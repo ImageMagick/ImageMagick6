@@ -2725,6 +2725,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
       /*
         Parse color of the form rgb(100,255,0).
       */
+      (void) memset(colorspace,0,sizeof(colorspace));
       (void) CopyMagickString(colorspace,name,MaxTextExtent);
       for (i=0; colorspace[i] != '\0'; i++)
         if (colorspace[i] == '(')
