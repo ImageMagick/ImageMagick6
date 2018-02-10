@@ -1199,7 +1199,7 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
       for (p=image->directory; *p != '\0'; p++)
       {
         q=p;
-        while ((*q != '\n') && (*q != '\0') && 
+        while ((*q != '\377') && (*q != '\0') && 
                ((size_t) (q-p) < sizeof(image_info->filename)))
           q++;
         (void) CopyMagickString(image_info->filename,p,(size_t) (q-p+1));
