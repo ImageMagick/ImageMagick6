@@ -578,8 +578,8 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
     default:
       ThrowReaderException(CorruptImageError,"UnrecognizedImageCompression");
   }
-  image->columns=(size_t) MagickAbsoluteValue(dib_info.width);
-  image->rows=(size_t) MagickAbsoluteValue(dib_info.height);
+  image->columns=(size_t) MagickAbsoluteValue((ssize_t) dib_info.width);
+  image->rows=(size_t) MagickAbsoluteValue((ssize_t) dib_info.height);
   image->matte=dib_info.bits_per_pixel == 32 ? MagickTrue : MagickFalse;
   image->depth=8;
   if ((dib_info.number_colors > 256) || (dib_info.colors_important > 256))
