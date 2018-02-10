@@ -423,7 +423,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
     }
   else
     for (p=image->directory; *p != '\0'; p++)
-      if (*p != '\377n')
+      if (*p != '\377')
         (void) WriteBlobByte(image,(unsigned char) *p);
       else
         {
