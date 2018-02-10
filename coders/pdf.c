@@ -1183,6 +1183,12 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
 {
 #define CFormat  "/Filter [ /%s ]\n"
 #define ObjectsPerImage  14
+#define ThrowPDFException(exception,message) \
+{ \
+  if (xref != (MagickOffsetType *) NULL) \
+    xref=(MagickOffsetType *) RelinquishMagickMemory(xref); \
+  ThrowWriterException((exception),(message)); \
+}
 
 DisableMSCWarning(4310)
   static const char
@@ -1851,7 +1857,7 @@ RestoreMSCWarning
     offset=TellBlob(image);
     number_pixels=(MagickSizeType) image->columns*image->rows;
     if ((4*number_pixels) != (MagickSizeType) ((size_t) (4*number_pixels)))
-      ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+      ThrowPDFException(ResourceLimitError,"MemoryAllocationFailed");
     if ((compression == FaxCompression) || (compression == Group4Compression) ||
         ((image_info->type != TrueColorType) &&
          (SetImageGray(image,&image->exception) != MagickFalse)))
@@ -1874,7 +1880,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,image,"jpeg",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,image->exception.reason);
+              ThrowPDFException(CoderError,image->exception.reason);
             break;
           }
           case JPEG2000Compression:
@@ -1882,7 +1888,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,image,"jp2",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,image->exception.reason);
+              ThrowPDFException(CoderError,image->exception.reason);
             break;
           }
           case RLECompression:
@@ -1897,7 +1903,7 @@ RestoreMSCWarning
             length=(size_t) number_pixels;
             pixel_info=AcquireVirtualMemory(length,sizeof(*pixels));
             if (pixel_info == (MemoryInfo *) NULL)
-              ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+              ThrowPDFException(ResourceLimitError,"MemoryAllocationFailed");
             pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
             /*
               Dump Runlength encoded pixels.
@@ -1980,7 +1986,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,image,"jpeg",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,image->exception.reason);
+              ThrowPDFException(CoderError,image->exception.reason);
             break;
           }
           case JPEG2000Compression:
@@ -1988,7 +1994,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,image,"jp2",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,image->exception.reason);
+              ThrowPDFException(CoderError,image->exception.reason);
             break;
           }
           case RLECompression:
@@ -2006,8 +2012,7 @@ RestoreMSCWarning
             if (pixel_info == (MemoryInfo *) NULL)
               {
                 xref=(MagickOffsetType *) RelinquishMagickMemory(xref);
-                ThrowWriterException(ResourceLimitError,
-                  "MemoryAllocationFailed");
+                ThrowPDFException(ResourceLimitError,"MemoryAllocationFailed");
               }
             pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
             /*
@@ -2112,7 +2117,7 @@ RestoreMSCWarning
               if (pixel_info == (MemoryInfo *) NULL)
                 {
                   xref=(MagickOffsetType *) RelinquishMagickMemory(xref);
-                  ThrowWriterException(ResourceLimitError,
+                  ThrowPDFException(ResourceLimitError,
                     "MemoryAllocationFailed");
                 }
               pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
@@ -2288,7 +2293,7 @@ RestoreMSCWarning
     tile_image=ThumbnailImage(image,geometry.width,geometry.height,
       &image->exception);
     if (tile_image == (Image *) NULL)
-      ThrowWriterException(ResourceLimitError,image->exception.reason);
+      ThrowPDFException(ResourceLimitError,image->exception.reason);
     xref[object++]=TellBlob(image);
     (void) FormatLocaleString(buffer,MaxTextExtent,"%.20g 0 obj\n",(double)
       object);
@@ -2393,7 +2398,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,tile_image,"jpeg",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,tile_image->exception.reason);
+              ThrowPDFException(CoderError,tile_image->exception.reason);
             break;
           }
           case JPEG2000Compression:
@@ -2401,7 +2406,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,tile_image,"jp2",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,tile_image->exception.reason);
+              ThrowPDFException(CoderError,tile_image->exception.reason);
             break;
           }
           case RLECompression:
@@ -2418,8 +2423,7 @@ RestoreMSCWarning
             if (pixel_info == (MemoryInfo *) NULL)
               {
                 tile_image=DestroyImage(tile_image);
-                ThrowWriterException(ResourceLimitError,
-                  "MemoryAllocationFailed");
+                ThrowPDFException(ResourceLimitError,"MemoryAllocationFailed");
               }
             pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
             /*
@@ -2491,7 +2495,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,tile_image,"jpeg",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,tile_image->exception.reason);
+              ThrowPDFException(CoderError,tile_image->exception.reason);
             break;
           }
           case JPEG2000Compression:
@@ -2499,7 +2503,7 @@ RestoreMSCWarning
             status=InjectImageBlob(image_info,image,tile_image,"jp2",
               &image->exception);
             if (status == MagickFalse)
-              ThrowWriterException(CoderError,tile_image->exception.reason);
+              ThrowPDFException(CoderError,tile_image->exception.reason);
             break;
           }
           case RLECompression:
@@ -2517,8 +2521,7 @@ RestoreMSCWarning
             if (pixel_info == (MemoryInfo *) NULL)
               {
                 tile_image=DestroyImage(tile_image);
-                ThrowWriterException(ResourceLimitError,
-                  "MemoryAllocationFailed");
+                ThrowPDFException(ResourceLimitError,"MemoryAllocationFailed");
               }
             pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
             /*
@@ -2611,7 +2614,7 @@ RestoreMSCWarning
               if (pixel_info == (MemoryInfo *) NULL)
                 {
                   tile_image=DestroyImage(tile_image);
-                  ThrowWriterException(ResourceLimitError,
+                  ThrowPDFException(ResourceLimitError,
                     "MemoryAllocationFailed");
                 }
               pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
@@ -2816,8 +2819,7 @@ RestoreMSCWarning
             if (pixel_info == (MemoryInfo *) NULL)
               {
                 image=DestroyImage(image);
-                ThrowWriterException(ResourceLimitError,
-                  "MemoryAllocationFailed");
+                ThrowPDFException(ResourceLimitError,"MemoryAllocationFailed");
               }
            pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
             /*
