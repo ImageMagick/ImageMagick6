@@ -1480,7 +1480,7 @@ static MagickBooleanType ReadPSDLayer(Image *image,const ImageInfo *image_info,
 static MagickBooleanType CheckPSDChannels(const PSDInfo *psd_info,
   LayerInfo *layer_info)
 {
-  ChannelType
+  int
     channel_type;
 
   register ssize_t
