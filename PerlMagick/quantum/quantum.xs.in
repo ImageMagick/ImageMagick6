@@ -3387,7 +3387,7 @@ Compare(ref,...)
 #
 #
 void
-CompareLayers(ref)
+CompareLayers(ref,...)
   Image::Magick::@MAGICK_ABI_SUFFIX@ ref = NO_INIT
   ALIAS:
     CompareImageLayers   = 1
@@ -3523,7 +3523,7 @@ CompareLayers(ref)
 #
 #
 void
-ComplexImages(ref)
+ComplexImages(ref,...)
   Image::Magick::@MAGICK_ABI_SUFFIX@ ref = NO_INIT
   ALIAS:
     ComplexImages   = 1
@@ -3845,7 +3845,7 @@ Display(ref,...)
 #
 #
 void
-EvaluateImages(ref)
+EvaluateImages(ref,...)
   Image::Magick::@MAGICK_ABI_SUFFIX@ ref = NO_INIT
   ALIAS:
     EvaluateImages   = 1
@@ -4177,7 +4177,7 @@ Features(ref,...)
 #
 #
 void
-Flatten(ref)
+Flatten(ref,...)
   Image::Magick::@MAGICK_ABI_SUFFIX@ ref = NO_INIT
   ALIAS:
     FlattenImage   = 1
