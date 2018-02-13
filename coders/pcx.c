@@ -360,6 +360,7 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     status=SetImageExtent(image,image->columns,image->rows);
     if (status == MagickFalse)
       ThrowPCXException(image->exception.severity,image->exception.reason);
+    (void) SetImageBackgroundColor(image);
     count=ReadBlob(image,3*image->colors,pcx_colormap);
     if (count != (ssize_t) (3*image->colors))
       ThrowPCXException(CorruptImageError,"ImproperImageHeader");
@@ -388,7 +389,6 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
       image->colormap[i].green=ScaleCharToQuantum(*p++);
       image->colormap[i].blue=ScaleCharToQuantum(*p++);
     }
-    (void) SetImageBackgroundColor(image);
     pcx_info.bytes_per_line=ReadBlobLSBShort(image);
     pcx_info.palette_info=ReadBlobLSBShort(image);
     pcx_info.horizontal_screensize=ReadBlobLSBShort(image);
