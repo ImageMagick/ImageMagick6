@@ -3830,7 +3830,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         unsigned int
           tag;
 
-        tag=(ReadBlobLSBShort(image) << 16) | ReadBlobLSBShort(image);
+        tag=((unsigned int) ReadBlobLSBShort(image) << 16) |
+          ReadBlobLSBShort(image);
         length=(size_t) ReadBlobLSBLong(image);
         if (tag == 0xFFFEE0DD)
           break; /* sequence delimiter tag */
@@ -3931,7 +3932,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         if (c == EOF)
           break;
       }
-      tag=(ReadBlobLSBShort(image) << 16) | ReadBlobLSBShort(image);
+      tag=((unsigned int) ReadBlobLSBShort(image) << 16) |
+        ReadBlobLSBShort(image);
       (void) tag;
       length=(size_t) ReadBlobLSBLong(image);
       if (length > GetBlobSize(image))
@@ -4042,7 +4044,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (c == EOF)
             break;
         }
-        tag=(ReadBlobLSBShort(image) << 16) | ReadBlobLSBShort(image);
+        tag=((unsigned int) ReadBlobLSBShort(image) << 16) |
+          ReadBlobLSBShort(image);
         stream_info->remaining=(size_t) ReadBlobLSBLong(image);
         if ((tag != 0xFFFEE000) || (stream_info->remaining <= 64) ||
             (EOFBlob(image) != MagickFalse))
