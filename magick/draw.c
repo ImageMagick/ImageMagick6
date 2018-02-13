@@ -2049,7 +2049,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           {
             GetNextToken(q,&q,extent,token);
             factor=strchr(token,'%') != (char *) NULL ? 0.01 : 1.0;
-            graphic_context[n]->fill.opacity=ClampToQuantum((MagickRealType)
+            graphic_context[n]->fill_opacity=ClampToQuantum((MagickRealType)
               QuantumRange*(1.0-factor*StringToDouble(token,&next_token)));
             if (token == next_token)
               status=MagickFalse;
@@ -2736,7 +2736,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           {
             GetNextToken(q,&q,extent,token);
             factor=strchr(token,'%') != (char *) NULL ? 0.01 : 1.0;
-            graphic_context[n]->stroke.opacity=ClampToQuantum((MagickRealType)
+            graphic_context[n]->stroke_opacity=ClampToQuantum((MagickRealType)
               QuantumRange*(1.0-factor*StringToDouble(token,&next_token)));
             if (token == next_token)
               status=MagickFalse;
