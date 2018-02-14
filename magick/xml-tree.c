@@ -1714,11 +1714,13 @@ static MagickBooleanType ParseInternalDoctype(XMLTreeRoot *root,char *xml,
       xml++;
     if (*xml == '\0')
       break;
-    if ((strlen(xml) > 9) && (strncmp(xml,"<!ENTITY ",9) == 0))
+    if ((strlen(xml) > 9) && (strncmp(xml,"<!ENTITY",8) == 0))
       {
         /*
           Parse entity definitions.
         */
+        if (strspn(xml+8,XMLWhitespace) == 0)
+          break;
         xml+=strspn(xml+8,XMLWhitespace)+8;
         c=xml;
         n=xml+strspn(xml,XMLWhitespace "%");
