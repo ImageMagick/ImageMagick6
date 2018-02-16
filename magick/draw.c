@@ -5481,7 +5481,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           arc;
 
         /*
-          Compute arc points.
+          Elliptical arc.
         */
         do
         {
@@ -5529,7 +5529,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
       case 'C':
       {
         /*
-          Compute bezier points.
+          Cubic Bézier curve. 
         */
         do
         {
@@ -5553,6 +5553,10 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           TraceBezier(q,4);
           q+=q->coordinates;
           point=end;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
@@ -5568,12 +5572,19 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           point.x=(double) (attribute == (int) 'H' ? x: point.x+x);
           TracePoint(q,point);
           q+=q->coordinates;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
       case 'l':
       case 'L':
       {
+        /*
+          Line to.
+        */
         do
         {
           GetNextToken(p,&p,MaxTextExtent,token);
@@ -5588,12 +5599,19 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           point.y=(double) (attribute == (int) 'L' ? y : point.y+y);
           TracePoint(q,point);
           q+=q->coordinates;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
       case 'M':
       case 'm':
       {
+        /*
+          Move to.
+        */
         if (q != primitive_info)
           {
             primitive_info->coordinates=(size_t) (q-primitive_info);
@@ -5623,6 +5641,10 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
               TracePoint(q,point);
               q+=q->coordinates;
             }
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
@@ -5630,7 +5652,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
       case 'Q':
       {
         /*
-          Compute bezier points.
+          Quadratic Bézier curve.
         */
         do
         {
@@ -5656,6 +5678,10 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           TraceBezier(q,3);
           q+=q->coordinates;
           point=end;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
@@ -5663,7 +5689,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
       case 'S':
       {
         /*
-          Compute bezier points.
+          Cubic Bézier curve.
         */
         do
         {
@@ -5696,6 +5722,10 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           TraceBezier(q,4);
           q+=q->coordinates;
           point=end;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
@@ -5703,7 +5733,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
       case 'T':
       {
         /*
-          Compute bezier points.
+          Quadratic Bézier curve.
         */
         do
         {
@@ -5734,12 +5764,19 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           TraceBezier(q,3);
           q+=q->coordinates;
           point=end;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
       case 'v':
       case 'V':
       {
+        /*
+          Line to.
+        */
         do
         {
           GetNextToken(p,&p,MaxTextExtent,token);
@@ -5749,12 +5786,19 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           point.y=(double) (attribute == (int) 'V' ? y : point.y+y);
           TracePoint(q,point);
           q+=q->coordinates;
+          while (isspace((int) ((unsigned char) *p)) != 0)
+            p++;
+          if (*p == ',')
+            p++;
         } while (IsPoint(p) != MagickFalse);
         break;
       }
       case 'z':
       case 'Z':
       {
+        /*
+          Close path.
+        */
         point=start;
         TracePoint(q,point);
         q+=q->coordinates;
