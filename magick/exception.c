@@ -55,7 +55,7 @@
 /*
   Global declarations.
 */
-#define MaxExceptions  128
+#define MaxExceptions  32
 
 /*
   Forward declarations.
