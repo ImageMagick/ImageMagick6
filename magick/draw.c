@@ -5722,6 +5722,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           TraceBezier(q,4);
           q+=q->coordinates;
           point=end;
+          last_attribute=attribute;
           while (isspace((int) ((unsigned char) *p)) != 0)
             p++;
           if (*p == ',')
@@ -5764,6 +5765,7 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           TraceBezier(q,3);
           q+=q->coordinates;
           point=end;
+          last_attribute=attribute;
           while (isspace((int) ((unsigned char) *p)) != 0)
             p++;
           if (*p == ',')
