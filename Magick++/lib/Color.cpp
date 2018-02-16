@@ -70,9 +70,11 @@ Magick::Color::Color(void)
   : _pixel(new PixelPacket),
     _isValid(false),
     _pixelOwn(true),
-    _pixelType(RGBPixel)
+    _pixelType(RGBAPixel)
 {
   initPixel();
+
+  alphaQuantum(TransparentOpacity);
 }
 
 Magick::Color::Color(Magick::Quantum red_,Magick::Quantum green_,
