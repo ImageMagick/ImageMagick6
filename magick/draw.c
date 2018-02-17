@@ -92,7 +92,12 @@
 */
 #define BezierQuantum  200
 #define DrawEpsilon  (1.0e-10)
-
+#define ThrowPointExpectedException(image,token) \
+{ \
+  (void) ThrowMagickException(&(image)->exception,GetMagickModule(),DrawError, \
+    "NonconformingDrawingPrimitiveDefinition","`%s'",token); \
+  status=MagickFalse; \
+}
 
 /*
   Typedef declarations.
@@ -168,7 +173,7 @@ static PrimitiveInfo
   *TraceStrokePolygon(const DrawInfo *,const PrimitiveInfo *);
 
 static size_t
-  TracePath(PrimitiveInfo *,const char *);
+  TracePath(Image *,PrimitiveInfo *,const char *);
 
 static void
   TraceArc(PrimitiveInfo *,const PointInfo,const PointInfo,const PointInfo),
@@ -1776,7 +1781,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
-  number_points=6553;
+  number_points=6613;
   primitive_info=(PrimitiveInfo *) AcquireQuantumMemory((size_t) number_points,
     sizeof(*primitive_info));
   if (primitive_info == (PrimitiveInfo *) NULL)
@@ -1832,37 +1837,37 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             affine.sx=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.rx=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.ry=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.sy=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.tx=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.ty=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("arc",keyword) == 0)
@@ -2052,7 +2057,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->fill_opacity=ClampToQuantum((MagickRealType)
               QuantumRange*(1.0-factor*StringToDouble(token,&next_token)));
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -2091,7 +2096,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             graphic_context[n]->pointsize=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("font-stretch",keyword) == 0)
@@ -2190,7 +2195,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->interline_spacing=StringToDouble(token,
               &next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("interword-spacing",keyword) == 0)
@@ -2199,7 +2204,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->interword_spacing=StringToDouble(token,
               &next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         status=MagickFalse;
@@ -2213,7 +2218,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             graphic_context[n]->kerning=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         status=MagickFalse;
@@ -2263,7 +2268,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               QuantumScale*graphic_context[n]->stroke_opacity)*factor*
               StringToDouble(token,&next_token));
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         status=MagickFalse;
@@ -2370,25 +2375,25 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 GetNextToken(q,&q,extent,token);
                 segment.x1=StringToDouble(token,&next_token);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   GetNextToken(q,&q,extent,token);
                 segment.y1=StringToDouble(token,&next_token);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   GetNextToken(q,&q,extent,token);
                 segment.x2=StringToDouble(token,&next_token);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   GetNextToken(q,&q,extent,token);
                 segment.y2=StringToDouble(token,&next_token);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 if (LocaleCompare(type,"radial") == 0)
                   {
                     GetNextToken(q,&q,extent,token);
@@ -2446,27 +2451,27 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 GetNextToken(q,&q,extent,token);
                 bounds.x=(ssize_t) ceil(StringToDouble(token,&next_token)-0.5);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   GetNextToken(q,&q,extent,token);
                 bounds.y=(ssize_t) ceil(StringToDouble(token,&next_token)-0.5);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   GetNextToken(q,&q,extent,token);
                 bounds.width=(size_t) floor(StringToDouble(token,&next_token)+
                   0.5);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   GetNextToken(q,&q,extent,token);
                 bounds.height=(size_t) floor(StringToDouble(token,&next_token)+
                   0.5);
                 if (token == next_token)
-                  status=MagickFalse;
+                  ThrowPointExpectedException(image,token);
                 for (p=q; *q != '\0'; )
                 {
                   GetNextToken(q,&q,extent,token);
@@ -2529,7 +2534,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             angle=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             affine.sx=cos(DegreesToRadians(fmod((double) angle,360.0)));
             affine.rx=sin(DegreesToRadians(fmod((double) angle,360.0)));
             affine.ry=(-sin(DegreesToRadians(fmod((double) angle,360.0))));
@@ -2552,13 +2557,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             affine.sx=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.sy=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("skewX",keyword) == 0)
@@ -2566,7 +2571,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             angle=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             affine.ry=sin(DegreesToRadians(angle));
             break;
           }
@@ -2575,7 +2580,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             angle=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             affine.rx=(-tan(DegreesToRadians(angle)/2.0));
             break;
           }
@@ -2673,7 +2678,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                   graphic_context[n]->dash_pattern[j]=StringToDouble(token,
                     &next_token);
                   if (token == next_token)
-                    status=MagickFalse;
+                    ThrowPointExpectedException(image,token);
                   if (graphic_context[n]->dash_pattern[j] < 0.0)
                     status=MagickFalse;
                 }
@@ -2692,7 +2697,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             graphic_context[n]->dash_offset=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("stroke-linecap",keyword) == 0)
@@ -2739,7 +2744,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->stroke_opacity=ClampToQuantum((MagickRealType)
               QuantumRange*(1.0-factor*StringToDouble(token,&next_token)));
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
@@ -2747,7 +2752,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             graphic_context[n]->stroke_width=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         status=MagickFalse;
@@ -2810,13 +2815,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             affine.tx=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             affine.ty=StringToDouble(token,&next_token);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         status=MagickFalse;
@@ -2831,28 +2836,28 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->viewbox.x=(ssize_t) ceil(StringToDouble(token,
               &next_token)-0.5);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             graphic_context[n]->viewbox.y=(ssize_t) ceil(StringToDouble(token,
               &next_token)-0.5);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             graphic_context[n]->viewbox.width=(size_t) floor(StringToDouble(
               token,&next_token)+0.5);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             GetNextToken(q,&q,extent,token);
             if (*token == ',')
               GetNextToken(q,&q,extent,token);
             graphic_context[n]->viewbox.height=(size_t) floor(StringToDouble(
               token,&next_token)+0.5);
             if (token == next_token)
-              status=MagickFalse;
+              ThrowPointExpectedException(image,token);
             break;
           }
         status=MagickFalse;
@@ -2906,13 +2911,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       GetNextToken(q,&q,extent,token);
       point.x=StringToDouble(token,&next_token);
       if (token == next_token)
-        status=MagickFalse;
+        ThrowPointExpectedException(image,token);
       GetNextToken(q,&q,extent,token);
       if (*token == ',')
         GetNextToken(q,&q,extent,token);
       point.y=StringToDouble(token,&next_token);
       if (token == next_token)
-        status=MagickFalse;
+        ThrowPointExpectedException(image,token);
       GetNextToken(q,(const char **) NULL,extent,token);
       if (*token == ',')
         GetNextToken(q,&q,extent,token);
@@ -3178,7 +3183,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case PathPrimitive:
       {
-        i=(ssize_t) (j+TracePath(primitive_info+j,token));
+        i=(ssize_t) (j+TracePath(image,primitive_info+j,token));
         break;
       }
       case ColorPrimitive:
@@ -5416,7 +5421,8 @@ static void TraceLine(PrimitiveInfo *primitive_info,const PointInfo start,
   primitive_info->coordinates=2;
 }
 
-static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
+static size_t TracePath(Image *image,PrimitiveInfo *primitive_info,
+  const char *path)
 {
   char
     *next_token,
@@ -5432,6 +5438,9 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
   int
     attribute,
     last_attribute;
+
+  MagickBooleanType
+    status;
 
   PointInfo
     end = {0.0, 0.0},
@@ -5459,6 +5468,8 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
   q=primitive_info;
   for (p=path; *p != '\0'; )
   {
+    if (status == MagickFalse)
+      break;
     while (isspace((int) ((unsigned char) *p)) != 0)
       p++;
     if (*p == '\0')
@@ -5489,14 +5500,20 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           arc.x=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           arc.y=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           angle=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
@@ -5509,10 +5526,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           x=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           y=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           end.x=(double) (attribute == (int) 'A' ? x : point.x+x);
           end.y=(double) (attribute == (int) 'A' ? y : point.y+y);
           TraceArcPath(q,point,end,arc,angle,large_arc,sweep);
@@ -5540,10 +5561,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             x=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             y=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             end.x=(double) (attribute == (int) 'C' ? x : point.x+x);
             end.y=(double) (attribute == (int) 'C' ? y : point.y+y);
             points[i]=end;
@@ -5569,6 +5594,8 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           x=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           point.x=(double) (attribute == (int) 'H' ? x: point.x+x);
           TracePoint(q,point);
           q+=q->coordinates;
@@ -5591,10 +5618,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           x=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           y=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           point.x=(double) (attribute == (int) 'L' ? x : point.x+x);
           point.y=(double) (attribute == (int) 'L' ? y : point.y+y);
           TracePoint(q,point);
@@ -5625,10 +5656,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           x=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           y=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           point.x=(double) (attribute == (int) 'M' ? x : point.x+x);
           point.y=(double) (attribute == (int) 'M' ? y : point.y+y);
           if (i == 0)
@@ -5663,10 +5698,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             x=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             y=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             if (*p == ',')
               p++;
             end.x=(double) (attribute == (int) 'Q' ? x : point.x+x);
@@ -5702,10 +5741,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             x=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             y=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             if (*p == ',')
               p++;
             end.x=(double) (attribute == (int) 'S' ? x : point.x+x);
@@ -5747,10 +5790,14 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             x=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
               GetNextToken(p,&p,MaxTextExtent,token);
             y=StringToDouble(token,&next_token);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
             end.x=(double) (attribute == (int) 'T' ? x : point.x+x);
             end.y=(double) (attribute == (int) 'T' ? y : point.y+y);
             points[i]=end;
@@ -5785,6 +5832,8 @@ static size_t TracePath(PrimitiveInfo *primitive_info,const char *path)
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
           y=StringToDouble(token,&next_token);
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           point.y=(double) (attribute == (int) 'V' ? y : point.y+y);
           TracePoint(q,point);
           q+=q->coordinates;
