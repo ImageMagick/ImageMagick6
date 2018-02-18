@@ -1586,7 +1586,7 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
         Native blob support for this image format.
       */
       blob_info->length=0;
-      blob_info->blob=(void *) AcquireQuantumMemory(MagickMaxBlobExtent,
+      blob_info->blob=AcquireQuantumMemory(MagickMaxBlobExtent,
         sizeof(unsigned char));
       if (blob_info->blob == (void *) NULL)
         (void) ThrowMagickException(exception,GetMagickModule(),
@@ -1600,7 +1600,9 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
           InheritException(exception,&image->exception);
           *length=image->blob->length;
           blob=DetachBlob(image->blob);
-          if (status == MagickFalse)
+          if (blob == (unsigned char *) NULL)
+            blob_info->blob=RelinquishMagickMemory(blob_info->blob);
+          else if (status == MagickFalse)
             blob=(unsigned char *) RelinquishMagickMemory(blob);
           else
             blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
@@ -1847,7 +1849,7 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
         Native blob support for this images format.
       */
       clone_info->length=0;
-      clone_info->blob=(void *) AcquireQuantumMemory(MagickMaxBlobExtent,
+      clone_info->blob=AcquireQuantumMemory(MagickMaxBlobExtent,
         sizeof(unsigned char));
       if (clone_info->blob == (void *) NULL)
         (void) ThrowMagickException(exception,GetMagickModule(),
@@ -1860,7 +1862,9 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
           status=WriteImages(clone_info,images,images->filename,exception);
           *length=images->blob->length;
           blob=DetachBlob(images->blob);
-          if (status == MagickFalse)
+          if (blob == (unsigned char *) NULL)
+            clone_info->blob=RelinquishMagickMemory(clone_info->blob);
+          else if (status == MagickFalse)
             blob=(unsigned char *) RelinquishMagickMemory(blob);
           else
             blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
