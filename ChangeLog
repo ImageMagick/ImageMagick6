@@ -1,5 +1,5 @@
 2018-02-18  6.9.9-35 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.9-35, GIT revision 12835:a8b2398aa:20180218.
+  * Release ImageMagick version 6.9.9-35, GIT revision 12841:fda641f6b:20180218.
 
 2018-02-09  6.9.9-35 Dirk Lemstra <dirk@lem.....org>
   * Add support for reading the HEIC image format to the Windows build.
