@@ -602,11 +602,11 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (number_pixels != (size_t) number_pixels)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   chroma1=(unsigned char *) AcquireQuantumMemory(image->columns+1UL,image->rows*
-    sizeof(*chroma1));
+    10*sizeof(*chroma1));
   chroma2=(unsigned char *) AcquireQuantumMemory(image->columns+1UL,image->rows*
-    sizeof(*chroma2));
+    10*sizeof(*chroma2));
   luma=(unsigned char *) AcquireQuantumMemory(image->columns+1UL,image->rows*
-    sizeof(*luma));
+    10*sizeof(*luma));
   if ((chroma1 == (unsigned char *) NULL) ||
       (chroma2 == (unsigned char *) NULL) || (luma == (unsigned char *) NULL))
     {
@@ -618,6 +618,12 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
         luma=(unsigned char *) RelinquishMagickMemory(luma);
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
     }
+  (void) ResetMagickMemory(chroma1,0,(image->columns+1UL)*image->rows*
+    10*sizeof(*chroma1));
+  (void) ResetMagickMemory(chroma2,0,(image->columns+1UL)*image->rows*
+    10*sizeof(*chroma2));
+  (void) ResetMagickMemory(luma,0,(image->columns+1UL)*image->rows*
+    10*sizeof(*luma));
   /*
     Advance to image data.
   */
