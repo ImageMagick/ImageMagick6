@@ -2343,6 +2343,10 @@ $image-&gt;Mogrify('crop', '340x256+0+0');
 <pre class="highlight"><code>$image-&gt;MogrifyRegion('100x100+40+50', 'modulate', brightness=&gt;50);
 </code></pre>
 
+<p>PerceptualHash() maps visually identical images to the same or similar hash-- useful in image retrieval, authentication, indexing, or copy detection as well as digital watermarking.  For each channel and for the sRGB and the HCLp colorspaces, 7 hash values are returned  For an sRGB images, for example, expect 42 perceptual hashes.</p>
+
+<pre class="highlight"><code>@phash = $image-&gt;PerceptualHash();</code></pre>
+
 <p>Ping() is a convenience method that returns information about an image without having to read the image into memory. It returns the width, height, file size in bytes, and the file format of the image. You can specify more than one filename but only one filehandle:</p>
 
 <pre class="highlight"><code>($width, $height, $size, $format) = $image-&gt;Ping('logo.png');
