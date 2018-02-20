@@ -1020,10 +1020,10 @@ static Image *OptimizeLayerFrames(const Image *image,
   {
     if ((curr->columns != image->columns) || (curr->rows != image->rows))
       ThrowImageException(OptionError,"ImagesAreNotTheSameSize");
-    /*
-      FUTURE: also check that image is also fully coalesced (full page)
-      Though as long as they are the same size it should not matter.
-    */
+    if ((curr->page.x != 0) || (curr->page.y != 0) ||
+        (curr->page.width != image->page.width) ||
+        (curr->page.height != image->page.height))
+      ThrowImageException(OptionError,"ImagePagesAreNotCoalesced");
   }
   /*
     Allocate memory (times 2 if we allow the use of frame duplications)
@@ -1154,8 +1154,8 @@ static Image *OptimizeLayerFrames(const Image *image,
         dup_bounds.width=dup_bounds.height=0; /* no dup, no pixel added */
         if ( add_frames )
           {
-            dup_image=CloneImage(curr->previous,curr->previous->page.width,
-                curr->previous->page.height,MagickTrue,exception);
+            dup_image=CloneImage(curr->previous,curr->previous->columns,
+                curr->previous->rows,MagickTrue,exception);
             if (dup_image == (Image *) NULL)
               {
                 bounds=(RectangleInfo *) RelinquishMagickMemory(bounds);
@@ -1182,8 +1182,8 @@ static Image *OptimizeLayerFrames(const Image *image,
         /*
           Now compare against a simple background disposal
         */
-        bgnd_image=CloneImage(curr->previous,curr->previous->page.width,
-          curr->previous->page.height,MagickTrue,exception);
+        bgnd_image=CloneImage(curr->previous,curr->previous->columns,
+          curr->previous->rows,MagickTrue,exception);
         if (bgnd_image == (Image *) NULL)
           {
             bounds=(RectangleInfo *) RelinquishMagickMemory(bounds);
@@ -1338,8 +1338,8 @@ static Image *OptimizeLayerFrames(const Image *image,
           bgnd_image=DestroyImage(bgnd_image);
         if ( disposals[i-1] == NoneDispose )
           {
-            prev_image=CloneImage(curr->previous,curr->previous->page.width,
-              curr->previous->page.height,MagickTrue,exception);
+            prev_image=CloneImage(curr->previous,curr->columns,
+              curr->rows,MagickTrue,exception);
             if (prev_image == (Image *) NULL)
               {
                 bounds=(RectangleInfo *) RelinquishMagickMemory(bounds);
