@@ -5461,6 +5461,7 @@ static size_t TracePath(Image *image,PrimitiveInfo *primitive_info,
     number_coordinates,
     z_count;
 
+  status=MagickTrue;
   attribute=0;
   number_coordinates=0;
   z_count=0;
