@@ -1,7 +1,9 @@
-2018-02-19  6.9.9-26 Cristy  <quetzlzacatenango@image...>
+2018-02-19  6.9.9-46 Cristy  <quetzlzacatenango@image...>
   * Do not refer to page in OptimizeLayerFrames (reference
     https://github.com/ImageMagick/ImageMagick/pull/987).
   * PerlMagick unit tests pass again.
+  * Fixed numerous use of uninitialized values, integer overflow,
+    memory exceeded, and timeouts (credit to OSS Fuzz).
 
 2018-02-18  6.9.9-35 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.9-35, GIT revision 12843:46d8215af:20180218.
