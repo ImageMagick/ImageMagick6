@@ -419,7 +419,7 @@ MagickExport const MagickInfo *GetMagickInfo(const char *name,
     {
       LockSemaphoreInfo(magick_semaphore);
       if (LocaleCompare(name,"*") == 0)
-#if defined(MAGICKCORE_MODULES_SUPPORT)
+#if defined(MAGICKCORE_BUILD_MODULES)
         (void) OpenModules(exception);
 #else
         RegisterStaticModules();
@@ -429,7 +429,7 @@ MagickExport const MagickInfo *GetMagickInfo(const char *name,
           magick_info=(const MagickInfo *) GetValueFromSplayTree(magick_list,
             name);
           if (magick_info == (const MagickInfo *) NULL)
-#if defined(MAGICKCORE_MODULES_SUPPORT)
+#if defined(MAGICKCORE_BUILD_MODULES)
             (void) OpenModule(name,exception);
 #else
             (void) RegisterStaticModule(name,exception);
