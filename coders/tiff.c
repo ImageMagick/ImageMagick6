@@ -1619,6 +1619,8 @@ RestoreMSCWarning
       method=ReadTileMethod;
     quantum_info->endian=LSBEndian;
     quantum_type=RGBQuantum;
+    if (((MagickSizeType) TIFFScanlineSize(tiff)) > GetBlobSize(image))
+      ThrowTIFFException(CorruptImageError,"InsufficientImageDataInFile");
     tiff_pixels=(unsigned char *) AcquireMagickMemory(MagickMax(
       TIFFScanlineSize(tiff),(image->columns*samples_per_pixel*
       pow(2.0,ceil(log(bits_per_sample)/log(2.0)))*sizeof(uint32))));
