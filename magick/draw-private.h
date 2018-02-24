@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 static inline MagickBooleanType GetFillColor(const DrawInfo *draw_info,
-  const ssize_t x,const ssize_t y,PixelPacket *pixel)
+  const ssize_t x,const ssize_t y,PixelPacket *fill)
 {
   Image
     *pattern;
@@ -38,19 +38,20 @@ static inline MagickBooleanType GetFillColor(const DrawInfo *draw_info,
   pattern=draw_info->fill_pattern;
   if (pattern == (Image *) NULL)
     {
-      *pixel=draw_info->fill;
+      *fill=draw_info->fill;
       return(MagickTrue);
     }
   status=GetOneVirtualMethodPixel(pattern,TileVirtualPixelMethod,
-    x+pattern->tile_offset.x,y+pattern->tile_offset.y,pixel,
-    &pattern->exception);
+    x+pattern->tile_offset.x,y+pattern->tile_offset.y,fill,&pattern->exception);
   if (pattern->matte == MagickFalse)
-    pixel->opacity=OpaqueOpacity;
+    fill->opacity=OpaqueOpacity;
+  fill->opacity=(double) (QuantumRange-QuantumScale*fill->opacity*(QuantumRange-
+    draw_info->fill.opacity));
   return(status);
 }
 
 static inline MagickBooleanType GetStrokeColor(const DrawInfo *draw_info,
-  const ssize_t x,const ssize_t y,PixelPacket *pixel)
+  const ssize_t x,const ssize_t y,PixelPacket *stroke)
 {
   Image
     *pattern;
@@ -61,14 +62,16 @@ static inline MagickBooleanType GetStrokeColor(const DrawInfo *draw_info,
   pattern=draw_info->stroke_pattern;
   if (pattern == (Image *) NULL)
     {
-      *pixel=draw_info->stroke;
+      *stroke=draw_info->stroke;
       return(MagickTrue);
     }
   status=GetOneVirtualMethodPixel(pattern,TileVirtualPixelMethod,
-    x+pattern->tile_offset.x,y+pattern->tile_offset.y,pixel,
+    x+pattern->tile_offset.x,y+pattern->tile_offset.y,stroke,
     &pattern->exception);
   if (pattern->matte == MagickFalse)
-    pixel->opacity=OpaqueOpacity;
+    stroke->opacity=OpaqueOpacity;
+  stroke->opacity=(double) (QuantumRange-QuantumScale*stroke->opacity*
+    (QuantumRange-draw_info->stroke.opacity));
   return(status);
 }
 
