@@ -4550,7 +4550,7 @@ MAGICK_PATCHLEVEL_VERSION=36
 
 MAGICK_VERSION=6.9.9-36
 
-MAGICK_GIT_REVISION=12878:ec3382965:20180223
+MAGICK_GIT_REVISION=12890:f83c799d3:20180224
 
 
 # Substitute library versioning
@@ -35583,8 +35583,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$WWWDecodeDelegate"", so it can be a program name with args.
-set dummy "$WWWDecodeDelegate"; ac_word=$2
+# Extract the first word of ""$WWWDecodeDelegateDefault"", so it can be a program name with args.
+set dummy "$WWWDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_WWWDecodeDelegate+:} false; then :
@@ -35610,7 +35610,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_WWWDecodeDelegate" && ac_cv_path_WWWDecodeDelegate=""$WWWDecodeDelegate""
+  test -z "$ac_cv_path_WWWDecodeDelegate" && ac_cv_path_WWWDecodeDelegate=""$WWWDecodeDelegateDelegateDefault""
   ;;
 esac
 fi
@@ -39921,6 +39921,7 @@ matches your expectations.
   PERL              --with-perl=$with_perl		$have_perl
   PNG               --with-png=$with_png		$have_png
   RAQM              --with-raqm=$with_raqm		$have_raqm
+  RAW               --with-raw=$with_raw    $have_raw
   RSVG              --with-rsvg=$with_rsvg		$have_rsvg
   TIFF              --with-tiff=$with_tiff		$have_tiff
   WEBP              --with-webp=$with_webp		$have_webp
@@ -40010,6 +40011,7 @@ matches your expectations.
   PERL              --with-perl=$with_perl		$have_perl
   PNG               --with-png=$with_png		$have_png
   RAQM              --with-raqm=$with_raqm		$have_raqm
+  RAW               --with-raw=$with_raw    $have_raw
   RSVG              --with-rsvg=$with_rsvg		$have_rsvg
   TIFF              --with-tiff=$with_tiff		$have_tiff
   WEBP              --with-webp=$with_webp		$have_webp

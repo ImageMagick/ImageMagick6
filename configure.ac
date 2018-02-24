@@ -3211,7 +3211,7 @@ AC_PATH_PROG(SVGDecodeDelegate, "$SVGDecodeDelegateDefault", "$SVGDecodeDelegate
 AC_PATH_PROG(UniconvertorDelegate, "$UniconvertorDelegateDefault", "$UniconvertorDelegateDefault")
 AC_PATH_PROG(WebPDecodeDelegate, "$WebPDecodeDelegateDefault", "$WebPDecodeDelegateDefault")
 AC_PATH_PROG(WebPEncodeDelegate, "$WebPEncodeDelegateDefault", "$WebPEncodeDelegateDefault")
-AC_PATH_PROG(WWWDecodeDelegate, "$WWWDecodeDelegate", "$WWWDecodeDelegate")
+AC_PATH_PROG(WWWDecodeDelegate, "$WWWDecodeDelegateDefault", "$WWWDecodeDelegateDelegateDefault")
 AC_PATH_PROG(XPSDelegate, "$XPSDelegateDefault", "$XPSDelegateDefault")
 
 # Prefer lpr to lp; lp needs options tacked on.
@@ -4048,6 +4048,7 @@ matches your expectations.
   PERL              --with-perl=$with_perl		$have_perl
   PNG               --with-png=$with_png		$have_png
   RAQM              --with-raqm=$with_raqm		$have_raqm
+  RAW               --with-raw=$with_raw    $have_raw
   RSVG              --with-rsvg=$with_rsvg		$have_rsvg
   TIFF              --with-tiff=$with_tiff		$have_tiff
   WEBP              --with-webp=$with_webp		$have_webp
