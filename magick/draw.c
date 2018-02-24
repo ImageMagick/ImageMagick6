@@ -1742,6 +1742,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     extent;
 
   ssize_t
+    defsDepth,
     j,
     k,
     n;
@@ -1804,6 +1805,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
   token=AcquireString(primitive);
   extent=strlen(token)+MaxTextExtent;
   (void) QueryColorDatabase("#000000",&start_color,&image->exception);
+  defsDepth=0;
   status=MagickTrue;
   for (q=primitive; *q != '\0'; )
   {
@@ -2304,7 +2306,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             if (LocaleCompare("clip-path",token) == 0)
               break;
             if (LocaleCompare("defs",token) == 0)
-              break;
+              {
+                defsDepth--;
+                graphic_context[n]->render=defsDepth > 0 ? MagickFalse : 
+                  MagickTrue;
+                break;
+              }
             if (LocaleCompare("gradient",token) == 0)
               break;
             if (LocaleCompare("graphic-context",token) == 0)
@@ -2515,7 +2522,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 break;
               }
             if (LocaleCompare("defs",token) == 0)
-              break;
+              {
+                defsDepth++;
+                graphic_context[n]->render=defsDepth > 0 ? MagickFalse : 
+                  MagickTrue;
+                break;
+              }
             status=MagickFalse;
             break;
           }
