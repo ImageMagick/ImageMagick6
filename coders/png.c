@@ -4812,7 +4812,6 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
 
   if (jng_image == (Image *) NULL)
   {
-    jng_image=DestroyImage(jng_image);
     DestroyJNG(NULL,NULL,NULL,&alpha_image,&alpha_image_info);
     return(DestroyImageList(image));
   }
