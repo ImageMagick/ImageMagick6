@@ -150,16 +150,21 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
           high,
           low;
 
+        ssize_t
+          n;
+
         /*
           Auto fit text into bounding box.
         */
-        for ( ; ; draw_info->pointsize*=2.0)
+        for (n=0; n < 32; n++, draw_info->pointsize*=2.0)
         {
           (void) FormatLocaleString(geometry,MaxTextExtent,"%+g%+g",
             -metrics.bounds.x1,metrics.ascent);
           if (draw_info->gravity == UndefinedGravity)
             (void) CloneString(&draw_info->geometry,geometry);
-          (void) GetMultilineTypeMetrics(image,draw_info,&metrics);
+          status=GetMultilineTypeMetrics(image,draw_info,&metrics);
+          if (status == MagickFalse)
+            break;
           width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
           height=(size_t) floor(metrics.height+draw_info->stroke_width+0.5);
           if ((image->columns != 0) && (image->rows != 0))
@@ -180,7 +185,9 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
             -metrics.bounds.x1,metrics.ascent);
           if (draw_info->gravity == UndefinedGravity)
             (void) CloneString(&draw_info->geometry,geometry);
-          (void) GetMultilineTypeMetrics(image,draw_info,&metrics);
+          status=GetMultilineTypeMetrics(image,draw_info,&metrics);
+          if (status == MagickFalse)
+            break;
           width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
           height=(size_t) floor(metrics.height+draw_info->stroke_width+0.5);
           if ((image->columns != 0) && (image->rows != 0))
