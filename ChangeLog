@@ -1,3 +1,6 @@
+2018-02-25  6.9.9-35 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-36, GIT revision 12898:fad4ecb37:20180225.
+
 2018-02-19  6.9.9-46 Cristy  <quetzlzacatenango@image...>
   * Do not refer to page in OptimizeLayerFrames (reference
     https://github.com/ImageMagick/ImageMagick/pull/987).
