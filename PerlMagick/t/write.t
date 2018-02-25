@@ -128,7 +128,7 @@ print("Apple Macintosh QuickDraw/PICT file ...\n");
 testReadWrite( 'PICT:input.pict',
   'PICT:output.pict',
   q//,
-  'a698f2fe0c6c31f83d19554a6ec02bac79c961dd9a87e7ed217752e75eb615d7');
+  '1252b2f3facc0fb67fcfacfc01938843566acbb9480bbe077a4c6f6af528eb4e');
 
 print("Portable pixmap format (color), ASCII format ...\n");
 ++$test;
