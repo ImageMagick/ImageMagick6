@@ -2266,22 +2266,26 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
           return((Image *) NULL);
         }
     }
-  if (profile != (StringInfo *) NULL)
-    {
-      (void) SetImageProfile(image,GetStringInfoName(profile),profile);
-      profile=DestroyStringInfo(profile);
-    }
   if (has_merged_image == MagickFalse)
     {
       Image
         *merged;
 
       if (GetImageListLength(image) == 1)
-        ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
+        {
+          if (profile != (StringInfo *) NULL)
+            profile=DestroyStringInfo(profile);
+          ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
+        }
       SetImageAlphaChannel(image,TransparentAlphaChannel);
       image->background_color.opacity=TransparentOpacity;
       merged=MergeImageLayers(image,FlattenLayer,exception);
       ReplaceImageInList(&image,merged);
+    }
+  if (profile != (StringInfo *) NULL)
+    {
+      (void) SetImageProfile(image,GetStringInfoName(profile),profile);
+      profile=DestroyStringInfo(profile);
     }
   (void) CloseBlob(image);
   return(GetFirstImageInList(image));
