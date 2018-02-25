@@ -45,7 +45,8 @@ static inline MagickBooleanType GetFillColor(const DrawInfo *draw_info,
     x+pattern->tile_offset.x,y+pattern->tile_offset.y,fill,&pattern->exception);
   if (pattern->matte == MagickFalse)
     fill->opacity=OpaqueOpacity;
-  fill->opacity*=(1.0-QuantumScale*draw_info->fill_opacity);
+  fill->opacity=(Quantum) (QuantumRange-(QuantumRange-fill->opacity)*
+    QuantumScale*(QuantumRange-draw_info->fill_opacity));
   return(status);
 }
 
@@ -69,7 +70,8 @@ static inline MagickBooleanType GetStrokeColor(const DrawInfo *draw_info,
     &pattern->exception);
   if (pattern->matte == MagickFalse)
     stroke->opacity=OpaqueOpacity;
-  stroke->opacity*=(1.0-QuantumScale*draw_info->stroke_opacity);
+  stroke->opacity=(Quantum) (QuantumRange-(QuantumRange-stroke->opacity)*
+    QuantumScale*(QuantumRange-draw_info->stroke_opacity));
   return(status);
 }
 
