@@ -2055,13 +2055,16 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           }
         if (LocaleCompare("fill-opacity",keyword) == 0)
           {
+            double
+              opacity;
+
             GetNextToken(q,&q,extent,token);
             factor=strchr(token,'%') != (char *) NULL ? 0.01 : 1.0;
-            graphic_context[n]->fill_opacity=(double) ClampToQuantum(
-              (MagickRealType) QuantumRange*(1.0-factor*
-              StringToDouble(token,&next_token)));
+            opacity=MagickMin(MagickMax(factor*
+              StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
+            graphic_context[n]->fill_opacity=QuantumRange*(1.0-opacity);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -2753,13 +2756,16 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           }
         if (LocaleCompare("stroke-opacity",keyword) == 0)
           {
+            double
+              opacity;
+
             GetNextToken(q,&q,extent,token);
             factor=strchr(token,'%') != (char *) NULL ? 0.01 : 1.0;
-            graphic_context[n]->stroke_opacity=(double) ClampToQuantum(
-              (MagickRealType) QuantumRange*(1.0-factor*
-              StringToDouble(token,&next_token)));
+            opacity=MagickMin(MagickMax(factor*
+              StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
+            graphic_context[n]->stroke_opacity=QuantumRange*(1.0-opacity);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
