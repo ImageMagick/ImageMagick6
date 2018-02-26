@@ -298,50 +298,63 @@ OPENCL_ELIF((MAGICKCORE_QUANTUM_DEPTH == 32))
 
 OPENCL_ENDIF()
 
-STRINGIFY(
-  inline int ClampToCanvas(const int offset, const int range)
-  {
-    return clamp(offset, (int)0, range - 1);
-  }
+OPENCL_IF((MAGICKCORE_HDRI_SUPPORT == 1))
+
+  STRINGIFY(
+    inline CLQuantum ClampToQuantum(const float value)
+    {
+      return (CLQuantum) value;
+    }
   )
 
-    STRINGIFY(
-      inline int ClampToCanvasWithHalo(const int offset, const int range, const int edge, const int section)
-  {
-    return clamp(offset, section ? (int)(0 - edge) : (int)0, section ? (range - 1) : (range - 1 + edge));
-  }
+OPENCL_ELSE()
+
+  STRINGIFY(
+    inline CLQuantum ClampToQuantum(const float value)
+    {
+      return (CLQuantum) (clamp(value, 0.0f, QuantumRange) + 0.5f);
+    }
   )
 
-    STRINGIFY(
-      inline CLQuantum ClampToQuantum(const float value)
-  {
-    return (CLQuantum)(clamp(value, 0.0f, (float)QuantumRange) + 0.5f);
-  }
+OPENCL_ENDIF()
+
+  STRINGIFY(
+    inline int ClampToCanvas(const int offset, const int range)
+    {
+      return clamp(offset, (int)0, range - 1);
+    }
   )
 
-    STRINGIFY(
-      inline uint ScaleQuantumToMap(CLQuantum value)
-  {
-    if (value >= (CLQuantum)MaxMap)
-      return ((uint)MaxMap);
-    else
-      return ((uint)value);
-  }
+  STRINGIFY(
+    inline int ClampToCanvasWithHalo(const int offset, const int range, const int edge, const int section)
+    {
+      return clamp(offset, section ? (int)(0 - edge) : (int)0, section ? (range - 1) : (range - 1 + edge));
+    }
   )
 
-    STRINGIFY(
-      inline float PerceptibleReciprocal(const float x)
-  {
-    float sign = x < (float) 0.0 ? (float)-1.0 : (float) 1.0;
-    return((sign*x) >= MagickEpsilon ? (float) 1.0 / x : sign*((float) 1.0 / MagickEpsilon));
-  }
+  STRINGIFY(
+    inline uint ScaleQuantumToMap(CLQuantum value)
+    {
+      if (value >= (CLQuantum)MaxMap)
+        return ((uint)MaxMap);
+      else
+        return ((uint)value);
+    }
   )
 
-    STRINGIFY(
-      inline float RoundToUnity(const float value)
-  {
-    return clamp(value, 0.0f, 1.0f);
-  }
+  STRINGIFY(
+    inline float PerceptibleReciprocal(const float x)
+    {
+      float sign = x < (float) 0.0 ? (float)-1.0 : (float) 1.0;
+      return((sign*x) >= MagickEpsilon ? (float) 1.0 / x : sign*((float) 1.0 / MagickEpsilon));
+    }
+  )
+
+  STRINGIFY(
+    inline float RoundToUnity(const float value)
+    {
+      return clamp(value, 0.0f, 1.0f);
+    }
   )
 
     STRINGIFY(
