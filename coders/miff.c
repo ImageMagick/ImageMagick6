@@ -574,7 +574,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
             /*
               Get the keyword.
             */
-            length=MaxTextExtent;
+            length=MaxTextExtent-1;
             p=keyword;
             do
             {
