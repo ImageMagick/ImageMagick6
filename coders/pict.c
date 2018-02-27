@@ -800,8 +800,9 @@ static MagickBooleanType ReadRectangle(Image *image,PICTRectangle *rectangle)
   rectangle->left=(short) ReadBlobMSBShort(image);
   rectangle->bottom=(short) ReadBlobMSBShort(image);
   rectangle->right=(short) ReadBlobMSBShort(image);
-  if ((EOFBlob(image) != MagickFalse) || (rectangle->left > rectangle->right) ||
-      (rectangle->top > rectangle->bottom))
+  if ((EOFBlob(image) != MagickFalse) ||
+      ((rectangle->bottom-rectangle->top) > 0) ||
+      ((rectangle->right-rectangle->left) > 0))
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -1049,6 +1050,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               }
             else
               for (i=0; i < (int) height; i++)
+              {
+                if (EOFBlob(image) != MagickFalse)
+                  break;
                 if (length > 200)
                   {
                     for (j=0; j < (ssize_t) ReadBlobMSBShort(image); j++)
@@ -1059,6 +1063,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                   for (j=0; j < (ssize_t) ReadBlobByte(image); j++)
                     if (ReadBlobByte(image) == EOF)
                       break;
+              }
             break;
           }
           case 0x1b:
@@ -1431,6 +1436,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
       continue;
     if (code == 0x8200)
       {
+        char
+          filename[MaxTextExtent];
+
         FILE
           *file;
 
@@ -1450,7 +1458,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
         read_info=CloneImageInfo(image_info);
         SetImageInfoBlob(read_info,(void *) NULL,0);
         file=(FILE *) NULL;
-        unique_file=AcquireUniqueFileResource(read_info->filename);
+        unique_file=AcquireUniqueFileResource(filename);
+        (void) FormatLocaleString(read_info->filename,MaxTextExtent,"jpeg:%s",
+          filename);
         if (unique_file != -1)
           file=fdopen(unique_file,"wb");
         if ((unique_file == -1) || (file == (FILE *) NULL))
@@ -1488,7 +1498,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
         (void) fclose(file);
         (void) close(unique_file);
         tile_image=ReadImage(read_info,exception);
-        (void) RelinquishUniqueFileResource(read_info->filename);
+        (void) RelinquishUniqueFileResource(filename);
         read_info=DestroyImageInfo(read_info);
         if (tile_image == (Image *) NULL)
           continue;
