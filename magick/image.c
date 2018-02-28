@@ -1682,6 +1682,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
     *p;
 
   size_t
+    field_width,
     length;
 
   canonical=MagickFalse;
@@ -1695,14 +1696,9 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         p=q+1;
         continue;
       }
+    field_width=0;
     if (*q == '0')
-      {
-        ssize_t
-          value;
-
-        value=(ssize_t) strtol(q,&q,10);
-        (void) value;
-      }
+      field_width=(ssize_t) strtol(q,&q,10);
     switch (*q)
     {
       case 'd':
@@ -1714,6 +1710,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         *q='\0';
         (void) FormatLocaleString(filename+(p-format),(size_t) (MaxTextExtent-
           (p-format)),p,value);
+        length+=(4-field_width);
         *q=c;
         (void) ConcatenateMagickString(filename,q,MaxTextExtent);
         canonical=MagickTrue;
