@@ -2940,7 +2940,8 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       /*
         Image signature.
       */
-      (void) SignatureImage(image);
+      if ((image->columns != 0) && (image->rows != 0))
+        (void) SignatureImage(image);
       string=GetImageProperty(image,"signature");
       break;
     }
