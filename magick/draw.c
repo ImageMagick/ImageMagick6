@@ -1658,6 +1658,46 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
 %
 */
 
+static size_t EllipsePoints(const PrimitiveInfo *primitive_info,
+  const PointInfo start,const PointInfo stop,const PointInfo degrees)
+{
+  double
+    delta,
+    step,
+    y;
+
+  PointInfo
+    angle;
+
+  register const PrimitiveInfo
+    *p;
+  
+  size_t
+    number_points;
+  
+  /*
+    Ellipses are just short segmented polys.
+  */ 
+  if ((fabs(stop.x) < DrawEpsilon) && (fabs(stop.y) < DrawEpsilon))
+    return(1);
+  delta=2.0/MagickMax(stop.x,stop.y);
+  step=MagickPI/8.0; 
+  if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
+    step=MagickPI/(4*(MagickPI/delta/2+0.5));
+  angle.x=DegreesToRadians(degrees.x);
+  y=degrees.y;
+  while (y < degrees.x)
+    y+=360.0;
+  angle.y=DegreesToRadians(y);
+  number_points=0;
+  for (p=primitive_info; angle.x < angle.y; angle.x+=step)
+  { 
+    number_points++;
+    p+=p->coordinates;
+  }
+  return(number_points+1);
+}
+
 static inline MagickBooleanType IsPoint(const char *point)
 {
   char
@@ -3045,7 +3085,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case CirclePrimitive:
       case ArcPrimitive:
-      case EllipsePrimitive:
       {
         double
           alpha,
@@ -3065,6 +3104,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             break;
           }
         points_extent=coordinates;
+        break;
+      }
+      case EllipsePrimitive:
+      {
+        points_extent=(double) EllipsePoints(primitive_info+j,
+          primitive_info[j].point,primitive_info[j+1].point,
+          primitive_info[j+2].point);
         break;
       }
       default:
