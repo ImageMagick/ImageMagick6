@@ -1681,12 +1681,12 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   register const char
     *p;
 
-  size_t
+  ssize_t
     field_width,
-    length;
+    offset;
 
   canonical=MagickFalse;
-  length=0;
+  offset=0;
   (void) CopyMagickString(filename,format,MaxTextExtent);
   for (p=strchr(format,'%'); p != (char *) NULL; p=strchr(p+1,'%'))
   {
@@ -1708,9 +1708,9 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         q++;
         c=(*q);
         *q='\0';
-        (void) FormatLocaleString(filename+(p-format-length),(size_t)
-          (MaxTextExtent-(p-format)),p,value);
-        length+=(4-field_width);
+        (void) FormatLocaleString(filename+(p-format-offset),(size_t)
+          (MaxTextExtent-(p-format-offset)),p,value);
+        offset+=(4-field_width);
         *q=c;
         (void) ConcatenateMagickString(filename,q,MaxTextExtent);
         canonical=MagickTrue;
@@ -1770,9 +1770,9 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         q--;
         c=(*q);
         *q='\0';
-        (void) CopyMagickString(filename+(p-format-length),value,(size_t)
-          (MaxTextExtent-(p-format-length)));
-        length+=strlen(pattern)-4;
+        (void) CopyMagickString(filename+(p-format-offset),value,(size_t)
+          (MaxTextExtent-(p-format-offset)));
+        offset+=strlen(pattern)-4;
         *q=c;
         (void) ConcatenateMagickString(filename,r+1,MaxTextExtent);
         canonical=MagickTrue;
