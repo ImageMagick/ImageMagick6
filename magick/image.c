@@ -1708,8 +1708,8 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         q++;
         c=(*q);
         *q='\0';
-        (void) FormatLocaleString(filename+(p-format),(size_t) (MaxTextExtent-
-          (p-format)),p,value);
+        (void) FormatLocaleString(filename+(p-format-length),(size_t)
+          (MaxTextExtent-(p-format)),p,value);
         length+=(4-field_width);
         *q=c;
         (void) ConcatenateMagickString(filename,q,MaxTextExtent);
@@ -1757,16 +1757,6 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         if (LocaleNCompare(pattern,"filename:",9) != 0)
           break;
         value=(const char *) NULL;
-#if 0
-        /* FUTURE: remove this code. -- Anthony  29 Arpil 2012
-           Removed as GetMagickProperty() will will never match a "filename:"
-           string as this is not a 'known' image property.
-        */
-        if ((image_info != (const ImageInfo *) NULL) &&
-            (image != (const Image *) NULL))
-          value=GetMagickProperty(image_info,image,pattern);
-        else
-#endif
         if (image != (Image *) NULL)
           value=GetImageProperty(image,pattern);
         if ((value == (const char *) NULL) &&
@@ -1782,7 +1772,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         *q='\0';
         (void) CopyMagickString(filename+(p-format-length),value,(size_t)
           (MaxTextExtent-(p-format-length)));
-        length+=strlen(pattern)-1;
+        length+=strlen(pattern)-4;
         *q=c;
         (void) ConcatenateMagickString(filename,r+1,MaxTextExtent);
         canonical=MagickTrue;
