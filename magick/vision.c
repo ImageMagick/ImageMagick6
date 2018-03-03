@@ -582,19 +582,20 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       {
         while ((isspace((int) ((unsigned char) *c)) != 0) || (*c == ','))
           c++;
-        first=strtol(c,&c,10);
+        first=(ssize_t) strtol(c,&c,10);
         if (first < 0)
-          first+=(long) component_image->colors;
+          first+=(ssize_t) component_image->colors;
         last=first;
         while (isspace((int) ((unsigned char) *c)) != 0)
           c++;
         if (*c == '-')
           {
-            last=strtol(c+1,&c,10);
+            last=(ssize_t) strtol(c+1,&c,10);
             if (last < 0)
-              last+=(long) component_image->colors;
+              last+=(ssize_t) component_image->colors;
           }
-        for (step=first > last ? -1 : 1; first != (last+step); first+=step)
+        step=(ssize_t) (first > last ? -1 : 1);
+        for ( ; first != (last+step); first+=step)
           object[first].census++;
       }
       for (i=0; i < (ssize_t) component_image->colors; i++)
@@ -615,19 +616,20 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       {
         while ((isspace((int) ((unsigned char) *c)) != 0) || (*c == ','))
           c++;
-        first=strtol(c,&c,10);
+        first=(ssize_t) strtol(c,&c,10);
         if (first < 0)
-          first+=(long) component_image->colors;
+          first+=(ssize_t) component_image->colors;
         last=first;
         while (isspace((int) ((unsigned char) *c)) != 0)
           c++;
         if (*c == '-')
           {
-            last=strtol(c+1,&c,10);
+            last=(ssize_t) strtol(c+1,&c,10);
             if (last < 0)
-              last+=(long) component_image->colors;
+              last+=(ssize_t) component_image->colors;
           }
-        for (step=first > last ? -1 : 1; first != (last+step); first+=step)
+        step=(ssize_t) (first > last ? -1 : 1);
+        for ( ; first != (last+step); first+=step)
         {
           component_image->matte=MagickTrue;
           component_image->colormap[first].opacity=TransparentOpacity;
