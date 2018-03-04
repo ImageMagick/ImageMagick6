@@ -1,3 +1,10 @@
+2018-03-04  6.9.9-37 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-37, GIT revision 12940:93dff0b31:20180304.
+
+2018-03-04  6.9.9-37 Cristy  <quetzlzacatenango@image...>
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+    exceeded, and timeouts (credit to OSS Fuzz).
+
 2018-02-25  6.9.9-36 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.9-36, GIT revision 12898:fad4ecb37:20180225.
 
@@ -373,7 +380,7 @@
   * Release ImageMagick version 6.9.8-5, GIT revision 11575:186b15d:20170512.
 
 2017-05-10  6.9.8-5 John Cupitt <jcupitt@gmail.com>
-  * Revise DICOM window and rescale handling (reference 
+  * Revise DICOM window and rescale handling (reference
     https://github.com/ImageMagick/ImageMagick/pull/484)
 
 2017-05-08  6.9.8-5 Cristy  <quetzlzacatenango@image...>
@@ -435,7 +442,7 @@
 2017-02-18  6.9.7-9 Dirk Lemstra <dirk@lem.....org>
   * Fixed fd leak for webp coder (reference
     https://github.com/ImageMagick/ImageMagick/pull/382)
-    
+
 2017-02-15  6.9.7-9 Cristy  <quetzlzacatenango@image...>
   * Prevent random pixel data for corrupt JPEG image (bug report from
     Hirokazu Moriguchi, Sony).
@@ -610,7 +617,7 @@
   * Release ImageMagick version 6.9.6-0, GIT revision 11078:9aec251:20161002.
 
 2016-09-27  6.9.6-0 Dirk Lemstra <dirk@lem.....org>
-  * Fixed incorrect RLE decoding when reading an SGI image (reference 
+  * Fixed incorrect RLE decoding when reading an SGI image (reference
     https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=30514)
 
 2016-09-05  6.9.5-10 Cristy  <quetzlzacatenango@image...>
@@ -971,7 +978,7 @@
   * Added support for reading DICOM images with implicit vr little-endian
     transfer syntax.
 
-2015-11-02  6.9.2-6 Samuel Thibault <samuel.thibault@...org> 
+2015-11-02  6.9.2-6 Samuel Thibault <samuel.thibault@...org>
   * Added 6dot variant for unicode and iso braille formats (reference
     https://www.imagemagick.org/discourse-server/viewtopic.php?f=2&p=127111).
 
@@ -1025,7 +1032,7 @@
   * New version 6.9.2-3, GIT revision 10235:c40ee57:20150919
 
 2015-09-17  6.9.2-2 Dirk Lemstra <dirk@lem.....org>
-  * Added extra checks to avoid out of bounds error when parsing the 8bim 
+  * Added extra checks to avoid out of bounds error when parsing the 8bim
     profile (reference https://github.com/ImageMagick/ImageMagick/issues/31).
   * Fixed size of memory allocation in RLE coder to avoid segfault (reference
     https://github.com/ImageMagick/ImageMagick/issues/32).
@@ -1516,7 +1523,7 @@
   * Quiet warning about unused variable "skip_to_iend" in coders/png.c.
 
 2014-06-07  6.8.9-3 Dirk Lemstra <dirk@snakeware...>
-  * Fixed creation of SVG from 8bim clip path. (reference 
+  * Fixed creation of SVG from 8bim clip path. (reference
     https://www.imagemagick.org/discourse-server/viewtopic.php?f=1&t=25594).
 
 2014-06-02  6.8.9-3 Cristy  <quetzlzacatenango@image...>
@@ -1629,7 +1636,7 @@
 
 2014-03-11  6.8.8-9 Cristy  <quetzlzacatenango@image...>
   * The -define jpeg:extent option overrides the image quality (reference
-    https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=25200). 
+    https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=25200).
 
 2014-03-09  6.8.8-8 Cristy  <quetzlzacatenango@image...>
   * New version 6.8.8-8, SVN revision 15097.
