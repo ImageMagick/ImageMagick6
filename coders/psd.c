@@ -1051,7 +1051,10 @@ static MagickBooleanType ReadPSDChannelRaw(Image *image,const size_t channels,
 
     count=ReadBlob(image,row_size,pixels);
     if (count != row_size)
-      break;
+      {
+        status=MagickFalse;
+        break;
+      }
 
     status=ReadPSDChannelPixels(image,channels,y,type,pixels,exception);
     if (status == MagickFalse)
