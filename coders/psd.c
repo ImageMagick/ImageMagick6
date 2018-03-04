@@ -1963,11 +1963,18 @@ static MagickBooleanType ReadPSDMergedImage(const ImageInfo *image_info,
   status=MagickTrue;
   for (i=0; i < (ssize_t) psd_info->channels; i++)
   {
+    ssize_t
+      type;
+
+    type=i;
+    if ((type == 1) && (psd_info->channels == 2))
+      type=-1;
+
     if (compression == RLE)
-      status=ReadPSDChannelRLE(image,psd_info,i,sizes+(i*image->rows),
+      status=ReadPSDChannelRLE(image,psd_info,type,sizes+(i*image->rows),
         exception);
     else
-      status=ReadPSDChannelRaw(image,psd_info->channels,i,exception);
+      status=ReadPSDChannelRaw(image,psd_info->channels,type,exception);
 
     if (status != MagickFalse)
       status=SetImageProgress(image,LoadImagesTag,i,psd_info->channels);
