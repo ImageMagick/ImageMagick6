@@ -833,6 +833,10 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
   if (EOFBlob(image) != MagickFalse)
     ThrowBinaryException(CorruptImageError,"InsufficientImageDataInFile",
       image->filename);
+  if ((outLayer->width < 1) || (outLayer->width > image->columns) ||
+      (outLayer->height < 1) || (outLayer->height > image->rows))
+    ThrowBinaryException(CorruptImageError,"ImproperImageHeader",
+      image->filename);
   /* read the layer properties! */
   foundPropEnd = 0;
   while ( (foundPropEnd == MagickFalse) && (EOFBlob(image) == MagickFalse) ) {
