@@ -334,6 +334,10 @@ static Image *ReadRLEImage(const ImageInfo *image_info,ExceptionInfo *exception)
     status=SetImageExtent(image,image->columns,image->rows);
     if (status == MagickFalse)
       {
+        if (colormap != (unsigned char *) NULL)
+          colormap=(unsigned char *) RelinquishMagickMemory(colormap);
+        if (pixel_info != (MemoryInfo *) NULL)
+          pixel_info=RelinquishVirtualMemory(pixel_info);
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
