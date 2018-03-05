@@ -905,8 +905,8 @@ MagickExport MagickBooleanType BilevelImageChannel(Image *image,
               SetPixelOpacity(q,(MagickRealType) GetPixelOpacity(q) <=
                 threshold ? 0 : QuantumRange);
             else
-              SetPixelOpacity(q,(MagickRealType) GetPixelOpacity(q) <=
-                threshold ? OpaqueOpacity : TransparentOpacity);
+              SetPixelAlpha(q,(MagickRealType) GetPixelAlpha(q) <= threshold ? 
+                OpaqueOpacity : TransparentOpacity);
           }
         if (((channel & IndexChannel) != 0) &&
             (image->colorspace == CMYKColorspace))
