@@ -1261,7 +1261,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
-    (void) SetImageBackgroundColor(image);
+    (void) ResetImagePixels(image,exception);
     /*
       Allocate image pixels.
     */
