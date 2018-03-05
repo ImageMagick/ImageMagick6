@@ -2300,6 +2300,9 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
+    register IndexPacket
+      *magick_restrict indexes;
+
     register PixelPacket
       *magick_restrict q;
 
@@ -2314,9 +2317,13 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
         status=MagickFalse;
         continue;
       }
+    indexes=GetCacheViewAuthenticIndexQueue(image_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       memset(q,0,sizeof(PixelPacket));
+      if ((image->storage_class == PseudoClass) ||
+          (image->colorspace == CMYKColorspace))
+        indexes[x]=0;
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
