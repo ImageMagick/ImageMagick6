@@ -2398,7 +2398,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
           "ParenthesisNestedTooDeeply","`%s'",expression);
       (void) CopyMagickString(subexpression,expression+1,MaxTextExtent);
-      subexpression[strlen(subexpression)-1]='\0';
+      if (strlen(subexpression) != 0)
+        subexpression[strlen(subexpression)-1]='\0';
       gamma=FxEvaluateSubexpression(fx_info,channel,x,y,subexpression,depth,
         beta,exception);
       (*depth)--;
