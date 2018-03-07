@@ -2987,6 +2987,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
 #define ThrowDCMException(exception,message) \
 { \
+  if (info.scale != (Quantum *) NULL) \
+    info.scale=(Quantum *) RelinquishMagickMemory(info.scale); \
   if (data != (unsigned char *) NULL) \
     data=(unsigned char *) RelinquishMagickMemory(data); \
   if (graymap != (int *) NULL) \
@@ -4063,8 +4065,6 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             if (stream_info->offsets != (ssize_t *) NULL)
               stream_info->offsets=(ssize_t *)
                 RelinquishMagickMemory(stream_info->offsets);
-            if (info.scale != (Quantum *) NULL)
-              info.scale=(Quantum *) RelinquishMagickMemory(info.scale);
             ThrowDCMException(CorruptImageError,"ImproperImageHeader");
           }
         stream_info->count=0;
