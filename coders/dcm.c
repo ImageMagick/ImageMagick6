@@ -3086,6 +3086,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Read DCM preamble.
   */
+  (void) memset(&info,0,sizeof(info));
   data=(unsigned char *) NULL;
   graymap=(int *) NULL;
   redmap=(int *) NULL;
@@ -3109,7 +3110,6 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     Read DCM Medical image.
   */
   (void) CopyMagickString(photometric,"MONOCHROME1 ",MaxTextExtent);
-  (void) memset(&info,0,sizeof(info));
   info.bits_allocated=8;
   info.bytes_per_pixel=1;
   info.depth=8;
