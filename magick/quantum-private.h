@@ -21,6 +21,7 @@
 #include "magick/memory_.h"
 #include "magick/cache.h"
 #include "magick/image-private.h"
+#include "magick/pixel-accessor.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -281,9 +282,11 @@ static inline Quantum ScaleAnyToQuantum(const QuantumAny quantum,
   if (quantum > range)
     return(QuantumRange);
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
-  return((Quantum) (((MagickRealType) QuantumRange*quantum)/range+0.5));
+  return((Quantum) (((MagickRealType) QuantumRange*quantum)*
+    PerceptibleReciprocal(range)+0.5));
 #else
-  return((Quantum) (((MagickRealType) QuantumRange*quantum)/range));
+  return((Quantum) (((MagickRealType) QuantumRange*quantum)*
+    PerceptibleReciprocal(range)));
 #endif
 }
 
