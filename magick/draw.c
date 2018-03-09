@@ -2079,19 +2079,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 if (graphic_context[n]->fill_opacity != OpaqueOpacity)
                   graphic_context[n]->fill.opacity=(Quantum)
                     graphic_context[n]->fill_opacity;
-                if (status == MagickFalse)
-                  {
-                    ImageInfo
-                      *pattern_info;
-
-                    pattern_info=AcquireImageInfo();
-                    (void) CopyMagickString(pattern_info->filename,token,
-                      MaxTextExtent);
-                    graphic_context[n]->fill_pattern=
-                      ReadImage(pattern_info,&image->exception);
-                    CatchException(&image->exception);
-                    pattern_info=DestroyImageInfo(pattern_info);
-                  }
               }
             break;
           }
@@ -2675,19 +2662,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
                   graphic_context[n]->stroke.opacity=(Quantum)
                     graphic_context[n]->stroke_opacity;
-                if (status == MagickFalse)
-                  {
-                    ImageInfo
-                      *pattern_info;
-
-                    pattern_info=AcquireImageInfo();
-                    (void) CopyMagickString(pattern_info->filename,token,
-                      MaxTextExtent);
-                    graphic_context[n]->stroke_pattern=
-                      ReadImage(pattern_info,&image->exception);
-                    CatchException(&image->exception);
-                    pattern_info=DestroyImageInfo(pattern_info);
-                  }
               }
             break;
           }
