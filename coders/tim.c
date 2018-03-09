@@ -245,6 +245,12 @@ static Image *ReadTIMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
+    status=ResetImagePixels(image,exception);
+    if (status == MagickFalse)
+      {
+        InheritException(exception,&image->exception);
+        return(DestroyImageList(image));
+      }
     tim_pixels=(unsigned char *) AcquireQuantumMemory(image_size,
       sizeof(*tim_pixels));
     if (tim_pixels == (unsigned char *) NULL)
