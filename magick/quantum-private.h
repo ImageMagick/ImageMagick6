@@ -93,8 +93,8 @@ extern MagickPrivate void
 static inline MagickSizeType GetQuantumRange(const size_t depth)
 {
   MagickSizeType
-    one,
-    max_depth;
+    max_depth,
+    one;
 
   if (depth == 0)
     return(0);
