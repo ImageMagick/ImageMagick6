@@ -94,8 +94,10 @@ extern MagickPrivate void
 static inline MagickSizeType GetQuantumRange(const size_t depth)
 {
   MagickSizeType
-    max_depth,
     one;
+
+  size_t
+    max_depth;
 
   if (depth == 0)
     return(0);
@@ -283,10 +285,10 @@ static inline Quantum ScaleAnyToQuantum(const QuantumAny quantum,
     return(QuantumRange);
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
   return((Quantum) (((MagickRealType) QuantumRange*quantum)*
-    PerceptibleReciprocal(range)+0.5));
+    PerceptibleReciprocal((double) range)+0.5));
 #else
   return((Quantum) (((MagickRealType) QuantumRange*quantum)*
-    PerceptibleReciprocal(range)));
+    PerceptibleReciprocal((double) range)));
 #endif
 }
 

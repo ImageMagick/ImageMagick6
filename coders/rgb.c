@@ -150,7 +150,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           image=DestroyImageList(image);
           return((Image *) NULL);
         }
-      if (DiscardBlobBytes(image,image->offset) == MagickFalse)
+      if (DiscardBlobBytes(image,(MagickSizeType) image->offset) == MagickFalse)
         ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
           image->filename);
     }
@@ -266,9 +266,9 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 SetPixelRed(q,GetPixelRed(p));
                 SetPixelGreen(q,GetPixelGreen(p));
                 SetPixelBlue(q,GetPixelBlue(p));
-                SetPixelOpacity(q,OpaqueOpacity);
+                SetPixelAlpha(q,OpaqueAlpha);
                 if (image->matte != MagickFalse)
-                  SetPixelOpacity(q,GetPixelOpacity(p));
+                  SetPixelAlpha(q,GetPixelAlpha(p));
                 p++;
                 q++;
               }
@@ -628,7 +628,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     break;
                   for (x=0; x < (ssize_t) image->columns; x++)
                   {
-                    SetPixelOpacity(q,GetPixelOpacity(p));
+                    SetPixelAlpha(q,GetPixelAlpha(p));
                     p++;
                     q++;
                   }
@@ -668,7 +668,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
             image=DestroyImageList(image);
             return((Image *) NULL);
           }
-        if (DiscardBlobBytes(image,image->offset) == MagickFalse)
+        if (DiscardBlobBytes(image,(MagickSizeType) image->offset) == MagickFalse)
           ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
             image->filename);
         length=GetQuantumExtent(canvas_image,quantum_info,RedQuantum);
@@ -970,7 +970,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     break;
                   for (x=0; x < (ssize_t) image->columns; x++)
                   {
-                    SetPixelOpacity(q,GetPixelOpacity(p));
+                    SetPixelAlpha(q,GetPixelAlpha(p));
                     p++;
                     q++;
                   }
