@@ -113,7 +113,7 @@ MagickExport ImageView *CloneImageView(const ImageView *image_view)
   clone_view=(ImageView *) AcquireMagickMemory(sizeof(*clone_view));
   if (clone_view == (ImageView *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(clone_view,0,sizeof(*clone_view));
+  (void) memset(clone_view,0,sizeof(*clone_view));
   clone_view->description=ConstantString(image_view->description);
   clone_view->extent=image_view->extent;
   clone_view->view=CloneCacheView(image_view->view);
@@ -727,7 +727,7 @@ MagickExport ImageView *NewImageView(Image *image)
   image_view=(ImageView *) AcquireMagickMemory(sizeof(*image_view));
   if (image_view == (ImageView *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(image_view,0,sizeof(*image_view));
+  (void) memset(image_view,0,sizeof(*image_view));
   image_view->description=ConstantString("ImageView");
   image_view->image=image;
   image_view->exception=AcquireExceptionInfo();
@@ -781,7 +781,7 @@ MagickExport ImageView *NewImageViewRegion(Image *image,const ssize_t x,
   image_view=(ImageView *) AcquireMagickMemory(sizeof(*image_view));
   if (image_view == (ImageView *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(image_view,0,sizeof(*image_view));
+  (void) memset(image_view,0,sizeof(*image_view));
   image_view->description=ConstantString("ImageView");
   image_view->exception=AcquireExceptionInfo();
   image_view->view=AcquireVirtualCacheView(image_view->image,

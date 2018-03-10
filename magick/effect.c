@@ -235,7 +235,7 @@ MagickExport Image *AdaptiveBlurImageChannel(const Image *image,
       blur_image=DestroyImage(blur_image);
       ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
     }
-  (void) ResetMagickMemory(kernel,0,(size_t) width*sizeof(*kernel));
+  (void) memset(kernel,0,(size_t) width*sizeof(*kernel));
   for (i=0; i < (ssize_t) width; i+=2)
   {
     kernel[i]=(double *) MagickAssumeAligned(AcquireAlignedMemory((size_t)
@@ -557,7 +557,7 @@ MagickExport Image *AdaptiveSharpenImageChannel(const Image *image,
       sharp_image=DestroyImage(sharp_image);
       ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
     }
-  (void) ResetMagickMemory(kernel,0,(size_t) width*sizeof(*kernel));
+  (void) memset(kernel,0,(size_t) width*sizeof(*kernel));
   for (i=0; i < (ssize_t) width; i+=2)
   {
     kernel[i]=(double *) MagickAssumeAligned(AcquireAlignedMemory((size_t)
@@ -1136,7 +1136,7 @@ MagickExport Image *DespeckleImage(const Image *image,ExceptionInfo *exception)
       continue;
     if ((image->matte == MagickFalse) && (i == 3))
       continue;
-    (void) ResetMagickMemory(pixels,0,length*sizeof(*pixels));
+    (void) memset(pixels,0,length*sizeof(*pixels));
     j=(ssize_t) image->columns+2;
     for (y=0; y < (ssize_t) image->rows; y++)
     {
@@ -1167,7 +1167,7 @@ MagickExport Image *DespeckleImage(const Image *image,ExceptionInfo *exception)
       }
       j++;
     }
-    (void) ResetMagickMemory(buffer,0,length*sizeof(*buffer));
+    (void) memset(buffer,0,length*sizeof(*buffer));
     for (k=0; k < 4; k++)
     {
       Hull(image,X[k],Y[k],image->columns,image->rows,1,pixels,buffer);
@@ -1290,7 +1290,7 @@ MagickExport Image *EdgeImage(const Image *image,const double radius,
   kernel_info=AcquireKernelInfo((const char *) NULL);
   if (kernel_info == (KernelInfo *) NULL)
     ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(kernel_info,0,sizeof(*kernel_info));
+  (void) memset(kernel_info,0,sizeof(*kernel_info));
   kernel_info->width=width;
   kernel_info->height=width;
   kernel_info->x=(ssize_t) (kernel_info->width-1)/2;
@@ -4315,7 +4315,7 @@ MagickExport Image *SharpenImageChannel(const Image *image,
   kernel_info=AcquireKernelInfo((const char *) NULL);
   if (kernel_info == (KernelInfo *) NULL)
     ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(kernel_info,0,sizeof(*kernel_info));
+  (void) memset(kernel_info,0,sizeof(*kernel_info));
   kernel_info->width=width;
   kernel_info->height=width;
   kernel_info->x=(ssize_t) (width-1)/2;

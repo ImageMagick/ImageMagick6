@@ -489,7 +489,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) ResetMagickMemory(channel_distortion,0,sizeof(channel_distortion));
+    (void) memset(channel_distortion,0,sizeof(channel_distortion));
     for (x=0; x < (ssize_t) columns; x++)
     {
       double
@@ -632,7 +632,7 @@ static MagickBooleanType GetFuzzDistortion(const Image *image,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) ResetMagickMemory(channel_distortion,0,sizeof(channel_distortion));
+    (void) memset(channel_distortion,0,sizeof(channel_distortion));
     for (x=0; x < (ssize_t) columns; x++)
     {
       MagickRealType
@@ -757,7 +757,7 @@ static MagickBooleanType GetMeanAbsoluteDistortion(const Image *image,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) ResetMagickMemory(channel_distortion,0,sizeof(channel_distortion));
+    (void) memset(channel_distortion,0,sizeof(channel_distortion));
     for (x=0; x < (ssize_t) columns; x++)
     {
       MagickRealType
@@ -1011,7 +1011,7 @@ static MagickBooleanType GetMeanSquaredDistortion(const Image *image,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) ResetMagickMemory(channel_distortion,0,sizeof(channel_distortion));
+    (void) memset(channel_distortion,0,sizeof(channel_distortion));
     for (x=0; x < (ssize_t) columns; x++)
     {
       MagickRealType
@@ -1301,7 +1301,7 @@ static MagickBooleanType GetPeakAbsoluteDistortion(const Image *image,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) ResetMagickMemory(channel_distortion,0,sizeof(channel_distortion));
+    (void) memset(channel_distortion,0,sizeof(channel_distortion));
     for (x=0; x < (ssize_t) columns; x++)
     {
       MagickRealType
@@ -1627,7 +1627,7 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
     sizeof(*channel_distortion));
   if (channel_distortion == (double *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(channel_distortion,0,length*
+  (void) memset(channel_distortion,0,length*
     sizeof(*channel_distortion));
   switch (metric)
   {
@@ -1768,7 +1768,7 @@ MagickExport double *GetImageChannelDistortions(Image *image,
     sizeof(*channel_distortion));
   if (channel_distortion == (double *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(channel_distortion,0,length*
+  (void) memset(channel_distortion,0,length*
     sizeof(*channel_distortion));
   status=MagickTrue;
   switch (metric)

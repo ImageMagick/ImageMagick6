@@ -2672,7 +2672,7 @@ MagickExport PixelPacket *GetCacheViewPixels(CacheView *cache_view,const ssize_t
 MagickExport void GetExceptionInfo(ExceptionInfo *exception)
 {
   assert(exception != (ExceptionInfo *) NULL);
-  (void) ResetMagickMemory(exception,0,sizeof(*exception));
+  (void) memset(exception,0,sizeof(*exception));
   exception->severity=UndefinedException;
   exception->exceptions=(void *) NewLinkedList(0);
   exception->semaphore=AllocateSemaphoreInfo();
@@ -2747,7 +2747,7 @@ MagickExport const ImageAttribute *GetImageAttribute(const Image *image,
   attribute=(ImageAttribute *) AcquireMagickMemory(sizeof(*attribute));
   if (attribute == (ImageAttribute *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(attribute,0,sizeof(*attribute));
+  (void) memset(attribute,0,sizeof(*attribute));
   attribute->key=ConstantString(key);
   attribute->value=ConstantString(value);
   (void) AddValueToSplayTree((SplayTreeInfo *) ((Image *) image)->attributes,
@@ -3520,7 +3520,7 @@ MagickExport void IdentityAffine(AffineMatrix *affine)
   (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   (void) LogMagickEvent(DeprecateEvent,GetMagickModule(),"last use: v5.5.7");
   assert(affine != (AffineMatrix *) NULL);
-  (void) ResetMagickMemory(affine,0,sizeof(AffineMatrix));
+  (void) memset(affine,0,sizeof(AffineMatrix));
   affine->sx=1.0;
   affine->sy=1.0;
 }

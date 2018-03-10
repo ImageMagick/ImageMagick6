@@ -126,7 +126,7 @@ WandExport MagickWand *CloneMagickWand(const MagickWand *wand)
   if (clone_wand == (MagickWand *) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       wand->name);
-  (void) ResetMagickMemory(clone_wand,0,sizeof(*clone_wand));
+  (void) memset(clone_wand,0,sizeof(*clone_wand));
   clone_wand->id=AcquireWandId();
   (void) FormatLocaleString(clone_wand->name,MaxTextExtent,"%s-%.20g",
     MagickWandId,(double) clone_wand->id);
@@ -550,7 +550,7 @@ WandExport double *MagickQueryFontMetrics(MagickWand *wand,
       return((double *) NULL);
     }
   (void) CloneString(&draw_info->text,text);
-  (void) ResetMagickMemory(&metrics,0,sizeof(metrics));
+  (void) memset(&metrics,0,sizeof(metrics));
   status=GetTypeMetrics(wand->images,draw_info,&metrics);
   draw_info=DestroyDrawInfo(draw_info);
   if (status == MagickFalse)
@@ -658,7 +658,7 @@ WandExport double *MagickQueryMultilineFontMetrics(MagickWand *wand,
       return((double *) NULL);
     }
   (void) CloneString(&draw_info->text,text);
-  (void) ResetMagickMemory(&metrics,0,sizeof(metrics));
+  (void) memset(&metrics,0,sizeof(metrics));
   status=GetMultilineTypeMetrics(wand->images,draw_info,&metrics);
   draw_info=DestroyDrawInfo(draw_info);
   if (status == MagickFalse)
@@ -1075,7 +1075,7 @@ WandExport MagickWand *NewMagickWand(void)
   if (wand == (MagickWand *) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       GetExceptionMessage(errno));
-  (void) ResetMagickMemory(wand,0,sizeof(*wand));
+  (void) memset(wand,0,sizeof(*wand));
   wand->id=AcquireWandId();
   (void) FormatLocaleString(wand->name,MaxTextExtent,"%s-%.20g",MagickWandId,
     (double) wand->id);

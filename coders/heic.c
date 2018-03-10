@@ -452,7 +452,7 @@ static MagickBooleanType ParseIinfAtom(Image *image, DataBuffer *db,
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
 
-  ResetMagickMemory(ctx->itemInfo, 0, sizeof(HEICItemInfo)*(count+1));
+  memset(ctx->itemInfo, 0, sizeof(HEICItemInfo)*(count+1));
 
   for (i = 0; i < count && DBGetSize(db) > 0; i++)
   {
@@ -1087,7 +1087,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   HEICImageContext
     ctx;
 
-  ResetMagickMemory(&ctx, 0, sizeof(ctx));
+  memset(&ctx, 0, sizeof(ctx));
 
   /*
     Open image file.

@@ -3095,7 +3095,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   stream_info=(DCMStreamInfo *) AcquireMagickMemory(sizeof(*stream_info));
   if (stream_info == (DCMStreamInfo *) NULL)
     ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(stream_info,0,sizeof(*stream_info));
+  (void) memset(stream_info,0,sizeof(*stream_info));
   count=ReadBlob(image,128,(unsigned char *) magick);
   if (count != 128)
     ThrowDCMException(CorruptImageError,"ImproperImageHeader");
@@ -3573,7 +3573,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               sizeof(*graymap));
             if (graymap == (int *) NULL)
               ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
-            (void) ResetMagickMemory(graymap,0,MagickMax(colors,65536)*
+            (void) memset(graymap,0,MagickMax(colors,65536)*
               sizeof(*graymap));
             for (i=0; i < (ssize_t) colors; i++)
               if (info.bytes_per_pixel == 1)
@@ -3600,7 +3600,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               sizeof(*redmap));
             if (redmap == (int *) NULL)
               ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
-            (void) ResetMagickMemory(redmap,0,MagickMax(colors,65536)*
+            (void) memset(redmap,0,MagickMax(colors,65536)*
               sizeof(*redmap));
             p=data;
             for (i=0; i < (ssize_t) colors; i++)
@@ -3632,7 +3632,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               sizeof(*greenmap));
             if (greenmap == (int *) NULL)
               ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
-            (void) ResetMagickMemory(greenmap,0,MagickMax(colors,65536)*
+            (void) memset(greenmap,0,MagickMax(colors,65536)*
               sizeof(*greenmap));
             p=data;
             for (i=0; i < (ssize_t) colors; i++)
@@ -3664,7 +3664,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               sizeof(*bluemap));
             if (bluemap == (int *) NULL)
               ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
-            (void) ResetMagickMemory(bluemap,0,MagickMax(colors,65536)*
+            (void) memset(bluemap,0,MagickMax(colors,65536)*
               sizeof(*bluemap));
             p=data;
             for (i=0; i < (ssize_t) colors; i++)
@@ -3918,7 +3918,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         sizeof(*info.scale));
       if (info.scale == (Quantum *) NULL)
         ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
-      (void) ResetMagickMemory(info.scale,0,MagickMax(length,256)*
+      (void) memset(info.scale,0,MagickMax(length,256)*
         sizeof(*info.scale));
       range=GetQuantumRange(info.depth);
       for (i=0; i <= (ssize_t) GetQuantumRange(info.depth); i++)

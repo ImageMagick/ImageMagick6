@@ -1487,7 +1487,7 @@ MagickExport MagickInfo *SetMagickInfo(const char *name)
   magick_info=(MagickInfo *) AcquireMagickMemory(sizeof(*magick_info));
   if (magick_info == (MagickInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(magick_info,0,sizeof(*magick_info));
+  (void) memset(magick_info,0,sizeof(*magick_info));
   magick_info->name=ConstantString(name);
   magick_info->adjoin=MagickTrue;
   magick_info->blob_support=MagickTrue;

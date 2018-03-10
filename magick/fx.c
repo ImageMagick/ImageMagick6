@@ -173,7 +173,7 @@ MagickExport FxInfo *AcquireFxInfo(const Image *image,const char *expression)
   fx_info=(FxInfo *) AcquireMagickMemory(sizeof(*fx_info));
   if (fx_info == (FxInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(fx_info,0,sizeof(*fx_info));
+  (void) memset(fx_info,0,sizeof(*fx_info));
   fx_info->exception=AcquireExceptionInfo();
   fx_info->images=image;
   fx_info->colors=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
@@ -3101,7 +3101,7 @@ static FxInfo **AcquireFxThreadSet(const Image *image,const char *expression,
         ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
       return((FxInfo **) NULL);
     }
-  (void) ResetMagickMemory(fx_info,0,number_threads*sizeof(*fx_info));
+  (void) memset(fx_info,0,number_threads*sizeof(*fx_info));
   if (*expression != '@')
     fx_expression=ConstantString(expression);
   else

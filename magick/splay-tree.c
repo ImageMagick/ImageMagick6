@@ -1147,7 +1147,7 @@ MagickExport SplayTreeInfo *NewSplayTree(
   splay_tree=(SplayTreeInfo *) AcquireMagickMemory(sizeof(*splay_tree));
   if (splay_tree == (SplayTreeInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(splay_tree,0,sizeof(*splay_tree));
+  (void) memset(splay_tree,0,sizeof(*splay_tree));
   splay_tree->root=(NodeInfo *) NULL;
   splay_tree->compare=compare;
   splay_tree->relinquish_key=relinquish_key;

@@ -736,7 +736,7 @@ static MagickBooleanType WriteXWDImage(const ImageInfo *image_info,Image *image)
   /*
     Initialize XWD file header.
   */
-  (void) ResetMagickMemory(&xwd_info,0,sizeof(xwd_info));
+  (void) memset(&xwd_info,0,sizeof(xwd_info));
   xwd_info.header_size=(CARD32) sz_XWDheader;
   value=GetImageProperty(image,"comment");
   if (value != (const char *) NULL)
@@ -799,7 +799,7 @@ static MagickBooleanType WriteXWDImage(const ImageInfo *image_info,Image *image)
       /*
         Dump colormap to file.
       */
-      (void) ResetMagickMemory(&color,0,sizeof(color));
+      (void) memset(&color,0,sizeof(color));
       colors=(XColor *) AcquireQuantumMemory((size_t) image->colors,
         sizeof(*colors));
       if (colors == (XColor *) NULL)
@@ -840,7 +840,7 @@ static MagickBooleanType WriteXWDImage(const ImageInfo *image_info,Image *image)
   pixels=(unsigned char *) AcquireQuantumMemory(length,sizeof(*pixels));
   if (pixels == (unsigned char *) NULL)
     ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(pixels,0,length);
+  (void) memset(pixels,0,length);
   /*
     Convert MIFF to XWD raster pixels.
   */

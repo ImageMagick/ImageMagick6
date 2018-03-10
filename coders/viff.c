@@ -521,7 +521,7 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
       number_pixels,max_packets),bytes_per_pixel*sizeof(*pixels));
     if (pixels == (unsigned char *) NULL)
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-    (void) ResetMagickMemory(pixels,0,MagickMax(number_pixels,max_packets)*
+    (void) memset(pixels,0,MagickMax(number_pixels,max_packets)*
       bytes_per_pixel*sizeof(*pixels));
     (void) ReadBlob(image,bytes_per_pixel*max_packets,pixels);
     lsb_first=1;
@@ -978,7 +978,7 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
   status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
-  (void) ResetMagickMemory(&viff_info,0,sizeof(ViffInfo));
+  (void) memset(&viff_info,0,sizeof(ViffInfo));
   scene=0;
   do
   {

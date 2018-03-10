@@ -1312,7 +1312,7 @@ MagickPrivate MagickBooleanType ComputeContrastStretchImageChannel(Image *image,
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed", image->filename);
  
   /* reset histogram */
-  (void) ResetMagickMemory(histogram,0,length*sizeof(*histogram));
+  (void) memset(histogram,0,length*sizeof(*histogram));
 
   /*
   if (SetImageGray(image,exception) != MagickFalse)
@@ -1482,7 +1482,7 @@ MagickPrivate MagickBooleanType ComputeContrastStretchImageChannel(Image *image,
   /*
     Stretch the histogram to create the stretched image mapping.
   */
-  (void) ResetMagickMemory(stretch_map,0,length*sizeof(*stretch_map));
+  (void) memset(stretch_map,0,length*sizeof(*stretch_map));
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
     if ((channel & RedChannel) != 0)
@@ -2418,7 +2418,7 @@ MagickPrivate MagickBooleanType ComputeEqualizeImage(Image *image,
       ThrowBinaryException(ResourceLimitWarning,"MemoryAllocationFailed", image->filename);
 
   /* reset histogram */
-  (void) ResetMagickMemory(histogram,0,length*sizeof(*histogram));
+  (void) memset(histogram,0,length*sizeof(*histogram));
 
   imageBuffer = GetAuthenticOpenCLBuffer(image, exception);
   if (imageBuffer == (cl_mem) NULL)
@@ -2470,7 +2470,7 @@ MagickPrivate MagickBooleanType ComputeEqualizeImage(Image *image,
   /*
     Integrate the histogram to get the equalization map.
   */
-  (void) ResetMagickMemory(&intensity,0,sizeof(intensity));
+  (void) memset(&intensity,0,sizeof(intensity));
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
     if ((channel & SyncChannels) != 0)
@@ -2498,7 +2498,7 @@ MagickPrivate MagickBooleanType ComputeEqualizeImage(Image *image,
   }
   black=map[0];
   white=map[(int) MaxMap];
-  (void) ResetMagickMemory(equalize_map,0,length*sizeof(*equalize_map));
+  (void) memset(equalize_map,0,length*sizeof(*equalize_map));
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
     if ((channel & SyncChannels) != 0)

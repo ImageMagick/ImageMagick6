@@ -1313,7 +1313,7 @@ MagickExport HashmapInfo *NewHashmap(const size_t capacity,
   hashmap_info=(HashmapInfo *) AcquireMagickMemory(sizeof(*hashmap_info));
   if (hashmap_info == (HashmapInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(hashmap_info,0,sizeof(*hashmap_info));
+  (void) memset(hashmap_info,0,sizeof(*hashmap_info));
   hashmap_info->hash=HashPointerType;
   if (hash != (size_t (*)(const void *)) NULL)
     hashmap_info->hash=hash;
@@ -1330,7 +1330,7 @@ MagickExport HashmapInfo *NewHashmap(const size_t capacity,
       capacity+1UL,sizeof(*hashmap_info->map));
   if (hashmap_info->map == (LinkedListInfo **) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(hashmap_info->map,0,(size_t) capacity*
+  (void) memset(hashmap_info->map,0,(size_t) capacity*
     sizeof(*hashmap_info->map));
   hashmap_info->semaphore=AllocateSemaphoreInfo();
   hashmap_info->signature=MagickCoreSignature;
@@ -1368,7 +1368,7 @@ MagickExport LinkedListInfo *NewLinkedList(const size_t capacity)
   list_info=(LinkedListInfo *) AcquireMagickMemory(sizeof(*list_info));
   if (list_info == (LinkedListInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(list_info,0,sizeof(*list_info));
+  (void) memset(list_info,0,sizeof(*list_info));
   list_info->capacity=capacity == 0 ? (size_t) (~0) : capacity;
   list_info->elements=0;
   list_info->head=(ElementInfo *) NULL;
@@ -1451,7 +1451,7 @@ static MagickBooleanType IncreaseHashmapCapacity(HashmapInfo *hashmap_info)
     sizeof(*map));
   if (map == (LinkedListInfo **) NULL)
     return(MagickFalse);
-  (void) ResetMagickMemory(map,0,(size_t) capacity*sizeof(*map));
+  (void) memset(map,0,(size_t) capacity*sizeof(*map));
   /*
     Copy entries to new hashmap with increased capacity.
   */

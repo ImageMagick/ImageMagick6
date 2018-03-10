@@ -263,7 +263,7 @@ static SVGInfo *AcquireSVGInfo(void)
   svg_info=(SVGInfo *) AcquireMagickMemory(sizeof(*svg_info));
   if (svg_info == (SVGInfo *) NULL)
     return((SVGInfo *) NULL);
-  (void) ResetMagickMemory(svg_info,0,sizeof(*svg_info));
+  (void) memset(svg_info,0,sizeof(*svg_info));
   svg_info->text=AcquireString("");
   svg_info->scale=(double *) AcquireMagickMemory(sizeof(*svg_info->scale));
   if (svg_info->scale == (double *) NULL)
@@ -2539,8 +2539,8 @@ static void SVGEndElement(void *context,const xmlChar *name)
       break;
   }
   *svg_info->text='\0';
-  (void) ResetMagickMemory(&svg_info->element,0,sizeof(svg_info->element));
-  (void) ResetMagickMemory(&svg_info->segment,0,sizeof(svg_info->segment));
+  (void) memset(&svg_info->element,0,sizeof(svg_info->element));
+  (void) memset(&svg_info->segment,0,sizeof(svg_info->segment));
   svg_info->n--;
 }
 
@@ -3244,7 +3244,7 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(CoderEvent,GetMagickModule(),"begin SAX");
   (void) xmlSubstituteEntitiesDefault(1);
-  (void) ResetMagickMemory(&sax_modules,0,sizeof(sax_modules));
+  (void) memset(&sax_modules,0,sizeof(sax_modules));
   sax_modules.internalSubset=SVGInternalSubset;
   sax_modules.isStandalone=SVGIsStandalone;
   sax_modules.hasInternalSubset=SVGHasInternalSubset;

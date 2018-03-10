@@ -91,7 +91,7 @@ MagickExport TimerInfo *AcquireTimerInfo(void)
   timer_info=(TimerInfo *) AcquireMagickMemory(sizeof(*timer_info));
   if (timer_info == (TimerInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToAcquireString");
-  (void) ResetMagickMemory(timer_info,0,sizeof(*timer_info));
+  (void) memset(timer_info,0,sizeof(*timer_info));
   timer_info->signature=MagickCoreSignature;
   GetTimerInfo(timer_info);
   return(timer_info);
@@ -284,7 +284,7 @@ MagickExport void GetTimerInfo(TimerInfo *time_info)
     Create a stopwatch and start it.
   */
   assert(time_info != (TimerInfo *) NULL);
-  (void) ResetMagickMemory(time_info,0,sizeof(*time_info));
+  (void) memset(time_info,0,sizeof(*time_info));
   time_info->state=UndefinedTimerState;
   time_info->signature=MagickCoreSignature;
   StartTimer(time_info,MagickTrue);

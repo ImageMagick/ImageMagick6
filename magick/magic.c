@@ -315,7 +315,7 @@ static LinkedListInfo *AcquireMagicCache(const char *filename,
           ResourceLimitError,"MemoryAllocationFailed","`%s'",p->name);
         continue;
       }
-    (void) ResetMagickMemory(magic_info,0,sizeof(*magic_info));
+    (void) memset(magic_info,0,sizeof(*magic_info));
     magic_info->path=(char *) "[built-in]";
     magic_info->name=(char *) p->name;
     magic_info->offset=p->offset;
@@ -877,7 +877,7 @@ static MagickBooleanType LoadMagicCache(LinkedListInfo *cache,const char *xml,
         magic_info=(MagicInfo *) AcquireMagickMemory(sizeof(*magic_info));
         if (magic_info == (MagicInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-        (void) ResetMagickMemory(magic_info,0,sizeof(*magic_info));
+        (void) memset(magic_info,0,sizeof(*magic_info));
         magic_info->path=ConstantString(filename);
         magic_info->exempt=MagickFalse;
         magic_info->signature=MagickCoreSignature;

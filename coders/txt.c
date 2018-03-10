@@ -205,7 +205,7 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
-  (void) ResetMagickMemory(text,0,sizeof(text));
+  (void) memset(text,0,sizeof(text));
   (void) ReadBlobString(image,text);
   /*
     Set the page geometry.
@@ -440,7 +440,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
-  (void) ResetMagickMemory(text,0,sizeof(text));
+  (void) memset(text,0,sizeof(text));
   (void) ReadBlobString(image,text);
   if (LocaleNCompare((char *) text,MagickID,strlen(MagickID)) != 0)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
@@ -480,7 +480,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (type < 0)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     image->colorspace=(ColorspaceType) type;
-    (void) ResetMagickMemory(&pixel,0,sizeof(pixel));
+    (void) memset(&pixel,0,sizeof(pixel));
     (void) SetImageBackgroundColor(image);
     range=GetQuantumRange(image->depth);
     for (y=0; y < (ssize_t) image->rows; y++)

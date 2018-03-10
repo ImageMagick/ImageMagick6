@@ -828,7 +828,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
-  (void) ResetMagickMemory(&primary_info,0,sizeof(primary_info));
+  (void) memset(&primary_info,0,sizeof(primary_info));
   switch (colorspace)
   {
     case OHTAColorspace:
@@ -1203,7 +1203,7 @@ MagickExport MagickBooleanType SetImageColorspace(Image *image,
   image->colorspace=colorspace;
   image->rendering_intent=UndefinedIntent;
   image->gamma=1.000/2.200;
-  (void) ResetMagickMemory(&image->chromaticity,0,sizeof(image->chromaticity));
+  (void) memset(&image->chromaticity,0,sizeof(image->chromaticity));
   type=image->type;
   if (IsGrayColorspace(colorspace) != MagickFalse)
     {

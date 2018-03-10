@@ -1195,7 +1195,7 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
   if (SetImageGray(image,exception) != MagickFalse)
     (void) SetImageColorspace(image,GRAYColorspace);
   status=MagickTrue;
-  (void) ResetMagickMemory(histogram,0,(MaxMap+1)*sizeof(*histogram));
+  (void) memset(histogram,0,(MaxMap+1)*sizeof(*histogram));
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -1359,7 +1359,7 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
   /*
     Stretch the histogram to create the stretched image mapping.
   */
-  (void) ResetMagickMemory(stretch_map,0,(MaxMap+1)*sizeof(*stretch_map));
+  (void) memset(stretch_map,0,(MaxMap+1)*sizeof(*stretch_map));
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
     if ((channel & RedChannel) != 0)
@@ -1644,7 +1644,7 @@ MagickExport Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
   */
   status=MagickTrue;
   progress=0;
-  (void) ResetMagickMemory(&zero,0,sizeof(zero));
+  (void) memset(&zero,0,sizeof(zero));
   image_view=AcquireAuthenticCacheView(image,exception);
   enhance_view=AcquireAuthenticCacheView(enhance_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -1848,7 +1848,7 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
   /*
     Form histogram.
   */
-  (void) ResetMagickMemory(histogram,0,(MaxMap+1)*sizeof(*histogram));
+  (void) memset(histogram,0,(MaxMap+1)*sizeof(*histogram));
   exception=(&image->exception);
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -1894,7 +1894,7 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
   /*
     Integrate the histogram to get the equalization map.
   */
-  (void) ResetMagickMemory(&intensity,0,sizeof(intensity));
+  (void) memset(&intensity,0,sizeof(intensity));
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
     if ((channel & SyncChannels) != 0)
@@ -1918,7 +1918,7 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
   }
   black=map[0];
   white=map[(int) MaxMap];
-  (void) ResetMagickMemory(equalize_map,0,(MaxMap+1)*sizeof(*equalize_map));
+  (void) memset(equalize_map,0,(MaxMap+1)*sizeof(*equalize_map));
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
     if ((channel & SyncChannels) != 0)
@@ -2197,7 +2197,7 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
   if (gamma_map == (Quantum *) NULL)
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
-  (void) ResetMagickMemory(gamma_map,0,(MaxMap+1)*sizeof(*gamma_map));
+  (void) memset(gamma_map,0,(MaxMap+1)*sizeof(*gamma_map));
   if (gamma != 0.0)
     for (i=0; i <= (ssize_t) MaxMap; i++)
       gamma_map[i]=ClampToQuantum((MagickRealType) ScaleMapToQuantum((
@@ -3418,7 +3418,7 @@ MagickExport MagickBooleanType LinearStretchImage(Image *image,
   /*
     Form histogram.
   */
-  (void) ResetMagickMemory(histogram,0,(MaxMap+1)*sizeof(*histogram));
+  (void) memset(histogram,0,(MaxMap+1)*sizeof(*histogram));
   exception=(&image->exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -4402,7 +4402,7 @@ MagickExport MagickBooleanType SigmoidalContrastImageChannel(Image *image,
   if (sigmoidal_map == (MagickRealType *) NULL)
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
-  (void) ResetMagickMemory(sigmoidal_map,0,(MaxMap+1)*sizeof(*sigmoidal_map));
+  (void) memset(sigmoidal_map,0,(MaxMap+1)*sizeof(*sigmoidal_map));
   if (sharpen != MagickFalse)
     for (i=0; i <= (ssize_t) MaxMap; i++)
       sigmoidal_map[i]=(MagickRealType) ScaleMapToQuantum((MagickRealType)

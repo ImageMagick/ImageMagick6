@@ -377,7 +377,7 @@ MagickExport MagickBooleanType NTAcquireTypeCache(SplayTreeInfo *type_cache,
         type_info=(TypeInfo *) AcquireMagickMemory(sizeof(*type_info));
         if (type_info == (TypeInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-        (void) ResetMagickMemory(type_info,0,sizeof(TypeInfo));
+        (void) memset(type_info,0,sizeof(TypeInfo));
         type_info->path=ConstantString("Windows Fonts");
         type_info->signature=MagickCoreSignature;
         (void) CopyMagickString(buffer,value_name,MaxTextExtent);  /* name */
@@ -586,7 +586,7 @@ MagickExport void *ImageToHBITMAP(Image *image,ExceptionInfo *exception)
   ssize_t
     y;
 
-  (void) ResetMagickMemory(&bitmap,0,sizeof(bitmap));
+  (void) memset(&bitmap,0,sizeof(bitmap));
   bitmap.bmType=0;
   bitmap.bmWidth=(LONG) image->columns;
   bitmap.bmHeight=(LONG) image->rows;

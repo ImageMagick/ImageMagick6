@@ -142,7 +142,7 @@ MagickExport ModuleInfo *AcquireModuleInfo(const char *path,const char *tag)
   module_info=(ModuleInfo *) AcquireMagickMemory(sizeof(*module_info));
   if (module_info == (ModuleInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(module_info,0,sizeof(*module_info));
+  (void) memset(module_info,0,sizeof(*module_info));
   if (path != (const char *) NULL)
     module_info->path=ConstantString(path);
   if (tag != (const char *) NULL)

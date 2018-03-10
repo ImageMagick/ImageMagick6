@@ -329,7 +329,7 @@ WandExport MagickBooleanType AnimateImageCommand(ImageInfo *image_info,
   pend=MagickFalse;
   respect_parenthesis=MagickFalse;
   resource_database=(XrmDatabase) NULL;
-  (void) ResetMagickMemory(&resource_info,0,sizeof(XResourceInfo));
+  (void) memset(&resource_info,0,sizeof(XResourceInfo));
   server_name=(char *) NULL;
   status=MagickTrue;
   /*

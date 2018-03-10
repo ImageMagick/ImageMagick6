@@ -1326,7 +1326,7 @@ MagickExport FILE *GetBlobFileHandle(const Image *image)
 MagickExport void GetBlobInfo(BlobInfo *blob_info)
 {
   assert(blob_info != (BlobInfo *) NULL);
-  (void) ResetMagickMemory(blob_info,0,sizeof(*blob_info));
+  (void) memset(blob_info,0,sizeof(*blob_info));
   blob_info->type=UndefinedStream;
   blob_info->quantum=(size_t) MagickMaxBlobExtent;
   blob_info->properties.st_mtime=time((time_t *) NULL);
@@ -2644,7 +2644,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
 
             blob_info->type=FileStream;
             (void) SetStreamBuffering(image_info,image);
-            (void) ResetMagickMemory(magick,0,sizeof(magick));
+            (void) memset(magick,0,sizeof(magick));
             count=fread(magick,1,sizeof(magick),blob_info->file_info.file);
             (void) fseek(blob_info->file_info.file,-((off_t) count),SEEK_CUR);
 #if defined(MAGICKCORE_POSIX_SUPPORT)

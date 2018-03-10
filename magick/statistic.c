@@ -167,7 +167,7 @@ static MagickPixelPacket **AcquirePixelThreadSet(const Image *image,
     sizeof(*pixels));
   if (pixels == (MagickPixelPacket **) NULL)
     return((MagickPixelPacket **) NULL);
-  (void) ResetMagickMemory(pixels,0,number_threads*sizeof(*pixels));
+  (void) memset(pixels,0,number_threads*sizeof(*pixels));
   for (i=0; i < (ssize_t) number_threads; i++)
   {
     pixels[i]=(MagickPixelPacket *) AcquireQuantumMemory(image->columns,
@@ -1685,19 +1685,19 @@ MagickExport ChannelMoments *GetImageChannelMoments(const Image *image,
     sizeof(*channel_moments));
   if (channel_moments == (ChannelMoments *) NULL)
     return(channel_moments);
-  (void) ResetMagickMemory(channel_moments,0,length*sizeof(*channel_moments));
-  (void) ResetMagickMemory(centroid,0,sizeof(centroid));
-  (void) ResetMagickMemory(M00,0,sizeof(M00));
-  (void) ResetMagickMemory(M01,0,sizeof(M01));
-  (void) ResetMagickMemory(M02,0,sizeof(M02));
-  (void) ResetMagickMemory(M03,0,sizeof(M03));
-  (void) ResetMagickMemory(M10,0,sizeof(M10));
-  (void) ResetMagickMemory(M11,0,sizeof(M11));
-  (void) ResetMagickMemory(M12,0,sizeof(M12));
-  (void) ResetMagickMemory(M20,0,sizeof(M20));
-  (void) ResetMagickMemory(M21,0,sizeof(M21));
-  (void) ResetMagickMemory(M22,0,sizeof(M22));
-  (void) ResetMagickMemory(M30,0,sizeof(M30));
+  (void) memset(channel_moments,0,length*sizeof(*channel_moments));
+  (void) memset(centroid,0,sizeof(centroid));
+  (void) memset(M00,0,sizeof(M00));
+  (void) memset(M01,0,sizeof(M01));
+  (void) memset(M02,0,sizeof(M02));
+  (void) memset(M03,0,sizeof(M03));
+  (void) memset(M10,0,sizeof(M10));
+  (void) memset(M11,0,sizeof(M11));
+  (void) memset(M12,0,sizeof(M12));
+  (void) memset(M20,0,sizeof(M20));
+  (void) memset(M21,0,sizeof(M21));
+  (void) memset(M22,0,sizeof(M22));
+  (void) memset(M30,0,sizeof(M30));
   GetMagickPixelPacket(image,&pixel);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -2367,7 +2367,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
           channel_statistics);
       return(channel_statistics);
     }
-  (void) ResetMagickMemory(channel_statistics,0,length*
+  (void) memset(channel_statistics,0,length*
     sizeof(*channel_statistics));
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
   {
@@ -2375,8 +2375,8 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     channel_statistics[i].maxima=(-MagickMaximumValue);
     channel_statistics[i].minima=MagickMaximumValue;
   }
-  (void) ResetMagickMemory(histogram,0,(MaxMap+1U)*sizeof(*histogram));
-  (void) ResetMagickMemory(&number_bins,0,sizeof(number_bins));
+  (void) memset(histogram,0,(MaxMap+1U)*sizeof(*histogram));
+  (void) memset(&number_bins,0,sizeof(number_bins));
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     register const IndexPacket
@@ -3034,7 +3034,7 @@ static PixelList *AcquirePixelList(const size_t width,const size_t height)
   pixel_list=(PixelList *) AcquireMagickMemory(sizeof(*pixel_list));
   if (pixel_list == (PixelList *) NULL)
     return(pixel_list);
-  (void) ResetMagickMemory((void *) pixel_list,0,sizeof(*pixel_list));
+  (void) memset((void *) pixel_list,0,sizeof(*pixel_list));
   pixel_list->length=width*height;
   for (i=0; i < ListChannels; i++)
   {
@@ -3042,7 +3042,7 @@ static PixelList *AcquirePixelList(const size_t width,const size_t height)
       sizeof(*pixel_list->lists[i].nodes));
     if (pixel_list->lists[i].nodes == (ListNode *) NULL)
       return(DestroyPixelList(pixel_list));
-    (void) ResetMagickMemory(pixel_list->lists[i].nodes,0,65537UL*
+    (void) memset(pixel_list->lists[i].nodes,0,65537UL*
       sizeof(*pixel_list->lists[i].nodes));
   }
   pixel_list->signature=MagickCoreSignature;
@@ -3066,7 +3066,7 @@ static PixelList **AcquirePixelListThreadSet(const size_t width,
     sizeof(*pixel_list));
   if (pixel_list == (PixelList **) NULL)
     return((PixelList **) NULL);
-  (void) ResetMagickMemory(pixel_list,0,number_threads*sizeof(*pixel_list));
+  (void) memset(pixel_list,0,number_threads*sizeof(*pixel_list));
   for (i=0; i < (ssize_t) number_threads; i++)
   {
     pixel_list[i]=AcquirePixelList(width,height);

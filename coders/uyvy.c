@@ -335,7 +335,7 @@ static MagickBooleanType WriteUYVYImage(const ImageInfo *image_info,
     ThrowWriterException(ResourceLimitError,image->exception.reason);
   (void) TransformImageColorspace(uyvy_image,YCbCrColorspace);
   full=MagickFalse;
-  (void) ResetMagickMemory(&pixel,0,sizeof(MagickPixelPacket));
+  (void) memset(&pixel,0,sizeof(MagickPixelPacket));
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     p=GetVirtualPixels(uyvy_image,0,y,image->columns,1,&image->exception);

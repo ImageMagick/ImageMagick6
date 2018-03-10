@@ -220,7 +220,7 @@ MagickExport ResampleFilter *AcquireResampleFilter(const Image *image,
     sizeof(*resample_filter));
   if (resample_filter == (ResampleFilter *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(resample_filter,0,sizeof(*resample_filter));
+  (void) memset(resample_filter,0,sizeof(*resample_filter));
 
   resample_filter->exception=exception;
   resample_filter->image=ReferenceImage((Image *) image);

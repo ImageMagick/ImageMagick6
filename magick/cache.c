@@ -358,7 +358,7 @@ MagickExport Cache AcquirePixelCache(const size_t number_threads)
     *value;
 
   cache_info=(CacheInfo *) AcquireCriticalMemory(sizeof(*cache_info));
-  (void) ResetMagickMemory(cache_info,0,sizeof(*cache_info));
+  (void) memset(cache_info,0,sizeof(*cache_info));
   cache_info->type=UndefinedCache;
   cache_info->mode=IOMode;
   cache_info->disk_mode=IOMode;
@@ -434,7 +434,7 @@ MagickExport NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
     sizeof(**nexus_info));
   if (nexus_info[0] == (NexusInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) ResetMagickMemory(nexus_info[0],0,number_threads*sizeof(**nexus_info));
+  (void) memset(nexus_info[0],0,number_threads*sizeof(**nexus_info));
   for (i=0; i < (ssize_t) number_threads; i++)
   {
     nexus_info[i]=(&nexus_info[0][i]);
@@ -912,7 +912,7 @@ static MagickBooleanType ClonePixelCacheRepository(
       clone_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
       continue;
-    (void) ResetMagickMemory(clone_nexus[id]->pixels,0,(size_t)
+    (void) memset(clone_nexus[id]->pixels,0,(size_t)
       clone_nexus[id]->length);
     (void) memcpy(clone_nexus[id]->pixels,cache_nexus[id]->pixels,length);
     status=WritePixelCachePixels(clone_info,clone_nexus[id],exception);
@@ -1389,7 +1389,7 @@ MagickPrivate cl_mem GetAuthenticOpenCLBuffer(const Image *image,
       context=GetOpenCLContext(clEnv);
       cache_info->opencl=(OpenCLCacheInfo *) AcquireCriticalMemory(
         sizeof(*cache_info->opencl));
-      (void) ResetMagickMemory(cache_info->opencl,0,
+      (void) memset(cache_info->opencl,0,
         sizeof(*cache_info->opencl));
       cache_info->opencl->events_semaphore=AllocateSemaphoreInfo();
       cache_info->opencl->length=cache_info->length;
@@ -2471,7 +2471,7 @@ MagickExport const char *GetPixelCacheFilename(const Image *image)
 MagickExport void GetPixelCacheMethods(CacheMethods *cache_methods)
 {
   assert(cache_methods != (CacheMethods *) NULL);
-  (void) ResetMagickMemory(cache_methods,0,sizeof(*cache_methods));
+  (void) memset(cache_methods,0,sizeof(*cache_methods));
   cache_methods->get_virtual_pixel_handler=GetVirtualPixelCache;
   cache_methods->get_virtual_pixels_handler=GetVirtualPixelsCache;
   cache_methods->get_virtual_indexes_from_handler=GetVirtualIndexesFromCache;
@@ -5104,7 +5104,7 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
       nexus_info->cache=(PixelPacket *) MagickAssumeAligned(
         AcquireAlignedMemory(1,(size_t) nexus_info->length));
       if (nexus_info->cache != (PixelPacket *) NULL)
-        (void) ResetMagickMemory(nexus_info->cache,0,(size_t)
+        (void) memset(nexus_info->cache,0,(size_t)
           nexus_info->length);
     }
   else
