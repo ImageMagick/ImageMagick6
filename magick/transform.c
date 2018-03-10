@@ -771,10 +771,10 @@ MagickExport Image *CropImage(const Image *image,const RectangleInfo *geometry,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     crop_indexes=GetCacheViewAuthenticIndexQueue(crop_view);
-    (void) CopyMagickMemory(q,p,(size_t) crop_image->columns*sizeof(*p));
+    (void) memcpy(q,p,(size_t) crop_image->columns*sizeof(*p));
     if ((indexes != (IndexPacket *) NULL) &&
         (crop_indexes != (IndexPacket *) NULL))
-      (void) CopyMagickMemory(crop_indexes,indexes,(size_t) crop_image->columns*
+      (void) memcpy(crop_indexes,indexes,(size_t) crop_image->columns*
         sizeof(*crop_indexes));
     if (SyncCacheViewAuthenticPixels(crop_view,exception) == MagickFalse)
       status=MagickFalse;
@@ -1105,13 +1105,13 @@ MagickExport Image *ExcerptImage(const Image *image,
         status=MagickFalse;
         continue;
       }
-    (void) CopyMagickMemory(q,p,(size_t) excerpt_image->columns*sizeof(*q));
+    (void) memcpy(q,p,(size_t) excerpt_image->columns*sizeof(*q));
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     if (indexes != (IndexPacket *) NULL)
       {
         excerpt_indexes=GetCacheViewAuthenticIndexQueue(excerpt_view);
         if (excerpt_indexes != (IndexPacket *) NULL)
-          (void) CopyMagickMemory(excerpt_indexes,indexes,(size_t)
+          (void) memcpy(excerpt_indexes,indexes,(size_t)
             excerpt_image->columns*sizeof(*excerpt_indexes));
       }
     if (SyncCacheViewAuthenticPixels(excerpt_view,exception) == MagickFalse)
@@ -1290,13 +1290,13 @@ MagickExport Image *FlipImage(const Image *image,ExceptionInfo *exception)
         status=MagickFalse;
         continue;
       }
-    (void) CopyMagickMemory(q,p,(size_t) image->columns*sizeof(*q));
+    (void) memcpy(q,p,(size_t) image->columns*sizeof(*q));
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     if (indexes != (const IndexPacket *) NULL)
       {
         flip_indexes=GetCacheViewAuthenticIndexQueue(flip_view);
         if (flip_indexes != (IndexPacket *) NULL)
-          (void) CopyMagickMemory(flip_indexes,indexes,(size_t) image->columns*
+          (void) memcpy(flip_indexes,indexes,(size_t) image->columns*
             sizeof(*flip_indexes));
       }
     if (SyncCacheViewAuthenticPixels(flip_view,exception) == MagickFalse)
@@ -1540,12 +1540,12 @@ static MagickBooleanType CopyImageRegion(Image *destination,const Image *source,
         continue;
       }
     indexes=GetCacheViewVirtualIndexQueue(source_view);
-    (void) CopyMagickMemory(q,p,(size_t) columns*sizeof(*p));
+    (void) memcpy(q,p,(size_t) columns*sizeof(*p));
     if (indexes != (IndexPacket *) NULL)
       {
         destination_indexes=GetCacheViewAuthenticIndexQueue(destination_view);
         if (destination_indexes != (IndexPacket *) NULL)
-          (void) CopyMagickMemory(destination_indexes,indexes,(size_t)
+          (void) memcpy(destination_indexes,indexes,(size_t)
             columns*sizeof(*indexes));
       }
     sync=SyncCacheViewAuthenticPixels(destination_view,exception);
@@ -2247,13 +2247,13 @@ MagickExport Image *TransposeImage(const Image *image,ExceptionInfo *exception)
         status=MagickFalse;
         continue;
       }
-    (void) CopyMagickMemory(q,p,(size_t) image->columns*sizeof(*q));
+    (void) memcpy(q,p,(size_t) image->columns*sizeof(*q));
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     if (indexes != (IndexPacket *) NULL)
       {
         transpose_indexes=GetCacheViewAuthenticIndexQueue(transpose_view);
         if (transpose_indexes != (IndexPacket *) NULL)
-          (void) CopyMagickMemory(transpose_indexes,indexes,(size_t)
+          (void) memcpy(transpose_indexes,indexes,(size_t)
             image->columns*sizeof(*transpose_indexes));
       }
     if (SyncCacheViewAuthenticPixels(transpose_view,exception) == MagickFalse)

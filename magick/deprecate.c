@@ -1088,7 +1088,7 @@ MagickExport void *CloneMemory(void *destination,const void *source,
   p=(const unsigned char *) source;
   q=(unsigned char *) destination;
   if ((p <= q) || ((p+size) >= q))
-    return(CopyMagickMemory(destination,source,size));
+    return(memcpy(destination,source,size));
   /*
     Overlap, copy backwards.
   */
@@ -6947,7 +6947,7 @@ MagickExport void Strip(char *message)
   if (q > p)
     if ((*q == '\'') || (*q == '"'))
       q--;
-  (void) CopyMagickMemory(message,p,(size_t) (q-p+1));
+  (void) memcpy(message,p,(size_t) (q-p+1));
   message[q-p+1]='\0';
 }
 

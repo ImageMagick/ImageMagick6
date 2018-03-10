@@ -639,7 +639,7 @@ MagickExport MagickBooleanType PasskeyDecipherImage(Image *image,
   FinalizeSignature(signature_info);
   (void) memset(input_block,0,sizeof(input_block));
   digest=GetStringInfoDatum(GetSignatureDigest(signature_info));
-  (void) CopyMagickMemory(input_block,digest,MagickMin(AESBlocksize,
+  (void) memcpy(input_block,digest,MagickMin(AESBlocksize,
     GetSignatureDigestsize(signature_info))*sizeof(*input_block));
   signature_info=DestroySignatureInfo(signature_info);
   /*
@@ -672,7 +672,7 @@ MagickExport MagickBooleanType PasskeyDecipherImage(Image *image,
     p=pixels;
     for (x=0; x < (ssize_t) length; x+=AESBlocksize)
     {
-      (void) CopyMagickMemory(output_block,input_block,AESBlocksize*
+      (void) memmove(output_block,input_block,AESBlocksize*
         sizeof(*output_block));
       IncrementCipherNonce(AESBlocksize,input_block);
       EncipherAESBlock(aes_info,output_block,output_block);
@@ -680,8 +680,7 @@ MagickExport MagickBooleanType PasskeyDecipherImage(Image *image,
         p[i]^=output_block[i];
       p+=AESBlocksize;
     }
-    (void) CopyMagickMemory(output_block,input_block,AESBlocksize*
-      sizeof(*output_block));
+    (void) memmove(output_block,input_block,AESBlocksize*sizeof(*output_block));
     EncipherAESBlock(aes_info,output_block,output_block);
     for (i=0; x < (ssize_t) length; x++)
     {
@@ -854,7 +853,7 @@ MagickExport MagickBooleanType PasskeyEncipherImage(Image *image,
   FinalizeSignature(signature_info);
   (void) memset(input_block,0,sizeof(input_block));
   digest=GetStringInfoDatum(GetSignatureDigest(signature_info));
-  (void) CopyMagickMemory(input_block,digest,MagickMin(AESBlocksize,
+  (void) memcpy(input_block,digest,MagickMin(AESBlocksize,
     GetSignatureDigestsize(signature_info))*sizeof(*input_block));
   signature=StringInfoToHexString(GetSignatureDigest(signature_info));
   (void) SetImageProperty(image,"cipher:type","AES");
@@ -892,7 +891,7 @@ MagickExport MagickBooleanType PasskeyEncipherImage(Image *image,
     p=pixels;
     for (x=0; x < (ssize_t) length; x+=AESBlocksize)
     {
-      (void) CopyMagickMemory(output_block,input_block,AESBlocksize*
+      (void) memmove(output_block,input_block,AESBlocksize*
         sizeof(*output_block));
       IncrementCipherNonce(AESBlocksize,input_block);
       EncipherAESBlock(aes_info,output_block,output_block);
@@ -900,7 +899,7 @@ MagickExport MagickBooleanType PasskeyEncipherImage(Image *image,
         p[i]^=output_block[i];
       p+=AESBlocksize;
     }
-    (void) CopyMagickMemory(output_block,input_block,AESBlocksize*
+    (void) memmove(output_block,input_block,AESBlocksize*
       sizeof(*output_block));
     EncipherAESBlock(aes_info,output_block,output_block);
     for (i=0; x < (ssize_t) length; x++)
@@ -1031,7 +1030,7 @@ static void SetAESKey(AESInfo *aes_info,const StringInfo *key)
   */
   datum=GetStringInfoDatum(aes_info->key);
   (void) memset(datum,0,GetStringInfoLength(aes_info->key));
-  (void) CopyMagickMemory(datum,GetStringInfoDatum(key),MagickMin(
+  (void) memcpy(datum,GetStringInfoDatum(key),MagickMin(
     GetStringInfoLength(key),GetStringInfoLength(aes_info->key)));
   for (i=0; i < n; i++)
     aes_info->encipher_key[i]=datum[4*i] | (datum[4*i+1] << 8) |

@@ -2152,7 +2152,7 @@ MagickPrivate unsigned char *NTResourceToBlob(const char *id)
     sizeof(*blob));
   if (blob != (unsigned char *) NULL)
     {
-      (void) CopyMagickMemory(blob,value,length);
+      (void) memcpy(blob,value,length);
       blob[length]='\0';
     }
   UnlockResource(global);

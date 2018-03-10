@@ -372,7 +372,7 @@ MagickBooleanType sixel_decode(Image *image,
                 }
                 (void) memset(dmbuf, background_color_index, (size_t) dmsx * dmsy);
                 for (y = 0; y < imsy; ++y) {
-                    (void) CopyMagickMemory(dmbuf + dmsx * y, imbuf + (size_t) imsx * y, imsx);
+                    (void) memcpy(dmbuf + dmsx * y, imbuf + (size_t) imsx * y, imsx);
                 }
                 imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
                 imsx = dmsx;
@@ -450,7 +450,7 @@ MagickBooleanType sixel_decode(Image *image,
                 }
                 (void) memset(dmbuf, background_color_index, (size_t) dmsx * dmsy);
                 for (y = 0; y < imsy; ++y) {
-                    (void) CopyMagickMemory(dmbuf + dmsx * y, imbuf + (size_t) imsx * y, imsx);
+                    (void) memcpy(dmbuf + dmsx * y, imbuf + (size_t) imsx * y, imsx);
                 }
                 imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
                 imsx = dmsx;
@@ -548,7 +548,7 @@ MagickBooleanType sixel_decode(Image *image,
             return (MagickFalse);
         }
         for (y = 0; y < dmsy; ++y) {
-            (void) CopyMagickMemory(dmbuf + dmsx * y, imbuf + imsx * y, dmsx);
+            (void) memcpy(dmbuf + dmsx * y, imbuf + imsx * y, dmsx);
         }
         imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
         imsx = dmsx;
@@ -595,7 +595,7 @@ static void sixel_advance(sixel_output_t *context, int nwrite)
 {
     if ((context->pos += nwrite) >= SIXEL_OUTPUT_PACKET_SIZE) {
         WriteBlob(context->image,SIXEL_OUTPUT_PACKET_SIZE,context->buffer);
-        CopyMagickMemory(context->buffer,
+        memcpy(context->buffer,
                context->buffer + SIXEL_OUTPUT_PACKET_SIZE,
                (context->pos -= SIXEL_OUTPUT_PACKET_SIZE));
     }

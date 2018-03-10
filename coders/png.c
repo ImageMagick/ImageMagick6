@@ -1220,7 +1220,7 @@ static void PNGShort(png_bytep p,png_uint_16 value)
 
 static void PNGType(png_bytep p,const png_byte *type)
 {
-  (void) CopyMagickMemory(p,type,4*sizeof(png_byte));
+  (void) memcpy(p,type,4*sizeof(png_byte));
 }
 
 static void LogPNGChunk(MagickBooleanType logging, const png_byte *type,
@@ -4839,7 +4839,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
     q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
     if ((s == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
       break;
-    (void) CopyMagickMemory(q,s,length);
+    (void) memcpy(q,s,length);
 
     if (SyncAuthenticPixels(image,exception) == MagickFalse)
       break;
@@ -6772,7 +6772,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                   }
 
                 n=GetAuthenticPixels(image,0,0,image->columns,1,exception);
-                (void) CopyMagickMemory(next,n,length);
+                (void) memcpy(next,n,length);
 
                 for (y=0; y < (ssize_t) image->rows; y++)
                 {
@@ -6799,7 +6799,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                     {
                       n=GetAuthenticPixels(image,0,y+1,image->columns,1,
                           exception);
-                      (void) CopyMagickMemory(next,n,length);
+                      (void) memcpy(next,n,length);
                     }
 
                   for (i=0; i < m; i++, yy++)

@@ -1741,10 +1741,10 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
           }
         source_indexes=GetCacheViewVirtualIndexQueue(source_view);
         indexes=GetCacheViewAuthenticIndexQueue(image_view);
-        (void) CopyMagickMemory(q,p,source_image->columns*sizeof(*p));
+        (void) memcpy(q,p,source_image->columns*sizeof(*p));
         if ((indexes != (IndexPacket *) NULL) &&
             (source_indexes != (const IndexPacket *) NULL))
-          (void) CopyMagickMemory(indexes,source_indexes,
+          (void) memcpy(indexes,source_indexes,
             source_image->columns*sizeof(*indexes));
         sync=SyncCacheViewAuthenticPixels(image_view,exception);
         if (sync == MagickFalse)
@@ -3036,11 +3036,11 @@ MagickExport MagickBooleanType TextureImage(Image *image,const Image *texture)
       width=texture_image->columns;
       if ((x+(ssize_t) width) > (ssize_t) image->columns)
         width=image->columns-x;
-      (void) CopyMagickMemory(q,p,width*sizeof(*p));
+      (void) memcpy(q,p,width*sizeof(*p));
       if ((image->colorspace == CMYKColorspace) &&
           (texture_image->colorspace == CMYKColorspace))
         {
-          (void) CopyMagickMemory(indexes,texture_indexes,width*
+          (void) memcpy(indexes,texture_indexes,width*
             sizeof(*indexes));
           indexes+=width;
         }

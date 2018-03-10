@@ -482,7 +482,7 @@ static Image *ReadPALMImage(const ImageInfo *image_info,
                     one_row[i+bit]=last_row[i+bit];
                 }
               }
-              (void) CopyMagickMemory(last_row, one_row, bytes_per_row);
+              (void) memcpy(last_row, one_row, bytes_per_row);
             }
         }
       ptr=one_row;
@@ -978,7 +978,7 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
               (void) WriteBlobByte(image, byte);
               (void) WriteBlob(image,tptr-tmpbuf,(unsigned char *) tmpbuf);
             }
-            (void) CopyMagickMemory(last_row,one_row,bytes_per_row);
+            (void) memcpy(last_row,one_row,bytes_per_row);
           }
         else
           (void) WriteBlob(image,bytes_per_row,one_row);
