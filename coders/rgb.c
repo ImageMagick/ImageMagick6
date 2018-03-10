@@ -266,9 +266,9 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 SetPixelRed(q,GetPixelRed(p));
                 SetPixelGreen(q,GetPixelGreen(p));
                 SetPixelBlue(q,GetPixelBlue(p));
-                SetPixelAlpha(q,OpaqueAlpha);
+                SetPixelOpacity(q,OpaqueOpacity);
                 if (image->matte != MagickFalse)
-                  SetPixelAlpha(q,GetPixelAlpha(p));
+                  SetPixelOpacity(q,GetPixelOpacity(p));
                 p++;
                 q++;
               }
@@ -628,7 +628,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     break;
                   for (x=0; x < (ssize_t) image->columns; x++)
                   {
-                    SetPixelAlpha(q,GetPixelAlpha(p));
+                    SetPixelOpacity(q,GetPixelOpacity(p));
                     p++;
                     q++;
                   }
@@ -970,7 +970,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     break;
                   for (x=0; x < (ssize_t) image->columns; x++)
                   {
-                    SetPixelAlpha(q,GetPixelAlpha(p));
+                    SetPixelOpacity(q,GetPixelOpacity(p));
                     p++;
                     q++;
                   }
