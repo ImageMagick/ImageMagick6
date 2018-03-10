@@ -4309,7 +4309,7 @@ exit_cleanup:
        or "-define convolve:bias=??")
 %    * Kernel Scale/normalize settings     ("-set 'option:convolve:scale'")
 %      This can also includes the addition of a scaled unity kernel.
-%    * Show Kernel being applied           ("-set option:showkernel 1")
+%    * Show Kernel being applied           ("-set option:showKernel 1")
 %
 %  The format of the MorphologyImage method is:
 %
@@ -4396,9 +4396,9 @@ MagickExport Image *MorphologyImageChannel(const Image *image,
     }
 
   /* display the (normalized) kernel via stderr */
-  if ( IsMagickTrue(GetImageArtifact(image,"showkernel"))
-    || IsMagickTrue(GetImageArtifact(image,"convolve:showkernel"))
-    || IsMagickTrue(GetImageArtifact(image,"morphology:showkernel")) )
+  if ( IsMagickTrue(GetImageArtifact(image,"showKernel"))
+    || IsMagickTrue(GetImageArtifact(image,"convolve:showKernel"))
+    || IsMagickTrue(GetImageArtifact(image,"morphology:showKernel")) )
     ShowKernelInfo(curr_kernel);
 
   /* Override the default handling of multi-kernel morphology results
@@ -4841,9 +4841,9 @@ MagickExport void ScaleKernelInfo(KernelInfo *kernel,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  ShowKernelInfo() outputs the details of the given kernel defination to
-%  standard error, generally due to a users 'showkernel' option request.
+%  standard error, generally due to a users 'showKernel' option request.
 %
-%  The format of the ShowKernel method is:
+%  The format of the ShowKernelInfo method is:
 %
 %      void ShowKernelInfo(const KernelInfo *kernel)
 %
