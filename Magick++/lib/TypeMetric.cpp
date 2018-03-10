@@ -15,7 +15,7 @@
 
 Magick::TypeMetric::TypeMetric(void)
 {
-  ResetMagickMemory(&_typeMetric,0,sizeof(_typeMetric));
+  memset(&_typeMetric,0,sizeof(_typeMetric));
 }
 
 Magick::TypeMetric::~TypeMetric(void)

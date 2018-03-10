@@ -40,7 +40,7 @@ Magick::Montage::~Montage(void)
 
 void Magick::Montage::updateMontageInfo(MontageInfo &montageInfo_) const
 {
-  (void) MagickCore::ResetMagickMemory(&montageInfo_,0,sizeof(montageInfo_));
+  (void) memset(&montageInfo_,0,sizeof(montageInfo_));
 
   // background_color
   montageInfo_.background_color=_backgroundColor;
