@@ -294,7 +294,7 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,ExceptionInfo *exception
           };
 
         /*
-          Line interlacing:  GGG...
+          Line interlacing:  G...G...G...
         */
         if (scene == 0)
           {
@@ -383,7 +383,7 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,ExceptionInfo *exception
       case PlaneInterlace:
       {
         /*
-          Plane interlacing:  GGG...
+          Plane interlacing:  GGG...GGG...GGG...
         */
         if (scene == 0)
           {
@@ -573,7 +573,7 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,ExceptionInfo *exception
       case PartitionInterlace:
       {
         /*
-          Partition interlacing:  GGG...
+          Partition interlacing:  GGG..., GGG..., GGG...
         */
         AppendImageFormat("G",image->filename);
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
@@ -977,7 +977,7 @@ static MagickBooleanType WriteGRAYImage(const ImageInfo *image_info,Image *image
       case LineInterlace:
       {
         /*
-          Line interlacing:  GGG...
+          Line interlacing:  GGG...GGG...GGG...
         */
         for (y=0; y < (ssize_t) image->rows; y++)
         {
@@ -1013,7 +1013,7 @@ static MagickBooleanType WriteGRAYImage(const ImageInfo *image_info,Image *image
       case PlaneInterlace:
       {
         /*
-          Plane interlacing:  GGG...
+          Plane interlacing:  GGGGG..., GGGGG..., GGGGG...
         */
         for (y=0; y < (ssize_t) image->rows; y++)
         {
