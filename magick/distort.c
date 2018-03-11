@@ -2281,11 +2281,14 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
   distort_image=CloneImage(image,geometry.width,geometry.height,MagickTrue,
     exception);
   if (distort_image == (Image *) NULL)
-    return((Image *) NULL);
+    {
+      coeff=(double *) RelinquishMagickMemory(coeff);
+      return((Image *) NULL);
+    }
   /* if image is ColorMapped - change it to DirectClass */
   if (SetImageStorageClass(distort_image,DirectClass) == MagickFalse)
     {
-      coeff = (double *) RelinquishMagickMemory(coeff);
+      coeff=(double *) RelinquishMagickMemory(coeff);
       InheritException(exception,&distort_image->exception);
       distort_image=DestroyImage(distort_image);
       return((Image *) NULL);
@@ -2774,7 +2777,7 @@ if ( d.x == 0.5 && d.y == 0.5 ) {
     distort_image->page.x = 0;
     distort_image->page.y = 0;
   }
-  coeff = (double *) RelinquishMagickMemory(coeff);
+  coeff=(double *) RelinquishMagickMemory(coeff);
   return(distort_image);
 }
 
