@@ -875,7 +875,7 @@ static Image *ExtractPostscript(Image *image,const ImageInfo *image_info,
  FINISH:
   DestroyImageInfo(clone_info);
   if (status == MagickFalse)
-    return((Image *) NULL);
+    return(DestroyImageList(image));
   return(image);
 }
 
