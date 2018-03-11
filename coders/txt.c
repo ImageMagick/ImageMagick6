@@ -483,6 +483,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) memset(&pixel,0,sizeof(pixel));
     (void) SetImageBackgroundColor(image);
     range=GetQuantumRange(image->depth);
+    status=MagickTrue;
     for (y=0; y < (ssize_t) image->rows; y++)
     {
       double
@@ -492,6 +493,8 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
         opacity,
         red;
 
+      if (status == MagickFalse)
+        break;
       red=0.0;
       green=0.0;
       blue=0.0;
@@ -500,7 +503,10 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       for (x=0; x < (ssize_t) image->columns; x++)
       {
         if (ReadBlobString(image,text) == (char *) NULL)
-          break;
+          {
+            status=MagickFalse;
+            break;
+          }
         switch (image->colorspace)
         {
           case LinearGRAYColorspace:
@@ -585,9 +591,14 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
         if (image->matte != MagickFalse)
           SetPixelAlpha(q,pixel.opacity);
         if (SyncAuthenticPixels(image,exception) == MagickFalse)
-          break;
+          {
+            status=MagickFalse;
+            break;
+          }
       }
     }
+    if (status == MagickFalse)
+      break;
     *text='\0';
     (void) ReadBlobString(image,text);
     if (LocaleNCompare((char *) text,MagickID,strlen(MagickID)) == 0)
