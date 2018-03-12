@@ -451,7 +451,9 @@ static Image *ReadTGAImage(const ImageInfo *image_info,
             /*
               Gray scale.
             */
-            index=(IndexPacket) ReadBlobByte(image);
+            if (ReadBlob(image,1,pixels) != 1)
+              ThrowReaderException(CorruptImageError,"UnableToReadImageData");
+            index=(Quantum) pixels[0];
             if (tga_info.colormap_type != 0)
               pixel=image->colormap[(ssize_t) ConstrainColormapIndex(image,
                 1UL*index)];
