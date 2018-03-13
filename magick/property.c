@@ -2296,9 +2296,10 @@ MagickExport const char *GetImageProperty(const Image *image,
           MagickPixelPacket
             pixel;
 
+          if ((image->columns == 0) || (image->rows == 0))
+            break;
           GetMagickPixelPacket(image,&pixel);
           fx_info=AcquireFxInfo(image,property+4);
-          alpha=0.0;
           status=FxEvaluateChannelExpression(fx_info,RedChannel,0,0,&alpha,
             exception);
           pixel.red=(MagickRealType) QuantumRange*alpha;
