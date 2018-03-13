@@ -2257,6 +2257,8 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   if (image_info->ping != MagickFalse)
     {
+      if (profile != (StringInfo *) NULL)
+        profile=DestroyStringInfo(profile);
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
@@ -2277,6 +2279,8 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
         exception);
       if (status != MagickTrue)
         {
+          if (profile != (StringInfo *) NULL)
+            profile=DestroyStringInfo(profile);
           (void) CloseBlob(image);
           image=DestroyImageList(image);
           return((Image *) NULL);
