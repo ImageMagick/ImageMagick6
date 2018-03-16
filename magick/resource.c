@@ -227,46 +227,6 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
         }
       break;
     }
-    case MapResource:
-    {
-      if ((resource_info.map+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.map+=(MagickOffsetType) size;
-      limit=resource_info.map_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.map < (MagickOffsetType) limit))
-        status=MagickTrue;
-      else
-        resource_info.map-=(MagickOffsetType) size;
-      if (logging != MagickFalse)
-        {
-          (void) FormatMagickSize(size,MagickTrue,resource_request);
-          (void) FormatMagickSize((MagickSizeType) resource_info.map,
-            MagickTrue,resource_current);
-          (void) FormatMagickSize(limit,MagickTrue,resource_limit);
-        }
-      break;
-    }
-    case MemoryResource:
-    {
-      if ((resource_info.memory+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.memory+=(MagickOffsetType) size;
-      limit=resource_info.memory_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.memory < (MagickOffsetType) limit))
-        status=MagickTrue;
-      else
-        resource_info.memory-=(MagickOffsetType) size;
-      if (logging != MagickFalse)
-        {
-          (void) FormatMagickSize(size,MagickTrue,resource_request);
-          (void) FormatMagickSize((MagickSizeType) resource_info.memory,
-            MagickTrue,resource_current);
-          (void) FormatMagickSize(limit,MagickTrue,resource_limit);
-        }
-      break;
-    }
     case FileResource:
     {
       if ((resource_info.file+(MagickOffsetType) size) < 0)
@@ -313,6 +273,46 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
         }
       break;
     }
+    case MapResource:
+    {
+      if ((resource_info.map+(MagickOffsetType) size) < 0)
+        return(MagickFalse);
+      resource_info.map+=(MagickOffsetType) size;
+      limit=resource_info.map_limit;
+      if ((limit == MagickResourceInfinity) ||
+          (resource_info.map < (MagickOffsetType) limit))
+        status=MagickTrue;
+      else
+        resource_info.map-=(MagickOffsetType) size;
+      if (logging != MagickFalse)
+        {
+          (void) FormatMagickSize(size,MagickTrue,resource_request);
+          (void) FormatMagickSize((MagickSizeType) resource_info.map,
+            MagickTrue,resource_current);
+          (void) FormatMagickSize(limit,MagickTrue,resource_limit);
+        }
+      break;
+    }
+    case MemoryResource:
+    {
+      if ((resource_info.memory+(MagickOffsetType) size) < 0)
+        return(MagickFalse);
+      resource_info.memory+=(MagickOffsetType) size;
+      limit=resource_info.memory_limit;
+      if ((limit == MagickResourceInfinity) ||
+          (resource_info.memory < (MagickOffsetType) limit))
+        status=MagickTrue;
+      else
+        resource_info.memory-=(MagickOffsetType) size;
+      if (logging != MagickFalse)
+        {
+          (void) FormatMagickSize(size,MagickTrue,resource_request);
+          (void) FormatMagickSize((MagickSizeType) resource_info.memory,
+            MagickTrue,resource_current);
+          (void) FormatMagickSize(limit,MagickTrue,resource_limit);
+        }
+      break;
+    }
     case ThreadResource:
     {
       limit=resource_info.thread_limit;
@@ -345,7 +345,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     }
     case TimeResource:
     {
-      if ((resource_info.file+(MagickOffsetType) size) < 0)
+      if ((resource_info.time+(MagickOffsetType) size) < 0)
         return(MagickFalse);
       resource_info.time+=(MagickOffsetType) size;
       limit=resource_info.time_limit;
@@ -685,14 +685,14 @@ MagickExport MagickSizeType GetMagickResource(const ResourceType type)
       resource=(MagickSizeType) resource_info.disk;
       break;
     }
-    case HeightResource:
-    {
-      resource=(MagickSizeType) resource_info.height;
-      break;
-    }
     case FileResource:
     {
       resource=(MagickSizeType) resource_info.file;
+      break;
+    }
+    case HeightResource:
+    {
+      resource=(MagickSizeType) resource_info.height;
       break;
     }
     case ListLengthResource:
@@ -700,14 +700,14 @@ MagickExport MagickSizeType GetMagickResource(const ResourceType type)
       resource=(MagickSizeType) resource_info.list_length;
       break;
     }
-    case MemoryResource:
-    {
-      resource=(MagickSizeType) resource_info.memory;
-      break;
-    }
     case MapResource:
     {
       resource=(MagickSizeType) resource_info.map;
+      break;
+    }
+    case MemoryResource:
+    {
+      resource=(MagickSizeType) resource_info.memory;
       break;
     }
     case ThreadResource:
