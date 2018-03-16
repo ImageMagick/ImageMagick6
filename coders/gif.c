@@ -1081,10 +1081,10 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         /*
           GIF Extension block.
         */
-
         count=ReadBlob(image,1,&c);
         if (count != 1)
           ThrowGIFException(CorruptImageError,"UnableToReadExtensionBlock");
+        (void) memset(buffer,0,sizeof(buffer));
         switch (c)
         {
           case 0xf9:
