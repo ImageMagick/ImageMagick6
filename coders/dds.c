@@ -1774,6 +1774,9 @@ static Image *ReadDDSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if ((num_images == 0) || (num_images > GetBlobSize(image)))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
 
+  if (AcquireMagickResource(ListLengthResource,num_images) == MagickFalse)
+    ThrowReaderException(ResourceLimitError,"ListLengthExceedsLimit");
+
   for (n = 0; n < num_images; n++)
   {
     if (n != 0)
