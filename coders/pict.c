@@ -937,7 +937,6 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
       return(DestroyImageList(image));
     }
   image->matte=MagickTrue;
-  (void) SetImageBackgroundColor(image);
   /*
     Interpret PICT opcodes.
   */
@@ -990,7 +989,6 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                 InheritException(exception,&image->exception);
                 return(DestroyImageList(image));
               }
-            (void) SetImageBackgroundColor(image);
             break;
           }
           case 0x12:
@@ -1162,7 +1160,6 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                 if (tile_image->matte != MagickFalse)
                   image->matte=tile_image->matte;
               }
-            (void) SetImageBackgroundColor(tile_image);
             if ((code != 0x9a) && (code != 0x9b))
               {
                 /*
