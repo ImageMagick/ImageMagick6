@@ -65,6 +65,7 @@
 #include "magick/pixel-accessor.h"
 #include "magick/quantum-private.h"
 #include "magick/resize.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/module.h"
@@ -554,6 +555,8 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   header=(unsigned char *) RelinquishMagickMemory(header);
   if (number_images > 65535)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  if (AcquireMagickResource(ListLengthResource,number_images) == MagickFalse)
+    ThrowReaderException(ResourceLimitError,"ListLengthExceedsLimit");
   /*
     Determine resolution by scene specification.
   */
