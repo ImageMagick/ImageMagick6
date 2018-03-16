@@ -1353,6 +1353,8 @@ done_reading:
     }
         }
       }
+    if (EOFBlob(image) != MagickFalse)
+      break;
 
       /* Allocate next image structure. */
     AcquireNextImage(image_info,image);
