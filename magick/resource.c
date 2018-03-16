@@ -125,7 +125,7 @@ static ResourceInfo
     MagickULLConstant(0),              /* initial time */
     (INT_MAX/(5*sizeof(Quantum))),     /* width limit */
     (INT_MAX/(5*sizeof(Quantum))),     /* height limit */
-    MagickResourceInfinity,            /* list lenght limit */
+    MagickResourceInfinity,            /* list length limit */
     MagickULLConstant(3072)*1024*1024, /* area limit */
     MagickULLConstant(1536)*1024*1024, /* memory limit */
     MagickULLConstant(3072)*1024*1024, /* map limit */
