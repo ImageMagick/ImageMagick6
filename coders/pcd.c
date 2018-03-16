@@ -710,6 +710,8 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
         image->colorspace=YCCColorspace;
         if (LocaleCompare(image_info->magick,"PCDS") == 0)
           (void) SetImageColorspace(image,sRGBColorspace);
+        if (EOFBlob(image) != MagickFalse)
+          break;
         if (j < (ssize_t) number_images)
           {
             /*
