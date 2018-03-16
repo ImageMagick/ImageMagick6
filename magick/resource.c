@@ -181,10 +181,14 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     logging,
     status;
 
+  MagickOffsetType
+    request;
+
   MagickSizeType
     limit;
 
-  if ((MagickOffsetType) size < 0)
+  request=(MagickOffsetType) size;
+  if (request < 0)
     return(MagickFalse);
   status=MagickFalse;
   logging=IsEventLogging();
@@ -209,15 +213,16 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     }
     case DiskResource:
     {
-      if ((resource_info.disk+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.disk+=(MagickOffsetType) size;
       limit=resource_info.disk_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.disk < (MagickOffsetType) limit))
-        status=MagickTrue;
-      else
-        resource_info.disk-=(MagickOffsetType) size;
+      if ((resource_info.disk+request) > resource_info.disk)
+        {
+          resource_info.disk+=request;
+          if ((limit == MagickResourceInfinity) ||
+              (resource_info.disk < (MagickOffsetType) limit))
+            status=MagickTrue;
+          else
+            resource_info.disk-=request;
+        }
       if (logging != MagickFalse)
         {
           (void) FormatMagickSize(size,MagickTrue,resource_request);
@@ -229,13 +234,16 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     }
     case FileResource:
     {
-      if ((resource_info.file+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.file+=(MagickOffsetType) size;
       limit=resource_info.file_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.file < (MagickOffsetType) limit))
-        status=MagickTrue;
+      if ((resource_info.file+request) > resource_info.file)
+        {
+          resource_info.file+=request;
+          if ((limit == MagickResourceInfinity) ||
+              (resource_info.file < (MagickOffsetType) limit))
+            status=MagickTrue;
+          else
+            resource_info.file-=request;
+        }
       if (logging != MagickFalse)
         {
           (void) FormatMagickSize(size,MagickFalse,resource_request);
@@ -275,15 +283,16 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     }
     case MapResource:
     {
-      if ((resource_info.map+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.map+=(MagickOffsetType) size;
       limit=resource_info.map_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.map < (MagickOffsetType) limit))
-        status=MagickTrue;
-      else
-        resource_info.map-=(MagickOffsetType) size;
+      if ((resource_info.map+request) > resource_info.map)
+        {
+          resource_info.map+=request;
+          if ((limit == MagickResourceInfinity) ||
+              (resource_info.map < (MagickOffsetType) limit))
+            status=MagickTrue;
+          else
+            resource_info.map-=request;
+        }
       if (logging != MagickFalse)
         {
           (void) FormatMagickSize(size,MagickTrue,resource_request);
@@ -295,15 +304,16 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     }
     case MemoryResource:
     {
-      if ((resource_info.memory+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.memory+=(MagickOffsetType) size;
       limit=resource_info.memory_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.memory < (MagickOffsetType) limit))
-        status=MagickTrue;
-      else
-        resource_info.memory-=(MagickOffsetType) size;
+      if ((resource_info.memory+request) > resource_info.memory)
+        {
+          resource_info.memory+=request;
+          if ((limit == MagickResourceInfinity) ||
+              (resource_info.memory < (MagickOffsetType) limit))
+            status=MagickTrue;
+          else
+            resource_info.memory-=request;
+        }
       if (logging != MagickFalse)
         {
           (void) FormatMagickSize(size,MagickTrue,resource_request);
@@ -345,15 +355,16 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     }
     case TimeResource:
     {
-      if ((resource_info.time+(MagickOffsetType) size) < 0)
-        return(MagickFalse);
-      resource_info.time+=(MagickOffsetType) size;
       limit=resource_info.time_limit;
-      if ((limit == MagickResourceInfinity) ||
-          (resource_info.time < (MagickOffsetType) limit))
-        status=MagickTrue;
-      else
-        resource_info.time-=(MagickOffsetType) size;
+      if ((resource_info.time+request) > resource_info.time)
+        {
+          resource_info.time+=request;
+          if ((limit == MagickResourceInfinity) ||
+              (resource_info.time < (MagickOffsetType) limit))
+            status=MagickTrue;
+          else
+            resource_info.time-=request;
+        }
       if (logging != MagickFalse)
         {
           (void) FormatMagickSize(size,MagickFalse,resource_request);
