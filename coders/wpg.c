@@ -600,8 +600,9 @@ static int UnpackWPG2Raster(Image *image,int bpp)
             }
           break;
         case 0x7E:
-          (void) FormatLocaleFile(stderr,
-            "\nUnsupported WPG token XOR, please report!");
+          if (y == 0)
+            (void) FormatLocaleFile(stderr,
+              "\nUnsupported WPG token XOR, please report!");
           XorMe=!XorMe;
           break;
         case 0x7F:
@@ -1450,8 +1451,9 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
                   }
                 case 1:    /*RLE for WPG2 */
                   {
-                    if( UnpackWPG2Raster(image,bpp) < 0)
-                      goto DecompressionFailed;
+                    if(!image_info->ping)
+                      if( UnpackWPG2Raster(image,bpp) < 0)
+                        goto DecompressionFailed;
                     break;
                   }
                 }
