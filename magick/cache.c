@@ -817,10 +817,8 @@ static MagickBooleanType ClonePixelCacheRepository(
 #define MaxCacheThreads  ((size_t) GetMagickResourceLimit(ThreadResource))
 #define cache_number_threads(source,destination,chunk,multithreaded) \
   num_threads((multithreaded) == 0 ? 1 : \
-    (((source)->type != MemoryCache) && \
-     ((source)->type != MapCache)) || \
-    (((destination)->type != MemoryCache) && \
-     ((destination)->type != MapCache)) ? \
+    (((source)->type != MemoryCache) && ((source)->type != MapCache)) || \
+    (((destination)->type != MemoryCache) && ((destination)->type != MapCache)) ? \
     MagickMax(MagickMin(GetMagickResourceLimit(ThreadResource),2),1) : \
     MagickMax(MagickMin((ssize_t) GetMagickResourceLimit(ThreadResource),(ssize_t) (chunk)/256),1))
 
@@ -912,8 +910,7 @@ static MagickBooleanType ClonePixelCacheRepository(
       clone_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
       continue;
-    (void) memset(clone_nexus[id]->pixels,0,(size_t)
-      clone_nexus[id]->length);
+    (void) memset(clone_nexus[id]->pixels,0,(size_t) clone_nexus[id]->length);
     (void) memcpy(clone_nexus[id]->pixels,cache_nexus[id]->pixels,length);
     status=WritePixelCachePixels(clone_info,clone_nexus[id],exception);
   }
@@ -1389,8 +1386,7 @@ MagickPrivate cl_mem GetAuthenticOpenCLBuffer(const Image *image,
       context=GetOpenCLContext(clEnv);
       cache_info->opencl=(OpenCLCacheInfo *) AcquireCriticalMemory(
         sizeof(*cache_info->opencl));
-      (void) memset(cache_info->opencl,0,
-        sizeof(*cache_info->opencl));
+      (void) memset(cache_info->opencl,0,sizeof(*cache_info->opencl));
       cache_info->opencl->events_semaphore=AllocateSemaphoreInfo();
       cache_info->opencl->length=cache_info->length;
       cache_info->opencl->pixels=cache_info->pixels;
@@ -2011,10 +2007,8 @@ MagickExport MagickBooleanType GetOneAuthenticPixel(Image *image,
   cache_info=(CacheInfo *) image->cache;
   assert(cache_info->signature == MagickCoreSignature);
   *pixel=image->background_color;
-  if (cache_info->methods.get_one_authentic_pixel_from_handler !=
-       (GetOneAuthenticPixelFromHandler) NULL)
-    return(cache_info->methods.get_one_authentic_pixel_from_handler(image,x,y,
-      pixel,exception));
+  if (cache_info->methods.get_one_authentic_pixel_from_handler != (GetOneAuthenticPixelFromHandler) NULL)
+    return(cache_info->methods.get_one_authentic_pixel_from_handler(image,x,y,pixel,exception));
   pixels=GetAuthenticPixelsCache(image,x,y,1UL,1UL,exception);
   if (pixels == (PixelPacket *) NULL)
     return(MagickFalse);
@@ -5104,8 +5098,7 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
       nexus_info->cache=(PixelPacket *) MagickAssumeAligned(
         AcquireAlignedMemory(1,(size_t) nexus_info->length));
       if (nexus_info->cache != (PixelPacket *) NULL)
-        (void) memset(nexus_info->cache,0,(size_t)
-          nexus_info->length);
+        (void) memset(nexus_info->cache,0,(size_t) nexus_info->length);
     }
   else
     {
