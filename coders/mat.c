@@ -219,7 +219,7 @@ static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVa
     }
     if (*p < 0)
     {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelBlue(q));
+      f = (*p / MinVal) * (QuantumRange - GetPixelBlue(q));
       if (f + GetPixelBlue(q) > QuantumRange)
         SetPixelBlue(q,QuantumRange);
       else
