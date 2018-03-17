@@ -1073,6 +1073,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   image->columns = 1;
   image->rows = 1;
   image->colors = 0;
+  (void) ResetImagePixels(image,exception);
   bpp=0;
   BitmapHeader2.RotAngle=0;
   Rec2.RecordLength = 0;
@@ -1189,7 +1190,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
               status=SetImageExtent(image,image->columns,image->rows);
               if (status == MagickFalse)
                 break;
-              (void) SetImageBackgroundColor(image);
+              (void) ResetImagePixels(image,exception);
               if ((image->storage_class != PseudoClass) && (bpp < 24))
                 {
                   image->colors=one << bpp;
@@ -1396,7 +1397,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
               status=SetImageExtent(image,image->columns,image->rows);
               if (status == MagickFalse)
                 break;
-              (void) SetImageBackgroundColor(image);
+              (void) ResetImagePixels(image,exception);
               if ((image->colors == 0) && (bpp != 24))
                 {
                   size_t
