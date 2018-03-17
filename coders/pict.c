@@ -937,6 +937,12 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
       return(DestroyImageList(image));
     }
   image->matte=MagickTrue;
+  status=ResetImagePixels(image,exception);
+  if (status == MagickFalse)
+    {
+      InheritException(exception,&image->exception);
+      return(DestroyImageList(image));
+    }
   /*
     Interpret PICT opcodes.
   */
