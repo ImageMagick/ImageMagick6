@@ -1043,6 +1043,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   flag=(unsigned char) ReadBlobByte(image);
   background=(unsigned char) ReadBlobByte(image);
   c=(unsigned char) ReadBlobByte(image);  /* reserved */
+  profiles=(LinkedListInfo *) NULL;
   one=1;
   global_colors=one << (((size_t) flag & 0x07)+1);
   global_colormap=(unsigned char *) AcquireQuantumMemory((size_t)
@@ -1057,7 +1058,6 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (count != (ssize_t) (3*global_colors))
         ThrowGIFException(CorruptImageError,"InsufficientImageDataInFile");
     }
-  profiles=(LinkedListInfo *) NULL;
   duration=0;
   opacity=(-1);
   image_count=0;
