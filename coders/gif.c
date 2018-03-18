@@ -1048,22 +1048,14 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   global_colormap=(unsigned char *) AcquireQuantumMemory((size_t)
     MagickMax(global_colors,256),3UL*sizeof(*global_colormap));
   if (global_colormap == (unsigned char *) NULL)
-    {
-      meta_image=DestroyImage(meta_image);
-      ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-    }
+    ThrowGIFException(ResourceLimitError,"MemoryAllocationFailed");
   (void) memset(global_colormap,0,3*MagickMax(global_colors,256)*
     sizeof(*global_colormap));
   if (BitSet((int) flag,0x80) != 0)
     {
       count=ReadBlob(image,(size_t) (3*global_colors),global_colormap);
       if (count != (ssize_t) (3*global_colors))
-        {
-          global_colormap=(unsigned char *) RelinquishMagickMemory(
-            global_colormap);
-          meta_image=DestroyImage(meta_image);
-          ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
-        }
+        ThrowGIFException(CorruptImageError,"InsufficientImageDataInFile");
     }
   profiles=(LinkedListInfo *) NULL;
   duration=0;
