@@ -1261,7 +1261,12 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
-    (void) ResetImagePixels(image,exception);
+    status=ResetImagePixels(image,exception);
+    if (status == MagickFalse)
+      {
+        InheritException(exception,&image->exception);
+        return(DestroyImageList(image));
+      }
     /*
       Allocate image pixels.
     */

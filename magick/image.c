@@ -2283,8 +2283,14 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
   CacheView
     *image_view;
 
+  const void
+    *pixels;
+
   MagickBooleanType
     status;
+
+  MagickSizeType
+    length;
 
   ssize_t
     y;
@@ -2293,6 +2299,12 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(image->signature == MagickCoreSignature);
+  pixels=AcquirePixelCachePixels(image,&length,exception);
+  if (pixels != (void *) NULL)
+    {
+      (void) memset((void *) pixels,0,(size_t) length);
+      return(MagickTrue);
+    }
   /*
     Reset image pixels.
   */
