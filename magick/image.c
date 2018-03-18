@@ -536,7 +536,7 @@ MagickExport Image *AppendImages(const Image *images,
       y_offset-=geometry.y;
     image_view=AcquireVirtualCacheView(next,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-    #pragma omp parallel for schedule(static,4) shared(status) \
+    #pragma omp parallel for schedule(static) shared(status) \
       magick_number_threads(next,next,next->rows,1)
 #endif
     for (y=0; y < (ssize_t) next->rows; y++)
@@ -1098,7 +1098,7 @@ MagickExport MagickBooleanType CopyImagePixels(Image *image,
   source_view=AcquireVirtualCacheView(source_image,exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(progress,status) \
+  #pragma omp parallel for schedule(static) shared(progress,status) \
     magick_number_threads(source_image,image,geometry->height,1)
 #endif
   for (y=0; y < (ssize_t) geometry->height; y++)
@@ -1851,7 +1851,7 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
   GetMagickPixelPacket(image,&zero);
   image_view=AcquireVirtualCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -2110,7 +2110,7 @@ MagickExport Image *NewMagickImage(const ImageInfo *image_info,
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -2314,7 +2314,7 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
   status=MagickTrue;
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -2544,7 +2544,7 @@ MagickExport MagickBooleanType SetImageColor(Image *image,
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -3223,7 +3223,7 @@ MagickExport MagickBooleanType SetImageOpacity(Image *image,
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -3701,7 +3701,7 @@ MagickExport MagickBooleanType SyncImage(Image *image)
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(range_exception,status) \
+  #pragma omp parallel for schedule(static) shared(range_exception,status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)

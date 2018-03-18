@@ -527,7 +527,7 @@ MagickExport Image *EvaluateImages(const Image *images,
     {
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       key=GetRandomSecretKey(random_info[0]);
-      #pragma omp parallel for schedule(static,4) shared(progress,status) \
+      #pragma omp parallel for schedule(static) shared(progress,status) \
         magick_number_threads(image,images,image->rows,key == ~0UL)
 #endif
       for (y=0; y < (ssize_t) image->rows; y++)
@@ -634,7 +634,7 @@ MagickExport Image *EvaluateImages(const Image *images,
     {
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       key=GetRandomSecretKey(random_info[0]);
-      #pragma omp parallel for schedule(static,4) shared(progress,status) \
+      #pragma omp parallel for schedule(static) shared(progress,status) \
         magick_number_threads(image,images,image->rows,key == ~0UL)
 #endif
       for (y=0; y < (ssize_t) image->rows; y++)
@@ -830,7 +830,7 @@ MagickExport MagickBooleanType EvaluateImageChannel(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   key=GetRandomSecretKey(random_info[0]);
-  #pragma omp parallel for schedule(static,4) shared(progress,status) \
+  #pragma omp parallel for schedule(static) shared(progress,status) \
     magick_number_threads(image,image,image->rows,key == ~0UL)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -1107,7 +1107,7 @@ MagickExport MagickBooleanType FunctionImageChannel(Image *image,
   progress=0;
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(progress,status) \
+  #pragma omp parallel for schedule(static) shared(progress,status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -2801,7 +2801,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
   GetMagickPixelPacket(images,&zero);
   polynomial_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(progress,status) \
+  #pragma omp parallel for schedule(static) shared(progress,status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -3651,7 +3651,7 @@ MagickExport Image *StatisticImageChannel(const Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   statistic_view=AcquireAuthenticCacheView(statistic_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(progress,status) \
+  #pragma omp parallel for schedule(static) shared(progress,status) \
     magick_number_threads(image,statistic_image,statistic_image->rows,1)
 #endif
   for (y=0; y < (ssize_t) statistic_image->rows; y++)

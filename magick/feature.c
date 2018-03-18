@@ -316,7 +316,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
   status=MagickTrue;
   edge_view=AcquireVirtualCacheView(edge_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(edge_image,edge_image,edge_image->rows,1)
 #endif
   for (y=0; y < (ssize_t) edge_image->rows; y++)
@@ -428,7 +428,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
   min=element.intensity;
   edge_view=AcquireAuthenticCacheView(edge_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(edge_image,edge_image,edge_image->rows,1)
 #endif
   for (y=0; y < (ssize_t) edge_image->rows; y++)
@@ -714,7 +714,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
   status=MagickTrue;
   image_view=AcquireVirtualCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,image->rows,1)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -1094,7 +1094,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
     Compute texture features.
   */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,number_grays,1)
 #endif
   for (i=0; i < 4; i++)
@@ -1279,7 +1279,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
     Compute more texture features.
   */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,number_grays,1)
 #endif
   for (i=0; i < 4; i++)
@@ -1355,7 +1355,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
     Compute more texture features.
   */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,number_grays,1)
 #endif
   for (i=0; i < 4; i++)
@@ -1474,7 +1474,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
   (void) memset(&variance,0,sizeof(variance));
   (void) memset(&sum_squares,0,sizeof(sum_squares));
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,number_grays,1)
 #endif
   for (i=0; i < 4; i++)
@@ -1626,7 +1626,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
     Compute more texture features.
   */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status) \
     magick_number_threads(image,image,number_grays,1)
 #endif
   for (i=0; i < 4; i++)
@@ -2210,7 +2210,7 @@ MagickExport Image *MeanShiftImage(const Image *image,const size_t width,
   pixel_view=AcquireVirtualCacheView(image,exception);
   mean_view=AcquireAuthenticCacheView(mean_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,4) shared(status,progress) \
+  #pragma omp parallel for schedule(static) shared(status,progress) \
     magick_number_threads(mean_image,mean_image,mean_image->rows,1)
 #endif
   for (y=0; y < (ssize_t) mean_image->rows; y++)
