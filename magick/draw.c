@@ -92,6 +92,7 @@
 */
 #define BezierQuantum  200
 #define DrawEpsilon  (1.0e-10)
+#define EllipseEpsilon  (0.0001)
 #define ThrowPointExpectedException(image,token) \
 { \
   (void) ThrowMagickException(&(image)->exception,GetMagickModule(),DrawError, \
@@ -1684,8 +1685,8 @@ static size_t EllipsePoints(const PrimitiveInfo *primitive_info,
   step=MagickPI/8.0; 
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  if (step < 0.00001)
-    step=0.00001;
+  if (step < EllipseEpsilon)
+    step=EllipseEpsilon;
   angle.x=DegreesToRadians(degrees.x);
   y=degrees.y;
   while (y < degrees.x)
@@ -5436,8 +5437,8 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  if (step < 0.00001)
-    step=0.00001;
+  if (step < EllipseEpsilon)
+    step=EllipseEpsilon;
   angle.x=DegreesToRadians(degrees.x);
   y=degrees.y;
   while (y < degrees.x)
