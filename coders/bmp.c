@@ -233,7 +233,7 @@ static MagickBooleanType DecodeImage(Image *image,const size_t compression,
     MagickBooleanType
       status;
 
-    if ((p < pixels) || (p >= q))
+    if ((p < pixels) || (p > q))
       break;
     count=ReadBlobByte(image);
     if (count == EOF)
@@ -287,14 +287,8 @@ static MagickBooleanType DecodeImage(Image *image,const size_t compression,
             /*
               Delta mode.
             */
-            byte=ReadBlobByte(image);
-            if (byte == EOF)
-              break;
-            x+=byte;
-            byte=ReadBlobByte(image);
-            if (byte == EOF)
-              break;
-            y+=byte;
+            x+=ReadBlobByte(image);
+            y+=ReadBlobByte(image);
             p=pixels+y*image->columns+x;
             break;
           }
@@ -304,8 +298,6 @@ static MagickBooleanType DecodeImage(Image *image,const size_t compression,
               Absolute mode.
             */
             count=(int) MagickMin((ssize_t) count,(ssize_t) (q-p));
-            if (count < 0)
-              break;
             if (compression == BI_RLE8)
               for (i=0; i < (ssize_t) count; i++)
               {
