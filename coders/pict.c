@@ -997,6 +997,12 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                 InheritException(exception,&image->exception);
                 return(DestroyImageList(image));
               }
+            status=ResetImagePixels(image,exception);
+            if (status == MagickFalse)
+              {
+                InheritException(exception,&image->exception);
+                return(DestroyImageList(image));
+              }
             break;
           }
           case 0x12:
@@ -1340,7 +1346,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                 break;
             }
             pixels=(unsigned char *) RelinquishMagickMemory(pixels);
-            if (jpeg == MagickFalse)
+            if ((jpeg == MagickFalse) && (EOFBlob(image) == MagickFalse))
               if ((code == 0x9a) || (code == 0x9b) ||
                   ((bytes_per_line & 0x8000) != 0))
                 (void) CompositeImage(image,CopyCompositeOp,tile_image,
