@@ -2119,6 +2119,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
   double *beta,ExceptionInfo *exception)
 {
 #define FxMaxParenthesisDepth  58
+#define FxMaxSubexpressionDepth  200
 
   char
     *q,
@@ -2132,7 +2133,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
     *p;
 
   *beta=0.0;
-  if (depth > MagickMaxRecursionDepth)
+  if (depth > FxMaxSubexpressionDepth)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
         "UnableToParseExpression","`%s'",expression);
