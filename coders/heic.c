@@ -57,6 +57,7 @@
 #include "magick/montage.h"
 #include "magick/transform.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/option.h"
 #include "magick/pixel-accessor.h"
 #include "magick/quantum-private.h"
@@ -405,7 +406,7 @@ static MagickBooleanType ParseIpcoAtom(Image *image, DataBuffer *db,
     prop = &(ctx->itemProps[ctx->itemPropsCount]);
     prop->type = atom;
     prop->size = length - 8;
-    prop->data = (uint8_t *) AcquireMagickMemory(prop->size);
+    prop->data = (uint8_t *) AcquireCriticalMemory(prop->size);
     if (DBChop(&propDb, db, prop->size) != MagickTrue) {
       ThrowAndReturn("incorrect read size");
     }
