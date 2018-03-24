@@ -181,10 +181,7 @@ static Image *ReadARTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     pixels=(const unsigned char *) ReadBlobStream(image,length,
       GetQuantumPixels(quantum_info),&count);
     if (count != (ssize_t) length)
-      {
-        quantum_info=DestroyQuantumInfo(quantum_info);
-        ThrowReaderException(CorruptImageError,"UnableToReadImageData");
-      }
+      break;
     (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
       quantum_type,pixels,exception);
     (void) ReadBlobStream(image,(size_t) (-(ssize_t) length) & 0x01,
@@ -198,6 +195,8 @@ static Image *ReadARTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   }
   SetQuantumImageType(image,quantum_type);
   quantum_info=DestroyQuantumInfo(quantum_info);
+  if (y < (ssize_t) image->rows)
+    ThrowReaderException(CorruptImageError,"UnableToReadImageData");
   if (EOFBlob(image) != MagickFalse)
     ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
       image->filename);
