@@ -338,6 +338,9 @@ typedef struct _DrawInfo
   double
     fill_opacity,
     stroke_opacity;
+
+  MagickBooleanType
+    clip_path;
 } DrawInfo;
 
 typedef struct _PrimitiveInfo
