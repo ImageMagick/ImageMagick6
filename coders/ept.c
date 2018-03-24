@@ -385,7 +385,7 @@ ModuleExport void UnregisterEPTImage(void)
 static MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image)
 {
   char
-     filename[MaxTextExtent];
+    filename[MaxTextExtent];
 
   EPTInfo
     ept_info;

@@ -135,6 +135,7 @@ ModuleExport size_t RegisterPS3Image(void)
   entry->mime_type=ConstantString("application/postscript");
   entry->module=ConstantString("PS3");
   entry->seekable_stream=MagickTrue;
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PS3");
   entry->encoder=(EncodeImageHandler *) WritePS3Image;
@@ -142,6 +143,7 @@ ModuleExport size_t RegisterPS3Image(void)
   entry->mime_type=ConstantString("application/postscript");
   entry->module=ConstantString("PS3");
   entry->seekable_stream=MagickTrue;
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
