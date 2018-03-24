@@ -171,7 +171,10 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
   (void) SetImageVirtualPixelMethod(canvas_image,BlackVirtualPixelMethod);
   quantum_info=AcquireQuantumInfo(image_info,canvas_image);
   if (quantum_info == (QuantumInfo *) NULL)
-    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+    {
+      canvas_image=DestroyImage(canvas_image);
+      ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+    }
   quantum_type=CMYKQuantum;
   if (LocaleCompare(image_info->magick,"CMYKA") == 0)
     {
@@ -225,8 +228,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             length=GetQuantumExtent(canvas_image,quantum_info,quantum_type);
             pixels=(const unsigned char *) ReadBlobStream(image,length,
               GetQuantumPixels(quantum_info),&count);
-            if (count != (ssize_t) length)
-              break;
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
@@ -297,8 +298,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         break;
       }
@@ -322,35 +321,33 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             length=GetQuantumExtent(canvas_image,quantum_info,CyanQuantum);
             pixels=(const unsigned char *) ReadBlobStream(image,length,
               GetQuantumPixels(quantum_info),&count);
-            if (count != (ssize_t) length)
-              break;
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const IndexPacket
-            *magick_restrict canvas_indexes;
-
-          register const PixelPacket
-            *magick_restrict p;
-
-          register IndexPacket
-            *magick_restrict indexes;
-
-          register PixelPacket
-            *magick_restrict q;
-
-          register ssize_t
-            x;
-
-          if (count != (ssize_t) length)
-            {
-              status=MagickFalse;
-              ThrowFileException(exception,CorruptImageError,
-                "UnexpectedEndOfFile",image->filename);
-              break;
-            }
           for (i=0; i < (ssize_t) (image->matte != MagickFalse ? 5 : 4); i++)
           {
+            register const IndexPacket
+              *magick_restrict canvas_indexes;
+
+            register const PixelPacket
+              *magick_restrict p;
+
+            register IndexPacket
+              *magick_restrict indexes;
+
+            register PixelPacket
+              *magick_restrict q;
+
+            register ssize_t
+              x;
+
+            if (count != (ssize_t) length)
+              {
+                status=MagickFalse;
+                ThrowFileException(exception,CorruptImageError,
+                  "UnexpectedEndOfFile",image->filename);
+                break;
+              }
             quantum_type=quantum_types[i];
             q=GetAuthenticPixels(canvas_image,0,0,canvas_image->columns,1,
               exception);
@@ -413,8 +410,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               }
             pixels=(const unsigned char *) ReadBlobStream(image,length,
               GetQuantumPixels(quantum_info),&count);
-            if (count != (ssize_t) length)
-              break;
           }
           if (image->previous == (Image *) NULL)
             {
@@ -436,8 +431,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             length=GetQuantumExtent(canvas_image,quantum_info,CyanQuantum);
             pixels=(const unsigned char *) ReadBlobStream(image,length,
               GetQuantumPixels(quantum_info),&count);
-            if (count != (ssize_t) length)
-              break;
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
@@ -486,8 +479,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -542,8 +533,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
            }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -597,8 +586,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -662,8 +649,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -721,8 +706,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                 }
               pixels=(const unsigned char *) ReadBlobStream(image,length,
                 GetQuantumPixels(quantum_info),&count);
-              if (count != (ssize_t) length)
-                break;
             }
             if (image->previous == (Image *) NULL)
               {
@@ -747,32 +730,29 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
         AppendImageFormat("C",image->filename);
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
-          {
-            canvas_image=DestroyImageList(canvas_image);
-            image=DestroyImageList(image);
-            return((Image *) NULL);
-          }
+          break;
         if (DiscardBlobBytes(image,(MagickSizeType) image->offset) == MagickFalse)
-          ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
-            image->filename);
+          {
+            status=MagickFalse;
+            ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
+              image->filename);
+            break;
+          }
         length=GetQuantumExtent(canvas_image,quantum_info,CyanQuantum);
         for (i=0; i < (ssize_t) scene; i++)
+        {
           for (y=0; y < (ssize_t) image->extract_info.height; y++)
           {
             (void) ReadBlobStream(image,length,GetQuantumPixels(quantum_info),
               &count);
             if (count != (ssize_t) length)
-              {
-                status=MagickFalse;
-                ThrowFileException(exception,CorruptImageError,
-                  "UnexpectedEndOfFile",image->filename);
-                break;
-              }
+              break;
           }
+          if (count != (ssize_t) length)
+            break;
+        }
         pixels=(const unsigned char *) ReadBlobStream(image,length,
           GetQuantumPixels(quantum_info),&count);
-        if (count != (ssize_t) length)
-          break;
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
           register const PixelPacket
@@ -820,8 +800,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -833,29 +811,22 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
         AppendImageFormat("M",image->filename);
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
-          {
-            canvas_image=DestroyImageList(canvas_image);
-            image=DestroyImageList(image);
-            return((Image *) NULL);
-          }
+          break;
         length=GetQuantumExtent(canvas_image,quantum_info,MagentaQuantum);
         for (i=0; i < (ssize_t) scene; i++)
+        {
           for (y=0; y < (ssize_t) image->extract_info.height; y++)
           {
             (void) ReadBlobStream(image,length,GetQuantumPixels(quantum_info),
               &count);
             if (count != (ssize_t) length)
-              {
-                status=MagickFalse;
-                ThrowFileException(exception,CorruptImageError,
-                  "UnexpectedEndOfFile",image->filename);
-                break;
-              }
+              break;
           }
+          if (count != (ssize_t) length)
+            break;
+        }
         pixels=(const unsigned char *) ReadBlobStream(image,length,
           GetQuantumPixels(quantum_info),&count);
-        if (count != (ssize_t) length)
-          break;
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
           register const PixelPacket
@@ -903,8 +874,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
            }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -916,29 +885,22 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
         AppendImageFormat("Y",image->filename);
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
-          {
-            canvas_image=DestroyImageList(canvas_image);
-            image=DestroyImageList(image);
-            return((Image *) NULL);
-          }
+          break;
         length=GetQuantumExtent(canvas_image,quantum_info,YellowQuantum);
         for (i=0; i < (ssize_t) scene; i++)
+        {
           for (y=0; y < (ssize_t) image->extract_info.height; y++)
           {
             (void) ReadBlobStream(image,length,GetQuantumPixels(quantum_info),
               &count);
             if (count != (ssize_t) length)
-              {
-                status=MagickFalse;
-                ThrowFileException(exception,CorruptImageError,
-                  "UnexpectedEndOfFile",image->filename);
-                break;
-              }
+              break;
           }
+          if (count != (ssize_t) length)
+            break;
+        }
         pixels=(const unsigned char *) ReadBlobStream(image,length,
           GetQuantumPixels(quantum_info),&count);
-        if (count != (ssize_t) length)
-          break;
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
           register const PixelPacket
@@ -986,8 +948,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
            }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -999,29 +959,22 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
         AppendImageFormat("K",image->filename);
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
-          {
-            canvas_image=DestroyImageList(canvas_image);
-            image=DestroyImageList(image);
-            return((Image *) NULL);
-          }
+          break;
         length=GetQuantumExtent(canvas_image,quantum_info,BlackQuantum);
         for (i=0; i < (ssize_t) scene; i++)
+        {
           for (y=0; y < (ssize_t) image->extract_info.height; y++)
           {
             (void) ReadBlobStream(image,length,GetQuantumPixels(quantum_info),
               &count);
             if (count != (ssize_t) length)
-              {
-                status=MagickFalse;
-                ThrowFileException(exception,CorruptImageError,
-                  "UnexpectedEndOfFile",image->filename);
-                break;
-              }
+              break;
           }
+          if (count != (ssize_t) length)
+            break;
+        }
         pixels=(const unsigned char *) ReadBlobStream(image,length,
           GetQuantumPixels(quantum_info),&count);
-        if (count != (ssize_t) length)
-          break;
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
           register const IndexPacket
@@ -1078,8 +1031,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
            }
           pixels=(const unsigned char *) ReadBlobStream(image,length,
             GetQuantumPixels(quantum_info),&count);
-          if (count != (ssize_t) length)
-            break;
         }
         if (image->previous == (Image *) NULL)
           {
@@ -1093,29 +1044,22 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             AppendImageFormat("A",image->filename);
             status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
             if (status == MagickFalse)
-              {
-                canvas_image=DestroyImageList(canvas_image);
-                image=DestroyImageList(image);
-                return((Image *) NULL);
-              }
+              break;
             length=GetQuantumExtent(canvas_image,quantum_info,AlphaQuantum);
             for (i=0; i < (ssize_t) scene; i++)
+            {
               for (y=0; y < (ssize_t) image->extract_info.height; y++)
               {
                 (void) ReadBlobStream(image,length,GetQuantumPixels(
                   quantum_info),&count);
                 if (count != (ssize_t) length)
-                  {
-                    status=MagickFalse;
-                    ThrowFileException(exception,CorruptImageError,
-                      "UnexpectedEndOfFile",image->filename);
-                    break;
-                  }
+                  break;
               }
+              if (count != (ssize_t) length)
+                break;
+            }
             pixels=(const unsigned char *) ReadBlobStream(image,length,
               GetQuantumPixels(quantum_info),&count);
-            if (count != (ssize_t) length)
-              break;
             for (y=0; y < (ssize_t) image->extract_info.height; y++)
             {
               register const PixelPacket
@@ -1163,8 +1107,6 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                }
               pixels=(const unsigned char *) ReadBlobStream(image,length,
                 GetQuantumPixels(quantum_info),&count);
-              if (count != (ssize_t) length)
-                break;
             }
             if (image->previous == (Image *) NULL)
               {
@@ -1182,6 +1124,8 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
         break;
       }
     }
+    if (status == MagickFalse)
+      break;
     SetQuantumImageType(image,quantum_type);
     /*
       Proceed to next image.
