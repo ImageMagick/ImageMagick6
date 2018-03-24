@@ -352,7 +352,7 @@ static MagickBooleanType WriteARTImage(const ImageInfo *image_info,Image *image)
       GrayQuantum,pixels,&image->exception);
     count=WriteBlob(image,length,pixels);
     if (count != (ssize_t) length)
-      ThrowWriterException(CorruptImageError,"UnableToWriteImageData");
+      break;
     (void) WriteBlob(image,(size_t) (-(ssize_t) length) & 0x01,pixels);
     status=SetImageProgress(image,SaveImageTag,(MagickOffsetType) y,
       image->rows);
@@ -361,6 +361,8 @@ static MagickBooleanType WriteARTImage(const ImageInfo *image_info,Image *image)
   }
   quantum_info=DestroyQuantumInfo(quantum_info);
   pixels=(unsigned char *) RelinquishMagickMemory(pixels);
+  if (y < (ssize_t) image->rows)
+    ThrowWriterException(CorruptImageError,"UnableToWriteImageData");
   (void) CloseBlob(image);
   return(MagickTrue);
 }
