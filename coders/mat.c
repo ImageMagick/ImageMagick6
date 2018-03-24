@@ -958,7 +958,7 @@ MATLAB_KO:
   while(!EOFBlob(image)) /* object parser loop */
   {
     Frames = 1;
-    (void) SeekBlob(image,filepos,SEEK_SET);
+    if(SeekBlob(image,filepos,SEEK_SET) != filepos) break;
     /* printf("pos=%X\n",TellBlob(image)); */
 
     MATLAB_HDR.DataType = ReadBlobXXXLong(image);
@@ -1373,7 +1373,7 @@ done_reading:
     {
       z = z2;
       if(image2==NULL) image2 = image;
-      if (EOFBlob(image) == MagickFalse)
+      if(!EOFBlob(image) && TellBlob(image)<filepos)
         goto NEXT_FRAME;
     }
 
