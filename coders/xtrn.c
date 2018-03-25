@@ -315,6 +315,9 @@ static MagickBooleanType WriteXTRNImage(const ImageInfo *image_info,
   char
     filename[MaxTextExtent];
 
+  ExceptionInfo
+    *sans_exception;
+
   Image
     *p;
 
@@ -353,8 +356,9 @@ static MagickBooleanType WriteXTRNImage(const ImageInfo *image_info,
       SetImageInfo(clone_info,1,&image->exception);
       (void) CopyMagickString(image->magick,clone_info->magick,
         MaxTextExtent);
-      blob_data=ImageToBlob(clone_info,image,&blob_length,
-        &image->exception);
+      sans_exception=AcquireExceptionInfo();
+      blob_data=ImageToBlob(clone_info,image,&blob_length,sans_exception);
+      sans_exception=DestroyExceptionInfo(sans_exception);
       if (blob_data == (unsigned char *) NULL)
         status=MagickFalse;
       else
