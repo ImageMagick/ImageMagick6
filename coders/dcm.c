@@ -2900,7 +2900,7 @@ static MagickBooleanType ReadDCMPixels(Image *image,DCMInfo *info,
                   double
                     window_max,
                     window_min;
-    
+
                   window_min=ceil(info->window_center-
                     (info->window_width-1.0)/2.0-0.5);
                   window_max=floor(info->window_center+
@@ -3418,6 +3418,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               Samples per pixel.
             */
             info.samples_per_pixel=(size_t) datum;
+            if ((info.samples_per_pixel == 0) || (info.samples_per_pixel > 4))
+              ThrowDCMException(CorruptImageError,"ImproperImageHeader");
             break;
           }
           case 0x0004:
