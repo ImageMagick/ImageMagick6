@@ -983,7 +983,7 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
       for (i=1; i < (ssize_t) number_families; i++)
       {
         type_info=GetTypeInfoByFamily(family[i],draw_info->style,
-          draw_info->stretch,draw_info->weight,exception);
+          draw_info->stretch,draw_info->weight,&image->exception);
         if (type_info != (const TypeInfo *) NULL)
           break;
       }
@@ -991,8 +991,8 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
         family[i]=DestroyString(family[i]);
       family=(char **) RelinquishMagickMemory(family);
       if (type_info == (const TypeInfo *) NULL)
-        (void) ThrowMagickException(exception,GetMagickModule(),TypeWarning,
-          "UnableToReadFont","`%s'",draw_info->family);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          TypeWarning,"UnableToReadFont","`%s'",draw_info->family);
     }
   if (type_info == (const TypeInfo *) NULL)
     type_info=GetTypeInfoByFamily("Arial",draw_info->style,
