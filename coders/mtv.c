@@ -143,6 +143,7 @@ static Image *ReadMTVImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Read MTV image.
   */
+  (void) memset(buffer,0,sizeof(buffer));
   (void) ReadBlobString(image,buffer);
   count=(ssize_t) sscanf(buffer,"%lu %lu\n",&columns,&rows);
   if (count <= 0)
