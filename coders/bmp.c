@@ -596,10 +596,6 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
     PixelPacket
       quantum_bits;
 
-    size_t
-      profile_data,
-      profile_size;
-
     /*
       Verify BMP identifier.
     */
@@ -675,8 +671,6 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
         bmp_info.y_pixels=ReadBlobLSBLong(image);
         bmp_info.number_colors=ReadBlobLSBLong(image);
         bmp_info.colors_important=ReadBlobLSBLong(image);
-        profile_data=0;
-        profile_size=0;
         if (image->debug != MagickFalse)
           {
             (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -831,10 +825,8 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 break;
               }
             }
-            profile_data=ReadBlobLSBLong(image);
-            profile_size=ReadBlobLSBLong(image);
-            (void) profile_data;
-            (void) profile_size;
+            (void) ReadBlobLSBLong(image);  /* Profile data */
+            (void) ReadBlobLSBLong(image);  /* Profile size */
             (void) ReadBlobLSBLong(image);  /* Reserved byte */
           }
       }
