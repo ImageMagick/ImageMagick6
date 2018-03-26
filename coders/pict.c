@@ -43,6 +43,7 @@
 #include "magick/blob.h"
 #include "magick/blob-private.h"
 #include "magick/cache.h"
+#include "magick/channel.h"
 #include "magick/color-private.h"
 #include "magick/colormap.h"
 #include "magick/colormap-private.h"
@@ -1179,7 +1180,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                 tile_image->y_resolution=(double) pixmap.vertical_resolution;
                 tile_image->units=PixelsPerInchResolution;
                 if (tile_image->matte != MagickFalse)
-                  image->matte=tile_image->matte;
+                  (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
               }
             if ((code != 0x9a) && (code != 0x9b))
               {
