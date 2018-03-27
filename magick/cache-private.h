@@ -306,7 +306,7 @@ extern MagickPrivate cl_event
   *GetOpenCLEvents(const Image *,cl_uint *);
 
 extern MagickPrivate cl_mem
-  GetAuthenticOpenCLBuffer(const Image *,ExceptionInfo *);
+  GetAuthenticOpenCLBuffer(Image *,ExceptionInfo *);
 
 extern MagickPrivate void
   AddOpenCLEvent(const Image *,cl_event),
