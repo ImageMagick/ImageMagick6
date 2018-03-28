@@ -1475,12 +1475,11 @@ RestoreMSCWarning
       if (value != (const char *) NULL)
         (void) CopyMagickString(create_date,value,MaxTextExtent);
       (void) FormatMagickTime(time((time_t *) NULL),MaxTextExtent,timestamp);
-      url=GetMagickHomeURL();
+      url=MagickAuthoritativeURL;
       escape=EscapeParenthesis(basename);
       i=FormatLocaleString(xmp_profile,MaxTextExtent,XMPProfile,
         XMPProfileMagick,modify_date,create_date,timestamp,url,escape,url);
       escape=DestroyString(escape);
-      url=DestroyString(url);
       (void) FormatLocaleString(buffer,MaxTextExtent,"/Length %.20g\n",(double)
         i);
       (void) WriteBlobString(image,buffer);
@@ -2975,11 +2974,10 @@ RestoreMSCWarning
   (void) WriteBlobString(image,buffer);
   (void) FormatLocaleString(buffer,MaxTextExtent,"/ModDate (%s)\n",date);
   (void) WriteBlobString(image,buffer);
-  url=GetMagickHomeURL();
+  url=MagickAuthoritativeURL;
   escape=EscapeParenthesis(url);
   (void) FormatLocaleString(buffer,MaxTextExtent,"/Producer (%s)\n",escape);
   escape=DestroyString(escape);
-  url=DestroyString(url);
   (void) WriteBlobString(image,buffer);
   (void) WriteBlobString(image,">>\n");
   (void) WriteBlobString(image,"endobj\n");

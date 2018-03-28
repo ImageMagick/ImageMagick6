@@ -1,3 +1,6 @@
+2018-03-26  6.9.9-41 Cristy  <quetzlzacatenango@image...>
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+
 2018-03-24  6.9.9-40 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.9-40, GIT revision 13136:8b7024499:20180325.
 
