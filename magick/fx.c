@@ -1283,7 +1283,6 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
 {
   char
     *q,
-    subexpression[MaxTextExtent],
     symbol[MaxTextExtent];
 
   const char
@@ -1322,6 +1321,10 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
   point.y=(double) y;
   if (isalpha((int) ((unsigned char) *(p+1))) == 0)
     {
+      char
+        *subexpression;
+
+      subexpression=AcquireString(expression);
       if (strchr("suv",(int) *p) != (char *) NULL)
         {
           switch (*p)
@@ -1420,6 +1423,7 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
           if (*p == '.')
             p++;
         }
+      subexpression=DestroyString(subexpression);
     }
   length=GetImageListLength(fx_info->images);
   while (i < 0)
