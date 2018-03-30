@@ -1584,7 +1584,7 @@ RestoreMSCWarning
           }
       }
     method=ReadGenericMethod;
-    if (TIFFGetField(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
+    if (TIFFGetFieldDefaulted(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
       {
         char
           value[MaxTextExtent];
