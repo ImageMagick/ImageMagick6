@@ -5946,8 +5946,12 @@ static size_t TracePath(Image *image,PrimitiveInfo *primitive_info,
       default:
       {
         if (isalpha((int) ((unsigned char) attribute)) != 0)
-          (void) FormatLocaleFile(stderr,"attribute not recognized: %c\n",
-            attribute);
+          {
+            (void) ThrowMagickException(&image->exception,GetMagickModule(),
+              DrawError,"attribute not recognized","`%c'",attribute);
+            primitive_info->coordinates=0;
+            return(0);
+          }
         break;
       }
     }
