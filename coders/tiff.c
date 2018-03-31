@@ -871,13 +871,12 @@ static tsize_t TIFFReadBlob(thandle_t image,tdata_t data,tsize_t size)
   return(count);
 }
 
-static int32 TIFFReadPixels(TIFF *tiff,size_t bits_per_sample,
-  tsample_t sample,ssize_t row,tdata_t scanline)
+static int32 TIFFReadPixels(TIFF *tiff,tsample_t sample,ssize_t row,
+  tdata_t scanline)
 {
   int32
     status;
 
-  (void) bits_per_sample;
   status=TIFFReadScanline(tiff,scanline,(uint32) row,sample);
   return(status);
 }
@@ -1137,6 +1136,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     i;
 
   size_t
+    number_pixels,
     pad;
 
   ssize_t
@@ -1626,12 +1626,13 @@ RestoreMSCWarning
     quantum_type=RGBQuantum;
     if (((MagickSizeType) TIFFScanlineSize(tiff)) > GetBlobSize(image))
       ThrowTIFFException(CorruptImageError,"InsufficientImageDataInFile");
-    tiff_pixels=(unsigned char *) AcquireMagickMemory(MagickMax(
-      TIFFScanlineSize(tiff),MagickMax((ssize_t) image->columns*
-      samples_per_pixel*pow(2.0,ceil(log(bits_per_sample)/log(2.0))),
-      image->columns*rows_per_strip)*sizeof(uint32)));
+    number_pixels=MagickMax(TIFFScanlineSize(tiff),MagickMax((ssize_t) 
+      image->columns*samples_per_pixel*pow(2.0,ceil(log(bits_per_sample)/
+      log(2.0))),image->columns*rows_per_strip)*sizeof(uint32));
+    tiff_pixels=(unsigned char *) AcquireMagickMemory(number_pixels);
     if (tiff_pixels == (unsigned char *) NULL)
       ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
+    (void) ResetMagickMemory(tiff_pixels,0,number_pixels);
     switch (method)
     {
       case ReadSingleSampleMethod:
@@ -1673,7 +1674,7 @@ RestoreMSCWarning
           register PixelPacket
             *magick_restrict q;
 
-          status=TIFFReadPixels(tiff,bits_per_sample,0,y,(char *) tiff_pixels);
+          status=TIFFReadPixels(tiff,0,y,(char *) tiff_pixels);
           if (status == -1)
             break;
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -1726,7 +1727,7 @@ RestoreMSCWarning
           register PixelPacket
             *magick_restrict q;
 
-          status=TIFFReadPixels(tiff,bits_per_sample,0,y,(char *) tiff_pixels);
+          status=TIFFReadPixels(tiff,0,y,(char *) tiff_pixels);
           if (status == -1)
             break;
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -1761,8 +1762,7 @@ RestoreMSCWarning
             int
               status;
 
-            status=TIFFReadPixels(tiff,bits_per_sample,(tsample_t) i,y,(char *)
-              tiff_pixels);
+            status=TIFFReadPixels(tiff,(tsample_t) i,y,(char *) tiff_pixels);
             if (status == -1)
               break;
             q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -1821,7 +1821,7 @@ RestoreMSCWarning
           unsigned char
             *p;
 
-          status=TIFFReadPixels(tiff,bits_per_sample,0,y,(char *) tiff_pixels);
+          status=TIFFReadPixels(tiff,0,y,(char *) tiff_pixels);
           if (status == -1)
             break;
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
