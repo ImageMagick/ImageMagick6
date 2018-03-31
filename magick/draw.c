@@ -1664,8 +1664,8 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
 %
 */
 
-static size_t EllipsePoints(const PrimitiveInfo *primitive_info,
-  const PointInfo start,const PointInfo stop,const PointInfo degrees)
+static size_t GetEllipseCoordinates(const PointInfo start,const PointInfo stop,
+  const PointInfo degrees)
 {
   double
     delta,
@@ -1675,19 +1675,16 @@ static size_t EllipsePoints(const PrimitiveInfo *primitive_info,
   PointInfo
     angle;
 
-  register const PrimitiveInfo
-    *p;
-  
   size_t
-    number_points;
-  
+    coordinates;
+
   /*
     Ellipses are just short segmented polys.
-  */ 
+  */
   if ((fabs(stop.x) < DrawEpsilon) && (fabs(stop.y) < DrawEpsilon))
     return(1);
   delta=2.0/MagickMax(stop.x,stop.y);
-  step=MagickPI/8.0; 
+  step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
   if (step < EllipseEpsilon)
@@ -1697,13 +1694,50 @@ static size_t EllipsePoints(const PrimitiveInfo *primitive_info,
   while (y < degrees.x)
     y+=360.0;
   angle.y=DegreesToRadians(y);
-  number_points=0;
-  for (p=primitive_info; angle.x < angle.y; angle.x+=step)
-  { 
-    number_points++;
-    p+=p->coordinates;
-  }
-  return(number_points+1);
+  for (coordinates=0; angle.x < angle.y; angle.x+=step)
+    coordinates++;
+  return(coordinates+1);
+}
+
+static size_t GetRoundRectangleCoordinates(const PointInfo start,
+  const PointInfo end,PointInfo arc)
+{
+  PointInfo
+    degrees,
+    offset,
+    point;
+
+  size_t
+    coordinates;
+
+  coordinates=0;
+  offset.x=fabs(end.x-start.x);
+  offset.y=fabs(end.y-start.y);
+  if (arc.x > (0.5*offset.x))
+    arc.x=0.5*offset.x;
+  if (arc.y > (0.5*offset.y))
+    arc.y=0.5*offset.y;
+  point.x=start.x+offset.x-arc.x;
+  point.y=start.y+arc.y;
+  degrees.x=270.0;
+  degrees.y=360.0;
+  coordinates+=GetEllipseCoordinates(point,arc,degrees);
+  point.x=start.x+offset.x-arc.x;
+  point.y=start.y+offset.y-arc.y;
+  degrees.x=0.0;
+  degrees.y=90.0;
+  coordinates+=GetEllipseCoordinates(point,arc,degrees);
+  point.x=start.x+arc.x;
+  point.y=start.y+offset.y-arc.y;
+  degrees.x=90.0;
+  degrees.y=180.0;
+  coordinates+=GetEllipseCoordinates(point,arc,degrees);
+  point.x=start.x+arc.x;
+  point.y=start.y+arc.y;
+  degrees.x=180.0;
+  degrees.y=270.0;
+  coordinates+=GetEllipseCoordinates(point,arc,degrees);
+  return(coordinates+1);
 }
 
 static inline MagickBooleanType IsPoint(const char *point)
@@ -1749,7 +1783,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
   double
     angle,
     factor,
-    points_extent,
     primitive_extent;
 
   DrawInfo
@@ -1787,6 +1820,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     bounds;
 
   size_t
+    coordinates,
     extent;
 
   ssize_t
@@ -3019,35 +3053,18 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     /*
       Speculate how many points our primitive might consume.
     */
-    points_extent=(double) primitive_info[j].coordinates;
+    coordinates=primitive_info[j].coordinates;
     switch (primitive_type)
     {
       case RectanglePrimitive:
       {
-        points_extent*=5;
+        coordinates*=5;
         break;
       }
       case RoundRectanglePrimitive:
       {
-        double
-          alpha,
-          beta,
-          coordinates,
-          radius;
-
-        alpha=bounds.x2-bounds.x1;
-        beta=bounds.y2-bounds.y1;
-        radius=hypot((double) alpha,(double) beta);
-        coordinates=ceil(MagickPI*MagickPI*radius)+6*BezierQuantum+360;
-        if (coordinates > 21438)
-          {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              DrawError,"TooManyBezierCoordinates","`%s'",token);
-            status=MagickFalse;
-            break;
-          }
-        points_extent*=5;
-        points_extent+=2*coordinates;
+        coordinates=GetRoundRectangleCoordinates(primitive_info[j].point,
+          primitive_info[j+1].point,primitive_info[j+2].point);
         break;
       }
       case BezierPrimitive:
@@ -3059,7 +3076,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
-        points_extent=(double) (BezierQuantum*primitive_info[j].coordinates);
+        coordinates=(BezierQuantum*primitive_info[j].coordinates);
         break;
       }
       case PathPrimitive:
@@ -3069,7 +3086,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           *t;
 
         GetNextToken(q,&q,extent,token);
-        points_extent=1;
+        coordinates=1;
         t=token;
         for (s=token; *s != '\0'; s=t)
         {
@@ -3083,75 +3100,46 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               t++;
               continue;
             }
-          points_extent++;
+          coordinates++;
         }
-        points_extent*=(6*BezierQuantum)+360.0;
+        coordinates*=(6*BezierQuantum)+360.0;
         break;
       }
       case CirclePrimitive:
       case ArcPrimitive:
       {
-        double
-          alpha,
-          beta,
-          coordinates,
-          radius;
+        PointInfo
+          degrees;
 
-        alpha=bounds.x2-bounds.x1;
-        beta=bounds.y2-bounds.y1;
-        radius=hypot(alpha,beta);
-        coordinates=ceil(MagickPI*MagickPI*radius)+6*BezierQuantum+360;
-        if (coordinates > 21438)
-          {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              DrawError,"TooManyBezierCoordinates","`%s'",token);
-            status=MagickFalse;
-            break;
-          }
-        points_extent=2*coordinates;
+        degrees.x=0.0;
+        degrees.y=360.0;
+        coordinates=GetEllipseCoordinates(primitive_info[j].point,
+          primitive_info[j+1].point,degrees);
         break;
       }
       case EllipsePrimitive:
       {
-        double
-          alpha,
-          beta,
-          coordinates,
-          radius;
-
-        alpha=bounds.x2-bounds.x1;
-        beta=bounds.y2-bounds.y1;
-        radius=hypot(alpha,beta);
-        coordinates=2.0*ceil(MagickPI*MagickPI*radius)+6*BezierQuantum+360;
-        if (coordinates > 1048576)
-          {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              DrawError,"TooManyBezierCoordinates","`%s'",token);
-            status=MagickFalse;
-            break;
-          }
-        points_extent=(double) EllipsePoints(primitive_info+j,
-          primitive_info[j].point,primitive_info[j+1].point,
-          primitive_info[j+2].point);
+        coordinates=GetEllipseCoordinates(primitive_info[j].point,
+          primitive_info[j+1].point,primitive_info[j+2].point);
         break;
       }
       default:
         break;
     }
+    if (coordinates > 2097152)
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),DrawError,
+          "TooManyBezierCoordinates","`%s'",token);
+        status=MagickFalse;
+      }
     if (status == MagickFalse)
       break;
-    if (((double) ((size_t) points_extent)) < points_extent)
-      {
-        (void) ThrowMagickException(&image->exception,GetMagickModule(),
-          ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
-        break;
-      }
-    if ((MagickSizeType) (i+points_extent) >= number_points)
+    if ((MagickSizeType) (i+coordinates) >= number_points)
       {
         /*
           Resize based on speculative points required by primitive.
         */
-        number_points+=points_extent+1;
+        number_points+=coordinates+1;
         primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(primitive_info,
           (size_t) number_points,sizeof(*primitive_info));
         if ((primitive_info == (PrimitiveInfo *) NULL) ||
