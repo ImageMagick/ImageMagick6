@@ -3200,8 +3200,8 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
     {
       if (LocaleCompare("page",property) == 0)
         {
-          (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-            GetImageIndexInList(image)+1);
+          (void) FormatLocaleString(value,MaxTextExtent,"%.20gx%.20g",(double)
+            image->page.width,(double) image->page.height);
           break;
         }
 #if defined(MAGICKCORE_LCMS_DELEGATE)
