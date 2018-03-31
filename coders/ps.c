@@ -660,7 +660,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
         for (p=command; *p != '\0'; p++)
           if (isspace((int) (unsigned char) *p) != 0)
             break;
-        value=AcquireString(p);
+        value=ConstantString(p);
         (void) SubstituteString(&value,"(","");
         (void) SubstituteString(&value,")","");
         (void) StripString(value);
