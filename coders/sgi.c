@@ -416,8 +416,8 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
           p=pixels+bytes_per_pixel*z;
           for (y=0; y < (ssize_t) iris_info.rows; y++)
           {
-            (void) ReadBlob(image,bytes_per_pixel*iris_info.columns,scanline);
-            if (EOFBlob(image) != MagickFalse)
+            count=ReadBlob(image,bytes_per_pixel*iris_info.columns,scanline);
+            if (count != (bytes_per_pixel*iris_info.columns))
               break;
             if (bytes_per_pixel == 2)
               for (x=0; x < (ssize_t) iris_info.columns; x++)
@@ -433,6 +433,8 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 p+=4;
               }
           }
+          if (y < (ssize_t) iris_info.rows)
+            break;
         }
         scanline=(unsigned char *) RelinquishMagickMemory(scanline);
       }
@@ -517,7 +519,7 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   }
                 (void) ReadBlob(image,(size_t) runlength[y+z*iris_info.rows],
                   packets);
-                if (EOFBlob(image) != MagickFalse)
+                if (count != runlength[y+z*iris_info.rows])
                   break;
                 offset+=(ssize_t) runlength[y+z*iris_info.rows];
                 status=SGIDecode(bytes_per_pixel,(ssize_t)
@@ -534,6 +536,8 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   }
                 p+=(iris_info.columns*4*bytes_per_pixel);
               }
+              if (y < (ssize_t) iris_info.rows)
+                break;
             }
           }
         else
@@ -553,9 +557,9 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     offset=(ssize_t) SeekBlob(image,(MagickOffsetType) offset,
                       SEEK_SET);
                   }
-                (void) ReadBlob(image,(size_t) runlength[y+z*iris_info.rows],
+                count=ReadBlob(image,(size_t) runlength[y+z*iris_info.rows],
                   packets);
-                if (EOFBlob(image) != MagickFalse)
+                if (count != runlength[y+z*iris_info.rows])
                   break;
                 offset+=(ssize_t) runlength[y+z*iris_info.rows];
                 status=SGIDecode(bytes_per_pixel,(ssize_t)
@@ -571,6 +575,8 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
                       "ImproperImageHeader");
                   }
               }
+              if (z < (ssize_t) iris_info.depth)
+                break;
               p+=(iris_info.columns*4*bytes_per_pixel);
             }
             offset=(ssize_t) SeekBlob(image,position,SEEK_SET);
