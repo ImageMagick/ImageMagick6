@@ -3128,8 +3128,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     }
     if (coordinates > 2097152)
       {
-        (void) ThrowMagickException(exception,GetMagickModule(),DrawError,
-          "TooManyBezierCoordinates","`%s'",token);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          DrawError,"TooManyBezierCoordinates","`%s'",token);
         status=MagickFalse;
       }
     if (status == MagickFalse)
