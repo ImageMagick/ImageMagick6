@@ -409,6 +409,8 @@ static MagickBooleanType ParseIpcoAtom(Image *image, DataBuffer *db,
     prop = &(ctx->itemProps[ctx->itemPropsCount]);
     prop->type = atom;
     prop->size = length - 8;
+    if (prop->size > DBGetSize(db))
+      ThrowAndReturn("insufficient data");
     if (prop->data != (uint8_t *) NULL)
       prop->data=(uint8_t *) RelinquishMagickMemory(prop->data);
     prop->data = (uint8_t *) AcquireCriticalMemory(prop->size);
