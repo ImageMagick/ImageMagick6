@@ -1599,6 +1599,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
               SEEK_CUR);
             if (offset < 0)
               {
+                (void) BZ2_bzDecompressEnd(&bzip_info);
                 quantum_info=DestroyQuantumInfo(quantum_info);
                 compress_pixels=(unsigned char *) RelinquishMagickMemory(
                   compress_pixels);
@@ -1639,10 +1640,16 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
             offset=SeekBlob(image,-((MagickOffsetType) zip_info.avail_in),
               SEEK_CUR);
             if (offset < 0)
-              ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+              {
+                (void) inflateEnd(&zip_info);
+                quantum_info=DestroyQuantumInfo(quantum_info);
+                compress_pixels=(unsigned char *) RelinquishMagickMemory(
+                  compress_pixels);
+                ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+              }
           }
         code=inflateEnd(&zip_info);
-        if (code != LZMA_OK)
+        if (code != Z_OK)
           status=MagickFalse;
         break;
       }
