@@ -297,8 +297,6 @@ static Image *ReadWEBPImage(const ImageInfo *image_info,
       image->rows=(size_t) features->height;
       image->depth=8;
       image->matte=features->has_alpha != 0 ? MagickTrue : MagickFalse;
-      if (IsWEBPImageLossless(stream,length) != MagickFalse)
-        image->quality=100;
       if (image_info->ping != MagickFalse)
         {
           stream=(unsigned char*) RelinquishMagickMemory(stream);
@@ -313,6 +311,8 @@ static Image *ReadWEBPImage(const ImageInfo *image_info,
           (void) CloseBlob(image);
           return(DestroyImageList(image));
         }
+      if (IsWEBPImageLossless(stream,length) != MagickFalse)
+        image->quality=100;
       webp_status=WebPDecode(stream,length,&configure);
     }
   if (webp_status != VP8_STATUS_OK)
