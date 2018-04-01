@@ -300,7 +300,8 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
               {
                 index=((*p) & (0x80 >> bit) ? 0x01 : 0x00);
                 SetPixelIndex(indexes+x+bit,index);
-                SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                if (index < image->colors)
+                  SetPixelRGBO(q,image->colormap+(ssize_t) index);
                 q++;
               }
             p++;
@@ -311,7 +312,8 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
               {
                 index=((*p) & (0x80 >> bit) ? 0x01 : 0x00);
                 SetPixelIndex(indexes+x+bit,index);
-                SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                if (index < image->colors)
+                  SetPixelRGBO(q,image->colormap+(ssize_t) index);
                 q++;
               }
             p++;
@@ -327,19 +329,23 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
         {
             index=ConstrainColormapIndex(image,(*p >> 6) & 0x3);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             q++;
             index=ConstrainColormapIndex(image,(*p >> 4) & 0x3);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             q++;
             index=ConstrainColormapIndex(image,(*p >> 2) & 0x3);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             q++;
             index=ConstrainColormapIndex(image,(*p) & 0x3);
             SetPixelIndex(indexes+x+1,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             q++;
             p++;
         }
@@ -347,19 +353,22 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
           {
             index=ConstrainColormapIndex(image,(*p >> 6) & 0x3);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             q++;
             if ((image->columns % 4) > 1)
               {
                 index=ConstrainColormapIndex(image,(*p >> 4) & 0x3);
                 SetPixelIndex(indexes+x,index);
-                SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                if (index < image->colors)
+                  SetPixelRGBO(q,image->colormap+(ssize_t) index);
                 q++;
                 if ((image->columns % 4) > 2)
                   {
                     index=ConstrainColormapIndex(image,(*p >> 2) & 0x3);
                     SetPixelIndex(indexes+x,index);
-                    SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                    if (index < image->colors)
+                      SetPixelRGBO(q,image->colormap+(ssize_t) index);
                     q++;
                   }
               }
@@ -374,11 +383,13 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
           {
             index=ConstrainColormapIndex(image,(*p >> 4) & 0x0f);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             q++;
             index=ConstrainColormapIndex(image,(*p) & 0x0f);
             SetPixelIndex(indexes+x+1,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             p++;
             q++;
           }
@@ -386,7 +397,8 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
           {
             index=ConstrainColormapIndex(image,(*p >> 4) & 0x0f);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             p++;
             q++;
           }
@@ -398,7 +410,8 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
           {
             index=ConstrainColormapIndex(image,*p);
             SetPixelIndex(indexes+x,index);
-            SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             p++;
             q++;
           }
