@@ -1270,6 +1270,7 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   if (option != (const char *) NULL)
     if (AcquireImageColormap(image,StringToUnsignedLong(option)) == MagickFalse)
       {
+        jpeg_destroy_decompress(&jpeg_info);
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
@@ -1281,6 +1282,7 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
       colors=(size_t) GetQuantumRange(image->depth)+1;
       if (AcquireImageColormap(image,colors) == MagickFalse)
         {
+          jpeg_destroy_decompress(&jpeg_info);
           InheritException(exception,&image->exception);
           return(DestroyImageList(image));
         }
