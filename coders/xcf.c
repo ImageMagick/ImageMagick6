@@ -428,7 +428,8 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
     size;
 
   Quantum
-    alpha;
+    alpha,
+    data;
 
   register PixelPacket
     *q;
@@ -443,7 +444,6 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
     j;
 
   unsigned char
-    data,
     pixel,
     *xcfdata,
     *xcfodata,
@@ -459,7 +459,7 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
   xcfdatalimit = xcfodata+count-1;
   exception=(&image->exception);
   alpha=ScaleCharToQuantum((unsigned char) inLayerInfo->alpha);
-  for (i=0; i < (ssize_t) bytes_per_pixel; i++)
+  for (i=0; i < bytes_per_pixel; i++)
   {
     q=GetAuthenticPixels(tile_image,0,0,tile_image->columns,tile_image->rows,
       exception);
@@ -489,16 +489,16 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
             goto bogus_rle;
           while (length-- > 0)
           {
-            data=(*xcfdata++);
+            data=ScaleCharToQuantum(*xcfdata++);
             switch (i)
             {
               case 0:
               {
-                SetPixelRed(q,ScaleCharToQuantum(data));
+                SetPixelRed(q,data);
                 if (inDocInfo->image_type == GIMP_GRAY)
                   {
-                    SetPixelGreen(q,ScaleCharToQuantum(data));
-                    SetPixelBlue(q,ScaleCharToQuantum(data));
+                    SetPixelGreen(q,data);
+                    SetPixelBlue(q,data);
                   }
                 else
                   {
@@ -511,19 +511,19 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
               case 1:
               {
                 if (inDocInfo->image_type == GIMP_GRAY)
-                  SetPixelAlpha(q,ScaleCharToQuantum(data));
+                  SetPixelAlpha(q,data);
                 else
-                  SetPixelGreen(q,ScaleCharToQuantum(data));
+                  SetPixelGreen(q,data);
                 break;
               }
               case 2:
               {
-                SetPixelBlue(q,ScaleCharToQuantum(data));
+                SetPixelBlue(q,data);
                 break;
               }
               case 3:
               {
-                SetPixelAlpha(q,ScaleCharToQuantum(data));
+                SetPixelAlpha(q,data);
                 break;
               }
             }
@@ -548,16 +548,16 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
           pixel=(*xcfdata++);
           for (j=0; j < (ssize_t) length; j++)
           {
-            data=pixel;
+            data=ScaleCharToQuantum(pixel);
             switch (i)
             {
               case 0:
               {
-                SetPixelRed(q,ScaleCharToQuantum(data));
+                SetPixelRed(q,data);
                 if (inDocInfo->image_type == GIMP_GRAY)
                   {
-                    SetPixelGreen(q,ScaleCharToQuantum(data));
-                    SetPixelBlue(q,ScaleCharToQuantum(data));
+                    SetPixelGreen(q,data);
+                    SetPixelBlue(q,data);
                   }
                 else
                   {
@@ -570,19 +570,19 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
               case 1:
               {
                 if (inDocInfo->image_type == GIMP_GRAY)
-                  SetPixelAlpha(q,ScaleCharToQuantum(data));
+                  SetPixelAlpha(q,data);
                 else
-                  SetPixelGreen(q,ScaleCharToQuantum(data));
+                  SetPixelGreen(q,data);
                 break;
               }
               case 2:
               {
-                SetPixelBlue(q,ScaleCharToQuantum(data));
+                SetPixelBlue(q,data);
                 break;
               }
               case 3:
               {
-                SetPixelAlpha(q,ScaleCharToQuantum(data));
+                SetPixelAlpha(q,data);
                 break;
               }
             }
@@ -751,17 +751,9 @@ static MagickBooleanType load_hierarchy(Image *image,XCFDocInfo *inDocInfo,
     offset,
     junk;
 
-  size_t
-    width,
-    height,
-    bytes_per_pixel;
-
-  width=ReadBlobMSBLong(image);
-  (void) width;
-  height=ReadBlobMSBLong(image);
-  (void) height;
-  bytes_per_pixel=inDocInfo->bytes_per_pixel=ReadBlobMSBLong(image);
-  (void) bytes_per_pixel;
+  (void) ReadBlobMSBLong(image); // width
+  (void) ReadBlobMSBLong(image); // height
+  inDocInfo->bytes_per_pixel=ReadBlobMSBLong(image);
 
   /* load in the levels...we make sure that the number of levels
    *  calculated when the TileManager was created is the same
@@ -966,6 +958,8 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
   /* clear the image based on the layer opacity */
   outLayer->image->background_color.opacity=
     ScaleCharToQuantum((unsigned char) (255-outLayer->alpha));
+  if (outLayer->alpha != 255U)
+    outLayer->image->matte=MagickTrue;
   (void) SetImageBackgroundColor(outLayer->image);
 
   InitXCFImage(outLayer);
