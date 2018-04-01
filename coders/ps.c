@@ -664,7 +664,8 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
         (void) SubstituteString(&value,"(","");
         (void) SubstituteString(&value,")","");
         (void) StripString(value);
-        (void) SetImageProperty(image,property,value);
+        if (*value != '\0')
+          (void) SetImageProperty(image,property,value);
         value=DestroyString(value);
         continue;
       }

@@ -580,9 +580,10 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
           name[i++]=(char) c;
         }
         name[i]='\0';
-        value=AcquireString(name);
+        value=ConstantString(name);
         (void) SubstituteString(&value,"#20"," ");
-        (void) SetImageProperty(image,property,value);
+        if (*value != '\0')
+          (void) SetImageProperty(image,property,value);
         value=DestroyString(value);
         continue;
       }
