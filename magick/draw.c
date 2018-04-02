@@ -3271,7 +3271,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case PathPrimitive:
       {
-        i=(ssize_t) (j+TracePath(image,primitive_info+j,token));
+        coordinates=TracePath(image,primitive_info+j,token);
+        if (coordinates == 0)
+          {
+            status=MagickFalse;
+            break;
+          }
+        i=(ssize_t) (j+coordinates);
         break;
       }
       case ColorPrimitive:
@@ -5952,16 +5958,13 @@ static size_t TracePath(Image *image,PrimitiveInfo *primitive_info,
       default:
       {
         if (isalpha((int) ((unsigned char) attribute)) != 0)
-          {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              DrawError,"attribute not recognized","`%c'",attribute);
-            primitive_info->coordinates=0;
-            return(0);
-          }
+          ThrowPointExpectedException(image,token);
         break;
       }
     }
   }
+  if (status == MagickFalse)
+    return(0);
   primitive_info->coordinates=(size_t) (q-primitive_info);
   number_coordinates+=primitive_info->coordinates;
   for (i=0; i < (ssize_t) number_coordinates; i++)
