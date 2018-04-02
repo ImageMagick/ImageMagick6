@@ -267,9 +267,6 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
   opj_codec_t
     *jp2_codec;
 
-  opj_codestream_index_t
-    *codestream_index = (opj_codestream_index_t *) NULL;
-
   opj_dparameters_t
     parameters;
 
@@ -439,7 +436,6 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
     {
       opj_destroy_codec(jp2_codec);
       opj_image_destroy(jp2_image);
-      opj_destroy_cstr_index(&codestream_index);
       return(GetFirstImageInList(image));
     }
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -520,7 +516,6 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
   */
   opj_destroy_codec(jp2_codec);
   opj_image_destroy(jp2_image);
-  opj_destroy_cstr_index(&codestream_index);
   (void) CloseBlob(image);
   return(GetFirstImageInList(image));
 }
