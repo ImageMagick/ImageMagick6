@@ -2123,7 +2123,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
   double *beta,ExceptionInfo *exception)
 {
 #define FxMaxParenthesisDepth  58
-#define FxMaxSubexpressionDepth  600
+#define FxMaxSubexpressionDepth  200
 #define FxReturn(value) \
 { \
   subexpression=DestroyString(subexpression); \
