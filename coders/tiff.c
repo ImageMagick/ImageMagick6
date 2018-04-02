@@ -45,6 +45,7 @@
 #include "magick/blob.h"
 #include "magick/blob-private.h"
 #include "magick/cache.h"
+#include "magick/channel.h"
 #include "magick/color.h"
 #include "magick/color-private.h"
 #include "magick/colormap.h"
@@ -1583,6 +1584,8 @@ RestoreMSCWarning
                (void) SetImageProperty(image,"tiff:alpha","unassociated");
           }
       }
+    if (image->matte != MagickFalse)
+      (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
     method=ReadGenericMethod;
     rows_per_strip=(uint32) image->rows;
     if (TIFFGetField(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
