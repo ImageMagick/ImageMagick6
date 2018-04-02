@@ -3914,7 +3914,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
   source_info=(*cache_info);
   source_info.file=(-1);
   (void) FormatLocaleString(cache_info->filename,MaxTextExtent,"%s[%.20g]",
-    image->filename,(double) GetImageIndexInList(image));
+    image->filename,(double) image->scene);
   cache_info->mode=mode;
   cache_info->rows=image->rows;
   cache_info->columns=image->columns;
