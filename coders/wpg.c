@@ -1460,8 +1460,9 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
                   }
                 case 1:    /*RLE for WPG2 */
                   {
-                    if( UnpackWPG2Raster(image,bpp) < 0)
-                      goto DecompressionFailed;
+                    if (!image_info->ping)
+                      if( UnpackWPG2Raster(image,bpp) < 0)
+                        goto DecompressionFailed;
                     break;
                   }
                 }
