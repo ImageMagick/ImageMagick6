@@ -1423,6 +1423,8 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (const DrawInfo *) NULL);
+  if (LocaleCompare(name,"MVG") == 0)
+    return(MagickFalse);
   (void) FormatLocaleString(clip_mask,MaxTextExtent,"%s",name);
   value=GetImageArtifact(image,clip_mask);
   if (value == (const char *) NULL)
