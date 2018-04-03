@@ -285,6 +285,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       {
         (void) ThrowMagickException(exception,GetMagickModule(),CoderError,
           libraw_strerror(errcode),"`%s'",image->filename);
+        libraw_close(raw_info);
         return(DestroyImageList(image));
       }
     image->columns=raw_info->sizes.width;
@@ -377,7 +378,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
     /*
       Set DNG image metadata.
     */
-    if (raw_info->color.profile)
+    if (raw_info->color.profile != NULL)
       {
         profile=BlobToStringInfo(raw_info->color.profile,
           raw_info->color.profile_length);
@@ -388,7 +389,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
       }
 #if LIBRAW_COMPILE_CHECK_VERSION_NOTLESS(0,18)
-    if (raw_info->idata.xmpdata)
+    if (raw_info->idata.xmpdata != NULL)
       {
         profile=BlobToStringInfo(raw_info->idata.xmpdata,
           raw_info->idata.xmplen);
