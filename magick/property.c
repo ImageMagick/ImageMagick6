@@ -2271,6 +2271,8 @@ MagickExport const char *GetImageProperty(const Image *image,
     {
       if (LocaleNCompare("fx:",property,3) == 0)
         {
+          if ((image->columns == 0) || (image->rows == 0))
+            break;
           fx_info=AcquireFxInfo(image,property+3);
           status=FxEvaluateChannelExpression(fx_info,DefaultChannels,0,0,&alpha,
             exception);
