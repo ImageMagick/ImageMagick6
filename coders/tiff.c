@@ -759,7 +759,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
           *ascii;
 
         ascii=(char *) NULL;
-        if ((TIFFGetField(tiff,exif_info[i].tag,&ascii,&sans,&sans) == 1) &&
+        if ((TIFFGetField(tiff,exif_info[i].tag,&ascii,&sans,&sans,&sans) == 1) &&
             (ascii != (char *) NULL) && (*ascii != '\0'))
           (void) CopyMagickString(value,ascii,MaxTextExtent);
         break;
@@ -772,7 +772,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
               shorty;
 
             shorty=0;
-            if (TIFFGetField(tiff,exif_info[i].tag,&shorty,&sans,&sans) == 1)
+            if (TIFFGetField(tiff,exif_info[i].tag,&shorty,&sans,&sans,&sans) == 1)
               (void) FormatLocaleString(value,MaxTextExtent,"%d",shorty);
           }
         else
@@ -787,7 +787,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
               shorty_num;
 
             tiff_status=TIFFGetField(tiff,exif_info[i].tag,&shorty_num,&shorty,
-              &sans,&sans);
+              &sans,&sans,&sans);
             if (tiff_status == 1)
               (void) FormatLocaleString(value,MaxTextExtent,"%d",
                 shorty_num != 0 ? shorty[0] : 0);
@@ -800,7 +800,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
           longy;
 
         longy=0;
-        if (TIFFGetField(tiff,exif_info[i].tag,&longy,&sans,&sans) == 1)
+        if (TIFFGetField(tiff,exif_info[i].tag,&longy,&sans,&sans,&sans) == 1)
           (void) FormatLocaleString(value,MaxTextExtent,"%d",longy);
         break;
       }
@@ -811,7 +811,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
           long8y;
 
         long8y=0;
-        if (TIFFGetField(tiff,exif_info[i].tag,&long8y,&sans,&sans) == 1)
+        if (TIFFGetField(tiff,exif_info[i].tag,&long8y,&sans,&sans,&sans) == 1)
           (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
             ((MagickOffsetType) long8y));
         break;
@@ -825,7 +825,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
           floaty;
 
         floaty=0.0;
-        if (TIFFGetField(tiff,exif_info[i].tag,&floaty,&sans,&sans) == 1)
+        if (TIFFGetField(tiff,exif_info[i].tag,&floaty,&sans,&sans,&sans) == 1)
           (void) FormatLocaleString(value,MaxTextExtent,"%g",(double) floaty);
         break;
       }
@@ -835,7 +835,7 @@ static void TIFFGetEXIFProperties(TIFF *tiff,Image *image)
           doubley;
 
         doubley=0.0;
-        if (TIFFGetField(tiff,exif_info[i].tag,&doubley,&sans,&sans) == 1)
+        if (TIFFGetField(tiff,exif_info[i].tag,&doubley,&sans,&sans,&sans) == 1)
           (void) FormatLocaleString(value,MaxTextExtent,"%g",doubley);
         break;
       }
