@@ -401,12 +401,6 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
   image->columns=(size_t) jp2_image->comps[0].w;
   image->rows=(size_t) jp2_image->comps[0].h;
   image->depth=jp2_image->comps[0].prec;
-  status=SetImageExtent(image,image->columns,image->rows);
-  if (status == MagickFalse)
-    {
-      InheritException(exception,&image->exception);
-      return(DestroyImageList(image));
-    }
   image->compression=JPEG2000Compression;
   if (jp2_image->numcomps == 1)
     SetImageColorspace(image,GRAYColorspace);
@@ -440,6 +434,14 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
       opj_destroy_codec(jp2_codec);
       opj_image_destroy(jp2_image);
       return(GetFirstImageInList(image));
+    }
+  status=SetImageExtent(image,image->columns,image->rows);
+  if (status == MagickFalse)
+    {
+      opj_destroy_codec(jp2_codec);
+      opj_image_destroy(jp2_image);
+      InheritException(exception,&image->exception);
+      return(DestroyImageList(image));
     }
   for (y=0; y < (ssize_t) image->rows; y++)
   {
