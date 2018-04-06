@@ -1137,8 +1137,8 @@ NEXT_FRAME:
         image->depth = 32;        /* double type cell */
         (void) SetImageOption(clone_info,"quantum:format","floating-point");
         if (MATLAB_HDR.StructureFlag & FLAG_COMPLEX)
-  {              /* complex float type cell */
-  }
+          {              /* complex float type cell */
+          }
         ldblk = (ssize_t) (4 * MATLAB_HDR.SizeX);
         break;
       case miDOUBLE:
@@ -1156,8 +1156,8 @@ RestoreMSCWarning
             ThrowReaderException(CoderError, "IncompatibleSizeOfDouble");
           }
         if (MATLAB_HDR.StructureFlag & FLAG_COMPLEX)
-  {                         /* complex double type cell */
-  }
+          {                         /* complex double type cell */
+          }
         ldblk = (ssize_t) (8 * MATLAB_HDR.SizeX);
         break;
       default:
@@ -1246,45 +1246,44 @@ RestoreMSCWarning
       {
         q=GetAuthenticPixels(image,0,MATLAB_HDR.SizeY-i-1,image->columns,1,exception);
         if (q == (PixelPacket *) NULL)
-  {
-    if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
+          {
+            if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
               "  MAT set image pixels returns unexpected NULL on a row %u.", (unsigned)(MATLAB_HDR.SizeY-i-1));
-    goto done_reading;    /* Skip image rotation, when cannot set image pixels    */
-  }
+            goto done_reading;    /* Skip image rotation, when cannot set image pixels    */
+          }
         if(ReadBlob(image2,ldblk,(unsigned char *)BImgBuff) != (ssize_t) ldblk)
-  {
-    if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
-             "  MAT cannot read scanrow %u from a file.", (unsigned)(MATLAB_HDR.SizeY-i-1));
-    goto ExitLoop;
-  }
+          {
+            if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
+              "  MAT cannot read scanrow %u from a file.", (unsigned)(MATLAB_HDR.SizeY-i-1));
+            goto ExitLoop;
+          }
         if((CellType==miINT8 || CellType==miUINT8) && (MATLAB_HDR.StructureFlag & FLAG_LOGICAL))
         {
           FixLogical((unsigned char *)BImgBuff,ldblk);
           if(ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,z2qtype[z],BImgBuff,exception) <= 0)
-    {
-ImportQuantumPixelsFailed:
-      if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
-              "  MAT failed to ImportQuantumPixels for a row %u", (unsigned)(MATLAB_HDR.SizeY-i-1));
-      break;
-    }
+            {
+              ImportQuantumPixelsFailed:
+              if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
+                "  MAT failed to ImportQuantumPixels for a row %u", (unsigned)(MATLAB_HDR.SizeY-i-1));
+              break;
+            }
         }
         else
         {
           if(ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,z2qtype[z],BImgBuff,exception) <= 0)
-      goto ImportQuantumPixelsFailed;
-
+            goto ImportQuantumPixelsFailed;
 
           if (z<=1 &&       /* fix only during a last pass z==0 || z==1 */
-          (CellType==miINT8 || CellType==miINT16 || CellType==miINT32 || CellType==miINT64))
-      FixSignedValues(q,MATLAB_HDR.SizeX);
+             (CellType==miINT8 || CellType==miINT16 || CellType==miINT32 || CellType==miINT64))
+            FixSignedValues(q,MATLAB_HDR.SizeX);
         }
 
         if (!SyncAuthenticPixels(image,exception))
-  {
-    if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
-            "  MAT failed to sync image pixels for a row %u", (unsigned)(MATLAB_HDR.SizeY-i-1));
-    goto ExitLoop;
-  }
+          {
+            if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
+              "  MAT failed to sync image pixels for a row %u", (unsigned)(MATLAB_HDR.SizeY-i-1));
+            goto ExitLoop;
+          }
       }
     } while(z-- >= 2);
 ExitLoop:
@@ -1303,17 +1302,17 @@ ExitLoop:
 
       if (CellType==miDOUBLE)
         for (i = 0; i < (ssize_t) MATLAB_HDR.SizeY; i++)
-  {
+        {
           ReadBlobDoublesXXX(image2, ldblk, (double *)BImgBuff);
           InsertComplexDoubleRow((double *)BImgBuff, i, image, MinVal, MaxVal);
-  }
+        }
 
       if (CellType==miSINGLE)
         for (i = 0; i < (ssize_t) MATLAB_HDR.SizeY; i++)
-  {
+        {
           ReadBlobFloatsXXX(image2, ldblk, (float *)BImgBuff);
           InsertComplexFloatRow((float *)BImgBuff, i, image, MinVal, MaxVal);
-  }
+        }
     }
 
       /* Image is gray when no complex flag is set and 2D Matrix AGAIN!!! */
@@ -1346,14 +1345,14 @@ done_reading:
       if(image2!=image)
       {
         DeleteImageFromList(&image2);
-  if(clone_info)
-  {
+        if(clone_info)
+        {
           if(clone_info->file)
-    {
+          {
             fclose(clone_info->file);
             clone_info->file = NULL;
             (void) remove_utf8(clone_info->filename);
-    }
+          }
         }
       }
     if (EOFBlob(image) != MagickFalse)
