@@ -1260,7 +1260,10 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             for (y=0; y < (ssize_t) tile_image->rows; y++)
             {
               if (p > (pixels+extent+image->columns))
-                ThrowPICTException(CorruptImageError,"NotEnoughPixelData");
+                {
+                  pixels=(unsigned char *) RelinquishMagickMemory(pixels);
+                  ThrowPICTException(CorruptImageError,"NotEnoughPixelData");
+                }
               q=QueueAuthenticPixels(tile_image,0,y,tile_image->columns,1,
                 exception);
               if (q == (PixelPacket *) NULL)
