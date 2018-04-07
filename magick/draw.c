@@ -1441,6 +1441,7 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
       (void) SetImageClipMask(image,clip_mask);
       clip_mask=DestroyImage(clip_mask);
     }
+  (void) DeleteImageArtifact(image->clip_mask,clip_mask);
   (void) QueryColorDatabase("#00000000",&image->clip_mask->background_color,
     &image->exception);
   image->clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
