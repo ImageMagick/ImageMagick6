@@ -1111,6 +1111,7 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
 
   size_t
     depth,
+    imageListLength,
     one;
 
   /*
@@ -1130,6 +1131,7 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
   scene=0;
   offset=0;
   one=1;
+  imageListLength=GetImageListLength(image);
   do
   {
     /*
@@ -1491,8 +1493,8 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
     image=SyncNextImageInList(image);
     if (image->progress_monitor != (MagickProgressMonitor) NULL)
       {
-        status=image->progress_monitor(SaveImagesTag,scene,
-          GetImageListLength(image),image->client_data);
+        status=image->progress_monitor(SaveImagesTag,scene,imageListLength,
+          image->client_data);
         if (status == MagickFalse)
           break;
       }

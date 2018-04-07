@@ -967,6 +967,9 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
   register unsigned char
     *q;
 
+  size_t
+    imageListLength;
+
   ssize_t
     y;
 
@@ -990,6 +993,7 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
     return(status);
   (void) memset(&viff_info,0,sizeof(ViffInfo));
   scene=0;
+  imageListLength=GetImageListLength(image);
   do
   {
     /*
@@ -1261,8 +1265,7 @@ RestoreMSCWarning
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

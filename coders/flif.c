@@ -412,6 +412,7 @@ static MagickBooleanType WriteFLIFImage(const ImageInfo *image_info,
 
   size_t
     columns,
+    imageListLength,
     length,
     rows;
 
@@ -470,7 +471,7 @@ static MagickBooleanType WriteFLIFImage(const ImageInfo *image_info,
       ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
     }
   scene=0;
-
+  imageListLength=GetImageListLength(image);
   do
   {
     for (y=0; y < (ssize_t) image->rows; y++)
@@ -526,12 +527,10 @@ static MagickBooleanType WriteFLIFImage(const ImageInfo *image_info,
         ThrowWriterException(ImageError,"FramesNotSameDimensions");
       }
     scene++;
-    status=SetImageProgress(image,SaveImagesTag,scene,GetImageListLength(
-      image));
+    status=SetImageProgress(image,SaveImagesTag,scene,imageListLength);
     if (status == MagickFalse)
        break;
   } while (image_info->adjoin != MagickFalse);
-
   flif_destroy_image(flifimage);
   pixels=RelinquishMagickMemory(pixels);
   flif_status=flif_encoder_encode_memory(flifenc,&buffer,&length);

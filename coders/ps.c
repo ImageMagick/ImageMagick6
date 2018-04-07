@@ -1587,6 +1587,7 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
   size_t
     bit,
     byte,
+    imageListLength,
     length,
     page,
     text_size;
@@ -1619,6 +1620,7 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
     compression=image_info->compression;
   page=1;
   scene=0;
+  imageListLength=GetImageListLength(image);
   do
   {
     /*
@@ -2337,8 +2339,7 @@ RestoreMSCWarning
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

@@ -190,6 +190,9 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
   register ssize_t
     x;
 
+  size_t
+    imageListLength;
+
   /*
     Open output image file.
   */
@@ -203,6 +206,7 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
   if (status == MagickFalse)
     return(status);
   scene=0;
+  imageListLength=GetImageListLength(image);
   do
   {
     (void) CopyMagickString(colorspace,CommandOptionToMnemonic(
@@ -261,8 +265,7 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

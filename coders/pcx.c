@@ -889,6 +889,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
     *q;
 
   size_t
+    imageListLength,
     length;
 
   ssize_t
@@ -930,6 +931,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
         (void) WriteBlobLSBLong(image,0x00000000L);
     }
   scene=0;
+  imageListLength=GetImageListLength(image);
   do
   {
     if (page_table != (MagickOffsetType *) NULL)
@@ -1177,8 +1179,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

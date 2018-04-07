@@ -3149,6 +3149,9 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
   register ssize_t
     i;
 
+  size_t
+    imageListLength;
+
   ssize_t
     y;
 
@@ -3212,6 +3215,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
   scene=0;
   debug=IsEventLogging();
   (void) debug;
+  imageListLength=GetImageListLength(image);
   do
   {
     /*
@@ -3667,12 +3671,12 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         (void) TIFFSetField(tiff,TIFFTAG_WHITEPOINT,chromaticity);
       }
     if ((LocaleCompare(image_info->magick,"PTIF") != 0) &&
-        (image_info->adjoin != MagickFalse) && (GetImageListLength(image) > 1))
+        (image_info->adjoin != MagickFalse) && (imageListLength > 1))
       {
         (void) TIFFSetField(tiff,TIFFTAG_SUBFILETYPE,FILETYPE_PAGE);
         if (image->scene != 0)
           (void) TIFFSetField(tiff,TIFFTAG_PAGENUMBER,(uint16) image->scene,
-            GetImageListLength(image));
+            imageListLength);
       }
     if (image->orientation != UndefinedOrientation)
       (void) TIFFSetField(tiff,TIFFTAG_ORIENTATION,(uint16) image->orientation);
@@ -3683,7 +3687,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         pages;
 
       page=(uint16) scene;
-      pages=(uint16) GetImageListLength(image);
+      pages=(uint16) imageListLength;
       if ((LocaleCompare(image_info->magick,"PTIF") != 0) &&
           (image_info->adjoin != MagickFalse) && (pages > 1))
         (void) TIFFSetField(tiff,TIFFTAG_SUBFILETYPE,FILETYPE_PAGE);
@@ -3954,8 +3958,7 @@ RestoreMSCWarning
     image=SyncNextImageInList(image);
     if (image == (Image *) NULL)
       break;
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

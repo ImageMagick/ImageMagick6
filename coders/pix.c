@@ -185,7 +185,13 @@ static Image *ReadPIXImage(const ImageInfo *image_info,ExceptionInfo *exception)
       {
         if (length == 0)
           {
-            length=(size_t) ReadBlobByte(image);
+            int
+              c;
+
+            c=ReadBlobByte(image);
+            if ((c == 0) || (c == EOF))
+              break;
+            length=(size_t) c;
             if (bits_per_pixel == 8)
               index=ScaleCharToQuantum((unsigned char) ReadBlobByte(image));
             else
@@ -203,6 +209,8 @@ static Image *ReadPIXImage(const ImageInfo *image_info,ExceptionInfo *exception)
         length--;
         q++;
       }
+      if (x < (ssize_t) image->columns)
+        break;
       if (SyncAuthenticPixels(image,exception) == MagickFalse)
         break;
       if (image->previous == (Image *) NULL)

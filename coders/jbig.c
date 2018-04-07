@@ -439,6 +439,7 @@ static MagickBooleanType WriteJBIGImage(const ImageInfo *image_info,
     *q;
 
   size_t
+    imageListLength,
     number_packets;
 
   ssize_t
@@ -466,6 +467,7 @@ static MagickBooleanType WriteJBIGImage(const ImageInfo *image_info,
     return(status);
   version=StringToDouble(JBG_VERSION,(char **) NULL);
   scene=0;
+  imageListLength=GetImageListLength(image);
   do
   {
     /*
@@ -563,8 +565,7 @@ static MagickBooleanType WriteJBIGImage(const ImageInfo *image_info,
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

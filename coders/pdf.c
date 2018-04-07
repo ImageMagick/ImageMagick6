@@ -1348,6 +1348,7 @@ RestoreMSCWarning
 
   size_t
     channels,
+    imageListLength,
     info_id,
     length,
     object,
@@ -1537,6 +1538,7 @@ RestoreMSCWarning
   (void) WriteBlobString(image,">>\n");
   (void) WriteBlobString(image,"endobj\n");
   scene=0;
+  imageListLength=GetImageListLength(image);
   do
   {
     MagickBooleanType
@@ -2937,8 +2939,7 @@ RestoreMSCWarning
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,
-      GetImageListLength(image));
+    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
