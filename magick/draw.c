@@ -92,7 +92,7 @@
 */
 #define BezierQuantum  200
 #define DrawEpsilon  (1.0e-10)
-#define EllipseEpsilon  (0.0001)
+#define MaxBezierCoordinates  2097152
 #define ThrowPointExpectedException(image,token) \
 { \
   (void) ThrowMagickException(&(image)->exception,GetMagickModule(),DrawError, \
@@ -1678,26 +1678,19 @@ static size_t GetEllipseCoordinates(const PointInfo start,const PointInfo stop,
   PointInfo
     angle;
 
-  size_t
-    coordinates;
-
   /*
     Ellipses are just short segmented polys.
   */
   delta=2.0*PerceptibleReciprocal(MagickMax(stop.x,stop.y));
-  step=MagickPI/8.0;
+  step=MagickPI/8.0; 
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  if (step < EllipseEpsilon)
-    step=EllipseEpsilon;
   angle.x=DegreesToRadians(degrees.x);
   y=degrees.y;
   while (y < degrees.x)
     y+=360.0;
   angle.y=DegreesToRadians(y);
-  for (coordinates=0; angle.x < angle.y; angle.x+=step)
-    coordinates++;
-  return(coordinates+1);
+  return((size_t) floor((angle.y-angle.x)/step+0.5)+3);
 }
 
 static size_t GetRoundRectangleCoordinates(const PointInfo start,
@@ -3140,7 +3133,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       default:
         break;
     }
-    if (coordinates > 2097152)
+    if (coordinates > MaxBezierCoordinates)
       {
         (void) ThrowMagickException(&image->exception,GetMagickModule(),
           DrawError,"TooManyBezierCoordinates","`%s'",token);
@@ -5475,8 +5468,6 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  if (step < EllipseEpsilon)
-    step=EllipseEpsilon;
   angle.x=DegreesToRadians(degrees.x);
   y=degrees.y;
   while (y < degrees.x)
