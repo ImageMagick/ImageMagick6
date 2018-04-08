@@ -1530,6 +1530,13 @@ RestoreMSCWarning
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
+    status=ResetImagePixels(image,exception);
+    if (status == MagickFalse)
+      {
+        TIFFClose(tiff);
+        InheritException(exception,&image->exception);
+        return(DestroyImageList(image));
+      }
     /*
       Allocate memory for the image and pixel buffer.
     */
