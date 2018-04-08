@@ -299,10 +299,13 @@ static Image *ReadTGAImage(const ImageInfo *image_info,
           sizeof(*comment));
       if (comment == (char *) NULL)
         ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-      (void) ReadBlob(image,tga_info.id_length,(unsigned char *) comment);
-      comment[tga_info.id_length]='\0';
-      (void) SetImageProperty(image,"comment",comment);
-      comment=DestroyString(comment);
+      count=ReadBlob(image,length,(unsigned char *) comment);
+      if (count == length)
+        {
+          comment[length]='\0';
+          (void) SetImageProperty(image,"comment",comment);
+          comment=DestroyString(comment);
+        }
     }
   if (tga_info.attributes & (1UL << 4))
     {
