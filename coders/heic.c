@@ -337,6 +337,8 @@ static MagickBooleanType ParseHvcCAtom(HEICItemProp *prop,
   p = prop->data;
 
   size = prop->size;
+  if (size >= MAX_HVCC_ATOM_SIZE)
+    ThrowAndReturn("hvcC atom is too long");
   memcpy(buffer, prop->data, size);
 
   pos = 22;
