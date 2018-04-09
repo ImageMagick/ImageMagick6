@@ -1866,9 +1866,24 @@ static int read_user_chunk_callback(png_struct *ping, png_unknown_chunkp chunk)
       *p++ ='\0';
       *p++ ='\0';
 
-      /* copy chunk->data to profile */
       s=chunk->data;
-      for (i=0; i < (ssize_t) chunk->size; i++)
+      i=0;
+      if (chunk->size > 6)
+        {
+          /* Skip first 6 bytes if "Exif\0\0" is
+             already present by accident
+          */
+          if (s[0] == 'E' && s[1] == 'x'  && s[2] == 'i' &&
+              s[3] == 'f' && s[4] == '\0' && s[5] == '\0')
+          {
+            s+=6;
+            i=6;
+            SetStringInfoLength(profile,chunk->size);
+          }
+        }
+
+      /* copy chunk->data to profile */
+      for (; i<chunk->size; i++)
         *p++ = *s++;
 
       (void) SetImageProfile(image,"exif",profile);
