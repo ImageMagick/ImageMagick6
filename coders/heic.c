@@ -1251,6 +1251,8 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
 
     if (info->type != ATOM('E','x','i','f'))
       continue;
+    if (info->size <= 4)
+      continue;
 
     buffer = (unsigned char *) AcquireMagickMemory(info->size);
     if (buffer == NULL) {
