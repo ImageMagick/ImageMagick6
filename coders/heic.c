@@ -942,6 +942,7 @@ static MagickBooleanType decodeH265Image(Image *image, HEICImageContext *ctx, un
         break;
       }
 
+      buffer = (unsigned char *) RelinquishMagickMemory(buffer);
       ThrowBinaryException(CoderWarning,(const char *)NULL,
         de265_get_error_text(warning));
     }
