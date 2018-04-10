@@ -63,6 +63,7 @@
 #include "magick/profile.h"
 #include "magick/property.h"
 #include "magick/quantum-private.h"
+#include "magick/resource_.h"
 #include "magick/semaphore.h"
 #include "magick/static.h"
 #include "magick/statistic.h"
