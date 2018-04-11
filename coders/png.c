@@ -4845,7 +4845,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
-      jng_image=DestroyImage(jng_image);
+      jng_image=DestroyImageList(jng_image);
       DestroyJNG(NULL,NULL,NULL,&alpha_image,&alpha_image_info);
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
