@@ -98,7 +98,6 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
   char
     *caption,
     geometry[MaxTextExtent],
-    *property,
     *text;
 
   const char
@@ -142,19 +141,17 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
   */
   option=GetImageOption(image_info,"filename");
   if (option == (const char *) NULL)
-    property=InterpretImageProperties(image_info,image,image_info->filename);
+    caption=InterpretImageProperties(image_info,image,image_info->filename);
   else
     if (LocaleNCompare(option,"caption:",8) == 0)
-      property=InterpretImageProperties(image_info,image,option+8);
+      caption=InterpretImageProperties(image_info,image,option+8);
     else
-      property=InterpretImageProperties(image_info,image,option);
-  if (property == (char *) NULL)
+      caption=InterpretImageProperties(image_info,image,option);
+  if (caption == (char *) NULL)
     return(DestroyImageList(image));
-  (void) SetImageProperty(image,"caption",property);
-  property=DestroyString(property);
-  caption=ConstantString(GetImageProperty(image,"caption"));
+  (void) SetImageProperty(image,"caption",caption);
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
-  width=draw_info->pointsize*strlen(caption);
+  width=(size_t) floor(draw_info->pointsize*strlen(caption)+0.5);
   if (AcquireMagickResource(WidthResource,width) == MagickFalse)
     {
       caption=DestroyString(caption);
@@ -289,8 +286,9 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
   */
   i=FormatMagickCaption(image,draw_info,split,&metrics,&caption);
   (void) CloneString(&draw_info->text,caption);
+  caption=DestroyString(caption);
   (void) FormatLocaleString(geometry,MaxTextExtent,"%+g%+g",MagickMax(
-    draw_info->direction == RightToLeftDirection ? image->columns-
+    draw_info->direction == RightToLeftDirection ? (double) image->columns-
     metrics.bounds.x2 : -metrics.bounds.x1,0.0),draw_info->gravity ==
     UndefinedGravity ? metrics.ascent : 0.0);
   (void) CloneString(&draw_info->geometry,geometry);
@@ -305,7 +303,6 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
       (void) SetImageProperty(image,"caption:pointsize",pointsize);
     }
   draw_info=DestroyDrawInfo(draw_info);
-  caption=DestroyString(caption);
   if (status == MagickFalse)
     {
       image=DestroyImageList(image);
