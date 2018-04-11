@@ -386,15 +386,15 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     colorspace[MaxTextExtent],
     text[MaxTextExtent];
 
+  double
+    x_offset,
+    y_offset;
+
   Image
     *image;
 
   IndexPacket
     *indexes;
-
-  long
-    x_offset,
-    y_offset;
 
   MagickBooleanType
     status;
@@ -444,8 +444,8 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) ReadBlobString(image,text);
   if (LocaleNCompare((char *) text,MagickID,strlen(MagickID)) != 0)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-  x_offset=(-1);
-  y_offset=(-1);
+  x_offset=(-1.0);
+  y_offset=(-1.0);
   do
   {
     width=0;
@@ -514,13 +514,13 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
           {
             if (image->matte != MagickFalse)
               {
-                (void) sscanf(text,"%ld,%ld: (%lf%*[%,]%lf%*[%,]",&x_offset,
+                (void) sscanf(text,"%lf,%lf: (%lf%*[%,]%lf%*[%,]",&x_offset,
                   &y_offset,&red,&opacity);
                 green=red;
                 blue=red;
                 break;
               }
-            (void) sscanf(text,"%ld,%ld: (%lf%*[%,]",&x_offset,&y_offset,&red);
+            (void) sscanf(text,"%lf,%lf: (%lf%*[%,]",&x_offset,&y_offset,&red);
             green=red;
             blue=red;
             break;
@@ -530,12 +530,12 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
             if (image->matte != MagickFalse)
               {
                 (void) sscanf(text,
-                  "%ld,%ld: (%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]",
+                  "%lf,%lf: (%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]",
                   &x_offset,&y_offset,&red,&green,&blue,&index,&opacity);
                 break;
               }
             (void) sscanf(text,
-              "%ld,%ld: (%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]",&x_offset,
+              "%lf,%lf: (%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]",&x_offset,
               &y_offset,&red,&green,&blue,&index);
             break;
           }
@@ -544,11 +544,11 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
             if (image->matte != MagickFalse)
               {
                 (void) sscanf(text,
-                  "%ld,%ld: (%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]",
+                  "%lf,%lf: (%lf%*[%,]%lf%*[%,]%lf%*[%,]%lf%*[%,]",
                   &x_offset,&y_offset,&red,&green,&blue,&opacity);
                 break;
               }
-            (void) sscanf(text,"%ld,%ld: (%lf%*[%,]%lf%*[%,]%lf%*[%,]",
+            (void) sscanf(text,"%lf,%lf: (%lf%*[%,]%lf%*[%,]%lf%*[%,]",
               &x_offset,&y_offset,&red,&green,&blue);
             break;
           }
