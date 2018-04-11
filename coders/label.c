@@ -55,6 +55,7 @@
 #include "magick/pixel-accessor.h"
 #include "magick/property.h"
 #include "magick/quantum-private.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/module.h"
@@ -134,6 +135,12 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   property=DestroyString(property);
   label=GetImageProperty(image,"label");
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
+  width=draw_info->pointsize*strlen(label);
+  if (AcquireMagickResource(WidthResource,width) == MagickFalse)
+    {
+      draw_info=DestroyDrawInfo(draw_info);
+      ThrowReaderException(ImageError,"WidthOrHeightExceedsLimit");
+    }
   draw_info->text=ConstantString(label);
   metrics.width=0.0;
   metrics.height=0.0;

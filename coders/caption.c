@@ -59,6 +59,7 @@
 #include "magick/pixel-accessor.h"
 #include "magick/property.h"
 #include "magick/quantum-private.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
@@ -153,6 +154,12 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
   property=DestroyString(property);
   caption=ConstantString(GetImageProperty(image,"caption"));
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
+  width=draw_info->pointsize*strlen(caption);
+  if (AcquireMagickResource(WidthResource,width) == MagickFalse)
+    {
+      draw_info=DestroyDrawInfo(draw_info);
+      ThrowReaderException(ImageError,"WidthOrHeightExceedsLimit");
+    }
   (void) CloneString(&draw_info->text,caption);
   gravity=GetImageOption(image_info,"gravity");
   if (gravity != (char *) NULL)
