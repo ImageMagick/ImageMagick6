@@ -394,7 +394,9 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
       Parse color.
     */
     (void) CopyMagickString(target,"gray",MaxTextExtent);
-    q=ParseXPMColor(p+width,MagickTrue);
+    q=(char *) NULL;
+    if (strlen(p) > width)
+      q=ParseXPMColor(p+width,MagickTrue);
     if (q != (char *) NULL)
       {
         while ((isspace((int) ((unsigned char) *q)) == 0) && (*q != '\0'))
