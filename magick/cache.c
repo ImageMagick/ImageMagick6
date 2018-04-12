@@ -1350,14 +1350,14 @@ MagickExport IndexPacket *GetAuthenticIndexQueue(const Image *image)
 %
 %  The format of the GetAuthenticOpenCLBuffer() method is:
 %
-%      cl_mem GetAuthenticOpenCLBuffer(Image *image)
+%      cl_mem GetAuthenticOpenCLBuffer(const Image *image)
 %
 %  A description of each parameter follows:
 %
 %    o image: the image.
 %
 */
-MagickPrivate cl_mem GetAuthenticOpenCLBuffer(Image *image,
+MagickPrivate cl_mem GetAuthenticOpenCLBuffer(const Image *image,
   ExceptionInfo *exception)
 {
   CacheInfo
@@ -1376,7 +1376,7 @@ MagickPrivate cl_mem GetAuthenticOpenCLBuffer(Image *image,
   cache_info=(CacheInfo *)image->cache;
   if ((cache_info->type == UndefinedCache) || (cache_info->reference_count > 1))
     {
-      SyncImagePixelCache(image,exception);
+      SyncImagePixelCache((Image *) image,exception);
       cache_info=(CacheInfo *)image->cache;
     }
   if ((cache_info->type != MemoryCache) || (cache_info->mapped != MagickFalse))
