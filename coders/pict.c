@@ -397,6 +397,9 @@ static unsigned char *ExpandBuffer(unsigned char *pixels,
 static unsigned char *DecodeImage(Image *blob,Image *image,
   size_t bytes_per_line,const unsigned int bits_per_pixel,size_t *extent)
 {
+  MagickBooleanType
+    status;
+
   MagickSizeType
     number_pixels;
 
@@ -460,6 +463,7 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
       return((unsigned char *) NULL);
     }
   (void) memset(scanline,0,2*row_bytes*sizeof(*scanline));
+  status=MagickTrue;
   if (bytes_per_line < 8)
     {
       /*
@@ -472,22 +476,20 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
         count=ReadBlob(blob,(size_t) number_pixels,scanline);
         if (count != (ssize_t) number_pixels)
           {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              CorruptImageError,"UnableToUncompressImage","`%s'",
-              image->filename);
+            status=MagickFalse;
             break;
           }
         p=ExpandBuffer(scanline,&number_pixels,bits_per_pixel);
         if ((q+number_pixels) > (pixels+(*extent)))
           {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              CorruptImageError,"UnableToUncompressImage","`%s'",
-              image->filename);
+            status=MagickFalse;
             break;
           }
         (void) memcpy(q,p,(size_t) number_pixels);
       }
       scanline=(unsigned char *) RelinquishMagickMemory(scanline);
+      if (status == MagickFalse)
+        pixels=(unsigned char *) RelinquishMagickMemory(pixels);
       return(pixels);
     }
   /*
@@ -502,15 +504,13 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
       scanline_length=(size_t) ReadBlobByte(blob);
     if ((scanline_length >= row_bytes) || (scanline_length == 0))
       {
-        (void) ThrowMagickException(&image->exception,GetMagickModule(),
-          CorruptImageError,"UnableToUncompressImage","`%s'",image->filename);
+        status=MagickFalse;
         break;
       }
     count=ReadBlob(blob,scanline_length,scanline);
     if (count != (ssize_t) scanline_length)
       {
-        (void) ThrowMagickException(&image->exception,GetMagickModule(),
-          CorruptImageError,"UnableToUncompressImage","`%s'",image->filename);
+        status=MagickFalse;
         break;
       }
     for (j=0; j < (ssize_t) scanline_length; )
@@ -539,6 +539,8 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
         }
   }
   scanline=(unsigned char *) RelinquishMagickMemory(scanline);
+  if (status == MagickFalse)
+    pixels=(unsigned char *) RelinquishMagickMemory(pixels);
   return(pixels);
 }
 
@@ -1252,7 +1254,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               pixels=DecodeImage(image,tile_image,(unsigned int) bytes_per_line,
                 (unsigned int) pixmap.bits_per_pixel,&extent);
             if (pixels == (unsigned char *) NULL)
-              ThrowPICTException(ResourceLimitError,"MemoryAllocationFailed");
+              ThrowPICTException(CorruptImageError,"UnableToUncompressImage");
             /*
               Convert PICT tile image to pixel packets.
             */
