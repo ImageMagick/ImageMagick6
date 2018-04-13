@@ -61,6 +61,7 @@
 #include "magick/list.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
@@ -161,19 +162,39 @@ static MagickBooleanType IsMIFF(const unsigned char *magick,const size_t length)
 %
 */
 
+static void *AcquireCompressionMemory(void *context,
+  const size_t items,const size_t size)
+{
+  size_t
+    extent;
+
+  if (HeapOverflowSanityCheck(items,size) != MagickFalse)
+    return((void *) NULL);
+  extent=items*size;
+  /* Check if the buffer is big enough when we get a large request */
+  if (extent > 2000000)
+    {
+      Image
+        *image;
+
+      image=(Image *) context;
+      if ((MagickSizeType) extent > GetBlobSize(image))
+        return((void *) NULL);
+    }
+  return(AcquireMagickMemory(extent));
+}
+
 #if defined(MAGICKCORE_BZLIB_DELEGATE)
 static void *AcquireBZIPMemory(void *context,int items,int size)
 {
-  (void) context;
-  return((void *) AcquireQuantumMemory((size_t) items,(size_t) size));
+  return(AcquireCompressionMemory(context,(size_t) items,(size_t) size));
 }
 #endif
 
 #if defined(MAGICKCORE_LZMA_DELEGATE)
 static void *AcquireLZMAMemory(void *context,size_t items,size_t size)
 {
-  (void) context;
-  return((void *) AcquireQuantumMemory((size_t) items,(size_t) size));
+  return(AcquireCompressionMemory(context,items,size));
 }
 #endif
 
@@ -181,8 +202,8 @@ static void *AcquireLZMAMemory(void *context,size_t items,size_t size)
 static voidpf AcquireZIPMemory(voidpf context,unsigned int items,
   unsigned int size)
 {
-  (void) context;
-  return((voidpf) AcquireQuantumMemory(items,size));
+  return((voidpf) AcquireCompressionMemory(context,(size_t) items,
+    (size_t) size));
 }
 #endif
 
@@ -1348,7 +1369,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
 
         bzip_info.bzalloc=AcquireBZIPMemory;
         bzip_info.bzfree=RelinquishBZIPMemory;
-        bzip_info.opaque=(void *) NULL;
+        bzip_info.opaque=(void *) image;
         code=BZ2_bzDecompressInit(&bzip_info,(int) image_info->verbose,
           MagickFalse);
         if (code != BZ_OK)
@@ -1364,11 +1385,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
 
         allocator.alloc=AcquireLZMAMemory;
         allocator.free=RelinquishLZMAMemory;
-        lzma_info=initialize_lzma;
-        lzma_info.allocator=(&allocator);
-        (void) memset(&allocator,0,sizeof(allocator));
-        allocator.alloc=AcquireLZMAMemory;
-        allocator.free=RelinquishLZMAMemory;
+        allocator.opaque=(void *) image;
         lzma_info=initialize_lzma;
         lzma_info.allocator=(&allocator);
         code=lzma_auto_decoder(&lzma_info,-1,0);
@@ -1386,7 +1403,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
 
         zip_info.zalloc=AcquireZIPMemory;
         zip_info.zfree=RelinquishZIPMemory;
-        zip_info.opaque=(voidpf) NULL;
+        zip_info.opaque=(voidpf) image;
         code=inflateInit(&zip_info);
         if (code != Z_OK)
           status=MagickFalse;
