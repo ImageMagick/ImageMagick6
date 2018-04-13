@@ -172,7 +172,7 @@ static void *AcquireCompressionMemory(void *context,
     return((void *) NULL);
   extent=items*size;
   /* Check if the buffer is big enough when we get a large request */
-  if (extent > 2000000)
+  if ((context != (void *) NULL) && (extent > 2000000))
     {
       Image
         *image;
@@ -2496,9 +2496,9 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         int
           code;
 
-        (void) memset(&bzip_info,0,sizeof(bzip_info));
         bzip_info.bzalloc=AcquireBZIPMemory;
         bzip_info.bzfree=RelinquishBZIPMemory;
+        bzip_info.opaque=(void *) NULL;
         code=BZ2_bzCompressInit(&bzip_info,(int) (image->quality ==
           UndefinedCompressionQuality ? 7 : MagickMin(image->quality/10,
           9)),(int) image_info->verbose,0);
@@ -2513,9 +2513,9 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         int
           code;
 
-        (void) memset(&allocator,0,sizeof(allocator));
         allocator.alloc=AcquireLZMAMemory;
         allocator.free=RelinquishLZMAMemory;
+        allocator.opaque=(void *) NULL;
         lzma_info=initialize_lzma;
         lzma_info.allocator=&allocator;
         code=lzma_easy_encoder(&lzma_info,image->quality/10,LZMA_CHECK_SHA256);
@@ -2531,9 +2531,9 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         int
           code;
 
-        (void) memset(&zip_info,0,sizeof(zip_info));
         zip_info.zalloc=AcquireZIPMemory;
         zip_info.zfree=RelinquishZIPMemory;
+        zip_info.opaque=(void *) NULL;
         code=deflateInit(&zip_info,(int) (image->quality ==
           UndefinedCompressionQuality ? 7 : MagickMin(image->quality/10,9)));
         if (code != Z_OK)
