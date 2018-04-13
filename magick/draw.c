@@ -1574,8 +1574,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
     dx=primitive_info[i].point.x-primitive_info[i-1].point.x;
     dy=primitive_info[i].point.y-primitive_info[i-1].point.y;
     maximum_length=hypot(dx,dy);
-    if ((fabs(maximum_length) < DrawEpsilon) ||
-        (maximum_length > MaxBezierCoordinates))
+    if (maximum_length > MaxBezierCoordinates)
       break;
     if (fabs(length) < DrawEpsilon)
       {
@@ -1591,9 +1590,9 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
         {
           dash_polygon[0]=primitive_info[0];
           dash_polygon[0].point.x=(double) (primitive_info[i-1].point.x+dx*
-            total_length/maximum_length);
+            total_length*PerceptibleReciprocal(maximum_length));
           dash_polygon[0].point.y=(double) (primitive_info[i-1].point.y+dy*
-            total_length/maximum_length);
+            total_length*PerceptibleReciprocal(maximum_length));
           j=1;
         }
       else
@@ -1602,9 +1601,9 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
             break;
           dash_polygon[j]=primitive_info[i-1];
           dash_polygon[j].point.x=(double) (primitive_info[i-1].point.x+dx*
-            total_length/maximum_length);
+            total_length*PerceptibleReciprocal(maximum_length));
           dash_polygon[j].point.y=(double) (primitive_info[i-1].point.y+dy*
-            total_length/maximum_length);
+            total_length*PerceptibleReciprocal(maximum_length));
           dash_polygon[j].coordinates=1;
           j++;
           dash_polygon[0].coordinates=(size_t) j;
