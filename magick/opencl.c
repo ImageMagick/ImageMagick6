@@ -1148,7 +1148,7 @@ static MagickBooleanType CompileOpenCLKernels(MagickCLEnv clEnv, ExceptionInfo* 
           char* log;
           size_t logSize;
           clEnv->library->clGetProgramBuildInfo(clEnv->programs[i], clEnv->device, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
-          log = (char*)AcquireMagickMemory(logSize);
+          log = (char*)AcquireCriticalMemory(logSize);
           clEnv->library->clGetProgramBuildInfo(clEnv->programs[i], clEnv->device, CL_PROGRAM_BUILD_LOG, logSize, log, &logSize);
 
           (void) FormatLocaleString(path,MaxTextExtent,"%s%s%s"
