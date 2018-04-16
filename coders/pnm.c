@@ -639,13 +639,8 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         */
         (void) SetImageColorspace(image,GRAYColorspace);
         quantum_type=GrayQuantum;
-        if (image->depth <= 8)
-          extent=image->columns;
-        else
-          if (image->depth <= 16)
-            extent=2*image->columns;
-          else
-            extent=4*image->columns;
+        extent=(image->depth <= 8 ? 1 : image->depth <= 16 ? 2 : 4)*
+          image->columns;
         quantum_info=AcquireQuantumInfo(image_info,image);
         if (quantum_info == (QuantumInfo *) NULL)
           ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
@@ -953,7 +948,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         }
         if (image->matte != MagickFalse)
           channels++;
-        extent=3*(image->depth <= 8 ? 1 : image->depth <= 16 ? 2 : 4)*
+        extent=channels*(image->depth <= 8 ? 1 : image->depth <= 16 ? 2 : 4)*
           image->columns;
         quantum_info=AcquireQuantumInfo(image_info,image);
         if (quantum_info == (QuantumInfo *) NULL)
