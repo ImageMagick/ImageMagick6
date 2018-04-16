@@ -3691,13 +3691,10 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
                 {
                   SetPixelOpacity(q,TransparentOpacity);
                 }
-
-#if 0 /* I have not found a case where this is needed. */
               else
                 {
-                  SetPixelOpacity(q)=(Quantum) OpaqueOpacity;
+                  SetPixelOpacity(q,OpaqueOpacity);
                 }
-#endif
 
               q++;
             }
