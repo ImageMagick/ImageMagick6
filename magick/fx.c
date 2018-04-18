@@ -1309,9 +1309,6 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
     i;
 
   size_t
-    length;
-
-  size_t
     level;
 
   p=expression;
@@ -1425,11 +1422,6 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
         }
       subexpression=DestroyString(subexpression);
     }
-  length=GetImageListLength(fx_info->images);
-  while (i < 0)
-    i+=(ssize_t) length;
-  if (length != 0)
-    i%=length;
   image=GetImageFromList(fx_info->images,i);
   if (image == (Image *) NULL)
     {
@@ -1437,6 +1429,7 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
         "NoSuchImage","`%s'",expression);
       return(0.0);
     }
+  i=GetImageIndexInList(image);
   GetMagickPixelPacket(image,&pixel);
   status=InterpolateMagickPixelPacket(image,fx_info->view[i],image->interpolate,
     point.x,point.y,&pixel,exception);
