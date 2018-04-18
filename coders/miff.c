@@ -1602,7 +1602,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
         default:
         {
           count=ReadBlob(image,packet_size*image->columns,pixels);
-          if (count != packet_size)
+          if (count != (packet_size*image->columns))
             ThrowReaderException(CorruptImageError,"UnableToReadImageData");
           (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
             quantum_type,pixels,exception);
