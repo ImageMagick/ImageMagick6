@@ -240,6 +240,8 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
   image->rows=(size_t) floor((((double) page.height*image->y_resolution)/
     delta.y)+0.5);
   status=SetImageExtent(image,image->columns,image->rows);
+  if (status != MagickFalse)
+    status=ResetImagePixels(image,&image->exception);
   if (status == MagickFalse)
     {
       InheritException(exception,&image->exception);
@@ -463,6 +465,8 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     for (depth=1; (GetQuantumRange(depth)+1) < max_value; depth++) ;
     image->depth=depth;
     status=SetImageExtent(image,image->columns,image->rows);
+    if (status != MagickFalse)
+      status=ResetImagePixels(image,&image->exception);
     if (status == MagickFalse)
       {
         InheritException(exception,&image->exception);
