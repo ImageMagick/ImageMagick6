@@ -1469,10 +1469,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             (void) RelinquishUniqueFileResource(read_info->filename);
             (void) CopyMagickString(image->filename,read_info->filename,
               MaxTextExtent);
-            ThrowFileException(exception,FileOpenError,
-              "UnableToCreateTemporaryFile",image->filename);
-            image=DestroyImageList(image);
-            return((Image *) NULL);
+            ThrowPICTException(FileOpenError,"UnableToCreateTemporaryFile");
           }
         length=ReadBlobMSBLong(image);
         if (length > 154)
