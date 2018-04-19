@@ -949,6 +949,8 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
     return(MagickFalse);
   status=SetImageExtent(outLayer->image,outLayer->image->columns,
     outLayer->image->rows);
+  if (status != MagickFalse)
+    status=ResetImagePixels(image,&image->exception);
   if (status == MagickFalse)
     {
       InheritException(&image->exception,&outLayer->image->exception);
@@ -960,7 +962,6 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
     ScaleCharToQuantum((unsigned char) (255-outLayer->alpha));
   if (outLayer->alpha != 255U)
     outLayer->image->matte=MagickTrue;
-  (void) SetImageBackgroundColor(outLayer->image);
 
   InitXCFImage(outLayer);
 
