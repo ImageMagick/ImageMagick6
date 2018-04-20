@@ -92,7 +92,7 @@
 */
 #define BezierQuantum  200
 #define DrawEpsilon  (1.0e-10)
-#define MaxBezierCoordinates  1048576
+#define MaxBezierCoordinates  2097152
 #define ThrowPointExpectedException(image,token) \
 { \
   (void) ThrowMagickException(&(image)->exception,GetMagickModule(),DrawError, \
@@ -259,6 +259,8 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
   GetDrawInfo(image_info,clone_info);
   if (draw_info == (DrawInfo *) NULL)
     return(clone_info);
+  if (clone_info->id != (char *) NULL)
+    (void) CloneString(&clone_info->id,draw_info->id);
   if (clone_info->primitive != (char *) NULL)
     (void) CloneString(&clone_info->primitive,draw_info->primitive);
   if (draw_info->geometry != (char *) NULL)
@@ -842,6 +844,8 @@ MagickExport DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(draw_info != (DrawInfo *) NULL);
   assert(draw_info->signature == MagickCoreSignature);
+  if (draw_info->id != (char *) NULL)
+    draw_info->id=DestroyString(draw_info->id);
   if (draw_info->primitive != (char *) NULL)
     draw_info->primitive=DestroyString(draw_info->primitive);
   if (draw_info->text != (char *) NULL)
@@ -2596,6 +2600,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                   }
                 graphic_context[n]=CloneDrawInfo((ImageInfo *) NULL,
                   graphic_context[n-1]);
+                if (*q == '"')
+                  {
+                    GetNextToken(q,&q,extent,token);
+                    (void) CloneString(&graphic_context[n]->id,token);
+                  }
                 break;
               }
             if (LocaleCompare("defs",token) == 0)
