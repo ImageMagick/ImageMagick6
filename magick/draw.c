@@ -2056,7 +2056,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("border-color",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
-            (void) QueryColorDatabase(token,&graphic_context[n]->border_color,
+            status&=QueryColorDatabase(token,&graphic_context[n]->border_color,
               &image->exception);
             break;
           }
@@ -2769,7 +2769,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               stop_color;
 
             GetNextToken(q,&q,extent,token);
-            (void) QueryColorDatabase(token,&stop_color,&image->exception);
+            status&=QueryColorDatabase(token,&stop_color,&image->exception);
             type=LinearGradient;
             if (draw_info->gradient.type == RadialGradient)
               type=RadialGradient;
@@ -2979,7 +2979,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("text-undercolor",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
-            (void) QueryColorDatabase(token,&graphic_context[n]->undercolor,
+            status&=QueryColorDatabase(token,&graphic_context[n]->undercolor,
               &image->exception);
             break;
           }
