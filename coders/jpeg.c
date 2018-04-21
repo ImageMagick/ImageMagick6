@@ -1447,7 +1447,7 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
           ssize_t
             pixel;
 
-          pixel=(size_t) GETJSAMPLE(*p)
+          pixel=(size_t) GETJSAMPLE(*p);
           index=ConstrainColormapIndex(image,pixel);
           SetPixelIndex(indexes+x,index);
           SetPixelRGBO(q,image->colormap+(ssize_t) index);
