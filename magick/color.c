@@ -2775,8 +2775,9 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
         }
       SetGeometryInfo(&geometry_info);
       if (i >= strlen(name))
-        i=(-1);
-      flags=ParseGeometry(name+i+1,&geometry_info);
+        flags=ParseGeometry(name,&geometry_info);
+      else
+        flags=ParseGeometry(name+i+1,&geometry_info);
       if (flags == 0)
         {
           char
@@ -2786,7 +2787,10 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
             colorspace;
 
           colorspace=color->colorspace;
-          colorname=AcquireString(name+i+1);
+          if (i >= strlen(name))
+            colorname=AcquireString(name);
+          else
+            colorname=AcquireString(name+i+1);
           (void) SubstituteString(&colorname,")","");
           (void) QueryMagickColor(colorname,color,exception);
           colorname=DestroyString(colorname);
