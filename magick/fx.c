@@ -2570,7 +2570,9 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
               case OpacityChannel: type="opacity"; break;
               default: type="unknown"; break;
             }
-          (void) CopyMagickString(subexpression,expression+6,MaxTextExtent);
+          *subexpression='\0';
+          if (strlen(subexpression) > 1)
+            (void) CopyMagickString(subexpression,expression+6,MaxTextExtent);
           if (strlen(subexpression) > 1)
             subexpression[strlen(subexpression)-1]='\0';
           if (fx_info->file != (FILE *) NULL)
