@@ -2916,7 +2916,7 @@ static MagickBooleanType ReadDCMPixels(Image *image,DCMInfo *info,
                 }
             }
           index&=info->mask;
-          index=(int) ConstrainColormapIndex(image,(size_t) index);
+          index=(int) ConstrainColormapIndex(image,(ssize_t) index);
           if (first_segment != MagickFalse)
             SetPixelIndex(indexes+x,index);
           else

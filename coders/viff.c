@@ -724,13 +724,13 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
 
                   index=(ssize_t) GetPixelRed(q);
                   SetPixelRed(q,image->colormap[(ssize_t)
-                    ConstrainColormapIndex(image,(size_t) index)].red);
+                    ConstrainColormapIndex(image,(ssize_t) index)].red);
                   index=(ssize_t) GetPixelGreen(q);
                   SetPixelGreen(q,image->colormap[(ssize_t)
-                    ConstrainColormapIndex(image,(size_t) index)].green);
+                    ConstrainColormapIndex(image,(ssize_t) index)].green);
                   index=(ssize_t) GetPixelRed(q);
                   SetPixelBlue(q,image->colormap[(ssize_t)
-                    ConstrainColormapIndex(image,(size_t) index)].blue);
+                    ConstrainColormapIndex(image,(ssize_t) index)].blue);
                 }
               SetPixelOpacity(q,image->matte != MagickFalse ? QuantumRange-
                 ScaleCharToQuantum(*(p+number_pixels*3)) : OpaqueOpacity);

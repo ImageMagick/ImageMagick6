@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 static inline IndexPacket ConstrainColormapIndex(Image *image,
-  const size_t index)
+  const ssize_t index)
 {
   if ((index < image->colors) && ((ssize_t) index >= 0))
     return((IndexPacket) index);

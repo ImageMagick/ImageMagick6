@@ -451,7 +451,7 @@ static MagickBooleanType DecodeImage(Image *image,const ssize_t opacity)
       c=ReadBlobLZWByte(lzw_info);
       if (c < 0)
         break;
-      index=ConstrainColormapIndex(image,(size_t) c);
+      index=ConstrainColormapIndex(image,(ssize_t) c);
       SetPixelIndex(indexes+x,index);
       SetPixelRGBO(q,image->colormap+(ssize_t) index);
       SetPixelOpacity(q,(ssize_t) index == opacity ? TransparentOpacity :
