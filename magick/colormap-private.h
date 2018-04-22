@@ -31,8 +31,9 @@ static inline IndexPacket ConstrainColormapIndex(Image *image,
 {
   if ((index < image->colors) && ((ssize_t) index >= 0))
     return((IndexPacket) index);
-  (void) ThrowMagickException(&image->exception,GetMagickModule(),
-    CorruptImageError,"InvalidColormapIndex","`%s'",image->filename);
+  if (image->exception.severity != CorruptImageError)
+    (void) ThrowMagickException(&image->exception,GetMagickModule(),
+      CorruptImageError,"InvalidColormapIndex","`%s'",image->filename);
   return((IndexPacket) 0);
 }
 
@@ -41,8 +42,9 @@ static inline MagickBooleanType IsValidColormapIndex(Image *image,
 {
   if ((index < 0) || (index >= (ssize_t) image->colors))
     {
-      (void) ThrowMagickException(exception,GetMagickModule(),CorruptImageError,
-        "InvalidColormapIndex","`%s'",image->filename);
+      if (image->exception.severity != CorruptImageError)
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          CorruptImageError,"InvalidColormapIndex","`%s'",image->filename);
       *target=(IndexPacket) 0;
       return(MagickFalse);
     }

@@ -53,6 +53,11 @@
 #include "magick/utility.h"
 
 /*
+  Define declarations.
+*/
+#define MaxExceptionList  64
+
+/*
   Forward declarations.
 */
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -931,7 +936,7 @@ MagickExport MagickBooleanType ThrowException(ExceptionInfo *exception,
   assert(exception->signature == MagickCoreSignature);
   LockSemaphoreInfo(exception->semaphore);
   exceptions=(LinkedListInfo *) exception->exceptions;
-  if (GetNumberOfElementsInLinkedList(exceptions) > MagickMaxRecursionDepth)
+  if (GetNumberOfElementsInLinkedList(exceptions) > MaxExceptionList)
     {
       UnlockSemaphoreInfo(exception->semaphore);
       return(MagickTrue);
@@ -965,7 +970,7 @@ MagickExport MagickBooleanType ThrowException(ExceptionInfo *exception,
       exception->description=p->description;
     }
   UnlockSemaphoreInfo(exception->semaphore);
-  if (GetNumberOfElementsInLinkedList(exceptions) == MagickMaxRecursionDepth)
+  if (GetNumberOfElementsInLinkedList(exceptions) == MaxExceptionList)
     (void) ThrowMagickException(exception,GetMagickModule(),ResourceLimitError,
       "TooManyExceptions","(exception processing is suspended)");
   return(MagickTrue);
