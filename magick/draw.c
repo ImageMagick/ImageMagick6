@@ -1678,7 +1678,8 @@ static size_t GetEllipseCoordinates(const PointInfo start,const PointInfo stop,
 {
   double
     delta,
-    step;
+    step,
+    y;
 
   PointInfo
     angle;
@@ -1690,8 +1691,11 @@ static size_t GetEllipseCoordinates(const PointInfo start,const PointInfo stop,
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  angle.x=DegreesToRadians(fmod(degrees.x,360.0));
-  angle.y=DegreesToRadians(fmod(degrees.y,360.0));
+  angle.x=DegreesToRadians(degrees.x);
+  y=degrees.y;
+  while (y < degrees.x)
+    y+=360.0;
+  angle.y=DegreesToRadians(y);
   return((size_t) floor((angle.y-angle.x)/step+0.5)+3);
 }
 
@@ -3350,6 +3354,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             primitive_type=UndefinedPrimitive;
             break;
           }
+        if ((primitive_info[j+2].point.x < -360.0) ||
+            (primitive_info[j+2].point.x > 360.0) ||
+            (primitive_info[j+2].point.y < -360.0) ||
+            (primitive_info[j+2].point.y > 360.0))
+          ThrowPointExpectedException(image,token);
         TraceArc(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -3362,6 +3371,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
+        if ((primitive_info[j+2].point.x < -360.0) ||
+            (primitive_info[j+2].point.x > 360.0) ||
+            (primitive_info[j+2].point.y < -360.0) ||
+            (primitive_info[j+2].point.y > 360.0))
+          ThrowPointExpectedException(image,token);
         TraceEllipse(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -5586,7 +5600,8 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
 {
   double
     delta,
-    step;
+    step,
+    y;
 
   PointInfo
     angle,
@@ -5605,8 +5620,11 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  angle.x=DegreesToRadians(fmod(degrees.x,360.0));
-  angle.y=DegreesToRadians(fmod(degrees.y,360.0));
+  angle.x=DegreesToRadians(degrees.x);
+  y=degrees.y;
+  while (y < degrees.x)
+    y+=360.0;
+  angle.y=DegreesToRadians(y);
   for (p=primitive_info; angle.x < angle.y; angle.x+=step)
   {
     point.x=cos(fmod(angle.x,DegreesToRadians(360.0)))*stop.x+start.x;
