@@ -415,12 +415,8 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
       return(GetFirstImageInList(image));
     }
   status=SetImageExtent(image,image->columns,image->rows);
-  if (status == MagickFalse)
-    {
-      InheritException(exception,&image->exception);
-      return(DestroyImageList(image));
-    }
-  status=ResetImagePixels(image,exception);
+  if (status != MagickFalse)
+    status=ResetImagePixels(image,exception);
   if (status == MagickFalse)
     {
       InheritException(exception,&image->exception);
