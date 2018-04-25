@@ -765,8 +765,8 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
     /*
       Verify that required image information is defined.
     */
-    if ((LocaleCompare(id,"MagickCache") != 0) ||
-        (image->storage_class == UndefinedClass) || (image->depth > 64) ||
+    if ((LocaleCompare(id,"MagickCache") != 0) || (image->depth > 128) ||
+        (image->storage_class == UndefinedClass) ||
         (image->compression == UndefinedCompression) || (image->columns == 0) ||
         (image->rows == 0))
       {
