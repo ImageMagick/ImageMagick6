@@ -1311,7 +1311,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
               if (image->next == (Image *) NULL)
                 goto Finish;
               image=SyncNextImageInList(image);
-              image->columns=image->rows=1;
+              image->columns=image->rows=0;
               image->colors=0;
               break;
 
@@ -1515,7 +1515,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
               if (image->next == (Image *) NULL)
                 goto Finish;
               image=SyncNextImageInList(image);
-              image->columns=image->rows=1;
+              image->columns=image->rows=0;
               image->colors=0;
               break;
 
