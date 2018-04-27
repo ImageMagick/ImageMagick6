@@ -576,7 +576,7 @@ coders_hdr_la_LIBADD       = $(MAGICKCORE_LIBS) $(GOMP_LIBS) $(MATH_LIBS)
 coders_heic_la_SOURCES     = coders/heic.c
 coders_heic_la_CPPFLAGS    = $(MODULE_CODER_CPPFLAGS)
 coders_heic_la_LDFLAGS     = $(MODULECOMMONFLAGS)
-coders_heic_la_LIBADD      = $(MAGICKCORE_LIBS) $(HEIC_LIBS)
+coders_heic_la_LIBADD      = $(MAGICKCORE_LIBS) $(HEIF_LIBS)
 
 # HRZ coder module
 coders_hrz_la_SOURCES      = coders/hrz.c
