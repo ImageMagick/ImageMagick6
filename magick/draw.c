@@ -169,7 +169,7 @@ typedef struct _PathInfo
   Forward declarations.
 */
 static Image
-  *DrawImageClippingMask(Image *,const DrawInfo *,const char *,ExceptionInfo *);
+  *DrawClippingMask(Image *,const DrawInfo *,const char *,ExceptionInfo *);
 
 static MagickBooleanType
   DrawStrokePolygon(Image *,const DrawInfo *,const PrimitiveInfo *);
@@ -1419,13 +1419,95 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
   MagickBooleanType
     status;
 
-  clipping_mask=DrawImageClippingMask(image,draw_info,clip_path,&image->exception);
+  clipping_mask=DrawClippingMask(image,draw_info,clip_path,&image->exception);
   if (clipping_mask == (Image *) NULL)
     return(MagickFalse);
   if (image->clip_mask != (Image *) NULL)
     image->clip_mask=DestroyImage(image->clip_mask);
   image->clip_mask=CloneImage(clipping_mask,0,0,MagickTrue,&image->exception);
   return(status);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%   D r a w C l i p p i n g M a s k                                           %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  DrawClippingMask() draws the clip path and returns it as an image clipping
+%  mask.
+%
+%  The format of the DrawClippingMask method is:
+%
+%      Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
+%        const char *clip_path,ExceptionInfo *exception)
+%
+%  A description of each parameter follows:
+%
+%    o image: the image.
+%
+%    o draw_info: the draw info.
+%
+%    o clip_path: the clip path.
+%
+%    o exception: return any errors or warnings in this structure.
+%
+*/
+static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
+  const char *clip_path,ExceptionInfo *exception)
+{
+  Image
+    *clip_mask;
+
+  DrawInfo
+    *clone_info;
+
+  MagickStatusType
+    status;
+
+  /*
+    Draw a clip path.
+  */
+  assert(image != (Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  assert(draw_info != (const DrawInfo *) NULL);
+  clip_mask=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  if (clip_mask == (Image *) NULL)
+    return((Image *) NULL);
+  (void) SetImageClipMask(image,(Image *) NULL);
+  (void) QueryColorCompliance("#0000",AllCompliance,
+    &clip_mask->background_color,exception);
+  clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
+  (void) SetImageBackgroundColor(clip_mask);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"\nbegin clip-path %s",
+      draw_info->clip_mask);
+  clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
+  (void) CloneString(&clone_info->primitive,clip_path);
+  (void) QueryColorCompliance("#ffffff",AllCompliance,&clone_info->fill,
+    exception);
+  if (clone_info->clip_mask != (char *) NULL)
+    clone_info->clip_mask=DestroyString(clone_info->clip_mask);
+  (void) QueryColorCompliance("#00000000",AllCompliance,&clone_info->stroke,
+    exception);
+  clone_info->stroke_width=0.0;
+  clone_info->opacity=OpaqueOpacity;
+  clone_info->clip_path=MagickTrue;
+  status=DrawImage(clip_mask,clone_info);
+  clone_info=DestroyDrawInfo(clone_info);
+  if (status == MagickFalse)
+    clip_mask=DestroyImage(clip_mask);
+  (void) NegateImage(clip_mask,MagickFalse);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end clip-path");
+  return(clip_mask);
 }
 
 /*
@@ -2040,7 +2122,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             clip_path=GetNodeByURL(primitive,token);
             if (clip_path != (char *) NULL)
               {
-                graphic_context[n]->clipping_mask=DrawImageClippingMask(image,
+                graphic_context[n]->clipping_mask=DrawClippingMask(image,
                   graphic_context[n],clip_path,&image->exception);
                 clip_path=DestroyString(clip_path);
               }
@@ -3803,88 +3885,6 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
   }
   image_view=DestroyCacheView(image_view);
   return(status);
-}
-
-/*
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                             %
-%                                                                             %
-%                                                                             %
-%   D r a w I m a g e C l i p p i n g M a s k                                 %
-%                                                                             %
-%                                                                             %
-%                                                                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  DrawImageClippingMask() draws the clip path and returns it as an image
-%  clipping mask.
-%
-%  The format of the DrawImageClippingMask method is:
-%
-%      Image *DrawImageClippingMask(Image *image,const DrawInfo *draw_info,
-%        const char *clip_path,ExceptionInfo *exception)
-%
-%  A description of each parameter follows:
-%
-%    o image: the image.
-%
-%    o draw_info: the draw info.
-%
-%    o clip_path: the clip path.
-%
-%    o exception: return any errors or warnings in this structure.
-%
-*/
-static Image *DrawImageClippingMask(Image *image,const DrawInfo *draw_info,
-  const char *clip_path,ExceptionInfo *exception)
-{
-  Image
-    *clip_mask;
-
-  DrawInfo
-    *clone_info;
-
-  MagickStatusType
-    status;
-
-  /*
-    Draw a clip path.
-  */
-  assert(image != (Image *) NULL);
-  assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  assert(draw_info != (const DrawInfo *) NULL);
-  clip_mask=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
-  if (clip_mask == (Image *) NULL)
-    return((Image *) NULL);
-  (void) SetImageClipMask(image,(Image *) NULL);
-  (void) QueryColorCompliance("#0000",AllCompliance,
-    &clip_mask->background_color,exception);
-  clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
-  (void) SetImageBackgroundColor(clip_mask);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"\nbegin clip-path %s",
-      draw_info->clip_mask);
-  clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
-  (void) CloneString(&clone_info->primitive,clip_path);
-  (void) QueryColorCompliance("#ffffff",AllCompliance,&clone_info->fill,
-    exception);
-  if (clone_info->clip_mask != (char *) NULL)
-    clone_info->clip_mask=DestroyString(clone_info->clip_mask);
-  (void) QueryColorCompliance("#00000000",AllCompliance,&clone_info->stroke,
-    exception);
-  clone_info->stroke_width=0.0;
-  clone_info->opacity=OpaqueOpacity;
-  clone_info->clip_path=MagickTrue;
-  status=DrawImage(clip_mask,clone_info);
-  clone_info=DestroyDrawInfo(clone_info);
-  if (status == MagickFalse)
-    clip_mask=DestroyImage(clip_mask);
-  (void) NegateImage(clip_mask,MagickFalse);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end clip-path");
-  return(clip_mask);
 }
 
 /*
