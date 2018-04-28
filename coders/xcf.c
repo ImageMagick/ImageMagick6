@@ -1119,14 +1119,14 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
+  if (image_type == GIMP_INDEXED)
+    ThrowReaderException(CoderError,"ColormapTypeNotSupported");
   if (image_type == GIMP_RGB)
     SetImageColorspace(image,sRGBColorspace);
-  else
-    if (image_type == GIMP_GRAY)
-      SetImageColorspace(image,GRAYColorspace);
-    else
-      if (image_type == GIMP_INDEXED)
-        ThrowReaderException(CoderError,"ColormapTypeNotSupported");
+  else if (image_type == GIMP_GRAY)
+    SetImageColorspace(image,GRAYColorspace);
+   else
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   (void) SetImageBackgroundColor(image);
   (void) SetImageOpacity(image,OpaqueOpacity); 
   /*
