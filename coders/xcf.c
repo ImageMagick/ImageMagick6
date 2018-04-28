@@ -699,13 +699,12 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
       switch (inDocInfo->compression)
       {
         case COMPRESS_NONE:
-          if (load_tile(image,tile_image,inDocInfo,inLayerInfo,(size_t) (offset2-offset)) == 0)
-            status=MagickTrue;
+          status=load_tile(image,tile_image,inDocInfo,inLayerInfo,(size_t)
+            (offset2-offset));
           break;
         case COMPRESS_RLE:
-          if (load_tile_rle (image,tile_image,inDocInfo,inLayerInfo,
-              (int) (offset2-offset)) == 0)
-            status=MagickTrue;
+          status=load_tile_rle(image,tile_image,inDocInfo,inLayerInfo,(size_t)
+            (offset2-offset));
           break;
         case COMPRESS_ZLIB:
           tile_image=DestroyImage(tile_image);
@@ -718,10 +717,13 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
       }
 
       /* composite the tile onto the layer's image, and then destroy it */
-      (void) CompositeImage(inLayerInfo->image,CopyCompositeOp,tile_image,
-        destLeft * TILE_WIDTH,destTop*TILE_HEIGHT);
+      if (status != MagickFalse)
+        (void) CompositeImage(inLayerInfo->image,CopyCompositeOp,tile_image,
+          destLeft * TILE_WIDTH,destTop*TILE_HEIGHT);
       tile_image=DestroyImage(tile_image);
 
+      if (status != MagickFalse)
+        return(MagickFalse);
       /* adjust tile position */
       destLeft++;
       if (destLeft >= (int) ntile_cols)
@@ -729,8 +731,6 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
           destLeft = 0;
           destTop++;
         }
-      if (status != MagickFalse)
-        return(MagickFalse);
       /* restore the saved position so we'll be ready to
        *  read the next offset.
        */
