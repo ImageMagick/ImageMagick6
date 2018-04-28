@@ -2317,8 +2317,8 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
             profile=DestroyStringInfo(profile);
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         }
-      SetImageAlphaChannel(image,TransparentAlphaChannel);
       image->background_color.opacity=TransparentOpacity;
+      (void) SetImageBackgroundColor(image);
       merged=MergeImageLayers(image,FlattenLayer,exception);
       ReplaceImageInList(&image,merged);
     }
