@@ -2451,6 +2451,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       case 'm':
       case 'M':
       {
+        if (LocaleCompare("mask",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            break;
+          }
         if (LocaleCompare("matte",keyword) == 0)
           {
             primitive_type=MattePrimitive;
@@ -2541,6 +2546,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 n--;
                 break;
               }
+            if (LocaleCompare("mask",token) == 0)
+              break;
             if (LocaleCompare("pattern",token) == 0)
               break;
             if (LocaleCompare("symbol",token) == 0)
@@ -2667,6 +2674,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                   graphic_context[n-1]);
                 if (*q == '"')
                   GetNextToken(q,&q,extent,token);
+                break;
+              }
+            if (LocaleCompare("mask",token) == 0)
+              {
+                GetNextToken(q,&q,extent,token);
                 break;
               }
             if (LocaleCompare("pattern",token) == 0)
