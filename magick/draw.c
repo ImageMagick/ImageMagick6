@@ -168,6 +168,9 @@ typedef struct _PathInfo
 /*
   Forward declarations.
 */
+static Image
+  *DrawImageClippingMask(Image *,const DrawInfo *,const char *,ExceptionInfo *);
+
 static MagickBooleanType
   DrawStrokePolygon(Image *,const DrawInfo *,const PrimitiveInfo *);
 
@@ -1391,12 +1394,12 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DrawClipPath() draws the clip path on the image mask.
+%  DrawClipPath() draws the clip path on the image write mask.
 %
 %  The format of the DrawClipPath method is:
 %
 %      MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
-%        const char *name)
+%        const char *clip_path)
 %
 %  A description of each parameter follows:
 %
@@ -1408,66 +1411,21 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %
 */
 MagickExport MagickBooleanType DrawClipPath(Image *image,
-  const DrawInfo *draw_info,const char *name)
+  const DrawInfo *draw_info,const char *clip_path)
 {
-  char
-    clip_mask[MaxTextExtent];
+  Image
+    *clipping_mask;
 
-  const char
-    *value;
-
-  DrawInfo
-    *clone_info;
-
-  MagickStatusType
+  MagickBooleanType
     status;
 
-  assert(image != (Image *) NULL);
-  assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  assert(draw_info != (const DrawInfo *) NULL);
-  if (LocaleCompare(name,"MVG") == 0)
+  clipping_mask=DrawImageClippingMask(image,draw_info,clip_path,&image->exception);
+  if (clipping_mask == (Image *) NULL)
     return(MagickFalse);
-  (void) FormatLocaleString(clip_mask,MaxTextExtent,"%s",name);
-  value=GetImageArtifact(image,clip_mask);
-  if (value == (const char *) NULL)
-    return(MagickFalse);
-  if (image->clip_mask == (Image *) NULL)
-    {
-      Image
-        *clip_mask;
-
-      clip_mask=CloneImage(image,image->columns,image->rows,MagickTrue,
-        &image->exception);
-      if (clip_mask == (Image *) NULL)
-        return(MagickFalse);
-      (void) SetImageClipMask(image,clip_mask);
-      clip_mask=DestroyImage(clip_mask);
-    }
-  (void) DeleteImageArtifact(image->clip_mask,clip_mask);
-  (void) QueryColorDatabase("#00000000",&image->clip_mask->background_color,
-    &image->exception);
-  image->clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
-  (void) SetImageBackgroundColor(image->clip_mask);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"\nbegin clip-path %s",
-      draw_info->clip_mask);
-  clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
-  (void) CloneString(&clone_info->primitive,value);
-  (void) QueryColorDatabase("#ffffff",&clone_info->fill,&image->exception);
-  if (clone_info->clip_mask != (char *) NULL)
-    clone_info->clip_mask=DestroyString(clone_info->clip_mask);
-  (void) QueryColorDatabase("#00000000",&clone_info->stroke,&image->exception);
-  clone_info->stroke_width=0.0;
-  clone_info->opacity=OpaqueOpacity;
-  clone_info->clip_path=MagickTrue;
-  status=DrawImage(image->clip_mask,clone_info);
-  status&=NegateImage(image->clip_mask,MagickFalse);
-  clone_info=DestroyDrawInfo(clone_info);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end clip-path");
-  return(status != 0 ? MagickTrue : MagickFalse);
+  if (image->clip_mask != (Image *) NULL)
+    image->clip_mask=DestroyImage(image->clip_mask);
+  image->clip_mask=CloneImage(clipping_mask,0,0,MagickTrue,&image->exception);
+  return(status);
 }
 
 /*
@@ -1701,7 +1659,7 @@ static size_t GetEllipseCoordinates(const PointInfo start,const PointInfo stop,
   return((size_t) floor((angle.y-angle.x)/step+0.5)+3);
 }
 
-static char *GetGroupByURL(const char *primitive,const char *url)
+static char *GetNodeByURL(const char *primitive,const char *url)
 {
   char
     *token;
@@ -2072,13 +2030,20 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       {
         if (LocaleCompare("clip-path",keyword) == 0)
           {
+            char
+              *clip_path;
+
             /*
-              Create clip mask.
+              Take a node from within the MVG document, and duplicate it here.
             */
             GetNextToken(q,&q,extent,token);
-            (void) CloneString(&graphic_context[n]->clip_mask,token);
-            (void) DrawClipPath(image,graphic_context[n],
-              graphic_context[n]->clip_mask);
+            clip_path=GetNodeByURL(primitive,token);
+            if (clip_path != (char *) NULL)
+              {
+                graphic_context[n]->clipping_mask=DrawImageClippingMask(image,
+                  graphic_context[n],clip_path,&image->exception);
+                clip_path=DestroyString(clip_path);
+              }
             break;
           }
         if (LocaleCompare("clip-rule",keyword) == 0)
@@ -2493,7 +2458,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 if (graphic_context[n]->clip_mask != (char *) NULL)
                   if (LocaleCompare(graphic_context[n]->clip_mask,
                       graphic_context[n-1]->clip_mask) != 0)
-                    (void) SetImageClipMask(image,(Image *) NULL);
+                    (void) SetImageClippingMask(image,(Image *) NULL);
                 graphic_context[n]=DestroyDrawInfo(graphic_context[n]);
                 n--;
                 break;
@@ -2515,26 +2480,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             if (LocaleCompare("clip-path",token) == 0)
               {
-                char
-                  name[MaxTextExtent];
-
-                GetNextToken(q,&q,extent,token);
-                (void) FormatLocaleString(name,MaxTextExtent,"%s",token);
-                for (p=q; *q != '\0'; )
-                {
-                  GetNextToken(q,&q,extent,token);
-                  if (LocaleCompare(token,"pop") != 0)
-                    continue;
-                  GetNextToken(q,(const char **) NULL,extent,token);
-                  if (LocaleCompare(token,"clip-path") != 0)
-                    continue;
-                  break;
-                }
-                if ((size_t) (q-p-4+1) > 0)
-                  {
-                    (void) CopyMagickString(token,p,(size_t) (q-p-4+1));
-                    (void) SetImageArtifact(image,name,token);
-                  }
                 GetNextToken(q,&q,extent,token);
                 break;
               }
@@ -2853,8 +2798,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                     status=MagickFalse;
                     break;
                   }
-                (void) memset(graphic_context[n]->dash_pattern,0,(2UL*x+2UL)*
-                  sizeof(*graphic_context[n]->dash_pattern));
+                (void) memset(graphic_context[n]->dash_pattern,0,(size_t)
+                  (2UL*x+2UL)*sizeof(*graphic_context[n]->dash_pattern));
                 for (j=0; j < x; j++)
                 {
                   GetNextToken(q,&q,extent,token);
@@ -3026,21 +2971,21 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("use",keyword) == 0)
           {
             char
-              *group;
+              *node;
 
             /*
-              Take a group from within the MVG document, and duplicate it here.
+              Get a node from the MVG document, and "use" it here.
             */
             GetNextToken(q,&q,extent,token);
-            group=GetGroupByURL(primitive,token);
-            if (group != (char *) NULL)
+            node=GetNodeByURL(primitive,token);
+            if (node != (char *) NULL)
               {
                 DrawInfo
                   *clone_info;
 
                 clone_info=CloneDrawInfo((ImageInfo *) NULL,graphic_context[n]);
-                (void) CloneString(&clone_info->primitive,group);
-                group=DestroyString(group);
+                (void) CloneString(&clone_info->primitive,node);
+                node=DestroyString(node);
                 status=DrawImage(image,clone_info);
                 clone_info=DestroyDrawInfo(clone_info);
               }
@@ -3265,11 +3210,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           center,
           radii;
 
-        if ((primitive_info[j+2].point.x < -360.0) ||
-            (primitive_info[j+2].point.x > 360.0) ||
-            (primitive_info[j+2].point.y < -360.0) ||
-            (primitive_info[j+2].point.y > 360.0))
-          ThrowPointExpectedException(image,token);
         center.x=0.5*(primitive_info[j+1].point.x+primitive_info[j].point.x);
         center.y=0.5*(primitive_info[j+1].point.y+primitive_info[j].point.y);
         radii.x=fabs(center.x-primitive_info[j].point.x);
@@ -3280,11 +3220,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case EllipsePrimitive:
       {
-        if ((primitive_info[j+2].point.x < -360.0) ||
-            (primitive_info[j+2].point.x > 360.0) ||
-            (primitive_info[j+2].point.y < -360.0) ||
-            (primitive_info[j+2].point.y > 360.0))
-          ThrowPointExpectedException(image,token);
         coordinates=GetEllipseCoordinates(primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         break;
@@ -3374,6 +3309,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             primitive_type=UndefinedPrimitive;
             break;
           }
+        if ((primitive_info[j+2].point.x < -360.0) ||
+            (primitive_info[j+2].point.x > 360.0) ||
+            (primitive_info[j+2].point.y < -360.0) ||
+            (primitive_info[j+2].point.y > 360.0))
+          ThrowPointExpectedException(image,token);
         TraceArc(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -3386,6 +3326,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
+        if ((primitive_info[j+2].point.x < -360.0) ||
+            (primitive_info[j+2].point.x > 360.0) ||
+            (primitive_info[j+2].point.y < -360.0) ||
+            (primitive_info[j+2].point.y > 360.0))
+          ThrowPointExpectedException(image,token);
         TraceEllipse(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -3514,14 +3459,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
     }
     if (graphic_context[n]->render != MagickFalse)
-      {
-        if ((n != 0) && (graphic_context[n]->clip_mask != (char *) NULL) &&
-            (LocaleCompare(graphic_context[n]->clip_mask,
-             graphic_context[n-1]->clip_mask) != 0))
-          status&=DrawClipPath(image,graphic_context[n],
-            graphic_context[n]->clip_mask);
-        status&=DrawPrimitive(image,graphic_context[n],primitive_info);
-      }
+      status&=DrawPrimitive(image,graphic_context[n],primitive_info);
     if (primitive_info->text != (char *) NULL)
       primitive_info->text=(char *) RelinquishMagickMemory(
         primitive_info->text);
@@ -3869,6 +3807,88 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
   }
   image_view=DestroyCacheView(image_view);
   return(status);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%   D r a w I m a g e C l i p p i n g M a s k                                 %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  DrawImageClippingMask() draws the clip path and returns it as an image
+%  clipping mask.
+%
+%  The format of the DrawImageClippingMask method is:
+%
+%      Image *DrawImageClippingMask(Image *image,const DrawInfo *draw_info,
+%        const char *clip_path,ExceptionInfo *exception)
+%
+%  A description of each parameter follows:
+%
+%    o image: the image.
+%
+%    o draw_info: the draw info.
+%
+%    o clip_path: the clip path.
+%
+%    o exception: return any errors or warnings in this structure.
+%
+*/
+static Image *DrawImageClippingMask(Image *image,const DrawInfo *draw_info,
+  const char *clip_path,ExceptionInfo *exception)
+{
+  Image
+    *clip_mask;
+
+  DrawInfo
+    *clone_info;
+
+  MagickStatusType
+    status;
+
+  /*
+    Draw a clip path.
+  */
+  assert(image != (Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  assert(draw_info != (const DrawInfo *) NULL);
+  clip_mask=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  if (clip_mask == (Image *) NULL)
+    return((Image *) NULL);
+  (void) SetImageClippingMask(image,(Image *) NULL);
+  (void) QueryColorCompliance("#0000",AllCompliance,
+    &clip_mask->background_color,exception);
+  clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
+  (void) SetImageBackgroundColor(clip_mask);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"\nbegin clip-path %s",
+      draw_info->clip_mask);
+  clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
+  (void) CloneString(&clone_info->primitive,clip_path);
+  (void) QueryColorCompliance("#ffffff",AllCompliance,&clone_info->fill,
+    exception);
+  if (clone_info->clip_mask != (char *) NULL)
+    clone_info->clip_mask=DestroyString(clone_info->clip_mask);
+  (void) QueryColorCompliance("#00000000",AllCompliance,&clone_info->stroke,
+    exception);
+  clone_info->stroke_width=0.0;
+  clone_info->opacity=OpaqueOpacity;
+  clone_info->clip_path=MagickTrue;
+  status=DrawImage(clip_mask,clone_info);
+  clone_info=DestroyDrawInfo(clone_info);
+  if (status == MagickFalse)
+    clip_mask=DestroyImage(clip_mask);
+  (void) NegateImage(clip_mask,MagickFalse);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end clip-path");
+  return(clip_mask);
 }
 
 /*
@@ -4596,7 +4616,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       ((IsPixelGray(&draw_info->fill) == MagickFalse) ||
        (IsPixelGray(&draw_info->stroke) == MagickFalse)))
     (void) SetImageColorspace(image,sRGBColorspace);
-  status=MagickTrue;
+  status=SetImageClippingMask(image,draw_info->clipping_mask);
   x=(ssize_t) ceil(primitive_info->point.x-0.5);
   y=(ssize_t) ceil(primitive_info->point.y-0.5);
   image_view=AcquireAuthenticCacheView(image,exception);

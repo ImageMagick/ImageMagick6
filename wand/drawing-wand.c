@@ -6837,7 +6837,7 @@ WandExport MagickBooleanType PopDrawingWand(DrawingWand *wand)
   if (CurrentContext->clip_mask != (char *) NULL)
     if (LocaleCompare(CurrentContext->clip_mask,
         wand->graphic_context[wand->index-1]->clip_mask) != 0)
-      (void) SetImageClipMask(wand->image,(Image *) NULL);
+      (void) SetImageClippingMask(wand->image,(Image *) NULL);
 #endif
   CurrentContext=DestroyDrawInfo(CurrentContext);
   wand->index--;

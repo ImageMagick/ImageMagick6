@@ -61,6 +61,7 @@
 #include "magick/log.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
@@ -185,8 +186,7 @@ typedef struct _SVGInfo
     document;
 #endif
 } SVGInfo;
-
-
+
 /*
   Forward declarations.
 */
@@ -265,9 +265,7 @@ static SVGInfo *AcquireSVGInfo(void)
     return((SVGInfo *) NULL);
   (void) memset(svg_info,0,sizeof(*svg_info));
   svg_info->text=AcquireString("");
-  svg_info->scale=(double *) AcquireMagickMemory(sizeof(*svg_info->scale));
-  if (svg_info->scale == (double *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  svg_info->scale=(double *) AcquireCriticalMemory(sizeof(*svg_info->scale));
   GetAffineMatrix(&svg_info->affine);
   svg_info->scale[0]=ExpandAffine(&svg_info->affine);
   return(svg_info);
@@ -395,7 +393,7 @@ static char **GetStyleTokens(void *context,const char *style,
   text=DestroyString(text);
   for (i=0; tokens[i] != (char *) NULL; i++)
     StripStyleTokens(tokens[i]);
-  *number_tokens=(ssize_t) i;
+  *number_tokens=(size_t) i;
   return(tokens);
 }
 
@@ -1306,7 +1304,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
             }
           if (LocaleCompare(keyword,"fill-rule") == 0)
             {
-              (void) FormatLocaleFile(svg_info->file,"fill-rule \"%s\"\n",value);
+              (void) FormatLocaleFile(svg_info->file,"fill-rule \"%s\"\n",
+                value);
               break;
             }
           if (LocaleCompare(keyword,"fill-opacity") == 0)
@@ -1329,7 +1328,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
             }
           if (LocaleCompare(keyword,"font-style") == 0)
             {
-              (void) FormatLocaleFile(svg_info->file,"font-style \"%s\"\n",value);
+              (void) FormatLocaleFile(svg_info->file,"font-style \"%s\"\n",
+                value);
               break;
             }
           if (LocaleCompare(keyword,"font-size") == 0)
@@ -1645,7 +1645,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
             {
               if (LocaleCompare(value,"currentColor") == 0)
                 {
-                  (void) FormatLocaleFile(svg_info->file,"stroke \"%s\"\n",color);
+                  (void) FormatLocaleFile(svg_info->file,"stroke \"%s\"\n",
+                    color);
                   break;
                 }
               (void) FormatLocaleFile(svg_info->file,"stroke \"%s\"\n",value);
@@ -1683,8 +1684,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
             }
           if (LocaleCompare(keyword,"stroke-miterlimit") == 0)
             {
-              (void) FormatLocaleFile(svg_info->file,"stroke-miterlimit \"%s\"\n",
-                value);
+              (void) FormatLocaleFile(svg_info->file,
+                "stroke-miterlimit \"%s\"\n",value);
               break;
             }
           if (LocaleCompare(keyword,"stroke-opacity") == 0)
@@ -1767,8 +1768,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
                           (void) FormatLocaleFile(svg_info->file,
                             "fill '#000000'\n");
                         else
-                          (void) FormatLocaleFile(svg_info->file,"fill \"%s\"\n",
-                            value);
+                          (void) FormatLocaleFile(svg_info->file,
+                            "fill \"%s\"\n",value);
                         break;
                       }
                     if (LocaleCompare(keyword,"fillcolor") == 0)
@@ -3219,6 +3220,7 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
 #else
             p=gdk_pixbuf_get_pixels(pixel_buffer);
 #endif
+            GetMagickPixelPacket(image,&fill_color);
             for (y=0; y < (ssize_t) image->rows; y++)
             {
               q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -3559,7 +3561,8 @@ ModuleExport void UnregisterSVGImage(void)
 %
 %  The format of the WriteSVGImage method is:
 %
-%      MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
+%      MagickBooleanType WriteSVGImage(const ImageInfo *image_info,
+%        Image *image)
 %
 %  A description of each parameter follows.
 %
