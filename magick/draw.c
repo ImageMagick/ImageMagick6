@@ -5021,6 +5021,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
   image_view=DestroyCacheView(image_view);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  end draw-primitive");
+  status&=SetImageClipMask(image,(Image *) NULL);
   return(status != 0 ? MagickTrue : MagickFalse);
 }
 
