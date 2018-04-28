@@ -4843,7 +4843,17 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
   if (status == MagickFalse)
     {
       jng_image=DestroyImageList(jng_image);
-      DestroyJNG(NULL,NULL,NULL,&alpha_image,&alpha_image_info);
+      DestroyJNG(NULL,&color_image,&color_image_info,&alpha_image,
+        &alpha_image_info);
+      InheritException(exception,&image->exception);
+      return(DestroyImageList(image));
+    }
+  if ((image->columns != jng_image->columns) ||
+      (image->rows != jng_image->rows))
+    {
+      jng_image=DestroyImageList(jng_image);
+      DestroyJNG(NULL,&color_image,&color_image_info,&alpha_image,
+        &alpha_image_info);
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
