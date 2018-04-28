@@ -1416,10 +1416,13 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
                 }
               image->columns=Bitmap2Header1.Width;
               image->rows=Bitmap2Header1.Height;
+              if (image_info->ping != MagickFalse)
+                return(image);
               status=SetImageExtent(image,image->columns,image->rows);
+              if (status != MagickFalse)
+                status=ResetImagePixels(image,exception);
               if (status == MagickFalse)
                 break;
-              (void) ResetImagePixels(image,exception);
               if ((image->colors == 0) && (bpp != 24))
                 {
                   size_t
@@ -1467,9 +1470,8 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
                   }
                 case 1:    /*RLE for WPG2 */
                   {
-                    if (!image_info->ping)
-                      if( UnpackWPG2Raster(image,bpp) < 0)
-                        goto DecompressionFailed;
+                    if( UnpackWPG2Raster(image,bpp) < 0)
+                      goto DecompressionFailed;
                     break;
                   }
                 }
