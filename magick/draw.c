@@ -2458,7 +2458,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 if (graphic_context[n]->clip_mask != (char *) NULL)
                   if (LocaleCompare(graphic_context[n]->clip_mask,
                       graphic_context[n-1]->clip_mask) != 0)
-                    (void) SetImageClippingMask(image,(Image *) NULL);
+                    (void) SetImageClipMask(image,(Image *) NULL);
                 graphic_context[n]=DestroyDrawInfo(graphic_context[n]);
                 n--;
                 break;
@@ -3862,7 +3862,7 @@ static Image *DrawImageClippingMask(Image *image,const DrawInfo *draw_info,
   clip_mask=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
   if (clip_mask == (Image *) NULL)
     return((Image *) NULL);
-  (void) SetImageClippingMask(image,(Image *) NULL);
+  (void) SetImageClipMask(image,(Image *) NULL);
   (void) QueryColorCompliance("#0000",AllCompliance,
     &clip_mask->background_color,exception);
   clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
@@ -4616,7 +4616,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       ((IsPixelGray(&draw_info->fill) == MagickFalse) ||
        (IsPixelGray(&draw_info->stroke) == MagickFalse)))
     (void) SetImageColorspace(image,sRGBColorspace);
-  status=SetImageClippingMask(image,draw_info->clipping_mask);
+  status=SetImageClipMask(image,draw_info->clipping_mask);
   x=(ssize_t) ceil(primitive_info->point.x-0.5);
   y=(ssize_t) ceil(primitive_info->point.y-0.5);
   image_view=AcquireAuthenticCacheView(image,exception);
