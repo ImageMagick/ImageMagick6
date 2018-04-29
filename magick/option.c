@@ -861,6 +861,7 @@ static const OptionInfo
     { "Undefined", UndefinedCompliance, UndefinedOptionFlag, MagickTrue },
     { "CSS", CSSCompliance, UndefinedOptionFlag, MagickFalse },
     { "No", NoCompliance, UndefinedOptionFlag, MagickFalse },
+    { "MVG", MVGCompliance, UndefinedOptionFlag, MagickFalse },
     { "SVG", SVGCompliance, UndefinedOptionFlag, MagickFalse },
     { "X11", X11Compliance, UndefinedOptionFlag, MagickFalse },
     { "XPM", XPMCompliance, UndefinedOptionFlag, MagickFalse },
