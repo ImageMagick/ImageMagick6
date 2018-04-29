@@ -266,6 +266,7 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
     (void) CloneString(&clone_info->primitive,draw_info->primitive);
   if (draw_info->geometry != (char *) NULL)
     (void) CloneString(&clone_info->geometry,draw_info->geometry);
+  clone_info->compliance=draw_info->compliance;
   clone_info->viewbox=draw_info->viewbox;
   clone_info->affine=draw_info->affine;
   clone_info->gravity=draw_info->gravity;
@@ -2125,6 +2126,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 graphic_context[n]->clipping_mask=DrawClippingMask(image,
                   graphic_context[n],clip_path,&image->exception);
                 clip_path=DestroyString(clip_path);
+                if (draw_info->compliance != SVGCompliance)
+                  status=SetImageClipMask(image,
+                    graphic_context[n]->clipping_mask);
               }
             break;
           }
@@ -2178,6 +2182,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           {
             primitive_type=ColorPrimitive;
             break;
+          }
+        if (LocaleCompare("compliance",keyword) == 0)
+          { 
+            GetNextToken(q,&q,extent,token);
+            graphic_context[n]->compliance=(ComplianceType) ParseCommandOption(
+              MagickComplianceOptions,MagickFalse,token);
           }
         status=MagickFalse;
         break;
@@ -4624,7 +4634,9 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       ((IsPixelGray(&draw_info->fill) == MagickFalse) ||
        (IsPixelGray(&draw_info->stroke) == MagickFalse)))
     (void) SetImageColorspace(image,sRGBColorspace);
-  status=SetImageClipMask(image,draw_info->clipping_mask);
+  status=MagickTrue;
+  if (draw_info->compliance == SVGCompliance)
+    status=SetImageClipMask(image,draw_info->clipping_mask);
   x=(ssize_t) ceil(primitive_info->point.x-0.5);
   y=(ssize_t) ceil(primitive_info->point.y-0.5);
   image_view=AcquireAuthenticCacheView(image,exception);
@@ -5033,7 +5045,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
   image_view=DestroyCacheView(image_view);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  end draw-primitive");
-  status&=SetImageClipMask(image,(Image *) NULL);
+  if (draw_info->compliance == SVGCompliance)
+    status&=SetImageClipMask(image,(Image *) NULL);
   return(status != 0 ? MagickTrue : MagickFalse);
 }
 

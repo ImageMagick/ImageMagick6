@@ -22,6 +22,7 @@
 #include "magick/image.h"
 #include "magick/pixel.h"
 #include "magick/type.h"
+#include "magick/color.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
@@ -344,6 +345,9 @@ typedef struct _DrawInfo
 
   Image
     *clipping_mask;
+
+  ComplianceType
+    compliance;
 } DrawInfo;
 
 typedef struct _PrimitiveInfo
