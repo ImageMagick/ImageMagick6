@@ -781,7 +781,7 @@ static PathInfo *ConvertPrimitiveToPath(
         code=MoveToCode;
       }
     coordinates--;
-    if ((code == MoveToCode) ||
+    if ((code == MoveToCode) || (coordinates <= 0) ||
         (fabs(q.x-primitive_info[i].point.x) >= DrawEpsilon) ||
         (fabs(q.y-primitive_info[i].point.y) >= DrawEpsilon))
       {
