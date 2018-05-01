@@ -1964,7 +1964,10 @@ static int formatIPTC(Image *ifile, Image *ofile)
     str=(unsigned char *) AcquireQuantumMemory((size_t) (taglen+MaxTextExtent),
       sizeof(*str));
     if (str == (unsigned char *) NULL)
-      return(0);
+      {
+        (void) printf("MemoryAllocationFailed");
+        return 0;
+      }
     for (tagindx=0; tagindx<taglen; tagindx++)
     {
       c=ReadBlobByte(ifile);
@@ -2102,7 +2105,10 @@ static int formatIPTCfromBuffer(Image *ofile, char *s, ssize_t len)
     {
       c = *s++; len--;
       if (len < 0)
-        return(-1);
+        {
+          str=(unsigned char *) RelinquishMagickMemory(str);
+          return(-1);
+        }
       str[tagindx]=(unsigned char) c;
     }
     str[taglen]=0;
