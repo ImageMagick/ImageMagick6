@@ -70,6 +70,7 @@
 #include "magick/image-private.h"
 #include "magick/list.h"
 #include "magick/log.h"
+#include "magick/memory-private.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/option.h"
@@ -216,9 +217,7 @@ MagickExport DrawInfo *AcquireDrawInfo(void)
   DrawInfo
     *draw_info;
 
-  draw_info=(DrawInfo *) AcquireMagickMemory(sizeof(*draw_info));
-  if (draw_info == (DrawInfo *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  draw_info=(DrawInfo *) AcquireCriticalMemory(sizeof(*draw_info));
   GetDrawInfo((ImageInfo *) NULL,draw_info);
   return(draw_info);
 }
@@ -256,9 +255,7 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
   DrawInfo
     *clone_info;
 
-  clone_info=(DrawInfo *) AcquireMagickMemory(sizeof(*clone_info));
-  if (clone_info == (DrawInfo *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  clone_info=(DrawInfo *) AcquireCriticalMemory(sizeof(*clone_info));
   GetDrawInfo(image_info,clone_info);
   if (draw_info == (DrawInfo *) NULL)
     return(clone_info);
@@ -344,9 +341,8 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
       if (clone_info->gradient.stops == (StopInfo *) NULL)
         ThrowFatalException(ResourceLimitFatalError,
           "UnableToAllocateDashPattern");
-      (void) memcpy(clone_info->gradient.stops,
-        draw_info->gradient.stops,(size_t) number_stops*
-        sizeof(*clone_info->gradient.stops));
+      (void) memcpy(clone_info->gradient.stops,draw_info->gradient.stops,
+        (size_t) number_stops*sizeof(*clone_info->gradient.stops));
     }
   if (draw_info->clip_mask != (char *) NULL)
     (void) CloneString(&clone_info->clip_mask,draw_info->clip_mask);
@@ -781,7 +777,7 @@ static PathInfo *ConvertPrimitiveToPath(
         code=MoveToCode;
       }
     coordinates--;
-    if ((code == MoveToCode) || (coordinates <= 0) ||
+    if ((code == MoveToCode) ||
         (fabs(q.x-primitive_info[i].point.x) >= DrawEpsilon) ||
         (fabs(q.y-primitive_info[i].point.y) >= DrawEpsilon))
       {
@@ -1796,18 +1792,6 @@ static char *GetNodeByURL(const char *primitive,const char *url)
   return(token);
 }
 
-static inline MagickBooleanType IsPoint(const char *point)
-{
-  char
-    *p;
-
-  double
-    value;
-
-  value=StringToDouble(point,&p);
-  return((fabs(value) < DrawEpsilon) && (p == point) ? MagickFalse : MagickTrue);
-}
-
 static size_t ReckonEllipseCoordinates(const PointInfo radii,
   const PointInfo degrees)
 {
@@ -1822,7 +1806,7 @@ static size_t ReckonEllipseCoordinates(const PointInfo radii,
   /*
     Ellipses are just short segmented polys.
   */
-  if ((fabs(radii.x) < DrawEpsilon) || (fabs(radii.y) < DrawEpsilon))
+  if ((fabs(radii.x) < MagickEpsilon) || (fabs(radii.y) < MagickEpsilon))
     return(0);
   delta=2.0*PerceptibleReciprocal(MagickMax(radii.x,radii.y));
   step=MagickPI/8.0;
@@ -1836,6 +1820,18 @@ static size_t ReckonEllipseCoordinates(const PointInfo radii,
   return((size_t) floor((angle.y-angle.x)/step+0.5)+3);
 }
 
+static inline MagickBooleanType IsPoint(const char *point)
+{
+  char
+    *p;
+
+  double
+    value;
+
+  value=StringToDouble(point,&p);
+  return((fabs(value) < DrawEpsilon) && (p == point) ? MagickFalse : MagickTrue);
+}
+
 static size_t ReckonRoundRectangleCoordinates(const PointInfo start,
   const PointInfo end,PointInfo arc)
 {
@@ -1846,9 +1842,11 @@ static size_t ReckonRoundRectangleCoordinates(const PointInfo start,
   size_t
     coordinates;
 
-  coordinates=0;
   offset.x=fabs(end.x-start.x);
   offset.y=fabs(end.y-start.y);
+  if ((offset.x < DrawEpsilon) || (offset.y < DrawEpsilon))
+    return(0);
+  coordinates=0;
   if (arc.x > (0.5*offset.x))
     arc.x=0.5*offset.x;
   if (arc.y > (0.5*offset.y))
@@ -1965,7 +1963,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
   if (*draw_info->primitive != '@')
     primitive=AcquireString(draw_info->primitive);
   else
-    if ((strlen(draw_info->primitive) > 1) && 
+    if ((strlen(draw_info->primitive) > 1) &&
         (*(draw_info->primitive+1) != '-'))
       primitive=FileToString(draw_info->primitive+1,~0UL,&image->exception);
   if (primitive == (char *) NULL)
@@ -3307,6 +3305,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           center,
           radii;
 
+        if ((primitive_info[j+2].point.x < -360.0) ||
+            (primitive_info[j+2].point.x > 360.0) ||
+            (primitive_info[j+2].point.y < -360.0) ||
+            (primitive_info[j+2].point.y > 360.0))
+          ThrowPointExpectedException(image,token);
         center.x=0.5*(primitive_info[j+1].point.x+primitive_info[j].point.x);
         center.y=0.5*(primitive_info[j+1].point.y+primitive_info[j].point.y);
         radii.x=fabs(center.x-primitive_info[j].point.x);
@@ -3316,6 +3319,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case EllipsePrimitive:
       {
+        if ((primitive_info[j+2].point.x < -360.0) ||
+            (primitive_info[j+2].point.x > 360.0) ||
+            (primitive_info[j+2].point.y < -360.0) ||
+            (primitive_info[j+2].point.y > 360.0))
+          ThrowPointExpectedException(image,token);
         coordinates=ReckonEllipseCoordinates(primitive_info[j+1].point,
           primitive_info[j+2].point);
         break;
@@ -4326,8 +4334,8 @@ RestoreMSCWarning
   bounds.y2=bounds.y2 < 0.0 ? 0.0 : bounds.y2 >= (double) image->rows-1.0 ?
     (double) image->rows-1.0 : bounds.y2;
   status=MagickTrue;
-  if ((fabs(bounds.x2-bounds.x1) < DrawEpsilon) ||
-      (fabs(bounds.y2-bounds.y1) < DrawEpsilon))
+  if ((fabs(bounds.x2-bounds.x1) < MagickEpsilon) ||
+      (fabs(bounds.y2-bounds.y1) < MagickEpsilon))
     status=MagickFalse;
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
@@ -5665,7 +5673,7 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
     Ellipses are just short segmented polys.
   */
   primitive_info->coordinates=0;
-  if ((fabs(radii.x) < DrawEpsilon) || (fabs(radii.y) < DrawEpsilon))
+  if ((fabs(radii.x) < MagickEpsilon) || (fabs(radii.y) < MagickEpsilon))
     return;
   delta=2.0*PerceptibleReciprocal(MagickMax(radii.x,radii.y));
   step=MagickPI/8.0;
@@ -6187,7 +6195,7 @@ static void TraceRectangle(PrimitiveInfo *primitive_info,const PointInfo start,
   register ssize_t
     i;
 
-  if ((fabs(start.x-end.x) < DrawEpsilon) || 
+  if ((fabs(start.x-end.x) < DrawEpsilon) ||
       (fabs(start.y-end.y) < DrawEpsilon))
     {
       primitive_info->coordinates=0;
