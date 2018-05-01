@@ -1808,7 +1808,7 @@ static inline MagickBooleanType IsPoint(const char *point)
   return((fabs(value) < DrawEpsilon) && (p == point) ? MagickFalse : MagickTrue);
 }
 
-static size_t ReckonEllipseCoordinates(const PointInfo stop,
+static size_t ReckonEllipseCoordinates(const PointInfo radii,
   const PointInfo degrees)
 {
   double
@@ -1822,7 +1822,9 @@ static size_t ReckonEllipseCoordinates(const PointInfo stop,
   /*
     Ellipses are just short segmented polys.
   */
-  delta=2.0*PerceptibleReciprocal(MagickMax(stop.x,stop.y));
+  if ((fabs(radii.x) < DrawEpsilon) || (fabs(radii.y) < DrawEpsilon))
+    return(0);
+  delta=2.0*PerceptibleReciprocal(MagickMax(radii.x,radii.y));
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
@@ -4324,8 +4326,8 @@ RestoreMSCWarning
   bounds.y2=bounds.y2 < 0.0 ? 0.0 : bounds.y2 >= (double) image->rows-1.0 ?
     (double) image->rows-1.0 : bounds.y2;
   status=MagickTrue;
-  if ((fabs(bounds.x2-bounds.x1) < MagickEpsilon) ||
-      (fabs(bounds.y2-bounds.y1) < MagickEpsilon))
+  if ((fabs(bounds.x2-bounds.x1) < DrawEpsilon) ||
+      (fabs(bounds.y2-bounds.y1) < DrawEpsilon))
     status=MagickFalse;
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
@@ -5642,7 +5644,7 @@ static void TraceCircle(PrimitiveInfo *primitive_info,const PointInfo start,
 }
 
 static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
-  const PointInfo stop,const PointInfo degrees)
+  const PointInfo radii,const PointInfo degrees)
 {
   double
     delta,
@@ -5662,7 +5664,10 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
   /*
     Ellipses are just short segmented polys.
   */
-  delta=2.0*PerceptibleReciprocal(MagickMax(stop.x,stop.y));
+  primitive_info->coordinates=0;
+  if ((fabs(radii.x) < DrawEpsilon) || (fabs(radii.y) < DrawEpsilon))
+    return;
+  delta=2.0*PerceptibleReciprocal(MagickMax(radii.x,radii.y));
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
@@ -5673,13 +5678,13 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
   angle.y=DegreesToRadians(y);
   for (p=primitive_info; angle.x < angle.y; angle.x+=step)
   {
-    point.x=cos(fmod(angle.x,DegreesToRadians(360.0)))*stop.x+start.x;
-    point.y=sin(fmod(angle.x,DegreesToRadians(360.0)))*stop.y+start.y;
+    point.x=cos(fmod(angle.x,DegreesToRadians(360.0)))*radii.x+start.x;
+    point.y=sin(fmod(angle.x,DegreesToRadians(360.0)))*radii.y+start.y;
     TracePoint(p,point);
     p+=p->coordinates;
   }
-  point.x=cos(fmod(angle.y,DegreesToRadians(360.0)))*stop.x+start.x;
-  point.y=sin(fmod(angle.y,DegreesToRadians(360.0)))*stop.y+start.y;
+  point.x=cos(fmod(angle.y,DegreesToRadians(360.0)))*radii.x+start.x;
+  point.y=sin(fmod(angle.y,DegreesToRadians(360.0)))*radii.y+start.y;
   TracePoint(p,point);
   p+=p->coordinates;
   primitive_info->coordinates=(size_t) (p-primitive_info);
@@ -6182,6 +6187,12 @@ static void TraceRectangle(PrimitiveInfo *primitive_info,const PointInfo start,
   register ssize_t
     i;
 
+  if ((fabs(start.x-end.x) < DrawEpsilon) || 
+      (fabs(start.y-end.y) < DrawEpsilon))
+    {
+      primitive_info->coordinates=0;
+      return;
+    }
   p=primitive_info;
   TracePoint(p,start);
   p+=p->coordinates;
@@ -6219,9 +6230,14 @@ static void TraceRoundRectangle(PrimitiveInfo *primitive_info,
   register ssize_t
     i;
 
-  p=primitive_info;
   offset.x=fabs(end.x-start.x);
   offset.y=fabs(end.y-start.y);
+  if ((offset.x < DrawEpsilon) || (offset.y < DrawEpsilon))
+    {
+      primitive_info->coordinates=0;
+      return;
+    }
+  p=primitive_info;
   if (arc.x > (0.5*offset.x))
     arc.x=0.5*offset.x;
   if (arc.y > (0.5*offset.y))
