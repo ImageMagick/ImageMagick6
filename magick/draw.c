@@ -1793,7 +1793,7 @@ static char *GetNodeByURL(const char *primitive,const char *url)
 }
 
 static size_t ReckonEllipseCoordinates(const PointInfo radii,
-  const PointInfo degrees)
+  const PointInfo arc)
 {
   double
     delta,
@@ -1812,9 +1812,9 @@ static size_t ReckonEllipseCoordinates(const PointInfo radii,
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  angle.x=DegreesToRadians(degrees.x);
-  y=degrees.y;
-  while (y < degrees.x)
+  angle.x=DegreesToRadians(arc.x);
+  y=arc.y;
+  while (y < arc.x)
     y+=360.0;
   angle.y=DegreesToRadians(y);
   return((size_t) floor((angle.y-angle.x)/step+0.5)+3);
@@ -3389,6 +3389,16 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
+        if ((primitive_info[j+1].point.x-primitive_info[j].point.x) < 0.0)
+          {
+            status=MagickFalse;
+            break;
+          }
+        if ((primitive_info[j+1].point.y-primitive_info[j].point.y) < 0.0)
+          {
+            status=MagickFalse;
+            break;
+          }
         TraceRectangle(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -3397,6 +3407,22 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       case RoundRectanglePrimitive:
       {
         if (primitive_info[j].coordinates != 3)
+          {
+            status=MagickFalse;
+            break;
+          }
+        if ((primitive_info[j+2].point.x < 0.0) ||
+            (primitive_info[j+2].point.y < 0.0))
+          {
+            status=MagickFalse;
+            break;
+          }
+        if ((primitive_info[j+1].point.x-primitive_info[j].point.x) < 0.0)
+          {
+            status=MagickFalse;
+            break;
+          }
+        if ((primitive_info[j+1].point.y-primitive_info[j].point.y) < 0.0)
           {
             status=MagickFalse;
             break;
@@ -3413,11 +3439,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             primitive_type=UndefinedPrimitive;
             break;
           }
-        if ((primitive_info[j+2].point.x < -360.0) ||
-            (primitive_info[j+2].point.x > 360.0) ||
-            (primitive_info[j+2].point.y < -360.0) ||
-            (primitive_info[j+2].point.y > 360.0))
-          ThrowPointExpectedException(image,token);
         TraceArc(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -3430,11 +3451,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
-        if ((primitive_info[j+2].point.x < -360.0) ||
-            (primitive_info[j+2].point.x > 360.0) ||
-            (primitive_info[j+2].point.y < -360.0) ||
-            (primitive_info[j+2].point.y > 360.0))
-          ThrowPointExpectedException(image,token);
+        if ((primitive_info[j+1].point.x < 0.0) ||
+            (primitive_info[j+1].point.y < 0.0))
+          {
+            status=MagickFalse;
+            break;
+          }
         TraceEllipse(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
@@ -5390,17 +5412,17 @@ static inline double Permutate(const ssize_t n,const ssize_t k)
 */
 
 static void TraceArc(PrimitiveInfo *primitive_info,const PointInfo start,
-  const PointInfo end,const PointInfo degrees)
+  const PointInfo end,const PointInfo arc)
 {
   PointInfo
     center,
-    radii;
+    radius;
 
   center.x=0.5*(end.x+start.x);
   center.y=0.5*(end.y+start.y);
-  radii.x=fabs(center.x-start.x);
-  radii.y=fabs(center.y-start.y);
-  TraceEllipse(primitive_info,center,radii,degrees);
+  radius.x=fabs(center.x-start.x);
+  radius.y=fabs(center.y-start.y);
+  TraceEllipse(primitive_info,center,radius,arc);
 }
 
 static void TraceArcPath(PrimitiveInfo *primitive_info,const PointInfo start,
@@ -5651,8 +5673,8 @@ static void TraceCircle(PrimitiveInfo *primitive_info,const PointInfo start,
   TraceEllipse(primitive_info,start,offset,degrees);
 }
 
-static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
-  const PointInfo radii,const PointInfo degrees)
+static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo center,
+  const PointInfo radii,const PointInfo arc)
 {
   double
     delta,
@@ -5679,20 +5701,20 @@ static void TraceEllipse(PrimitiveInfo *primitive_info,const PointInfo start,
   step=MagickPI/8.0;
   if ((delta >= 0.0) && (delta < (MagickPI/8.0)))
     step=MagickPI/(4.0*(MagickPI*PerceptibleReciprocal(delta)/2.0));
-  angle.x=DegreesToRadians(degrees.x);
-  y=degrees.y;
-  while (y < degrees.x)
+  angle.x=DegreesToRadians(arc.x);
+  y=arc.y;
+  while (y < arc.x)
     y+=360.0;
   angle.y=DegreesToRadians(y);
   for (p=primitive_info; angle.x < angle.y; angle.x+=step)
   {
-    point.x=cos(fmod(angle.x,DegreesToRadians(360.0)))*radii.x+start.x;
-    point.y=sin(fmod(angle.x,DegreesToRadians(360.0)))*radii.y+start.y;
+    point.x=cos(fmod(angle.x,DegreesToRadians(360.0)))*radii.x+center.x;
+    point.y=sin(fmod(angle.x,DegreesToRadians(360.0)))*radii.y+center.y;
     TracePoint(p,point);
     p+=p->coordinates;
   }
-  point.x=cos(fmod(angle.y,DegreesToRadians(360.0)))*radii.x+start.x;
-  point.y=sin(fmod(angle.y,DegreesToRadians(360.0)))*radii.y+start.y;
+  point.x=cos(fmod(angle.y,DegreesToRadians(360.0)))*radii.x+center.x;
+  point.y=sin(fmod(angle.y,DegreesToRadians(360.0)))*radii.y+center.y;
   TracePoint(p,point);
   p+=p->coordinates;
   primitive_info->coordinates=(size_t) (p-primitive_info);
