@@ -1521,6 +1521,7 @@ ModuleExport size_t RegisterBMPImage(void)
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("BMP2");
+  entry->decoder=(DecodeImageHandler *) ReadBMPImage;
   entry->encoder=(EncodeImageHandler *) WriteBMPImage;
   entry->magick=(IsImageFormatHandler *) IsBMP;
   entry->description=ConstantString("Microsoft Windows bitmap image (V2)");
@@ -1529,6 +1530,7 @@ ModuleExport size_t RegisterBMPImage(void)
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("BMP3");
+  entry->decoder=(DecodeImageHandler *) ReadBMPImage;
   entry->encoder=(EncodeImageHandler *) WriteBMPImage;
   entry->magick=(IsImageFormatHandler *) IsBMP;
   entry->description=ConstantString("Microsoft Windows bitmap image (V3)");
