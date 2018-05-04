@@ -4353,21 +4353,20 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
       {
         DestroyJNG(NULL,&color_image,&color_image_info,
           &alpha_image,&alpha_image_info);
-        ThrowReaderException(CorruptImageError,"CorruptImage");
+        ThrowReaderException(CorruptImageError,"ImproperImageHeader");
       }
 
+    if (length > GetBlobSize(image))
+      {
+        DestroyJNG(NULL,&color_image,&color_image_info,
+          &alpha_image,&alpha_image_info);
+        ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
+      }
     p=NULL;
     chunk=(unsigned char *) NULL;
 
     if (length != 0)
       {
-        if (length > GetBlobSize(image))
-          {
-            DestroyJNG(NULL,&color_image,&color_image_info,
-              &alpha_image,&alpha_image_info);
-            ThrowReaderException(CorruptImageError,
-              "InsufficientImageDataInFile");
-          }
         chunk=(unsigned char *) AcquireQuantumMemory(length,sizeof(*chunk));
 
         if (chunk == (unsigned char *) NULL)
