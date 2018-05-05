@@ -165,6 +165,10 @@ typedef struct _MemoryPool
 /*
   Global declarations.
 */
+static size_t
+  max_memory_request = 0,
+  virtual_anonymous_memory = 0;
+
 #if defined _MSC_VER
 static void* MSCMalloc(size_t size)
 {
@@ -588,25 +592,9 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
   size_t
     extent;
 
-  static size_t
-    max_memory_request = 0,
-    virtual_anonymous_memory = 0;
-
   if (HeapOverflowSanityCheck(count,quantum) != MagickFalse)
     return((MemoryInfo *) NULL);
-  if (max_memory_request == 0)
-    {
-      max_memory_request=(size_t) MagickULLConstant(~0);
-      value=GetPolicyValue("system:max-memory-request");
-      if (value != (char *) NULL)
-        {
-          /*
-            The security policy sets a max memory request limit.
-          */
-          max_memory_request=StringToSizeType(value,100.0);
-          value=DestroyString(value);
-        }
-    }
+  (void) GetMaxMemoryRequest();
   if (virtual_anonymous_memory == 0)
     {
       virtual_anonymous_memory=1;
@@ -906,6 +894,46 @@ MagickExport void GetMagickMemoryMethods(
   *acquire_memory_handler=memory_methods.acquire_memory_handler;
   *resize_memory_handler=memory_methods.resize_memory_handler;
   *destroy_memory_handler=memory_methods.destroy_memory_handler;
+}
+
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
++   G e t M a x M e m o r y R e q u e s t                                     %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  GetMaxMemoryRequest() returns the max_memory_request value.
+%
+%  The format of the GetMaxMemoryRequest method is:
+%
+%      size_t GetMaxMemoryRequest(void)
+%
+*/
+MagickExport size_t GetMaxMemoryRequest(void)
+{
+  if (max_memory_request == 0)
+    {
+      char
+        *value;
+
+      max_memory_request=(size_t) MagickULLConstant(~0);
+      value=GetPolicyValue("system:max-memory-request");
+      if (value != (char *) NULL)
+        {
+          /*
+            The security policy sets a max memory request limit.
+          */
+          max_memory_request=StringToSizeType(value,100.0);
+          value=DestroyString(value);
+        }
+    }
+  return(max_memory_request);
 }
 
 /*

@@ -168,19 +168,12 @@ static void *AcquireCompressionMemory(void *context,
   size_t
     extent;
 
+  (void) context;
   if (HeapOverflowSanityCheck(items,size) != MagickFalse)
     return((void *) NULL);
   extent=items*size;
-  /* Check if the buffer is big enough when we get a large request */
-  if ((context != (void *) NULL) && (extent > 2000000))
-    {
-      Image
-        *image;
-
-      image=(Image *) context;
-      if ((MagickSizeType) extent > GetBlobSize(image))
-        return((void *) NULL);
-    }
+  if (extent > GetMaxMemoryRequest())
+    return((void *) NULL);
   return(AcquireMagickMemory(extent));
 }
 
