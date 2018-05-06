@@ -374,8 +374,6 @@ MagickExport Cache AcquirePixelCache(const size_t number_threads)
   if (cache_info->number_threads == 0)
     cache_info->number_threads=1;
   cache_info->nexus_info=AcquirePixelCacheNexus(cache_info->number_threads);
-  if (cache_info->nexus_info == (NexusInfo **) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   value=GetEnvironmentValue("MAGICK_SYNCHRONIZE");
   if (value != (const char *) NULL)
     {
@@ -612,9 +610,6 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
     return(MagickFalse);
   image_nexus=AcquirePixelCacheNexus(1);
   clip_nexus=AcquirePixelCacheNexus(1);
-  if ((image_nexus == (NexusInfo **) NULL) ||
-      (clip_nexus == (NexusInfo **) NULL))
-    ThrowBinaryException(CacheError,"UnableToGetCacheNexus",image->filename);
   p=GetAuthenticPixelCacheNexus(image,nexus_info->region.x,nexus_info->region.y,
     nexus_info->region.width,nexus_info->region.height,image_nexus[0],
     exception);
@@ -873,9 +868,6 @@ static MagickBooleanType ClonePixelCacheRepository(
   */
   cache_nexus=AcquirePixelCacheNexus(MaxCacheThreads);
   clone_nexus=AcquirePixelCacheNexus(MaxCacheThreads);
-  if ((cache_nexus == (NexusInfo **) NULL) ||
-      (clone_nexus == (NexusInfo **) NULL))
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   length=(size_t) MagickMin(cache_info->columns,clone_info->columns)*
     sizeof(*cache_info->pixels);
   status=MagickTrue;
@@ -3043,12 +3035,6 @@ MagickExport const PixelPacket *GetVirtualPixelsFromNexus(const Image *image,
   q=pixels;
   indexes=nexus_info->indexes;
   virtual_nexus=AcquirePixelCacheNexus(1);
-  if (virtual_nexus == (NexusInfo **) NULL)
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
-        "UnableToGetCacheNexus","`%s'",image->filename);
-      return((const PixelPacket *) NULL);
-    }
   switch (virtual_pixel_method)
   {
     case BlackVirtualPixelMethod:
@@ -3647,9 +3633,6 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     return(MagickFalse);
   image_nexus=AcquirePixelCacheNexus(1);
   clip_nexus=AcquirePixelCacheNexus(1);
-  if ((image_nexus == (NexusInfo **) NULL) ||
-      (clip_nexus == (NexusInfo **) NULL))
-    ThrowBinaryException(CacheError,"UnableToGetCacheNexus",image->filename);
   p=GetAuthenticPixelCacheNexus(image,nexus_info->region.x,
     nexus_info->region.y,nexus_info->region.width,nexus_info->region.height,
     image_nexus[0],exception);
