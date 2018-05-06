@@ -894,7 +894,7 @@ static MagickBooleanType ClonePixelCacheRepository(
     region.height=1;
     region.x=0;
     region.y=y;
-    pixels=SetPixelCacheNexusPixels(cache_info,ReadMode,&region,MagickTrue,
+    pixels=SetPixelCacheNexusPixels(cache_info,ReadMode,&region,MagickFalse,
       cache_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
       continue;
@@ -902,7 +902,7 @@ static MagickBooleanType ClonePixelCacheRepository(
     if (status == MagickFalse)
       continue;
     region.width=clone_info->columns;
-    pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,&region,MagickTrue,
+    pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,&region,MagickFalse,
       clone_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
       continue;
@@ -941,7 +941,7 @@ static MagickBooleanType ClonePixelCacheRepository(
         region.height=1;
         region.x=0;
         region.y=y;
-        pixels=SetPixelCacheNexusPixels(cache_info,ReadMode,&region,MagickTrue,
+        pixels=SetPixelCacheNexusPixels(cache_info,ReadMode,&region,MagickFalse,
           cache_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
           continue;
@@ -949,8 +949,8 @@ static MagickBooleanType ClonePixelCacheRepository(
         if (status == MagickFalse)
           continue;
         region.width=clone_info->columns;
-        pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,&region,MagickTrue,
-          clone_nexus[id],exception);
+        pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,&region,
+          MagickFalse,clone_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
           continue;
         (void) memcpy(clone_nexus[id]->indexes,cache_nexus[id]->indexes,length);
