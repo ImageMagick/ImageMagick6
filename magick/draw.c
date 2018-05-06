@@ -1514,9 +1514,10 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   clone_info->clip_path=MagickTrue;
   status=DrawImage(clip_mask,clone_info);
   clone_info=DestroyDrawInfo(clone_info);
+  (void) SeparateImageChannel(clip_mask,TrueAlphaChannel);
+  (void) NegateImage(clip_mask,MagickFalse);
   if (status == MagickFalse)
     clip_mask=DestroyImage(clip_mask);
-  (void) NegateImage(clip_mask,MagickFalse);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end clip-path");
   return(clip_mask);
