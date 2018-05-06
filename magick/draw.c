@@ -4805,7 +4805,10 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
     (void) SetImageColorspace(image,sRGBColorspace);
   status=MagickTrue;
   if (draw_info->compliance == SVGCompliance)
-    status=SetImageClipMask(image,draw_info->clipping_mask);
+    {
+      status=SetImageClipMask(image,draw_info->clipping_mask);
+      status&=SetImageMask(image,draw_info->composite_mask);
+    }
   x=(ssize_t) ceil(primitive_info->point.x-0.5);
   y=(ssize_t) ceil(primitive_info->point.y-0.5);
   image_view=AcquireAuthenticCacheView(image,exception);
@@ -5213,7 +5216,10 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  end draw-primitive");
   if (draw_info->compliance == SVGCompliance)
-    status&=SetImageClipMask(image,(Image *) NULL);
+    {
+      status&=SetImageClipMask(image,(Image *) NULL);
+      status&=SetImageMask(image,(Image *) NULL);
+    }
   return(status != 0 ? MagickTrue : MagickFalse);
 }
 
