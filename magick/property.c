@@ -3533,7 +3533,11 @@ DisableMSCWarning(4127) \
       interpret_text=(char *) ResizeQuantumMemory(interpret_text,extent+ \
         MaxTextExtent,sizeof(*interpret_text)); \
       if (interpret_text == (char *) NULL) \
-        return((char *) NULL); \
+        { \
+          if (property_info != image_info) \
+            property_info=DestroyImageInfo(property_info); \
+          return((char *) NULL); \
+        } \
       q=interpret_text+strlen(interpret_text); \
    } \
 } \
@@ -3549,7 +3553,11 @@ DisableMSCWarning(4127) \
       interpret_text=(char *) ResizeQuantumMemory(interpret_text,extent+ \
         MaxTextExtent,sizeof(*interpret_text)); \
       if (interpret_text == (char *) NULL) \
-        return((char *) NULL); \
+        { \
+          if (property_info != image_info) \
+            property_info=DestroyImageInfo(property_info); \
+          return((char *) NULL); \
+        } \
       q=interpret_text+strlen(interpret_text); \
      } \
    q+=FormatLocaleString(q,extent,"%s=%s\n",(key),(value)); \
@@ -3566,7 +3574,11 @@ DisableMSCWarning(4127) \
       interpret_text=(char *) ResizeQuantumMemory(interpret_text,extent+ \
         MaxTextExtent,sizeof(*interpret_text)); \
       if (interpret_text == (char *) NULL) \
-        return((char *) NULL); \
+        { \
+          if (property_info != image_info) \
+            property_info=DestroyImageInfo(property_info); \
+          return((char *) NULL); \
+        } \
       q=interpret_text+strlen(interpret_text); \
     } \
   (void) CopyMagickString(q,(string),extent); \
@@ -3576,6 +3588,9 @@ RestoreMSCWarning
 
   char
     *interpret_text;
+
+  ImageInfo
+    *property_info;
 
   register char
     *q;  /* current position in interpret_text */
@@ -3619,6 +3634,10 @@ RestoreMSCWarning
   /*
     Translate any embedded format characters.
   */
+  if (image_info != (ImageInfo *) NULL)
+    property_info=(ImageInfo *) image_info;
+  else
+    property_info=CloneImageInfo(image_info);
   interpret_text=AcquireString(embed_text); /* new string with extra space */
   extent=MaxTextExtent;                     /* how many extra space */
   number=MagickFalse;                       /* is last char a number? */
@@ -3727,7 +3746,7 @@ RestoreMSCWarning
             p--;  /* back up one */
             continue;
           }
-        value=GetMagickPropertyLetter(image_info,image,*p);
+        value=GetMagickPropertyLetter(property_info,image,*p);
         if (value != (char *) NULL)
           {
             AppendString2Text(value);
@@ -3797,32 +3816,61 @@ RestoreMSCWarning
           (void) ThrowMagickException(&image->exception,GetMagickModule(),
             OptionError,"UnbalancedBraces","\"%%[%s\"",pattern);
           interpret_text=DestroyString(interpret_text);
+          if (property_info != image_info)
+            property_info=DestroyImageInfo(property_info);
           return((char *) NULL);
         }
       /*
         Special Lookup Prefixes %[prefix:...]
       */
+      if (LocaleNCompare("fx:",pattern,3) == 0)
+        {
+          double
+            value;
+
+          FxInfo
+            *fx_info;
+
+          MagickBooleanType
+            status;
+
+          /*
+            FX - value calculator.
+          */
+          fx_info=AcquireFxInfo(image,pattern+3);
+          status=FxEvaluateChannelExpression(fx_info,GrayChannel,0,0,&value,
+            &image->exception);
+          fx_info=DestroyFxInfo(fx_info);
+          if (status != MagickFalse)
+            {
+              char
+                result[MagickPathExtent];
+
+              (void) FormatLocaleString(result,MagickPathExtent,"%.*g",
+                GetMagickPrecision(),(double) value);
+              AppendString2Text(result);
+            }
+          continue;
+        }
       if (LocaleNCompare("option:",pattern,7) == 0)
         {
           /*
             Option - direct global option lookup (with globbing).
           */
-          if (image_info == (ImageInfo *) NULL)
-            continue; /* no global options available */
           if (IsGlob(pattern+7) != MagickFalse)
             {
-              ResetImageOptionIterator(image_info);
-              while ((key=GetNextImageOption(image_info)) != (const char *) NULL)
+              ResetImageOptionIterator(property_info);
+              while ((key=GetNextImageOption(property_info)) != (const char *) NULL)
               if (GlobExpression(key,pattern+7,MagickTrue) != MagickFalse)
                 {
-                  value=GetImageOption(image_info,key);
+                  value=GetImageOption(property_info,key);
                   if (value != (const char *) NULL)
                     AppendKeyValue2Text(key,value);
                   /* else - assertion failure? key but no value! */
                 }
               continue;
             }
-          value=GetImageOption(image_info,pattern+7);
+          value=GetImageOption(property_info,pattern+7);
           if (value != (char *) NULL)
             AppendString2Text(value);
           /* else - no global option of this specifc name */
@@ -3886,7 +3934,7 @@ RestoreMSCWarning
         %[basename] %[denisty] %[delay].  Also handles a braced single
         letter: %[b] %[G] %[g].
       */
-      value=GetMagickProperty(image_info,image,pattern);
+      value=GetMagickProperty(property_info,image,pattern);
       if (value != (const char *) NULL)
         {
           AppendString2Text(value);
@@ -3904,14 +3952,11 @@ RestoreMSCWarning
       /*
         Look for user option of this name (should never match in CLI usage).
       */
-      if (image_info != (ImageInfo *) NULL)
+      value=GetImageOption(property_info,pattern);
+      if (value != (char *) NULL)
         {
-          value=GetImageOption(image_info,pattern);
-          if (value != (char *) NULL)
-            {
-              AppendString2Text(value);
-              continue;
-            }
+          AppendString2Text(value);
+          continue;
         }
       /*
         Failed to find any match anywhere!
@@ -3929,6 +3974,8 @@ RestoreMSCWarning
     } /* Braced Percent Escape */
   } /* for each char in 'embed_text' */
   *q='\0';
+  if (property_info != image_info)
+    property_info=DestroyImageInfo(property_info);
   return(interpret_text);
 }
 
