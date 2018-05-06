@@ -446,7 +446,7 @@ MagickExport NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
 %                                                                             %
 %                                                                             %
 %                                                                             %
-+   A c q u i r e P i x e l C a c h e P i x e l s                             %
+%   A c q u i r e P i x e l C a c h e P i x e l s                             %
 %                                                                             %
 %                                                                             %
 %                                                                             %
@@ -3604,8 +3604,8 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     number_pixels;
 
   NexusInfo
-    **magick_restrict clip_nexus,
-    **magick_restrict image_nexus;
+    **magick_restrict image_nexus,
+    **magick_restrict mask_nexus;
 
   register const PixelPacket
     *magick_restrict r;
@@ -3632,7 +3632,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   if (cache_info == (Cache) NULL)
     return(MagickFalse);
   image_nexus=AcquirePixelCacheNexus(1);
-  clip_nexus=AcquirePixelCacheNexus(1);
+  mask_nexus=AcquirePixelCacheNexus(1);
   p=GetAuthenticPixelCacheNexus(image,nexus_info->region.x,
     nexus_info->region.y,nexus_info->region.width,nexus_info->region.height,
     image_nexus[0],exception);
@@ -3641,7 +3641,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   nexus_indexes=nexus_info->indexes;
   r=GetVirtualPixelsFromNexus(image->mask,MaskVirtualPixelMethod,
     nexus_info->region.x,nexus_info->region.y,nexus_info->region.width,
-    nexus_info->region.height,clip_nexus[0],&image->exception);
+    nexus_info->region.height,mask_nexus[0],&image->exception);
   GetMagickPixelPacket(image,&alpha);
   GetMagickPixelPacket(image,&beta);
   number_pixels=(MagickSizeType) nexus_info->region.width*
@@ -3664,7 +3664,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     q++;
     r++;
   }
-  clip_nexus=DestroyPixelCacheNexus(clip_nexus,1);
+  mask_nexus=DestroyPixelCacheNexus(mask_nexus,1);
   image_nexus=DestroyPixelCacheNexus(image_nexus,1);
   if (i < (ssize_t) number_pixels)
     return(MagickFalse);
