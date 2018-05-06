@@ -1085,7 +1085,7 @@ static void SVGStartElement(void *context,const xmlChar *name,
     {
       if (LocaleCompare((const char *) name,"mask") == 0)
         {
-          (void) FormatLocaleFile(svg_info->file,"push maks \"%s\"\n",id);
+          (void) FormatLocaleFile(svg_info->file,"push mask \"%s\"\n",id);
           break;
         }
       break;
