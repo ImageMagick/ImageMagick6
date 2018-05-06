@@ -344,15 +344,18 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
       (void) memcpy(clone_info->gradient.stops,draw_info->gradient.stops,
         (size_t) number_stops*sizeof(*clone_info->gradient.stops));
     }
-  if (draw_info->clip_mask != (char *) NULL)
-    (void) CloneString(&clone_info->clip_mask,draw_info->clip_mask);
   clone_info->bounds=draw_info->bounds;
-  clone_info->clip_units=draw_info->clip_units;
   clone_info->render=draw_info->render;
   clone_info->fill_opacity=draw_info->fill_opacity;
   clone_info->stroke_opacity=draw_info->stroke_opacity;
   clone_info->element_reference=draw_info->element_reference;
+  if (draw_info->clip_mask != (char *) NULL)
+    (void) CloneString(&clone_info->clip_mask,draw_info->clip_mask);
+  if (draw_info->clipping_mask != (Image *) NULL)
+    clone_info->clipping_mask=CloneImage(draw_info->clipping_mask,0,0,
+      MagickTrue,&draw_info->clipping_mask->exception);
   clone_info->clip_path=draw_info->clip_path;
+  clone_info->clip_units=draw_info->clip_units;
   clone_info->debug=IsEventLogging();
   return(clone_info);
 }
@@ -5061,7 +5064,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           (void) DrawDashPolygon(draw_info,primitive_info,image);
           break;
         }
-      mid=ExpandAffine(&draw_info->affine)*SaneStrokeWidth(image,draw_info)/2.0;
+      mid=ExpandAffine(&draw_info->affine)*SaneStrokeWidth(image,draw_info)/
+        2.0;
       if ((mid > 1.0) &&
           ((draw_info->stroke.opacity != (Quantum) TransparentOpacity) ||
            (draw_info->stroke_pattern != (Image *) NULL)))
