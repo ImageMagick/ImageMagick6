@@ -1591,7 +1591,7 @@ static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
     exception);
   if (composite_mask == (Image *) NULL)
     return((Image *) NULL);
-  (void) SetImageClipMask(image,(Image *) NULL);
+  (void) SetImageMask(image,(Image *) NULL);
   (void) QueryColorCompliance("#0000",AllCompliance,
     &composite_mask->background_color,exception);
   composite_mask->background_color.opacity=(Quantum) TransparentOpacity;
