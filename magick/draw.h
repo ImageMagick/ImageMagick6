@@ -348,6 +348,9 @@ typedef struct _DrawInfo
 
   ComplianceType
     compliance;
+
+  Image
+    *composite_mask;
 } DrawInfo;
 
 typedef struct _PrimitiveInfo
