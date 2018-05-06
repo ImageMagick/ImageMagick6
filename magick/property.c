@@ -1707,7 +1707,7 @@ static MagickBooleanType ValidateXMPProfile(const char *profile,
   {
     xmlDocPtr
       document;
-    
+
     /*
       Parse XML profile.
     */
