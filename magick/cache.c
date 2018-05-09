@@ -623,21 +623,17 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
     nexus_info->region.height;
   for (i=0; i < (ssize_t) number_pixels; i++)
   {
-    double
-      mask_alpha;
-
     if ((p == (PixelPacket *) NULL) || (r == (const PixelPacket *) NULL))
       break;
-    mask_alpha=QuantumScale*GetPixelIntensity(image,r);
-    SetPixelRed(q,mask_alpha*MagickOver_(p->red,GetPixelOpacity(p),
-      q->red,GetPixelOpacity(q)));
-    SetPixelGreen(q,mask_alpha*MagickOver_(p->green,GetPixelOpacity(p),
-      q->green,GetPixelOpacity(q)));
-    SetPixelBlue(q,mask_alpha*MagickOver_(p->blue,GetPixelOpacity(p),
-      q->blue,GetPixelOpacity(q)));
-    SetPixelOpacity(q,GetPixelOpacity(p));
-    if (cache_info->active_index_channel != MagickFalse)
-      SetPixelIndex(nexus_indexes+i,GetPixelIndex(indexes+i));
+    if (GetPixelIntensity(image,r) > (QuantumRange/2.0))
+      {
+        SetPixelRed(q,GetPixelRed(p));
+        SetPixelGreen(q,GetPixelGreen(p));
+        SetPixelBlue(q,GetPixelBlue(p));
+        SetPixelOpacity(q,GetPixelOpacity(p));
+        if (cache_info->active_index_channel != MagickFalse)
+          SetPixelIndex(nexus_indexes+i,GetPixelIndex(indexes+i));
+      }
     p++;
     q++;
     r++;
