@@ -6133,7 +6133,7 @@ static size_t TracePath(Image *image,PrimitiveInfo *primitive_info,
         do
         {
           GetNextToken(p,&p,MaxTextExtent,token);
-          if (*token == ',')
+          if ((i != 0) && (*token == ','))
             GetNextToken(p,&p,MaxTextExtent,token);
           x=StringToDouble(token,&next_token);
           if (token == next_token)
