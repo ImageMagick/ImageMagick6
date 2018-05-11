@@ -6339,8 +6339,7 @@ static size_t TracePath(Image *image,PrimitiveInfo *primitive_info,
       }
       default:
       {
-        if (isalpha((int) ((unsigned char) attribute)) != 0)
-          ThrowPointExpectedException(image,token);
+        ThrowPointExpectedException(image,token);
         break;
       }
     }
