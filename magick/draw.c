@@ -3856,16 +3856,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
-        if ((primitive_info[j+1].point.x-primitive_info[j].point.x) < 0.0)
-          {
-            status=MagickFalse;
-            break;
-          }
-        if ((primitive_info[j+1].point.y-primitive_info[j].point.y) < 0.0)
-          {
-            status=MagickFalse;
-            break;
-          }
         TraceRectangle(primitive_info+j,primitive_info[j].point,
           primitive_info[j+1].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
