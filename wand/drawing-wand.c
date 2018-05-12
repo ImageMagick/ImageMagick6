@@ -2532,7 +2532,7 @@ WandExport char *DrawGetVectorGraphics(DrawingWand *wand)
         *dash_pattern;
 
       dash_pattern=AcquireString((char *) NULL);
-      for (i=0; fabs(CurrentContext->dash_pattern[i]) >= MaagickEpsilon; i++)
+      for (i=0; fabs(CurrentContext->dash_pattern[i]) >= MagickEpsilon; i++)
       {
         if (i != 0)
           (void) ConcatenateString(&dash_pattern,",");
