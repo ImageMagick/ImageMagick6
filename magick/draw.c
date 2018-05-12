@@ -346,10 +346,11 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
         (size_t) number_stops*sizeof(*clone_info->gradient.stops));
     }
   clone_info->bounds=draw_info->bounds;
-  clone_info->render=draw_info->render;
   clone_info->fill_opacity=draw_info->fill_opacity;
   clone_info->stroke_opacity=draw_info->stroke_opacity;
   clone_info->element_reference=draw_info->element_reference;
+  clone_info->clip_path=draw_info->clip_path;
+  clone_info->clip_units=draw_info->clip_units;
   if (draw_info->clip_mask != (char *) NULL)
     (void) CloneString(&clone_info->clip_mask,draw_info->clip_mask);
   if (draw_info->clipping_mask != (Image *) NULL)
@@ -358,8 +359,7 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
   if (draw_info->composite_mask != (Image *) NULL)
     clone_info->composite_mask=CloneImage(draw_info->composite_mask,0,0,
       MagickTrue,&draw_info->composite_mask->exception);
-  clone_info->clip_path=draw_info->clip_path;
-  clone_info->clip_units=draw_info->clip_units;
+  clone_info->render=draw_info->render;
   clone_info->debug=IsEventLogging();
   return(clone_info);
 }
