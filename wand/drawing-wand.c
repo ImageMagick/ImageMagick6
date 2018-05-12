@@ -1874,7 +1874,7 @@ WandExport double *DrawGetStrokeDashArray(const DrawingWand *wand,
   n=0;
   p=CurrentContext->dash_pattern;
   if (p != (const double *) NULL)
-    while (*p++ != 0.0)
+    while (fabs(*p++) >= MagickEpsilon)
       n++;
   *number_elements=n;
   dasharray=(double *) NULL;
@@ -2532,7 +2532,7 @@ WandExport char *DrawGetVectorGraphics(DrawingWand *wand)
         *dash_pattern;
 
       dash_pattern=AcquireString((char *) NULL);
-      for (i=0; CurrentContext->dash_pattern[i] != 0.0; i++)
+      for (i=0; fabs(CurrentContext->dash_pattern[i]) >= MaagickEpsilon; i++)
       {
         if (i != 0)
           (void) ConcatenateString(&dash_pattern,",");
@@ -2910,7 +2910,7 @@ WandExport void DrawPathCurveToRelative(DrawingWand *wand,const double x1,
 %                                                                             %
 %                                                                             %
 %                                                                             %
-%   D r a w P a t h C u r v e T o Q u a d r a t i c B e z i e r A b s o l u t % %
+%  D r a w P a t h C u r v e T o Q u a d r a t i c B e z i e r A b s o l u t e%
 %                                                                             %
 %                                                                             %
 %                                                                             %
@@ -5482,7 +5482,7 @@ WandExport MagickBooleanType DrawSetStrokeDashArray(DrawingWand *wand,
   update=MagickFalse;
   q=CurrentContext->dash_pattern;
   if (q != (const double *) NULL)
-    while (*q++ != 0.0)
+    while (fabs(*q++) < MagickEpsilon)
       n_old++;
   if ((n_old == 0) && (n_new == 0))
     update=MagickFalse;
@@ -5621,8 +5621,7 @@ WandExport void DrawSetStrokeLineCap(DrawingWand *wand,const LineCap linecap)
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  if ((wand->filter_off != MagickFalse) ||
-      (CurrentContext->linecap != linecap))
+  if ((wand->filter_off != MagickFalse) || (CurrentContext->linecap != linecap))
     {
       CurrentContext->linecap=linecap;
       (void) MVGPrintf(wand,"stroke-linecap '%s'\n",CommandOptionToMnemonic(
@@ -6624,8 +6623,8 @@ WandExport void DrawTranslate(DrawingWand *wand,const double x,const double y)
 %
 %  The format of the DrawSetViewbox method is:
 %
-%      void DrawSetViewbox(DrawingWand *wand,ssize_t x1,
-%        ssize_t y1,ssize_t x2,ssize_t y2)
+%      void DrawSetViewbox(DrawingWand *wand,ssize_t x1,ssize_t y1,
+%        ssize_t x2,ssize_t y2)
 %
 %  A description of each parameter follows:
 %
