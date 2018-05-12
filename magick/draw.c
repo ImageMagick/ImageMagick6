@@ -796,7 +796,7 @@ static PathInfo *ConvertPrimitiveToPath(
         closed_subpath=primitive_info[i].closed_subpath;
       }
     coordinates--;
-    if ((code == MoveToCode) || (coordinates < 0) ||
+    if ((code == MoveToCode) || (coordinates <= 0) ||
         (fabs(q.x-primitive_info[i].point.x) >= DrawEpsilon) ||
         (fabs(q.y-primitive_info[i].point.y) >= DrawEpsilon))
       {
@@ -816,7 +816,7 @@ static PathInfo *ConvertPrimitiveToPath(
         continue;
       }
     /*
-      Subpath is not closed-- close it with a "ghost" line.
+      Mark the p point as open if the subpath is not closed.
     */
     path_info[start].code=OpenCode;
     path_info[n].code=GhostlineCode;
@@ -2172,7 +2172,7 @@ static char *GetNodeByURL(const char *primitive,const char *url)
     n;
 
   /*
-    Find and return group by ID.
+    Find and return node by ID.
   */
   token=AcquireString(primitive);
   extent=strlen(token)+MagickPathExtent;
@@ -2201,7 +2201,7 @@ static char *GetNodeByURL(const char *primitive,const char *url)
         if ((n == 0) && (start != (const char *) NULL))
           {
             /*
-              End of group by ID.
+              End of node by ID.
             */
             length=(size_t) (p-start+1);
             break;
@@ -2218,7 +2218,7 @@ static char *GetNodeByURL(const char *primitive,const char *url)
             if (LocaleCompare(url,token) == 0)
               {
                 /*
-                  Start of group by ID.
+                  Start of node by ID.
                 */
                 n=0;
                 start=q;
@@ -2621,6 +2621,10 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           }
         if (LocaleCompare("compliance",keyword) == 0)
           {
+            /*
+              MVG compliance associates a clipping mask with an image; SVG
+              compliance associates a clipping mask with a graphics context.
+            */
             GetNextToken(q,&q,extent,token);
             graphic_context[n]->compliance=(ComplianceType) ParseCommandOption(
               MagickComplianceOptions,MagickFalse,token);
@@ -3595,11 +3599,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     if (status == MagickFalse)
       break;
     if ((fabs(affine.sx-1.0) >= DrawEpsilon) ||
-        (fabs(affine.rx) >= DrawEpsilon) ||
-        (fabs(affine.ry) >= DrawEpsilon) ||
+        (fabs(affine.rx) >= DrawEpsilon) || (fabs(affine.ry) >= DrawEpsilon) ||
         (fabs(affine.sy-1.0) >= DrawEpsilon) ||
-        (fabs(affine.tx) >= DrawEpsilon) ||
-        (fabs(affine.ty) >= DrawEpsilon))
+        (fabs(affine.tx) >= DrawEpsilon) || (fabs(affine.ty) >= DrawEpsilon))
       {
         graphic_context[n]->affine.sx=current.sx*affine.sx+current.ry*affine.rx;
         graphic_context[n]->affine.rx=current.rx*affine.sx+current.sy*affine.rx;
@@ -3932,9 +3934,21 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         break;
       }
       case PolylinePrimitive:
+      {
+        if (primitive_info[j].coordinates < 1)
+          {
+            status=MagickFalse;
+            break;
+          }
         break;
+      }
       case PolygonPrimitive:
       {
+        if (primitive_info[j].coordinates < 3)
+          {
+            status=MagickFalse;
+            break;
+          }
         primitive_info[i]=primitive_info[j];
         primitive_info[i].coordinates=0;
         primitive_info[j].coordinates++;
@@ -5175,8 +5189,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           (void) DrawDashPolygon(draw_info,primitive_info,image);
           break;
         }
-      mid=ExpandAffine(&draw_info->affine)*SaneStrokeWidth(image,draw_info)/
-        2.0;
+      mid=ExpandAffine(&draw_info->affine)*SaneStrokeWidth(image,draw_info)/2.0;
       if ((mid > 1.0) &&
           ((draw_info->stroke.opacity != (Quantum) TransparentOpacity) ||
            (draw_info->stroke_pattern != (Image *) NULL)))
@@ -6512,8 +6525,7 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
   const DrawInfo *draw_info,const PrimitiveInfo *primitive_info)
 {
 #define CheckPathExtent(pad) \
-  if (((p+(pad)) >= (ssize_t) max_strokes) || \
-      ((q+(pad)) >= (ssize_t) max_strokes)) \
+  if ((q+(pad)) >= (ssize_t) max_strokes) \
     { \
       if (~max_strokes < (pad)) \
         { \
