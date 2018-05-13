@@ -1424,7 +1424,7 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DrawClipPath() draws the clip path on the image write mask.
+%  DrawClipPath() draws the clip path on the image mask.
 %
 %  The format of the DrawClipPath method is:
 %
@@ -1453,9 +1453,7 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
     clip_path,&image->exception);
   if (clipping_mask == (Image *) NULL)
     return(MagickFalse);
-  if (image->clip_mask != (Image *) NULL)
-    image->clip_mask=DestroyImage(image->clip_mask);
-  image->clip_mask=CloneImage(clipping_mask,0,0,MagickTrue,&image->exception);
+  (void) SetImageClipMask(image,clipping_mask);
   return(status);
 }
 
@@ -2652,6 +2650,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->decorate=(DecorationType) decorate;
             break;
           }
+        if (LocaleCompare("density",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            (void) CloneString(&graphic_context[n]->density,token);
+            break;
+          }
         if (LocaleCompare("direction",keyword) == 0)
           {
             ssize_t
@@ -2745,8 +2749,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             (void) CloneString(&graphic_context[n]->font,token);
             if (LocaleCompare("none",token) == 0)
-              graphic_context[n]->font=(char *)
-                RelinquishMagickMemory(graphic_context[n]->font);
+              graphic_context[n]->font=(char *) RelinquishMagickMemory(
+                graphic_context[n]->font);
             break;
           }
         if (LocaleCompare("font-family",keyword) == 0)
@@ -3498,8 +3502,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("text-antialias",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
-            graphic_context[n]->text_antialias=
-              StringToLong(token) != 0 ? MagickTrue : MagickFalse;
+            graphic_context[n]->text_antialias=StringToLong(token) != 0 ?
+              MagickTrue : MagickFalse;
             break;
           }
         if (LocaleCompare("text-undercolor",keyword) == 0)
@@ -3615,8 +3619,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     if (primitive_type == UndefinedPrimitive)
       {
         if (image->debug != MagickFalse)
-          (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",
-            (int) (q-p),p);
+          (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int)
+            (q-p),p);
         continue;
       }
     /*
@@ -3653,6 +3657,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       primitive_info[i].point=point;
       primitive_info[i].coordinates=0;
       primitive_info[i].method=FloodfillMethod;
+      primitive_info[i].closed_subpath=MagickFalse;
       i++;
       if (i < (ssize_t) number_points)
         continue;
@@ -5667,8 +5672,7 @@ static void TraceArcPath(PrimitiveInfo *primitive_info,const PointInfo start,
   else
     if ((theta > 0.0) && (sweep == MagickFalse))
       theta-=2.0*MagickPI;
-  arc_segments=(size_t) ceil(fabs((double) (theta/(0.5*MagickPI+
-    DrawEpsilon))));
+  arc_segments=(size_t) ceil(fabs((double) (theta/(0.5*MagickPI+DrawEpsilon))));
   p=primitive_info;
   for (i=0; i < (ssize_t) arc_segments; i++)
   {
