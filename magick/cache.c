@@ -3579,7 +3579,7 @@ static inline void ApplyPixelCompositeMask(const MagickPixelPacket *p,
   double
     gamma;
 
-  if (alpha == TransparentOpacity)
+  if (fabs(alpha-TransparentOpacity) < MagickEpsilon)
     {
       *composite=(*q);
       return;
