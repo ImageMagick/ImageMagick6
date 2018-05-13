@@ -1429,7 +1429,7 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %  The format of the DrawClipPath method is:
 %
 %      MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
-%        const char *clip_path)
+%        const char *id)
 %
 %  A description of each parameter follows:
 %
@@ -1437,23 +1437,31 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %
 %    o draw_info: the draw info.
 %
-%    o name: the name of the clip path.
+%    o id: the id of the clip path.
 %
 */
+static char *GetNodeByURL(const char *,const char *);
 MagickExport MagickBooleanType DrawClipPath(Image *image,
-  const DrawInfo *draw_info,const char *clip_path)
+  const DrawInfo *draw_info,const char *id)
 {
+  const char
+    *clip_path;
+
   Image
     *clipping_mask;
 
   MagickBooleanType
     status;
 
-  clipping_mask=DrawClippingMask(image,draw_info,draw_info->clip_mask,
-    clip_path,&image->exception);
+  clip_path=GetImageArtifact(image,id);
+  if (clip_path == (const char *) NULL)
+    return(MagickFalse);
+  clipping_mask=DrawClippingMask(image,draw_info,draw_info->clip_mask,clip_path,
+    &image->exception);
   if (clipping_mask == (Image *) NULL)
     return(MagickFalse);
-  (void) SetImageClipMask(image,clipping_mask);
+  status=SetImageClipMask(image,clipping_mask);
+  clipping_mask=DestroyImage(clipping_mask);
   return(status);
 }
 
@@ -1492,11 +1500,11 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
 static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   const char *id,const char *clip_path,ExceptionInfo *exception)
 {
-  Image
-    *clip_mask;
-
   DrawInfo
     *clone_info;
+
+  Image
+    *clip_mask;
 
   MagickStatusType
     status;
@@ -1533,8 +1541,8 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   clone_info->clip_path=MagickTrue;
   status=DrawImage(clip_mask,clone_info);
   clone_info=DestroyDrawInfo(clone_info);
-  (void) SeparateImageChannel(clip_mask,TrueAlphaChannel);
-  (void) NegateImage(clip_mask,MagickFalse);
+  status&=SeparateImageChannel(clip_mask,TrueAlphaChannel);
+  status&=NegateImage(clip_mask,MagickFalse);
   if (status == MagickFalse)
     clip_mask=DestroyImage(clip_mask);
   if (image->debug != MagickFalse)
@@ -2172,6 +2180,8 @@ static char *GetNodeByURL(const char *primitive,const char *url)
   /*
     Find and return node by ID.
   */
+  if (primitive == (const char *) NULL)
+    return((char *) NULL);
   token=AcquireString(primitive);
   extent=strlen(token)+MagickPathExtent;
   length=0;
@@ -2561,8 +2571,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                   graphic_context[n],token,clip_path,&image->exception);
                 clip_path=DestroyString(clip_path);
                 if (draw_info->compliance != SVGCompliance)
-                  status=SetImageClipMask(image,
-                    graphic_context[n]->clipping_mask);
+                  (void) DrawClipPath(image,graphic_context[n],
+                    graphic_context[n]->clip_mask);
               }
             break;
           }
@@ -3015,6 +3025,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                     n=0;
                     break;
                   }
+                if ((graphic_context[n]->clip_mask != (char *) NULL) &&
+                    (draw_info->compliance != SVGCompliance))
+                  if (LocaleCompare(graphic_context[n]->clip_mask,
+                      graphic_context[n-1]->clip_mask) != 0)
+                    (void) SetImageClipMask(image,(Image *) NULL);
                 graphic_context[n]=DestroyDrawInfo(graphic_context[n]);
                 n--;
                 break;
@@ -3038,7 +3053,14 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             if (LocaleCompare("clip-path",token) == 0)
               {
+                char
+                  *clip_path,
+                  name[MaxTextExtent];
+
                 GetNextToken(q,&q,extent,token);
+                (void) FormatLocaleString(name,MaxTextExtent,"%s",token);
+                clip_path=GetNodeByURL(primitive,name);
+                (void) SetImageArtifact(image,name,clip_path);
                 break;
               }
             if (LocaleCompare("defs",token) == 0)
@@ -4062,7 +4084,15 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
     }
     if (graphic_context[n]->render != MagickFalse)
-      status&=DrawPrimitive(image,graphic_context[n],primitive_info);
+      {
+        if ((n != 0) && (draw_info->compliance != SVGCompliance) &&
+            (graphic_context[n]->clip_mask != (char *) NULL) &&
+            (LocaleCompare(graphic_context[n]->clip_mask,
+             graphic_context[n-1]->clip_mask) != 0))
+          status&=DrawClipPath(image,graphic_context[n],
+            graphic_context[n]->clip_mask);
+        status&=DrawPrimitive(image,graphic_context[n],primitive_info);
+      }
     if (primitive_info->text != (char *) NULL)
       primitive_info->text=(char *) RelinquishMagickMemory(
         primitive_info->text);
@@ -5229,13 +5259,13 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
     }
   }
   image_view=DestroyCacheView(image_view);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  end draw-primitive");
   if (draw_info->compliance == SVGCompliance)
     {
       status&=SetImageClipMask(image,(Image *) NULL);
       status&=SetImageMask(image,(Image *) NULL);
     }
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  end draw-primitive");
   return(status != 0 ? MagickTrue : MagickFalse);
 }
 
