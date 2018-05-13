@@ -1623,8 +1623,8 @@ static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
   clone_info->opacity=OpaqueOpacity;
   status=DrawImage(composite_mask,clone_info);
   clone_info=DestroyDrawInfo(clone_info);
-  (void) SeparateImageChannel(composite_mask,TrueAlphaChannel);
-  (void) NegateImage(composite_mask,MagickFalse);
+  status&=SeparateImageChannel(composite_mask,TrueAlphaChannel);
+  status&=NegateImage(composite_mask,MagickFalse);
   if (status == MagickFalse)
     composite_mask=DestroyImage(composite_mask);
   if (image->debug != MagickFalse)

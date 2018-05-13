@@ -3572,7 +3572,7 @@ MagickExport const PixelPacket *GetVirtualPixelsNexus(const Cache cache,
 %
 */
 
-static inline void MagickPixelCompositeMask(const MagickPixelPacket *p,
+static inline void ApplyPixelCompositeMask(const MagickPixelPacket *p,
   const MagickRealType alpha,const MagickPixelPacket *q,
   const MagickRealType beta,MagickPixelPacket *composite)
 {
@@ -3655,7 +3655,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
       break;
     SetMagickPixelPacket(image,p,indexes+i,&alpha);
     SetMagickPixelPacket(image,q,nexus_indexes+i,&beta);
-    MagickPixelCompositeMask(&beta,GetPixelIntensity(image,r),&alpha,
+    ApplyPixelCompositeMask(&beta,GetPixelIntensity(image,r),&alpha,
       alpha.opacity,&beta);
     SetPixelRed(q,ClampToQuantum(beta.red));
     SetPixelGreen(q,ClampToQuantum(beta.green));
