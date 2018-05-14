@@ -142,7 +142,9 @@ namespace MagickCore
 #        if defined(MAGICKCORE_LIBOPENJP2_DELEGATE)
 #          pragma comment(lib, "CORE_DB_openjpeg_.lib")
 #        endif
-#        pragma comment(lib, "CORE_DB_libxml_.lib")
+#        if defined(MAGICKCORE_XML_DELEGATE)
+#          pragma comment(lib, "CORE_DB_libxml_.lib")
+#        endif
 #        if defined(MAGICKCORE_LQR_DELEGATE)
 #          pragma comment(lib, "CORE_DB_lqr_.lib")
 #        endif
@@ -213,7 +215,9 @@ namespace MagickCore
 #        if defined(MAGICKCORE_LIBOPENJP2_DELEGATE)
 #          pragma comment(lib, "CORE_RL_openjpeg_.lib")
 #        endif
-#        pragma comment(lib, "CORE_RL_libxml_.lib")
+#        if defined(MAGICKCORE_XML_DELEGATE)
+#          pragma comment(lib, "CORE_RL_libxml_.lib")
+#        endif
 #        if defined(MAGICKCORE_LQR_DELEGATE)
 #          pragma comment(lib, "CORE_RL_lqr_.lib")
 #        endif
