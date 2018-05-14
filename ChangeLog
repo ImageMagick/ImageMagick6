@@ -1,5 +1,5 @@
-2018-05-13  6.9.9-43 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.9-43, GIT revision 13456:e027e2bb4:20180513.
+2018-05-13  6.9.9-44 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-44, GIT revision 13456:e027e2bb4:20180513.
 
 2018-05-03  6.9.9-43 Cristy  <quetzlzacatenango@image...>
   * Fixed numerous use of uninitialized values, integer overflow, memory
