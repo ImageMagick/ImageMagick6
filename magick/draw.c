@@ -169,6 +169,9 @@ typedef struct _PathInfo
 /*
   Forward declarations.
 */
+static char
+  *GetNodeByURL(const char *,const char *);
+
 static Image
   *DrawClippingMask(Image *,const DrawInfo *,const char *,const char *,
     ExceptionInfo *);
@@ -1441,7 +1444,6 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %    o id: the id of the clip path.
 %
 */
-static char *GetNodeByURL(const char *,const char *);
 MagickExport MagickBooleanType DrawClipPath(Image *image,
   const DrawInfo *draw_info,const char *id)
 {
@@ -2567,7 +2569,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 status=MagickFalse;
                 break;
               }
-            clip_path=GetNodeByURL(primitive,token);
+            (void) CloneString(&graphic_context[n]->clip_mask,token);
+            clip_path=GetNodeByURL(primitive,graphic_context[n]->clip_mask);
             if (clip_path != (char *) NULL)
               {
                 if (graphic_context[n]->clipping_mask != (Image *) NULL)
