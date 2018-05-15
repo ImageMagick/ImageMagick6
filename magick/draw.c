@@ -169,9 +169,6 @@ typedef struct _PathInfo
 /*
   Forward declarations.
 */
-static char
-  *GetNodeByURL(const char *,const char *);
-
 static Image
   *DrawClippingMask(Image *,const DrawInfo *,const char *,const char *,
     ExceptionInfo *);
@@ -1444,6 +1441,7 @@ static void DrawBoundingRectangles(Image *image,const DrawInfo *draw_info,
 %    o id: the id of the clip path.
 %
 */
+static char *GetNodeByURL(const char *,const char *);
 MagickExport MagickBooleanType DrawClipPath(Image *image,
   const DrawInfo *draw_info,const char *id)
 {
@@ -2411,6 +2409,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"begin draw-image");
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
+  if (image->matte == MagickFalse)
+    {
+      status=SetImageAlphaChannel(image,OpaqueAlphaChannel);
+      if (status == MagickFalse)
+        return(status);
+    }
   primitive=(char *) NULL;
   if (*draw_info->primitive != '@')
     primitive=AcquireString(draw_info->primitive);
@@ -2569,8 +2573,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 status=MagickFalse;
                 break;
               }
-            (void) CloneString(&graphic_context[n]->clip_mask,token);
-            clip_path=GetNodeByURL(primitive,graphic_context[n]->clip_mask);
+            clip_path=GetNodeByURL(primitive,token);
             if (clip_path != (char *) NULL)
               {
                 if (graphic_context[n]->clipping_mask != (Image *) NULL)
@@ -4620,8 +4623,6 @@ RestoreMSCWarning
   /*
     Draw polygon or line.
   */
-  if (image->matte == MagickFalse)
-    (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
   start_y=(ssize_t) ceil(bounds.y1-0.5);
   stop_y=(ssize_t) floor(bounds.y2+0.5);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
