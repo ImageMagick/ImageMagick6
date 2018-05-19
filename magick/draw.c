@@ -3138,7 +3138,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                     continue;
                   break;
                 }
-                if ((size_t) (q-p-4+1) <= 0)
+                if ((q == (char *) NULL) || (p == (char *) NULL) || ((q-4) < p))
                   {
                     status=MagickFalse;
                     break;
