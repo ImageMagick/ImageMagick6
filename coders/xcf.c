@@ -173,7 +173,7 @@ typedef struct
     green,
     blue,
     alpha;
-} XCFPixelPacket;
+} XCFPixelInfo;
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -282,7 +282,8 @@ static CompositeOperator GIMPBlendModeToCompositeOperator(
 %
 %  The format of the ReadBlobStringWithLongSize method is:
 %
-%      char *ReadBlobStringWithLongSize(Image *image,char *string)
+%      char *ReadBlobStringWithLongSize(Image *image,char *string,
+%        ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -290,9 +291,12 @@ static CompositeOperator GIMPBlendModeToCompositeOperator(
 %
 %    o string: the address of a character buffer.
 %
+%    o exception: return any errors or warnings in this structure.
+%
 */
 
-static char *ReadBlobStringWithLongSize(Image *image,char *string,size_t max)
+static char *ReadBlobStringWithLongSize(Image *image,char *string,size_t max,
+  ExceptionInfo *exception)
 {
   int
     c;
@@ -322,17 +326,15 @@ static char *ReadBlobStringWithLongSize(Image *image,char *string,size_t max)
   string[i]='\0';
   offset=SeekBlob(image,(MagickOffsetType) (length-i),SEEK_CUR);
   if (offset < 0)
-    (void) ThrowMagickException(&image->exception,GetMagickModule(),
+    (void) ThrowMagickException(exception,GetMagickModule(),
       CorruptImageError,"ImproperImageHeader","`%s'",image->filename);
   return(string);
 }
 
 static MagickBooleanType load_tile(Image *image,Image *tile_image,
-  XCFDocInfo *inDocInfo,XCFLayerInfo *inLayerInfo,size_t data_length)
+  XCFDocInfo *inDocInfo,XCFLayerInfo *inLayerInfo,size_t data_length,
+  ExceptionInfo *exception)
 {
-  ExceptionInfo
-    *exception;
-
   ssize_t
     y;
 
@@ -351,7 +353,7 @@ static MagickBooleanType load_tile(Image *image,Image *tile_image,
   unsigned char
     *graydata;
 
-  XCFPixelPacket
+  XCFPixelInfo
     *xcfdata,
     *xcfodata;
 
@@ -364,9 +366,9 @@ static MagickBooleanType load_tile(Image *image,Image *tile_image,
   if (extent > data_length)
     ThrowBinaryException(CorruptImageError,"NotEnoughPixelData",
       image->filename);
-  xcfdata=(XCFPixelPacket *) AcquireQuantumMemory(MagickMax(data_length,
+  xcfdata=(XCFPixelInfo *) AcquireQuantumMemory(MagickMax(data_length,
     tile_image->columns*tile_image->rows),sizeof(*xcfdata));
-  if (xcfdata == (XCFPixelPacket *) NULL)
+  if (xcfdata == (XCFPixelInfo *) NULL)
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   xcfodata=xcfdata;
@@ -374,11 +376,10 @@ static MagickBooleanType load_tile(Image *image,Image *tile_image,
   count=ReadBlob(image,data_length,(unsigned char *) xcfdata);
   if (count != (ssize_t) data_length)
     {
-      xcfodata=(XCFPixelPacket *) RelinquishMagickMemory(xcfodata);
+      xcfodata=(XCFPixelInfo *) RelinquishMagickMemory(xcfodata);
       ThrowBinaryException(CorruptImageError,"NotEnoughPixelData",
         image->filename);
     }
-  exception=(&image->exception);
   for (y=0; y < (ssize_t) tile_image->rows; y++)
   {
     q=GetAuthenticPixels(tile_image,0,y,tile_image->columns,1,exception);
@@ -414,16 +415,14 @@ static MagickBooleanType load_tile(Image *image,Image *tile_image,
      if (SyncAuthenticPixels(tile_image,exception) == MagickFalse)
        break;
   }
-  xcfodata=(XCFPixelPacket *) RelinquishMagickMemory(xcfodata);
+  xcfodata=(XCFPixelInfo *) RelinquishMagickMemory(xcfodata);
   return MagickTrue;
 }
 
 static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
-  XCFDocInfo *inDocInfo,XCFLayerInfo *inLayerInfo,size_t data_length)
+  XCFDocInfo *inDocInfo,XCFLayerInfo *inLayerInfo,size_t data_length,
+  ExceptionInfo *exception)
 {
-  ExceptionInfo
-    *exception;
-
   MagickOffsetType
     size;
 
@@ -457,7 +456,6 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
   xcfodata=xcfdata;
   count=ReadBlob(image, (size_t) data_length, xcfdata);
   xcfdatalimit = xcfodata+count-1;
-  exception=(&image->exception);
   alpha=ScaleCharToQuantum((unsigned char) inLayerInfo->alpha);
   for (i=0; i < bytes_per_pixel; i++)
   {
@@ -597,17 +595,14 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
   return(MagickTrue);
 
   bogus_rle:
-    if (xcfodata != (unsigned char *) NULL)
-      xcfodata=(unsigned char *) RelinquishMagickMemory(xcfodata);
+  if (xcfodata != (unsigned char *) NULL)
+    xcfodata=(unsigned char *) RelinquishMagickMemory(xcfodata);
   return(MagickFalse);
 }
 
 static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
-  XCFLayerInfo *inLayerInfo)
+  XCFLayerInfo *inLayerInfo,ExceptionInfo *exception)
 {
-  ExceptionInfo
-    *exception;
-
   int
     destLeft = 0,
     destTop = 0;
@@ -636,7 +631,6 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
     tile_image_height;
 
   /* start reading the data */
-  exception=inDocInfo->exception;
   width=ReadBlobMSBLong(image);
   height=ReadBlobMSBLong(image);
 
@@ -658,14 +652,14 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
     status=MagickFalse;
     if (offset == 0)
       ThrowBinaryException(CorruptImageError,"NotEnoughTiles",image->filename);
-    /* save the current position as it is where the
-     *  next tile offset is stored.
-     */
+    /*
+      Save the current position as it is where the next tile offset is stored.
+    */
     saved_pos=TellBlob(image);
     /* read in the offset of the next tile so we can calculate the amount
        of data needed for this tile*/
     offset2=(MagickOffsetType) ReadBlobMSBLong(image);
-    if ((MagickSizeType) offset2 > inDocInfo->file_size)
+    if ((MagickSizeType) offset2 >= inDocInfo->file_size)
       ThrowBinaryException(CorruptImageError,"InsufficientImageDataInFile",
         image->filename);
     /* if the offset is 0 then we need to read in the maximum possible
@@ -677,8 +671,9 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
       ThrowBinaryException(CorruptImageError,"InsufficientImageDataInFile",
         image->filename);
 
-      /* allocate the image for the tile
-        NOTE: the last tile in a row or column may not be a full tile!
+      /*
+        Allocate the image for the tile.  NOTE: the last tile in a row or
+        column may not be a full tile!
       */
       tile_image_width=(size_t) (destLeft == (int) ntile_cols-1 ?
         (int) width % TILE_WIDTH : TILE_WIDTH);
@@ -700,11 +695,11 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
       {
         case COMPRESS_NONE:
           status=load_tile(image,tile_image,inDocInfo,inLayerInfo,(size_t)
-            (offset2-offset));
+            (offset2-offset),&image->exception);
           break;
         case COMPRESS_RLE:
           status=load_tile_rle(image,tile_image,inDocInfo,inLayerInfo,(size_t)
-            (offset2-offset));
+            (offset2-offset),&image->exception);
           break;
         case COMPRESS_ZLIB:
           tile_image=DestroyImage(tile_image);
@@ -722,7 +717,7 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
           destLeft * TILE_WIDTH,destTop*TILE_HEIGHT);
       tile_image=DestroyImage(tile_image);
 
-      if (status != MagickFalse)
+      if (status == MagickFalse)
         return(MagickFalse);
       /* adjust tile position */
       destLeft++;
@@ -783,7 +778,7 @@ static MagickBooleanType load_hierarchy(Image *image,XCFDocInfo *inDocInfo,
       image->filename);
 
   /* read in the level */
-  if (load_level (image, inDocInfo, inLayer) == 0)
+  if (load_level (image, inDocInfo, inLayer, &image->exception) == 0)
     return(MagickFalse);
   /* restore the saved position so we'll be ready to
    *  read the next offset.
@@ -824,7 +819,7 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
   outLayer->height = ReadBlobMSBLong(image);
   outLayer->type = ReadBlobMSBLong(image);
   (void) ReadBlobStringWithLongSize(image, outLayer->name,
-    sizeof(outLayer->name));
+    sizeof(outLayer->name),&image->exception);
   if (EOFBlob(image) != MagickFalse)
     ThrowBinaryException(CorruptImageError,"InsufficientImageDataInFile",
       image->filename);
@@ -1284,7 +1279,7 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         /* size_t digits =  */ (void) ReadBlobMSBLong(image);
         for (i=0; i<5; i++)
          (void) ReadBlobStringWithLongSize(image, unit_string,
-           sizeof(unit_string));
+           sizeof(unit_string),&image->exception);
       }
      break;
 
@@ -1430,7 +1425,7 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         /* now reverse the order of the layers as they are put
            into subimages
         */
-        for (j=(long) number_layers-1; j >= 0; j--)
+        for (j=(ssize_t) number_layers-1; j >= 0; j--)
           AppendImageToList(&image,layer_info[j].image);
       }
 #endif
