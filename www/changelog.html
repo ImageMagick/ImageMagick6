@@ -10,7 +10,7 @@
   <title>Changelog @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
   <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://legacy.imagemagick.org" />
+  <meta name="application-url" content="https://www.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="changelog, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -22,9 +22,8 @@
   <meta name="copyright" content="Copyright (c) 1999-2017 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="changelog.html" rel="canonical" />
+  <link href="https://www.imagemagick.org/www/changelog.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -32,9 +31,9 @@
 <body>
   <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="../index.html"><img class="d-block" id="logo" name="ImageMagick" alt="And Now a Touch of Magick" width="32" height="32" src="../images/wand.ico"/></a>
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
@@ -58,12 +57,12 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://legacy.imagemagick.org/discourse-server//">Community</a>
+        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
     </div>
   </nav>
@@ -78,9 +77,54 @@
     </script>
   </div>
   </header>
-  <main role="main" class="container">
+  <main class="container">
     <div class="magick-template">
-<div class="magick-header"><dl><dt>2018-01-22  6.9.9-34 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+<div class="magick-header"><dl><dt>2018-05-16  6.9.9-45 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-44, GIT revision 13456:e027e2bb4:20180513.</li>
+<dt>2018-05-16  6.9.9-45 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory    exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-05-13  6.9.9-44 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-44, GIT revision 13456:e027e2bb4:20180513.</li>
+<dt>2018-05-03  6.9.9-43 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory    exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-05-01  6.9.9-42 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-42, GIT revision 13394:69b3ddf2e:20180501.</li>
+<dt>2018-05-01  6.9.9-42  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Missing break when checking "compliance" element.</li>
+<dt>2018-04-30  6.9.9-41 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-41, GIT revision 13379:e819f52a2:20180430.</li>
+<dt>2018-03-26  6.9.9-41 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory</li>
+<dt>2018-03-24  6.9.9-40 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-40, GIT revision 13136:8b7024499:20180325.</li>
+<dt>2018-03-21  6.9.9-40 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory    exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-03-18  6.9.9-39 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-39, GIT revision 13067:ae2245e56:20180318.</li>
+<dt>2018-03-17  6.9.9-39 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory    exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-03-11  6.9.9-38 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-38, GIT revision 13009:9f53c16ef:20180311.</li>
+<dt>2018-03-09  6.9.9-38 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory    exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-03-04  6.9.9-37 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-37, GIT revision 12940:93dff0b31:20180304.</li>
+<dt>2018-03-04  6.9.9-37 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow, memory    exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-02-25  6.9.9-36 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-36, GIT revision 12898:fad4ecb37:20180225.</li>
+<dt>2018-02-19  6.9.9-36 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Do not refer to page in OptimizeLayerFrames (reference    https://github.com/ImageMagick/ImageMagick/pull/987).</li>
+  <li> PerlMagick unit tests pass again.</li>
+  <li> Fixed numerous use of uninitialized values, integer overflow,    memory exceeded, and timeouts (credit to OSS Fuzz).</li>
+<dt>2018-02-18  6.9.9-35 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.9-35, GIT revision 12843:46d8215af:20180218.</li>
+<dt>2018-02-09  6.9.9-35 Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> Add support for reading the HEIC image format to the Windows build.</li>
+<dt>2018-01-23  6.9.9-35 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous use of uninitialized values, integer overflow,    memory exceeded, and timeouts (credit to OSS Fuzz).</li>
+  <li> Add list-length policy to limit the maximum image sequence length.</li>
+<dt>2018-01-22  6.9.9-34 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.9-34, GIT revision 12574:5370ede60:20180122.</li>
 <dt>2018-01-06  6.9.9-34 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Support aspect ratio geometry, e.g. -crop 3:2.</li>
@@ -283,7 +327,7 @@
 <dt>2017-05-12  6.9.8-5 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.8-5, GIT revision 11575:186b15d:20170512.</li>
 <dt>2017-05-10  6.9.8-5 John Cupitt &lt;jcupitt@gmail.com&gt;</dt>
-  <li> Revise DICOM window and rescale handling (reference     https://github.com/ImageMagick/ImageMagick/pull/484)</li>
+  <li> Revise DICOM window and rescale handling (reference    https://github.com/ImageMagick/ImageMagick/pull/484)</li>
 <dt>2017-05-08  6.9.8-5 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Fix transient PDF bug (reference    https://github.com/ImageMagick/ImageMagick/issues/463).</li>
   <li> Check for EOF conditions for RLE image format.</li>
@@ -318,7 +362,8 @@
 <dt>2017-02-18  6.9.7-9 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.7-9, GIT revision 11371:126c7c9:20170218.</li>
 <dt>2017-02-18  6.9.7-9 Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
-  <li> Fixed fd leak for webp coder (reference    https://github.com/ImageMagick/ImageMagick/pull/382)    <dt>2017-02-15  6.9.7-9 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed fd leak for webp coder (reference    https://github.com/ImageMagick/ImageMagick/pull/382)</li>
+<dt>2017-02-15  6.9.7-9 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Prevent random pixel data for corrupt JPEG image (bug report from    Hirokazu Moriguchi, Sony).</li>
   <li> Support pixel-cache and shred security policies.</li>
 <dt>2017-02-12  6.9.7-8 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -417,7 +462,7 @@
 <dt>2016-10-02  6.9.6-0 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.6-0, GIT revision 11078:9aec251:20161002.</li>
 <dt>2016-09-27  6.9.6-0 Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
-  <li> Fixed incorrect RLE decoding when reading an SGI image (reference     https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=30514)</li>
+  <li> Fixed incorrect RLE decoding when reading an SGI image (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=30514)</li>
 <dt>2016-09-05  6.9.5-10 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.5-10, GIT revision 11054:ddda572:20160920.</li>
 <dt>2016-09-17  6.9.5-10 Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
@@ -629,7 +674,7 @@
   <li> Added local contrast enhancement.</li>
   <li> Fixed bug in SetPixelCacheExtent that made images all black (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=28514).</li>
   <li> Added support for reading DICOM images with implicit vr little-endian    transfer syntax.</li>
-<dt>2015-11-02  6.9.2-6 Samuel Thibault &lt;samuel.thibault@...org&gt; </dt>
+<dt>2015-11-02  6.9.2-6 Samuel Thibault &lt;samuel.thibault@...org&gt;</dt>
   <li> Added 6dot variant for unicode and iso braille formats (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=2&amp;p=127111).</li>
 <dt>2015-10-31  6.9.2-5 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> New version 6.9.2-5, GIT revision 10316:86a76b6:20151031.</li>
@@ -658,7 +703,7 @@
 <dt>2015-09-19  6.9.2-3 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> New version 6.9.2-3, GIT revision 10235:c40ee57:20150919</li>
 <dt>2015-09-17  6.9.2-2 Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
-  <li> Added extra checks to avoid out of bounds error when parsing the 8bim     profile (reference https://github.com/ImageMagick/ImageMagick/issues/31).</li>
+  <li> Added extra checks to avoid out of bounds error when parsing the 8bim    profile (reference https://github.com/ImageMagick/ImageMagick/issues/31).</li>
   <li> Fixed size of memory allocation in RLE coder to avoid segfault (reference    https://github.com/ImageMagick/ImageMagick/issues/32).</li>
 <dt>2015-09-16  6.9.2-2 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Add Bootstrap MIT license to ImageMagick web CSS and JS.</li>
@@ -940,7 +985,7 @@
 <dt>2014-06-07  6.8.9-3 Glenn Randers-Pehrson &lt;glennrp@image...&gt;</dt>
   <li> Quiet warning about unused variable "skip_to_iend" in coders/png.c.</li>
 <dt>2014-06-07  6.8.9-3 Dirk Lemstra &lt;dirk@snakeware...&gt;</dt>
-  <li> Fixed creation of SVG from 8bim clip path. (reference     https://www.imagemagick.org/discourse-server/viewtopic.html?f=1&amp;t=25594).</li>
+  <li> Fixed creation of SVG from 8bim clip path. (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=1&amp;t=25594).</li>
 <dt>2014-06-02  6.8.9-3 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> The -version option returns 0 status (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=25667).</li>
   <li> The inline coder can now read from standard input (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=25641).</li>
@@ -1002,7 +1047,7 @@
   <li> Added tiff:ignore-tags to ignore specific tags.</li>
   <li> Added orderedDither, selectiveBlur, separate, sepiaTone, sketch,    smushImages, tint, uniqueColors and vignette to Magick++.</li>
 <dt>2014-03-11  6.8.8-9 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> The -define jpeg:extent option overrides the image quality (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=25200). </li>
+  <li> The -define jpeg:extent option overrides the image quality (reference    https://www.imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=25200).</li>
 <dt>2014-03-09  6.8.8-8 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> New version 6.8.8-8, SVN revision 15097.</li>
 <dt>2014-03-04  6.8.8-8 Glenn Randers-Pehrson &lt;glennrp@image...&gt;</dt>
@@ -4330,7 +4375,7 @@
     <a href="links.html">Related</a> •
      <a href="sitemap.html">Sitemap</a>
        
-    <a href="changelog.html#"><img class="d-inline" id="logo" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+    <a href="changelog.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
        
     <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
     <a href="support.html">Donate</a> •

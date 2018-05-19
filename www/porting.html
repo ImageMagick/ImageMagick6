@@ -10,7 +10,7 @@
   <title>Porting to ImageMagick Version 7 @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
   <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://legacy.imagemagick.org" />
+  <meta name="application-url" content="https://www.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="porting, to, imagemagick, version, 7, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -22,9 +22,8 @@
   <meta name="copyright" content="Copyright (c) 1999-2017 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="porting.html" rel="canonical" />
+  <link href="https://www.imagemagick.org/www/porting.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -32,9 +31,9 @@
 <body>
   <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="../index.html"><img class="d-block" id="logo" name="ImageMagick" alt="And Now a Touch of Magick" width="32" height="32" src="../images/wand.ico"/></a>
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
@@ -58,12 +57,12 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://legacy.imagemagick.org/discourse-server//">Community</a>
+        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
     </div>
   </nav>
@@ -78,7 +77,7 @@
     </script>
   </div>
   </header>
-  <main role="main" class="container">
+  <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 
@@ -444,11 +443,15 @@ be applied to expand the one channel into separate RGB (or other) channels.
 <dd class="col-md-8">the default is to update the RGBA channels, previously, in IMv6, the default was RGB.  If you get results that differ from IMv6, you may need to specify <code>-channel RGB</code> on your command line (e.g. -channel RGB -negate).</dd>
 <dt class="col-md-4">+combine</dt>
 <dd class="col-md-8">This option now requires an argument, the image colorspace (e.g. +combine sRGB).</dd>
+<dt class="col-md-4">-format</dt>
+<dd class="col-md-8">The %Z image property is no longer supported.</dd>
 <dt class="col-md-4">-gamma</dt>
 <dd class="col-md-8">Multiple gamma arguments (e.g. <code>-gamma 1,2,3</code>) are no longer supported, instead use <code>-channel</code> (e.g. <code>-channel blue -gamma 2)</code>.</dd>
 <dt class="col-md-4">-region</dt>
-<dd class="col-md-8">The draw transformations are relative to the upper left corner of the image, previously in IMv6 they were relative to the region.</dd>
+<dd class="col-md-8">This option set a write mask for the region you define.  In IMv6, a separate image was clone instead, operated on, and the results were composited to the source image.  In addition, the draw transformations are relative to the upper left corner of the image, previously in IMv6 they were relative to the region.</dd>
 </dl>
+
+<p>Use <code>-define morphology:showKernel=1</code> to post the morphology or convolution kernel.  Previously it was <code>-define showKernel=1</code>.</p>
 
 <h3>New Options</h3>
 <p>ImageMagick version 7 supports these new options, though most are limited
@@ -653,7 +656,7 @@ example "+annotate", "+resize", "+clut", and "+draw" .</p>
     <a href="links.html">Related</a> •
      <a href="sitemap.html">Sitemap</a>
        
-    <a href="porting.html#"><img class="d-inline" id="logo" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+    <a href="porting.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
        
     <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
     <a href="support.html">Donate</a> •

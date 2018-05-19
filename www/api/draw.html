@@ -10,7 +10,7 @@
   <title>MagickCore, C API: Draw on an Image @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
   <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://legacy.imagemagick.org" />
+  <meta name="application-url" content="https://www.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, draw, on, an, image, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -22,9 +22,8 @@
   <meta name="copyright" content="Copyright (c) 1999-2017 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="draw.html" rel="canonical" />
+  <link href="https://www.imagemagick.org/api/draw.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -32,9 +31,9 @@
 <body>
   <header>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="../index.html"><img class="d-block" id="logo" name="ImageMagick" alt="And Now a Touch of Magick" width="32" height="32" src="../images/wand.ico"/></a>
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+    <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
@@ -58,12 +57,12 @@
         <a class="nav-link" href="../www/develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="../https://legacy.imagemagick.org/discourse-server//">Community</a>
+        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
     </div>
   </nav>
@@ -78,10 +77,10 @@
     </script>
   </div>
   </header>
-  <main role="main" class="container">
+  <main class="container">
     <div class="magick-template">
 <div class="magick-header">
-<p class="text-center"><a href="draw.html#AcquireDrawInfo">AcquireDrawInfo</a> &#8226; <a href="draw.html#CloneDrawInfo">CloneDrawInfo</a> &#8226; <a href="draw.html#DestroyDrawInfo">DestroyDrawInfo</a> &#8226; <a href="draw.html#DrawAffineImage">DrawAffineImage</a> &#8226; <a href="draw.html#DrawClipPath">DrawClipPath</a> &#8226; <a href="draw.html#DrawImage">DrawImage</a> &#8226; <a href="draw.html#DrawGradientImage">DrawGradientImage</a> &#8226; <a href="draw.html#DrawPatternPath">DrawPatternPath</a> &#8226; <a href="draw.html#DrawPrimitive">DrawPrimitive</a> &#8226; <a href="draw.html#GetAffineMatrix">GetAffineMatrix</a></p>
+<p class="text-center"><a href="draw.html#AcquireDrawInfo">AcquireDrawInfo</a> &#8226; <a href="draw.html#CloneDrawInfo">CloneDrawInfo</a> &#8226; <a href="draw.html#DestroyDrawInfo">DestroyDrawInfo</a> &#8226; <a href="draw.html#DrawAffineImage">DrawAffineImage</a> &#8226; <a href="draw.html#DrawClipPath">DrawClipPath</a> &#8226; <a href="draw.html#DrawClippingMask">DrawClippingMask</a> &#8226; <a href="draw.html#DrawCompositeMask">DrawCompositeMask</a> &#8226; <a href="draw.html#DrawGradientImage">DrawGradientImage</a> &#8226; <a href="draw.html#DrawImage">DrawImage</a> &#8226; <a href="draw.html#DrawPatternPath">DrawPatternPath</a> &#8226; <a href="draw.html#DrawPrimitive">DrawPrimitive</a> &#8226; <a href="draw.html#GetAffineMatrix">GetAffineMatrix</a></p>
 
 <h2><a href="http://www.imagemagick.org/api/MagickCore/draw_8c.html" id="AcquireDrawInfo">AcquireDrawInfo</a></h2>
 
@@ -181,7 +180,7 @@ MagickBooleanType DrawAffineImage(Image *image,const Image *source,
 
 <pre class="text">
 MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
-  const char *name)
+  const char *id)
 </pre>
 
 <p>A description of each parameter follows:</p>
@@ -199,19 +198,20 @@ MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
 <dd>the draw info. </dd>
 
 <dd> </dd>
-<dt>name</dt>
-<dd>the name of the clip path. </dd>
+<dt>id</dt>
+<dd>the id of the clip path. </dd>
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawImage">DrawImage</a></h2>
+<h2><a href="http://www.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawClippingMask">DrawClippingMask</a></h2>
 
-<p>DrawImage() draws a graphic primitive on your image.  The primitive may be represented as a string or filename.  Precede the filename with an "at" sign (@) and the contents of the file are drawn on the image.  You can affect how text is drawn by setting one or more members of the draw info structure.</p>
+<p>DrawClippingMask() draws the clip path and returns it as an image clipping mask.</p>
 
-<p>The format of the DrawImage method is:</p>
+<p>The format of the DrawClippingMask method is:</p>
 
 <pre class="text">
-MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
+Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
+  const char *id,const char *clip_path,ExceptionInfo *exception)
 </pre>
 
 <p>A description of each parameter follows:</p>
@@ -227,6 +227,57 @@ MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 <dd> </dd>
 <dt>draw_info</dt>
 <dd>the draw info. </dd>
+
+<dd> </dd>
+<dt>id</dt>
+<dd>the clip path id. </dd>
+
+<dd> </dd>
+<dt>clip_path</dt>
+<dd>the clip path. </dd>
+
+<dd> </dd>
+<dt>exception</dt>
+<dd>return any errors or warnings in this structure. </dd>
+
+<dd>  </dd>
+</dl>
+<h2><a href="http://www.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawCompositeMask">DrawCompositeMask</a></h2>
+
+<p>DrawCompositeMask() draws the mask path and returns it as an image mask.</p>
+
+<p>The format of the DrawCompositeMask method is:</p>
+
+<pre class="text">
+Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
+  const char *id,const char *mask_path,ExceptionInfo *exception)
+</pre>
+
+<p>A description of each parameter follows:</p>
+
+<dd>
+</dd>
+
+<dd> </dd>
+<dl class="dl-horizontal">
+<dt>image</dt>
+<dd>the image. </dd>
+
+<dd> </dd>
+<dt>draw_info</dt>
+<dd>the draw info. </dd>
+
+<dd> </dd>
+<dt>id</dt>
+<dd>the mask path id. </dd>
+
+<dd> </dd>
+<dt>mask_path</dt>
+<dd>the mask path. </dd>
+
+<dd> </dd>
+<dt>exception</dt>
+<dd>return any errors or warnings in this structure. </dd>
 
 <dd>  </dd>
 </dl>
@@ -253,6 +304,32 @@ MagickBooleanType DrawGradientImage(Image *image,
 
 <dd> </dd>
 <dt>_info</dt>
+<dd>the draw info. </dd>
+
+<dd>  </dd>
+</dl>
+<h2><a href="http://www.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawImage">DrawImage</a></h2>
+
+<p>DrawImage() draws a graphic primitive on your image.  The primitive may be represented as a string or filename.  Precede the filename with an "at" sign (@) and the contents of the file are drawn on the image.  You can affect how text is drawn by setting one or more members of the draw info structure.</p>
+
+<p>The format of the DrawImage method is:</p>
+
+<pre class="text">
+MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
+</pre>
+
+<p>A description of each parameter follows:</p>
+
+<dd>
+</dd>
+
+<dd> </dd>
+<dl class="dl-horizontal">
+<dt>image</dt>
+<dd>the image. </dd>
+
+<dd> </dd>
+<dt>draw_info</dt>
 <dd>the draw info. </dd>
 
 <dd>  </dd>
@@ -354,7 +431,7 @@ void GetAffineMatrix(AffineMatrix *affine_matrix)
     <a href="../www/links.html">Related</a> •
      <a href="../www/sitemap.html">Sitemap</a>
        
-    <a href="draw.html#"><img class="d-inline" id="logo" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+    <a href="draw.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
        
     <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
     <a href="../www/support.html">Donate</a> •
