@@ -1742,7 +1742,8 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
             annotate_info->affine.tx=offset->x;
             annotate_info->affine.ty=offset->y;
             (void) ConcatenateString(&annotate_info->primitive,"'");
-            (void) DrawImage(image,annotate_info);
+            if (strlen(annotate_info->primitive) > 7)
+              (void) DrawImage(image,annotate_info);
             (void) CloneString(&annotate_info->primitive,"path '");
           }
       }
