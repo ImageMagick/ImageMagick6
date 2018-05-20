@@ -2547,6 +2547,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       case 'c':
       case 'C':
       {
+        if (LocaleCompare("class",keyword) == 0)
+          {
+            /*
+              Class primitive.
+            */
+            break;
+          }
         if (LocaleCompare("clip-path",keyword) == 0)
           {
             char
@@ -3003,6 +3010,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("pop",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
+            if (LocaleCompare("class",token) == 0)
+              break;
             if (LocaleCompare("clip-path",token) == 0)
               break;
             if (LocaleCompare("defs",token) == 0)
@@ -3051,6 +3060,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("push",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
+            if (LocaleCompare("class",token) == 0)
+              {
+                /*
+                  Class context.
+                */
+                break;
+              }
             if (LocaleCompare("clip-path",token) == 0)
               {
                 char
@@ -3354,8 +3370,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("stroke-antialias",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
-            graphic_context[n]->stroke_antialias=
-              StringToLong(token) != 0 ? MagickTrue : MagickFalse;
+            graphic_context[n]->stroke_antialias=StringToLong(token) != 0 ?
+              MagickTrue : MagickFalse;
             break;
           }
         if (LocaleCompare("stroke-dasharray",keyword) == 0)
