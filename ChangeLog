@@ -1,3 +1,9 @@
+2018-05-21  6.9.9-47 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-47, GIT revision 13489:3ff167343:20180521.
+
+2018-05-21  6.9.9-47 Cristy  <quetzlzacatenango@image...>
+  * Fixed memory corruption for MVG paths.
+
 2018-05-20  6.9.9-46 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.9-46, GIT revision 13483:ced03dfb8:20180520.
 
