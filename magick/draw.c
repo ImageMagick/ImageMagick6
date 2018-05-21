@@ -6026,9 +6026,6 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
       break;
     last_attribute=attribute;
     attribute=(int) (*p++);
-    if (((size_t) (mvg_info->offset+4096) > *mvg_info->extent) &&
-        (CheckPrimitiveExtent(mvg_info,4096) != MagickFalse))
-      q=(*mvg_info->primitive_info)+mvg_info->offset;
     switch (attribute)
     {
       case 'a':
@@ -6154,6 +6151,9 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           if (token == next_token)
             ThrowPointExpectedException(image,token);
           point.x=(double) (attribute == (int) 'H' ? x: point.x+x);
+          if (((size_t) (mvg_info->offset+4096) > *mvg_info->extent) &&
+              (CheckPrimitiveExtent(mvg_info,4096) != MagickFalse))
+            q=(*mvg_info->primitive_info)+mvg_info->offset;
           TracePoint(q,point);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6186,6 +6186,9 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
             ThrowPointExpectedException(image,token);
           point.x=(double) (attribute == (int) 'L' ? x : point.x+x);
           point.y=(double) (attribute == (int) 'L' ? y : point.y+y);
+          if (((size_t) (mvg_info->offset+4096) > *mvg_info->extent) &&
+              (CheckPrimitiveExtent(mvg_info,4096) != MagickFalse))
+            q=(*mvg_info->primitive_info)+mvg_info->offset;
           TracePoint(q,point);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6228,6 +6231,9 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           if (i == 0)
             start=point;
           i++;
+          if (((size_t) (mvg_info->offset+4096) > *mvg_info->extent) &&
+              (CheckPrimitiveExtent(mvg_info,4096) != MagickFalse))
+            q=(*mvg_info->primitive_info)+mvg_info->offset;
           TracePoint(q,point);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6398,6 +6404,9 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           if (token == next_token)
             ThrowPointExpectedException(image,token);
           point.y=(double) (attribute == (int) 'V' ? y : point.y+y);
+          if (((size_t) (mvg_info->offset+4096) > *mvg_info->extent) &&
+              (CheckPrimitiveExtent(mvg_info,4096) != MagickFalse))
+            q=(*mvg_info->primitive_info)+mvg_info->offset;
           TracePoint(q,point);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6415,6 +6424,9 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           Close path.
         */
         point=start;
+        if (((size_t) (mvg_info->offset+4096) > *mvg_info->extent) &&
+            (CheckPrimitiveExtent(mvg_info,4096) != MagickFalse))
+          q=(*mvg_info->primitive_info)+mvg_info->offset;
         TracePoint(q,point);
         mvg_info->offset+=q->coordinates;
         q+=q->coordinates;
