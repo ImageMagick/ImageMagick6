@@ -2549,9 +2549,23 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       {
         if (LocaleCompare("class",keyword) == 0)
           {
-            /*
-              Class primitive.
-            */
+            char
+              *node;
+
+            GetNextToken(q,&q,extent,token);
+            if (*token == '\0')
+              {
+                status=MagickFalse;
+                break;
+              }
+            node=GetNodeByURL(primitive,token);
+            if (node != (char *) NULL)
+              {
+                /*
+                  Insert class elements in stream.
+                */
+                node=DestroyString(node);
+              }
             break;
           }
         if (LocaleCompare("clip-path",keyword) == 0)
@@ -3065,6 +3079,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 /*
                   Class context.
                 */
+                GetNextToken(q,&q,extent,token);
                 break;
               }
             if (LocaleCompare("clip-path",token) == 0)
