@@ -2205,7 +2205,7 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
 static char *GetNodeByURL(const char *primitive,const char *url)
 {
   char
-    *token;
+    *node;
 
   const char
     *q,
@@ -2226,8 +2226,8 @@ static char *GetNodeByURL(const char *primitive,const char *url)
   */
   if (primitive == (const char *) NULL)
     return((char *) NULL);
-  token=AcquireString(primitive);
-  extent=strlen(token)+MagickPathExtent;
+  node=AcquireString(primitive);
+  extent=strlen(node)+MagickPathExtent;
   length=0;
   n=0;
   start=(const char *) NULL;
@@ -2235,10 +2235,10 @@ static char *GetNodeByURL(const char *primitive,const char *url)
   for (q=primitive; (*q != '\0') && (length == 0); )
   {
     p=q;
-    GetNextToken(q,&q,extent,token);
-    if (*token == '\0')
+    GetNextToken(q,&q,extent,node);
+    if (*node == '\0')
       break;
-    if (*token == '#')
+    if (*node == '#')
       {
         /*
           Comment.
@@ -2247,9 +2247,9 @@ static char *GetNodeByURL(const char *primitive,const char *url)
           q++;
         continue;
       }
-    if (LocaleCompare("pop",token) == 0)
+    if (LocaleCompare("pop",node) == 0)
       {
-        GetNextToken(q,&q,extent,token);
+        GetNextToken(q,&q,extent,node);
         if ((n == 0) && (start != (const char *) NULL))
           {
             /*
@@ -2260,14 +2260,14 @@ static char *GetNodeByURL(const char *primitive,const char *url)
           }
         n--;
       }
-    if (LocaleCompare("push",token) == 0)
+    if (LocaleCompare("push",node) == 0)
       {
-        GetNextToken(q,&q,extent,token);
+        GetNextToken(q,&q,extent,node);
         n++;
         if (*q == '"')
           {
-            GetNextToken(q,&q,extent,token);
-            if (LocaleCompare(url,token) == 0)
+            GetNextToken(q,&q,extent,node);
+            if (LocaleCompare(url,node) == 0)
               {
                 /*
                   Start of node by ID.
@@ -2279,9 +2279,9 @@ static char *GetNodeByURL(const char *primitive,const char *url)
       }
   }
   if (start == (const char *) NULL)
-    return(DestroyString(token));
-  (void) CopyMagickString(token,start,length);
-  return(token);
+    return(DestroyString(node));
+  (void) CopyMagickString(node,start,length);
+  return(node);
 }
 
 static inline MagickBooleanType IsPoint(const char *point)
@@ -2561,10 +2561,25 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             node=GetNodeByURL(primitive,token);
             if (node != (char *) NULL)
               {
+                char
+                  *elements;
+
+                ssize_t
+                  offset;
+
                 /*
-                  Insert class elements in stream.
+                  Inject class elements in stream.
                 */
+                offset=p-primitive;
+                elements=AcquireString(primitive);
+                elements[offset]='\0';
+                (void) ConcatenateString(&elements,node);
                 node=DestroyString(node);
+                (void) ConcatenateString(&elements,"\n");
+                (void) ConcatenateString(&elements,q);
+                primitive=DestroyString(primitive);
+                primitive=elements;
+                q=primitive+offset;
               }
             break;
           }
