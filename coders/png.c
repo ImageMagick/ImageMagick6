@@ -5596,7 +5596,6 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                   {
                     mng_info->global_plte_length=0;
                     chunk=(unsigned char *) RelinquishMagickMemory(chunk);
-                    mng_info=MngInfoFreeStruct(mng_info);
                     ThrowReaderException(ResourceLimitError,
                       "MemoryAllocationFailed");
                   }
@@ -5828,11 +5827,11 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
             mng_info->clip=fb;
             mng_info->clip=mng_minimum_box(fb,mng_info->frame);
 
-            subframe_width=(size_t) (mng_info->clip.right
-               -mng_info->clip.left);
+            subframe_width=(size_t) (mng_info->clip.right-
+               mng_info->clip.left);
 
-            subframe_height=(size_t) (mng_info->clip.bottom
-               -mng_info->clip.top);
+            subframe_height=(size_t) (mng_info->clip.bottom-
+               mng_info->clip.top);
             /*
               Insert a background layer behind the frame if framing_mode is 4.
             */
