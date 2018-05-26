@@ -39,16 +39,18 @@ static inline MagickBooleanType GetFillColor(const DrawInfo *draw_info,
   if (pattern == (Image *) NULL)
     {
       *fill=draw_info->fill;
-      fill->opacity=(Quantum) (QuantumRange-(QuantumRange-fill->opacity)*
-        QuantumScale*(QuantumRange-draw_info->fill_opacity));
+      if (fabs(draw_info->fill_opacity-TransparentOpacity) >= MagickEpsilon)
+        fill->opacity=(Quantum) (QuantumRange-(QuantumRange-fill->opacity)*
+          QuantumScale*(QuantumRange-draw_info->fill_opacity));
       return(MagickTrue);
     }
   status=GetOneVirtualMethodPixel(pattern,TileVirtualPixelMethod,
     x+pattern->tile_offset.x,y+pattern->tile_offset.y,fill,&pattern->exception);
   if (pattern->matte == MagickFalse)
     fill->opacity=OpaqueOpacity;
-  fill->opacity=(Quantum) (QuantumRange-(QuantumRange-fill->opacity)*
-    QuantumScale*(QuantumRange-draw_info->fill_opacity));
+  if (fabs(draw_info->fill_opacity-TransparentOpacity) >= MagickEpsilon)
+    fill->opacity=(Quantum) (QuantumRange-(QuantumRange-fill->opacity)*
+      QuantumScale*(QuantumRange-draw_info->fill_opacity));
   return(status);
 }
 
@@ -65,8 +67,9 @@ static inline MagickBooleanType GetStrokeColor(const DrawInfo *draw_info,
   if (pattern == (Image *) NULL)
     {
       *stroke=draw_info->stroke;
-      stroke->opacity=(Quantum) (QuantumRange-(QuantumRange-stroke->opacity)*
-        QuantumScale*(QuantumRange-draw_info->stroke_opacity));
+      if (fabs(draw_info->stroke_opacity-TransparentOpacity) >= MagickEpsilon)
+        stroke->opacity=(Quantum) (QuantumRange-(QuantumRange-stroke->opacity)*
+          QuantumScale*(QuantumRange-draw_info->stroke_opacity));
       return(MagickTrue);
     }
   status=GetOneVirtualMethodPixel(pattern,TileVirtualPixelMethod,
@@ -74,8 +77,9 @@ static inline MagickBooleanType GetStrokeColor(const DrawInfo *draw_info,
     &pattern->exception);
   if (pattern->matte == MagickFalse)
     stroke->opacity=OpaqueOpacity;
-  stroke->opacity=(Quantum) (QuantumRange-(QuantumRange-stroke->opacity)*
-    QuantumScale*(QuantumRange-draw_info->stroke_opacity));
+  if (fabs(draw_info->stroke_opacity-TransparentOpacity) >= MagickEpsilon)
+    stroke->opacity=(Quantum) (QuantumRange-(QuantumRange-stroke->opacity)*
+      QuantumScale*(QuantumRange-draw_info->stroke_opacity));
   return(status);
 }
 
