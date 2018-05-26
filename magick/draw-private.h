@@ -39,6 +39,8 @@ static inline MagickBooleanType GetFillColor(const DrawInfo *draw_info,
   if (pattern == (Image *) NULL)
     {
       *fill=draw_info->fill;
+      fill->opacity=(Quantum) (QuantumRange-(QuantumRange-fill->opacity)*
+        QuantumScale*(QuantumRange-draw_info->fill_opacity));
       return(MagickTrue);
     }
   status=GetOneVirtualMethodPixel(pattern,TileVirtualPixelMethod,
@@ -63,6 +65,8 @@ static inline MagickBooleanType GetStrokeColor(const DrawInfo *draw_info,
   if (pattern == (Image *) NULL)
     {
       *stroke=draw_info->stroke;
+      stroke->opacity=(Quantum) (QuantumRange-(QuantumRange-stroke->opacity)*
+        QuantumScale*(QuantumRange-draw_info->stroke_opacity));
       return(MagickTrue);
     }
   status=GetOneVirtualMethodPixel(pattern,TileVirtualPixelMethod,

@@ -2749,13 +2749,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               (void) DrawPatternPath(image,draw_info,token,
                 &graphic_context[n]->fill_pattern);
             else
-              {
-                status&=QueryColorDatabase(token,&graphic_context[n]->fill,
-                  &image->exception);
-                if (graphic_context[n]->fill_opacity != OpaqueOpacity)
-                  graphic_context[n]->fill.opacity=(Quantum)
-                    graphic_context[n]->fill_opacity;
-              }
+              status&=QueryColorDatabase(token,&graphic_context[n]->fill,
+                &image->exception);
             break;
           }
         if (LocaleCompare("fill-opacity",keyword) == 0)
@@ -2771,7 +2766,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            graphic_context[n]->fill_opacity=QuantumRange*(1.0-opacity);
+            if (fabs(opacity) >= DrawEpsilon)
+              graphic_context[n]->fill_opacity=(QuantumRange-
+                graphic_context[n]->fill_opacity)*(1.0-opacity);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -2993,21 +2990,24 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           }
         if (LocaleCompare("opacity",keyword) == 0)
           {
+            double
+              opacity;
+
             GetNextToken(q,&q,extent,token);
             if (graphic_context[n]->clip_path != MagickFalse)
               break;
             factor=strchr(token,'%') != (char *) NULL ? 0.01 : 1.0;
-            graphic_context[n]->opacity=(Quantum) (QuantumRange-QuantumRange*
-              ((1.0-QuantumScale*graphic_context[n]->opacity)*factor*
-              StringToDouble(token,&next_token)));
-            graphic_context[n]->fill_opacity=QuantumRange-QuantumRange*((1.0-
-              QuantumScale*graphic_context[n]->fill_opacity)*factor*
-              StringToDouble(token,&next_token));
-            graphic_context[n]->stroke_opacity=QuantumRange-QuantumRange*((1.0-
-              QuantumScale*graphic_context[n]->stroke_opacity)*factor*
-              StringToDouble(token,&next_token));
+            opacity=MagickMin(MagickMax(factor*
+              StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
+            if (fabs(opacity) >= DrawEpsilon)
+              {
+                graphic_context[n]->fill_opacity=(QuantumRange-
+                  graphic_context[n]->fill_opacity)*(1.0-opacity);
+                graphic_context[n]->stroke_opacity=(QuantumRange-
+                  graphic_context[n]->stroke_opacity)*(1.0-opacity);
+              }
             break;
           }
         status=MagickFalse;
@@ -3388,13 +3388,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               (void) DrawPatternPath(image,draw_info,token,
                 &graphic_context[n]->stroke_pattern);
             else
-              {
-                status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
-                  &image->exception);
-                if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
-                  graphic_context[n]->stroke.opacity=(Quantum)
-                    graphic_context[n]->stroke_opacity;
-              }
+              status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
+                &image->exception);
             break;
           }
         if (LocaleCompare("stroke-antialias",keyword) == 0)
@@ -3517,7 +3512,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            graphic_context[n]->stroke_opacity=QuantumRange*(1.0-opacity);
+            if (fabs(opacity) >= DrawEpsilon)
+              graphic_context[n]->stroke_opacity=(QuantumRange-
+                graphic_context[n]->stroke_opacity)*(1.0-opacity);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
