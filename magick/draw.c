@@ -2570,7 +2570,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
                 /*
                   Inject class elements in stream.
                 */
-                offset=p-primitive;
+                offset=(ssize_t) (p-primitive);
                 elements=AcquireString(primitive);
                 elements[offset]='\0';
                 (void) ConcatenateString(&elements,node);
@@ -2749,8 +2749,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               (void) DrawPatternPath(image,draw_info,token,
                 &graphic_context[n]->fill_pattern);
             else
-              status&=QueryColorDatabase(token,&graphic_context[n]->fill,
-                &image->exception);
+              {
+                status&=QueryColorDatabase(token,&graphic_context[n]->fill,
+                  &image->exception);
+                graphic_context[n]->fill.opacity=ClampToQuantum(
+                  graphic_context[n]->fill_opacity);
+              }
             break;
           }
         if (LocaleCompare("fill-opacity",keyword) == 0)
@@ -2768,6 +2772,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               ThrowPointExpectedException(image,token);
             graphic_context[n]->fill_opacity=(QuantumRange-
               graphic_context[n]->fill_opacity)*(1.0-opacity);
+            graphic_context[n]->fill.opacity=ClampToQuantum(
+              graphic_context[n]->fill_opacity);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -3000,13 +3006,14 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            if (fabs(opacity) >= DrawEpsilon)
-              {
-                graphic_context[n]->fill_opacity=(QuantumRange-
-                  graphic_context[n]->fill_opacity)*(1.0-opacity);
-                graphic_context[n]->stroke_opacity=(QuantumRange-
-                  graphic_context[n]->stroke_opacity)*(1.0-opacity);
-              }
+            graphic_context[n]->fill_opacity=(QuantumRange-
+              graphic_context[n]->fill_opacity)*(1.0-opacity);
+            graphic_context[n]->fill.opacity=ClampToQuantum(
+              graphic_context[n]->fill_opacity);
+            graphic_context[n]->stroke_opacity=(QuantumRange-
+              graphic_context[n]->stroke_opacity)*(1.0-opacity);
+            graphic_context[n]->stroke.opacity=ClampToQuantum(
+              graphic_context[n]->stroke_opacity);
             break;
           }
         status=MagickFalse;
@@ -3205,10 +3212,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               }
             if (LocaleCompare("graphic-context",token) == 0)
               {
-                graphic_context[n]->fill.opacity=
-                  graphic_context[n]->fill_opacity;
-                graphic_context[n]->stroke.opacity=
-                  graphic_context[n]->stroke_opacity;
                 n++;
                 graphic_context=(DrawInfo **) ResizeQuantumMemory(
                   graphic_context,(size_t) (n+1),sizeof(*graphic_context));
@@ -3391,8 +3394,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               (void) DrawPatternPath(image,draw_info,token,
                 &graphic_context[n]->stroke_pattern);
             else
-              status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
-                &image->exception);
+              {
+                status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
+                  &image->exception);
+                graphic_context[n]->stroke.opacity=ClampToQuantum(
+                  graphic_context[n]->stroke_opacity);
+              }
             break;
           }
         if (LocaleCompare("stroke-antialias",keyword) == 0)
@@ -3517,6 +3524,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               ThrowPointExpectedException(image,token);
             graphic_context[n]->stroke_opacity=(QuantumRange-
               graphic_context[n]->stroke_opacity)*(1.0-opacity);
+            graphic_context[n]->stroke.opacity=ClampToQuantum(
+              graphic_context[n]->stroke_opacity);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
@@ -3673,8 +3682,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     }
     if (status == MagickFalse)
       break;
-    graphic_context[n]->fill.opacity=graphic_context[n]->fill_opacity;
-    graphic_context[n]->stroke.opacity=graphic_context[n]->stroke_opacity;
     if ((fabs(affine.sx-1.0) >= DrawEpsilon) ||
         (fabs(affine.rx) >= DrawEpsilon) || (fabs(affine.ry) >= DrawEpsilon) ||
         (fabs(affine.sy-1.0) >= DrawEpsilon) ||
