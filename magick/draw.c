@@ -2766,9 +2766,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            if (fabs(opacity) >= DrawEpsilon)
-              graphic_context[n]->fill_opacity=(QuantumRange-
-                graphic_context[n]->fill_opacity)*(1.0-opacity);
+            graphic_context[n]->fill_opacity=(QuantumRange-
+              graphic_context[n]->fill_opacity)*(1.0-opacity);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -3206,6 +3205,10 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               }
             if (LocaleCompare("graphic-context",token) == 0)
               {
+                graphic_context[n]->fill.opacity=
+                  graphic_context[n]->fill_opacity;
+                graphic_context[n]->stroke.opacity=
+                  graphic_context[n]->stroke_opacity;
                 n++;
                 graphic_context=(DrawInfo **) ResizeQuantumMemory(
                   graphic_context,(size_t) (n+1),sizeof(*graphic_context));
@@ -3512,9 +3515,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            if (fabs(opacity) >= DrawEpsilon)
-              graphic_context[n]->stroke_opacity=(QuantumRange-
-                graphic_context[n]->stroke_opacity)*(1.0-opacity);
+            graphic_context[n]->stroke_opacity=(QuantumRange-
+              graphic_context[n]->stroke_opacity)*(1.0-opacity);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
@@ -3671,6 +3673,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     }
     if (status == MagickFalse)
       break;
+    graphic_context[n]->fill.opacity=graphic_context[n]->fill_opacity;
+    graphic_context[n]->stroke.opacity=graphic_context[n]->stroke_opacity;
     if ((fabs(affine.sx-1.0) >= DrawEpsilon) ||
         (fabs(affine.rx) >= DrawEpsilon) || (fabs(affine.ry) >= DrawEpsilon) ||
         (fabs(affine.sy-1.0) >= DrawEpsilon) ||
@@ -6512,12 +6516,14 @@ static void TraceRectangle(PrimitiveInfo *primitive_info,const PointInfo start,
   TracePoint(p,start);
   p+=p->coordinates;
   point.x=start.x;
-  point.y=end.y;
+  point.y=end.y-1.0;
   TracePoint(p,point);
   p+=p->coordinates;
-  TracePoint(p,end);
+  point.x=end.x-1.0;
+  point.y=end.y-1.0;
+  TracePoint(p,point);
   p+=p->coordinates;
-  point.x=end.x;
+  point.x=end.x-1.0;
   point.y=start.y;
   TracePoint(p,point);
   p+=p->coordinates;
