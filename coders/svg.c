@@ -1164,8 +1164,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
           if (LocaleCompare(keyword,"x") == 0)
             {
               if (LocaleCompare((char *) name,"tspan") != 0)
-                svg_info->bounds.x=GetUserSpaceCoordinateValue(svg_info,1,value)-
-                  svg_info->center.x;
+                svg_info->bounds.x=GetUserSpaceCoordinateValue(svg_info,1,
+                  value)-svg_info->center.x;
               break;
             }
           if (LocaleCompare(keyword,"x1") == 0)
@@ -1391,6 +1391,10 @@ static void SVGStartElement(void *context,const xmlChar *name,
       if (LocaleCompare((const char *) name,"text") == 0)
         {
           PushGraphicContext(id);
+          (void) FormatLocaleFile(svg_info->file,"translate %g,%g\n",
+            svg_info->bounds.x,svg_info->bounds.y);
+          svg_info->center.x=svg_info->bounds.x;
+          svg_info->center.y=svg_info->bounds.y;
           svg_info->bounds.x=0.0;
           svg_info->bounds.y=0.0;
           svg_info->bounds.width=0.0;
@@ -2862,8 +2866,7 @@ static void SVGEndElement(void *context,const xmlChar *name)
                 *text;
 
               text=EscapeString(svg_info->text,'\'');
-              (void) FormatLocaleFile(svg_info->file,"text %g,%g \"%s\"\n",
-                svg_info->bounds.x,svg_info->bounds.y,text);
+              (void) FormatLocaleFile(svg_info->file,"text 0,0 \"%s\"\n",text);
               text=DestroyString(text);
               *svg_info->text='\0';
             }
