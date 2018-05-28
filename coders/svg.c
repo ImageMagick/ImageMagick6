@@ -2573,7 +2573,7 @@ static void SVGEndElement(void *context,const xmlChar *name)
             keyword=(char *) tokens[j];
             value=(char *) tokens[j+1];
             (void) FormatLocaleFile(svg_info->file,"push class \"%s\"\n",
-              keyword);
+              *keyword == '.' ? keyword+1 : keyword);
             SVGProcessStyleElement(context,name,value);
             (void) FormatLocaleFile(svg_info->file,"pop class\n");
           }
@@ -3252,7 +3252,7 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
             (void) SetImageBackgroundColor(image);
 #if defined(MAGICKCORE_CAIRO_DELEGATE)
             cairo_surface=cairo_image_surface_create_for_data(pixels,
-              CAIRO_FORMAT_ARGB32,(int) image->columns,(int) image->rows, (int)
+              CAIRO_FORMAT_ARGB32,(int) image->columns,(int) image->rows,(int)
               stride);
             if ((cairo_surface == (cairo_surface_t *) NULL) ||
                 (cairo_surface_status(cairo_surface) != CAIRO_STATUS_SUCCESS))
