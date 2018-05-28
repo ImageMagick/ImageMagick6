@@ -347,6 +347,23 @@ static double GetUserSpaceCoordinateValue(const SVGInfo *svg_info,int type,
   return(value);
 }
 
+#if defined(__cplusplus) || defined(c_plusplus)
+extern "C" {
+#endif
+
+static int SVGIsStandalone(void *context)
+{
+  SVGInfo
+    *svg_info;
+
+  /*
+    Is this document tagged standalone?
+  */
+  (void) LogMagickEvent(CoderEvent,GetMagickModule(),"  SAX.SVGIsStandalone()");
+  svg_info=(SVGInfo *) context;
+  return(svg_info->document->standalone == 1);
+}
+
 static int SVGHasInternalSubset(void *context)
 {
   SVGInfo
@@ -596,23 +613,6 @@ static char **SVGKeyValuePairs(void *context,const int key_sentinel,
   tokens[i]=(char *) NULL;
   *number_tokens=(size_t) i;
   return(tokens);
-}
-
-#if defined(__cplusplus) || defined(c_plusplus)
-extern "C" {
-#endif
-
-static int SVGIsStandalone(void *context)
-{
-  SVGInfo
-    *svg_info;
-
-  /*
-    Is this document tagged standalone?
-  */
-  (void) LogMagickEvent(CoderEvent,GetMagickModule(),"  SAX.SVGIsStandalone()");
-  svg_info=(SVGInfo *) context;
-  return(svg_info->document->standalone == 1);
 }
 
 static void SVGNotationDeclaration(void *context,const xmlChar *name,
@@ -1970,277 +1970,7 @@ static void SVGStartElement(void *context,const xmlChar *name,
             }
           if (LocaleCompare(keyword,"style") == 0)
             {
-              (void) LogMagickEvent(CoderEvent,GetMagickModule(),"  ");
-              tokens=SVGKeyValuePairs(context,':',';',value,&number_tokens);
-              for (j=0; j < (ssize_t) (number_tokens-1); j+=2)
-              {
-                keyword=(char *) tokens[j];
-                value=(char *) tokens[j+1];
-                if (LocaleCompare(keyword,"font-size") != 0)
-                  continue;
-                svg_info->pointsize=GetUserSpaceCoordinateValue(svg_info,0,
-                  value);
-                (void) FormatLocaleFile(svg_info->file,"font-size %g\n",
-                  svg_info->pointsize);
-              }
-              for (j=0; j < (ssize_t) (number_tokens-1); j+=2)
-              {
-                keyword=(char *) tokens[j];
-                value=(char *) tokens[j+1];
-                (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                  "    %s: %s",keyword,value);
-                switch (*keyword)
-                {
-                  case 'B':
-                  case 'b':
-                  {
-                    if (LocaleCompare((const char *) name,"background") == 0)
-                      {
-                        if (LocaleCompare((const char *) name,"svg") == 0)
-                          (void) CopyMagickString(background,value,
-                            MagickPathExtent);
-                        break;
-                      }
-                    break;
-                  }
-                  case 'C':
-                  case 'c':
-                  {
-                     if (LocaleCompare(keyword,"clip-path") == 0)
-                       {
-                         (void) FormatLocaleFile(svg_info->file,
-                           "clip-path \"%s\"\n",value);
-                         break;
-                       }
-                    if (LocaleCompare(keyword,"clip-rule") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "clip-rule \"%s\"\n",value);
-                        break;
-                      }
-                     if (LocaleCompare(keyword,"clipPathUnits") == 0)
-                       {
-                         (void) CloneString(&units,value);
-                         (void) FormatLocaleFile(svg_info->file,
-                          "clip-units \"%s\"\n",value);
-                         break;
-                       }
-                    if (LocaleCompare(keyword,"color") == 0)
-                      {
-                        (void) CloneString(&color,value);
-                        break;
-                      }
-                    break;
-                  }
-                  case 'F':
-                  case 'f':
-                  {
-                    if (LocaleCompare(keyword,"fill") == 0)
-                      {
-                         if (LocaleCompare(value,"currentColor") == 0)
-                           {
-                             (void) FormatLocaleFile(svg_info->file,
-                               "fill \"%s\"\n",color);
-                             break;
-                           }
-                        if (LocaleCompare(value,"#00000000") == 0)
-                          (void) FormatLocaleFile(svg_info->file,
-                            "fill '#000000'\n");
-                        else
-                          (void) FormatLocaleFile(svg_info->file,
-                            "fill \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"fillcolor") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,"fill \"%s\"\n",
-                          value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"fill-rule") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "fill-rule \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"fill-opacity") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "fill-opacity \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"font-family") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "font-family \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"font-stretch") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "font-stretch \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"font-style") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "font-style \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"font-size") == 0)
-                      {
-                        svg_info->pointsize=GetUserSpaceCoordinateValue(
-                          svg_info,0,value);
-                        (void) FormatLocaleFile(svg_info->file,"font-size %g\n",
-                          svg_info->pointsize);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"font-weight") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "font-weight \"%s\"\n",value);
-                        break;
-                      }
-                    break;
-                  }
-                  case 'O':
-                  case 'o':
-                  {
-                    if (LocaleCompare(keyword,"offset") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,"offset %g\n",
-                          GetUserSpaceCoordinateValue(svg_info,1,value));
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"opacity") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "opacity \"%s\"\n",value);
-                        break;
-                      }
-                    break;
-                  }
-                  case 'S':
-                  case 's':
-                  {
-                    if (LocaleCompare(keyword,"stop-color") == 0)
-                      {
-                        (void) CloneString(&svg_info->stop_color,value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke") == 0)
-                      {
-                        if (LocaleCompare(value,"currentColor") == 0)
-                          {
-                            (void) FormatLocaleFile(svg_info->file,
-                              "stroke \"%s\"\n",color);
-                            break;
-                          }
-                        if (LocaleCompare(value,"#00000000") == 0)
-                          (void) FormatLocaleFile(svg_info->file,
-                            "fill '#000000'\n");
-                        else
-                          (void) FormatLocaleFile(svg_info->file,
-                            "stroke \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-antialiasing") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-antialias %d\n",
-                          LocaleCompare(value,"true") == 0);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-dasharray") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-dasharray %s\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-dashoffset") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-dashoffset %g\n",
-                          GetUserSpaceCoordinateValue(svg_info,1,value));
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-linecap") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-linecap \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-linejoin") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-linejoin \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-miterlimit") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-miterlimit \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-opacity") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-opacity \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"stroke-width") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "stroke-width %g\n",
-                          GetUserSpaceCoordinateValue(svg_info,1,value));
-                        break;
-                      }
-                    break;
-                  }
-                  case 't':
-                  case 'T':
-                  {
-                    if (LocaleCompare(keyword,"text-align") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "text-align \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"text-anchor") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "text-anchor \"%s\"\n",value);
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"text-decoration") == 0)
-                      {
-                        if (LocaleCompare(value,"underline") == 0)
-                          (void) FormatLocaleFile(svg_info->file,
-                          "decorate underline\n");
-                        if (LocaleCompare(value,"line-through") == 0)
-                          (void) FormatLocaleFile(svg_info->file,
-                          "decorate line-through\n");
-                        if (LocaleCompare(value,"overline") == 0)
-                          (void) FormatLocaleFile(svg_info->file,
-                          "decorate overline\n");
-                        break;
-                      }
-                    if (LocaleCompare(keyword,"text-antialiasing") == 0)
-                      {
-                        (void) FormatLocaleFile(svg_info->file,
-                          "text-antialias %d\n",
-                          LocaleCompare(value,"true") == 0);
-                        break;
-                      }
-                    break;
-                  }
-                  default:
-                    break;
-                }
-              }
-              for (j=0; tokens[j] != (char *) NULL; j++)
-                tokens[j]=DestroyString(tokens[j]);
-              tokens=(char **) RelinquishMagickMemory(tokens);
+              SVGProcessStyleElement(context,name,value);
               break;
             }
           break;
@@ -2896,7 +2626,8 @@ static void SVGEndElement(void *context,const xmlChar *name)
 
               text=EscapeString(svg_info->text,'\'');
               (void) FormatLocaleFile(svg_info->file,"text %g,%g \"%s\"\n",
-                svg_info->bounds.x,svg_info->bounds.y,text);
+                svg_info->bounds.x-svg_info->center.x,svg_info->bounds.y-
+                svg_info->center.y,text);
               text=DestroyString(text);
               draw_info=CloneDrawInfo(svg_info->image_info,(DrawInfo *) NULL);
               draw_info->pointsize=svg_info->pointsize;
@@ -3305,7 +3036,7 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
             attributes;
 
           /*
-            Our best hope for compliance to the SVG standard.
+            Our best hope for compliance with the SVG standard.
           */
           status=AcquireUniqueSymbolicLink(image->filename,input_filename);
           (void) AcquireUniqueFilename(output_filename);
