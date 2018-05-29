@@ -3291,7 +3291,6 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
 #else
             p=gdk_pixbuf_get_pixels(pixel_buffer);
 #endif
-            GetMagickPixelPacket(image,&fill_color);
             for (y=0; y < (ssize_t) image->rows; y++)
             {
               q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
