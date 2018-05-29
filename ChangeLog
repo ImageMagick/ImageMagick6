@@ -1,3 +1,9 @@
+2018-05-28  6.9.9-48 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-47, GIT revision 13518:5cef106dc:20180528.
+
+2018-05-28  6.9.9-48 Cristy  <quetzlzacatenango@image...>
+  * A SVG rectangle with a width and height of 1, is a point.
+
 2018-05-21  6.9.9-47 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.9-47, GIT revision 13489:3ff167343:20180521.
 
