@@ -1,3 +1,7 @@
+2018-05-30  6.9.9-50 Cristy  <quetzlzacatenango@image...>
+  * Heap buffer overflow fix (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1156).
+
 2018-05-29  6.9.9-49 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.9-47, GIT revision 13521:00f535ee9:20180529.
 
