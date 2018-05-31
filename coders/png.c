@@ -5474,7 +5474,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                  CoderError,"Nonzero object_id in MNG-LC datastream",
                  "`%s'", image->filename);
 
-            if (object_id > MNG_MAX_OBJECTS)
+            if (object_id >= MNG_MAX_OBJECTS)
               {
                 /*
                   Instead of using a warning we should allocate a larger
@@ -5483,7 +5483,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                 (void) ThrowMagickException(&image->exception,
                     GetMagickModule(), CoderError,
                     "object id too large","`%s'",image->filename);
-                object_id=MNG_MAX_OBJECTS;
+                object_id=MNG_MAX_OBJECTS-1;
               }
 
             if (mng_info->exists[object_id])
