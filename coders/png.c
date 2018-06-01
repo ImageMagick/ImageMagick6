@@ -4478,11 +4478,11 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
         color_image_info=(ImageInfo *)AcquireMagickMemory(sizeof(ImageInfo));
 
         if (color_image_info == (ImageInfo *) NULL)
-        {
-          DestroyJNG(chunk,&color_image,&color_image_info,
+          {
+            DestroyJNG(chunk,&color_image,&color_image_info,
               &alpha_image,&alpha_image_info);
-          ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-        }
+            ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+          }
 
         GetImageInfo(color_image_info);
         color_image=AcquireImage(color_image_info);
@@ -4500,6 +4500,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
 
         if (status == MagickFalse)
           {
+            InheritException(exception,&color_image->exception);
             DestroyJNG(chunk,&color_image,&color_image_info,
               &alpha_image,&alpha_image_info);
             return(DestroyImageList(image));
@@ -4795,13 +4796,15 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
     {
       assert(color_image == (Image *) NULL);
       assert(alpha_image == (Image *) NULL);
+      if (color_image != (Image *) NULL)
+        color_image=DestroyImage(color_image);
       return(DestroyImageList(image));
     }
 
   if (color_image == (Image *) NULL)
     {
       assert(alpha_image == (Image *) NULL);
-      return(DestroyImageList(image));
+      ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
     }
 
   (void) SeekBlob(color_image,0,SEEK_SET);
