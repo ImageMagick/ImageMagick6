@@ -95,127 +95,175 @@ typedef struct
 } CUTPalHeader;
 
 
-static void InsertRow(ssize_t depth,unsigned char *p,ssize_t y,Image *image)
+static MagickBooleanType InsertRow(int bpp,unsigned char *p,ssize_t y,
+  Image *image)
 {
   ExceptionInfo
     *exception;
 
-  size_t bit; ssize_t x;
-  register PixelPacket *q;
-  IndexPacket index;
-  register IndexPacket *indexes;
+  int
+    bit;
 
-  index=(IndexPacket) 0;
+  ssize_t
+    x;
+
+  register PixelPacket
+    *q;
+
+  IndexPacket
+    index;
+
+  register IndexPacket
+    *indexes;
+
   exception=(&image->exception);
-  switch (depth)
-  {
+  q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
+  if (q == (PixelPacket *) NULL)
+    return(MagickFalse);
+  indexes=GetAuthenticIndexQueue(image);
+  switch (bpp)
+    {
     case 1:  /* Convert bitmap scanline. */
       {
-        q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
-        if (q == (PixelPacket *) NULL)
-          break;
-        indexes=GetAuthenticIndexQueue(image);
         for (x=0; x < ((ssize_t) image->columns-7); x+=8)
-        {
-          for (bit=0; bit < 8; bit++)
           {
-            index=(IndexPacket) ((((*p) & (0x80 >> bit)) != 0) ? 0x01 : 0x00);
-            SetPixelIndex(indexes+x+bit,index);
-          }
-          p++;
-        }
-        if ((image->columns % 8) != 0)
-          {
-            for (bit=0; bit < (image->columns % 8); bit++)
+            for (bit=0; bit < 8; bit++)
               {
-                index=(IndexPacket) ((((*p) & (0x80 >> bit)) != 0) ? 0x01 : 0x00);
+                index=((*p) & (0x80 >> bit) ? 0x01 : 0x00);
                 SetPixelIndex(indexes+x+bit,index);
+                if (index < image->colors)
+                  SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                q++;
               }
             p++;
           }
-        (void) SyncAuthenticPixels(image,exception);
+        if ((image->columns % 8) != 0)
+          {
+            for (bit=0; bit < (ssize_t) (image->columns % 8); bit++)
+              {
+                index=((*p) & (0x80 >> bit) ? 0x01 : 0x00);
+                SetPixelIndex(indexes+x+bit,index);
+                if (index < image->colors)
+                  SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                q++;
+              }
+            p++;
+          }
         break;
       }
     case 2:  /* Convert PseudoColor scanline. */
       {
-        q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
-        if (q == (PixelPacket *) NULL)
+        if ((image->storage_class != PseudoClass) ||
+            (indexes == (IndexPacket *) NULL))
           break;
-        indexes=GetAuthenticIndexQueue(image);
-        for (x=0; x < ((ssize_t) image->columns-1); x+=2)
-          {
+        for (x=0; x < ((ssize_t) image->columns-3); x+=4)
+        {
             index=ConstrainColormapIndex(image,(*p >> 6) & 0x3);
             SetPixelIndex(indexes+x,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            q++;
             index=ConstrainColormapIndex(image,(*p >> 4) & 0x3);
             SetPixelIndex(indexes+x,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            q++;
             index=ConstrainColormapIndex(image,(*p >> 2) & 0x3);
             SetPixelIndex(indexes+x,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            q++;
             index=ConstrainColormapIndex(image,(*p) & 0x3);
             SetPixelIndex(indexes+x+1,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            q++;
             p++;
-          }
-        if ((image->columns % 4) != 0)
+        }
+       if ((image->columns % 4) != 0)
           {
             index=ConstrainColormapIndex(image,(*p >> 6) & 0x3);
             SetPixelIndex(indexes+x,index);
-            if ((image->columns % 4) >= 1)
-
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            q++;
+            if ((image->columns % 4) > 1)
               {
                 index=ConstrainColormapIndex(image,(*p >> 4) & 0x3);
                 SetPixelIndex(indexes+x,index);
-                if ((image->columns % 4) >= 2)
-
+                if (index < image->colors)
+                  SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                q++;
+                if ((image->columns % 4) > 2)
                   {
                     index=ConstrainColormapIndex(image,(*p >> 2) & 0x3);
                     SetPixelIndex(indexes+x,index);
+                    if (index < image->colors)
+                      SetPixelRGBO(q,image->colormap+(ssize_t) index);
+                    q++;
                   }
               }
             p++;
           }
-        (void) SyncAuthenticPixels(image,exception);
         break;
       }
 
     case 4:  /* Convert PseudoColor scanline. */
       {
-        q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
-        if (q == (PixelPacket *) NULL)
-          break;
-        indexes=GetAuthenticIndexQueue(image);
         for (x=0; x < ((ssize_t) image->columns-1); x+=2)
           {
-            index=ConstrainColormapIndex(image,(*p >> 4) & 0xf);
+            index=ConstrainColormapIndex(image,(*p >> 4) & 0x0f);
             SetPixelIndex(indexes+x,index);
-            index=ConstrainColormapIndex(image,(*p) & 0xf);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            q++;
+            index=ConstrainColormapIndex(image,(*p) & 0x0f);
             SetPixelIndex(indexes+x+1,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             p++;
+            q++;
           }
         if ((image->columns % 2) != 0)
           {
-            index=ConstrainColormapIndex(image,(*p >> 4) & 0xf);
+            index=ConstrainColormapIndex(image,(*p >> 4) & 0x0f);
             SetPixelIndex(indexes+x,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
             p++;
+            q++;
           }
-        (void) SyncAuthenticPixels(image,exception);
         break;
       }
     case 8: /* Convert PseudoColor scanline. */
       {
-        q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
-        if (q == (PixelPacket *) NULL)
-          break;
-        indexes=GetAuthenticIndexQueue(image);
         for (x=0; x < (ssize_t) image->columns; x++)
-        {
-          index=ConstrainColormapIndex(image,*p);
-          SetPixelIndex(indexes+x,index);
-          p++;
-        }
-        (void) SyncAuthenticPixels(image,exception);
-        break;
+          {
+            index=ConstrainColormapIndex(image,*p);
+            SetPixelIndex(indexes+x,index);
+            if (index < image->colors)
+              SetPixelRGBO(q,image->colormap+(ssize_t) index);
+            p++;
+            q++;
+          }
       }
+      break;
+
+    case 24:     /*  Convert DirectColor scanline.  */
+      for (x=0; x < (ssize_t) image->columns; x++)
+        {
+          SetPixelRed(q,ScaleCharToQuantum(*p++));
+          SetPixelGreen(q,ScaleCharToQuantum(*p++));
+          SetPixelBlue(q,ScaleCharToQuantum(*p++));
+          q++;
+        }
+      break;
     }
+  if (!SyncAuthenticPixels(image,exception))
+    return(MagickFalse);
+  return(MagickTrue);
 }
+
 
 /*
    Compute the number of colors in Grayed R[i]=G[i]=B[i] image
