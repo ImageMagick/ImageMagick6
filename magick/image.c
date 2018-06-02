@@ -164,9 +164,7 @@ MagickExport Image *AcquireImage(const ImageInfo *image_info)
     Allocate image structure.
   */
   (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
-  image=(Image *) AcquireMagickMemory(sizeof(*image));
-  if (image == (Image *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  image=(Image *) AcquireCriticalMemory(sizeof(*image));
   (void) memset(image,0,sizeof(*image));
   /*
     Initialize Image structure.
