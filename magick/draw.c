@@ -2330,6 +2330,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 
   double
     angle,
+    coordinates,
     factor,
     primitive_extent;
 
@@ -2338,9 +2339,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 
   MagickBooleanType
     proceed;
-
-  MagickSizeType
-    coordinates;
 
   MagickStatusType
     status;
@@ -3793,7 +3791,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     /*
       Speculate how many points our primitive might consume.
     */
-    coordinates=primitive_info[j].coordinates;
+    coordinates=(double) primitive_info[j].coordinates;
     switch (primitive_type)
     {
       case RectanglePrimitive:
@@ -3825,7 +3823,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
-        coordinates=(BezierQuantum*primitive_info[j].coordinates);
+        coordinates=(double) (BezierQuantum*primitive_info[j].coordinates);
         break;
       }
       case PathPrimitive:
@@ -3868,8 +3866,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         alpha=bounds.x2-bounds.x1;
         beta=bounds.y2-bounds.y1;
         radius=hypot(alpha,beta);
-        coordinates=(MagickSizeType) (2*(ceil(MagickPI*radius))+
-          6*BezierQuantum+360);
+        coordinates=2.0*(ceil(MagickPI*radius))+6*BezierQuantum+360.0;
         break;
       }
       default:
@@ -3878,7 +3875,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     if (coordinates > MaxBezierCoordinates)
       {
         (void) ThrowMagickException(&image->exception,GetMagickModule(),
-          DrawError,"TooManyBezierCoordinates","`%s'",token);
+          ResourceLimitError,"MemoryAllocationFailed","`%s'",token);
         status=MagickFalse;
       }
     if (status == MagickFalse)
@@ -4044,8 +4041,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case PathPrimitive:
       {
-        coordinates=TracePath(image,&mvg_info,token);
-        if (coordinates == 0)
+        coordinates=(double) TracePath(image,&mvg_info,token);
+        if (coordinates == 0.0)
           {
             status=MagickFalse;
             break;
