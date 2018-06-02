@@ -2030,7 +2030,7 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
               {
                 j=i;
                 i--;
-                alpha=100.0*(offset-gradient->stops[i].offset)/
+                alpha=(offset-gradient->stops[i].offset)/
                   (gradient->stops[j].offset-gradient->stops[i].offset);
                 MagickPixelCompositeBlend(&gradient->stops[i].color,1.0-alpha,
                   &gradient->stops[j].color,alpha,&composite);

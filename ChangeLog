@@ -1,9 +1,14 @@
+2018-06-02  6.9.9-60 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-60, GIT revision 13538:2e52fdbf5:20180602.
+
 2018-05-30  6.9.9-50 Cristy  <quetzlzacatenango@image...>
   * Heap buffer overflow fix (reference
     https://github.com/ImageMagick/ImageMagick/issues/1156).
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+    exceeded, and timeouts (credit to OSS Fuzz).
 
 2018-05-29  6.9.9-49 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.9-47, GIT revision 13521:00f535ee9:20180529.
+  * Release ImageMagick version 6.9.9-49, GIT revision 13521:00f535ee9:20180529.
 
 2018-05-29  6.9.9-49 Cristy  <quetzlzacatenango@image...>
   * Properly initialize SVG color style.
