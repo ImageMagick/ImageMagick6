@@ -1,5 +1,5 @@
 2018-06-02  6.9.9-60 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.9-60, GIT revision 13538:2e52fdbf5:20180602.
+  * Release ImageMagick version 6.9.9-60, GIT revision 13539:2ae91d95c:20180602.
 
 2018-05-30  6.9.9-50 Cristy  <quetzlzacatenango@image...>
   * Heap buffer overflow fix (reference
