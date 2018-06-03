@@ -2292,6 +2292,7 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
           }
       }
   }
+  token=DestroyString(token);
   return(macros);
 }
 
