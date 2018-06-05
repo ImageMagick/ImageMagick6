@@ -515,7 +515,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,Image *image
       Transform colorspace to YCbCr.
     */
     if (image->colorspace != YCbCrColorspace)
-      status=TransformImageColorspace(image,YCbCrColorspace,exception);
+      status=TransformImageColorspace(image,YCbCrColorspace);
     if (status == MagickFalse)
       break;
     /*
