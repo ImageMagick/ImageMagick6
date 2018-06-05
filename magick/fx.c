@@ -5255,7 +5255,7 @@ MagickExport Image *SwirlImage(const Image *image,double degrees,
             UndefinedInterpolatePixel,(double) ((cosine*delta.x-sine*delta.y)/
             scale.x+center.x),(double) ((sine*delta.x+cosine*delta.y)/scale.y+
             center.y),&pixel,exception);
-          if (status == MagickFalse)          
+          if (status == MagickFalse)
             break;
           SetPixelPacket(swirl_image,&pixel,q,swirl_indexes+x);
         }
@@ -5963,7 +5963,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
 
         p=kernel+id*image->columns;
         q=pixels+y*image->columns;
-        HatTransform(q+high_pass,1,image->columns,(size_t) (1 << level),p);
+        HatTransform(q+high_pass,1,image->columns,(size_t) (1UL << level),p);
         q+=low_pass;
         for (x=0; x < (ssize_t) image->columns; x++)
           *q++=(*p++);
@@ -5986,7 +5986,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
 
         p=kernel+id*image->rows;
         q=pixels+x+low_pass;
-        HatTransform(q,image->columns,image->rows,(size_t) (1 << level),p);
+        HatTransform(q,image->columns,image->rows,(size_t) (1UL << level),p);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
           *q=(*p++);
