@@ -1784,7 +1784,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
         }
       else
         {
-          if ((j+1) > (ssize_t) number_vertices))
+          if ((j+1) > (ssize_t) number_vertices)
             break;
           dash_polygon[j]=primitive_info[i-1];
           dash_polygon[j].point.x=(double) (primitive_info[i-1].point.x+dx*
@@ -6144,7 +6144,10 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
-          sweep=StringToLong(token) != 0 ? MagickTrue : MagickFalse;
+          sweep=fabs(StringToDouble(token,&next_token)) < DrawEpsilon ?
+            MagickFalse : MagickTrue;
+          if (token == next_token)
+            ThrowPointExpectedException(image,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
