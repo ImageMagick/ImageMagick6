@@ -79,6 +79,7 @@ extern MagickExport float
 
 extern MagickExport int
   EOFBlob(const Image *),
+  ErrorBlob(const Image *),
   ReadBlobByte(Image *);
 
 extern MagickExport MagickBooleanType
