@@ -20,6 +20,7 @@
 
 #include "magick/log.h"
 #include "magick/magick.h"
+#include "magick/resource-private.h"
 #include "magick/string_.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -49,6 +50,7 @@ extern "C" {
   CatchException(exception); \
   (void) DestroyExceptionInfo(exception); \
   MagickCoreTerminus(); \
+  AsynchronousResourceComponentTerminus(); \
   _exit((int) (severity-FatalErrorException)+1); \
 }
 #define ThrowFileException(exception,severity,tag,context) \
