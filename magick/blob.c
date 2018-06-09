@@ -1013,8 +1013,6 @@ MagickExport int ErrorBlob(const Image *image)
     }
     case BlobStream:
       break;
-    case CustomStream:
-      break;
   }
   return(blob_info->error);
 }
