@@ -1411,12 +1411,6 @@ static void SVGStartElement(void *context,const xmlChar *name,
         {
           if (*svg_info->text != '\0')
             {
-              DrawInfo
-                *draw_info;
-
-              TypeMetric
-                metrics;
-
               char
                 *text;
 
@@ -1425,13 +1419,6 @@ static void SVGStartElement(void *context,const xmlChar *name,
                 svg_info->bounds.x-svg_info->center.x,svg_info->bounds.y-
                 svg_info->center.y,text);
               text=DestroyString(text);
-              draw_info=CloneDrawInfo(svg_info->image_info,(DrawInfo *) NULL);
-              draw_info->pointsize=svg_info->pointsize;
-              draw_info->text=AcquireString(svg_info->text);
-              (void) ConcatenateString(&draw_info->text," ");
-              GetTypeMetrics(svg_info->image,draw_info,&metrics);
-              svg_info->bounds.x+=metrics.width;
-              draw_info=DestroyDrawInfo(draw_info);
               *svg_info->text='\0';
             }
           PushGraphicContext(id);
@@ -2627,12 +2614,6 @@ static void SVGEndElement(void *context,const xmlChar *name)
         {
           if (*svg_info->text != '\0')
             {
-              DrawInfo
-                *draw_info;
-
-              TypeMetric
-                metrics;
-
               char
                 *text;
 
@@ -2641,13 +2622,6 @@ static void SVGEndElement(void *context,const xmlChar *name)
                 svg_info->bounds.x-svg_info->center.x,svg_info->bounds.y-
                 svg_info->center.y,text);
               text=DestroyString(text);
-              draw_info=CloneDrawInfo(svg_info->image_info,(DrawInfo *) NULL);
-              draw_info->pointsize=svg_info->pointsize;
-              draw_info->text=AcquireString(svg_info->text);
-              (void) ConcatenateString(&draw_info->text," ");
-              GetTypeMetrics(svg_info->image,draw_info,&metrics);
-              svg_info->bounds.x+=metrics.width;
-              draw_info=DestroyDrawInfo(draw_info);
               *svg_info->text='\0';
             }
           (void) FormatLocaleFile(svg_info->file,"pop graphic-context\n");
