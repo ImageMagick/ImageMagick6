@@ -4103,7 +4103,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
           }
         if (*token != ',')
           GetNextToken(q,&q,extent,token);
-        primitive_info[j].text=AcquireString(token);
+        (void) CloneString(&primitive_info[j].text,token);
         /*
           Compute text cursor offset.
         */
@@ -4174,9 +4174,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             graphic_context[n]->clip_mask);
         status&=DrawPrimitive(image,graphic_context[n],primitive_info);
       }
-    if (primitive_info->text != (char *) NULL)
-      primitive_info->text=(char *) RelinquishMagickMemory(
-        primitive_info->text);
     proceed=SetImageProgress(image,RenderImageTag,q-primitive,(MagickSizeType)
       primitive_extent);
     if (proceed == MagickFalse)
@@ -4192,7 +4189,13 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
   macros=DestroySplayTree(macros);
   token=DestroyString(token);
   if (primitive_info != (PrimitiveInfo *) NULL)
-    primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
+    {
+      for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++)
+        if (primitive_info[i].text != (char *) NULL)
+          primitive_info[i].text=(char *) RelinquishMagickMemory(
+            primitive_info[i].text);
+      primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
+    }
   primitive=DestroyString(primitive);
   for ( ; n >= 0; n--)
     graphic_context[n]=DestroyDrawInfo(graphic_context[n]);
