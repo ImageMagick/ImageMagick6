@@ -2339,6 +2339,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 
   double
     angle,
+    cursor,
     factor,
     primitive_extent;
 
@@ -2464,6 +2465,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
   token=AcquireString(primitive);
   extent=strlen(token)+MaxTextExtent;
   (void) QueryColorDatabase("#000000",&start_color,&image->exception);
+  cursor=0.0;
   defsDepth=0;
   symbolDepth=0;
   macros=GetMVGMacros(primitive);
@@ -2532,6 +2534,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             affine.ty=StringToDouble(token,&next_token);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
+            cursor=0.0;
             break;
           }
         if (LocaleCompare("arc",keyword) == 0)
@@ -3576,6 +3579,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("text",keyword) == 0)
           {
             primitive_type=TextPrimitive;
+            affine.tx+=cursor;
             break;
           }
         if (LocaleCompare("text-align",keyword) == 0)
@@ -3615,11 +3619,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               MagickTrue : MagickFalse;
             break;
           }
-        if (LocaleCompare("text-span",keyword) == 0)
-          {
-            primitive_type=TextPrimitive;
-            break;
-          }
         if (LocaleCompare("text-undercolor",keyword) == 0)
           {
             GetNextToken(q,&q,extent,token);
@@ -3639,6 +3638,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             affine.ty=StringToDouble(token,&next_token);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
+            cursor=0.0;
             break;
           }
         status=MagickFalse;
@@ -4092,6 +4092,12 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case TextPrimitive:
       {
+        DrawInfo
+          *clone_info;
+
+        TypeMetric
+          metrics;
+
         if (primitive_info[j].coordinates != 1)
           {
             status=MagickFalse;
@@ -4100,6 +4106,18 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (*token != ',')
           GetNextToken(q,&q,extent,token);
         (void) CloneString(&primitive_info[j].text,token);
+        /*
+          Compute text cursor offset.
+        */
+        clone_info=CloneDrawInfo((ImageInfo *) NULL,graphic_context[n]);
+        if (clone_info->density != (char *) NULL)
+          clone_info->density=DestroyString(clone_info->density);
+        clone_info->render=MagickFalse;
+        clone_info->text=AcquireString(token);
+        (void) ConcatenateString(&clone_info->text," ");
+        status&=GetTypeMetrics(image,clone_info,&metrics);
+        clone_info=DestroyDrawInfo(clone_info);
+        cursor+=metrics.width;
         break;
       }
       case ImagePrimitive:
