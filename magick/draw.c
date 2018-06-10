@@ -2178,30 +2178,30 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
 static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   const size_t pad)
 {
-  PrimitiveInfo
-    *primitive_info;
-
   size_t
     extent;
-
+  
   /*
     Check if there is enough storage for drawing pimitives.
   */
   extent=(size_t) mvg_info->offset+pad+4096;
   if (extent <= *mvg_info->extent)
     return(MagickTrue);
-  primitive_info=AcquireQuantumMemory(extent,sizeof(*primitive_info));
-  if (primitive_info == (PrimitiveInfo *) NULL)
-    {
-      (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
-        ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-      return(MagickFalse);
-    }
-  (void) memcpy(primitive_info,*mvg_info->primitive_info,*mvg_info->extent);
-  (void) RelinquishMagickMemory(*mvg_info->primitive_info);
-  *mvg_info->primitive_info=primitive_info;
+  *mvg_info->primitive_info=ResizeQuantumMemory(*mvg_info->primitive_info,
+    extent,sizeof(*mvg_info->primitive_info));
   *mvg_info->extent=extent;
-  return(MagickTrue);
+  if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
+    return(MagickTrue);
+  /*  
+    Reallocation failed, allocate 1 point to facilitate unwinding.
+  */
+  (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
+    ResourceLimitError,"MemoryAllocationFailed","`%s'","");
+  *mvg_info->primitive_info=AcquireCriticalMemory(
+    sizeof(*mvg_info->primitive_info));
+  *mvg_info->extent=1;
+  mvg_info->offset=0;
+  return(MagickFalse);
 }
 
 static SplayTreeInfo *GetMVGMacros(const char *primitive)
@@ -2339,7 +2339,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 
   double
     angle,
-    cursor,
     factor,
     primitive_extent;
 
@@ -2464,7 +2463,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     }
   token=AcquireString(primitive);
   extent=strlen(token)+MaxTextExtent;
-  cursor=0.0;
   (void) QueryColorDatabase("#000000",&start_color,&image->exception);
   defsDepth=0;
   symbolDepth=0;
@@ -3578,7 +3576,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("text",keyword) == 0)
           {
             primitive_type=TextPrimitive;
-            affine.tx+=cursor;
             break;
           }
         if (LocaleCompare("text-align",keyword) == 0)
@@ -3616,6 +3613,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             GetNextToken(q,&q,extent,token);
             graphic_context[n]->text_antialias=StringToLong(token) != 0 ?
               MagickTrue : MagickFalse;
+            break;
+          }
+        if (LocaleCompare("text-span",keyword) == 0)
+          {
+            primitive_type=TextPrimitive;
             break;
           }
         if (LocaleCompare("text-undercolor",keyword) == 0)
@@ -4090,12 +4092,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case TextPrimitive:
       {
-        DrawInfo 
-          *clone_info;
-
-        TypeMetric
-          metrics;
-
         if (primitive_info[j].coordinates != 1)
           {
             status=MagickFalse;
@@ -4104,18 +4100,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (*token != ',')
           GetNextToken(q,&q,extent,token);
         (void) CloneString(&primitive_info[j].text,token);
-        /*
-          Compute text cursor offset.
-        */
-        clone_info=CloneDrawInfo((ImageInfo *) NULL,graphic_context[n]);
-        if (clone_info->density != (char *) NULL)
-          clone_info->density=DestroyString(clone_info->density);
-        clone_info->render=MagickFalse;
-        clone_info->text=AcquireString(token);
-        (void) ConcatenateString(&clone_info->text," ");
-        status&=GetTypeMetrics(image,clone_info,&metrics);
-        clone_info=DestroyDrawInfo(clone_info);
-        cursor+=metrics.width;
         break;
       }
       case ImagePrimitive:
@@ -6668,6 +6652,8 @@ static void TraceRoundRectangle(MVGInfo *mvg_info,const PointInfo start,
   TraceEllipse(mvg_info,point,arc,degrees);
   p=(*mvg_info->primitive_info)+mvg_info->offset;
   mvg_info->offset+=p->coordinates;
+  if (CheckPrimitiveExtent(mvg_info,4096) == MagickFalse)
+    return;
   p=(*mvg_info->primitive_info)+mvg_info->offset;
   TracePoint(p,(*mvg_info->primitive_info+offset)->point);
   p+=p->coordinates;
