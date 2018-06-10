@@ -492,8 +492,7 @@ MagickExport Image *BlueShiftImage(const Image *image,const double factor,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  shift_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  shift_image=CloneImage(image,0,0,MagickTrue,exception);
   if (shift_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(shift_image,DirectClass) == MagickFalse)
@@ -725,8 +724,7 @@ MagickExport Image *ColorizeImage(const Image *image,const char *opacity,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  colorize_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  colorize_image=CloneImage(image,0,0,MagickTrue,exception);
   if (colorize_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(colorize_image,DirectClass) == MagickFalse)
@@ -4223,7 +4221,7 @@ MagickExport Image *SepiaToneImage(const Image *image,const double threshold,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  sepia_image=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  sepia_image=CloneImage(image,0,0,MagickTrue,exception);
   if (sepia_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(sepia_image,DirectClass) == MagickFalse)
@@ -5354,7 +5352,7 @@ MagickExport Image *TintImage(const Image *image,const char *opacity,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  tint_image=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  tint_image=CloneImage(image,0,0,MagickTrue,exception);
   if (tint_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(tint_image,DirectClass) == MagickFalse)
@@ -5850,7 +5848,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
   if (noise_image != (Image *) NULL)
     return(noise_image);
 #endif
-  noise_image=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  noise_image=CloneImage(image,0,0,MagickTrue,exception);
   if (noise_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(noise_image,DirectClass) == MagickFalse)

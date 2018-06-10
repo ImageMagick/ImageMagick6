@@ -1052,7 +1052,7 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
   i+=4;
   if (i >= (ssize_t) (layer_info->length-8))
     return;
-  layers=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  layers=CloneImage(image,0,0,MagickTrue,exception);
   (void) DeleteImageProfile(layers,"tiff:37724");
   AttachBlob(layers->blob,layer_info->datum,layer_info->length);
   SeekBlob(layers,(MagickOffsetType) i,SEEK_SET);

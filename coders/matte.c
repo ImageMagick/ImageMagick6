@@ -181,8 +181,7 @@ static MagickBooleanType WriteMATTEImage(const ImageInfo *image_info,
 
   if (image->matte == MagickFalse)
     ThrowWriterException(CoderError,"ImageDoesNotHaveAAlphaChannel");
-  matte_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    &image->exception);
+  matte_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (matte_image == (Image *) NULL)
     return(MagickFalse);
   (void) SetImageType(matte_image,TrueColorMatteType);

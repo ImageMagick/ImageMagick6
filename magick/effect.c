@@ -195,7 +195,7 @@ MagickExport Image *AdaptiveBlurImageChannel(const Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  blur_image=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  blur_image=CloneImage(image,0,0,MagickTrue,exception);
   if (blur_image == (Image *) NULL)
     return((Image *) NULL);
   if (fabs(sigma) <= MagickEpsilon)
@@ -1087,8 +1087,7 @@ MagickExport Image *DespeckleImage(const Image *image,ExceptionInfo *exception)
   if (despeckle_image != (Image *) NULL)
     return(despeckle_image);
 #endif
-  despeckle_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  despeckle_image=CloneImage(image,0,0,MagickTrue,exception);
   if (despeckle_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(despeckle_image,DirectClass) == MagickFalse)
@@ -2294,8 +2293,7 @@ MagickExport Image *KuwaharaImageChannel(const Image *image,
   gaussian_image=BlurImage(image,radius,sigma,exception);
   if (gaussian_image == (Image *) NULL)
     return((Image *) NULL);
-  kuwahara_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  kuwahara_image=CloneImage(image,0,0,MagickTrue,exception);
   if (kuwahara_image == (Image *) NULL)
     {
       gaussian_image=DestroyImage(gaussian_image);
@@ -4081,7 +4079,7 @@ MagickExport Image *ShadeImage(const Image *image,const MagickBooleanType gray,
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
   linear_image=CloneImage(image,0,0,MagickTrue,exception);
-  shade_image=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  shade_image=CloneImage(image,0,0,MagickTrue,exception);
   if ((linear_image == (Image *) NULL) || (shade_image == (Image *) NULL))
     {
       if (linear_image != (Image *) NULL)
@@ -4426,8 +4424,7 @@ MagickExport Image *SpreadImage(const Image *image,const double radius,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  spread_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  spread_image=CloneImage(image,0,0,MagickTrue,exception);
   if (spread_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(spread_image,DirectClass) == MagickFalse)

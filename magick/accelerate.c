@@ -318,7 +318,7 @@ static Image *ComputeAddNoiseImage(const Image *image,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {
@@ -558,7 +558,7 @@ static Image *ComputeBlurImage(const Image* image,const ChannelType channel,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image, image->columns, image->rows, MagickTrue, exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage, DirectClass) != MagickTrue)
   {
@@ -1783,7 +1783,7 @@ static Image *ComputeConvolveImage(const Image* image,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {
@@ -2081,7 +2081,7 @@ static Image *ComputeDespeckleImage(const Image *image,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {
@@ -3051,7 +3051,7 @@ static Image *ComputeLocalContrastImage(const Image *image,
 
   /* create output */
   {
-    filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+    filteredImage = CloneImage(image,0,0,MagickTrue,exception);
     assert(filteredImage != NULL);
     if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
     {
@@ -3496,8 +3496,7 @@ static Image* ComputeMotionBlurImage(const Image *image,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image,image->columns,image->rows,
-    MagickTrue,exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {
@@ -3785,7 +3784,7 @@ static Image *ComputeRadialBlurImage(const Image *image,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {
@@ -4688,7 +4687,7 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
     goto cleanup;
   }
 
-  filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {
@@ -4962,7 +4961,7 @@ static Image *ComputeUnsharpMaskImageSingle(const Image *image,
 
   /* create output */
   {
-    filteredImage = CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+    filteredImage = CloneImage(image,0,0,MagickTrue,exception);
     assert(filteredImage != NULL);
     if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
     {
@@ -5176,7 +5175,7 @@ static Image *ComputeWaveletDenoiseImage(const Image *image,
   }
 
   /* create output */
-  filteredImage = CloneImage(image, image->columns, image->rows, MagickTrue, exception);
+  filteredImage = CloneImage(image,0,0,MagickTrue, exception);
   assert(filteredImage != NULL);
   if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
   {

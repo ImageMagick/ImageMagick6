@@ -753,7 +753,7 @@ MagickExport Image *OilPaintImage(const Image *image,const double radius,
   assert(exception->signature == MagickCoreSignature);
   width=GetOptimalKernelWidth2D(radius,0.5);
   linear_image=CloneImage(image,0,0,MagickTrue,exception);
-  paint_image=CloneImage(image,image->columns,image->rows,MagickTrue,exception);
+  paint_image=CloneImage(image,0,0,MagickTrue,exception);
   if ((linear_image == (Image *) NULL) || (paint_image == (Image *) NULL))
     {
       if (linear_image != (Image *) NULL)

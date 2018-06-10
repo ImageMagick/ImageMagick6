@@ -193,8 +193,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  component_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  component_image=CloneImage(image,0,0,MagickTrue,exception);
   if (component_image == (Image *) NULL)
     return((Image *) NULL);
   component_image->depth=MAGICKCORE_QUANTUM_DEPTH;

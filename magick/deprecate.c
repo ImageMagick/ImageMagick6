@@ -1242,8 +1242,7 @@ MagickExport MagickBooleanType ColorFloodfillImage(Image *image,
     return(MagickFalse);
   if (image->matte == MagickFalse)
     (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
-  floodplane_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    &image->exception);
+  floodplane_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (floodplane_image == (Image *) NULL)
     return(MagickFalse);
   (void) SetImageAlphaChannel(floodplane_image,OpaqueAlphaChannel);
@@ -4898,8 +4897,7 @@ MagickExport MagickBooleanType MatteFloodfillImage(Image *image,
     return(MagickFalse);
   if (image->matte == MagickFalse)
     (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
-  floodplane_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    &image->exception);
+  floodplane_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (floodplane_image == (Image *) NULL)
     return(MagickFalse);
   (void) SetImageAlphaChannel(floodplane_image,OpaqueAlphaChannel);

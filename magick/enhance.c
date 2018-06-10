@@ -1629,8 +1629,7 @@ MagickExport Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
   assert(exception->signature == MagickCoreSignature);
   if ((image->columns < 5) || (image->rows < 5))
     return((Image *) NULL);
-  enhance_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  enhance_image=CloneImage(image,0,0,MagickTrue,exception);
   if (enhance_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(enhance_image,DirectClass) == MagickFalse)

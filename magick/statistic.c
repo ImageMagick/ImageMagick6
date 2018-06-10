@@ -3623,8 +3623,7 @@ MagickExport Image *StatisticImageChannel(const Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  statistic_image=CloneImage(image,image->columns,image->rows,MagickTrue,
-    exception);
+  statistic_image=CloneImage(image,0,0,MagickTrue,exception);
   if (statistic_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(statistic_image,DirectClass) == MagickFalse)
