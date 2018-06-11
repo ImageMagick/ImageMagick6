@@ -1,9 +1,12 @@
+2018-06-11  6.9.9-51 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.9-51, GIT revision 13574:a58324488:20180611.
+
 2018-06-06  6.9.9-51 Cristy  <quetzlzacatenango@image...>
   * Fixed numerous use of uninitialized values, integer overflow, memory
     exceeded, and timeouts (credit to OSS Fuzz).
 
 2018-06-02  6.9.9-50 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.9-60, GIT revision 13539:2ae91d95c:20180602.
+  * Release ImageMagick version 6.9.9-50, GIT revision 13539:2ae91d95c:20180602.
 
 2018-05-30  6.9.9-50 Cristy  <quetzlzacatenango@image...>
   * Heap buffer overflow fix (reference
