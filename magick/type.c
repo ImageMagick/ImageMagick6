@@ -725,6 +725,9 @@ MagickExport MagickBooleanType LoadFontConfigFonts(SplayTreeInfo *type_cache,
     extension[MaxTextExtent],
     name[MaxTextExtent];
 
+  FcBool
+    result;
+
   FcChar8
     *family,
     *file,
@@ -761,9 +764,13 @@ MagickExport MagickBooleanType LoadFontConfigFonts(SplayTreeInfo *type_cache,
     Load system fonts.
   */
   (void) exception;
-  font_config=FcInitLoadConfigAndFonts();
+  result=FcInit();
+  if (result == 0)
+    return(MagickFalse);
+  font_config=FcConfigGetCurrent();
   if (font_config == (FcConfig *) NULL)
     return(MagickFalse);
+  FcConfigSetRescanInterval(font_config,0);
   font_set=(FcFontSet *) NULL;
   object_set=FcObjectSetBuild(FC_FULLNAME,FC_FAMILY,FC_STYLE,FC_SLANT,
     FC_WIDTH,FC_WEIGHT,FC_FILE,(char *) NULL);
@@ -772,7 +779,7 @@ MagickExport MagickBooleanType LoadFontConfigFonts(SplayTreeInfo *type_cache,
       pattern=FcPatternCreate();
       if (pattern != (FcPattern *) NULL)
         {
-          font_set=FcFontList(0,pattern,object_set);
+          font_set=FcFontList(font_config,pattern,object_set);
           FcPatternDestroy(pattern);
         }
       FcObjectSetDestroy(object_set);
