@@ -2180,7 +2180,7 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
 {
   size_t
     extent;
-  
+
   /*
     Check if there is enough storage for drawing pimitives.
   */
@@ -2189,10 +2189,12 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
     return(MagickTrue);
   *mvg_info->primitive_info=ResizeQuantumMemory(*mvg_info->primitive_info,
     extent,sizeof(**mvg_info->primitive_info));
-  *mvg_info->extent=extent;
   if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
-    return(MagickTrue);
-  /*  
+    {
+      *mvg_info->extent=extent;
+      return(MagickTrue);
+    }
+  /*
     Reallocation failed, allocate a primitive to facilitate unwinding.
   */
   (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
@@ -4193,9 +4195,11 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
   if (primitive_info != (PrimitiveInfo *) NULL)
     {
       for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++)
-        if (primitive_info[i].text != (char *) NULL)
-          primitive_info[i].text=(char *) RelinquishMagickMemory(
-            primitive_info[i].text);
+        if ((primitive_info[i].primitive == TextPrimitive) ||
+            (primitive_info[i].primitive == ImagePrimitive))
+          if (primitive_info[i].text != (char *) NULL)
+            primitive_info[i].text=(char *) RelinquishMagickMemory(
+              primitive_info[i].text);
       primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
     }
   primitive=DestroyString(primitive);
