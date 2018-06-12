@@ -462,12 +462,12 @@ MagickExport void ConvertHSLToRGB(const double hue,const double saturation,
 {
   double
     b,
+    c,
     g,
+    h,
+    min,
     r,
-    v,
-    x,
-    y,
-    z;
+    x;
 
   /*
     Convert HSL to RGB colorspace.
@@ -475,31 +475,69 @@ MagickExport void ConvertHSLToRGB(const double hue,const double saturation,
   assert(red != (Quantum *) NULL);
   assert(green != (Quantum *) NULL);
   assert(blue != (Quantum *) NULL);
-  if (saturation == 0.0)
-    {
-      *red=ClampToQuantum((double) QuantumRange*lightness);
-      *green=ClampToQuantum((double) QuantumRange*lightness);
-      *blue=ClampToQuantum((double) QuantumRange*lightness);
-      return;
-    }
-  v=(lightness <= 0.5) ? (lightness*(1.0+saturation)) : (lightness+saturation-
-    lightness*saturation);
-  y=lightness+lightness-v;
-  x=y+(v-y)*(6.0*hue-(ssize_t) (6.0*hue));
-  z=v-(v-y)*(6.0*hue-(ssize_t) (6.0*hue));
-  switch ((ssize_t) (6.0*hue))
+  h=hue*360.0;
+  if (lightness <= 0.5)
+    c=2.0*lightness*saturation;
+  else
+    c=(2.0-2.0*lightness)*saturation;
+  min=lightness-0.5*c;
+  h-=360.0*floor(h/360.0);
+  h/=60.0;
+  x=c*(1.0-fabs(h-2.0*floor(h/2.0)-1.0));
+  switch ((int) floor(h))
   {
-    case 0: r=v; g=x; b=y; break;
-    case 1: r=z; g=v; b=y; break;
-    case 2: r=y; g=v; b=x; break;
-    case 3: r=y; g=z; b=v; break;
-    case 4: r=x; g=y; b=v; break;
-    case 5: r=v; g=y; b=z; break;
-    default: r=v; g=x; b=y; break;
+    case 0:
+    {
+      r=min+c;
+      g=min+x;
+      b=min;
+      break;
+    }
+    case 1:
+    {
+      r=min+x;
+      g=min+c;
+      b=min;
+      break;
+    }
+    case 2:
+    {
+      r=min;
+      g=min+c;
+      b=min+x;
+      break;
+    }
+    case 3:
+    {
+      r=min;
+      g=min+x;
+      b=min+c;
+      break;
+    }
+    case 4:
+    {
+      r=min+x;
+      g=min;
+      b=min+c;
+      break;
+    }
+    case 5:
+    {
+      r=min+c;
+      g=min;
+      b=min+x;
+      break;
+    }
+    default:
+    {
+      r=0.0;
+      g=0.0;
+      b=0.0;
+    }
   }
-  *red=ClampToQuantum((double) QuantumRange*r);
-  *green=ClampToQuantum((double) QuantumRange*g);
-  *blue=ClampToQuantum((double) QuantumRange*b);
+  *red=ClampToQuantum(QuantumRange*r);
+  *green=ClampToQuantum(QuantumRange*g);
+  *blue=ClampToQuantum(QuantumRange*b);
 }
 
 /*
@@ -1090,15 +1128,9 @@ MagickExport void ConvertRGBToHSL(const Quantum red,const Quantum green,
   const Quantum blue,double *hue,double *saturation,double *lightness)
 {
   double
-    b,
-    delta,
-    g,
-    h,
-    l,
+    c,
     max,
-    min,
-    r,
-    s;
+    min;
 
   /*
     Convert RGB to HSL colorspace.
@@ -1106,30 +1138,34 @@ MagickExport void ConvertRGBToHSL(const Quantum red,const Quantum green,
   assert(hue != (double *) NULL);
   assert(saturation != (double *) NULL);
   assert(lightness != (double *) NULL);
-  r=QuantumScale*red;
-  g=QuantumScale*green;
-  b=QuantumScale*blue;
-  max=MagickMax(r,MagickMax(g,b));
-  min=MagickMin(r,MagickMin(g,b));
-  h=0.0;
-  s=0.0;
-  l=(min+max)/2.0;
-  delta=max-min;
-  if (delta != 0.0)
+  max=MagickMax(QuantumScale*red,MagickMax(QuantumScale*green,
+    QuantumScale*blue));
+  min=MagickMin(QuantumScale*red,MagickMin(QuantumScale*green,
+    QuantumScale*blue));
+  c=max-min;
+  *lightness=(max+min)/2.0;
+  if (c <= 0.0)
     {
-      s=delta/((l <= 0.5) ? (min+max) : (2.0-max-min));
-      if (r == max)
-        h=(g == min ? 5.0+(max-b)/delta : 1.0-(max-g)/delta);
-      else
-        if (g == max)
-          h=(b == min ? 1.0+(max-r)/delta : 3.0-(max-b)/delta);
-        else
-          h=(r == min ? 3.0+(max-g)/delta : 5.0-(max-r)/delta);
-      h/=6.0;
+      *hue=0.0;
+      *saturation=0.0;
+      return;
     }
-  *hue=MagickMin(MagickMax(h,0.0),1.0);
-  *saturation=MagickMin(MagickMax(s,0.0),1.0);
-  *lightness=MagickMin(MagickMax(l,0.0),1.0);
+  if (fabs(max-QuantumScale*red) < MagickEpsilon)
+    {
+      *hue=(QuantumScale*green-QuantumScale*blue)/c;
+      if ((QuantumScale*green) < (QuantumScale*blue))
+        *hue+=6.0;
+    }
+  else
+    if (fabs(max-QuantumScale*green) < MagickEpsilon)
+      *hue=2.0+(QuantumScale*blue-QuantumScale*red)/c;
+    else
+      *hue=4.0+(QuantumScale*red-QuantumScale*green)/c;
+  *hue*=60.0/360.0;
+  if (*lightness <= 0.5)
+    *saturation=c/(2.0*(*lightness));
+  else
+    *saturation=c/(2.0-2.0*(*lightness));
 }
 
 /*
