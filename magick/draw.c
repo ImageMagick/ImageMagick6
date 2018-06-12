@@ -4130,7 +4130,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             break;
           }
         GetNextToken(q,&q,extent,token);
-        primitive_info[j].text=AcquireString(token);
+        (void) CloneString(&primitive_info[j].text,token);
         break;
       }
     }
