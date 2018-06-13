@@ -3875,6 +3875,8 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
         ((int) ping_color_type == PNG_COLOR_TYPE_GRAY_ALPHA) ||
         (png_get_valid(ping,ping_info,PNG_INFO_tRNS))) ?
         MagickTrue : MagickFalse;
+    if (image->matte != MagickFalse)
+      (void) SetImageStorageClass(image,DirectClass);
 
 #if 0  /* I'm not sure what's wrong here but it does not work. */
     if (image->matte != MagickFalse)
