@@ -1634,6 +1634,8 @@ RestoreMSCWarning
       method=ReadTileMethod;
     quantum_info->endian=LSBEndian;
     quantum_type=RGBQuantum;
+    if (TIFFScanlineSize(tiff) <= 0)
+      ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
     if (((MagickSizeType) TIFFScanlineSize(tiff)) > GetBlobSize(image))
       ThrowTIFFException(CorruptImageError,"InsufficientImageDataInFile");
     number_pixels=MagickMax(TIFFScanlineSize(tiff),MagickMax((ssize_t) 
@@ -2840,6 +2842,11 @@ static MagickBooleanType GetTIFFInfo(const ImageInfo *image_info,TIFF *tiff,
   (void) TIFFSetField(tiff,TIFFTAG_TILELENGTH,tile_rows);
   tiff_info->tile_geometry.width=tile_columns;
   tiff_info->tile_geometry.height=tile_rows;
+  if ((TIFFScanlineSize(tiff) <= 0) || (TIFFTileSize(tiff) <= 0))
+    {
+      DestroyTIFFInfo(tiff_info);
+      return(MagickFalse);
+    }
   tiff_info->scanlines=(unsigned char *) AcquireQuantumMemory((size_t)
     tile_rows*TIFFScanlineSize(tiff),sizeof(*tiff_info->scanlines));
   tiff_info->pixels=(unsigned char *) AcquireQuantumMemory((size_t)
