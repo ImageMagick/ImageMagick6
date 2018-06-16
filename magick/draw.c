@@ -5345,13 +5345,12 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           /*
             Draw strokes while respecting line cap/join attributes.
           */
-          for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++) ;
           closed_path=primitive_info[0].closed_subpath;
+          i=(ssize_t) primitive_info[0].coordinates;
           x=fabs(primitive_info[i-1].point.x-primitive_info[0].point.x);
           y=fabs(primitive_info[i-1].point.y-primitive_info[0].point.y);
           if ((x < DrawEpsilon) && (y < DrawEpsilon))
             closed_path=MagickTrue;
-          i=(ssize_t) primitive_info[0].coordinates;
           if ((((draw_info->linecap == RoundCap) ||
                 (closed_path != MagickFalse)) &&
                (draw_info->linejoin == RoundJoin)) ||
