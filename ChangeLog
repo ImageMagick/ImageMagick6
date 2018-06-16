@@ -1,3 +1,12 @@
+2018-06-16  6.9.10-1 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-1, GIT revision 13595:dafb03062:20180616.
+
+2018-06-16  6.9.10-1 Cristy  <quetzlzacatenango@image...>
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+    exceeded, and timeouts (credit to OSS Fuzz).
+  * Fixed an issue with stroke and label: (reference
+    https://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=34142).
+
 2018-06-12  6.9.10-0 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-0, GIT revision 13585:82d7dbe0b:20180612.
 
