@@ -2245,9 +2245,9 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
     if (LocaleCompare("push",token) == 0)
       {
         register const char
-          *sentinel;
+          *end,
+          *start;
 
-        sentinel=q-strlen(token)-1;
         GetNextToken(q,&q,extent,token);
         if (*q == '"')
           {
@@ -2264,6 +2264,7 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
               Named macro (e.g. push graphic-context "wheel").
             */
             GetNextToken(q,&q,extent,token);
+            start=q;
             (void) CopyMagickString(name,token,MagickPathExtent);
             n=0;
             for (p=q; *q != '\0'; )
@@ -2284,7 +2285,10 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                   continue;
                 }
               if (LocaleCompare(token,"pop") == 0)
-                n--;
+                {
+                  end=p-strlen(token)-1;
+                  n--;
+                }
               if (LocaleCompare(token,"push") == 0)
                 n++;
               if (n < 0)
@@ -2293,8 +2297,8 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                     Extract macro.
                   */
                   GetNextToken(p,&p,extent,token);
-                  macro=AcquireString(sentinel);
-                  macro[p-sentinel]='\0';
+                  macro=AcquireString(start);
+                  macro[end-start]='\0';
                   (void) AddValueToSplayTree(macros,ConstantString(name),
                     ConstantString(macro));
                   macro=DestroyString(macro);
