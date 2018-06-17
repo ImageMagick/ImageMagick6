@@ -3667,7 +3667,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               *use;
 
             /*
-              Get a node from the MVG document, and "use" it here.
+              Get a macro from the MVG document, and "use" it here.
             */
             GetNextToken(q,&q,extent,token);
             use=(const char *) GetValueFromSplayTree(macros,token);
@@ -3847,7 +3847,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       case BezierPrimitive:
       {
         coordinates=(double) (BezierQuantum*primitive_info[j].coordinates);
-        if (coordinates > (107*BezierQuantum))
+        if (primitive_info[j].coordinates > (107*BezierQuantum))
           {
             (void) ThrowMagickException(&image->exception,GetMagickModule(),
               DrawError,"TooManyBezierCoordinates","`%s'",token);
@@ -3881,7 +3881,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         }
         for (s=token; *s != '\0'; s++)
           if (strspn(s,"AaCcQqSsTt") != 0)
-            coordinates+=20.0*BezierQuantum+360.0;
+            coordinates+=(20.0*BezierQuantum)+360.0;
         break;
       }
       case CirclePrimitive:
@@ -3916,7 +3916,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
     if (status == MagickFalse)
       break;
-    if ((size_t) (i+coordinates) >= number_points)
+    if (((size_t) (i+coordinates)) >= number_points)
       {
         /*
           Resize based on speculative points required by primitive.
@@ -4027,8 +4027,8 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             status=MagickFalse;
             break;
           }
-        TraceEllipse(&mvg_info,primitive_info[j].point,primitive_info[j+1].point,
-          primitive_info[j+2].point);
+        TraceEllipse(&mvg_info,primitive_info[j].point,
+          primitive_info[j+1].point,primitive_info[j+2].point);
         i=(ssize_t) (j+primitive_info[j].coordinates);
         break;
       }
