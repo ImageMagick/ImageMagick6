@@ -174,6 +174,7 @@
   Include declarations.
 */
 #include "magick/studio.h"
+#include "magick/artifact.h"
 #include "magick/attribute.h"
 #include "magick/cache-view.h"
 #include "magick/color.h"
@@ -197,6 +198,7 @@
 #include "magick/quantum.h"
 #include "magick/resource_.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
 #include "magick/thread-private.h"
 
 /*
@@ -1452,6 +1454,12 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
   CacheView
     *image_view;
 
+  const char
+    *artifact;
+
+  double
+    amount;
+
   DoublePixelPacket
     **pixels;
 
@@ -1472,6 +1480,10 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
     return(MagickFalse);
   exception=(&image->exception);
   status=MagickTrue;
+  amount=1.0;
+  artifact=GetImageArtifact(image,"dither:diffusion-amount");
+  if (artifact != (const char *) NULL)
+    amount=StringToDoubleInterval(artifact,1.0);
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -1529,11 +1541,11 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
       AssociateAlphaPixel(&cube,q+u,&pixel);
       if (x > 0)
         {
-          pixel.red+=7*current[u-v].red/16;
-          pixel.green+=7*current[u-v].green/16;
-          pixel.blue+=7*current[u-v].blue/16;
+          pixel.red+=7.0*amount*current[u-v].red/16;
+          pixel.green+=7.0*amount*current[u-v].green/16;
+          pixel.blue+=7.0*amount*current[u-v].blue/16;
           if (cube.associate_alpha != MagickFalse)
-            pixel.opacity+=7*current[u-v].opacity/16;
+            pixel.opacity+=7.0*amount*current[u-v].opacity/16;
         }
       if (y > 0)
         {
@@ -1545,18 +1557,18 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
               if (cube.associate_alpha != MagickFalse)
                 pixel.opacity+=previous[u+v].opacity/16;
             }
-          pixel.red+=5*previous[u].red/16;
-          pixel.green+=5*previous[u].green/16;
-          pixel.blue+=5*previous[u].blue/16;
+          pixel.red+=5.0*amount*previous[u].red/16;
+          pixel.green+=5.0*amount*previous[u].green/16;
+          pixel.blue+=5.0*amount*previous[u].blue/16;
           if (cube.associate_alpha != MagickFalse)
-            pixel.opacity+=5*previous[u].opacity/16;
+            pixel.opacity+=5.0*amount*previous[u].opacity/16;
           if (x > 0)
             {
-              pixel.red+=3*previous[u-v].red/16;
-              pixel.green+=3*previous[u-v].green/16;
-              pixel.blue+=3*previous[u-v].blue/16;
+              pixel.red+=3.0*amount*previous[u-v].red/16;
+              pixel.green+=3.0*amount*previous[u-v].green/16;
+              pixel.blue+=3.0*amount*previous[u-v].blue/16;
               if (cube.associate_alpha != MagickFalse)
-                pixel.opacity+=3*previous[u-v].opacity/16;
+                pixel.opacity+=3.0*amount*previous[u-v].opacity/16;
             }
         }
       pixel.red=(MagickRealType) ClampPixel(pixel.red);
