@@ -1,3 +1,9 @@
+2018-06-18  6.9.10-2 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-2, GIT revision 13604:bca07e94b:20180618.
+
+2018-06-18  6.9.10-2 Cristy  <quetzlzacatenango@image...>
+  * More rovust SVG text handling.
+
 2018-06-16  6.9.10-1 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-1, GIT revision 13595:dafb03062:20180616.
 
