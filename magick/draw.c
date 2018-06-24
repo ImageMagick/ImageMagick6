@@ -3593,7 +3593,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if (LocaleCompare("text",keyword) == 0)
           {
             primitive_type=TextPrimitive;
-            affine.tx+=cursor;
+            /* affine.tx+=cursor; */
             break;
           }
         if (LocaleCompare("text-align",keyword) == 0)
@@ -3745,9 +3745,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
     if (primitive_type == UndefinedPrimitive)
       {
-        if (image->debug != MagickFalse)
+        if ((image->debug != MagickFalse) && (q > p))
           (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int)
-            (q-p),p);
+            (q-p-1),p);
         continue;
       }
     /*
@@ -4154,8 +4154,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     mvg_info.offset=i;
     if (primitive_info == (PrimitiveInfo *) NULL)
       break;
-    if (image->debug != MagickFalse)
-      (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int) (q-p),p);
+    if ((image->debug != MagickFalse) && (q > p))
+      (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int) (q-p-1),
+        p);
     if (status == MagickFalse)
       break;
     primitive_info[i].primitive=UndefinedPrimitive;

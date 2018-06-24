@@ -1,6 +1,7 @@
 2018-06-20  6.9.10-3 Cristy  <quetzlzacatenango@image...>
   * Fix potential memory leak in raw image decoders (reference
     https://github.com/ImageMagick/ImageMagick/issues/117).
+  * Apply translate component of SVG transform rotate.
 
 2018-06-18  6.9.10-2 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-2, GIT revision 13604:bca07e94b:20180618.
