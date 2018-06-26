@@ -4821,7 +4821,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
       "    Reading jng_image from color_blob.");
 
   assert(color_image_info != (ImageInfo *) NULL);
-  (void) FormatLocaleString(color_image_info->filename,MaxTextExtent,"%s",
+  (void) FormatLocaleString(color_image_info->filename,MaxTextExtent,"jpeg:%s",
     color_image->filename);
 
   color_image_info->ping=MagickFalse;   /* To do: avoid this */
