@@ -1058,6 +1058,9 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
   int
     file;
 
+  MagickBooleanType
+    status;
+
   MagickOffsetType
     offset;
 
@@ -1066,6 +1069,9 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
 
   ssize_t
     count;
+
+  struct stat
+    attributes;
 
   unsigned char
     *blob;
@@ -1077,6 +1083,12 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
   (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
   *length=0;
+  status=GetPathAttributes(filename,&attributes);
+  if ((status == MagickFalse) || (S_ISDIR(attributes.st_mode) != 0))
+    {
+      ThrowFileException(exception,BlobError,"UnableToReadBlob",filename);
+      return(NULL);
+    }
   file=fileno(stdin);
   if (LocaleCompare(filename,"-") != 0)
     file=open_utf8(filename,O_RDONLY | O_BINARY,0);
