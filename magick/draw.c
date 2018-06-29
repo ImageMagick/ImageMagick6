@@ -1735,7 +1735,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
   {
     if (draw_info->dash_pattern[n] <= 0.0)
       break;
-    length=scale*draw_info->dash_pattern[n];
+    length=scale*(draw_info->dash_pattern[n]+(n == 0 ? -0.5 : 0.5));
     if (offset > length)
       {
         offset-=length;
@@ -1760,6 +1760,8 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
     dx=primitive_info[i].point.x-primitive_info[i-1].point.x;
     dy=primitive_info[i].point.y-primitive_info[i-1].point.y;
     maximum_length=hypot(dx,dy);
+    if (maximum_length > MaxBezierCoordinates)
+      break;
     if (fabs(length) < MagickEpsilon)
       {
         n++;
@@ -2269,9 +2271,6 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
             n=0;
             for (p=q; *q != '\0'; )
             {
-              char
-                *macro;
-
               GetNextToken(p,&p,extent,token);
               if (*token == '\0')
                 break;
@@ -2293,6 +2292,9 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                 n++;
               if (n < 0)
                 {
+                  char
+                    *macro;
+
                   /*
                     Extract macro.
                   */
@@ -4216,8 +4218,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
         if ((primitive_info[i].primitive == TextPrimitive) ||
             (primitive_info[i].primitive == ImagePrimitive))
           if (primitive_info[i].text != (char *) NULL)
-            primitive_info[i].text=(char *) RelinquishMagickMemory(
-              primitive_info[i].text);
+            primitive_info[i].text=DestroyString(primitive_info[i].text);
       primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
     }
   primitive=DestroyString(primitive);
@@ -4382,8 +4383,7 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
     sizeof(*polygon_info));
   if (polygon_info == (PolygonInfo **) NULL)
     return((PolygonInfo **) NULL);
-  (void) memset(polygon_info,0,(size_t)
-    GetMagickResourceLimit(ThreadResource)*sizeof(*polygon_info));
+  (void) memset(polygon_info,0,number_threads*sizeof(*polygon_info));
   path_info=ConvertPrimitiveToPath(draw_info,primitive_info);
   if (path_info == (PathInfo *) NULL)
     return(DestroyPolygonThreadSet(polygon_info));
@@ -5724,7 +5724,7 @@ static inline double Permutate(const ssize_t n,const ssize_t k)
 */
 
 static void TraceArc(MVGInfo *mvg_info,const PointInfo start,
-  const PointInfo end,const PointInfo arc)
+  const PointInfo end,const PointInfo degrees)
 {
   PointInfo
     center,
@@ -5734,7 +5734,7 @@ static void TraceArc(MVGInfo *mvg_info,const PointInfo start,
   center.y=0.5*(end.y+start.y);
   radius.x=fabs(center.x-start.x);
   radius.y=fabs(center.y-start.y);
-  TraceEllipse(mvg_info,center,radius,arc);
+  TraceEllipse(mvg_info,center,radius,degrees);
 }
 
 static void TraceArcPath(MVGInfo *mvg_info,const PointInfo start,
@@ -6201,10 +6201,9 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
-          sweep=fabs(StringToDouble(token,&next_token)) < MagickEpsilon ?
-            MagickFalse : MagickTrue;
-          if (token == next_token)
-            ThrowPointExpectedException(image,token);
+          sweep=StringToLong(token) != 0 ? MagickTrue : MagickFalse;
+          if (*token == ',')
+            GetNextToken(p,&p,MaxTextExtent,token);
           GetNextToken(p,&p,MaxTextExtent,token);
           if (*token == ',')
             GetNextToken(p,&p,MaxTextExtent,token);
