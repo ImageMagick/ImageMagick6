@@ -29,12 +29,14 @@ extern "C" {
 static inline IndexPacket ConstrainColormapIndex(Image *image,
   const ssize_t index)
 {
-  if ((index < image->colors) && ((ssize_t) index >= 0))
-    return((IndexPacket) index);
-  if (image->exception.severity != CorruptImageError)
-    (void) ThrowMagickException(&image->exception,GetMagickModule(),
-      CorruptImageError,"InvalidColormapIndex","`%s'",image->filename);
-  return((IndexPacket) 0);
+  if ((index < 0) || (index >= (ssize_t) image->colors))
+    {
+      if (image->exception.severity != CorruptImageError)
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CorruptImageError,"InvalidColormapIndex","`%s'",image->filename);
+      return((IndexPacket) 0);
+    }
+  return((IndexPacket) index);
 }
 
 static inline MagickBooleanType IsValidColormapIndex(Image *image,
