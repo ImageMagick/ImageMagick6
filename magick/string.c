@@ -1067,7 +1067,8 @@ MagickExport StringInfo *FileToStringInfo(const char *filename,
 %
 %  The format of the FormatMagickSize method is:
 %
-%      ssize_t FormatMagickSize(const MagickSizeType size,char *format)
+%      ssize_t FormatMagickSize(const MagickSizeType size,
+%        const MagickBooleanType by,char *format)
 %
 %  A description of each parameter follows:
 %

@@ -2484,6 +2484,7 @@ MagickExport const char *GetImageProperty(const Image *image,
 %    %y   y resolution (density)
 %    %z   image depth (as read in unless modified, image save depth)
 %    %A   image transparency channel enabled (true/false)
+%    %B   file size of image in bytes
 %    %C   image compression type
 %    %D   image GIF dispose method
 %    %G   original image size (%wx%h; before any resizes)
@@ -2771,6 +2772,18 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       */
       (void) FormatLocaleString(value,MaxTextExtent,"%s",
          CommandOptionToMnemonic(MagickBooleanOptions,(ssize_t) image->matte));
+      break;
+    }
+    case 'B':
+    {
+      /*
+        Image size read in - in bytes.
+      */
+      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+        image->extent);
+      if (image->extent == 0)
+        (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+          GetBlobSize(image));
       break;
     }
     case 'C':
