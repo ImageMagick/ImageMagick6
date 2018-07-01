@@ -1,5 +1,7 @@
 2018-06-28  6.9.10-4 Cristy  <quetzlzacatenango@image...>
   * Small tweaks to compile under Cygwin.
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+    exceeded, and timeouts (credit to OSS Fuzz).
 
 2018-06-24  6.9.10-3 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-3, GIT revision 13618:69366aab3:20180624.

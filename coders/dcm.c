@@ -4253,8 +4253,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           AcquireNextImage(image_info,image);
           if (GetNextImageInList(image) == (Image *) NULL)
             {
-              image=DestroyImageList(image);
-              return((Image *) NULL);
+              status=MagickFalse;
+              break;
             }
           image=SyncNextImageInList(image);
           status=SetImageProgress(image,LoadImagesTag,TellBlob(image),
@@ -4271,8 +4271,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         AcquireNextImage(image_info,image);
         if (GetNextImageInList(image) == (Image *) NULL)
           {
-            image=DestroyImageList(image);
-            return((Image *) NULL);
+            status=MagickFalse;
+            break;
           }
         image=SyncNextImageInList(image);
         status=SetImageProgress(image,LoadImagesTag,TellBlob(image),
@@ -4299,6 +4299,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (redmap != (int *) NULL)
     redmap=(int *) RelinquishMagickMemory(redmap);
   (void) CloseBlob(image);
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 

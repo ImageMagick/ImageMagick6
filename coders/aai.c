@@ -226,7 +226,7 @@ static Image *ReadAAIImage(const ImageInfo *image_info,ExceptionInfo *exception)
         AcquireNextImage(image_info,image);
         if (GetNextImageInList(image) == (Image *) NULL)
           {
-            image=DestroyImageList(image);
+            status=MagickFalse;
             return((Image *) NULL);
           }
         image=SyncNextImageInList(image);

@@ -3504,8 +3504,7 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
     size+=WriteBlobMSBLong(image,0);
     size+=WritePascalString(image,property,4);
     if (info != (const StringInfo *) NULL)
-      size+=WriteBlob(image,GetStringInfoLength(info),
-        GetStringInfoDatum(info));
+      size+=WriteBlob(image,GetStringInfoLength(info),GetStringInfoDatum(info));
     next_image=GetNextImageInList(next_image);
   }
   /*

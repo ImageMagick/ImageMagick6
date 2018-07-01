@@ -818,7 +818,10 @@ static Image *ReadMATImageV4(const ImageInfo *image_info,Image *image,
 skip_reading_current:
     AcquireNextImage(image_info,image);
     if (GetNextImageInList(image) == (Image *) NULL)
-      return(DestroyImageList(image));
+      {
+        status=MagickFalse;
+        break;
+      }
     image=SyncNextImageInList(image);
     status=SetImageProgress(image,LoadImagesTag,TellBlob(image),
       GetBlobSize(image));
@@ -826,6 +829,8 @@ skip_reading_current:
       break;
   }
   (void) CloseBlob(image);
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 
