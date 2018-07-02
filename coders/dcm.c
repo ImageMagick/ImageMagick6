@@ -3093,10 +3093,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   image=AcquireImage(image_info);
   status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
   if (status == MagickFalse)
-    {
-      image=DestroyImageList(image);
-      return((Image *) NULL);
-    }
+    return(DestroyImageList(image));
   image->depth=8UL;
   image->endian=LSBEndian;
   /*
@@ -3934,7 +3931,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           greenmap=(int *) RelinquishMagickMemory(greenmap);
         if (redmap != (int *) NULL)
           redmap=(int *) RelinquishMagickMemory(redmap);
-        image=DestroyImage(image);
+        image=DestroyImageList(image);
         return(GetFirstImageInList(images));
       }
     if (info.depth != (1UL*MAGICKCORE_QUANTUM_DEPTH))
