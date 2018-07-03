@@ -1,5 +1,5 @@
-2018-07-01  6.9.10-4 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-4, GIT revision 13632:38e6eef23:20180701.
+2018-07-02  6.9.10-4 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-4, GIT revision 13635:c1c026715:20180702.
 
 2018-06-28  6.9.10-4 Cristy  <quetzlzacatenango@image...>
   * Small tweaks to compile under Cygwin.
