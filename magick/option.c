@@ -2251,7 +2251,8 @@ MagickExport MagickBooleanType IsCommandOption(const char *option)
   if ((*option != '-') && (*option != '+'))
     return(MagickFalse);
   if (strlen(option) == 1)
-    return(MagickFalse);
+    return(((*option == '{') || (*option == '}') || (*option == '[') ||
+      (*option == ']')) ? MagickTrue : MagickFalse);
   option++;
   if (isalpha((int) ((unsigned char) *option)) == 0)
     return(MagickFalse);
