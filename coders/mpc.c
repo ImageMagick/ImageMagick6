@@ -891,9 +891,12 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
             switch (depth)
             {
               default:
+              {
                 colormap=(unsigned char *) RelinquishMagickMemory(colormap);
                 ThrowReaderException(CorruptImageError,
                   "ImageDepthNotSupported");
+                break;
+              }
               case 8:
               {
                 unsigned char
