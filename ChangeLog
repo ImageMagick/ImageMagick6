@@ -1,3 +1,10 @@
+2018-07-04  6.9.10-5 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-5, GIT revision 13643:fe71cc8b2:20180704.
+
+2018-07-04  6.9.10-5 Cristy  <quetzlzacatenango@image...>
+  * Fixed a few potential memory leaks (reference
+    https://github.com/ImageMagick/ImageMagick/issues).
+
 2018-07-02  6.9.10-4 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-4, GIT revision 13635:c1c026715:20180702.
 
