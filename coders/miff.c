@@ -2427,7 +2427,11 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
           switch (quantum_info->depth)
           {
             default:
+            {
+              colormap=(unsigned char *) RelinquishMagickMemory(colormap);
               ThrowWriterException(CorruptImageError,"ImageDepthNotSupported");
+              break;
+            }
             case 32:
             {
               register unsigned int
