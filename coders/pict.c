@@ -1482,7 +1482,8 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               c=ReadBlobByte(image);
               if (c == EOF)
                 break;
-              (void) fputc(c,file);
+              if (fputc(c,file) != c)
+                break;
             }
           }
         (void) fclose(file);

@@ -3891,7 +3891,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   "UnexpectedEndOfFile",image->filename);
                 break;
               }
-            (void) fputc(c,file);
+            if (fputc(c,file) != c)
+              break;
           }
           (void) fclose(file);
           if (c == EOF)
