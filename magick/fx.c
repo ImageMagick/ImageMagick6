@@ -1633,8 +1633,7 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
         {
           if (image->extent != 0)
             return(image->extent);
-          else
-            return(GetBlobSize(image));
+          return(GetBlobSize(image));
         }
       break;
     }
