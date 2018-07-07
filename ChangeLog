@@ -1,5 +1,6 @@
 2018-07-06  6.9.10-6 Cristy  <quetzlzacatenango@image...>
   * Improve SVG support for tspan element.
+  * Add support for -fx image.extent.
 
 2018-07-04  6.9.10-5 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-5, GIT revision 13643:fe71cc8b2:20180704.
