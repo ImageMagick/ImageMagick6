@@ -185,6 +185,8 @@ static Image *ReadMVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if ((image->columns == 0) || (image->rows == 0))
     ThrowReaderException(OptionError,"MustSpecifyImageSize");
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
+  if (draw_info->density != (char *) NULL)
+    draw_info->density=DestroyString(draw_info->density);
   draw_info->affine.sx=image->x_resolution == 0.0 ? 1.0 : image->x_resolution/
     96.0;
   draw_info->affine.sy=image->y_resolution == 0.0 ? 1.0 : image->y_resolution/
