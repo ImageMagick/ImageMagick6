@@ -217,6 +217,7 @@
      <li><code>resolution.y</code>=> y resolution</li>
 
      <li><code>depth</code>=> image depth</li>
+     <li><code>extent</code>=> image extent in bytes</li>
      <li><code>minima</code>=> image minima</li>
      <li><code>maxima</code>=> image maxima</li>
      <li><code>mean</code>=> image mean</li>
@@ -225,8 +226,9 @@
      <li><code>skewness</code>=> image skewness (add a channel specifier to compute a statistic for that channel, e.g. depth.r)</li></dl></dd>
   <dt class="col-md-4"> iterators:</dt>
     <dd class="col-md-8"> while()</dd>
+  <dt class="col-md-4"> image attributes:</dt>
+    <dd class="col-md-8"> image.depth, image.kurtosis, image.maxima, image.minima, image.resolution.x, image.resolution.y, image.skewness, image.standard_deviation</dd>
 </dl>
-
 
 <h3>The Fx Expression</h3>
 
@@ -321,6 +323,7 @@
 <dt class="col-md-4"> <code>tanh(</code><var>x</var><code>)</code></dt><dd class="col-md-8"> hyperbolic tangent function</dd>
 <dt class="col-md-4"> <code>trunc(</code><var>x</var><code>)</code></dt><dd class="col-md-8"> round to integer, towards zero</dd>
 <dt class="col-md-4"> <code>while(</code><var>condition</var>,<var>expression</var><code>)</code></dt><dd class="col-md-8"> iterate while the condition is not equal to 0</dd>
+<dt class="col-md-4"> <code>image.depth, image.kurtosis, image.maxima, image.minima, image.resolution.x, image.resolution.y, image.skewness, image.standard_deviation</code></dt><dd class="col-md-8"> image attributes</dd>
 </dl>
 <br/>
 <p>The expression semantics include these rules:</p>
