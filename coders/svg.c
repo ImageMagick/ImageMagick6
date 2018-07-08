@@ -3287,23 +3287,26 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
         image->rows=gdk_pixbuf_get_height(pixel_buffer);
 #endif
         image->matte=MagickTrue;
-        status=SetImageExtent(image,image->columns,image->rows);
-        if (status == MagickFalse)
-          {
-#if !defined(MAGICKCORE_CAIRO_DELEGATE)
-            g_object_unref(G_OBJECT(pixel_buffer));
-#endif
-            g_object_unref(svg_handle);
-            InheritException(exception,&image->exception);
-            ThrowReaderException(MissingDelegateError,
-              "NoDecodeDelegateForThisImageFormat");
-          }
         if (image_info->ping == MagickFalse)
           {
 #if defined(MAGICKCORE_CAIRO_DELEGATE)
             size_t
               stride;
+#endif
 
+            status=SetImageExtent(image,image->columns,image->rows);
+            if (status == MagickFalse)
+              {
+#if !defined(MAGICKCORE_CAIRO_DELEGATE)
+                g_object_unref(G_OBJECT(pixel_buffer));
+#endif
+                g_object_unref(svg_handle);
+                InheritException(exception,&image->exception);
+                ThrowReaderException(MissingDelegateError,
+                  "NoDecodeDelegateForThisImageFormat");
+              }
+
+#if defined(MAGICKCORE_CAIRO_DELEGATE)
             stride=4*image->columns;
 #if defined(MAGICKCORE_PANGOCAIRO_DELEGATE)
             stride=(size_t) cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32,
