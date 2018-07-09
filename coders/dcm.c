@@ -3993,6 +3993,9 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             MagickOffsetType
               offset;
 
+            if (stream_info->offsets != (ssize_t *) NULL)
+              stream_info->offsets=(ssize_t *)
+                RelinquishMagickMemory(stream_info->offsets);
             stream_info->offsets=(ssize_t *) AcquireQuantumMemory(
               stream_info->offset_count,sizeof(*stream_info->offsets));
             if (stream_info->offsets == (ssize_t *) NULL)
