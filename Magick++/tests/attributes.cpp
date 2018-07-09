@@ -154,7 +154,7 @@ int main( int /*argc*/, char ** argv)
     //
 
     // Test default value.
-    if ( image.backgroundColor() != ColorRGB("white") )
+    if (image.backgroundColor() != string(ColorRGB("white")))
       {
 	++failures;
 	cout << "Line: " << __LINE__ << ", backgroundColor default ("
@@ -1068,7 +1068,7 @@ int main( int /*argc*/, char ** argv)
     // pixelColor
     //
     // Test default
-    if ( image.pixelColor(40,60) != canvasColor )
+    if (image.pixelColor(40,60) != string(canvasColor))
       {
 	++failures;
 	cout << "Line: " << __LINE__ << ", pixelColor default ("
