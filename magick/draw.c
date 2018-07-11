@@ -2267,6 +2267,7 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
             */
             GetNextToken(q,&q,extent,token);
             start=q;
+            end=q;
             (void) CopyMagickString(name,token,MagickPathExtent);
             n=0;
             for (p=q; *q != '\0'; )
@@ -2290,7 +2291,7 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                 }
               if (LocaleCompare(token,"push") == 0)
                 n++;
-              if (n < 0)
+              if ((n < 0) && (end > start))
                 {
                   char
                     *macro;
