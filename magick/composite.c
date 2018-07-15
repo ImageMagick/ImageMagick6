@@ -2238,6 +2238,9 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
   value=GetImageArtifact(image,"compose:outside-overlay");
   if (value != (const char *) NULL)
     clip_to_self=IsMagickTrue(value) == MagickFalse ? MagickTrue : MagickFalse;
+  value=GetImageArtifact(image,"compose:clip-to-self");
+  if (value != (const char *) NULL)
+    clip_to_self=IsMagickTrue(value) != MagickFalse ? MagickTrue : MagickFalse;
   clamp=MagickTrue;
   value=GetImageArtifact(image,"compose:clamp");
   if (value != (const char *) NULL)
