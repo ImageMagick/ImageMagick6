@@ -1,5 +1,5 @@
 2018-07-16  6.9.10-7 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-7, GIT revision 13674:a1f89a6ed:20180716.
+  * Release ImageMagick version 6.9.10-7, GIT revision 13676:dab6babe2:20180716.
 
 2018-07-15  6.9.10-7 Cristy  <quetzlzacatenango@image...>
   * Fixed numerous use of uninitialized values, integer overflow, memory
