@@ -274,7 +274,7 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
   GetDrawInfo(image_info,clone_info);
   if (draw_info == (DrawInfo *) NULL)
     return(clone_info);
-  if (clone_info->primitive != (char *) NULL)
+  if (draw_info->primitive != (char *) NULL)
     (void) CloneString(&clone_info->primitive,draw_info->primitive);
   if (draw_info->geometry != (char *) NULL)
     (void) CloneString(&clone_info->geometry,draw_info->geometry);
