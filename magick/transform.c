@@ -1172,6 +1172,9 @@ MagickExport Image *ExtentImage(const Image *image,
   Image
     *extent_image;
 
+  MagickBooleanType
+    status;
+
   /*
     Allocate extent image.
   */
@@ -1182,17 +1185,25 @@ MagickExport Image *ExtentImage(const Image *image,
   assert(geometry != (const RectangleInfo *) NULL);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-  if ((image->columns == geometry->width) && 
-      (image->rows == geometry->height) &&
-      (geometry->x == 0) && (geometry->y == 0))
-    return(CloneImage(image,0,0,MagickTrue,exception));
   extent_image=CloneImage(image,geometry->width,geometry->height,MagickTrue,
     exception);
   if (extent_image == (Image *) NULL)
     return((Image *) NULL);
-  (void) SetImageBackgroundColor(extent_image);
-  (void) CompositeImage(extent_image,image->compose,image,-geometry->x,
+  status=SetImageBackgroundColor(extent_image);
+  if (status == MagickFalse)
+    {
+      InheritException(exception,&extent_image->exception);
+      extent_image=DestroyImage(extent_image);
+      return((Image *) NULL);
+    }
+  status=CompositeImage(extent_image,image->compose,image,-geometry->x,
     -geometry->y);
+  if (status == MagickFalse)
+    {
+      InheritException(exception,&extent_image->exception);
+      extent_image=DestroyImage(extent_image);
+      return((Image *) NULL);
+    }
   return(extent_image);
 }
 
