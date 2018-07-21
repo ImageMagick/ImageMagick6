@@ -636,6 +636,7 @@ static Image *ReadMATImageV4(const ImageInfo *image_info,Image *image,
   unsigned int
     depth;
 
+  status=MagickTrue;
   (void) SeekBlob(image,0,SEEK_SET);
   while (EOFBlob(image) == MagickFalse)
   {
