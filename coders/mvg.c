@@ -235,6 +235,11 @@ static Image *ReadMVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
+  if (*draw_info->primitive == '@')
+    {
+      draw_info=DestroyDrawInfo(draw_info);
+      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+    }
   (void) DrawImage(image,draw_info);
   (void) SetImageArtifact(image,"MVG",draw_info->primitive);
   draw_info=DestroyDrawInfo(draw_info);

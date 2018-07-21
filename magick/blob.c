@@ -1082,6 +1082,14 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
   (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
   *length=0;
+  status=IsRightsAuthorized(PathPolicyDomain,ReadPolicyRights,filename);
+  if (status == MagickFalse)
+    {
+      errno=EPERM;
+      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
+        "NotAuthorized","`%s'",filename);
+      return(NULL);
+    }
   status=GetPathAttributes(filename,&attributes);
   if ((status == MagickFalse) || (S_ISDIR(attributes.st_mode) != 0))
     {
@@ -1267,6 +1275,9 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
   int
     file;
 
+  MagickBooleanType
+    status;
+
   size_t
     length,
     quantum;
@@ -1284,6 +1295,14 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
   assert(image->signature == MagickCoreSignature);
   assert(filename != (const char *) NULL);
   (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
+  status=IsRightsAuthorized(PathPolicyDomain,WritePolicyRights,filename);
+  if (status == MagickFalse)
+    {
+      errno=EPERM;
+      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
+        "NotAuthorized","`%s'",filename);
+      return(MagickFalse);
+    }
   file=fileno(stdin);
   if (LocaleCompare(filename,"-") != 0)
     file=open_utf8(filename,O_RDONLY | O_BINARY,0);
