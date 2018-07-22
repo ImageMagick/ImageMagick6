@@ -1299,8 +1299,8 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
   if (status == MagickFalse)
     {
       errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",filename);
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),
+        PolicyError,"NotAuthorized","`%s'",filename);
       return(MagickFalse);
     }
   file=fileno(stdin);
