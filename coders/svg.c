@@ -1833,10 +1833,10 @@ static void SVGStartElement(void *context,const xmlChar *name,
                               (*p == ','))
                             break;
                         affine.tx=GetUserSpaceCoordinateValue(svg_info,1,value);
-                        affine.ty=affine.tx;
+                        affine.ty=0.0;
                         if (*p != '\0')
-                          affine.ty=
-                            GetUserSpaceCoordinateValue(svg_info,-1,p+1);
+                          affine.ty=GetUserSpaceCoordinateValue(svg_info,-1,
+                            p+1);
                         break;
                       }
                     break;
