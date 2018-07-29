@@ -227,7 +227,9 @@ void DumpProfileData()
 
   OpenCLLog("====================================================");
 
-  // Write out the device info to the profile
+  /*
+    Write out the device info to the profile.
+  */
   if (0 == 1)
   {
     MagickCLEnv clEnv;
@@ -255,7 +257,9 @@ void DumpProfileData()
     strcpy(indent, "                              ");
     strncpy(indent, kernelNames[i], min(strlen(kernelNames[i]), strlen(indent) - 1));
     sprintf(buf, "%s%d\t(%d calls)   \t%d -> %d", indent, profileRecords[i].count > 0 ? (profileRecords[i].total / profileRecords[i].count) : 0, profileRecords[i].count, profileRecords[i].min, profileRecords[i].max);
-    //printf("%s%d\t(%d calls)   \t%d -> %d\n", indent, profileRecords[i].count > 0 ? (profileRecords[i].total / profileRecords[i].count) : 0, profileRecords[i].count, profileRecords[i].min, profileRecords[i].max);
+    /*
+      printf("%s%d\t(%d calls)   \t%d -> %d\n", indent, profileRecords[i].count > 0 ? (profileRecords[i].total / profileRecords[i].count) : 0, profileRecords[i].count, profileRecords[i].min, profileRecords[i].max);
+    */
     OpenCLLog(buf);
   }
   OpenCLLog("====================================================");
@@ -1402,7 +1406,7 @@ MagickBooleanType InitOpenCLEnvInternal(MagickCLEnv clEnv, ExceptionInfo* except
   {
     int status = clInitializePerfMarkerAMD();
     if (status == AP_SUCCESS) {
-      //printf("PerfMarker successfully initialized\n");
+      /* printf("PerfMarker successfully initialized\n"); */
     }
   }
 #endif

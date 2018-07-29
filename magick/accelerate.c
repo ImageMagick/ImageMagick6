@@ -973,7 +973,7 @@ MagickPrivate MagickBooleanType AccelerateCompositeImage(Image *image,
   case BlendCompositeOp:
     break;
   default:
-    // unsupported compose operator, quit
+    /* unsupported compose operator, quit */
     return MagickFalse;
   };
 
@@ -1293,7 +1293,7 @@ MagickPrivate MagickBooleanType ComputeContrastStretchImageChannel(Image *image,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
 
-  //exception=(&image->exception);
+  /* exception=(&image->exception); */
 
   /*
    * initialize opencl env
@@ -3100,7 +3100,7 @@ static Image *ComputeLocalContrastImage(const Image *image,
     {
       imageColumns = (unsigned int) image->columns;
       imageRows = (unsigned int) image->rows;
-      iRadius = (cl_int) (image->rows > image->columns ? image->rows : image->columns) * 0.002f * fabs(radius); // Normalized radius, 100% gives blur radius of 20% of the largest dimension
+      iRadius = (cl_int) (image->rows > image->columns ? image->rows : image->columns) * 0.002f * fabs(radius);  /*Normalized radius, 100% gives blur radius of 20% of the largest dimension */
 
       passes = (((1.0f * imageRows) * imageColumns * iRadius) + 3999999999) / 4000000000.0f;
       passes = (passes < 1) ? 1: passes;
@@ -3580,7 +3580,9 @@ static Image* ComputeMotionBlurImage(const Image *image,
   }
 
 
- // get the OpenCL kernel
+  /*
+    Get the OpenCL kernel.
+  */
   motionBlurKernel = AcquireOpenCLKernel(clEnv, MAGICK_OPENCL_ACCELERATE, 
     "MotionBlur");
   if (motionBlurKernel == NULL)
@@ -3590,7 +3592,9 @@ static Image* ComputeMotionBlurImage(const Image *image,
     goto cleanup;
   }
   
-  // set the kernel arguments
+  /*
+    Set the kernel arguments.
+  */
   i = 0;
   clStatus=clEnv->library->clSetKernelArg(motionBlurKernel,i++,sizeof(cl_mem),
     (void *)&imageBuffer);
@@ -3626,7 +3630,9 @@ static Image* ComputeMotionBlurImage(const Image *image,
     goto cleanup;
   }
 
-  // launch the kernel
+  /*
+    Launch the kernel.
+  */
   local_work_size[0] = 16;
   local_work_size[1] = 16;
   global_work_size[0] = (size_t)padGlobalWorkgroupSizeToLocalWorkgroupSize(
@@ -5199,7 +5205,9 @@ static Image *ComputeWaveletDenoiseImage(const Image *image,
     goto cleanup;
   };
 
-  // Process image
+  /*
+    Process image.
+  */
   {
     int x;
     const int PASSES = 5;
