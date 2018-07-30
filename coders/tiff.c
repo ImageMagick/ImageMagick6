@@ -1070,6 +1070,7 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
         else
           info.channels=(image->matte != MagickFalse ? 5UL : 4UL);
       }
+  info.min_channels=info.channels;
   (void) ReadPSDLayers(layers,image_info,&info,MagickFalse,exception);
   /* we need to set the datum in case a realloc happend */
   ((StringInfo *) layer_info)->datum=GetBlobStreamData(layers);
