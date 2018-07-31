@@ -1058,6 +1058,7 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
   info.rows=layers->rows;
   /* Setting the mode to a value that won't change the colorspace */
   info.mode=10;
+  info.min_channels=1;
   if (IsGrayImage(image,&image->exception) != MagickFalse)
     info.channels=(image->matte != MagickFalse ? 2UL : 1UL);
   else
@@ -1066,11 +1067,16 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
     else
       {
         if (image->colorspace != CMYKColorspace)
-          info.channels=(image->matte != MagickFalse ? 4UL : 3UL);
+          {
+            info.channels=(image->matte != MagickFalse ? 4UL : 3UL);
+            info.min_channels=3;
+          }
         else
-          info.channels=(image->matte != MagickFalse ? 5UL : 4UL);
+          {
+            info.channels=(image->matte != MagickFalse ? 5UL : 4UL);
+            info.min_channels=4;
+          }
       }
-  info.min_channels=info.channels;
   (void) ReadPSDLayers(layers,image_info,&info,MagickFalse,exception);
   /* we need to set the datum in case a realloc happend */
   ((StringInfo *) layer_info)->datum=GetBlobStreamData(layers);
