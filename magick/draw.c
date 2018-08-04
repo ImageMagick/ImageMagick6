@@ -4093,7 +4093,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       }
       case PathPrimitive:
       {
-        coordinates=TracePath(image,&mvg_info,token);
+        coordinates=(double) TracePath(image,&mvg_info,token);
         if (coordinates == 0)
           {
             status=MagickFalse;
