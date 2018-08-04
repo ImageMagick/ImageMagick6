@@ -873,6 +873,27 @@ static void SVGProcessStyleElement(void *context,const xmlChar *name,
           }
         break;
       }
+      case 'K':
+      case 'k':
+      {
+        if (LocaleCompare(keyword,"kerning") == 0)
+          {
+            (void) FormatLocaleFile(svg_info->file,"kerning \"%s\"\n",value);
+            break;
+          }
+        break;
+      }
+      case 'L':
+      case 'l':
+      {
+        if (LocaleCompare(keyword,"letter-spacing") == 0)
+          {
+            (void) FormatLocaleFile(svg_info->file,"letter-spacing \"%s\"\n",
+              value);
+            break;
+          }
+        break;
+      }
       case 'M':
       case 'm':
       {
@@ -1896,6 +1917,27 @@ static void SVGStartElement(void *context,const xmlChar *name,
           if (LocaleCompare(keyword,"href") == 0)
             {
               (void) CloneString(&svg_info->url,value);
+              break;
+            }
+          break;
+        }
+        case 'K':
+        case 'k':
+        {
+          if (LocaleCompare(keyword,"kernel") == 0)
+            {
+              (void) FormatLocaleFile(svg_info->file,"kernel \"%s\"\n",value);
+              break;
+            }
+          break;
+        }
+        case 'L':
+        case 'l':
+        {
+          if (LocaleCompare(keyword,"letter-spacing") == 0)
+            {
+              (void) FormatLocaleFile(svg_info->file,"letter-spacing \"%s\"\n",
+                value);
               break;
             }
           break;
@@ -4315,9 +4357,30 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         status=MagickFalse;
         break;
       }
+      case 'k':
+      case 'K':
+      {
+        if (LocaleCompare("kerning",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            (void) FormatLocaleString(message,MagickPathExtent,"kerning:%s;",
+              token);
+            (void) WriteBlobString(image,message);
+            break;
+          }
+        break;
+      }
       case 'l':
       case 'L':
       {
+        if (LocaleCompare("letter-spacing",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            (void) FormatLocaleString(message,MagickPathExtent,
+              "letter-spacing:%s;",token);
+            (void) WriteBlobString(image,message);
+            break;
+          }
         if (LocaleCompare("line",keyword) == 0)
           {
             primitive_type=LinePrimitive;

@@ -2349,6 +2349,7 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     primitive_extent;
 
   DrawInfo
+    *clone_info,
     **graphic_context;
 
   MagickBooleanType
@@ -2395,6 +2396,9 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
     k,
     n,
     symbolDepth;
+
+  TypeMetric
+    metrics;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -2964,6 +2968,19 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       case 'l':
       case 'L':
       {
+        if (LocaleCompare("letter-spacing",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            clone_info=CloneDrawInfo((ImageInfo *) NULL,graphic_context[n]);
+            clone_info->text=AcquireString(" ");
+            status&=GetTypeMetrics(image,clone_info,&metrics);
+            graphic_context[n]->kerning=metrics.width*
+              StringToDouble(token,&next_token);
+            clone_info=DestroyDrawInfo(clone_info);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
+            break;
+          }
         if (LocaleCompare("line",keyword) == 0)
           {
             primitive_type=LinePrimitive;
@@ -3658,9 +3675,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
             use=(const char *) GetValueFromSplayTree(macros,token);
             if (use != (const char *) NULL)
               {
-                DrawInfo
-                  *clone_info;
-
                 clone_info=CloneDrawInfo((ImageInfo *) NULL,graphic_context[n]);
                 (void) CloneString(&clone_info->primitive,use);
                 status=DrawImage(image,clone_info);
@@ -3699,6 +3713,21 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
               GetNextToken(q,&q,extent,token);
             graphic_context[n]->viewbox.height=(size_t) floor(StringToDouble(
               token,&next_token)+0.5);
+            if (token == next_token)
+              ThrowPointExpectedException(image,token);
+            break;
+          }
+        status=MagickFalse;
+        break;
+      }
+      case 'w':
+      case 'W':
+      {
+        if (LocaleCompare("word-spacing",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            graphic_context[n]->interword_spacing=StringToDouble(token,
+              &next_token);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
             break;
@@ -4098,12 +4127,6 @@ MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
       {
         char
           geometry[MagickPathExtent];
-
-        DrawInfo
-          *clone_info;
-
-        TypeMetric
-          metrics;
 
         if (primitive_info[j].coordinates != 1)
           {
