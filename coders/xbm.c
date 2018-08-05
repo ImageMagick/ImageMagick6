@@ -195,6 +195,10 @@ static Image *ReadXBMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register unsigned char
     *p;
 
+  long
+    height,
+    width;
+
   short int
     hex_digits[256];
 
@@ -208,11 +212,9 @@ static Image *ReadXBMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     bit,
     byte,
     bytes_per_line,
-    height,
     length,
     padding,
-    version,
-    width;
+    version;
 
   /*
     Open image file.
@@ -238,17 +240,19 @@ static Image *ReadXBMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   height=0;
   *name='\0';
   while (ReadBlobString(image,buffer) != (char *) NULL)
-    if (sscanf(buffer,"#define %1024s %u",name,&width) == 2)
+    if (sscanf(buffer,"#define %1024s %ld",name,&width) == 2)
       if ((strlen(name) >= 6) &&
           (LocaleCompare(name+strlen(name)-6,"_width") == 0))
         break;
   while (ReadBlobString(image,buffer) != (char *) NULL)
-    if (sscanf(buffer,"#define %1024s %u",name,&height) == 2)
+    if (sscanf(buffer,"#define %1024s %ld",name,&height) == 2)
       if ((strlen(name) >= 7) &&
           (LocaleCompare(name+strlen(name)-7,"_height") == 0))
         break;
-  image->columns=width;
-  image->rows=height;
+  if ((width <= 0) || (height <= 0) || (EOFBlob(image) != MagickFalse))
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  image->columns=(size_t) width;
+  image->rows=(size_t) height;
   image->depth=8;
   image->storage_class=PseudoClass;
   image->colors=2;
@@ -276,9 +280,6 @@ static Image *ReadXBMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (LocaleCompare("bits[]",(char *) p) == 0)
       break;
   }
-  if ((image->columns == 0) || (image->rows == 0) ||
-      (EOFBlob(image) != MagickFalse))
-    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   /*
     Initialize image structure.
   */
