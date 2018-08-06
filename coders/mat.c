@@ -178,8 +178,8 @@ typedef enum
 static const QuantumType z2qtype[4] = {GrayQuantum, BlueQuantum, GreenQuantum, RedQuantum};
 
 
-static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVal,
-                                  double MaxVal)
+static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
+  double MaxVal)
 {
   ExceptionInfo
     *exception;
@@ -200,43 +200,43 @@ static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVa
   for (x = 0; x < (ssize_t) image->columns; x++)
   {
     if (*p > 0)
-    {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelRed(q));
-      if (f + GetPixelRed(q) > QuantumRange)
-        SetPixelRed(q,QuantumRange);
-      else
-        SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
-      f = GetPixelGreen(q) - f/2.0;
-      if (f <= 0.0)
-        {
-          SetPixelGreen(q,0);
-          SetPixelBlue(q,0);
-        }
-      else
-        {
-          SetPixelBlue(q,ClampToQuantum(f));
-          SetPixelGreen(q,ClampToQuantum(f));
-        }
-    }
+      {
+        f=(*p/MaxVal)*(QuantumRange-GetPixelRed(q));
+        if ((f+GetPixelRed(q)) >= QuantumRange)
+          SetPixelRed(q,QuantumRange);
+        else
+          SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
+        f=GetPixelGreen(q)-f/2.0;
+        if (f <= 0.0)
+          {
+            SetPixelGreen(q,0);
+            SetPixelBlue(q,0);
+          }
+        else
+          {
+            SetPixelBlue(q,ClampToQuantum(f));
+            SetPixelGreen(q,ClampToQuantum(f));
+          }
+      }
     if (*p < 0)
-    {
-      f = (*p / MinVal) * (QuantumRange - GetPixelBlue(q));
-      if (f + GetPixelBlue(q) > QuantumRange)
-        SetPixelBlue(q,QuantumRange);
-      else
-        SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
-      f = GetPixelGreen(q) - f/2.0;
-      if (f <= 0.0)
-        {
-          SetPixelRed(q,0);
-          SetPixelGreen(q,0);
-        }
-      else
-        {
-          SetPixelRed(q,ClampToQuantum(f));
-          SetPixelGreen(q,ClampToQuantum(f));
-        }
-    }
+      {
+        f=(*p/MinVal)*(QuantumRange-GetPixelBlue(q));
+        if ((f+GetPixelBlue(q)) >= QuantumRange)
+          SetPixelBlue(q,QuantumRange);
+        else
+          SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
+        f=GetPixelGreen(q)-f/2.0;
+        if (f <= 0.0)
+          {
+            SetPixelRed(q,0);
+            SetPixelGreen(q,0);
+          }
+        else
+          {
+            SetPixelRed(q,ClampToQuantum(f));
+            SetPixelGreen(q,ClampToQuantum(f));
+          }
+      }
     p++;
     q++;
   }
@@ -246,8 +246,8 @@ static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVa
 }
 
 
-static void InsertComplexFloatRow(float *p, int y, Image * image, double MinVal,
-                                  double MaxVal)
+static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
+  double MaxVal)
 {
   ExceptionInfo
     *exception;
@@ -268,41 +268,43 @@ static void InsertComplexFloatRow(float *p, int y, Image * image, double MinVal,
   for (x = 0; x < (ssize_t) image->columns; x++)
   {
     if (*p > 0)
-    {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelRed(q));
-      if (f + GetPixelRed(q) > QuantumRange)
-        SetPixelRed(q,QuantumRange);
-      else
-        SetPixelRed(q,GetPixelRed(q)+(int) f);
-      if ((int) f / 2.0 > GetPixelGreen(q))
-        {
-          SetPixelGreen(q,0);
-          SetPixelBlue(q,0);
-        }
-      else
-        {
-          SetPixelBlue(q,GetPixelBlue(q)-(int) (f/2.0));
-          SetPixelGreen(q,GetPixelBlue(q));
-        }
-    }
+      {
+        f=(*p/MaxVal)*(QuantumRange-GetPixelRed(q));
+        if ((f+GetPixelRed(q)) >= QuantumRange)
+          SetPixelRed(q,QuantumRange);
+        else
+          SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
+        f/=2.0;
+        if ((f > 0) && (f < GetPixelGreen(q)) && (f < GetPixelBlue(q)))
+          {
+            SetPixelBlue(q,GetPixelBlue(q)-ClampToQuantum(f));
+            SetPixelGreen(q,GetPixelBlue(q));
+          }
+        else
+          {
+            SetPixelGreen(q,0);
+            SetPixelBlue(q,0);
+          }
+      }
     if (*p < 0)
-    {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelBlue(q));
-      if (f + GetPixelBlue(q) > QuantumRange)
-        SetPixelBlue(q,QuantumRange);
-      else
-        SetPixelBlue(q,GetPixelBlue(q)+(int) f);
-      if ((int) f / 2.0 > q->green)
-        {
-          SetPixelGreen(q,0);
-          SetPixelRed(q,0);
-        }
-      else
-        {
-          SetPixelRed(q,GetPixelRed(q)-(int) (f/2.0));
-          SetPixelGreen(q,GetPixelRed(q));
-        }
-    }
+      {
+        f=(*p/MaxVal)*(QuantumRange-GetPixelBlue(q));
+        if ((f > 0) && ((f+GetPixelBlue(q)) < QuantumRange))
+          SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
+        else
+          SetPixelBlue(q,QuantumRange);
+        f/=2.0;
+        if ((f > 0) && (f < GetPixelGreen(q)) && (f < GetPixelRed(q)))
+          {
+            SetPixelRed(q,GetPixelRed(q)-ClampToQuantum(f));
+            SetPixelGreen(q,GetPixelRed(q));
+          }
+        else
+          {
+            SetPixelGreen(q,0);
+            SetPixelRed(q,0);
+          }
+      }
     p++;
     q++;
   }
