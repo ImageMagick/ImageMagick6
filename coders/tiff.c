@@ -220,6 +220,31 @@ static MagickBooleanType
   WriteGROUP4Image(const ImageInfo *,Image *),
   WritePTIFImage(const ImageInfo *,Image *),
   WriteTIFFImage(const ImageInfo *,Image *);
+
+static void InitPSDInfo(Image *image, Image *layer, PSDInfo *info)
+{
+  info->version=1;
+  info->columns=layer->columns;
+  info->rows=layer->rows;
+  /* Setting the mode to a value that won't change the colorspace */
+  info->mode=10;
+  /* Assume that image has matte */
+  if (IsGrayImage(image,&image->exception) != MagickFalse)
+    info->channels=2U;
+  else
+    if (image->storage_class == PseudoClass)
+      info->channels=2U;
+    else
+      {
+        if (image->colorspace != CMYKColorspace)
+          info->channels=4U;
+        else
+          info->channels=5U;
+      }
+  info->min_channels=info->channels - 1U;
+  if (image->matte != MagickTrue)
+      info->channels--;
+}
 #endif
 
 /*
@@ -1053,30 +1078,7 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
   (void) DeleteImageProfile(layers,"tiff:37724");
   AttachBlob(layers->blob,layer_info->datum,layer_info->length);
   SeekBlob(layers,(MagickOffsetType) i,SEEK_SET);
-  info.version=1;
-  info.columns=layers->columns;
-  info.rows=layers->rows;
-  /* Setting the mode to a value that won't change the colorspace */
-  info.mode=10;
-  info.min_channels=1;
-  if (IsGrayImage(image,&image->exception) != MagickFalse)
-    info.channels=(image->matte != MagickFalse ? 2UL : 1UL);
-  else
-    if (image->storage_class == PseudoClass)
-      info.channels=(image->matte != MagickFalse ? 2UL : 1UL);
-    else
-      {
-        if (image->colorspace != CMYKColorspace)
-          {
-            info.channels=(image->matte != MagickFalse ? 4UL : 3UL);
-            info.min_channels=3;
-          }
-        else
-          {
-            info.channels=(image->matte != MagickFalse ? 5UL : 4UL);
-            info.min_channels=4;
-          }
-      }
+  InitPSDInfo(image, layers, &info);
   (void) ReadPSDLayers(layers,image_info,&info,MagickFalse,exception);
   /* we need to set the datum in case a realloc happend */
   ((StringInfo *) layer_info)->datum=GetBlobStreamData(layers);
