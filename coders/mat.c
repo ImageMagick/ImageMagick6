@@ -188,9 +188,9 @@ static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
   int x;
   register PixelPacket *q;
 
-  if (MinVal == 0)
+  if (MinVal >= 0)
     MinVal = -1;
-  if (MaxVal == 0)
+  if (MaxVal <= 0)
     MaxVal = 1;
 
   exception=(&image->exception);
@@ -201,7 +201,7 @@ static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
   {
     if (*p > 0)
       {
-        f=(*p/MaxVal)*(QuantumRange-GetPixelRed(q));
+        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelRed(q));
         if ((f+GetPixelRed(q)) >= QuantumRange)
           SetPixelRed(q,QuantumRange);
         else
@@ -220,7 +220,7 @@ static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
       }
     if (*p < 0)
       {
-        f=(*p/MinVal)*(QuantumRange-GetPixelBlue(q));
+        f=(*p/MinVal)*(Quantum) (QuantumRange-GetPixelBlue(q));
         if ((f+GetPixelBlue(q)) >= QuantumRange)
           SetPixelBlue(q,QuantumRange);
         else
@@ -256,9 +256,9 @@ static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
   int x;
   register PixelPacket *q;
 
-  if (MinVal == 0)
+  if (MinVal >= 0)
     MinVal = -1;
-  if (MaxVal == 0)
+  if (MaxVal <= 0)
     MaxVal = 1;
 
   exception=(&image->exception);
@@ -269,13 +269,13 @@ static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
   {
     if (*p > 0)
       {
-        f=(*p/MaxVal)*(QuantumRange-GetPixelRed(q));
-        if ((f+GetPixelRed(q)) >= QuantumRange)
-          SetPixelRed(q,QuantumRange);
-        else
+        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelRed(q));
+        if ((f+GetPixelRed(q)) < QuantumRange)
           SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
+        else
+          SetPixelRed(q,QuantumRange);
         f/=2.0;
-        if ((f > 0) && (f < GetPixelGreen(q)) && (f < GetPixelBlue(q)))
+        if (f < GetPixelGreen(q))
           {
             SetPixelBlue(q,GetPixelBlue(q)-ClampToQuantum(f));
             SetPixelGreen(q,GetPixelBlue(q));
@@ -288,7 +288,7 @@ static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
       }
     if (*p < 0)
       {
-        f=(*p/MaxVal)*(QuantumRange-GetPixelBlue(q));
+        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelBlue(q));
         if ((f > 0) && ((f+GetPixelBlue(q)) < QuantumRange))
           SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
         else
