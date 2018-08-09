@@ -1,3 +1,7 @@
+2018-08-08  6.9.10-10 Cristy  <quetzlzacatenango@image...>
+  * ThumbnailImage function no longer reveals sensitive information (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1243).
+
 2018-08-06  6.9.10-9 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-9, GIT revision 13721:6fb59a954:20180805.
 
