@@ -1573,7 +1573,8 @@ static MagickBooleanType ReadPSDLayersInternal(Image *image,
           count=ReadBlob(image,4,(unsigned char *) type);
           if (count == 4)
             ReversePSDString(image,type,4);
-          if ((count == 4) && (LocaleNCompare(type,"Lr16",4) == 0))
+          if ((count == 4) && ((LocaleNCompare(type,"Lr16",4) == 0) ||
+              (LocaleNCompare(type,"Lr32",4) == 0)))
             size=GetPSDSize(psd_info,image);
           else
             return(MagickTrue);
@@ -1622,8 +1623,7 @@ static MagickBooleanType ReadPSDLayersInternal(Image *image,
           ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
             image->filename);
         }
-      (void) memset(layer_info,0,(size_t) number_layers*
-        sizeof(*layer_info));
+      (void) memset(layer_info,0,(size_t) number_layers*sizeof(*layer_info));
 
       for (i=0; i < number_layers; i++)
       {
