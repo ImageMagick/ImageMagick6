@@ -2983,7 +2983,7 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
     }
   if (image_info->affirm != MagickFalse)
     return(MagickTrue);
-  if (frames == 0)
+  if ((frames == 0) && (*image_info->filename != '\0'))
     {
       /*
         Determine the image format from the first few bytes of the file.
