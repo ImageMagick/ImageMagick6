@@ -376,7 +376,6 @@ ModuleExport size_t RegisterHEICImage(void)
   entry->module=ConstantString("GIF");
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
-  entry->thread_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
