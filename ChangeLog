@@ -1,3 +1,6 @@
+2018-08-12  6.9.10-10 Dirk Lemstra <dirk@lem.....org>
+  * Restored thread support for the HEIC coder.
+
 2018-08-08  6.9.10-10 Cristy  <quetzlzacatenango@image...>
   * ThumbnailImage function no longer reveals sensitive information (reference
     https://github.com/ImageMagick/ImageMagick/issues/1243).
