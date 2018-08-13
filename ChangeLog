@@ -1,3 +1,6 @@
+2018-08-13  6.9.10-10 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-10, GIT revision 13743:8f8009715:20180813
+
 2018-08-12  6.9.10-10 Dirk Lemstra <dirk@lem.....org>
   * Restored thread support for the HEIC coder.
 
