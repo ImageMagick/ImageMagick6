@@ -17,7 +17,7 @@ PACKAGE_CHANGE_DATE=`awk '/^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/ { print 
 # Package version.  This is is the numeric version suffix applied to
 # PACKAGE_NAME (e.g. "1.0.0").
 PACKAGE_VERSION='6.9.10'
-PACKAGE_PERL_VERSION='6.9.10'
+PACKAGE_PERL_VERSION='6.9.11'
 PACKAGE_LIB_VERSION="0x69A"
 PACKAGE_RELEASE="10"
 PACKAGE_LIB_VERSION_NUMBER="6,9,10,${PACKAGE_RELEASE}"
