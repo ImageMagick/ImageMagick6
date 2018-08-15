@@ -209,8 +209,7 @@ static Image *ReadGRADIENTImage(const ImageInfo *image_info,
   SetImageInfoBlob(read_info,(void *) NULL,0);
   (void) CopyMagickString(colorname,image_info->filename,MaxTextExtent);
   (void) sscanf(image_info->filename,"%[^-]",colorname);
-  (void) FormatLocaleString(read_info->filename,MaxTextExtent,"xc:%s",
-    colorname);
+  (void) CopyMagickString(read_info->filename,colorname,MaxTextExtent);
   image=ReadXCImage(read_info,exception);
   read_info=DestroyImageInfo(read_info);
   if (image == (Image *) NULL)
