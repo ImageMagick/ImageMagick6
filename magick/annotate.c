@@ -1567,7 +1567,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     */
     glyph.id=grapheme[i].index;
     if (glyph.id == 0)
-      glyph.id=FT_Get_Char_Index(face,'?');
+      glyph.id=FT_Get_Char_Index(face,' ');
     if ((glyph.id != 0) && (last_glyph.id != 0))
       origin.x+=(FT_Pos) (64.0*draw_info->kerning);
     glyph.origin=origin;
