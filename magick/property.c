@@ -3278,7 +3278,7 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
       if (LocaleCompare("printsize.x",property) == 0)
         {
           (void) FormatLocaleString(value,MagickPathExtent,"%.*g",
-            GetMagickPrecision(),image->colors/image->x_resolution);
+            GetMagickPrecision(),image->columns/image->x_resolution);
           break;
         }
       if (LocaleCompare("printsize.y",property) == 0)
