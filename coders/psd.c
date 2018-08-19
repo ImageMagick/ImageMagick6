@@ -750,7 +750,7 @@ static StringInfo *ParseImageResourceBlocks(Image *image,
     if (p > (blocks+length-4))
       break;
     p=PushLongPixel(MSBEndian,p,&count);
-    if ((p+count) > (blocks+length))
+    if (((p+count) < blocks) || ((p+count) > (blocks+length)))
       break;
     switch (id)
     {
