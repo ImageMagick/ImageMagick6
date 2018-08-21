@@ -2540,7 +2540,7 @@ am__DIST_COMMON = $(srcdir)/ImageMagick.spec.in \
 	$(top_srcdir)/wand/Wand.pc.in ChangeLog config/ar-lib \
 	config/compile config/config.guess config/config.sub \
 	config/depcomp config/install-sh config/ltmain.sh \
-	config/missing config/mkinstalldirs
+	config/missing config/mkinstalldirs missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
