@@ -510,6 +510,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
       if ((channel & RedChannel) != 0)
         {
           pixel=Sa*GetPixelRed(p)-Da*GetPixelRed(q);
+          distance+=pixel*pixel;
           if (distance > fuzz)
             {
               channel_distortion[RedChannel]++;
