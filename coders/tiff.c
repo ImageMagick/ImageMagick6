@@ -191,7 +191,6 @@ static const ExifInfo
     { 0, 0, 0, (char *) NULL }
 };
 #endif
-#endif  /* MAGICKCORE_TIFF_DELEGATE */
 
 /*
   Global declarations.
@@ -212,7 +211,6 @@ static volatile MagickBooleanType
 /*
   Forward declarations.
 */
-#if defined(MAGICKCORE_TIFF_DELEGATE)
 static Image *
   ReadTIFFImage(const ImageInfo *,ExceptionInfo *);
 
@@ -2172,6 +2170,7 @@ RestoreMSCWarning
 %
 */
 
+#if defined(MAGICKCORE_TIFF_DELEGATE)
 #if defined(MAGICKCORE_HAVE_TIFFMERGEFIELDINFO) && defined(MAGICKCORE_HAVE_TIFFSETTAGEXTENDER)
 static TIFFExtendProc
   tag_extender = (TIFFExtendProc) NULL;
@@ -2264,6 +2263,7 @@ static void TIFFTagExtender(TIFF *tiff)
   TIFFIgnoreTags(tiff);
 }
 #endif
+#endif
 
 ModuleExport size_t RegisterTIFFImage(void)
 {
@@ -2275,6 +2275,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   MagickInfo
     *entry;
 
+#if defined(MAGICKCORE_TIFF_DELEGATE)
   if (tiff_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&tiff_semaphore);
   LockSemaphoreInfo(tiff_semaphore);
@@ -2291,6 +2292,7 @@ ModuleExport size_t RegisterTIFFImage(void)
       instantiate_key=MagickTrue;
     }
   UnlockSemaphoreInfo(tiff_semaphore);
+#endif
   *version='\0';
 #if defined(TIFF_VERSION)
   (void) FormatLocaleString(version,MaxTextExtent,"%d",TIFF_VERSION);
@@ -2405,6 +2407,7 @@ ModuleExport void UnregisterTIFFImage(void)
   (void) UnregisterMagickInfo("TIFF");
   (void) UnregisterMagickInfo("TIF");
   (void) UnregisterMagickInfo("PTIF");
+#if defined(MAGICKCORE_TIFF_DELEGATE)
   if (tiff_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&tiff_semaphore);
   LockSemaphoreInfo(tiff_semaphore);
@@ -2422,6 +2425,7 @@ ModuleExport void UnregisterTIFFImage(void)
     }
   UnlockSemaphoreInfo(tiff_semaphore);
   DestroySemaphoreInfo(&tiff_semaphore);
+#endif
 }
 
 #if defined(MAGICKCORE_TIFF_DELEGATE)
