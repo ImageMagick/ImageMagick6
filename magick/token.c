@@ -560,9 +560,9 @@ MagickExport MagickBooleanType GlobExpression(const char *expression,
                   }
               }
             }
-            if (GetUTFCode(pattern) != 0)
-              pattern+=GetUTFOctets(pattern);
-          }
+          if (GetUTFCode(pattern) != 0)
+            pattern+=GetUTFOctets(pattern);
+        }
         break;
       }
       case '\\':
