@@ -1779,9 +1779,9 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
       if (LocaleCompare(symbol,"page.y") == 0)
         return((double) image->page.y);
       if (LocaleCompare(symbol,"printsize.x") == 0)
-        return(image->columns/image->x_resolution);
+        return(PerceptibleReciprocal(image->resolution.x)*image->columns);
       if (LocaleCompare(symbol,"printsize.y") == 0)
-        return(image->rows/image->y_resolution);
+        return(PerceptibleReciprocal(image->resolution.y)*image->rows);
       break;
     }
     case 'Q':
