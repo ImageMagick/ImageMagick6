@@ -1283,7 +1283,7 @@ MagickExport MagickBooleanType OpenModule(const char *module,
     {
       errno=EPERM;
       (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",tag);
+        "NotAuthorized","`%s'",module);
       return(MagickFalse);
     }
   (void) CopyMagickString(module_name,module,MaxTextExtent);
