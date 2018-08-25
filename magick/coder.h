@@ -22,6 +22,7 @@
 extern "C" {
 #endif
 
+#include <errno.h>
 #include "magick/exception-private.h"
 #include "magick/policy.h"
 
