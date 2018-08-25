@@ -22,6 +22,9 @@
 extern "C" {
 #endif
 
+#include "magick/exception-private.h"
+#include "magick/policy.h"
+
 typedef struct _CoderInfo
 {
   char
@@ -54,6 +57,20 @@ extern MagickExport MagickBooleanType
 
 MagickExport void
   CoderComponentTerminus(void);
+
+static inline MagickBooleanType IsCoderAuthorized(const char *module,
+  const char *coder,const PolicyRights rights,ExceptionInfo *exception)
+{
+  if ((IsRightsAuthorized(ModulePolicyDomain,rights,module) == MagickFalse) ||
+      (IsRightsAuthorized(CoderPolicyDomain,rights,coder) == MagickFalse))
+    {
+      errno=EPERM;
+      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
+        "NotAuthorized","`%s:%s'",module,coder);
+      return(MagickFalse);
+    }
+  return(MagickTrue);
+}
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
