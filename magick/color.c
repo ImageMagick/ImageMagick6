@@ -2570,7 +2570,7 @@ MagickExport MagickBooleanType QueryColorname(const Image *image,
 %
 %  The format of the QueryMagickColor method is:
 %
-%      MagickBooleanType QueryMagickColorCompilence(const char *name,
+%      MagickBooleanType QueryMagickColorCompiliance(const char *name,
 %        const ComplianceType compliance,MagickPixelPacket *color,
 %        ExceptionInfo *exception)
 %
