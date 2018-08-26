@@ -3278,14 +3278,14 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
       if (LocaleCompare("printsize.x",property) == 0)
         {
           (void) FormatLocaleString(value,MagickPathExtent,"%.*g",
-            GetMagickPrecision(),PerceptibleReciprocal(image->resolution.x)*
+            GetMagickPrecision(),PerceptibleReciprocal(image->x_resolution)*
               image->columns);
           break;
         }
       if (LocaleCompare("printsize.y",property) == 0)
         {
           (void) FormatLocaleString(value,MagickPathExtent,"%.*g",
-            GetMagickPrecision(),PerceptibleReciprocal(image->resolution.y)*
+            GetMagickPrecision(),PerceptibleReciprocal(image->y_resolution)*
               image->rows);
           break;
         }
