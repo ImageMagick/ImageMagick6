@@ -44,6 +44,7 @@
 #include "magick/exception.h"
 #include "magick/exception-private.h"
 #include "magick/image.h"
+#include "magick/image-private.h"
 #include "magick/memory_.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
@@ -521,7 +522,7 @@ MagickExport MagickBooleanType GlobExpression(const char *expression,
               match=GlobExpression(expression,target,case_insensitive);
               if (match != MagickFalse)
                 {
-                  expression+=strlen(target);
+                  expression+=MagickMin(strlen(expression),strlen(target));
                   break;
                 }
               p=target;
