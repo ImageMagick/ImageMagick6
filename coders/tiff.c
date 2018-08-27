@@ -2678,6 +2678,8 @@ static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
         exception);
       if (pyramid_image == (Image *) NULL)
         break;
+      DestroyBlob(pyramid_image);
+      pyramid_image->blob=ReferenceBlob(next->blob);
       pyramid_image->x_resolution=resolution.x;
       pyramid_image->y_resolution=resolution.y;
       (void) SetImageProperty(pyramid_image,"tiff:subfiletype","REDUCEDIMAGE");
