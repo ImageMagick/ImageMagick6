@@ -463,6 +463,9 @@
         <message name="URLNotFound">
           URL not found
         </message>
+        <message name="VectorGraphicsNestedTooDeeply">
+          vector graphics nested too deeply
+        </message>
       </error>
     </draw>
     <file>

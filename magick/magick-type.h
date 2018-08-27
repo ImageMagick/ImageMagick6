@@ -46,7 +46,7 @@ typedef float MagickFloatType;
 #elif (MAGICKCORE_SIZEOF_FLOAT_T == MAGICKCORE_SIZEOF_DOUBLE)
 typedef double MagickFloatType;
 #elif (MAGICKCORE_SIZEOF_FLOAT_T == MAGICKCORE_SIZEOF_LONG_DOUBLE)
-typedef long double MagickFloatType;
+typedef double MagickFloatType;
 #else
 #error Your MagickFloatType type is neither a float, nor a double, nor a long double
 #endif
@@ -55,7 +55,7 @@ typedef double MagickDoubleType;
 #elif (MAGICKCORE_SIZEOF_DOUBLE_T == MAGICKCORE_SIZEOF_DOUBLE)
 typedef double MagickDoubleType;
 #elif (MAGICKCORE_SIZEOF_DOUBLE_T == MAGICKCORE_SIZEOF_LONG_DOUBLE)
-typedef long double MagickDoubleType;
+typedef double MagickDoubleType;
 #else
 #error Your MagickDoubleType type is neither a float, nor a double, nor a long double
 #endif

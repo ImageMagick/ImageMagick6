@@ -261,7 +261,7 @@ extern MagickExport const IndexPacket
   *GetVirtualIndexesFromNexus(const Cache,NexusInfo *);
 
 extern MagickExport const PixelPacket
-  *GetVirtualPixelsFromNexus(const Image *,const VirtualPixelMethod,
+  *GetVirtualPixelCacheNexus(const Image *,const VirtualPixelMethod,
     const ssize_t,const ssize_t,const size_t,const size_t,NexusInfo *,
     ExceptionInfo *) magick_hot_spot,
   *GetVirtualPixelsNexus(const Cache,NexusInfo *);

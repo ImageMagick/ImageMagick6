@@ -229,7 +229,8 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
   if ((*p != '+') && (*p != '-'))
     {
       c=(int) ((unsigned char) *q);
-      if ((c == 215) || (*q == 'x') || (*q == 'X') || (*q == '\0'))
+      if ((c == 215) || (*q == 'x') || (*q == 'X') || (*q == ':') ||
+          (*q == '\0'))
         {
           /*
             Parse width.
@@ -249,7 +250,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
   if ((*p != '+') && (*p != '-'))
     {
       c=(int) ((unsigned char) *p);
-      if ((c == 215) || (*p == 'x') || (*p == 'X'))
+      if ((c == 215) || (*p == 'x') || (*p == 'X') || (*p == ':'))
         {
           p++;
           if ((*p != '+') && (*p != '-'))
@@ -988,8 +989,8 @@ MagickExport MagickStatusType ParseGeometry(const char *geometry,
   if (LocaleNCompare(p,"0x",2) == 0)
     (void) strtol(p,&q,10);
   c=(int) ((unsigned char) *q);
-  if ((c == 215) || (*q == 'x') || (*q == 'X') || (*q == ',') ||
-      (*q == '/') || (*q == ':') || (*q =='\0'))
+  if ((c == 215) || (*q == 'x') || (*q == 'X') || (*q == ':') ||
+      (*q == ',') || (*q == '/') || (*q =='\0'))
     {
       /*
         Parse rho.
@@ -1007,8 +1008,8 @@ MagickExport MagickStatusType ParseGeometry(const char *geometry,
     }
   q=p;
   c=(int) ((unsigned char) *p);
-  if ((c == 215) || (*p == 'x') || (*p == 'X') || (*p == ',') || (*p == '/') ||
-      (*p == ':'))
+  if ((c == 215) || (*p == 'x') || (*p == 'X') || (*p == ':') || (*p == ',') ||
+      (*p == '/'))
     {
       /*
         Parse sigma.
@@ -1017,8 +1018,8 @@ MagickExport MagickStatusType ParseGeometry(const char *geometry,
       while (isspace((int) ((unsigned char) *p)) != 0)
         p++;
       c=(int) ((unsigned char) *q);
-      if (((c != 215) && (*q != 'x') && (*q != 'X')) || ((*p != '+') &&
-          (*p != '-')))
+      if (((c != 215) && (*q != 'x') && (*q != 'X') && (*q != ':')) ||
+          ((*p != '+') && (*p != '-')))
         {
           q=p;
           value=StringToDouble(p,&p);

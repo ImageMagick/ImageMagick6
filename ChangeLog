@@ -1,6 +1,28 @@
+2018-08-26  6.9.10-11 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-11, GIT revision 13791:216c19429:20180826
+
+2018-08-15  6.9.10-11 Cristy  <quetzlzacatenango@image...>
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+    exceeded, and timeouts (credit to OSS Fuzz).
+  * Add support for "module" security policy.
+
+2018-08-13  6.9.10-10 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-10, GIT revision 13743:8f8009715:20180813
+
+2018-08-12  6.9.10-10 Dirk Lemstra <dirk@lem.....org>
+  * Restored thread support for the HEIC coder.
+
+2018-08-08  6.9.10-10 Cristy  <quetzlzacatenango@image...>
+  * ThumbnailImage function no longer reveals sensitive information (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1243).
+
+2018-08-06  6.9.10-9 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-9, GIT revision 13721:6fb59a954:20180805.
+
 2018-07-24  6.9.10-9 Cristy  <quetzlzacatenango@image...>
   * XBM coder leaves the hex image data uninitialized if hex value of the
     pixel is negative.
+  * More improvements to SVG text handling.
 
 2018-07-23  6.9.10-8 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-8, GIT revision 13693:88aeaf9d9:20180723.

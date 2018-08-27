@@ -91,6 +91,86 @@
 %    o exception: return any errors or warnings in this structure.
 %
 */
+
+static Image *ReadXCImage(const ImageInfo *image_info,ExceptionInfo *exception)
+{
+  Image
+    *image;
+
+  IndexPacket
+    index,
+    *indexes;
+
+  MagickBooleanType
+    status;
+
+  MagickPixelPacket
+    color;
+
+  PixelPacket
+    pixel;
+
+  register ssize_t
+    x;
+
+  register PixelPacket
+    *q;
+
+  ssize_t
+    y;
+
+  /*
+    Initialize Image structure.
+  */
+  assert(image_info != (const ImageInfo *) NULL);
+  assert(image_info->signature == MagickCoreSignature);
+  if (image_info->debug != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
+      image_info->filename);
+  assert(exception != (ExceptionInfo *) NULL);
+  assert(exception->signature == MagickCoreSignature);
+  image=AcquireImage(image_info);
+  if (image->columns == 0)
+    image->columns=1;
+  if (image->rows == 0)
+    image->rows=1;
+  status=SetImageExtent(image,image->columns,image->rows);
+  if (status == MagickFalse)
+    {
+      InheritException(exception,&image->exception);
+      return(DestroyImageList(image));
+    }
+  (void) CopyMagickString(image->filename,image_info->filename,MaxTextExtent);
+  status=QueryMagickColor((char *) image_info->filename,&color,exception);
+  if (status == MagickFalse)
+    {
+      image=DestroyImage(image);
+      return((Image *) NULL);
+    }
+  (void) SetImageColorspace(image,color.colorspace);
+  image->matte=color.matte;
+  (void) memset(&pixel,0,sizeof(pixel));
+  index=0;
+  SetPixelPacket(image,&color,&pixel,&index);
+  for (y=0; y < (ssize_t) image->rows; y++)
+  {
+    q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
+    if (q == (PixelPacket *) NULL)
+      break;
+    for (x=0; x < (ssize_t) image->columns; x++)
+      *q++=pixel;
+    if (image->colorspace == CMYKColorspace)
+      {
+        indexes=GetAuthenticIndexQueue(image);
+        for (x=0; x < (ssize_t) image->columns; x++)
+          SetPixelIndex(indexes+x,index);
+      }
+    if (SyncAuthenticPixels(image,exception) == MagickFalse)
+      break;
+  }
+  return(GetFirstImageInList(image));
+}
+
 static Image *ReadGRADIENTImage(const ImageInfo *image_info,
   ExceptionInfo *exception)
 {
@@ -129,9 +209,8 @@ static Image *ReadGRADIENTImage(const ImageInfo *image_info,
   SetImageInfoBlob(read_info,(void *) NULL,0);
   (void) CopyMagickString(colorname,image_info->filename,MaxTextExtent);
   (void) sscanf(image_info->filename,"%[^-]",colorname);
-  (void) FormatLocaleString(read_info->filename,MaxTextExtent,"xc:%s",
-    colorname);
-  image=ReadImage(read_info,exception);
+  (void) CopyMagickString(read_info->filename,colorname,MaxTextExtent);
+  image=ReadXCImage(read_info,exception);
   read_info=DestroyImageInfo(read_info);
   if (image == (Image *) NULL)
     return((Image *) NULL);

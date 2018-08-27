@@ -1440,7 +1440,10 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
           switch (depth)
           {
             default:
+            {
+              colormap=(unsigned char *) RelinquishMagickMemory(colormap);
               ThrowWriterException(CorruptImageError,"ImageDepthNotSupported");
+            }
             case 32:
             {
               unsigned int

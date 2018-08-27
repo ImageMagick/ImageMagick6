@@ -45,6 +45,7 @@
 #include "magick/blob-private.h"
 #include "magick/exception.h"
 #include "magick/exception-private.h"
+#include "magick/image-private.h"
 #include "magick/list.h"
 #include "magick/memory_.h"
 #include "magick/string_.h"
@@ -179,8 +180,8 @@ MagickExport Image *CloneImageList(const Image *images,ExceptionInfo *exception)
 %
 %  The numbers start at 0 for the first image in the list, while negative
 %  numbers refer to images starting counting from the end of the range. Images
-%  may be refered to multiple times to clone them multiple times. Images
-%  refered beyond the available number of images in list are ignored.
+%  may be referred to multiple times to clone them multiple times. Images
+%  referred beyond the available number of images in list are ignored.
 %
 %  Images referenced may be reversed, and results in a clone of those images
 %  also being made with a reversed order.
@@ -213,16 +214,16 @@ MagickExport Image *CloneImages(const Image *images,const char *scenes,
     *clone_images,
     *image;
 
-  long
-    first,
-    last,
-    step;
-
   register ssize_t
     i;
 
   size_t
     length;
+
+  ssize_t
+    first,
+    last,
+    step;
 
   assert(images != (const Image *) NULL);
   assert(images->signature == MagickCoreSignature);
@@ -238,19 +239,28 @@ MagickExport Image *CloneImages(const Image *images,const char *scenes,
   {
     while ((isspace((int) ((unsigned char) *p)) != 0) || (*p == ','))
       p++;
-    first=strtol(p,&p,10);
+    first=(ssize_t) strtol(p,&p,10);
     if (first < 0)
-      first+=(long) length;
+      first+=(ssize_t) length;
+    else
+      if (first > (ssize_t) length)
+        first=(ssize_t) length;
     last=first;
     while (isspace((int) ((unsigned char) *p)) != 0)
       p++;
     if (*p == '-')
       {
-        last=strtol(p+1,&p,10);
+        last=(ssize_t) strtol(p+1,&p,10);
         if (last < 0)
-          last+=(long) length;
+          last+=(ssize_t) length;
+        else
+          if (last > (ssize_t) length)
+            last=(ssize_t) length;
       }
-    for (step=first > last ? -1 : 1; first != (last+step); first+=step)
+    first=MagickMin(MagickMax(first,0),length);
+    last=MagickMin(MagickMax(last,0),length);
+    step=(ssize_t) (first > last ? -1 : 1);
+    for ( ; first != (last+step); first+=step)
     {
       i=0;
       for (next=images; next != (Image *) NULL; next=GetNextImageInList(next))
@@ -317,8 +327,8 @@ MagickExport void DeleteImageFromList(Image **images)
 %  comma separated list of image numbers or ranges.
 %
 %  The numbers start at 0 for the first image, while negative numbers refer to
-%  images starting counting from the end of the range. Images may be refered to
-%  multiple times without problems. Image refered beyond the available number
+%  images starting counting from the end of the range. Images may be referred to
+%  multiple times without problems. Image referred beyond the available number
 %  of images in list are ignored.
 %
 %  If the referenced images are in the reverse order, that range will be
@@ -470,8 +480,8 @@ MagickExport Image *DestroyImageList(Image *images)
 %  using a count and a comma separated list of image numbers or ranges.
 %
 %  The numbers start at 0 for the first image, while negative numbers refer to
-%  images starting counting from the end of the range. Images may be refered to
-%  multiple times without problems. Image refered beyond the available number
+%  images starting counting from the end of the range. Images may be referred to
+%  multiple times without problems. Image referred beyond the available number
 %  of images in list are ignored.
 %
 %  The format of the DuplicateImages method is:
@@ -1445,7 +1455,9 @@ MagickExport Image *SyncNextImageInList(const Image *images)
       DestroyBlob(images->next);
       images->next->blob=ReferenceBlob(images->blob);
     }
-  images->next->compression=images->compression;
-  images->next->endian=images->endian;
+  if (images->next->compression == UndefinedCompression)
+    images->next->compression=images->compression;
+  if (images->next->endian == UndefinedEndian)
+    images->next->endian=images->endian;
   return(images->next);
 }

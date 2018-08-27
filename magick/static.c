@@ -378,6 +378,9 @@ MagickExport MagickBooleanType RegisterStaticModule(const char *module,
   char
     module_name[MagickPathExtent];
 
+  PolicyRights
+    rights;
+
   register const CoderInfo
     *p;
 
@@ -392,6 +395,14 @@ MagickExport MagickBooleanType RegisterStaticModule(const char *module,
   */
   assert(module != (const char *) NULL);
   (void) CopyMagickString(module_name,module,MagickPathExtent);
+  rights=ReadPolicyRights;
+  if (IsRightsAuthorized(ModulePolicyDomain,rights,module) == MagickFalse)
+    {
+      errno=EPERM;
+      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
+        "NotAuthorized","`%s'",module);
+      return(MagickFalse);
+    }
   p=GetCoderInfo(module,exception);
   if (p != (CoderInfo *) NULL)
     (void) CopyMagickString(module_name,p->name,MagickPathExtent);

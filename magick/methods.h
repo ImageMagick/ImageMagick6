@@ -648,7 +648,7 @@ extern "C" {
 #define GetVirtualIndexQueue  PrependMagickMethod(GetVirtualIndexQueue)
 #define GetVirtualMemoryBlob  PrependMagickMethod(GetVirtualMemoryBlob)
 #define GetVirtualPixelQueue  PrependMagickMethod(GetVirtualPixelQueue)
-#define GetVirtualPixelsFromNexus  PrependMagickMethod(GetVirtualPixelsFromNexus)
+#define GetVirtualPixelCacheNexus  PrependMagickMethod(GetVirtualPixelCacheNexus)
 #define GetVirtualPixelsNexus  PrependMagickMethod(GetVirtualPixelsNexus)
 #define GetVirtualPixels  PrependMagickMethod(GetVirtualPixels)
 #define GetXMLTreeAttribute  PrependMagickMethod(GetXMLTreeAttribute)
