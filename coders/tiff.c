@@ -191,7 +191,6 @@ static const ExifInfo
     { 0, 0, 0, (char *) NULL }
 };
 #endif
-#endif  /* MAGICKCORE_TIFF_DELEGATE */
 
 /*
   Global declarations.
@@ -212,7 +211,6 @@ static volatile MagickBooleanType
 /*
   Forward declarations.
 */
-#if defined(MAGICKCORE_TIFF_DELEGATE)
 static Image *
   ReadTIFFImage(const ImageInfo *,ExceptionInfo *);
 
@@ -1009,7 +1007,7 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
     *option;
 
   const StringInfo
-    *layer_info;
+    *profile;
 
   Image
     *layers;
@@ -1027,37 +1025,39 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
   option=GetImageOption(image_info,"tiff:ignore-layers");
   if (option != (const char * ) NULL)
     return;
-  layer_info=GetImageProfile(image,"tiff:37724");
-  if (layer_info == (const StringInfo *) NULL)
+  profile=GetImageProfile(image,"tiff:37724");
+  if (profile == (const StringInfo *) NULL)
     return;
-  for (i=0; i < (ssize_t) layer_info->length-8; i++)
+  for (i=0; i < (ssize_t) profile->length-8; i++)
   {
-    if (LocaleNCompare((const char *) (layer_info->datum+i),
+    if (LocaleNCompare((const char *) (profile->datum+i),
         image->endian == MSBEndian ? "8BIM" : "MIB8",4) != 0)
       continue;
     i+=4;
-    if ((LocaleNCompare((const char *) (layer_info->datum+i),
+    if ((LocaleNCompare((const char *) (profile->datum+i),
          image->endian == MSBEndian ? "Layr" : "ryaL",4) == 0) ||
-        (LocaleNCompare((const char *) (layer_info->datum+i),
+        (LocaleNCompare((const char *) (profile->datum+i),
          image->endian == MSBEndian ? "LMsk" : "ksML",4) == 0) ||
-        (LocaleNCompare((const char *) (layer_info->datum+i),
+        (LocaleNCompare((const char *) (profile->datum+i),
          image->endian == MSBEndian ? "Lr16" : "61rL",4) == 0) ||
-        (LocaleNCompare((const char *) (layer_info->datum+i),
+        (LocaleNCompare((const char *) (profile->datum+i),
          image->endian == MSBEndian ? "Lr32" : "23rL",4) == 0))
       break;
   }
   i+=4;
-  if (i >= (ssize_t) (layer_info->length-8))
+  if (i >= (ssize_t) (profile->length-8))
     return;
   layers=CloneImage(image,0,0,MagickTrue,exception);
   (void) DeleteImageProfile(layers,"tiff:37724");
-  AttachBlob(layers->blob,layer_info->datum,layer_info->length);
+  AttachBlob(layers->blob,profile->datum,profile->length);
   SeekBlob(layers,(MagickOffsetType) i,SEEK_SET);
   info.version=1;
   info.columns=layers->columns;
   info.rows=layers->rows;
   /* Setting the mode to a value that won't change the colorspace */
   info.mode=10;
+  if (image->storage_class == PseudoClass)
+    info.mode=2; /* indexed mode */
   if (IsGrayImage(image,&image->exception) != MagickFalse)
     info.channels=(image->matte != MagickFalse ? 2UL : 1UL);
   else
@@ -1072,7 +1072,7 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
       }
   (void) ReadPSDLayers(layers,image_info,&info,MagickFalse,exception);
   /* we need to set the datum in case a realloc happend */
-  ((StringInfo *) layer_info)->datum=GetBlobStreamData(layers);
+  ((StringInfo *) profile)->datum=GetBlobStreamData(layers);
   InheritException(exception,&layers->exception);
   DeleteImageFromList(&layers);
   if (layers != (Image *) NULL)
@@ -1637,7 +1637,7 @@ RestoreMSCWarning
       ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
     if (((MagickSizeType) TIFFScanlineSize(tiff)) > GetBlobSize(image))
       ThrowTIFFException(CorruptImageError,"InsufficientImageDataInFile");
-    number_pixels=MagickMax(TIFFScanlineSize(tiff),MagickMax((ssize_t) 
+    number_pixels=MagickMax(TIFFScanlineSize(tiff),MagickMax((ssize_t)
       image->columns*samples_per_pixel*pow(2.0,ceil(log(bits_per_sample)/
       log(2.0))),image->columns*rows_per_strip)*sizeof(uint32));
     tiff_pixels=(unsigned char *) AcquireMagickMemory(number_pixels);
@@ -2170,6 +2170,7 @@ RestoreMSCWarning
 %
 */
 
+#if defined(MAGICKCORE_TIFF_DELEGATE)
 #if defined(MAGICKCORE_HAVE_TIFFMERGEFIELDINFO) && defined(MAGICKCORE_HAVE_TIFFSETTAGEXTENDER)
 static TIFFExtendProc
   tag_extender = (TIFFExtendProc) NULL;
@@ -2262,6 +2263,7 @@ static void TIFFTagExtender(TIFF *tiff)
   TIFFIgnoreTags(tiff);
 }
 #endif
+#endif
 
 ModuleExport size_t RegisterTIFFImage(void)
 {
@@ -2273,6 +2275,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   MagickInfo
     *entry;
 
+#if defined(MAGICKCORE_TIFF_DELEGATE)
   if (tiff_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&tiff_semaphore);
   LockSemaphoreInfo(tiff_semaphore);
@@ -2289,6 +2292,7 @@ ModuleExport size_t RegisterTIFFImage(void)
       instantiate_key=MagickTrue;
     }
   UnlockSemaphoreInfo(tiff_semaphore);
+#endif
   *version='\0';
 #if defined(TIFF_VERSION)
   (void) FormatLocaleString(version,MaxTextExtent,"%d",TIFF_VERSION);
@@ -2403,6 +2407,7 @@ ModuleExport void UnregisterTIFFImage(void)
   (void) UnregisterMagickInfo("TIFF");
   (void) UnregisterMagickInfo("TIF");
   (void) UnregisterMagickInfo("PTIF");
+#if defined(MAGICKCORE_TIFF_DELEGATE)
   if (tiff_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&tiff_semaphore);
   LockSemaphoreInfo(tiff_semaphore);
@@ -2420,6 +2425,7 @@ ModuleExport void UnregisterTIFFImage(void)
     }
   UnlockSemaphoreInfo(tiff_semaphore);
   DestroySemaphoreInfo(&tiff_semaphore);
+#endif
 }
 
 #if defined(MAGICKCORE_TIFF_DELEGATE)
@@ -3284,13 +3290,11 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
       case FaxCompression:
       {
         compress_tag=COMPRESSION_CCITTFAX3;
-        SetQuantumMinIsWhite(quantum_info,MagickTrue);
         break;
       }
       case Group4Compression:
       {
         compress_tag=COMPRESSION_CCITTFAX4;
-        SetQuantumMinIsWhite(quantum_info,MagickTrue);
         break;
       }
 #if defined(COMPRESSION_JBIG)

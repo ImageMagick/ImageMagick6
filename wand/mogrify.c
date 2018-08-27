@@ -196,7 +196,7 @@ WandExport MagickBooleanType MagickCommandGenesis(ImageInfo *image_info,
     TimerInfo
       *timer;
 
-    SetOpenMPMaximumThreads((int) n);
+    (void) SetMagickResourceLimit(ThreadResource,(MagickSizeType) n);
     timer=AcquireTimerInfo();
     if (concurrent == MagickFalse)
       {
@@ -1637,9 +1637,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             */
             (void) SyncImageSettings(mogrify_info,*image);
             (void) ParsePageGeometry(*image,argv[i+1],&geometry,exception);
-            (void) QueryColorDatabase(argv[i+2],&draw_info->fill,exception);
-            (void) GetOneVirtualMagickPixel(*image,geometry.x,geometry.y,
-              &target,exception);
+            (void) QueryMagickColor(argv[i+2],&target,exception);
             (void) FloodfillPaintImage(*image,channel,draw_info,&target,
               geometry.x,geometry.y,*option == '-' ? MagickFalse : MagickTrue);
             InheritException(exception,&(*image)->exception);

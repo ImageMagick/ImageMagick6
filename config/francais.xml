@@ -457,6 +457,9 @@
         <message name="URLNotFound">
           URL inaccessible
         </message>
+        <message name="VectorGraphicsNestedTooDeeply">
+          trop d'imbrication de vector graphiques
+        </message>
       </error>
     </draw>
     <file>

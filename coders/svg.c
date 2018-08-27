@@ -554,7 +554,7 @@ static void SVGElementDeclaration(void *context,const xmlChar *name,int type,
         name,(xmlElementTypeVal) type,content);
 }
 
-static void SVGStripString(char *message)
+static void SVGStripString(const MagickBooleanType trim,char *message)
 {
   register char
     *p,
@@ -584,23 +584,26 @@ static void SVGStripString(char *message)
     *q++=(*p);
   }
   *q='\0';
-  /*
-    Remove whitespace.
-  */
-  length=strlen(message);
-  p=message;
-  while (isspace((int) ((unsigned char) *p)) != 0)
-    p++;
-  if ((*p == '\'') || (*p == '"'))
-    p++;
-  q=message+length-1;
-  while ((isspace((int) ((unsigned char) *q)) != 0) && (q > p))
-    q--;
-  if (q > p)
-    if ((*q == '\'') || (*q == '"'))
-      q--;
-  (void) memmove(message,p,(size_t) (q-p+1));
-  message[q-p+1]='\0';
+  if (trim != MagickFalse)
+    {
+      /*
+        Remove whitespace.
+      */
+      length=strlen(message);
+      p=message;
+      while (isspace((int) ((unsigned char) *p)) != 0)
+        p++;
+      if ((*p == '\'') || (*p == '"'))
+        p++;
+      q=message+length-1;
+      while ((isspace((int) ((unsigned char) *q)) != 0) && (q > p))
+        q--;
+      if (q > p)
+        if ((*q == '\'') || (*q == '"'))
+          q--;
+      (void) memmove(message,p,(size_t) (q-p+1));
+      message[q-p+1]='\0';
+    }
   /*
     Convert newlines to a space.
   */
@@ -662,13 +665,13 @@ static char **SVGKeyValuePairs(void *context,const int key_sentinel,
       }
     tokens[i]=AcquireString(p);
     (void) CopyMagickString(tokens[i],p,(size_t) (q-p+1));
-    SVGStripString(tokens[i]);
+    SVGStripString(MagickTrue,tokens[i]);
     i++;
     p=q+1;
   }
   tokens[i]=AcquireString(p);
   (void) CopyMagickString(tokens[i],p,(size_t) (q-p+1));
-  SVGStripString(tokens[i++]);
+  SVGStripString(MagickTrue,tokens[i++]);
   tokens[i]=(char *) NULL;
   *number_tokens=(size_t) i;
   return(tokens);
@@ -865,6 +868,27 @@ static void SVGProcessStyleElement(void *context,const xmlChar *name,
         if (LocaleCompare(keyword,"font-weight") == 0)
           {
             (void) FormatLocaleFile(svg_info->file,"font-weight \"%s\"\n",
+              value);
+            break;
+          }
+        break;
+      }
+      case 'K':
+      case 'k':
+      {
+        if (LocaleCompare(keyword,"kerning") == 0)
+          {
+            (void) FormatLocaleFile(svg_info->file,"kerning \"%s\"\n",value);
+            break;
+          }
+        break;
+      }
+      case 'L':
+      case 'l':
+      {
+        if (LocaleCompare(keyword,"letter-spacing") == 0)
+          {
+            (void) FormatLocaleFile(svg_info->file,"letter-spacing \"%s\"\n",
               value);
             break;
           }
@@ -1897,6 +1921,27 @@ static void SVGStartElement(void *context,const xmlChar *name,
             }
           break;
         }
+        case 'K':
+        case 'k':
+        {
+          if (LocaleCompare(keyword,"kernel") == 0)
+            {
+              (void) FormatLocaleFile(svg_info->file,"kernel \"%s\"\n",value);
+              break;
+            }
+          break;
+        }
+        case 'L':
+        case 'l':
+        {
+          if (LocaleCompare(keyword,"letter-spacing") == 0)
+            {
+              (void) FormatLocaleFile(svg_info->file,"letter-spacing \"%s\"\n",
+                value);
+              break;
+            }
+          break;
+        }
         case 'M':
         case 'm':
         {
@@ -2704,6 +2749,7 @@ static void SVGEndElement(void *context,const xmlChar *name)
               char
                 *text;
 
+              SVGStripString(MagickTrue,svg_info->text);
               text=EscapeString(svg_info->text,'\'');
               (void) FormatLocaleFile(svg_info->file,"text 0,0 \"%s\"\n",text);
               text=DestroyString(text);
@@ -2793,7 +2839,7 @@ static void SVGCharacters(void *context,const xmlChar *c,int length)
   for (i=0; i < (ssize_t) length; i++)
     *p++=c[i];
   *p='\0';
-  SVGStripString(text);
+  SVGStripString(MagickFalse,text);
   if (svg_info->text == (char *) NULL)
     svg_info->text=text;
   else
@@ -4311,9 +4357,30 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         status=MagickFalse;
         break;
       }
+      case 'k':
+      case 'K':
+      {
+        if (LocaleCompare("kerning",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            (void) FormatLocaleString(message,MagickPathExtent,"kerning:%s;",
+              token);
+            (void) WriteBlobString(image,message);
+            break;
+          }
+        break;
+      }
       case 'l':
       case 'L':
       {
+        if (LocaleCompare("letter-spacing",keyword) == 0)
+          {
+            GetNextToken(q,&q,extent,token);
+            (void) FormatLocaleString(message,MagickPathExtent,
+              "letter-spacing:%s;",token);
+            (void) WriteBlobString(image,message);
+            break;
+          }
         if (LocaleCompare("line",keyword) == 0)
           {
             primitive_type=LinePrimitive;

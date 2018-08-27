@@ -3275,6 +3275,20 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
             }
       }
 #endif
+      if (LocaleCompare("printsize.x",property) == 0)
+        {
+          (void) FormatLocaleString(value,MagickPathExtent,"%.*g",
+            GetMagickPrecision(),PerceptibleReciprocal(image->x_resolution)*
+              image->columns);
+          break;
+        }
+      if (LocaleCompare("printsize.y",property) == 0)
+        {
+          (void) FormatLocaleString(value,MagickPathExtent,"%.*g",
+            GetMagickPrecision(),PerceptibleReciprocal(image->y_resolution)*
+              image->rows);
+          break;
+        }
       if (LocaleCompare("profiles",property) == 0)
         {
           const char

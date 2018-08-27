@@ -1632,8 +1632,8 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
       if (LocaleCompare(symbol,"extent") == 0)
         {
           if (image->extent != 0)
-            return(image->extent);
-          return(GetBlobSize(image));
+            return((double) image->extent);
+          return((double) GetBlobSize(image));
         }
       break;
     }
@@ -1778,6 +1778,10 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
         return((double) image->page.x);
       if (LocaleCompare(symbol,"page.y") == 0)
         return((double) image->page.y);
+      if (LocaleCompare(symbol,"printsize.x") == 0)
+        return(PerceptibleReciprocal(image->x_resolution)*image->columns);
+      if (LocaleCompare(symbol,"printsize.y") == 0)
+        return(PerceptibleReciprocal(image->y_resolution)*image->rows);
       break;
     }
     case 'Q':

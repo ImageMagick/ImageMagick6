@@ -1200,7 +1200,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
   if (channel == OpacityChannel)
     {
       (void) FormatLocaleString(component,MaxTextExtent,"%.*g",
-        GetMagickPrecision(),QuantumScale*ClampToQuantum(color));
+        GetMagickPrecision(),(double) QuantumScale*ClampToQuantum(color));
       (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
       return;
     }
@@ -2570,7 +2570,7 @@ MagickExport MagickBooleanType QueryColorname(const Image *image,
 %
 %  The format of the QueryMagickColor method is:
 %
-%      MagickBooleanType QueryMagickColorCompilence(const char *name,
+%      MagickBooleanType QueryMagickColorCompiliance(const char *name,
 %        const ComplianceType compliance,MagickPixelPacket *color,
 %        ExceptionInfo *exception)
 %

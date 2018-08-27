@@ -178,8 +178,8 @@ typedef enum
 static const QuantumType z2qtype[4] = {GrayQuantum, BlueQuantum, GreenQuantum, RedQuantum};
 
 
-static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVal,
-                                  double MaxVal)
+static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
+  double MaxVal)
 {
   ExceptionInfo
     *exception;
@@ -188,9 +188,9 @@ static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVa
   int x;
   register PixelPacket *q;
 
-  if (MinVal == 0)
+  if (MinVal >= 0)
     MinVal = -1;
-  if (MaxVal == 0)
+  if (MaxVal <= 0)
     MaxVal = 1;
 
   exception=(&image->exception);
@@ -200,41 +200,43 @@ static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVa
   for (x = 0; x < (ssize_t) image->columns; x++)
   {
     if (*p > 0)
-    {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelRed(q));
-      if (f + GetPixelRed(q) > QuantumRange)
-        SetPixelRed(q,QuantumRange);
-      else
-        SetPixelRed(q,GetPixelRed(q)+(int) f);
-      if ((int) f / 2.0 > GetPixelGreen(q))
-        {
-          SetPixelGreen(q,0);
-          SetPixelBlue(q,0);
-        }
-      else
-        {
-          SetPixelBlue(q,GetPixelBlue(q)-(int) (f/2.0));
-          SetPixelGreen(q,GetPixelBlue(q));
-        }
-    }
+      {
+        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelRed(q));
+        if ((f+GetPixelRed(q)) >= QuantumRange)
+          SetPixelRed(q,QuantumRange);
+        else
+          SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
+        f=GetPixelGreen(q)-f/2.0;
+        if (f <= 0.0)
+          {
+            SetPixelGreen(q,0);
+            SetPixelBlue(q,0);
+          }
+        else
+          {
+            SetPixelBlue(q,ClampToQuantum(f));
+            SetPixelGreen(q,ClampToQuantum(f));
+          }
+      }
     if (*p < 0)
-    {
-      f = (*p / MinVal) * (QuantumRange - GetPixelBlue(q));
-      if (f + GetPixelBlue(q) > QuantumRange)
-        SetPixelBlue(q,QuantumRange);
-      else
-        SetPixelBlue(q,GetPixelBlue(q)+(int) f);
-      if ((int) f / 2.0 > q->green)
-        {
-          SetPixelRed(q,0);
-          SetPixelGreen(q,0);
-        }
-      else
-        {
-          SetPixelRed(q,GetPixelRed(q)-(int) (f/2.0));
-          SetPixelGreen(q,GetPixelRed(q));
-        }
-    }
+      {
+        f=(*p/MinVal)*(Quantum) (QuantumRange-GetPixelBlue(q));
+        if ((f+GetPixelBlue(q)) >= QuantumRange)
+          SetPixelBlue(q,QuantumRange);
+        else
+          SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
+        f=GetPixelGreen(q)-f/2.0;
+        if (f <= 0.0)
+          {
+            SetPixelRed(q,0);
+            SetPixelGreen(q,0);
+          }
+        else
+          {
+            SetPixelRed(q,ClampToQuantum(f));
+            SetPixelGreen(q,ClampToQuantum(f));
+          }
+      }
     p++;
     q++;
   }
@@ -244,8 +246,8 @@ static void InsertComplexDoubleRow(double *p, int y, Image * image, double MinVa
 }
 
 
-static void InsertComplexFloatRow(float *p, int y, Image * image, double MinVal,
-                                  double MaxVal)
+static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
+  double MaxVal)
 {
   ExceptionInfo
     *exception;
@@ -254,9 +256,9 @@ static void InsertComplexFloatRow(float *p, int y, Image * image, double MinVal,
   int x;
   register PixelPacket *q;
 
-  if (MinVal == 0)
+  if (MinVal >= 0)
     MinVal = -1;
-  if (MaxVal == 0)
+  if (MaxVal <= 0)
     MaxVal = 1;
 
   exception=(&image->exception);
@@ -266,41 +268,43 @@ static void InsertComplexFloatRow(float *p, int y, Image * image, double MinVal,
   for (x = 0; x < (ssize_t) image->columns; x++)
   {
     if (*p > 0)
-    {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelRed(q));
-      if (f + GetPixelRed(q) > QuantumRange)
-        SetPixelRed(q,QuantumRange);
-      else
-        SetPixelRed(q,GetPixelRed(q)+(int) f);
-      if ((int) f / 2.0 > GetPixelGreen(q))
-        {
-          SetPixelGreen(q,0);
-          SetPixelBlue(q,0);
-        }
-      else
-        {
-          SetPixelBlue(q,GetPixelBlue(q)-(int) (f/2.0));
-          SetPixelGreen(q,GetPixelBlue(q));
-        }
-    }
+      {
+        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelRed(q));
+        if ((f+GetPixelRed(q)) < QuantumRange)
+          SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
+        else
+          SetPixelRed(q,QuantumRange);
+        f/=2.0;
+        if (f < GetPixelGreen(q))
+          {
+            SetPixelBlue(q,GetPixelBlue(q)-ClampToQuantum(f));
+            SetPixelGreen(q,GetPixelBlue(q));
+          }
+        else
+          {
+            SetPixelGreen(q,0);
+            SetPixelBlue(q,0);
+          }
+      }
     if (*p < 0)
-    {
-      f = (*p / MaxVal) * (QuantumRange - GetPixelBlue(q));
-      if (f + GetPixelBlue(q) > QuantumRange)
-        SetPixelBlue(q,QuantumRange);
-      else
-        SetPixelBlue(q,GetPixelBlue(q)+(int) f);
-      if ((int) f / 2.0 > q->green)
-        {
-          SetPixelGreen(q,0);
-          SetPixelRed(q,0);
-        }
-      else
-        {
-          SetPixelRed(q,GetPixelRed(q)-(int) (f/2.0));
-          SetPixelGreen(q,GetPixelRed(q));
-        }
-    }
+      {
+        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelBlue(q));
+        if ((f+GetPixelBlue(q)) < QuantumRange)
+          SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
+        else
+          SetPixelBlue(q,QuantumRange);
+        f/=2.0;
+        if (f < GetPixelGreen(q))
+          {
+            SetPixelRed(q,GetPixelRed(q)-ClampToQuantum(f));
+            SetPixelGreen(q,GetPixelRed(q));
+          }
+        else
+          {
+            SetPixelGreen(q,0);
+            SetPixelRed(q,0);
+          }
+      }
     p++;
     q++;
   }
@@ -1123,7 +1127,9 @@ MATLAB_KO:
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "MATLAB_HDR.CellType: %.20g",(double) CellType);
 
-    (void) ReadBlob(image2, 4, (unsigned char *) &size);     /* data size */
+    /* data size */
+    if (ReadBlob(image2, 4, (unsigned char *) &size) != 4)
+      goto MATLAB_KO;
 
 NEXT_FRAME:
     switch (CellType)
