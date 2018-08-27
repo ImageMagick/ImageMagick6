@@ -991,6 +991,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               Clipping rectangle.
             */
             length=ReadBlobMSBShort(image);
+            if (length > GetBlobSize(image))
+              ThrowPICTException(CorruptImageError,
+                "InsufficientImageDataInFile");
             if (length != 0x000a)
               {
                 for (i=0; i < (ssize_t) (length-2); i++)
@@ -1042,6 +1045,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             if (pattern != 1)
               ThrowPICTException(CorruptImageError,"UnknownPatternType");
             length=ReadBlobMSBShort(image);
+            if (length > GetBlobSize(image))
+              ThrowPICTException(CorruptImageError,
+                "InsufficientImageDataInFile");
             if (ReadRectangle(image,&frame) == MagickFalse)
               ThrowPICTException(CorruptImageError,"ImproperImageHeader");
             if (ReadPixmap(image,&pixmap) == MagickFalse)
@@ -1053,6 +1059,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             (void) ReadBlobMSBLong(image);
             flags=(ssize_t) ReadBlobMSBShort(image);
             length=ReadBlobMSBShort(image);
+            if (length > GetBlobSize(image))
+              ThrowPICTException(CorruptImageError,
+                "InsufficientImageDataInFile");
             for (i=0; i <= (ssize_t) length; i++)
               (void) ReadBlobMSBLong(image);
             width=(size_t) (frame.bottom-frame.top);
@@ -1113,6 +1122,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               Skip polygon or region.
             */
             length=ReadBlobMSBShort(image);
+            if (length > GetBlobSize(image))
+              ThrowPICTException(CorruptImageError,
+                "InsufficientImageDataInFile");
             for (i=0; i < (ssize_t) (length-2); i++)
               if (ReadBlobByte(image) == EOF)
                 break;
@@ -1234,6 +1246,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
                   Skip region.
                 */
                 length=ReadBlobMSBShort(image);
+                if (length > GetBlobSize(image))
+                  ThrowPICTException(CorruptImageError,
+                    "InsufficientImageDataInFile");
                 for (i=0; i < (ssize_t) (length-2); i++)
                   if (ReadBlobByte(image) == EOF)
                     break;
@@ -1355,6 +1370,9 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             */
             type=ReadBlobMSBShort(image);
             length=ReadBlobMSBShort(image);
+            if (length > GetBlobSize(image))
+              ThrowPICTException(CorruptImageError,
+                "InsufficientImageDataInFile");
             if (length == 0)
               break;
             (void) ReadBlobMSBLong(image);
@@ -1464,6 +1482,8 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             ThrowPICTException(FileOpenError,"UnableToCreateTemporaryFile");
           }
         length=ReadBlobMSBLong(image);
+        if (length > GetBlobSize(image))
+          ThrowPICTException(CorruptImageError,"InsufficientImageDataInFile");
         if (length > 154)
           {
             for (i=0; i < 6; i++)
@@ -1515,6 +1535,8 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
           Skip reserved.
         */
         length=ReadBlobMSBShort(image);
+        if (length > GetBlobSize(image))
+          ThrowPICTException(CorruptImageError,"InsufficientImageDataInFile");
         for (i=0; i < (ssize_t) length; i++)
           if (ReadBlobByte(image) == EOF)
             break;
@@ -1526,6 +1548,8 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
           Skip reserved.
         */
         length=(size_t) ((code >> 7) & 0xff);
+        if (length > GetBlobSize(image))
+          ThrowPICTException(CorruptImageError,"InsufficientImageDataInFile");
         for (i=0; i < (ssize_t) length; i++)
           if (ReadBlobByte(image) == EOF)
             break;
