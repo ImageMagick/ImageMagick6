@@ -231,7 +231,10 @@ static void InitPSDInfo(Image *image, Image *layer, PSDInfo *info)
     info->channels=2U;
   else
     if (image->storage_class == PseudoClass)
-      info->channels=2U;
+      {
+        info->mode=2;
+        info->channels=2U;
+      }
     else
       {
         if (image->colorspace != CMYKColorspace)
