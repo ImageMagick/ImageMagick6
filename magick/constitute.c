@@ -1072,10 +1072,10 @@ MagickExport MagickBooleanType WriteImage(const ImageInfo *image_info,
   */
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
+  assert(image != (Image *) NULL);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   exception=(&image->exception);
   sans_exception=AcquireExceptionInfo();

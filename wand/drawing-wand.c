@@ -172,9 +172,9 @@ static int MVGPrintf(DrawingWand *wand,const char *format,...)
   size_t
     extent;
 
+  assert(wand != (DrawingWand *) NULL);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",format);
-  assert(wand != (DrawingWand *) NULL);
   assert(wand->signature == WandSignature);
   extent=20UL*MaxTextExtent;
   if (wand->mvg == (char *) NULL)
@@ -4540,9 +4540,9 @@ WandExport void DrawSetBorderColor(DrawingWand *wand,
 WandExport MagickBooleanType DrawSetClipPath(DrawingWand *wand,
   const char *clip_mask)
 {
+  assert(wand != (DrawingWand *) NULL);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",clip_mask);
-  assert(wand != (DrawingWand *) NULL);
   assert(wand->signature == WandSignature);
   assert(clip_mask != (const char *) NULL);
   if ((CurrentContext->clip_mask == (const char *) NULL) ||
@@ -4681,9 +4681,9 @@ WandExport void DrawSetClipUnits(DrawingWand *wand,
 WandExport MagickBooleanType DrawSetDensity(DrawingWand *wand,
   const char *density)
 {
+  assert(wand != (DrawingWand *) NULL);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",density);
-  assert(wand != (DrawingWand *) NULL);
   assert(wand->signature == MagickCoreSignature);
   assert(density != (const char *) NULL);
   if ((CurrentContext->density == (const char *) NULL) ||
