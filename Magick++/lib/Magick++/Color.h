@@ -122,11 +122,12 @@ namespace Magick
     {
       return (static_cast<double>(quantum_)/QuantumRange);
     }
-#endif
+#else
     static double scaleQuantumToDouble(const double quantum_)
     {
       return (quantum_/QuantumRange);
     }
+#endif
 
   protected:
 
