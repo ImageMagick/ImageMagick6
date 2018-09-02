@@ -2668,7 +2668,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 graphic_context[n]->clipping_mask=DrawClippingMask(image,
                   graphic_context[n],token,clip_path,&image->exception);
                 if (draw_info->compliance != SVGCompliance)
-                  (void) DrawClipPath(image,graphic_context[n],
+                  status&=DrawClipPath(image,graphic_context[n],
                     graphic_context[n]->clip_mask);
               }
             break;
