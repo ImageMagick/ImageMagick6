@@ -2212,19 +2212,22 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   /*
     Check if there is enough storage for drawing pimitives.
   */
-  extent=(size_t) mvg_info->offset;
-  if ((HeapOverflowSanityCheck(extent,pad) != MagickFalse) &&
-      (HeapOverflowSanityCheck(extent+pad,4096) != MagickFalse))
+  extent=(size_t) mvg_info->offset+pad;
+  if (~extent >= pad)
     {
-      extent+=pad+4096;
-      if (extent <= *mvg_info->extent)
-        return(MagickTrue);
-      *mvg_info->primitive_info=ResizeQuantumMemory(*mvg_info->primitive_info,
-        extent,sizeof(**mvg_info->primitive_info));
-      if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
+      extent+=4096;
+      if (~extent >= 4096)
         {
-          *mvg_info->extent=extent;
-          return(MagickTrue);
+          if (extent <= *mvg_info->extent)
+            return(MagickTrue);
+          *mvg_info->primitive_info=ResizeQuantumMemory(
+            *mvg_info->primitive_info,extent,
+            sizeof(**mvg_info->primitive_info));
+          if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
+            {
+              *mvg_info->extent=extent;
+              return(MagickTrue);
+            }
         }
     }
   /*
@@ -2232,7 +2235,7 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   */
   (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
     ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-  *mvg_info->primitive_info=AcquireCriticalMemory(
+  *mvg_info->primitive_info=AcquireCriticalMemory(4*
     sizeof(**mvg_info->primitive_info));
   (void) memset(*mvg_info->primitive_info,0,sizeof(**mvg_info->primitive_info));
   *mvg_info->extent=1;
@@ -6776,7 +6779,8 @@ static MagickBooleanType TraceRoundRectangle(MVGInfo *mvg_info,
   point.y=start.y+segment.y-arc.y;
   degrees.x=0.0;
   degrees.y=90.0;
-  TraceEllipse(mvg_info,point,arc,degrees);
+  if (TraceEllipse(mvg_info,point,arc,degrees) == MagickFalse)
+    return(MagickFalse);
   p=(*mvg_info->primitive_info)+mvg_info->offset;
   mvg_info->offset+=p->coordinates;
   point.x=start.x+arc.x;
