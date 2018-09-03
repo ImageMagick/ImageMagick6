@@ -62,10 +62,12 @@
 #include "magick/module.h"
 #include "magick/type.h"
 #include "magick/module.h"
+#if defined(MAGICKCORE_WMF_DELEGATE)
 #include "wand/MagickWand.h"
+#endif
 
 #if defined(__CYGWIN__)
-#undef MAGICKCORE_WMF_DELEGATE
+#undef MAGICKCORE_SANS_DELEGATE
 #endif
 
 #if defined(MAGICKCORE_SANS_DELEGATE)
