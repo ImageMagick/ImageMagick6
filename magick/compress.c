@@ -975,7 +975,7 @@ MagickExport MagickBooleanType LZWEncodeImage(Image *image,const size_t length,
   assert(pixels != (unsigned char *) NULL);
   table=(TableType *) AcquireQuantumMemory(1UL << 12,sizeof(*table));
   if (table == (TableType *) NULL)
-    ThrowBinaryException(ResourceLimitWarning,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitWarning,"MemoryAllocationFailed",
       image->filename);
   /*
     Initialize variables.
@@ -1111,7 +1111,7 @@ MagickExport MagickBooleanType PackbitsEncodeImage(Image *image,
   assert(pixels != (unsigned char *) NULL);
   packbits=(unsigned char *) AcquireQuantumMemory(128UL,sizeof(*packbits));
   if (packbits == (unsigned char *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   for (i=(ssize_t) length; i != 0; )
   {
@@ -1265,7 +1265,7 @@ MagickExport MagickBooleanType ZLIBEncodeImage(Image *image,const size_t length,
   compress_pixels=(unsigned char *) AcquireQuantumMemory(compress_packets,
     sizeof(*compress_pixels));
   if (compress_pixels == (unsigned char *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   stream.next_in=pixels;
   stream.avail_in=(unsigned int) length;
@@ -1286,7 +1286,8 @@ MagickExport MagickBooleanType ZLIBEncodeImage(Image *image,const size_t length,
       compress_packets=(size_t) stream.total_out;
     }
   if (status != Z_OK)
-    ThrowBinaryException(CoderError,"UnableToZipCompressImage",image->filename)
+    ThrowBinaryImageException(CoderError,"UnableToZipCompressImage",
+      image->filename)
   for (i=0; i < (ssize_t) compress_packets; i++)
     (void) WriteBlobByte(image,compress_pixels[i]);
   compress_pixels=(unsigned char *) RelinquishMagickMemory(compress_pixels);

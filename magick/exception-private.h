@@ -28,9 +28,15 @@ extern "C" {
 
 #define ThrowBinaryException(severity,tag,context) \
 { \
-  if (image != (Image *) NULL) \
-  (void) ThrowMagickException(&image->exception,GetMagickModule(),severity, \
+  (void) ThrowMagickException(exception,GetMagickModule(),severity, \
     tag == (const char *) NULL ? "unknown" : tag,"`%s'",context); \
+  return(MagickFalse); \
+}
+#define ThrowBinaryImageException(severity,tag,context) \
+{ \
+  if (image != (Image *) NULL) \
+    (void) ThrowMagickException(&image->exception,GetMagickModule(),severity, \
+       tag == (const char *) NULL ? "unknown" : tag,"`%s'",context); \
   return(MagickFalse); \
 }
 #define ThrowFatalException(severity,tag) \

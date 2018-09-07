@@ -1827,7 +1827,7 @@ MagickExport MagickBooleanType SegmentImage(Image *image,
           extrema[i]=(short *) RelinquishMagickMemory(extrema[i]);
           histogram[i]=(ssize_t *) RelinquishMagickMemory(histogram[i]);
         }
-        ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+        ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
           image->filename)
       }
   }

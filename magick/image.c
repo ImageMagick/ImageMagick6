@@ -2652,7 +2652,7 @@ MagickExport MagickBooleanType SetImageClipMask(Image *image,
   if (clip_mask != (const Image *) NULL)
     if ((clip_mask->columns != image->columns) ||
         (clip_mask->rows != image->rows))
-      ThrowBinaryException(ImageError,"ImageSizeDiffers",image->filename);
+      ThrowBinaryImageException(ImageError,"ImageSizeDiffers",image->filename);
   if (image->clip_mask != (Image *) NULL)
     image->clip_mask=DestroyImage(image->clip_mask);
   image->clip_mask=NewImageList();
@@ -2697,11 +2697,13 @@ MagickExport MagickBooleanType SetImageExtent(Image *image,const size_t columns,
   const size_t rows)
 {
   if ((columns == 0) || (rows == 0))
-    ThrowBinaryException(ImageError,"NegativeOrZeroImageSize",image->filename);
+    ThrowBinaryImageException(ImageError,"NegativeOrZeroImageSize",
+      image->filename);
   image->columns=columns;
   image->rows=rows;
   if ((image->depth == 0) || (image->depth > (8*sizeof(MagickSizeType))))
-    ThrowBinaryException(ImageError,"ImageDepthNotSupported",image->filename);
+    ThrowBinaryImageException(ImageError,"ImageDepthNotSupported",
+      image->filename);
   return(SyncImagePixelCache(image,&image->exception));
 }
 
@@ -3159,7 +3161,7 @@ MagickExport MagickBooleanType SetImageMask(Image *image,const Image *mask)
   assert(image->signature == MagickCoreSignature);
   if (mask != (const Image *) NULL)
     if ((mask->columns != image->columns) || (mask->rows != image->rows))
-      ThrowBinaryException(ImageError,"ImageSizeDiffers",image->filename);
+      ThrowBinaryImageException(ImageError,"ImageSizeDiffers",image->filename);
   if (image->mask != (Image *) NULL)
     image->mask=DestroyImage(image->mask);
   image->mask=NewImageList();

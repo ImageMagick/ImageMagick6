@@ -348,7 +348,7 @@ static MagickBooleanType JPEGWarningHandler(j_common_ptr jpeg_info,int level)
       */
       (jpeg_info->err->format_message)(jpeg_info,message);
       if (jpeg_info->err->num_warnings++ < JPEGExcessiveWarnings)
-        ThrowBinaryException(CorruptImageWarning,(char *) message,
+        ThrowBinaryImageException(CorruptImageWarning,(char *) message,
           image->filename);
     }
   else

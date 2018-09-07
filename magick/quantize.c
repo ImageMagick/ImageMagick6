@@ -493,7 +493,7 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
   if (cube_info->quantize_info->colorspace != UndefinedColorspace)
     (void) TransformImageColorspace(image,cube_info->quantize_info->colorspace);
   if (AcquireImageColormap(image,cube_info->colors) == MagickFalse)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   image->colors=0;
   cube_info->transparent_pixels=0;
@@ -2655,7 +2655,7 @@ MagickExport MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
   */
   cube_info=GetCubeInfo(quantize_info,depth,maximum_colors);
   if (cube_info == (CubeInfo *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   status=ClassifyImageColors(cube_info,image,&image->exception);
   if (status != MagickFalse)
@@ -3094,7 +3094,7 @@ MagickExport MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
   cube_info=GetCubeInfo(quantize_info,MaxTreeDepth,
     quantize_info->number_colors);
   if (cube_info == (CubeInfo *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   status=ClassifyImageColors(cube_info,remap_image,&image->exception);
   if (status != MagickFalse)
@@ -3168,7 +3168,7 @@ MagickExport MagickBooleanType RemapImages(const QuantizeInfo *quantize_info,
   cube_info=GetCubeInfo(quantize_info,MaxTreeDepth,
     quantize_info->number_colors);
   if (cube_info == (CubeInfo *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   status=ClassifyImageColors(cube_info,remap_image,&image->exception);
   if (status != MagickFalse)

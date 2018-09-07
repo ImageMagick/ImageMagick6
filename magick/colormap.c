@@ -123,7 +123,7 @@ MagickExport MagickBooleanType AcquireImageColormap(Image *image,
     {
       image->colors=0;
       image->storage_class=DirectClass;
-      ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+      ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
   for (i=0; i < (ssize_t) image->colors; i++)

@@ -2516,7 +2516,7 @@ static size_t PSDPackbitsEncodeImage(Image *image,const size_t length,
   assert(compact_pixels != (unsigned char *) NULL);
   packbits=(unsigned char *) AcquireQuantumMemory(128UL,sizeof(*packbits));
   if (packbits == (unsigned char *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   q=compact_pixels;
   for (i=(ssize_t) length; i != 0; )

@@ -2447,7 +2447,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   if (depth > MagickMaxRecursionDepth)
-    ThrowBinaryException(DrawError,"VectorGraphicsNestedTooDeeply",
+    ThrowBinaryImageException(DrawError,"VectorGraphicsNestedTooDeeply",
       image->filename);
   if ((draw_info->primitive == (char *) NULL) ||
       (*draw_info->primitive == '\0'))
@@ -2481,7 +2481,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
   if (graphic_context == (DrawInfo **) NULL)
     {
       primitive=DestroyString(primitive);
-      ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+      ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
   number_points=4096;
@@ -2493,7 +2493,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
       for ( ; n >= 0; n--)
         graphic_context[n]=DestroyDrawInfo(graphic_context[n]);
       graphic_context=(DrawInfo **) RelinquishMagickMemory(graphic_context);
-      ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+      ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
   (void) memset(primitive_info,0,(size_t) number_points*
@@ -4287,8 +4287,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
     graphic_context[n]=DestroyDrawInfo(graphic_context[n]);
   graphic_context=(DrawInfo **) RelinquishMagickMemory(graphic_context);
   if (status == MagickFalse)
-    ThrowBinaryException(DrawError,"NonconformingDrawingPrimitiveDefinition",
-      keyword);
+    ThrowBinaryImageException(DrawError,
+      "NonconformingDrawingPrimitiveDefinition",keyword);
   return(status != 0 ? MagickTrue : MagickFalse);
 }
 
