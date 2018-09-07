@@ -294,6 +294,7 @@ static MagickBooleanType Classify(Image *image,short **extrema,
   (void) memset(&red,0,sizeof(red));
   (void) memset(&green,0,sizeof(green));
   (void) memset(&blue,0,sizeof(blue));
+  exception=(&image->exception);
   while (DefineRegion(extrema[Red],&red) != 0)
   {
     green.index=0;
@@ -355,7 +356,6 @@ static MagickBooleanType Classify(Image *image,short **extrema,
   status=MagickTrue;
   count=0;
   progress=0;
-  exception=(&image->exception);
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {

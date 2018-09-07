@@ -307,6 +307,7 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
   assert(image->signature == MagickCoreSignature);
   if (image->storage_class != PseudoClass)
     return(MagickTrue);
+  exception=(&image->exception);
   /*
     Allocate memory for pixel indexes.
   */
@@ -331,7 +332,6 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
   for (i=0; i < (ssize_t) image->colors; i++)
     pixels[(ssize_t) image->colormap[i].opacity]=(unsigned short) i;
   status=MagickTrue;
-  exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {

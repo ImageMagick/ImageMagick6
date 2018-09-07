@@ -456,6 +456,7 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
   if (image->blob == (BlobInfo *) NULL)
     ThrowBinaryException(BlobError,"UnableToOpenBlob",image->filename);
   mb_hash=(HuffmanTable **) AcquireQuantumMemory(HashSize,sizeof(*mb_hash));
@@ -502,7 +503,6 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
   image->x_resolution=204.0;
   image->y_resolution=196.0;
   image->units=PixelsPerInchResolution;
-  exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; ((y < (ssize_t) image->rows) && (null_lines < 3)); )
   {
@@ -767,7 +767,7 @@ RestoreMSCWarning \
   scanline=(unsigned char *) AcquireQuantumMemory((size_t) width+1UL,
     sizeof(*scanline));
   if (scanline == (unsigned char *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       inject_image->filename);
   (void) memset(scanline,0,width*sizeof(*scanline));
   huffman_image=CloneImage(inject_image,0,0,MagickTrue,&image->exception);

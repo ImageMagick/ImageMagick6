@@ -1366,6 +1366,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   /*
     Initialize Truetype library.
   */
+  exception=(&image->exception);
   ft_status=FT_Init_FreeType(&library);
   if (ft_status != 0)
     ThrowBinaryException(TypeError,"UnableToInitializeFreetypeLibrary",
@@ -1380,7 +1381,6 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
       args.pathname=ConstantString(draw_info->font+1);
   face=(FT_Face) NULL;
   ft_status=FT_Open_Face(library,&args,(long) draw_info->face,&face);
-  exception=(&image->exception);
   if (ft_status != 0)
     {
       (void) FT_Done_FreeType(library);

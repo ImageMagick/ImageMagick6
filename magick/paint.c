@@ -182,6 +182,7 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     return(MagickFalse);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
+  exception=(&image->exception);
   if (IsGrayColorspace(image->colorspace) != MagickFalse)
     (void) SetImageColorspace(image,sRGBColorspace);
   if ((image->matte == MagickFalse) &&
@@ -205,7 +206,6 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   /*
     Push initial segment on stack.
   */
-  exception=(&image->exception);
   x=x_offset;
   y=y_offset;
   start=0;
@@ -627,7 +627,7 @@ MagickExport MagickBooleanType GradientImage(Image *image,
   gradient->stops=(StopInfo *) AcquireQuantumMemory(gradient->number_stops,
     sizeof(*gradient->stops));
   if (gradient->stops == (StopInfo *) NULL)
-    ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   (void) memset(gradient->stops,0,gradient->number_stops*
     sizeof(*gradient->stops));

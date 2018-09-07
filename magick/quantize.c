@@ -3259,6 +3259,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
+  exception=(&image->exception);
   if (image->type != GrayscaleType)
     (void) TransformImageColorspace(image,GRAYColorspace);
   if (image->storage_class == PseudoClass)
@@ -3272,9 +3273,6 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
       image->filename);
   if (image->storage_class != PseudoClass)
     {
-      ExceptionInfo
-        *exception;
-
       (void) memset(colormap_index,(-1),MaxColormapSize*
         sizeof(*colormap_index));
       if (AcquireImageColormap(image,MaxColormapSize) == MagickFalse)
@@ -3285,7 +3283,6 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
         }
       image->colors=0;
       status=MagickTrue;
-      exception=(&image->exception);
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
@@ -3367,7 +3364,6 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
   image->colormap=(PixelPacket *) RelinquishMagickMemory(image->colormap);
   image->colormap=colormap;
   status=MagickTrue;
-  exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \

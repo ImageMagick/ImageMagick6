@@ -424,6 +424,7 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (color_correction_collection == (const char *) NULL)
     return(MagickFalse);
+  exception=(&image->exception);
   ccc=NewXMLTree((const char *) color_correction_collection,&image->exception);
   if (ccc == (XMLTreeInfo *) NULL)
     return(MagickFalse);
@@ -632,7 +633,6 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
   */
   status=MagickTrue;
   progress=0;
-  exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(progress,status) \
@@ -774,6 +774,7 @@ MagickExport MagickBooleanType ClutImageChannel(Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(clut_image != (Image *) NULL);
   assert(clut_image->signature == MagickCoreSignature);
+  exception=(&image->exception);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
   if ((IsGrayColorspace(image->colorspace) != MagickFalse) &&
@@ -790,7 +791,6 @@ MagickExport MagickBooleanType ClutImageChannel(Image *image,
   status=MagickTrue;
   progress=0;
   adjust=(ssize_t) (clut_image->interpolate == IntegerInterpolatePixel ? 0 : 1);
-  exception=(&image->exception);
   clut_view=AcquireAuthenticCacheView(clut_image,exception);
   for (i=0; i <= (ssize_t) MaxMap; i++)
   {
@@ -1166,6 +1166,7 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
 
 #if defined(MAGICKCORE_OPENCL_SUPPORT) && 0
   /* Call OpenCL version */
@@ -1191,7 +1192,6 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
   /*
     Form histogram.
   */
-  exception=(&image->exception);
   if (SetImageGray(image,exception) != MagickFalse)
     (void) SetImageColorspace(image,GRAYColorspace);
   status=MagickTrue;
@@ -1815,6 +1815,7 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
 
 #if defined(MAGICKCORE_OPENCL_SUPPORT)
   /* Call OpenCL version */
@@ -1848,7 +1849,6 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
     Form histogram.
   */
   (void) memset(histogram,0,(MaxMap+1)*sizeof(*histogram));
-  exception=(&image->exception);
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -2190,6 +2190,7 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
   if (gamma == 1.0)
     return(MagickTrue);
   gamma_map=(Quantum *) AcquireQuantumMemory(MaxMap+1UL,sizeof(*gamma_map));
@@ -2256,7 +2257,6 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
   */
   status=MagickTrue;
   progress=0;
-  exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(progress,status) \
@@ -3407,6 +3407,7 @@ MagickExport MagickBooleanType LinearStretchImage(Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
+  exception=(&image->exception);
   histogram=(MagickRealType *) AcquireQuantumMemory(MaxMap+1UL,
     sizeof(*histogram));
   if (histogram == (MagickRealType *) NULL)
@@ -3416,7 +3417,6 @@ MagickExport MagickBooleanType LinearStretchImage(Image *image,
     Form histogram.
   */
   (void) memset(histogram,0,(MaxMap+1)*sizeof(*histogram));
-  exception=(&image->exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     register const PixelPacket
@@ -4394,6 +4394,7 @@ MagickExport MagickBooleanType SigmoidalContrastImageChannel(Image *image,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
   sigmoidal_map=(MagickRealType *) AcquireQuantumMemory(MaxMap+1UL,
     sizeof(*sigmoidal_map));
   if (sigmoidal_map == (MagickRealType *) NULL)
@@ -4434,7 +4435,6 @@ MagickExport MagickBooleanType SigmoidalContrastImageChannel(Image *image,
   */
   status=MagickTrue;
   progress=0;
-  exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(progress,status) \

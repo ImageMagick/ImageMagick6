@@ -503,6 +503,7 @@ MagickExport MagickBooleanType SignatureImage(Image *image)
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
   quantum_info=AcquireQuantumInfo((const ImageInfo *) NULL,image);
   if (quantum_info == (QuantumInfo *) NULL)
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
@@ -519,7 +520,6 @@ MagickExport MagickBooleanType SignatureImage(Image *image)
   signature_info=AcquireSignatureInfo();
   signature=AcquireStringInfo(quantum_info->extent);
   pixels=GetQuantumPixels(quantum_info);
-  exception=(&image->exception);
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {

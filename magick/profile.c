@@ -853,7 +853,7 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
           GetStringInfoDatum(profile),(cmsUInt32Number)
           GetStringInfoLength(profile));
         if (source_profile == (cmsHPROFILE) NULL)
-          ThrowBinaryException(ResourceLimitError,
+          ThrowBinaryImageException(ResourceLimitError,
             "ColorspaceColorProfileMismatch",name);
         if ((cmsGetDeviceClass(source_profile) != cmsSigLinkClass) &&
             (icc_profile == (StringInfo *) NULL))

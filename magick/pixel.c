@@ -4163,6 +4163,7 @@ MagickExport MagickBooleanType ImportImagePixels(Image *image,const ssize_t x,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  exception=(&image->exception);
   length=strlen(map);
   quantum_map=(QuantumType *) AcquireQuantumMemory(length,sizeof(*quantum_map));
   if (quantum_map == (QuantumType *) NULL)
@@ -4259,7 +4260,6 @@ MagickExport MagickBooleanType ImportImagePixels(Image *image,const ssize_t x,
   /*
     Transfer the pixels from the pixel datarray to the image.
   */
-  exception=(&image->exception);
   roi.width=width;
   roi.height=height;
   roi.x=x;
