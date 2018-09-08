@@ -439,6 +439,8 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if ((image_info->ping != MagickFalse) && (image_info->number_scenes != 0))
       if (image->scene >= (image_info->scene+image_info->number_scenes-1))
         break;
+    if ((MagickOffsetType) (image->columns*image->rows/8) > GetBlobSize(image))
+      ThrowPNMException(CorruptImageError,"InsufficientImageDataInFile");
     status=SetImageExtent(image,image->columns,image->rows);
     if (status == MagickFalse)
       {
@@ -1425,6 +1427,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->description=ConstantString("Common 2-dimensional bitmap format");
   entry->mime_type=ConstantString("image/x-portable-pixmap");
   entry->module=ConstantString("PNM");
+  entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PBM");
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
@@ -1432,6 +1435,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->description=ConstantString("Portable bitmap format (black and white)");
   entry->mime_type=ConstantString("image/x-portable-bitmap");
   entry->module=ConstantString("PNM");
+  entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PFM");
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
@@ -1439,6 +1443,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Portable float format");
   entry->module=ConstantString("PFM");
+  entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PGM");
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
@@ -1446,6 +1451,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->description=ConstantString("Portable graymap format (gray scale)");
   entry->mime_type=ConstantString("image/x-portable-greymap");
   entry->module=ConstantString("PNM");
+  entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PNM");
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
@@ -1454,6 +1460,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->description=ConstantString("Portable anymap");
   entry->mime_type=ConstantString("image/x-portable-pixmap");
   entry->module=ConstantString("PNM");
+  entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PPM");
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
@@ -1461,6 +1468,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->description=ConstantString("Portable pixmap format (color)");
   entry->mime_type=ConstantString("image/x-portable-pixmap");
   entry->module=ConstantString("PNM");
+  entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

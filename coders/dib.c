@@ -591,6 +591,8 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   image->depth=8;
   if ((dib_info.number_colors > 256) || (dib_info.colors_important > 256))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  if ((dib_info.image_size != 0U) && (dib_info.image_size > GetBlobSize(image)))
+    ThrowReaderException(CorruptImageError,"UnexpectedEndOfFile");
   if ((dib_info.number_colors != 0) || (dib_info.bits_per_pixel < 16))
     {
       size_t
@@ -1016,6 +1018,7 @@ ModuleExport size_t RegisterDIBImage(void)
   entry->encoder=(EncodeImageHandler *) WriteDIBImage;
   entry->magick=(IsImageFormatHandler *) IsDIB;
   entry->adjoin=MagickFalse;
+  entry->seekable_stream=MagickTrue;
   entry->stealth=MagickTrue;
   entry->description=ConstantString(
     "Microsoft Windows 3.X Packed Device-Independent Bitmap");
@@ -1025,6 +1028,7 @@ ModuleExport size_t RegisterDIBImage(void)
   entry->decoder=(DecodeImageHandler *) ReadDIBImage;
   entry->magick=(IsImageFormatHandler *) IsDIB;
   entry->adjoin=MagickFalse;
+  entry->seekable_stream=MagickTrue;
   entry->stealth=MagickTrue;
   entry->description=ConstantString(
     "Microsoft Windows 3.X Packed Device-Independent Bitmap");
