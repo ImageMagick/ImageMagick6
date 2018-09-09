@@ -2689,7 +2689,9 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         }
         case StereoCompositeOp:
         {
-          canvas.red=(MagickRealType) GetPixelRed(p);
+          composite.green=(MagickRealType) GetPixelGreen(p);
+          composite.blue=(MagickRealType) GetPixelBlue(p);
+          composite.opacity=(composite.opacity+canvas.opacity/2);
           break;
         }
         case ThresholdCompositeOp:
