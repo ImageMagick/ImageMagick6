@@ -3253,6 +3253,8 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
     }
 
   status=SetImageExtent(image,image->columns,image->rows);
+  if (status != MagickFalse)
+    status=ResetImagePixels(image,exception);
   if (status == MagickFalse)
     {
       png_destroy_read_struct(&ping,&ping_info,&end_info);
@@ -3454,7 +3456,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
         if (pass < num_passes-1)
           continue;
 
-        q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
+        q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
         if (q == (PixelPacket *) NULL)
           break;
@@ -3557,7 +3559,13 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
         r=quantum_scanline;
 
         for (x=0; x < (ssize_t) image->columns; x++)
+        {
+          SetPixelRed(q,ClampToQuantum(image->colormap[(int) *r].red));
+          SetPixelGreen(q,ClampToQuantum(image->colormap[(int) *r].green));
+          SetPixelBlue(q,ClampToQuantum(image->colormap[(int) *r].blue));
           SetPixelIndex(indexes+x,*r++);
+          q++;
+        }
 
         if (SyncAuthenticPixels(image,exception) == MagickFalse)
           break;
@@ -3598,17 +3606,6 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
             ping_color_type&=0x03;
           }
       }
-    }
-
-  if (image->storage_class == PseudoClass)
-    {
-      MagickBooleanType
-        matte;
-
-      matte=image->matte;
-      image->matte=MagickFalse;
-      (void) SyncImage(image);
-      image->matte=matte;
     }
 
   png_read_end(ping,end_info);
