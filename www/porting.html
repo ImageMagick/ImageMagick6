@@ -6,11 +6,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"  />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"  />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>Porting to ImageMagick Version 7 @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://www.imagemagick.org" />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="porting, to, imagemagick, version, 7, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -23,7 +23,7 @@
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="https://www.imagemagick.org/www/porting.html" rel="canonical" />
+  <link href="https://imagemagick.org/www/porting.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
+        <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
@@ -99,7 +99,7 @@ better reporting of which option failed, the consolidation and deprecation of
 options, and more global use of 'image properties' (more commonly known as
 'percent escapes' in option arguments. </p>
 
-<p>ImageMagick version 7 is available now as a <a href="https://www.imagemagick.org/download/">production</a> release.</p>
+<p>ImageMagick version 7 is available now as a <a href="https://imagemagick.org/download/">production</a> release.</p>
 
 <p>Now that ImageMagick version 7 is released, we continue to support and enhance version 6 for a minimum of 10 years.</p>
 
@@ -216,7 +216,7 @@ options, and more global use of 'image properties' (more commonly known as
 
 <p>As a consequence of using an array structure for variable pixel channels, auto-vectorization compilers have additional opportunities to speed up pixel loops.</p>
 
-<h4>Pixel Accessors</h4>
+<h5>Pixel Accessors</h5>
 <p>You can access pixel channel as array elements (e.g. <code>pixel[1]</code>) or use convenience accessors to get or set pixel channels:</p>
 
 <pre class="highlight"><code>GetPixela()                  SetPixela()
@@ -242,7 +242,7 @@ GetPixelY()                  SetPixelY()</code></pre>
 
 <p>You can find these accessors defined in the header file, <code>MagickCore/pixel-accessor.h</code></p>
 
-<h4>Pixel Traits</h4>
+<h5>Pixel Traits</h5>
 <p>Each pixel channel includes one or more of these traits:</p>
 <dl class="row">
 <dt class="col-md-4">Undefined</dt>
@@ -279,9 +279,9 @@ GetPixelYTraits()        SetPixelYTraits()</code></pre>
 NegateImage(image,exception);
 (void) SetImageChannelMask(image,channel_mask);</code></pre>
 
-<h4>Pixel User Channels</h4>
+<h5>Pixel User Channels</h5>
 <p>In version 7, we introduce pixel user channels.  Traditionally we utilize 4 channels, red, green, blue, and alpha.   For CMYK we also have a black channel.  User channels are designed to contain whatever additional channel information that makes sense for your application.  Some examples include extra channels in TIFF or PSD images or perhaps you require a channel with infrared information for the pixel.  You can associate traits with the user channels so that they when they are acted upon by an image processing algorithm (e.g. blur) the pixels are copied, acted upon by the algorithm, or even blended with the alpha channel if that makes sense.</p>
-<h4>Pixel Metacontent</h4>
+<h5>Pixel Metacontent</h5>
 <p>In version 7, we introduce pixel metacontent.  Metacontent is content about content. So rather than being the content itself, it's something that describes or is associated with the content.  Here the content is a pixel.  The pixel metacontent is for your exclusive use (internally the data is just copied, it is not modified) and is accessed with these MagickCore API methods:</p>
 <pre class="highlight"><code>SetImageMetacontentExtent()
 GetImageMetacontentExtent()
@@ -305,7 +305,7 @@ Rec709Luminance</code></pre>
 <p>Previously, grayscale images were Rec601Luminance and consumed 4 channels: red, green, blue, and alpha.  With version 7, grayscale consumes only 1 channel requiring far less resources as a result.</p>
 
 <h2 class="magick-post-title"><a class="anchor" id="mask"></a>Masks</h2>
-<p>Version 7 supports masks for most image operators.  Black pixels in a read mask ignores corresponding pixel in an image whereas black pixels in a write mask protects the corresponding pixel in the image.  From the command-line, you can associate a mask with an image with the <code>-read-mask</code> and <code>-write-mask</code> options.  This polarity is the reverse of masks in version 6 of ImageMagick.  For convenience, we continue to support the <code>-mask</code> option in version 7 to match the behavior of version 6.</p>
+<p>Version 7 supports masks for most image operators.  White pixels in a read mask ignores corresponding pixel in an image whereas white pixels in a write mask protects the corresponding pixel in the image.  From the command-line, you can associate a mask with an image with the <code>-read-mask</code> and <code>-write-mask</code> options.  This polarity is matches masks in version 6 of ImageMagick for ease of porting your workflow.  For convenience, we continue to support the <code>-mask</code> option in version 7 to match the behavior of version 6.</p>
 <p>In this example, we compute the distortion of a masked reconstructed image:</p>
 <pre class="highlight"><code>compare -metric rmse -read-mask hat_mask.png hat.png wizard.png difference.png</code></pre>
 <p>Here we protect certain pixels from change:</p>
@@ -605,11 +605,11 @@ example "+annotate", "+resize", "+clut", and "+draw" .</p>
 </dl>
 <h2 class="magick-post-title"><a class="anchor" id="summary"></a>Version 7 Change Summary</h2>
 <p>Changes from ImageMagick version 6 to version 7 are summarized here:</p>
-<h4>High Dynamic Range Imaging</h4>
+<h5>High Dynamic Range Imaging</h5>
 <ul>
 <li>ImageMagick version 7 enables HDRI by default.  Expect more accurate image processing results with higher memory requirements and possible slower processing times.  You can disable this feature for resource constrained system such as a cell phone with a slight loss of accuracy for certain algorithms (e.g. resizing).</li>
 </ul>
-<h4>Pixels</h4>
+<h5>Pixels</h5>
 <ul>
 <li>Pixels are no longer addressed with PixelPacket structure members (e.g. red, green, blue, opacity) but as an array of channels (e.g. pixel[PixelRedChannel]).</li>
 <li>Use convenience macros to access pixel channels (e.g. GetPixelRed(), SetPixelRed()).</li>
@@ -619,20 +619,20 @@ example "+annotate", "+resize", "+clut", and "+draw" .</p>
 <li>Use the <var>metacontent</var> channel  to associate metacontent with each pixel.</li>
 <li>All color packet structures, PixelPacket, LongPacket, and DoublePacket, are consolidated to a single color structure, PixelInfo.</li>
 </ul>
-<h4>Alpha</h4>
+<h5>Alpha</h5>
 <ul>
 <li>We support alpha rather than opacity (0 transparent; QuantumRange opaque).</li>
 <li>Use GetPixelAlpha() or SetPixelAlpha() to get or set the alpha pixel channel value.</li>
 </ul>
-<h4>Grayscale</h4>
+<h5>Grayscale</h5>
 <ul>
 <li>Grayscale images consume one pixel channel in ImageMagick version 7.  To process RGB, set the colorspace to RGB (e.g. -colorspace sRGB).</li>
 </ul>
-<h4>Masks</h4>
+<h5>Masks</h5>
 <ul>
 <li>ImageMagick version 6 only supports read mask in limited circumstances.  Version 7 supports both a read and write mask.  The read mask is honored by most image-processing algorithms.</li>
 </ul>
-<h4>MagickCore API</h4>
+<h5>MagickCore API</h5>
 <ul>
 <li>Almost all image processing algorithms are now channel aware.</li>
 <li>MagickCore, version 7, adds an ExceptionInfo argument to those methods that lacked it in version 6, e.g. <code>NegateImage(image,MagickTrue,exception);</code></li>
@@ -641,7 +641,7 @@ example "+annotate", "+resize", "+clut", and "+draw" .</p>
 <li>The InterpolatePixelMethod enum is now PixelInterpolateMethod.</li>
 <li>To account for variable pixel channels, images may now return a different signature.</li>
 </ul>
-<h4>Deprecated Methods</h4>
+<h5>Deprecated Methods</h5>
 <ul>
 <li>All ImageMagick version 6 MagickCore and MagickWand deprecated methods are removed and no longer available in ImageMagick version 7.</li>
 <li>All MagickCore channel method analogs are removed (e.g. NegateImageChannels()).  For version 7, use pixel traits instead.</li>

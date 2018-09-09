@@ -6,11 +6,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"  />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"  />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>Security Policy @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://www.imagemagick.org" />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="security, policy, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -23,7 +23,7 @@
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="https://www.imagemagick.org/www/security-policy.html" rel="canonical" />
+  <link href="https://imagemagick.org/www/security-policy.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
+        <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
@@ -104,6 +104,12 @@
   &lt;policy domain="system" name="precision" value="6"/>
   &lt;policy domain="cache" name="shared-secret" stealth="true" value="replace with your secret phrase"/>
   &lt;policy domain="coder" rights="none" pattern="MVG" />
+  &lt;policy domain="coder" rights="none" pattern="EPS" />
+  &lt;policy domain="coder" rights="none" pattern="PS" />
+  &lt;policy domain="coder" rights="none" pattern="PS2" />
+  &lt;policy domain="coder" rights="none" pattern="PS3" />
+  &lt;policy domain="coder" rights="none" pattern="PDF" />
+  &lt;policy domain="coder" rights="none" pattern="XPS" />
   &lt;policy domain="filter" rights="none" pattern="*" />
   &lt;policy domain="delegate" rights="none" pattern="HTTPS" />  <!--  prevent 'curl' program from reading HTTPS URL's -->
   &lt;policy domain="path" rights="none" pattern="@*"/>  <!-- indirect reads not permitted -->
@@ -111,9 +117,11 @@
 
 <p>Since we process multiple simultaneous sessions, we do not want any one session consuming all the available memory. With this policy, large images are cached to disk. If the image is too large and exceeds the pixel cache disk limit, the program exits. In addition, we place a time limit to prevent any run-away processing tasks. If any one image has a width or height that exceeds 8192 pixels or if an image sequence exceeds 128 frames, an exception is thrown and processing stops. As of ImageMagick 7.0.1-8 and 6.9.4-6, you can prevent the use of any delegate or all delegates (set the pattern to "*"). Note, prior to these releases, use a domain of <code>coder</code> to prevent delegate usage (e.g. <code>domain="coder" rights="none" pattern="HTTPS"</code>). We prevent users from executing any image filters.  The policy also prevents indirect reads. If you want to, for example, read text from a file (e.g. <code>caption:@myCaption.txt</code>), you'll need to disable the <code>path</code> policy.</p>
 
+<p>Policy patterns are <em>case sensitive</em>.  To get expected behavior, coders and modules must be upper-case (e.g. "EPS" not "eps").</p>
+
 <p>Here is what you can expect when you restrict the HTTPS coder, for example:</p>
 
-<pre class="highlight"><code>$ convert https://www.imagemagick.org/images/wizard.png wizard.jpg
+<pre class="highlight"><code>$ convert https://imagemagick.org/images/wizard.png wizard.jpg
 convert: not authorized `HTTPS'
 convert: unable to open file: No such file or directory
 convert: no images defined `wizard.jpg'</code></pre>
@@ -123,6 +131,9 @@ convert: no images defined `wizard.jpg'</code></pre>
 <pre class="highlight"><code>&lt;policy domain="delegate" rights="none" pattern="*" />
 &lt;policy domain="coder" rights="none" pattern="*" />
 &lt;policy domain="coder" rights="read | write" pattern="{GIF,JPEG,PNG,WEBP}" /></code></pre>
+
+<p>Here we disable just a few Postscript related formats:</p>
+<pre class="highlight"><code>&lt;policy domain="coder" rights="none" pattern="{EPS,PS2,PS3,PS,PDF,XPS}" /></code></pre>
 
 <p>As of ImageMagick 6.9.9-11, you can allocate the pixel cache and some internal buffers with anonymous memory mapping rather than from heap.  As a consequence, the pixels are initialized to zero.  You can also securely delete any temporary files for increased security.  The value is the number of times to shred (replace its content with random data) before deleting a temporary file.  For example,</p>
 <pre class="highlight"><code>&lt;policy domain="system" name="memory-map" value="anonymous"/>
@@ -186,6 +197,9 @@ Path: [built-in]
 <p>Notice the <code>Cache</code> policy is not listed due to the <code>stealth</code> property.</p>
 
 <p>As of ImageMagick 6.9.8-10, you can programmatically set the ImageMagick security policy with SetMagickSecurityPolicy() (MagickCore) or MagickSetSecurityPolicy() (MagickWand).</p>
+
+<p>As of ImageMagick version 6.9.10-11, you can set a module security policy.  For example, to prevent Postscript or PDF interpretation, use:</p>
+<pre class="highlight"><code>&lt;policy domain="module" rights="none" pattern="{ps,pdf,xps}/></code></pre>
 
 <p>For additional details about resource limits and the policy configuration file, read <a href="resources.html">Resources</a> and <a href="architecture.html">Architecture</a>.</p>
 

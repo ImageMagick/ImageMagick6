@@ -6,11 +6,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"  />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"  />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>Install from Source @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://www.imagemagick.org" />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="install, from, source, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -23,7 +23,7 @@
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="https://www.imagemagick.org/www/install-source.html" rel="canonical" />
+  <link href="https://imagemagick.org/www/install-source.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
+        <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
@@ -93,7 +93,7 @@
 
 <h2 class="magick-post-title"><a class="anchor" id="unix"></a>Install from Unix Source</h2>
 
-<p>ImageMagick builds on a variety of Unix and Unix-like operating systems including Linux, Solaris, FreeBSD, Mac OS X, and others.  A compiler is required and fortunately almost all modern Unix systems have one.  Download <a href="https://www.imagemagick.org/download/">ImageMagick-6.?.?.?-tar.gz</a> from <a href="https://www.imagemagick.org/download">www.imagemagick.org</a> or a <a href="mirror.html">mirror</a> and verify its <a href="https://www.imagemagick.org/download/digest.rdf">message digest</a>.</p>
+<p>ImageMagick builds on a variety of Unix and Unix-like operating systems including Linux, Solaris, FreeBSD, Mac OS X, and others.  A compiler is required and fortunately almost all modern Unix systems have one.  Download <a href="https://imagemagick.org/download/">ImageMagick-6.?.?.?-tar.gz</a> from <a href="https://imagemagick.org/download">imagemagick.org</a> or a <a href="mirror.html">mirror</a> and verify its <a href="https://imagemagick.org/download/digest.rdf">message digest</a>.</p>
 
 <p>Unpack the distribution with this command:</p>
 
@@ -118,12 +118,12 @@
 <pre class="highlight"><code>/usr/local/bin/convert logo: logo.gif
 </code></pre>
 
-<p>For a more comprehensive test, run the ImageMagick validation suite. Ghostscript is a prerequisite, otherwise the EPS, PS, and PDF tests will fail.</p>
+<p>For a more comprehensive test, run the ImageMagick validation suite. Ghostscript and Freetype are prerequisites, otherwise expect the EPS, PS, PDF and text annotations tests to fail.</p>
 
 <pre class="highlight"><code>make check
 </code></pre>
 
-<p>Congratulations, you have a working ImageMagick distribution and you are ready to use ImageMagick to <a href="https://www.imagemagick.org/Usage/">convert, compose, or edit</a> your images or perhaps you'll want to use one of the <a href="develop.html">Application Program Interfaces</a> for C, C++, Perl, and others.</p>
+<p>Congratulations, you have a working ImageMagick distribution and you are ready to use ImageMagick to <a href="https://imagemagick.org/Usage/">convert, compose, or edit</a> your images or perhaps you'll want to use one of the <a href="develop.html">Application Program Interfaces</a> for C, C++, Perl, and others.</p>
 
 <p>The above instructions will satisfy a great number of ImageMagick users, but we suspect a few will have additional questions or problems to consider.  For example, what does one do if ImageMagick fails to configure or compile?  Or what if you don't have administrator privileges and what if you don't want to install ImageMagick in the default <code>/../usr/local</code> folder?  You will find the answer to these questions, and more, in <a href="advanced-unix-installation.html">Advanced Unix Source Installation</a>.</p>
 
@@ -135,7 +135,7 @@
 
 <pre class="highlight"><code>git clone -b ImageMagick-Windows-6 --single-branch git@github.com:ImageMagick/ImageMagick-Windows.git ImageMagick-Windows-6</code></pre>
 
-<p>and run <code>CloneRepositories.cmd</code>.  Alternatively, download <a href="https://www.imagemagick.org/download/windows/">ImageMagick-6.?.?-?.zip</a> and verify its <a href="https://www.imagemagick.org/download/windows/digest.rdf">message digest</a>.  For the latter, you can unpack the distribution with <a href="http://www.winzip.com">WinZip</a> or type the following from any MS-DOS Command Prompt window:</p>
+<p>and run <code>CloneRepositories.cmd</code>.  Alternatively, download <a href="https://imagemagick.org/download/windows/">ImageMagick-6.?.?-?.zip</a> and verify its <a href="https://imagemagick.org/download/windows/digest.rdf">message digest</a>.  For the latter, you can unpack the distribution with <a href="http://www.winzip.com">WinZip</a> or type the following from any MS-DOS Command Prompt window:</p>
 
 <pre class="highlight"><code>unzip ImageMagick-windows.zip</code></pre>
 
@@ -154,7 +154,7 @@ to compile the program and on completion run the program.</p>
 <pre class="highlight"><code>validate
 </code></pre>
 
-<p>Congratulations, you have a working ImageMagick distribution under Windows and you are ready to use ImageMagick to <a href="https://www.imagemagick.org/Usage/">convert, compose, or edit</a> your images or perhaps you'll want to use one of the <a href="develop.html">Application Program Interfaces</a> for C, C++, Perl, and others.</p>
+<p>Congratulations, you have a working ImageMagick distribution under Windows and you are ready to use ImageMagick to <a href="https://imagemagick.org/Usage/">convert, compose, or edit</a> your images or perhaps you'll want to use one of the <a href="develop.html">Application Program Interfaces</a> for C, C++, Perl, and others.</p>
 
 <p>The above instructions will satisfy a great number of ImageMagick users, but we suspect a few will have additional questions or problems to consider.  For example, what does one do if ImageMagick fails to configure or compile?  Or what if you want to install ImageMagick in a place other than the <kbd>ImageMagick-6.9.10/VisualMagick/bin</kbd> folder?  Or perhaps you want to build and install the <a href="ImageMagickObject.html">ImageMagickObject</a> COM+ component.  You will find the answer to these questions, and more, in <a href="advanced-windows-installation.html">Advanced Windows Source Installation</a>.</p>
 

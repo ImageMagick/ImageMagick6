@@ -6,11 +6,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"  />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"  />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>Architecture @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://www.imagemagick.org" />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="architecture, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -23,7 +23,7 @@
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="https://www.imagemagick.org/www/architecture.html" rel="canonical" />
+  <link href="https://imagemagick.org/www/architecture.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
+        <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
@@ -158,7 +158,7 @@ if (image == (Image *) NULL)
 
 <p>When the pixel cache is initialized, pixels are scaled from whatever bit depth they originated from to that required by the pixel cache.  For example, a 1-channel 1-bit monochrome PBM image is scaled to a 4 channel 8-bit RGBA image, if you are using the Q8 version of ImageMagick, and 16-bit RGBA for the Q16 version.  You can determine which version you have with the <a href="command-line-options.html#version">&#x2011;version</a> option: </p>
 
-<pre class="highlight"><span class="crtprompt">$ </span><span class='crtin'>identify -version</span><span class='crtout'><br/></span><span class="crtprompt">$ </span><span class='crtin'>Version: ImageMagick 6.9.10-5 2018-07-11 Q16 https://www.imagemagick.org</span></pre>
+<pre class="highlight"><span class="crtprompt">$ </span><span class='crtin'>identify -version</span><span class='crtout'><br/></span><span class="crtprompt">$ </span><span class='crtin'>Version: ImageMagick 6.9.10-11 2018-08-29 Q16 https://imagemagick.org</span></pre>
 <p>As you can see, the convenience of the pixel cache sometimes comes with a trade-off in storage (e.g. storing a 1-bit monochrome image as 16-bit RGBA is wasteful) and speed (i.e. storing the entire image in memory is generally slower than accessing one scanline of pixels at a time).  In most cases, the benefits of the pixel cache typically outweigh any disadvantages.</p>
 
 <h3><a class="anchor" id="authentic-pixels"></a>Access the Pixel Cache</h3>
@@ -315,7 +315,7 @@ Resource limits:
   Time: unlimited
 </code></pre>
 
-<p>You can set these limits either as a <a href="security-policy.html">security policy</a> (see <a href="https://legacy.imagemagick.org/source/policy.xml">policy.xml</a>), with an <a href="resources.html#environment">environment variable</a>, with the <a href="command-line-options.html#limit">-limit</a> command line option, or with the <a href="api/resource.html#SetMagickResourceLimit">SetMagickResourceLimit()</a> MagickCore API method. As an example, our online web interface to ImageMagick, <a href="https://www.imagemagick.org/MagickStudio/scripts/MagickStudio.cgi">ImageMagick Studio</a>, includes these policy limits to help prevent a denial-of-service:</p>
+<p>You can set these limits either as a <a href="security-policy.html">security policy</a> (see <a href="https://legacy.imagemagick.org/source/policy.xml">policy.xml</a>), with an <a href="resources.html#environment">environment variable</a>, with the <a href="command-line-options.html#limit">-limit</a> command line option, or with the <a href="api/resource.html#SetMagickResourceLimit">SetMagickResourceLimit()</a> MagickCore API method. As an example, our online web interface to ImageMagick, <a href="https://imagemagick.org/MagickStudio/scripts/MagickStudio.cgi">ImageMagick Studio</a>, includes these policy limits to help prevent a denial-of-service:</p>
 <pre class="highlight"><code>&lt;policymap>
   &lt;policy domain="resource" name="temporary-path" value="/tmp"/>
   &lt;policy domain="resource" name="memory" value="256MiB"/>
@@ -433,7 +433,7 @@ convert image.mpc -crop 100x100+100+0 +repage 2.png
 convert image.mpc -crop 100x100+200+0 +repage 3.png
 </code></pre>
 
-<p>MPC is ideal for web sites.  It reduces the overhead of reading and writing an image.  We use it exclusively at our <a href="https://www.imagemagick.org/MagickStudio/scripts/MagickStudio.cgi">online image studio</a>.</p>
+<p>MPC is ideal for web sites.  It reduces the overhead of reading and writing an image.  We use it exclusively at our <a href="https://imagemagick.org/MagickStudio/scripts/MagickStudio.cgi">online image studio</a>.</p>
 
 <h2 class="magick-post-title"><a class="anchor" id="stream"></a>Streaming Pixels</h2>
 
@@ -532,6 +532,7 @@ convert -limit memory 2mb -limit map 2mb -limit disk 2gb \
   -define registry:cache:hosts=192.168.100.50:6668,192.168.100.51:6668 \
   myhugeimage.jpg -sharpen 5x2 myhugeimage.png
 </code></pre>
+<p>Due to network latency, expect a substantial slow-down in processing your workflow.</p>
 
 <h2 class="magick-post-title"><a class="anchor" id="threads"></a>Threads of Execution</h2>
 
@@ -659,7 +660,7 @@ void ConvertBMPToImage(const BITMAPINFOHEADER *bmp_info,
 
 <p>The OpenMP committee has not defined the behavior of mixing OpenMP with other threading models such as Posix threads.  However, using modern releases of Linux, OpenMP and Posix threads appear to interoperate without complaint.  If you want to use Posix threads from a program module that calls one of the ImageMagick application programming interfaces (e.g. MagickCore, MagickWand, Magick++, etc.) from Mac OS X or an older Linux release, you may need to disable OpenMP support within ImageMagick.  Add the <code>--disable-openmp</code> option to the configure script command line and rebuild and reinstall ImageMagick.</p>
 
-<h4>Threading Performance</h4>
+<h5>Threading Performance</h5>
 <p>It can be difficult to predict behavior in a parallel environment.   Performance might depend on a number of factors including the compiler, the version of the OpenMP library, the processor type, the number of cores, the amount of memory, whether hyperthreading is enabled, the mix of applications that are executing concurrently with ImageMagick, or the particular image-processing algorithm you utilize.  The only way to be certain of optimal performance, in terms of the number of threads, is to benchmark.   ImageMagick includes progressive threading when benchmarking a command and returns the elapsed time and efficiency for one or more threads.  This can help you identify how many threads is the most efficient in your environment.  For this benchmark we sharpen a 1920x1080 image of a model 10 times with 1 to 12 threads:</p>
 <pre class="highlight"><code>-> convert -bench 10 model.png -sharpen 5x2 null:
 Performance[1]: 10i 1.135ips 1.000e 8.760u 0:08.810
@@ -1167,7 +1168,7 @@ static MagickBooleanType WriteMGKImage(const ImageInfo *image_info,Image *image)
 display logo.mgk
 </code></pre>
 
-<p>We provide the <a href="https://www.imagemagick.org/download/kits/">Magick Coder Kit</a> to help you get started writing your own custom coder.</p>
+<p>We provide the <a href="https://imagemagick.org/download/kits/">Magick Coder Kit</a> to help you get started writing your own custom coder.</p>
 
 <h2 class="magick-post-title"><a class="anchor" id="filters"></a>Custom Image Filters</h2>
 
@@ -1391,7 +1392,7 @@ ModuleExport size_t analyzeImage(Image **images,const int argc,const char **argv
 </code></pre>
 
 
-<p>We provide the <a href="https://www.imagemagick.org/download/kits/">Magick Filter Kit</a> to help you get started writing your own custom image filter.</p>
+<p>We provide the <a href="https://imagemagick.org/download/kits/">Magick Filter Kit</a> to help you get started writing your own custom image filter.</p>
 
 </div>
     </div>

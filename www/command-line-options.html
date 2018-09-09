@@ -6,11 +6,11 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"  />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"  />
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>Command-line Options @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® is a software suite to create, edit, compose, or convert bitmap images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, JPEG-2000, GIF, WebP, Postscript, PDF, and SVG. Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves." />
-  <meta name="application-url" content="https://www.imagemagick.org" />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="command-line, options, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
   <meta name="rating" content="GENERAL" />
@@ -23,7 +23,7 @@
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
-  <link href="https://www.imagemagick.org/www/command-line-options.html" rel="canonical" />
+  <link href="https://imagemagick.org/www/command-line-options.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
         <a class="nav-link" href="develop.html">Develop</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" target="_blank" href="https://www.imagemagick.org/discourse-server/">Community</a>
+        <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
     <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
@@ -564,7 +564,7 @@ negative results without clipping to the color value range
 <p>See the discussion on HDRI implementations of ImageMagick on the page <a
 href="high-dynamic-range.html" >High Dynamic-Range Images</a>. For more
 about HDRI go the ImageMagick <a
-href="https://www.imagemagick.org/Usage/basics/#hdri" >Usage</a> pages or this
+href="https://imagemagick.org/Usage/basics/#hdri" >Usage</a> pages or this
 <a
 href="http://en.wikipedia.org/wiki/High_dynamic_range_imaging">Wikipedia</a>
 entry.  </p>
@@ -1465,9 +1465,8 @@ href="command-line-options.html#set">-set</a> '<code>option:compose:args</code>'
 appropriately for the compose method. </p>
 
 <p>Some <a href="command-line-options.html#compose">-compose</a> methods can modify the 'destination'
-image outside the overlay area. You can disable this by setting the special <a
-href="command-line-options.html#set">-set</a> '<code>option:compose:outside-overlay</code>'
-to '<code>false</code>'.  </p>
+image outside the overlay area. You can disable this by setting this define:
+<a href="command-line-options.html#define">-define</a> '<code>compose:outside-overlay=false</code></p>
 
 <p>The SVG compositing specification requires that color and opacity values range between zero and QuantumRange inclusive.  You can permit values outside this range with this option: <a href="command-line-options.html#set">-set</a> '<code>option:compose:clamp=false</code></p>
 
@@ -1597,7 +1596,7 @@ negative results without clipping to the color value range (0..QuantumRange).
 See the discussion on HDRI implementations of ImageMagick on the page <a
 href="high-dynamic-range.html">High
 Dynamic-Range Images</a>. For more about HDRI go the ImageMagick <a
-href="https://www.imagemagick.org/Usage/basics/#hdri">Usage</a> pages or this
+href="https://imagemagick.org/Usage/basics/#hdri">Usage</a> pages or this
 <a href="http://en.wikipedia.org/wiki/High_dynamic_range_imaging">Wikipedia</a>
 entry.  </p>
 
@@ -1717,7 +1716,7 @@ option.</p>
 <p>Get the passphrase from the file specified by <var>filename</var>.</p>
 
 <p>For more information, see the webpage, <a
-href="https://www.imagemagick.org/www/cipher.html">ImageMagick: Encipher or
+href="https://imagemagick.org/www/cipher.html">ImageMagick: Encipher or
 Decipher an Image</a>.</p>
 
 
@@ -1808,13 +1807,18 @@ available:</p>
   <tr>
     <td>compose:args=<var>arguments</var></td>
      <td>Sets certain compose argument values when using convert ... -compose ...
-    -composite. See <a href="https://www.imagemagick.org/www/compose.html"
+    -composite. See <a href="https://imagemagick.org/www/compose.html"
     >Image Composition</a></td>
   </tr>
 
   <tr>
     <td>compose:clamp=<var>on|off</var></td>
     <td>set each pixel whose value is below zero to zero and any the pixel whose value is above the quantum range to the quantum range (e.g. 65535) otherwise the pixel value remains unchanged.  Define supported in ImageMagick 6.9.1-3 and above.</td>
+  </tr>
+
+  <tr>
+    <td>compose:outside-overlay=<var>true|false</var></td>
+    <td>Some <a href="command-line-options.html#compose" >-compose</a> methods can modify the 'destination' image outside the overlay area.  It is disabled by default.</td>
   </tr>
 
   <tr>
@@ -3407,7 +3411,7 @@ image sequence.</p>
 <p>Get the passphrase from the file specified by <var>filename</var>.</p>
 
 <p>For more information, see the webpage, <a
-href="https://www.imagemagick.org/www/cipher.html">ImageMagick: Encipher or
+href="https://imagemagick.org/www/cipher.html">ImageMagick: Encipher or
 Decipher an Image</a>.</p>
 
 
@@ -3796,7 +3800,7 @@ images.</p>
 <p>See the discussion on HDRI implementations of ImageMagick on the page <a
 href="high-dynamic-range.html" >High Dynamic-Range Images</a>. For more
 about HDRI go the ImageMagick <a
-href="https://www.imagemagick.org/Usage/basics/#hdri" >Usage</a> pages, <a
+href="https://imagemagick.org/Usage/basics/#hdri" >Usage</a> pages, <a
 href="http://www.fmwconcepts.com/imagemagick/fourier_transforms/fourier.html"
 >Fred's Fourier Processing With ImageMagick page</a> or this <a
  href="http://en.wikipedia.org/wiki/High_dynamic_range_imaging" >Wikipedia</a>
@@ -5852,7 +5856,7 @@ argument determine how many images to interpolate between each image. </p>
 <p class="magick-description">apply a morphology method to the image.</p>
 
 <p>Until I get around to writing an option summary for this, see <a
-href="https://www.imagemagick.org/Usage/morphology/" >IM Usage Examples,
+href="https://imagemagick.org/Usage/morphology/" >IM Usage Examples,
 Morphology</a>. </p>
 
 
