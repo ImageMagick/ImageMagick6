@@ -39,6 +39,7 @@
 /*
   Include declarations.
 */
+#include <string.h>
 #include "magick/studio.h"
 #include "magick/blob.h"
 #include "magick/blob-private.h"
@@ -351,6 +352,7 @@ static Image *ReadSFWImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Read JPEG image.
   */
+  (void) CopyMagickString(read_info->magick,"JPEG",MaxTextExtent);
   jpeg_image=ReadImage(read_info,exception);
   (void) RelinquishUniqueFileResource(read_info->filename);
   read_info=DestroyImageInfo(read_info);
