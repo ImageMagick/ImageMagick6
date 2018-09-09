@@ -1999,6 +1999,10 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
     (double) image->columns,(double) image->rows);
   if (write(file,message,strlen(message)) != (ssize_t) strlen(message))
     status=MagickFalse;
+  (void) FormatLocaleString(message,MaxTextExtent,
+    "# x1,y1  x2,y2 # count angle distance\n");
+  if (write(file,message,strlen(message)) != (ssize_t) strlen(message))
+    status=MagickFalse;
   line_count=image->columns > image->rows ? image->columns/4 : image->rows/4;
   if (threshold != 0)
     line_count=threshold;
@@ -2080,7 +2084,8 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
                 cos(DegreesToRadians((double) x))+(image->columns/2.0);
             }
           (void) FormatLocaleString(message,MaxTextExtent,
-            "line %g,%g %g,%g  # %g\n",line.x1,line.y1,line.x2,line.y2,maxima);
+            "line %g,%g %g,%g  # %g %g %g\n",line.x1,line.y1,line.x2,line.y2,
+            maxima,(double) x,(double) y);
           if (write(file,message,strlen(message)) != (ssize_t) strlen(message))
             status=MagickFalse;
         }
