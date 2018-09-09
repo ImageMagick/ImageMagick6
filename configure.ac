@@ -38,7 +38,7 @@ m4_define([magick_tar_name],[ImageMagick])
 # ==============================================================================
 AC_INIT([ImageMagick],
         [magick_version],
-        [https://github.com/ImageMagick/ImageMagick/issues],
+        [https://github.com/ImageMagick/ImageMagick6/issues],
         [magick_tar_name],
         [https://imagemagick.org])
 AC_CONFIG_SRCDIR([magick/MagickCore.h])
