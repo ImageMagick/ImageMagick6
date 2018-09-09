@@ -39,7 +39,6 @@
 /*
   Include declarations.
 */
-#include <string.h>
 #include "magick/studio.h"
 #include "magick/blob.h"
 #include "magick/blob-private.h"
