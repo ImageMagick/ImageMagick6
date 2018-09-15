@@ -344,7 +344,7 @@ MagickExport size_t GetImageChannelDepth(const Image *image,
 
           atDepth=MagickTrue;
           range=GetQuantumRange(current_depth[id]);
-          if ((atDepth != MagickFalse) && ((channel & RedChannel) != 0))
+          if ((channel & RedChannel) != 0)
             if (IsPixelAtDepth(image->colormap[i].red,range) == MagickFalse)
               atDepth=MagickFalse;
           if ((atDepth != MagickFalse) && ((channel & GreenChannel) != 0))
