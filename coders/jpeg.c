@@ -1535,18 +1535,19 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
 */
 ModuleExport size_t RegisterJPEGImage(void)
 {
+#define JPEGDescription "Joint Photographic Experts Group JFIF format"
+#define JPEGStringify(macro_or_string)  JPEGStringifyArg(macro_or_string)
+#define JPEGStringifyArg(contents)  #contents
+
   char
     version[MaxTextExtent];
 
   MagickInfo
     *entry;
 
-  static const char
-    description[] = "Joint Photographic Experts Group JFIF format";
-
   *version='\0';
 #if defined(LIBJPEG_TURBO_VERSION)
-  (void) CopyMagickString(version,"libjpeg-turbo " MagickStringify(
+  (void) CopyMagickString(version,"libjpeg-turbo " JPEGStringify(
     LIBJPEG_TURBO_VERSION),MagickPathExtent);
 #elif defined(JPEG_LIB_VERSION)
   (void) FormatLocaleString(version,MagickPathExtent,"libjpeg %d",
@@ -1563,7 +1564,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   entry->magick=(IsImageFormatHandler *) IsJPEG;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
-  entry->description=ConstantString(description);
+  entry->description=ConstantString(JPEGDescription);
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
@@ -1580,7 +1581,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   entry->magick=(IsImageFormatHandler *) IsJPEG;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
-  entry->description=ConstantString(description);
+  entry->description=ConstantString(JPEGDescription);
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
@@ -1596,7 +1597,7 @@ ModuleExport size_t RegisterJPEGImage(void)
 #endif
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
-  entry->description=ConstantString(description);
+  entry->description=ConstantString(JPEGDescription);
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
@@ -1612,7 +1613,7 @@ ModuleExport size_t RegisterJPEGImage(void)
 #endif
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
-  entry->description=ConstantString(description);
+  entry->description=ConstantString(JPEGDescription);
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
@@ -1628,7 +1629,7 @@ ModuleExport size_t RegisterJPEGImage(void)
 #endif
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
-  entry->description=ConstantString(description);
+  entry->description=ConstantString(JPEGDescription);
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
