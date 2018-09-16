@@ -4060,20 +4060,7 @@ MagickExport Image *PolaroidImage(const Image *image,const DrawInfo *draw_info,
   if (value != (const char *) NULL)
     {
       char
-        *caption,
-        geometry[MaxTextExtent];
-
-      DrawInfo
-        *annotate_info;
-
-      MagickBooleanType
-        status;
-
-      ssize_t
-        count;
-
-      TypeMetric
-        metrics;
+        *caption;
 
       /*
         Generate caption image.
@@ -4081,31 +4068,49 @@ MagickExport Image *PolaroidImage(const Image *image,const DrawInfo *draw_info,
       caption_image=CloneImage(image,image->columns,1,MagickTrue,exception);
       if (caption_image == (Image *) NULL)
         return((Image *) NULL);
-      annotate_info=CloneDrawInfo((const ImageInfo *) NULL,draw_info);
       caption=InterpretImageProperties((ImageInfo *) NULL,(Image *) image,
         value);
-      (void) CloneString(&annotate_info->text,caption);
-      count=FormatMagickCaption(caption_image,annotate_info,MagickTrue,&metrics,
-        &caption);
-      status=SetImageExtent(caption_image,image->columns,(size_t)
-        ((count+1)*(metrics.ascent-metrics.descent)+0.5));
-      if (status == MagickFalse)
-        caption_image=DestroyImage(caption_image);
-      else
+      if (caption != (char *) NULL)
         {
-          caption_image->background_color=image->border_color;
-          (void) SetImageBackgroundColor(caption_image);
+          char
+            geometry[MaxTextExtent];
+
+          DrawInfo
+            *annotate_info;
+
+          MagickBooleanType
+            status;
+
+          ssize_t
+            count;
+
+          TypeMetric
+            metrics;
+
+          annotate_info=CloneDrawInfo((const ImageInfo *) NULL,draw_info);
           (void) CloneString(&annotate_info->text,caption);
-          (void) FormatLocaleString(geometry,MaxTextExtent,"+0+%.20g",
-            metrics.ascent);
-          if (annotate_info->gravity == UndefinedGravity)
-            (void) CloneString(&annotate_info->geometry,AcquireString(
-              geometry));
-          (void) AnnotateImage(caption_image,annotate_info);
-          height+=caption_image->rows;
+          count=FormatMagickCaption(caption_image,annotate_info,MagickTrue,
+            &metrics,&caption);
+          status=SetImageExtent(caption_image,image->columns,(size_t)
+            ((count+1)*(metrics.ascent-metrics.descent)+0.5));
+          if (status == MagickFalse)
+            caption_image=DestroyImage(caption_image);
+          else
+            {
+              caption_image->background_color=image->border_color;
+              (void) SetImageBackgroundColor(caption_image);
+              (void) CloneString(&annotate_info->text,caption);
+              (void) FormatLocaleString(geometry,MaxTextExtent,"+0+%.20g",
+                metrics.ascent);
+              if (annotate_info->gravity == UndefinedGravity)
+                (void) CloneString(&annotate_info->geometry,AcquireString(
+                  geometry));
+              (void) AnnotateImage(caption_image,annotate_info);
+              height+=caption_image->rows;
+            }
+          caption=DestroyString(caption);
+          annotate_info=DestroyDrawInfo(annotate_info);
         }
-      annotate_info=DestroyDrawInfo(annotate_info);
-      caption=DestroyString(caption);
     }
   picture_image=CloneImage(image,image->columns+2*quantum,height,MagickTrue,
     exception);
