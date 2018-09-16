@@ -4108,8 +4108,8 @@ MagickExport Image *PolaroidImage(const Image *image,const DrawInfo *draw_info,
               (void) AnnotateImage(caption_image,annotate_info);
               height+=caption_image->rows;
             }
-          caption=DestroyString(caption);
           annotate_info=DestroyDrawInfo(annotate_info);
+          caption=DestroyString(caption);
         }
     }
   picture_image=CloneImage(image,image->columns+2*quantum,height,MagickTrue,
