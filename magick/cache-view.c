@@ -156,7 +156,7 @@ MagickExport CacheView *AcquireVirtualCacheView(const Image *image,
   CacheView
     *magick_restrict cache_view;
 
-  magick_unreferenced(image);
+  magick_unreferenced(exception);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
