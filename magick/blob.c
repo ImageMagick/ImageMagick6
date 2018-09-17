@@ -2700,7 +2700,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
         }
       blob_info->type=FileStream;
       blob_info->exempt=MagickTrue;
-			return(SetStreamBuffering(image_info,image));
+      return(SetStreamBuffering(image_info,image));
     }
 #endif
   GetPathComponent(image->filename,ExtensionPath,extension);
