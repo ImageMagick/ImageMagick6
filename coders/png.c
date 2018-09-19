@@ -8700,6 +8700,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
   tried_333 = MagickFalse;
   tried_444 = MagickFalse;
 
+  image->depth=GetImageDepth(image,&image->exception);
   for (j=0; j<6; j++)
   {
     /*
@@ -8811,7 +8812,6 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
      number_semitransparent = 0;
      number_transparent = 0;
 
-     (void) SetImageDepth(image,image->depth);
      for (y=0; y < (ssize_t) image->rows; y++)
      {
        q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
