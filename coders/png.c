@@ -51,6 +51,7 @@
 #include "magick/color.h"
 #include "magick/color-private.h"
 #include "magick/colormap.h"
+#include "magick/colormap-private.h"
 #include "magick/colorspace.h"
 #include "magick/colorspace-private.h"
 #include "magick/constitute.h"
@@ -3563,10 +3564,12 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
 
         for (x=0; x < (ssize_t) image->columns; x++)
         {
-          SetPixelRed(q,ClampToQuantum(image->colormap[(int) *r].red));
-          SetPixelGreen(q,ClampToQuantum(image->colormap[(int) *r].green));
-          SetPixelBlue(q,ClampToQuantum(image->colormap[(int) *r].blue));
-          SetPixelIndex(indexes+x,*r++);
+          ssize_t index=ConstrainColormapIndex(image,(ssize_t) *r);
+          SetPixelRed(q,ClampToQuantum(image->colormap[index].red));
+          SetPixelGreen(q,ClampToQuantum(image->colormap[index].green));
+          SetPixelBlue(q,ClampToQuantum(image->colormap[index].blue));
+          SetPixelIndex(indexes+x,index);
+          r++;
           q++;
         }
 
