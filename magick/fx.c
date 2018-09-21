@@ -3169,6 +3169,8 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  if (expression == (const char *) NULL)
+    return(CloneImage(image,0,0,MagickTrue,exception));
   fx_info=AcquireFxThreadSet(image,expression,exception);
   if (fx_info == (FxInfo **) NULL)
     return((Image *) NULL);
