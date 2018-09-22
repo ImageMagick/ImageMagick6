@@ -1142,8 +1142,7 @@ void Magick::Image::matte(const bool matteFlag_)
   // matte channel, then create an opaque matte channel.  Likewise, if
   // the image already has a matte channel but a matte channel is not
   // desired, then set the matte channel to opaque.
-  if ((matteFlag_ && !constImage()->matte) || (constImage()->matte &&
-    !matteFlag_))
+  if (bool(matteFlag_) != bool(constImage()->matte))
     SetImageOpacity(image(),OpaqueOpacity);
 
   image()->matte=(MagickBooleanType) matteFlag_;
