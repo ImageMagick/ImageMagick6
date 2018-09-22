@@ -142,8 +142,7 @@ static MagickBooleanType
 %    o exception: return any errors or warnings in this structure.
 %
 */
-static Image *ReadTGAImage(const ImageInfo *image_info,
-  ExceptionInfo *exception)
+static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
   Image
     *image;
@@ -274,7 +273,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,
 
           one=1;
           image->colors=one << tga_info.bits_per_pixel;
-          if (image->colors > GetBlobSize(image))
+          if ((MagickSizeType) image->colors > GetBlobSize(image))
             ThrowReaderException(CorruptImageError,
               "InsufficientImageDataInFile");
           if (AcquireImageColormap(image,image->colors) == MagickFalse)
@@ -310,16 +309,16 @@ static Image *ReadTGAImage(const ImageInfo *image_info,
   if (tga_info.attributes & (1UL << 4))
     {
       if (tga_info.attributes & (1UL << 5))
-        SetImageArtifact(image,"tga:image-origin","TopRight");
+        image->orientation=TopRightOrientation;
       else
-        SetImageArtifact(image,"tga:image-origin","BottomRight");
+        image->orientation=BottomRightOrientation;
     }
   else
     {
       if (tga_info.attributes & (1UL << 5))
-        SetImageArtifact(image,"tga:image-origin","TopLeft");
+        image->orientation=TopLeftOrientation;
       else
-        SetImageArtifact(image,"tga:image-origin","BottomLeft");
+        image->orientation=BottomLeftOrientation;
     }
   if (image_info->ping != MagickFalse)
     {
@@ -459,7 +458,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,
             index=(Quantum) pixels[0];
             if (tga_info.colormap_type != 0)
               pixel=image->colormap[(ssize_t) ConstrainColormapIndex(image,
-                1UL*index)];
+                (ssize_t) index)];
             else
               {
                 pixel.red=ScaleCharToQuantum((unsigned char) index);
@@ -490,7 +489,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,
               pixel.opacity=(k & 0x80) == 0 ? (Quantum) TransparentOpacity :
                 (Quantum) OpaqueOpacity;
             if (image->storage_class == PseudoClass)
-              index=ConstrainColormapIndex(image,((size_t) k << 8)+j);
+              index=ConstrainColormapIndex(image,(ssize_t) ((size_t) k << 8)+j);
             break;
           }
           case 24:
@@ -722,8 +721,7 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
     compression;
 
   const char
-    *comment,
-    *value;
+    *comment;
 
   const double
     midpoint = QuantumRange/2.0;
@@ -836,19 +834,12 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
         else
           tga_info.colormap_size=24;
       }
-  value=GetImageArtifact(image,"tga:image-origin");
-  if (value != (const char *) NULL)
-    {
-      OrientationType
-        origin;
-
-      origin=(OrientationType) ParseCommandOption(MagickOrientationOptions,
-        MagickFalse,value);
-      if (origin == BottomRightOrientation || origin == TopRightOrientation)
-        tga_info.attributes|=(1UL << 4);
-      if (origin == TopLeftOrientation || origin == TopRightOrientation)
-        tga_info.attributes|=(1UL << 5);
-    }
+  if ((image->orientation == BottomRightOrientation) ||
+      (image->orientation == TopRightOrientation))
+    tga_info.attributes|=(1UL << 4);
+  if ((image->orientation == TopLeftOrientation) ||
+      (image->orientation == TopRightOrientation))
+    tga_info.attributes|=(1UL << 5);
   /*
     Write TGA header.
   */
