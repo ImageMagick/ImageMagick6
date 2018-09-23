@@ -103,6 +103,7 @@
 #define IPTC_MARKER  (JPEG_APP0+13)
 #define XML_MARKER  (JPEG_APP0+1)
 #define MaxBufferExtent  16384
+#define MaxJPEGScans  1024
 
 /*
   Typedef declarations.
@@ -306,22 +307,49 @@ static void JPEGErrorHandler(j_common_ptr jpeg_info)
   ErrorManager
     *error_manager;
 
+  ExceptionInfo
+    *exception;
+
   Image
     *image;
 
   *message='\0';
   error_manager=(ErrorManager *) jpeg_info->client_data;
   image=error_manager->image;
+  exception=(&image->exception);
   (jpeg_info->err->format_message)(jpeg_info,message);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(CoderEvent,GetMagickModule(),
       "[%s] JPEG Trace: \"%s\"",image->filename,message);
   if (error_manager->finished != MagickFalse)
-    (void) ThrowMagickException(&image->exception,GetMagickModule(),
-      CorruptImageWarning,(char *) message,"`%s'",image->filename);
+    (void) ThrowMagickException(exception,GetMagickModule(),CorruptImageWarning,
+      (char *) message,"`%s'",image->filename);
   else
-    (void) ThrowMagickException(&image->exception,GetMagickModule(),
-      CorruptImageError,(char *) message,"`%s'",image->filename);
+    (void) ThrowMagickException(exception,GetMagickModule(),CorruptImageError,
+      (char *) message,"`%s'",image->filename);
+  longjmp(error_manager->error_recovery,1);
+}
+
+static void JPEGProgressHandler(j_common_ptr jpeg_info)
+{
+  ErrorManager
+    *error_manager;
+
+  ExceptionInfo
+    *exception;
+
+  Image
+    *image;
+
+  error_manager=(ErrorManager *) jpeg_info->client_data;
+  image=error_manager->image;
+  exception=(&image->exception);
+  if (jpeg_info->is_decompressor == 0)
+    return;
+  if (((j_decompress_ptr) jpeg_info)->input_scan_number < MaxJPEGScans)
+    return;
+  (void) ThrowMagickException(exception,GetMagickModule(),CorruptImageError,
+    "too many scans","`%s'",image->filename);
   longjmp(error_manager->error_recovery,1);
 }
 
@@ -1040,6 +1068,9 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   struct jpeg_error_mgr
     jpeg_error;
 
+  struct jpeg_progress_mgr
+    jpeg_progress;
+
   register JSAMPLE
     *p;
 
@@ -1079,6 +1110,7 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   (void) memset(&error_manager,0,sizeof(error_manager));
   (void) memset(&jpeg_info,0,sizeof(jpeg_info));
   (void) memset(&jpeg_error,0,sizeof(jpeg_error));
+  (void) memset(&jpeg_progress,0,sizeof(jpeg_progress));
   jpeg_info.err=jpeg_std_error(&jpeg_error);
   jpeg_info.err->emit_message=(void (*)(j_common_ptr,int)) JPEGWarningHandler;
   jpeg_info.err->error_exit=(void (*)(j_common_ptr)) JPEGErrorHandler;
@@ -1100,6 +1132,8 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   jpeg_create_decompress(&jpeg_info);
   if (GetMaxMemoryRequest() != ~0UL)
     jpeg_info.mem->max_memory_to_use=(long) GetMaxMemoryRequest();
+  jpeg_progress.progress_monitor=(void (*)(j_common_ptr)) JPEGProgressHandler;
+  jpeg_info.progress=(&jpeg_progress);
   JPEGSourceManager(&jpeg_info,image);
   jpeg_set_marker_processor(&jpeg_info,JPEG_COM,ReadComment);
   option=GetImageOption(image_info,"profile:skip");
