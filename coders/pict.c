@@ -445,7 +445,7 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
     bytes_per_line=width;
   row_bytes=(size_t) (image->columns | 0x8000);
   if (image->storage_class == DirectClass)
-    row_bytes=(size_t) ((4*image->columns) | 0x8000);
+    row_bytes=(size_t) (4*(image->columns | 0x8000));
   /*
     Allocate pixel and scanline buffer.
   */
@@ -1790,7 +1790,7 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
   /*
     Allocate memory.
   */
-  bytes_per_line=image->columns;
+  bytes_per_line=image->columns | 0x8000;
   if (storage_class == DirectClass)
     bytes_per_line*=image->matte != MagickFalse ? 4 : 3;
   buffer=(unsigned char *) AcquireQuantumMemory(PictInfoSize,sizeof(*buffer));
