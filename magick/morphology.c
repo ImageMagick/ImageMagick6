@@ -3191,7 +3191,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                      GetPixelIntensity(image,&(k_pixels[u])) < GetPixelIntensity(result_image,q) ) {
                   /* copy the whole pixel - no channel selection */
                   *q = k_pixels[u];
-                
+
                   if ( result.red > 0.0 ) changes[id]++;
                   result.red = 1.0;
                 }
@@ -4197,19 +4197,19 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
         case TopHatMorphology:
         case BottomHatMorphology:
           if ( verbose != MagickFalse )
-            (void) FormatLocaleFile(stderr, "\n%s: Difference with original image",
-                 CommandOptionToMnemonic(MagickMorphologyOptions, method) );
-          (void) CompositeImageChannel(curr_image,
-                  (ChannelType) (channel & ~SyncChannels),
-                  DifferenceCompositeOp, image, 0, 0);
+            (void) FormatLocaleFile(stderr,
+              "\n%s: Difference with original image",
+              CommandOptionToMnemonic(MagickMorphologyOptions,method));
+          (void) CompositeImageChannel(curr_image,(ChannelType)
+            (channel & ~SyncChannels),DifferenceCompositeOp,image,0,0);
           break;
         case EdgeMorphology:
           if ( verbose != MagickFalse )
-            (void) FormatLocaleFile(stderr, "\n%s: Difference of Dilate and Erode",
-                 CommandOptionToMnemonic(MagickMorphologyOptions, method) );
-          (void) CompositeImageChannel(curr_image,
-                  (ChannelType) (channel & ~SyncChannels),
-                  DifferenceCompositeOp, save_image, 0, 0);
+            (void) FormatLocaleFile(stderr,
+              "\n%s: Difference of Dilate and Erode",
+              CommandOptionToMnemonic(MagickMorphologyOptions,method));
+          (void) CompositeImageChannel(curr_image,(ChannelType)
+            (channel & ~SyncChannels),OutCompositeOp,save_image,0,0);
           save_image = DestroyImage(save_image); /* finished with save image */
           break;
         default:
