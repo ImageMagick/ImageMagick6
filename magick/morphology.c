@@ -4209,7 +4209,7 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
               "\n%s: Difference of Dilate and Erode",
               CommandOptionToMnemonic(MagickMorphologyOptions,method));
           (void) CompositeImageChannel(curr_image,(ChannelType)
-            (channel & ~SyncChannels),OutCompositeOp,save_image,0,0);
+            (channel & ~SyncChannels),DifferenceCompositeOp,save_image,0,0);
           save_image = DestroyImage(save_image); /* finished with save image */
           break;
         default:
