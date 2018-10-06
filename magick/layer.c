@@ -330,7 +330,7 @@ MagickExport Image *CoalesceImages(const Image *image,ExceptionInfo *exception)
     */
     coalesce_image->next=CloneImage(dispose_image,0,0,MagickTrue,exception);
     if (coalesce_image->next != NULL)
-￼     coalesce_image->next->previous=coalesce_image;
+      coalesce_image->next->previous=coalesce_image;
     previous=coalesce_image;
     coalesce_image=GetNextImageInList(coalesce_image);
     (void) CompositeImage(coalesce_image,next->matte != MagickFalse ?
