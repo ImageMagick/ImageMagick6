@@ -2837,9 +2837,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
               ThrowPointExpectedException(image,token);
             graphic_context[n]->fill_opacity=(QuantumRange-
               graphic_context[n]->fill_opacity)*(1.0-opacity);
-            if (graphic_context[n]->fill_opacity != OpaqueOpacity)
-              graphic_context[n]->fill.opacity=ClampToQuantum(
-                graphic_context[n]->fill_opacity);
+            if (graphic_context[n]->fill.opacity != TransparentOpacity)
+              graphic_context[n]->fill.opacity=graphic_context[n]->fill_opacity;
+            else
+              graphic_context[n]->fill.opacity=ClampToQuantum(QuantumRange*
+                (1.0-opacity));
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -3614,9 +3616,12 @@ static MagickBooleanType RenderMVGContent(Image *image,
               ThrowPointExpectedException(image,token);
             graphic_context[n]->stroke_opacity=(QuantumRange-
               graphic_context[n]->stroke_opacity)*(1.0-opacity);
-            if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
-              graphic_context[n]->stroke.opacity=ClampToQuantum(
-                graphic_context[n]->stroke_opacity);
+            if (graphic_context[n]->stroke.opacity != TransparentOpacity)
+              graphic_context[n]->stroke.opacity=
+                graphic_context[n]->stroke_opacity;
+            else
+              graphic_context[n]->stroke.opacity=ClampToQuantum(QuantumRange*
+                (1.0-opacity));
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
