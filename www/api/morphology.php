@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="morphology.php#AcquireKernelInfo">AcquireKernelInfo</a> &bull; <a href="morphology.php#CloneKernelInfo">CloneKernelInfo</a> &bull; <a href="morphology.php#DestroyKernelInfo">DestroyKernelInfo</a> &bull; <a href="morphology.php#MorphologyApply">MorphologyApply</a> &bull; <a href="morphology.php#MorphologyImageChannel">MorphologyImageChannel</a> &bull; <a href="morphology.php#ScaleGeometryKernelInfo">ScaleGeometryKernelInfo</a> &bull; <a href="morphology.php#ScaleKernelInfo">ScaleKernelInfo</a> &bull; <a href="morphology.php#ShowKernelInfo">ShowKernelInfo</a> &bull; <a href="morphology.php#UnityAddKernelInfo">UnityAddKernelInfo</a> &bull; <a href="morphology.php#ZeroKernelNans">ZeroKernelNans</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="AcquireKernelInfo">AcquireKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="AcquireKernelInfo">AcquireKernelInfo</a></h2>
 
 <p>AcquireKernelInfo() takes the given string (generally supplied by the user) and converts it into a Morphology/Convolution Kernel.  This allows users to specify a kernel from a number of pre-defined kernels, or to fully specify their own kernel for a specific Convolution or Morphology Operation.</p>
 
@@ -130,7 +130,7 @@ KernelInfo *AcquireKernelInfo(const char *kernel_string)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="CloneKernelInfo">CloneKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="CloneKernelInfo">CloneKernelInfo</a></h2>
 
 <p>CloneKernelInfo() creates a new clone of the given Kernel List so that its can be modified without effecting the original.  The cloned kernel should be destroyed using DestoryKernelInfo() when no longer needed.</p>
 
@@ -152,7 +152,7 @@ KernelInfo *CloneKernelInfo(const KernelInfo *kernel)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="DestroyKernelInfo">DestroyKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="DestroyKernelInfo">DestroyKernelInfo</a></h2>
 
 <p>DestroyKernelInfo() frees the memory used by a Convolution/Morphology kernel.</p>
 
@@ -174,7 +174,7 @@ KernelInfo *DestroyKernelInfo(KernelInfo *kernel)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="MorphologyApply">MorphologyApply</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="MorphologyApply">MorphologyApply</a></h2>
 
 <p>MorphologyApply() applies a morphological method, multiple times using a list of multiple kernels.  This is the method that should be called by other 'operators' that internally use morphology operations as part of their processing.</p>
 
@@ -237,7 +237,7 @@ Image *MorphologyApply(const Image *image,MorphologyMethod method,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="MorphologyImageChannel">MorphologyImageChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="MorphologyImageChannel">MorphologyImageChannel</a></h2>
 
 <p>MorphologyImageChannel() applies a user supplied kernel to the image according to the given mophology method.</p>
 
@@ -286,7 +286,7 @@ Image *MorphologyImage(const Image *image,MorphologyMethod method,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="ScaleGeometryKernelInfo">ScaleGeometryKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="ScaleGeometryKernelInfo">ScaleGeometryKernelInfo</a></h2>
 
 <p>ScaleGeometryKernelInfo() takes a geometry argument string, typically provided as a  "-set option:convolve:scale {geometry}" user setting, and modifies the kernel according to the parsed arguments of that setting.</p>
 
@@ -317,7 +317,7 @@ void ScaleGeometryKernelInfo(KernelInfo *kernel,
 
 <p></dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="ScaleKernelInfo">ScaleKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="ScaleKernelInfo">ScaleKernelInfo</a></h2>
 
 <p>ScaleKernelInfo() scales the given kernel list by the given amount, with or without normalization of the sum of the kernel values (as per given flags).</p>
 
@@ -371,7 +371,7 @@ void ScaleKernelInfo(KernelInfo *kernel, const double scaling_factor,
 
 <p></dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="ShowKernelInfo">ShowKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="ShowKernelInfo">ShowKernelInfo</a></h2>
 
 <p>ShowKernelInfo() outputs the details of the given kernel defination to standard error, generally due to a users 'showKernel' option request.</p>
 
@@ -393,7 +393,7 @@ void ShowKernelInfo(const KernelInfo *kernel)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="UnityAddKernelInfo">UnityAddKernelInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="UnityAddKernelInfo">UnityAddKernelInfo</a></h2>
 
 <p>UnityAddKernelInfo() Adds a given amount of the 'Unity' Convolution Kernel to the given pre-scaled and normalized Kernel.  This in effect adds that amount of the original image into the resulting convolution kernel.  This value is usually provided by the user as a percentage value in the 'convolve:scale' setting.</p>
 
@@ -423,7 +423,7 @@ void UnityAdditionKernelInfo(KernelInfo *kernel, const double scale )
 
 <p></dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/morphology_8c.html" id="ZeroKernelNans">ZeroKernelNans</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/morphology_8c.html" id="ZeroKernelNans">ZeroKernelNans</a></h2>
 
 <p>ZeroKernelNans() replaces any special 'nan' value that may be present in the kernel with a zero value.  This is typically done when the kernel will be used in special hardware (GPU) convolution processors, to simply matters.</p>
 

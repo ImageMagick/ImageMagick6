@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="fourier.php#ComplexImages">ComplexImages</a> &bull; <a href="fourier.php#ForwardFourierTransformImage">ForwardFourierTransformImage</a> &bull; <a href="fourier.php#InverseFourierTransformImage">InverseFourierTransformImage</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/fourier_8c.html" id="ComplexImages">ComplexImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/fourier_8c.html" id="ComplexImages">ComplexImages</a></h2>
 
 <p>ComplexImages() performs complex mathematics on an image sequence.</p>
 
@@ -113,7 +113,7 @@ MagickBooleanType ComplexImages(Image *images,const ComplexOperator op,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/fourier_8c.html" id="ForwardFourierTransformImage">ForwardFourierTransformImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/fourier_8c.html" id="ForwardFourierTransformImage">ForwardFourierTransformImage</a></h2>
 
 <p>ForwardFourierTransformImage() implements the discrete Fourier transform (DFT) of the image either as a magnitude / phase or real / imaginary image pair.</p>
 
@@ -144,7 +144,7 @@ Image *ForwardFourierTransformImage(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/fourier_8c.html" id="InverseFourierTransformImage">InverseFourierTransformImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/fourier_8c.html" id="InverseFourierTransformImage">InverseFourierTransformImage</a></h2>
 
 <p>InverseFourierTransformImage() implements the inverse discrete Fourier transform (DFT) of the image either as a magnitude / phase or real / imaginary image pair.</p>
 

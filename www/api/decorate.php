@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="decorate.php#BorderImage">BorderImage</a> &bull; <a href="decorate.php#FrameImage">FrameImage</a> &bull; <a href="decorate.php#RaiseImage">RaiseImage</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/decorate_8c.html" id="BorderImage">BorderImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/decorate_8c.html" id="BorderImage">BorderImage</a></h2>
 
 <p>BorderImage() surrounds the image with a border of the color defined by the bordercolor member of the image structure.  The width and height of the border are defined by the corresponding members of the border_info structure.</p>
 
@@ -113,7 +113,7 @@ Image *BorderImage(const Image *image,const RectangleInfo *border_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/decorate_8c.html" id="FrameImage">FrameImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/decorate_8c.html" id="FrameImage">FrameImage</a></h2>
 
 <p>FrameImage() adds a simulated three-dimensional border around the image. The color of the border is defined by the matte_color member of image. Members width and height of frame_info specify the border width of the vertical and horizontal sides of the frame.  Members inner and outer indicate the width of the inner and outer shadows of the frame.</p>
 
@@ -144,7 +144,7 @@ Image *FrameImage(const Image *image,const FrameInfo *frame_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/decorate_8c.html" id="RaiseImage">RaiseImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/decorate_8c.html" id="RaiseImage">RaiseImage</a></h2>
 
 <p>RaiseImage() creates a simulated three-dimensional button-like effect by lightening and darkening the edges of the image.  Members width and height of raise_info define the width of the vertical and horizontal edge of the effect.</p>
 

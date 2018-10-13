@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="segment.php#SegmentImage">SegmentImage</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/segment_8c.html" id="SegmentImage">SegmentImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/segment_8c.html" id="SegmentImage">SegmentImage</a></h2>
 
 <p>SegmentImage() segment an image by analyzing the histograms of the color components and identifying units that are homogeneous with the fuzzy C-means technique.</p>
 

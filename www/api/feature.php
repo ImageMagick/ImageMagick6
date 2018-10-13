@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="feature.php#CannyEdgeImage">CannyEdgeImage</a> &bull; <a href="feature.php#GetImageChannelFeatures">GetImageChannelFeatures</a> &bull; <a href="feature.php#Use HoughLineImage">Use HoughLineImage</a> &bull; <a href="feature.php#MeanShiftImage">MeanShiftImage</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/feature_8c.html" id="CannyEdgeImage">CannyEdgeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/feature_8c.html" id="CannyEdgeImage">CannyEdgeImage</a></h2>
 
 <p>CannyEdgeImage() uses a multi-stage algorithm to detect a wide range of edges in images.</p>
 
@@ -126,7 +126,7 @@ Image *CannyEdgeImage(const Image *image,const double radius,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/feature_8c.html" id="GetImageChannelFeatures">GetImageChannelFeatures</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/feature_8c.html" id="GetImageChannelFeatures">GetImageChannelFeatures</a></h2>
 
 <p>GetImageChannelFeatures() returns features for each channel in the image in each of four directions (horizontal, vertical, left and right diagonals) for the specified distance.  The features include the angular second moment, contrast, correlation, sum of squares: variance, inverse difference moment, sum average, sum varience, sum entropy, entropy, difference variance,  difference entropy, information measures of correlation 1, information measures of correlation 2, and maximum correlation coefficient.  You can access the red channel contrast, for example, like this:</p>
 
@@ -164,7 +164,7 @@ ChannelFeatures *GetImageChannelFeatures(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/feature_8c.html" id="Use_HoughLineImage">Use HoughLineImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/feature_8c.html" id="Use_HoughLineImage">Use HoughLineImage</a></h2>
 
 <p>Use HoughLineImage() in conjunction with any binary edge extracted image (we recommand Canny) to identify lines in the image.  The algorithm accumulates counts for every white pixel for every possible orientation (for angles from 0 to 179 in 1 degree increments) and distance from the center of the image to the corner (in 1 px increments) and stores the counts in an accumulator matrix of angle vs distance. The size of the accumulator is 180x(diagonal/2). Next it searches this space for peaks in counts and converts the locations of the peaks to slope and intercept in the normal x,y input image space. Use the slope/intercepts to find the endpoints clipped to the bounds of the image. The lines are then drawn. The counts are a measure of the length of the lines</p>
 
@@ -199,7 +199,7 @@ Image *HoughLineImage(const Image *image,const size_t width,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/feature_8c.html" id="MeanShiftImage">MeanShiftImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/feature_8c.html" id="MeanShiftImage">MeanShiftImage</a></h2>
 
 <p>MeanShiftImage() delineate arbitrarily shaped clusters in the image. For each pixel, it visits all the pixels in the neighborhood specified by the window centered at the pixel and excludes those that are outside the radius=(window-1)/2 surrounding the pixel. From those pixels, it finds those that are within the specified color distance from the current mean, and computes a new x,y centroid from those coordinates and a new mean. This new x,y centroid is used as the center for a new window. This process iterates until it converges and the final mean is replaces the (original window center) pixel value. It repeats this process for the next pixel, etc.,  until it processes all pixels in the image. Results are typically better with colorspaces other than sRGB. We recommend YIQ, YUV or YCbCr.</p>
 

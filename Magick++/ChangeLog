@@ -5,18 +5,18 @@
 2013-07-09  6.8.6-4 Dirk Lemstra <dirk@snakeware...>
   * Added combineImages, evaluateImages, mergeImageLayers, optimizeImageLayers
     optimizePlusImageLayers and separateImages to STL.h (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=23699).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=2&t=23699).
   * Added support for the fill area flag ('^') and the pixel area
     count limit flag ('@') to the Geometry class of Magick++ (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=23704).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=2&t=23704).
 
 2012-08-23  6.7.9-2 Cristy  <quetzlzacatenango@image...>
   * On rare occasions, PNG warnings triggered an assertion (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=23&t=21737).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=23&t=21737).
 
 2012-05-12  6.7.6-10 Cristy  <quetzlzacatenango@image...>
   * GravityType argument no longer ignored in Magick::Image::extent (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=21000).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=21000).
 
 2011-02-12  6.6.7-7 Cristy  <quetzlzacatenango@image...>
   * Add support for the strip() and stripImage() STL methods.

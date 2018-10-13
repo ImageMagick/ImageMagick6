@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="statistic.php#EvaluateImage">EvaluateImage</a> &bull; <a href="statistic.php#FunctionImage">FunctionImage</a> &bull; <a href="statistic.php#GetImageChannelEntropy">GetImageChannelEntropy</a> &bull; <a href="statistic.php#GetImageChannelKurtosis">GetImageChannelKurtosis</a> &bull; <a href="statistic.php#GetImageChannelMean">GetImageChannelMean</a> &bull; <a href="statistic.php#GetImageChannelMoments">GetImageChannelMoments</a> &bull; <a href="statistic.php#GetImageChannelPerceptualHash">GetImageChannelPerceptualHash</a> &bull; <a href="statistic.php#GetImageChannelRange">GetImageChannelRange</a> &bull; <a href="statistic.php#GetImageChannelStatistics">GetImageChannelStatistics</a> &bull; <a href="statistic.php#PolynomialImage">PolynomialImage</a> &bull; <a href="statistic.php#StatisticImage">StatisticImage</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="EvaluateImage">EvaluateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="EvaluateImage">EvaluateImage</a></h2>
 
 <p>EvaluateImage() applies a value to the image with an arithmetic, relational, or logical operator to an image. Use these operations to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
@@ -128,7 +128,7 @@ MagickBooleanType EvaluateImageChannel(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="FunctionImage">FunctionImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="FunctionImage">FunctionImage</a></h2>
 
 <p>FunctionImage() applies a value to the image with an arithmetic, relational, or logical operator to an image. Use these operations to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
@@ -172,7 +172,7 @@ MagickBooleanType FunctionImageChannel(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelEntropy">GetImageChannelEntropy</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelEntropy">GetImageChannelEntropy</a></h2>
 
 <p>GetImageChannelEntropy() returns the entropy of one or more image channels.</p>
 
@@ -207,7 +207,7 @@ MagickBooleanType GetImageChannelEntropy(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelKurtosis">GetImageChannelKurtosis</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelKurtosis">GetImageChannelKurtosis</a></h2>
 
 <p>GetImageChannelKurtosis() returns the kurtosis and skewness of one or more image channels.</p>
 
@@ -247,7 +247,7 @@ MagickBooleanType GetImageChannelKurtosis(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelMean">GetImageChannelMean</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelMean">GetImageChannelMean</a></h2>
 
 <p>GetImageChannelMean() returns the mean and standard deviation of one or more image channels.</p>
 
@@ -287,7 +287,7 @@ MagickBooleanType GetImageChannelMean(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelMoments">GetImageChannelMoments</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelMoments">GetImageChannelMoments</a></h2>
 
 <p>GetImageChannelMoments() returns the normalized moments of one or more image channels.</p>
 
@@ -314,7 +314,7 @@ ChannelMoments *GetImageChannelMoments(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelPerceptualHash">GetImageChannelPerceptualHash</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelPerceptualHash">GetImageChannelPerceptualHash</a></h2>
 
 <p>GetImageChannelPerceptualHash() returns the perceptual hash of one or more image channels.</p>
 
@@ -341,7 +341,7 @@ ChannelPerceptualHash *GetImageChannelPerceptualHash(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelRange">GetImageChannelRange</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelRange">GetImageChannelRange</a></h2>
 
 <p>GetImageChannelRange() returns the range of one or more image channels.</p>
 
@@ -381,7 +381,7 @@ MagickBooleanType GetImageChannelRange(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelStatistics">GetImageChannelStatistics</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="GetImageChannelStatistics">GetImageChannelStatistics</a></h2>
 
 <p>GetImageChannelStatistics() returns statistics for each channel in the image.  The statistics include the channel depth, its minima, maxima, mean, standard deviation, kurtosis and skewness.  You can access the red channel mean, for example, like this:</p>
 
@@ -415,7 +415,7 @@ ChannelStatistics *GetImageChannelStatistics(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="PolynomialImage">PolynomialImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="PolynomialImage">PolynomialImage</a></h2>
 
 <p>PolynomialImage() returns a new image where each pixel is the sum of the pixels in the image sequence after applying its corresponding terms (coefficient and degree pairs).</p>
 
@@ -457,7 +457,7 @@ Image *PolynomialImageChannel(const Image *images,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/statistic_8c.html" id="StatisticImage">StatisticImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/statistic_8c.html" id="StatisticImage">StatisticImage</a></h2>
 
 <p>StatisticImage() makes each pixel the min / max / median / mode / etc. of the neighborhood of the specified width and height.</p>
 

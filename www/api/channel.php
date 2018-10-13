@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="channel.php#CombineImages">CombineImages</a> &bull; <a href="channel.php#GetImageAlphaChannel">GetImageAlphaChannel</a> &bull; <a href="channel.php#SeparateImageChannel">SeparateImageChannel</a> &bull; <a href="channel.php#SeparateImages">SeparateImages</a> &bull; <a href="channel.php#SetImageAlphaChannel">SetImageAlphaChannel</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/channel_8c.html" id="CombineImages">CombineImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/channel_8c.html" id="CombineImages">CombineImages</a></h2>
 
 <p>CombineImages() combines one or more images into a single image.  The grayscale value of the pixels of each image in the sequence is assigned in order to the specified channels of the combined image.   The typical ordering would be image 1 =&gt; Red, 2 =&gt; Green, 3 =&gt; Blue, etc.</p>
 
@@ -109,7 +109,7 @@ Image *CombineImages(const Image *image,const ChannelType channel,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/channel_8c.html" id="GetImageAlphaChannel">GetImageAlphaChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/channel_8c.html" id="GetImageAlphaChannel">GetImageAlphaChannel</a></h2>
 
 <p>GetImageAlphaChannel() returns MagickFalse if the image alpha channel is not activated.  That is, the image is RGB rather than RGBA or CMYK rather than CMYKA.</p>
 
@@ -131,7 +131,7 @@ MagickBooleanType GetImageAlphaChannel(const Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/channel_8c.html" id="SeparateImageChannel">SeparateImageChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/channel_8c.html" id="SeparateImageChannel">SeparateImageChannel</a></h2>
 
 <p>SeparateImageChannel() separates a channel from the image and returns it as a grayscale image.  A channel is a particular color component of each pixel in the image.</p>
 
@@ -158,7 +158,7 @@ MagickBooleanType SeparateImageChannel(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/channel_8c.html" id="SeparateImages">SeparateImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/channel_8c.html" id="SeparateImages">SeparateImages</a></h2>
 
 <p>SeparateImages() returns a separate grayscale image for each channel specified.</p>
 
@@ -189,7 +189,7 @@ MagickBooleanType SeparateImages(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/channel_8c.html" id="SetImageAlphaChannel">SetImageAlphaChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/channel_8c.html" id="SetImageAlphaChannel">SetImageAlphaChannel</a></h2>
 
 <p>SetImageAlphaChannel() activates, deactivates, resets, or sets the alpha channel.</p>
 

@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="mime.php#AcquireMimeCache">AcquireMimeCache</a> &bull; <a href="mime.php#GetMimeInfoList">GetMimeInfoList</a> &bull; <a href="mime.php#GetMimeList">GetMimeList</a> &bull; <a href="mime.php#GetMimeDescription">GetMimeDescription</a> &bull; <a href="mime.php#GetMimeType">GetMimeType</a> &bull; <a href="mime.php#ListMimeInfo">ListMimeInfo</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/mime_8c.html" id="AcquireMimeCache">AcquireMimeCache</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/mime_8c.html" id="AcquireMimeCache">AcquireMimeCache</a></h2>
 
 <p>AcquireMimeCache() caches one or more magic configurations which provides a mapping between magic attributes and a magic name.</p>
 
@@ -109,7 +109,7 @@ LinkedListInfo *AcquireMimeCache(const char *filename,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeInfoList">GetMimeInfoList</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeInfoList">GetMimeInfoList</a></h2>
 
 <p>GetMimeInfoList() returns any image aliases that match the specified pattern.</p>
 
@@ -140,7 +140,7 @@ const MimeInfo **GetMimeInfoList(const char *pattern,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeList">GetMimeList</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeList">GetMimeList</a></h2>
 
 <p>GetMimeList() returns any image format alias that matches the specified pattern.</p>
 
@@ -171,7 +171,7 @@ char **GetMimeList(const char *pattern,size_t *number_aliases,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeDescription">GetMimeDescription</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeDescription">GetMimeDescription</a></h2>
 
 <p>GetMimeDescription() returns the mime type description.</p>
 
@@ -193,7 +193,7 @@ const char *GetMimeDescription(const MimeInfo *mime_info)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeType">GetMimeType</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/mime_8c.html" id="GetMimeType">GetMimeType</a></h2>
 
 <p>GetMimeType() returns the mime type.</p>
 
@@ -215,7 +215,7 @@ const char *GetMimeType(const MimeInfo *mime_info)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/mime_8c.html" id="ListMimeInfo">ListMimeInfo</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/mime_8c.html" id="ListMimeInfo">ListMimeInfo</a></h2>
 
 <p>ListMimeInfo() lists the magic info to a file.</p>
 

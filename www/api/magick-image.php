@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="magick-image.php#GetImageFromMagickWand">GetImageFromMagickWand</a> &bull; <a href="magick-image.php#MagickAdaptiveBlurImage">MagickAdaptiveBlurImage</a> &bull; <a href="magick-image.php#MagickAdaptiveResizeImage">MagickAdaptiveResizeImage</a> &bull; <a href="magick-image.php#MagickAdaptiveSharpenImage">MagickAdaptiveSharpenImage</a> &bull; <a href="magick-image.php#MagickAdaptiveThresholdImage">MagickAdaptiveThresholdImage</a> &bull; <a href="magick-image.php#MagickAddImage">MagickAddImage</a> &bull; <a href="magick-image.php#MagickAddNoiseImage">MagickAddNoiseImage</a> &bull; <a href="magick-image.php#MagickAffineTransformImage">MagickAffineTransformImage</a> &bull; <a href="magick-image.php#MagickAnnotateImage">MagickAnnotateImage</a> &bull; <a href="magick-image.php#MagickAnimateImages">MagickAnimateImages</a> &bull; <a href="magick-image.php#MagickAppendImages">MagickAppendImages</a> &bull; <a href="magick-image.php#MagickAutoGammaImage">MagickAutoGammaImage</a> &bull; <a href="magick-image.php#MagickAutoLevelImage">MagickAutoLevelImage</a> &bull; <a href="magick-image.php#MagickAutoOrientImage">MagickAutoOrientImage</a> &bull; <a href="magick-image.php#MagickBlackThresholdImage">MagickBlackThresholdImage</a> &bull; <a href="magick-image.php#MagickBlueShiftImage">MagickBlueShiftImage</a> &bull; <a href="magick-image.php#MagickBlurImage">MagickBlurImage</a> &bull; <a href="magick-image.php#MagickBorderImage">MagickBorderImage</a> &bull; <a href="magick-image.php#Use MagickBrightnessContrastImage">Use MagickBrightnessContrastImage</a> &bull; <a href="magick-image.php#MagickCharcoalImage">MagickCharcoalImage</a> &bull; <a href="magick-image.php#MagickChopImage">MagickChopImage</a> &bull; <a href="magick-image.php#MagickClampImage">MagickClampImage</a> &bull; <a href="magick-image.php#MagickClipImage">MagickClipImage</a> &bull; <a href="magick-image.php#MagickClipImagePath">MagickClipImagePath</a> &bull; <a href="magick-image.php#MagickClutImage">MagickClutImage</a> &bull; <a href="magick-image.php#MagickCoalesceImages">MagickCoalesceImages</a> &bull; <a href="magick-image.php#MagickColorDecisionListImage">MagickColorDecisionListImage</a> &bull; <a href="magick-image.php#MagickColorizeImage">MagickColorizeImage</a> &bull; <a href="magick-image.php#MagickColorMatrixImage">MagickColorMatrixImage</a> &bull; <a href="magick-image.php#MagickCombineImages">MagickCombineImages</a> &bull; <a href="magick-image.php#MagickCommentImage">MagickCommentImage</a> &bull; <a href="magick-image.php#MagickCompareImageChannels">MagickCompareImageChannels</a> &bull; <a href="magick-image.php#MagickCompareImageLayers">MagickCompareImageLayers</a> &bull; <a href="magick-image.php#MagickCompareImages">MagickCompareImages</a> &bull; <a href="magick-image.php#MagickCompositeImage">MagickCompositeImage</a> &bull; <a href="magick-image.php#MagickCompositeImageGravity">MagickCompositeImageGravity</a> &bull; <a href="magick-image.php#MagickCompositeLayers">MagickCompositeLayers</a> &bull; <a href="magick-image.php#MagickContrastImage">MagickContrastImage</a> &bull; <a href="magick-image.php#MagickContrastStretchImage">MagickContrastStretchImage</a> &bull; <a href="magick-image.php#MagickConvolveImage">MagickConvolveImage</a> &bull; <a href="magick-image.php#MagickCropImage">MagickCropImage</a> &bull; <a href="magick-image.php#MagickCycleColormapImage">MagickCycleColormapImage</a> &bull; <a href="magick-image.php#MagickConstituteImage">MagickConstituteImage</a> &bull; <a href="magick-image.php#MagickDecipherImage">MagickDecipherImage</a> &bull; <a href="magick-image.php#MagickDeconstructImages">MagickDeconstructImages</a> &bull; <a href="magick-image.php#MagickDeskewImage">MagickDeskewImage</a> &bull; <a href="magick-image.php#MagickDespeckleImage">MagickDespeckleImage</a> &bull; <a href="magick-image.php#MagickDestroyImage">MagickDestroyImage</a> &bull; <a href="magick-image.php#MagickDisplayImage">MagickDisplayImage</a> &bull; <a href="magick-image.php#MagickDisplayImages">MagickDisplayImages</a> &bull; <a href="magick-image.php#MagickDistortImage">MagickDistortImage</a> &bull; <a href="magick-image.php#MagickDrawImage">MagickDrawImage</a> &bull; <a href="magick-image.php#MagickEdgeImage">MagickEdgeImage</a> &bull; <a href="magick-image.php#MagickEmbossImage">MagickEmbossImage</a> &bull; <a href="magick-image.php#MagickEncipherImage">MagickEncipherImage</a> &bull; <a href="magick-image.php#MagickEnhanceImage">MagickEnhanceImage</a> &bull; <a href="magick-image.php#MagickEqualizeImage">MagickEqualizeImage</a> &bull; <a href="magick-image.php#MagickEvaluateImage">MagickEvaluateImage</a> &bull; <a href="magick-image.php#MagickExportImagePixels">MagickExportImagePixels</a> &bull; <a href="magick-image.php#MagickExtentImage">MagickExtentImage</a> &bull; <a href="magick-image.php#MagickFilterImage">MagickFilterImage</a> &bull; <a href="magick-image.php#MagickFlipImage">MagickFlipImage</a> &bull; <a href="magick-image.php#MagickFloodfillPaintImage">MagickFloodfillPaintImage</a> &bull; <a href="magick-image.php#MagickFlopImage">MagickFlopImage</a> &bull; <a href="magick-image.php#MagickForwardFourierTransformImage">MagickForwardFourierTransformImage</a> &bull; <a href="magick-image.php#MagickFrameImage">MagickFrameImage</a> &bull; <a href="magick-image.php#MagickFunctionImage">MagickFunctionImage</a> &bull; <a href="magick-image.php#MagickFxImage">MagickFxImage</a> &bull; <a href="magick-image.php#MagickGammaImage">MagickGammaImage</a> &bull; <a href="magick-image.php#MagickGaussianBlurImage">MagickGaussianBlurImage</a> &bull; <a href="magick-image.php#MagickGetImage">MagickGetImage</a> &bull; <a href="magick-image.php#MagickGetImageAlphaChannel">MagickGetImageAlphaChannel</a> &bull; <a href="magick-image.php#MagickGetImageClipMask">MagickGetImageClipMask</a> &bull; <a href="magick-image.php#MagickGetImageBackgroundColor">MagickGetImageBackgroundColor</a> &bull; <a href="magick-image.php#MagickGetImageBlob">MagickGetImageBlob</a> &bull; <a href="magick-image.php#MagickGetImagesBlob">MagickGetImagesBlob</a> &bull; <a href="magick-image.php#MagickGetImageBluePrimary">MagickGetImageBluePrimary</a> &bull; <a href="magick-image.php#MagickGetImageBorderColor">MagickGetImageBorderColor</a> &bull; <a href="magick-image.php#MagickGetImageChannelDepth">MagickGetImageChannelDepth</a> &bull; <a href="magick-image.php#MagickGetImageChannelDistortion">MagickGetImageChannelDistortion</a> &bull; <a href="magick-image.php#MagickGetImageChannelDistortions">MagickGetImageChannelDistortions</a> &bull; <a href="magick-image.php#MagickGetImageChannelFeatures">MagickGetImageChannelFeatures</a> &bull; <a href="magick-image.php#MagickGetImageChannelKurtosis">MagickGetImageChannelKurtosis</a> &bull; <a href="magick-image.php#MagickGetImageChannelMean">MagickGetImageChannelMean</a> &bull; <a href="magick-image.php#MagickGetImageChannelRange">MagickGetImageChannelRange</a> &bull; <a href="magick-image.php#MagickGetImageChannelStatistics">MagickGetImageChannelStatistics</a> &bull; <a href="magick-image.php#MagickGetImageColormapColor">MagickGetImageColormapColor</a> &bull; <a href="magick-image.php#MagickGetImageColors">MagickGetImageColors</a> &bull; <a href="magick-image.php#MagickGetImageColorspace">MagickGetImageColorspace</a> &bull; <a href="magick-image.php#MagickGetImageCompose">MagickGetImageCompose</a> &bull; <a href="magick-image.php#MagickGetImageCompression">MagickGetImageCompression</a> &bull; <a href="magick-image.php#MagickGetImageCompressionQuality">MagickGetImageCompressionQuality</a> &bull; <a href="magick-image.php#MagickGetImageDelay">MagickGetImageDelay</a> &bull; <a href="magick-image.php#MagickGetImageDepth">MagickGetImageDepth</a> &bull; <a href="magick-image.php#MagickGetImageDistortion">MagickGetImageDistortion</a> &bull; <a href="magick-image.php#MagickGetImageDispose">MagickGetImageDispose</a> &bull; <a href="magick-image.php#MagickGetImageEndian">MagickGetImageEndian</a> &bull; <a href="magick-image.php#MagickGetImageFilename">MagickGetImageFilename</a> &bull; <a href="magick-image.php#MagickGetImageFormat">MagickGetImageFormat</a> &bull; <a href="magick-image.php#MagickGetImageFuzz">MagickGetImageFuzz</a> &bull; <a href="magick-image.php#MagickGetImageGamma">MagickGetImageGamma</a> &bull; <a href="magick-image.php#MagickGetImageGravity">MagickGetImageGravity</a> &bull; <a href="magick-image.php#MagickGetImageGreenPrimary">MagickGetImageGreenPrimary</a> &bull; <a href="magick-image.php#MagickGetImageHeight">MagickGetImageHeight</a> &bull; <a href="magick-image.php#MagickGetImageHistogram">MagickGetImageHistogram</a> &bull; <a href="magick-image.php#MagickGetImageInterlaceScheme">MagickGetImageInterlaceScheme</a> &bull; <a href="magick-image.php#MagickGetImageInterpolateMethod">MagickGetImageInterpolateMethod</a> &bull; <a href="magick-image.php#MagickGetImageIterations">MagickGetImageIterations</a> &bull; <a href="magick-image.php#MagickGetImageLength">MagickGetImageLength</a> &bull; <a href="magick-image.php#MagickGetImageMatteColor">MagickGetImageMatteColor</a> &bull; <a href="magick-image.php#MagickGetImageOrientation">MagickGetImageOrientation</a> &bull; <a href="magick-image.php#MagickGetImagePage">MagickGetImagePage</a> &bull; <a href="magick-image.php#MagickGetImagePixelColor">MagickGetImagePixelColor</a> &bull; <a href="magick-image.php#MagickGetImageRedPrimary">MagickGetImageRedPrimary</a> &bull; <a href="magick-image.php#MagickGetImageRegion">MagickGetImageRegion</a> &bull; <a href="magick-image.php#MagickGetImageRenderingIntent">MagickGetImageRenderingIntent</a> &bull; <a href="magick-image.php#MagickGetImageResolution">MagickGetImageResolution</a> &bull; <a href="magick-image.php#MagickGetImageScene">MagickGetImageScene</a> &bull; <a href="magick-image.php#MagickGetImageSignature">MagickGetImageSignature</a> &bull; <a href="magick-image.php#MagickGetImageTicksPerSecond">MagickGetImageTicksPerSecond</a> &bull; <a href="magick-image.php#MagickGetImageType">MagickGetImageType</a> &bull; <a href="magick-image.php#MagickGetImageUnits">MagickGetImageUnits</a> &bull; <a href="magick-image.php#MagickGetImageVirtualPixelMethod">MagickGetImageVirtualPixelMethod</a> &bull; <a href="magick-image.php#MagickGetImageWhitePoint">MagickGetImageWhitePoint</a> &bull; <a href="magick-image.php#MagickGetImageWidth">MagickGetImageWidth</a> &bull; <a href="magick-image.php#MagickGetNumberImages">MagickGetNumberImages</a> &bull; <a href="magick-image.php#MagickGetImageTotalInkDensity">MagickGetImageTotalInkDensity</a> &bull; <a href="magick-image.php#MagickHaldClutImage">MagickHaldClutImage</a> &bull; <a href="magick-image.php#MagickHasNextImage">MagickHasNextImage</a> &bull; <a href="magick-image.php#MagickHasPreviousImage">MagickHasPreviousImage</a> &bull; <a href="magick-image.php#MagickIdentifyImage">MagickIdentifyImage</a> &bull; <a href="magick-image.php#MagickImplodeImage">MagickImplodeImage</a> &bull; <a href="magick-image.php#MagickImportImagePixels">MagickImportImagePixels</a> &bull; <a href="magick-image.php#MagickInverseFourierTransformImage">MagickInverseFourierTransformImage</a> &bull; <a href="magick-image.php#MagickLabelImage">MagickLabelImage</a> &bull; <a href="magick-image.php#MagickLevelImage">MagickLevelImage</a> &bull; <a href="magick-image.php#MagickLinearStretchImage">MagickLinearStretchImage</a> &bull; <a href="magick-image.php#MagickLiquidRescaleImage">MagickLiquidRescaleImage</a> &bull; <a href="magick-image.php#MagickLocalContrastImage">MagickLocalContrastImage</a> &bull; <a href="magick-image.php#MagickMagnifyImage">MagickMagnifyImage</a> &bull; <a href="magick-image.php#MagickMergeImageLayers">MagickMergeImageLayers</a> &bull; <a href="magick-image.php#MagickMinifyImage">MagickMinifyImage</a> &bull; <a href="magick-image.php#MagickModulateImage">MagickModulateImage</a> &bull; <a href="magick-image.php#MagickMontageImage">MagickMontageImage</a> &bull; <a href="magick-image.php#MagickMorphImages">MagickMorphImages</a> &bull; <a href="magick-image.php#MagickMorphologyImage">MagickMorphologyImage</a> &bull; <a href="magick-image.php#MagickMotionBlurImage">MagickMotionBlurImage</a> &bull; <a href="magick-image.php#MagickNegateImage">MagickNegateImage</a> &bull; <a href="magick-image.php#MagickNewImage">MagickNewImage</a> &bull; <a href="magick-image.php#MagickNextImage">MagickNextImage</a> &bull; <a href="magick-image.php#MagickNormalizeImage">MagickNormalizeImage</a> &bull; <a href="magick-image.php#MagickOilPaintImage">MagickOilPaintImage</a> &bull; <a href="magick-image.php#MagickOpaquePaintImage">MagickOpaquePaintImage</a> &bull; <a href="magick-image.php#MagickOptimizeImageLayers">MagickOptimizeImageLayers</a> &bull; <a href="magick-image.php#MagickOptimizeImageTransparency">MagickOptimizeImageTransparency</a> &bull; <a href="magick-image.php#MagickOrderedPosterizeImage">MagickOrderedPosterizeImage</a> &bull; <a href="magick-image.php#MagickPingImage">MagickPingImage</a> &bull; <a href="magick-image.php#MagickPingImageBlob">MagickPingImageBlob</a> &bull; <a href="magick-image.php#MagickPingImageFile">MagickPingImageFile</a> &bull; <a href="magick-image.php#MagickPolaroidImage">MagickPolaroidImage</a> &bull; <a href="magick-image.php#MagickPosterizeImage">MagickPosterizeImage</a> &bull; <a href="magick-image.php#MagickPreviewImages">MagickPreviewImages</a> &bull; <a href="magick-image.php#MagickPreviousImage">MagickPreviousImage</a> &bull; <a href="magick-image.php#MagickQuantizeImage">MagickQuantizeImage</a> &bull; <a href="magick-image.php#MagickQuantizeImages">MagickQuantizeImages</a> &bull; <a href="magick-image.php#MagickRaiseImage">MagickRaiseImage</a> &bull; <a href="magick-image.php#MagickRandomThresholdImage">MagickRandomThresholdImage</a> &bull; <a href="magick-image.php#MagickReadImage">MagickReadImage</a> &bull; <a href="magick-image.php#MagickReadImageBlob">MagickReadImageBlob</a> &bull; <a href="magick-image.php#MagickReadImageFile">MagickReadImageFile</a> &bull; <a href="magick-image.php#MagickRemapImage">MagickRemapImage</a> &bull; <a href="magick-image.php#MagickRemoveImage">MagickRemoveImage</a> &bull; <a href="magick-image.php#MagickResampleImage">MagickResampleImage</a> &bull; <a href="magick-image.php#MagickResetImagePage">MagickResetImagePage</a> &bull; <a href="magick-image.php#MagickResizeImage">MagickResizeImage</a> &bull; <a href="magick-image.php#MagickRollImage">MagickRollImage</a> &bull; <a href="magick-image.php#MagickRotateImage">MagickRotateImage</a> &bull; <a href="magick-image.php#MagickRotationalBlurImage">MagickRotationalBlurImage</a> &bull; <a href="magick-image.php#MagickSampleImage">MagickSampleImage</a> &bull; <a href="magick-image.php#MagickScaleImage">MagickScaleImage</a> &bull; <a href="magick-image.php#MagickSegmentImage">MagickSegmentImage</a> &bull; <a href="magick-image.php#MagickSelectiveBlurImage">MagickSelectiveBlurImage</a> &bull; <a href="magick-image.php#MagickSeparateImageChannel">MagickSeparateImageChannel</a> &bull; <a href="magick-image.php#MagickSepiaToneImage">MagickSepiaToneImage</a> &bull; <a href="magick-image.php#MagickSetImage">MagickSetImage</a> &bull; <a href="magick-image.php#MagickSetImageAlphaChannel">MagickSetImageAlphaChannel</a> &bull; <a href="magick-image.php#MagickSetImageBackgroundColor">MagickSetImageBackgroundColor</a> &bull; <a href="magick-image.php#MagickSetImageBias">MagickSetImageBias</a> &bull; <a href="magick-image.php#MagickSetImageBluePrimary">MagickSetImageBluePrimary</a> &bull; <a href="magick-image.php#MagickSetImageBorderColor">MagickSetImageBorderColor</a> &bull; <a href="magick-image.php#MagickSetImageChannelDepth">MagickSetImageChannelDepth</a> &bull; <a href="magick-image.php#MagickSetImageClipMask">MagickSetImageClipMask</a> &bull; <a href="magick-image.php#MagickSetImageColor">MagickSetImageColor</a> &bull; <a href="magick-image.php#MagickSetImageColormapColor">MagickSetImageColormapColor</a> &bull; <a href="magick-image.php#MagickSetImageColorspace">MagickSetImageColorspace</a> &bull; <a href="magick-image.php#MagickSetImageCompose">MagickSetImageCompose</a> &bull; <a href="magick-image.php#MagickSetImageCompression">MagickSetImageCompression</a> &bull; <a href="magick-image.php#MagickSetImageCompressionQuality">MagickSetImageCompressionQuality</a> &bull; <a href="magick-image.php#MagickSetImageDelay">MagickSetImageDelay</a> &bull; <a href="magick-image.php#MagickSetImageDepth">MagickSetImageDepth</a> &bull; <a href="magick-image.php#MagickSetImageDispose">MagickSetImageDispose</a> &bull; <a href="magick-image.php#MagickSetImageEndian">MagickSetImageEndian</a> &bull; <a href="magick-image.php#MagickSetImageExtent">MagickSetImageExtent</a> &bull; <a href="magick-image.php#MagickSetImageFilename">MagickSetImageFilename</a> &bull; <a href="magick-image.php#MagickSetImageFormat">MagickSetImageFormat</a> &bull; <a href="magick-image.php#MagickSetImageFuzz">MagickSetImageFuzz</a> &bull; <a href="magick-image.php#MagickSetImageGamma">MagickSetImageGamma</a> &bull; <a href="magick-image.php#MagickSetImageGravity">MagickSetImageGravity</a> &bull; <a href="magick-image.php#MagickSetImageGreenPrimary">MagickSetImageGreenPrimary</a> &bull; <a href="magick-image.php#MagickSetImageInterlaceScheme">MagickSetImageInterlaceScheme</a> &bull; <a href="magick-image.php#MagickSetImageInterpolateMethod">MagickSetImageInterpolateMethod</a> &bull; <a href="magick-image.php#MagickSetImageIterations">MagickSetImageIterations</a> &bull; <a href="magick-image.php#MagickSetImageMatte">MagickSetImageMatte</a> &bull; <a href="magick-image.php#MagickSetImageMatteColor">MagickSetImageMatteColor</a> &bull; <a href="magick-image.php#MagickSetImageOpacity">MagickSetImageOpacity</a> &bull; <a href="magick-image.php#MagickSetImageOrientation">MagickSetImageOrientation</a> &bull; <a href="magick-image.php#MagickSetImagePage">MagickSetImagePage</a> &bull; <a href="magick-image.php#MagickSetImageProgressMonitor">MagickSetImageProgressMonitor</a> &bull; <a href="magick-image.php#MagickSetImageRedPrimary">MagickSetImageRedPrimary</a> &bull; <a href="magick-image.php#MagickSetImageRenderingIntent">MagickSetImageRenderingIntent</a> &bull; <a href="magick-image.php#MagickSetImageResolution">MagickSetImageResolution</a> &bull; <a href="magick-image.php#MagickSetImageScene">MagickSetImageScene</a> &bull; <a href="magick-image.php#MagickSetImageTicksPerSecond">MagickSetImageTicksPerSecond</a> &bull; <a href="magick-image.php#MagickSetImageType">MagickSetImageType</a> &bull; <a href="magick-image.php#MagickSetImageUnits">MagickSetImageUnits</a> &bull; <a href="magick-image.php#MagickSetImageVirtualPixelMethod">MagickSetImageVirtualPixelMethod</a> &bull; <a href="magick-image.php#MagickSetImageWhitePoint">MagickSetImageWhitePoint</a> &bull; <a href="magick-image.php#MagickShadeImage">MagickShadeImage</a> &bull; <a href="magick-image.php#MagickShadowImage">MagickShadowImage</a> &bull; <a href="magick-image.php#MagickSharpenImage">MagickSharpenImage</a> &bull; <a href="magick-image.php#MagickShaveImage">MagickShaveImage</a> &bull; <a href="magick-image.php#MagickShearImage">MagickShearImage</a> &bull; <a href="magick-image.php#MagickSigmoidalContrastImage">MagickSigmoidalContrastImage</a> &bull; <a href="magick-image.php#MagickSimilarityImage">MagickSimilarityImage</a> &bull; <a href="magick-image.php#MagickSketchImage">MagickSketchImage</a> &bull; <a href="magick-image.php#MagickSmushImages">MagickSmushImages</a> &bull; <a href="magick-image.php#MagickSolarizeImage">MagickSolarizeImage</a> &bull; <a href="magick-image.php#MagickSparseColorImage">MagickSparseColorImage</a> &bull; <a href="magick-image.php#MagickSpliceImage">MagickSpliceImage</a> &bull; <a href="magick-image.php#MagickSpreadImage">MagickSpreadImage</a> &bull; <a href="magick-image.php#MagickStatisticImage">MagickStatisticImage</a> &bull; <a href="magick-image.php#MagickSteganoImage">MagickSteganoImage</a> &bull; <a href="magick-image.php#MagickStereoImage">MagickStereoImage</a> &bull; <a href="magick-image.php#MagickStripImage">MagickStripImage</a> &bull; <a href="magick-image.php#MagickSwirlImage">MagickSwirlImage</a> &bull; <a href="magick-image.php#MagickTextureImage">MagickTextureImage</a> &bull; <a href="magick-image.php#MagickThresholdImage">MagickThresholdImage</a> &bull; <a href="magick-image.php#MagickThumbnailImage">MagickThumbnailImage</a> &bull; <a href="magick-image.php#MagickTintImage">MagickTintImage</a> &bull; <a href="magick-image.php#MagickTransformImage">MagickTransformImage</a> &bull; <a href="magick-image.php#MagickTransformImageColorspace">MagickTransformImageColorspace</a> &bull; <a href="magick-image.php#MagickTransparentPaintImage">MagickTransparentPaintImage</a> &bull; <a href="magick-image.php#MagickTransposeImage">MagickTransposeImage</a> &bull; <a href="magick-image.php#MagickTransverseImage">MagickTransverseImage</a> &bull; <a href="magick-image.php#MagickTrimImage">MagickTrimImage</a> &bull; <a href="magick-image.php#MagickUniqueImageColors">MagickUniqueImageColors</a> &bull; <a href="magick-image.php#MagickUnsharpMaskImage">MagickUnsharpMaskImage</a> &bull; <a href="magick-image.php#MagickVignetteImage">MagickVignetteImage</a> &bull; <a href="magick-image.php#MagickWaveImage">MagickWaveImage</a> &bull; <a href="magick-image.php#MagickWhiteThresholdImage">MagickWhiteThresholdImage</a> &bull; <a href="magick-image.php#MagickWriteImage">MagickWriteImage</a> &bull; <a href="magick-image.php#MagickWriteImageFile">MagickWriteImageFile</a> &bull; <a href="magick-image.php#MagickWriteImages">MagickWriteImages</a> &bull; <a href="magick-image.php#MagickWriteImagesFile">MagickWriteImagesFile</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="GetImageFromMagickWand">GetImageFromMagickWand</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="GetImageFromMagickWand">GetImageFromMagickWand</a></h2>
 
 <p>GetImageFromMagickWand() returns the current image from the magick wand.</p>
 
@@ -104,7 +104,7 @@ Image *GetImageFromMagickWand(const MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveBlurImage">MagickAdaptiveBlurImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveBlurImage">MagickAdaptiveBlurImage</a></h2>
 
 <p>MagickAdaptiveBlurImage() adaptively blurs the image by blurring less intensely near image edges and more intensely far from edges. We blur the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and MagickAdaptiveBlurImage() selects a suitable radius for you.</p>
 
@@ -141,7 +141,7 @@ MagickBooleanType MagickAdaptiveBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveResizeImage">MagickAdaptiveResizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveResizeImage">MagickAdaptiveResizeImage</a></h2>
 
 <p>MagickAdaptiveResizeImage() adaptively resize image with data dependent triangulation.</p>
 
@@ -167,7 +167,7 @@ MagickBooleanType MagickAdaptiveBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveSharpenImage">MagickAdaptiveSharpenImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveSharpenImage">MagickAdaptiveSharpenImage</a></h2>
 
 <p>MagickAdaptiveSharpenImage() adaptively sharpens the image by sharpening more intensely near image edges and less intensely far from edges. We sharpen the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and MagickAdaptiveSharpenImage() selects a suitable radius for you.</p>
 
@@ -204,7 +204,7 @@ MagickBooleanType MagickAdaptiveSharpenImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveThresholdImage">MagickAdaptiveThresholdImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAdaptiveThresholdImage">MagickAdaptiveThresholdImage</a></h2>
 
 <p>MagickAdaptiveThresholdImage() selects an individual threshold for each pixel based on the range of intensity values in its local neighborhood.  This allows for thresholding of an image whose global intensity histogram doesn't contain distinctive peaks.</p>
 
@@ -239,7 +239,7 @@ MagickBooleanType MagickAdaptiveThresholdImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAddImage">MagickAddImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAddImage">MagickAddImage</a></h2>
 
 <p>MagickAddImage() adds a clone of the images from the second wand and inserts them into the first wand.</p>
 
@@ -272,7 +272,7 @@ MagickBooleanType MagickAddImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAddNoiseImage">MagickAddNoiseImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAddNoiseImage">MagickAddNoiseImage</a></h2>
 
 <p>MagickAddNoiseImage() adds random noise to the image.</p>
 
@@ -305,7 +305,7 @@ MagickBooleanType MagickAddNoiseImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAffineTransformImage">MagickAffineTransformImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAffineTransformImage">MagickAffineTransformImage</a></h2>
 
 <p>MagickAffineTransformImage() transforms an image as dictated by the affine matrix of the drawing wand.</p>
 
@@ -332,7 +332,7 @@ MagickBooleanType MagickAffineTransformImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAnnotateImage">MagickAnnotateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAnnotateImage">MagickAnnotateImage</a></h2>
 
 <p>MagickAnnotateImage() annotates an image with text.</p>
 
@@ -376,7 +376,7 @@ MagickBooleanType MagickAnnotateImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAnimateImages">MagickAnimateImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAnimateImages">MagickAnimateImages</a></h2>
 
 <p>MagickAnimateImages() animates an image or image sequence.</p>
 
@@ -403,7 +403,7 @@ MagickBooleanType MagickAnimateImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAppendImages">MagickAppendImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAppendImages">MagickAppendImages</a></h2>
 
 <p>MagickAppendImages() append the images in a wand from the current image onwards, creating a new wand with the single image result.  This is affected by the gravity and background settings of the first image.</p>
 
@@ -432,7 +432,7 @@ MagickWand *MagickAppendImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoGammaImage">MagickAutoGammaImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoGammaImage">MagickAutoGammaImage</a></h2>
 
 <p>MagickAutoGammaImage() extracts the 'mean' from the image and adjust the image to try make set its gamma appropriatally.</p>
 
@@ -460,7 +460,7 @@ MagickBooleanType MagickAutoGammaImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoLevelImage">MagickAutoLevelImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoLevelImage">MagickAutoLevelImage</a></h2>
 
 <p>MagickAutoLevelImage() adjusts the levels of a particular image channel by scaling the minimum and maximum values to the full quantum range.</p>
 
@@ -488,7 +488,7 @@ MagickBooleanType MagickAutoLevelImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoOrientImage">MagickAutoOrientImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoOrientImage">MagickAutoOrientImage</a></h2>
 
 <p>MagickAutoOrientImage() adjusts an image so that its orientation is suitable $  for viewing (i.e. top-left orientation).</p>
 
@@ -510,7 +510,7 @@ MagickBooleanType MagickAutoOrientImage(MagickWand *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBlackThresholdImage">MagickBlackThresholdImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBlackThresholdImage">MagickBlackThresholdImage</a></h2>
 
 <p>MagickBlackThresholdImage() is like MagickThresholdImage() but  forces all pixels below the threshold into black while leaving all pixels above the threshold unchanged.</p>
 
@@ -537,7 +537,7 @@ MagickBooleanType MagickBlackThresholdImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBlueShiftImage">MagickBlueShiftImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBlueShiftImage">MagickBlueShiftImage</a></h2>
 
 <p>MagickBlueShiftImage() mutes the colors of the image to simulate a scene at nighttime in the moonlight.</p>
 
@@ -564,7 +564,7 @@ MagickBooleanType MagickBlueShiftImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBlurImage">MagickBlurImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBlurImage">MagickBlurImage</a></h2>
 
 <p>MagickBlurImage() blurs an image.  We convolve the image with a gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, the radius should be larger than sigma.  Use a radius of 0 and BlurImage() selects a suitable radius for you.</p>
 
@@ -601,7 +601,7 @@ MagickBooleanType MagickBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBorderImage">MagickBorderImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickBorderImage">MagickBorderImage</a></h2>
 
 <p>MagickBorderImage() surrounds the image with a border of the color defined by the bordercolor pixel wand.</p>
 
@@ -637,7 +637,7 @@ MagickBooleanType MagickBorderImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="Use_MagickBrightnessContrastImage">Use MagickBrightnessContrastImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="Use_MagickBrightnessContrastImage">Use MagickBrightnessContrastImage</a></h2>
 
 <p>Use MagickBrightnessContrastImage() to change the brightness and/or contrast of an image.  It converts the brightness and contrast parameters into slope and intercept and calls a polynomical function to apply to the image.</p>
 
@@ -675,7 +675,7 @@ MagickBooleanType MagickBrightnessContrastImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCharcoalImage">MagickCharcoalImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCharcoalImage">MagickCharcoalImage</a></h2>
 
 <p>MagickCharcoalImage() simulates a charcoal drawing.</p>
 
@@ -706,7 +706,7 @@ MagickBooleanType MagickCharcoalImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickChopImage">MagickChopImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickChopImage">MagickChopImage</a></h2>
 
 <p>MagickChopImage() removes a region of an image and collapses the image to occupy the removed portion</p>
 
@@ -745,7 +745,7 @@ MagickBooleanType MagickChopImage(MagickWand *wand,const size_t width,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClampImage">MagickClampImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClampImage">MagickClampImage</a></h2>
 
 <p>MagickClampImage() restricts the color range from 0 to the quantum depth.</p>
 
@@ -773,7 +773,7 @@ MagickBooleanType MagickClampImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClipImage">MagickClipImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClipImage">MagickClipImage</a></h2>
 
 <p>MagickClipImage() clips along the first path from the 8BIM profile, if present.</p>
 
@@ -795,7 +795,7 @@ MagickBooleanType MagickClipImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClipImagePath">MagickClipImagePath</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClipImagePath">MagickClipImagePath</a></h2>
 
 <p>MagickClipImagePath() clips along the named paths from the 8BIM profile, if present. Later operations take effect inside the path.  Id may be a number if preceded with #, to work on a numbered path, e.g., "#1" to use the first path.</p>
 
@@ -826,7 +826,7 @@ MagickBooleanType MagickClipImagePath(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClutImage">MagickClutImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickClutImage">MagickClutImage</a></h2>
 
 <p>MagickClutImage() replaces colors in the image from a color lookup table.</p>
 
@@ -855,7 +855,7 @@ MagickBooleanType MagickClutImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCoalesceImages">MagickCoalesceImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCoalesceImages">MagickCoalesceImages</a></h2>
 
 <p>MagickCoalesceImages() composites a set of images while respecting any page offsets and disposal methods.  GIF, MIFF, and MNG animation sequences typically start with an image background and each subsequent image varies in size and offset.  MagickCoalesceImages() returns a new sequence where each image in the sequence is the same size as the first and composited with the next image in the sequence.</p>
 
@@ -877,7 +877,7 @@ MagickWand *MagickCoalesceImages(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickColorDecisionListImage">MagickColorDecisionListImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickColorDecisionListImage">MagickColorDecisionListImage</a></h2>
 
 <p>MagickColorDecisionListImage() accepts a lightweight Color Correction Collection (CCC) file which solely contains one or more color corrections and applies the color correction to the image.  Here is a sample CCC file:</p>
 
@@ -921,7 +921,7 @@ MagickBooleanType MagickColorDecisionListImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickColorizeImage">MagickColorizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickColorizeImage">MagickColorizeImage</a></h2>
 
 <p>MagickColorizeImage() blends the fill color with each pixel in the image.</p>
 
@@ -952,7 +952,7 @@ MagickBooleanType MagickColorizeImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickColorMatrixImage">MagickColorMatrixImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickColorMatrixImage">MagickColorMatrixImage</a></h2>
 
 <p>MagickColorMatrixImage() apply color transformation to an image. The method permits saturation changes, hue rotation, luminance to alpha, and various other effects.  Although variable-sized transformation matrices can be used, typically one uses a 5x5 matrix for an RGBA image and a 6x6 for CMYKA (or RGBA with offsets).  The matrix is similar to those used by Adobe Flash except offsets are in column 6 rather than 5 (in support of CMYKA images) and offsets are normalized (divide Flash offset by 255).</p>
 
@@ -979,7 +979,7 @@ MagickBooleanType MagickColorMatrixImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCombineImages">MagickCombineImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCombineImages">MagickCombineImages</a></h2>
 
 <p>MagickCombineImages() combines one or more images into a single image.  The grayscale value of the pixels of each image in the sequence is assigned in order to the specified  hannels of the combined image.   The typical ordering would be image 1 =&gt; Red, 2 =&gt; Green, 3 =&gt; Blue, etc.</p>
 
@@ -1006,7 +1006,7 @@ MagickWand *MagickCombineImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCommentImage">MagickCommentImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCommentImage">MagickCommentImage</a></h2>
 
 <p>MagickCommentImage() adds a comment to your image.</p>
 
@@ -1033,7 +1033,7 @@ MagickBooleanType MagickCommentImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompareImageChannels">MagickCompareImageChannels</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompareImageChannels">MagickCompareImageChannels</a></h2>
 
 <p>MagickCompareImageChannels() compares one or more image channels of an image to a reconstructed image and returns the difference image.</p>
 
@@ -1073,7 +1073,7 @@ MagickWand *MagickCompareImageChannels(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompareImageLayers">MagickCompareImageLayers</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompareImageLayers">MagickCompareImageLayers</a></h2>
 
 <p>MagickCompareImageLayers() compares each image with the next in a sequence and returns the maximum bounding region of any pixel differences it discovers.</p>
 
@@ -1100,7 +1100,7 @@ MagickWand *MagickCompareImageLayers(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompareImages">MagickCompareImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompareImages">MagickCompareImages</a></h2>
 
 <p>MagickCompareImages() compares an image to a reconstructed image and returns the specified difference image.</p>
 
@@ -1135,7 +1135,7 @@ MagickWand *MagickCompareImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompositeImage">MagickCompositeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompositeImage">MagickCompositeImage</a></h2>
 
 <p>MagickCompositeImage() composite one image onto another at the specified offset.</p>
 
@@ -1180,7 +1180,7 @@ MagickBooleanType MagickCompositeImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompositeImageGravity">MagickCompositeImageGravity</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompositeImageGravity">MagickCompositeImageGravity</a></h2>
 
 <p>MagickCompositeImageGravity() composite one image onto another using the specified gravity.</p>
 
@@ -1218,7 +1218,7 @@ MagickBooleanType MagickCompositeImageGravity(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompositeLayers">MagickCompositeLayers</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCompositeLayers">MagickCompositeLayers</a></h2>
 
 <p>MagickCompositeLayers() composite the images in the source wand over the images in the destination wand in sequence, starting with the current image in both lists.</p>
 
@@ -1260,7 +1260,7 @@ MagickBooleanType MagickCompositeLayers(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickContrastImage">MagickContrastImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickContrastImage">MagickContrastImage</a></h2>
 
 <p>MagickContrastImage() enhances the intensity differences between the lighter and darker elements of the image.  Set sharpen to a value other than 0 to increase the image contrast otherwise the contrast is reduced.</p>
 
@@ -1289,7 +1289,7 @@ MagickBooleanType MagickContrastImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickContrastStretchImage">MagickContrastStretchImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickContrastStretchImage">MagickContrastStretchImage</a></h2>
 
 <p>MagickContrastStretchImage() enhances the contrast of a color image by adjusting the pixels color to span the entire range of colors available. You can also reduce the influence of a particular channel with a gamma value of 0.</p>
 
@@ -1327,7 +1327,7 @@ MagickBooleanType MagickContrastStretchImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickConvolveImage">MagickConvolveImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickConvolveImage">MagickConvolveImage</a></h2>
 
 <p>MagickConvolveImage() applies a custom convolution kernel to the image.</p>
 
@@ -1365,7 +1365,7 @@ MagickBooleanType MagickConvolveImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCropImage">MagickCropImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCropImage">MagickCropImage</a></h2>
 
 <p>MagickCropImage() extracts a region of the image.</p>
 
@@ -1404,7 +1404,7 @@ MagickBooleanType MagickCropImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCycleColormapImage">MagickCycleColormapImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCycleColormapImage">MagickCycleColormapImage</a></h2>
 
 <p>MagickCycleColormapImage() displaces an image's colormap by a given number of positions.  If you cycle the colormap a number of times you can produce a psychodelic effect.</p>
 
@@ -1431,7 +1431,7 @@ MagickBooleanType MagickCycleColormapImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickConstituteImage">MagickConstituteImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickConstituteImage">MagickConstituteImage</a></h2>
 
 <p>MagickConstituteImage() adds an image to the wand comprised of the pixel data you supply.  The pixel data must be in scanline order top-to-bottom. The data can be char, short int, int, float, or double.  Float and double require the pixels to be normalized [0..1], otherwise [0..Max],  where Max is the maximum value the type can accomodate (e.g. 255 for char).  For example, to create a 640x480 image from unsigned red-green-blue character data, use</p>
 
@@ -1477,7 +1477,7 @@ MagickBooleanType MagickConstituteImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDecipherImage">MagickDecipherImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDecipherImage">MagickDecipherImage</a></h2>
 
 <p>MagickDecipherImage() converts cipher pixels to plain pixels.</p>
 
@@ -1504,7 +1504,7 @@ MagickBooleanType MagickDecipherImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDeconstructImages">MagickDeconstructImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDeconstructImages">MagickDeconstructImages</a></h2>
 
 <p>MagickDeconstructImages() compares each image with the next in a sequence and returns the maximum bounding region of any pixel differences it discovers.</p>
 
@@ -1526,7 +1526,7 @@ MagickWand *MagickDeconstructImages(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDeskewImage">MagickDeskewImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDeskewImage">MagickDeskewImage</a></h2>
 
 <p>MagickDeskewImage() removes skew from the image.  Skew is an artifact that occurs in scanned images because of the camera being misaligned, imperfections in the scanning or surface, or simply because the paper was not placed completely flat when scanned.</p>
 
@@ -1553,7 +1553,7 @@ MagickBooleanType MagickDeskewImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDespeckleImage">MagickDespeckleImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDespeckleImage">MagickDespeckleImage</a></h2>
 
 <p>MagickDespeckleImage() reduces the speckle noise in an image while perserving the edges of the original image.</p>
 
@@ -1575,7 +1575,7 @@ MagickBooleanType MagickDespeckleImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDestroyImage">MagickDestroyImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDestroyImage">MagickDestroyImage</a></h2>
 
 <p>MagickDestroyImage() dereferences an image, deallocating memory associated with the image if the reference count becomes zero.</p>
 
@@ -1597,7 +1597,7 @@ Image *MagickDestroyImage(Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDisplayImage">MagickDisplayImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDisplayImage">MagickDisplayImage</a></h2>
 
 <p>MagickDisplayImage() displays an image.</p>
 
@@ -1624,7 +1624,7 @@ MagickBooleanType MagickDisplayImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDisplayImages">MagickDisplayImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDisplayImages">MagickDisplayImages</a></h2>
 
 <p>MagickDisplayImages() displays an image or image sequence.</p>
 
@@ -1651,7 +1651,7 @@ MagickBooleanType MagickDisplayImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDistortImage">MagickDistortImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDistortImage">MagickDistortImage</a></h2>
 
 <p>MagickDistortImage() distorts an image using various distortion methods, by mapping color lookups of the source image to a new destination image usally of the same size as the source image, unless 'bestfit' is set to true.</p>
 
@@ -1701,7 +1701,7 @@ MagickBooleanType MagickDistortImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDrawImage">MagickDrawImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDrawImage">MagickDrawImage</a></h2>
 
 <p>MagickDrawImage() renders the drawing wand on the current image.</p>
 
@@ -1728,7 +1728,7 @@ MagickBooleanType MagickDrawImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEdgeImage">MagickEdgeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEdgeImage">MagickEdgeImage</a></h2>
 
 <p>MagickEdgeImage() enhance edges within the image with a convolution filter of the given radius.  Use a radius of 0 and Edge() selects a suitable radius for you.</p>
 
@@ -1754,7 +1754,7 @@ MagickBooleanType MagickEdgeImage(MagickWand *wand,const double radius)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEmbossImage">MagickEmbossImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEmbossImage">MagickEmbossImage</a></h2>
 
 <p>MagickEmbossImage() returns a grayscale image with a three-dimensional effect.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and Emboss() selects a suitable radius for you.</p>
 
@@ -1785,7 +1785,7 @@ MagickBooleanType MagickEmbossImage(MagickWand *wand,const double radius,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEncipherImage">MagickEncipherImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEncipherImage">MagickEncipherImage</a></h2>
 
 <p>MagickEncipherImage() converts plaint pixels to cipher pixels.</p>
 
@@ -1812,7 +1812,7 @@ MagickBooleanType MagickEncipherImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEnhanceImage">MagickEnhanceImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEnhanceImage">MagickEnhanceImage</a></h2>
 
 <p>MagickEnhanceImage() applies a digital filter that improves the quality of a noisy image.</p>
 
@@ -1834,7 +1834,7 @@ MagickBooleanType MagickEnhanceImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEqualizeImage">MagickEqualizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEqualizeImage">MagickEqualizeImage</a></h2>
 
 <p>MagickEqualizeImage() equalizes the image histogram.</p>
 
@@ -1862,7 +1862,7 @@ MagickBooleanType MagickEqualizeImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEvaluateImage">MagickEvaluateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEvaluateImage">MagickEvaluateImage</a></h2>
 
 <p>MagickEvaluateImage() applys an arithmetic, relational, or logical expression to an image.  Use these operators to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
@@ -1902,7 +1902,7 @@ MagickBooleanType MagickEvaluateImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickExportImagePixels">MagickExportImagePixels</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickExportImagePixels">MagickExportImagePixels</a></h2>
 
 <p>MagickExportImagePixels() extracts pixel data from an image and returns it to you.  The method returns MagickTrue on success otherwise MagickFalse if an error is encountered.  The data is returned as char, short int, int, ssize_t, float, or double in the order specified by map.</p>
 
@@ -1949,7 +1949,7 @@ MagickBooleanType MagickExportImagePixels(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickExtentImage">MagickExtentImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickExtentImage">MagickExtentImage</a></h2>
 
 <p>MagickExtentImage() extends the image as defined by the geometry, gravity, and wand background color.  Set the (x,y) offset of the geometry to move the original wand relative to the extended wand.</p>
 
@@ -1988,7 +1988,7 @@ MagickBooleanType MagickExtentImage(MagickWand *wand,const size_t width,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFilterImage">MagickFilterImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFilterImage">MagickFilterImage</a></h2>
 
 <p>MagickFilterImage() applies a custom convolution kernel to the image.</p>
 
@@ -2021,7 +2021,7 @@ MagickBooleanType MagickFilterImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFlipImage">MagickFlipImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFlipImage">MagickFlipImage</a></h2>
 
 <p>MagickFlipImage() creates a vertical mirror image by reflecting the pixels around the central x-axis.</p>
 
@@ -2043,7 +2043,7 @@ MagickBooleanType MagickFlipImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFloodfillPaintImage">MagickFloodfillPaintImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFloodfillPaintImage">MagickFloodfillPaintImage</a></h2>
 
 <p>MagickFloodfillPaintImage() changes the color value of any pixel that matches target and is an immediate neighbor.  If the method FillToBorderMethod is specified, the color value is changed for any neighbor pixel that does not match the bordercolor member of image.</p>
 
@@ -2092,7 +2092,7 @@ MagickBooleanType MagickFloodfillPaintImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFlopImage">MagickFlopImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFlopImage">MagickFlopImage</a></h2>
 
 <p>MagickFlopImage() creates a horizontal mirror image by reflecting the pixels around the central y-axis.</p>
 
@@ -2114,7 +2114,7 @@ MagickBooleanType MagickFlopImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickForwardFourierTransformImage">MagickForwardFourierTransformImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickForwardFourierTransformImage">MagickForwardFourierTransformImage</a></h2>
 
 <p>MagickForwardFourierTransformImage() implements the discrete Fourier transform (DFT) of the image either as a magnitude / phase or real / imaginary image pair.</p>
 
@@ -2141,7 +2141,7 @@ MagickBooleanType MagickForwardFourierTransformImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFrameImage">MagickFrameImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFrameImage">MagickFrameImage</a></h2>
 
 <p>MagickFrameImage() adds a simulated three-dimensional border around the image.  The width and height specify the border width of the vertical and horizontal sides of the frame.  The inner and outer bevels indicate the width of the inner and outer shadows of the frame.</p>
 
@@ -2186,7 +2186,7 @@ MagickBooleanType MagickFrameImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFunctionImage">MagickFunctionImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFunctionImage">MagickFunctionImage</a></h2>
 
 <p>MagickFunctionImage() applys an arithmetic, relational, or logical expression to an image.  Use these operators to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
@@ -2229,7 +2229,7 @@ MagickBooleanType MagickFunctionImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFxImage">MagickFxImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFxImage">MagickFxImage</a></h2>
 
 <p>MagickFxImage() evaluate expression for each pixel in the image.</p>
 
@@ -2261,7 +2261,7 @@ MagickWand *MagickFxImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGammaImage">MagickGammaImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGammaImage">MagickGammaImage</a></h2>
 
 <p>MagickGammaImage() gamma-corrects an image.  The same image viewed on different devices will have perceptual differences in the way the image's intensities are represented on the screen.  Specify individual gamma levels for the red, green, and blue channels, or adjust all three with the gamma parameter.  Values typically range from 0.8 to 2.3.</p>
 
@@ -2295,7 +2295,7 @@ MagickBooleanType MagickGammaImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGaussianBlurImage">MagickGaussianBlurImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGaussianBlurImage">MagickGaussianBlurImage</a></h2>
 
 <p>MagickGaussianBlurImage() blurs an image.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, the radius should be larger than sigma.  Use a radius of 0 and MagickGaussianBlurImage() selects a suitable radius for you.</p>
 
@@ -2332,7 +2332,7 @@ MagickBooleanType MagickGaussianBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImage">MagickGetImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImage">MagickGetImage</a></h2>
 
 <p>MagickGetImage() gets the image at the current image index.</p>
 
@@ -2354,7 +2354,7 @@ MagickWand *MagickGetImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageAlphaChannel">MagickGetImageAlphaChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageAlphaChannel">MagickGetImageAlphaChannel</a></h2>
 
 <p>MagickGetImageAlphaChannel() returns MagickFalse if the image alpha channel is not activated.  That is, the image is RGB rather than RGBA or CMYK rather than CMYKA.</p>
 
@@ -2376,7 +2376,7 @@ MagickBooleanType MagickGetImageAlphaChannel(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageClipMask">MagickGetImageClipMask</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageClipMask">MagickGetImageClipMask</a></h2>
 
 <p>MagickGetImageClipMask() gets the image clip mask at the current image index.</p>
 
@@ -2398,7 +2398,7 @@ MagickWand *MagickGetImageClipMask(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBackgroundColor">MagickGetImageBackgroundColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBackgroundColor">MagickGetImageBackgroundColor</a></h2>
 
 <p>MagickGetImageBackgroundColor() returns the image background color.</p>
 
@@ -2425,7 +2425,7 @@ MagickBooleanType MagickGetImageBackgroundColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBlob">MagickGetImageBlob</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBlob">MagickGetImageBlob</a></h2>
 
 <p>MagickGetImageBlob() implements direct to memory image formats.  It returns the image as a blob (a formatted "file" in memory) and its length, starting from the current position in the image sequence.  Use MagickSetImageFormat() to set the format to write to the blob (GIF, JPEG,  PNG, etc.).</p>
 
@@ -2455,7 +2455,7 @@ unsigned char *MagickGetImageBlob(MagickWand *wand,size_t *length)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImagesBlob">MagickGetImagesBlob</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImagesBlob">MagickGetImagesBlob</a></h2>
 
 <p>MagickGetImagesBlob() implements direct to memory image formats.  It returns the image sequence as a blob and its length.  The format of the image determines the format of the returned blob (GIF, JPEG,  PNG, etc.).  To return a different image format, use MagickSetImageFormat().</p>
 
@@ -2483,7 +2483,7 @@ unsigned char *MagickGetImagesBlob(MagickWand *wand,size_t *length)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBluePrimary">MagickGetImageBluePrimary</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBluePrimary">MagickGetImageBluePrimary</a></h2>
 
 <p>MagickGetImageBluePrimary() returns the chromaticy blue primary point for the image.</p>
 
@@ -2514,7 +2514,7 @@ MagickBooleanType MagickGetImageBluePrimary(MagickWand *wand,double *x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBorderColor">MagickGetImageBorderColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBorderColor">MagickGetImageBorderColor</a></h2>
 
 <p>MagickGetImageBorderColor() returns the image border color.</p>
 
@@ -2541,7 +2541,7 @@ MagickBooleanType MagickGetImageBorderColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelDepth">MagickGetImageChannelDepth</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelDepth">MagickGetImageChannelDepth</a></h2>
 
 <p>MagickGetImageChannelDepth() gets the depth for one or more image channels.</p>
 
@@ -2568,7 +2568,7 @@ size_t MagickGetImageChannelDepth(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelDistortion">MagickGetImageChannelDistortion</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelDistortion">MagickGetImageChannelDistortion</a></h2>
 
 <p>MagickGetImageChannelDistortion() compares one or more image channels of an image to a reconstructed image and returns the specified distortion metric.</p>
 
@@ -2608,7 +2608,7 @@ MagickBooleanType MagickGetImageChannelDistortion(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelDistortions">MagickGetImageChannelDistortions</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelDistortions">MagickGetImageChannelDistortions</a></h2>
 
 <p>MagickGetImageChannelDistortions() compares one or more image channels of an image to a reconstructed image and returns the specified distortion metrics.</p>
 
@@ -2641,7 +2641,7 @@ double *MagickGetImageChannelDistortion(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelFeatures">MagickGetImageChannelFeatures</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelFeatures">MagickGetImageChannelFeatures</a></h2>
 
 <p>MagickGetImageChannelFeatures() returns features for each channel in the image in each of four directions (horizontal, vertical, left and right diagonals) for the specified distance.  The features include the angular second moment, contrast, correlation, sum of squares: variance, inverse difference moment, sum average, sum varience, sum entropy, entropy, difference variance, difference entropy, information measures of correlation 1, information measures of correlation 2, and maximum correlation coefficient.  You can access the red channel contrast, for example, like this:</p>
 
@@ -2675,7 +2675,7 @@ ChannelFeatures *MagickGetImageChannelFeatures(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelKurtosis">MagickGetImageChannelKurtosis</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelKurtosis">MagickGetImageChannelKurtosis</a></h2>
 
 <p>MagickGetImageChannelKurtosis() gets the kurtosis and skewness of one or more image channels.</p>
 
@@ -2710,7 +2710,7 @@ MagickBooleanType MagickGetImageChannelKurtosis(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelMean">MagickGetImageChannelMean</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelMean">MagickGetImageChannelMean</a></h2>
 
 <p>MagickGetImageChannelMean() gets the mean and standard deviation of one or more image channels.</p>
 
@@ -2745,7 +2745,7 @@ MagickBooleanType MagickGetImageChannelMean(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelRange">MagickGetImageChannelRange</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelRange">MagickGetImageChannelRange</a></h2>
 
 <p>MagickGetImageChannelRange() gets the range for one or more image channels.</p>
 
@@ -2780,7 +2780,7 @@ MagickBooleanType MagickGetImageChannelRange(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelStatistics">MagickGetImageChannelStatistics</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelStatistics">MagickGetImageChannelStatistics</a></h2>
 
 <p>MagickGetImageChannelStatistics() returns statistics for each channel in the image.  The statistics include the channel depth, its minima and maxima, the mean, the standard deviation, the kurtosis and the skewness. You can access the red channel mean, for example, like this:</p>
 
@@ -2809,7 +2809,7 @@ ChannelStatistics *MagickGetImageChannelStatistics(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageColormapColor">MagickGetImageColormapColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageColormapColor">MagickGetImageColormapColor</a></h2>
 
 <p>MagickGetImageColormapColor() returns the color of the specified colormap index.</p>
 
@@ -2840,7 +2840,7 @@ MagickBooleanType MagickGetImageColormapColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageColors">MagickGetImageColors</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageColors">MagickGetImageColors</a></h2>
 
 <p>MagickGetImageColors() gets the number of unique colors in the image.</p>
 
@@ -2862,7 +2862,7 @@ size_t MagickGetImageColors(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageColorspace">MagickGetImageColorspace</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageColorspace">MagickGetImageColorspace</a></h2>
 
 <p>MagickGetImageColorspace() gets the image colorspace.</p>
 
@@ -2884,7 +2884,7 @@ ColorspaceType MagickGetImageColorspace(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageCompose">MagickGetImageCompose</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageCompose">MagickGetImageCompose</a></h2>
 
 <p>MagickGetImageCompose() returns the composite operator associated with the image.</p>
 
@@ -2906,7 +2906,7 @@ CompositeOperator MagickGetImageCompose(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageCompression">MagickGetImageCompression</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageCompression">MagickGetImageCompression</a></h2>
 
 <p>MagickGetImageCompression() gets the image compression.</p>
 
@@ -2928,7 +2928,7 @@ CompressionType MagickGetImageCompression(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageCompressionQuality">MagickGetImageCompressionQuality</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageCompressionQuality">MagickGetImageCompressionQuality</a></h2>
 
 <p>MagickGetImageCompressionQuality() gets the image compression quality.</p>
 
@@ -2950,7 +2950,7 @@ size_t MagickGetImageCompressionQuality(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDelay">MagickGetImageDelay</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDelay">MagickGetImageDelay</a></h2>
 
 <p>MagickGetImageDelay() gets the image delay.</p>
 
@@ -2972,7 +2972,7 @@ size_t MagickGetImageDelay(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDepth">MagickGetImageDepth</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDepth">MagickGetImageDepth</a></h2>
 
 <p>MagickGetImageDepth() gets the image depth.</p>
 
@@ -2994,7 +2994,7 @@ size_t MagickGetImageDepth(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDistortion">MagickGetImageDistortion</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDistortion">MagickGetImageDistortion</a></h2>
 
 <p>MagickGetImageDistortion() compares an image to a reconstructed image and returns the specified distortion metric.</p>
 
@@ -3030,7 +3030,7 @@ MagickBooleanType MagickGetImageDistortion(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDispose">MagickGetImageDispose</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageDispose">MagickGetImageDispose</a></h2>
 
 <p>MagickGetImageDispose() gets the image disposal method.</p>
 
@@ -3052,7 +3052,7 @@ DisposeType MagickGetImageDispose(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageEndian">MagickGetImageEndian</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageEndian">MagickGetImageEndian</a></h2>
 
 <p>MagickGetImageEndian() gets the image endian.</p>
 
@@ -3074,7 +3074,7 @@ EndianType MagickGetImageEndian(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageFilename">MagickGetImageFilename</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageFilename">MagickGetImageFilename</a></h2>
 
 <p>MagickGetImageFilename() returns the filename of a particular image in a sequence.</p>
 
@@ -3096,7 +3096,7 @@ char *MagickGetImageFilename(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageFormat">MagickGetImageFormat</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageFormat">MagickGetImageFormat</a></h2>
 
 <p>MagickGetImageFormat() returns the format of a particular image in a sequence.</p>
 
@@ -3118,7 +3118,7 @@ char *MagickGetImageFormat(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageFuzz">MagickGetImageFuzz</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageFuzz">MagickGetImageFuzz</a></h2>
 
 <p>MagickGetImageFuzz() gets the image fuzz.</p>
 
@@ -3140,7 +3140,7 @@ double MagickGetImageFuzz(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGamma">MagickGetImageGamma</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGamma">MagickGetImageGamma</a></h2>
 
 <p>MagickGetImageGamma() gets the image gamma.</p>
 
@@ -3162,7 +3162,7 @@ double MagickGetImageGamma(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGravity">MagickGetImageGravity</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGravity">MagickGetImageGravity</a></h2>
 
 <p>MagickGetImageGravity() gets the image gravity.</p>
 
@@ -3184,7 +3184,7 @@ GravityType MagickGetImageGravity(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGreenPrimary">MagickGetImageGreenPrimary</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGreenPrimary">MagickGetImageGreenPrimary</a></h2>
 
 <p>MagickGetImageGreenPrimary() returns the chromaticy green primary point.</p>
 
@@ -3215,7 +3215,7 @@ MagickBooleanType MagickGetImageGreenPrimary(MagickWand *wand,double *x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageHeight">MagickGetImageHeight</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageHeight">MagickGetImageHeight</a></h2>
 
 <p>MagickGetImageHeight() returns the image height.</p>
 
@@ -3237,7 +3237,7 @@ size_t MagickGetImageHeight(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageHistogram">MagickGetImageHistogram</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageHistogram">MagickGetImageHistogram</a></h2>
 
 <p>MagickGetImageHistogram() returns the image histogram as an array of PixelWand wands.</p>
 
@@ -3264,7 +3264,7 @@ PixelWand **MagickGetImageHistogram(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageInterlaceScheme">MagickGetImageInterlaceScheme</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageInterlaceScheme">MagickGetImageInterlaceScheme</a></h2>
 
 <p>MagickGetImageInterlaceScheme() gets the image interlace scheme.</p>
 
@@ -3286,7 +3286,7 @@ InterlaceType MagickGetImageInterlaceScheme(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageInterpolateMethod">MagickGetImageInterpolateMethod</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageInterpolateMethod">MagickGetImageInterpolateMethod</a></h2>
 
 <p>MagickGetImageInterpolateMethod() returns the interpolation method for the sepcified image.</p>
 
@@ -3308,7 +3308,7 @@ InterpolatePixelMethod MagickGetImageInterpolateMethod(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageIterations">MagickGetImageIterations</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageIterations">MagickGetImageIterations</a></h2>
 
 <p>MagickGetImageIterations() gets the image iterations.</p>
 
@@ -3330,7 +3330,7 @@ size_t MagickGetImageIterations(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageLength">MagickGetImageLength</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageLength">MagickGetImageLength</a></h2>
 
 <p>MagickGetImageLength() returns the image length in bytes.</p>
 
@@ -3357,7 +3357,7 @@ MagickBooleanType MagickGetImageLength(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageMatteColor">MagickGetImageMatteColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageMatteColor">MagickGetImageMatteColor</a></h2>
 
 <p>MagickGetImageMatteColor() returns the image matte color.</p>
 
@@ -3384,7 +3384,7 @@ MagickBooleanType MagickGetImagematteColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageOrientation">MagickGetImageOrientation</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageOrientation">MagickGetImageOrientation</a></h2>
 
 <p>MagickGetImageOrientation() returns the image orientation.</p>
 
@@ -3406,7 +3406,7 @@ OrientationType MagickGetImageOrientation(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImagePage">MagickGetImagePage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImagePage">MagickGetImagePage</a></h2>
 
 <p>MagickGetImagePage() returns the page geometry associated with the image.</p>
 
@@ -3445,7 +3445,7 @@ MagickBooleanType MagickGetImagePage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImagePixelColor">MagickGetImagePixelColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImagePixelColor">MagickGetImagePixelColor</a></h2>
 
 <p>MagickGetImagePixelColor() returns the color of the specified pixel.</p>
 
@@ -3476,7 +3476,7 @@ MagickBooleanType MagickGetImagePixelColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRedPrimary">MagickGetImageRedPrimary</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRedPrimary">MagickGetImageRedPrimary</a></h2>
 
 <p>MagickGetImageRedPrimary() returns the chromaticy red primary point.</p>
 
@@ -3507,7 +3507,7 @@ MagickBooleanType MagickGetImageRedPrimary(MagickWand *wand,double *x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRegion">MagickGetImageRegion</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRegion">MagickGetImageRegion</a></h2>
 
 <p>MagickGetImageRegion() extracts a region of the image and returns it as a a new wand.</p>
 
@@ -3547,7 +3547,7 @@ MagickWand *MagickGetImageRegion(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRenderingIntent">MagickGetImageRenderingIntent</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRenderingIntent">MagickGetImageRenderingIntent</a></h2>
 
 <p>MagickGetImageRenderingIntent() gets the image rendering intent.</p>
 
@@ -3569,7 +3569,7 @@ RenderingIntent MagickGetImageRenderingIntent(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageResolution">MagickGetImageResolution</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageResolution">MagickGetImageResolution</a></h2>
 
 <p>MagickGetImageResolution() gets the image X and Y resolution.</p>
 
@@ -3600,7 +3600,7 @@ MagickBooleanType MagickGetImageResolution(MagickWand *wand,double *x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageScene">MagickGetImageScene</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageScene">MagickGetImageScene</a></h2>
 
 <p>MagickGetImageScene() gets the image scene.</p>
 
@@ -3622,7 +3622,7 @@ size_t MagickGetImageScene(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageSignature">MagickGetImageSignature</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageSignature">MagickGetImageSignature</a></h2>
 
 <p>MagickGetImageSignature() generates an SHA-256 message digest for the image pixel stream.</p>
 
@@ -3644,7 +3644,7 @@ char *MagickGetImageSignature(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageTicksPerSecond">MagickGetImageTicksPerSecond</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageTicksPerSecond">MagickGetImageTicksPerSecond</a></h2>
 
 <p>MagickGetImageTicksPerSecond() gets the image ticks-per-second.</p>
 
@@ -3666,7 +3666,7 @@ size_t MagickGetImageTicksPerSecond(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageType">MagickGetImageType</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageType">MagickGetImageType</a></h2>
 
 <p>MagickGetImageType() gets the potential image type:</p>
 
@@ -3696,7 +3696,7 @@ ImageType MagickGetImageType(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageUnits">MagickGetImageUnits</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageUnits">MagickGetImageUnits</a></h2>
 
 <p>MagickGetImageUnits() gets the image units of resolution.</p>
 
@@ -3718,7 +3718,7 @@ ResolutionType MagickGetImageUnits(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageVirtualPixelMethod">MagickGetImageVirtualPixelMethod</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageVirtualPixelMethod">MagickGetImageVirtualPixelMethod</a></h2>
 
 <p>MagickGetImageVirtualPixelMethod() returns the virtual pixel method for the sepcified image.</p>
 
@@ -3740,7 +3740,7 @@ VirtualPixelMethod MagickGetImageVirtualPixelMethod(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageWhitePoint">MagickGetImageWhitePoint</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageWhitePoint">MagickGetImageWhitePoint</a></h2>
 
 <p>MagickGetImageWhitePoint() returns the chromaticy white point.</p>
 
@@ -3771,7 +3771,7 @@ MagickBooleanType MagickGetImageWhitePoint(MagickWand *wand,double *x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageWidth">MagickGetImageWidth</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageWidth">MagickGetImageWidth</a></h2>
 
 <p>MagickGetImageWidth() returns the image width.</p>
 
@@ -3793,7 +3793,7 @@ size_t MagickGetImageWidth(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetNumberImages">MagickGetNumberImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetNumberImages">MagickGetNumberImages</a></h2>
 
 <p>MagickGetNumberImages() returns the number of images associated with a magick wand.</p>
 
@@ -3815,7 +3815,7 @@ size_t MagickGetNumberImages(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageTotalInkDensity">MagickGetImageTotalInkDensity</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageTotalInkDensity">MagickGetImageTotalInkDensity</a></h2>
 
 <p>MagickGetImageTotalInkDensity() gets the image total ink density.</p>
 
@@ -3837,7 +3837,7 @@ double MagickGetImageTotalInkDensity(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickHaldClutImage">MagickHaldClutImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickHaldClutImage">MagickHaldClutImage</a></h2>
 
 <p>MagickHaldClutImage() replaces colors in the image from a Hald color lookup table.   A Hald color lookup table is a 3-dimensional color cube mapped to 2 dimensions.  Create it with the HALD coder.  You can apply any color transformation to the Hald image and then use this method to apply the transform to the image.</p>
 
@@ -3866,7 +3866,7 @@ MagickBooleanType MagickHaldClutImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickHasNextImage">MagickHasNextImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickHasNextImage">MagickHasNextImage</a></h2>
 
 <p>MagickHasNextImage() returns MagickTrue if the wand has more images when traversing the list in the forward direction</p>
 
@@ -3888,7 +3888,7 @@ MagickBooleanType MagickHasNextImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickHasPreviousImage">MagickHasPreviousImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickHasPreviousImage">MagickHasPreviousImage</a></h2>
 
 <p>MagickHasPreviousImage() returns MagickTrue if the wand has more images when traversing the list in the reverse direction</p>
 
@@ -3910,7 +3910,7 @@ MagickBooleanType MagickHasPreviousImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickIdentifyImage">MagickIdentifyImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickIdentifyImage">MagickIdentifyImage</a></h2>
 
 <p>MagickIdentifyImage() identifies an image by printing its attributes to the file.  Attributes include the image width, height, size, and others.</p>
 
@@ -3932,7 +3932,7 @@ const char *MagickIdentifyImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickImplodeImage">MagickImplodeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickImplodeImage">MagickImplodeImage</a></h2>
 
 <p>MagickImplodeImage() creates a new image that is a copy of an existing one with the image pixels "implode" by the specified percentage.  It allocates the memory necessary for the new Image structure and returns a pointer to the new image.</p>
 
@@ -3959,7 +3959,7 @@ MagickBooleanType MagickImplodeImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickImportImagePixels">MagickImportImagePixels</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickImportImagePixels">MagickImportImagePixels</a></h2>
 
 <p>MagickImportImagePixels() accepts pixel datand stores it in the image at the location you specify.  The method returns MagickFalse on success otherwise MagickTrue if an error is encountered.  The pixel data can be either char, short int, int, ssize_t, float, or double in the order specified by map.</p>
 
@@ -4006,7 +4006,7 @@ MagickBooleanType MagickImportImagePixels(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickInverseFourierTransformImage">MagickInverseFourierTransformImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickInverseFourierTransformImage">MagickInverseFourierTransformImage</a></h2>
 
 <p>MagickInverseFourierTransformImage() implements the inverse discrete Fourier transform (DFT) of the image either as a magnitude / phase or real / imaginary image pair.</p>
 
@@ -4038,7 +4038,7 @@ MagickBooleanType MagickInverseFourierTransformImage(
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLabelImage">MagickLabelImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLabelImage">MagickLabelImage</a></h2>
 
 <p>MagickLabelImage() adds a label to your image.</p>
 
@@ -4064,7 +4064,7 @@ MagickBooleanType MagickLabelImage(MagickWand *wand,const char *label)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLevelImage">MagickLevelImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLevelImage">MagickLevelImage</a></h2>
 
 <p>MagickLevelImage() adjusts the levels of an image by scaling the colors falling between specified white and black points to the full available quantum range. The parameters provided represent the black, mid, and white points. The black point specifies the darkest color in the image. Colors darker than the black point are set to zero. Mid point specifies a gamma correction to apply to the image.  White point specifies the lightest color in the image. Colors brighter than the white point are set to the maximum quantum value.</p>
 
@@ -4106,7 +4106,7 @@ MagickBooleanType MagickLevelImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLinearStretchImage">MagickLinearStretchImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLinearStretchImage">MagickLinearStretchImage</a></h2>
 
 <p>MagickLinearStretchImage() stretches with saturation the image intensity.</p>
 
@@ -4139,7 +4139,7 @@ MagickBooleanType MagickLinearStretchImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLiquidRescaleImage">MagickLiquidRescaleImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLiquidRescaleImage">MagickLiquidRescaleImage</a></h2>
 
 <p>MagickLiquidRescaleImage() rescales image with seam carving.</p>
 
@@ -4173,7 +4173,7 @@ MagickBooleanType MagickLinearStretchImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLocalContrastImage">MagickLocalContrastImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickLocalContrastImage">MagickLocalContrastImage</a></h2>
 
 <p>MagickLocalContrastImage() attempts to increase the appearance of large-scale light-dark transitions. Local contrast enhancement works similarly to sharpening with an unsharp mask, however the mask is instead created using an image with a greater blur distance.</p>
 
@@ -4199,7 +4199,7 @@ MagickBooleanType MagickLinearStretchImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMagnifyImage">MagickMagnifyImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMagnifyImage">MagickMagnifyImage</a></h2>
 
 <p>MagickMagnifyImage() is a convenience method that scales an image proportionally to twice its original size.</p>
 
@@ -4221,7 +4221,7 @@ MagickBooleanType MagickMagnifyImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMergeImageLayers">MagickMergeImageLayers</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMergeImageLayers">MagickMergeImageLayers</a></h2>
 
 <p>MagickMergeImageLayers() composes all the image layers from the current given image onward to produce a single image of the merged layers.</p>
 
@@ -4256,7 +4256,7 @@ MagickWand *MagickMergeImageLayers(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMinifyImage">MagickMinifyImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMinifyImage">MagickMinifyImage</a></h2>
 
 <p>MagickMinifyImage() is a convenience method that scales an image proportionally to one-half its original size</p>
 
@@ -4278,7 +4278,7 @@ MagickBooleanType MagickMinifyImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickModulateImage">MagickModulateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickModulateImage">MagickModulateImage</a></h2>
 
 <p>MagickModulateImage() lets you control the brightness, saturation, and hue of an image.  Hue is the percentage of absolute rotation from the current position.  For example 50 results in a counter-clockwise rotation of 90 degrees, 150 results in a clockwise rotation of 90 degrees, with 0 and 200 both resulting in a rotation of 180 degrees.</p>
 
@@ -4315,7 +4315,7 @@ MagickBooleanType MagickModulateImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMontageImage">MagickMontageImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMontageImage">MagickMontageImage</a></h2>
 
 <p>MagickMontageImage() creates a composite image by combining several separate images. The images are tiled on the composite image with the name of the image optionally appearing just below the individual tile.</p>
 
@@ -4360,7 +4360,7 @@ MagickWand *MagickMontageImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMorphImages">MagickMorphImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMorphImages">MagickMorphImages</a></h2>
 
 <p>MagickMorphImages() method morphs a set of images.  Both the image pixels and size are linearly interpolated to give the appearance of a meta-morphosis from one image to the next.</p>
 
@@ -4387,7 +4387,7 @@ MagickWand *MagickMorphImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMorphologyImage">MagickMorphologyImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMorphologyImage">MagickMorphologyImage</a></h2>
 
 <p>MagickMorphologyImage() applies a user supplied kernel to the image according to the given mophology method.</p>
 
@@ -4429,7 +4429,7 @@ MagickBooleanType MagickMorphologyImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMotionBlurImage">MagickMotionBlurImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMotionBlurImage">MagickMotionBlurImage</a></h2>
 
 <p>MagickMotionBlurImage() simulates motion blur.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, radius should be larger than sigma.  Use a radius of 0 and MotionBlurImage() selects a suitable radius for you. Angle gives the angle of the blurring motion.</p>
 
@@ -4471,7 +4471,7 @@ MagickBooleanType MagickMotionBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNegateImage">MagickNegateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNegateImage">MagickNegateImage</a></h2>
 
 <p>MagickNegateImage() negates the colors in the reference image.  The Grayscale option means that only grayscale values within the image are negated.</p>
 
@@ -4506,7 +4506,7 @@ MagickBooleanType MagickNegateImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNewImage">MagickNewImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNewImage">MagickNewImage</a></h2>
 
 <p>MagickNewImage() adds a blank image canvas of the specified size and background color to the wand.</p>
 
@@ -4542,7 +4542,7 @@ MagickBooleanType MagickNewImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNextImage">MagickNextImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNextImage">MagickNextImage</a></h2>
 
 <p>MagickNextImage() sets the next image in the wand as the current image.</p>
 
@@ -4570,7 +4570,7 @@ MagickBooleanType MagickNextImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNormalizeImage">MagickNormalizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickNormalizeImage">MagickNormalizeImage</a></h2>
 
 <p>MagickNormalizeImage() enhances the contrast of a color image by adjusting the pixels color to span the entire range of colors available</p>
 
@@ -4600,7 +4600,7 @@ MagickBooleanType MagickNormalizeImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOilPaintImage">MagickOilPaintImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOilPaintImage">MagickOilPaintImage</a></h2>
 
 <p>MagickOilPaintImage() applies a special effect filter that simulates an oil painting.  Each pixel is replaced by the most frequent color occurring in a circular region defined by radius.</p>
 
@@ -4627,7 +4627,7 @@ MagickBooleanType MagickOilPaintImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOpaquePaintImage">MagickOpaquePaintImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOpaquePaintImage">MagickOpaquePaintImage</a></h2>
 
 <p>MagickOpaquePaintImage() changes any pixel that matches color with the color defined by fill.</p>
 
@@ -4674,7 +4674,7 @@ MagickBooleanType MagickOpaquePaintImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOptimizeImageLayers">MagickOptimizeImageLayers</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOptimizeImageLayers">MagickOptimizeImageLayers</a></h2>
 
 <p>MagickOptimizeImageLayers() compares each image the GIF disposed forms of the previous image in the sequence.  From this it attempts to select the smallest cropped image to replace each frame, while preserving the results of the animation.</p>
 
@@ -4696,7 +4696,7 @@ MagickWand *MagickOptimizeImageLayers(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOptimizeImageTransparency">MagickOptimizeImageTransparency</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOptimizeImageTransparency">MagickOptimizeImageTransparency</a></h2>
 
 <p>MagickOptimizeImageTransparency() takes a frame optimized GIF animation, and compares the overlayed pixels against the disposal image resulting from all the previous frames in the animation.  Any pixel that does not change the disposal image (and thus does not effect the outcome of an overlay) is made transparent.</p>
 
@@ -4718,7 +4718,7 @@ MagickBooleanType MagickOptimizeImageTransparency(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOrderedPosterizeImage">MagickOrderedPosterizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickOrderedPosterizeImage">MagickOrderedPosterizeImage</a></h2>
 
 <p>MagickOrderedPosterizeImage() performs an ordered dither based on a number of pre-defined dithering threshold maps, but over multiple intensity levels, which can be different for different channels, according to the input arguments.</p>
 
@@ -4757,7 +4757,7 @@ MagickBooleanType MagickOrderedPosterizeImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPingImage">MagickPingImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPingImage">MagickPingImage</a></h2>
 
 <p>MagickPingImage() is like MagickReadImage() except the only valid information returned is the image width, height, size, and format.  It is designed to efficiently obtain this information from a file without reading the entire image sequence into memory.</p>
 
@@ -4783,7 +4783,7 @@ MagickBooleanType MagickPingImage(MagickWand *wand,const char *filename)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPingImageBlob">MagickPingImageBlob</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPingImageBlob">MagickPingImageBlob</a></h2>
 
 <p>MagickPingImageBlob() pings an image or image sequence from a blob.</p>
 
@@ -4814,7 +4814,7 @@ MagickBooleanType MagickPingImageBlob(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPingImageFile">MagickPingImageFile</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPingImageFile">MagickPingImageFile</a></h2>
 
 <p>MagickPingImageFile() pings an image or image sequence from an open file descriptor.</p>
 
@@ -4840,7 +4840,7 @@ MagickBooleanType MagickPingImageFile(MagickWand *wand,FILE *file)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPolaroidImage">MagickPolaroidImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPolaroidImage">MagickPolaroidImage</a></h2>
 
 <p>MagickPolaroidImage() simulates a Polaroid picture.</p>
 
@@ -4871,7 +4871,7 @@ MagickBooleanType MagickPolaroidImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPosterizeImage">MagickPosterizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPosterizeImage">MagickPosterizeImage</a></h2>
 
 <p>MagickPosterizeImage() reduces the image to a limited number of color level.</p>
 
@@ -4902,7 +4902,7 @@ MagickBooleanType MagickPosterizeImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPreviewImages">MagickPreviewImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPreviewImages">MagickPreviewImages</a></h2>
 
 <p>MagickPreviewImages() tiles 9 thumbnails of the specified image with an image processing operation applied at varying strengths.  This helpful to quickly pin-point an appropriate parameter for an image processing operation.</p>
 
@@ -4929,7 +4929,7 @@ MagickWand *MagickPreviewImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPreviousImage">MagickPreviousImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickPreviousImage">MagickPreviousImage</a></h2>
 
 <p>MagickPreviousImage() sets the previous image in the wand as the current image.</p>
 
@@ -4957,7 +4957,7 @@ MagickBooleanType MagickPreviousImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickQuantizeImage">MagickQuantizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickQuantizeImage">MagickQuantizeImage</a></h2>
 
 <p>MagickQuantizeImage() analyzes the colors within a reference image and chooses a fixed number of colors to represent the image.  The goal of the algorithm is to minimize the color difference between the input and output image while minimizing the processing time.</p>
 
@@ -5002,7 +5002,7 @@ MagickBooleanType MagickQuantizeImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickQuantizeImages">MagickQuantizeImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickQuantizeImages">MagickQuantizeImages</a></h2>
 
 <p>MagickQuantizeImages() analyzes the colors within a sequence of images and chooses a fixed number of colors to represent the image.  The goal of the algorithm is to minimize the color difference between the input and output image while minimizing the processing time.</p>
 
@@ -5047,7 +5047,7 @@ MagickBooleanType MagickQuantizeImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRaiseImage">MagickRaiseImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRaiseImage">MagickRaiseImage</a></h2>
 
 <p>MagickRaiseImage() creates a simulated three-dimensional button-like effect by lightening and darkening the edges of the image.  Members width and height of raise_info define the width of the vertical and horizontal edge of the effect.</p>
 
@@ -5079,7 +5079,7 @@ MagickBooleanType MagickRaiseImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRandomThresholdImage">MagickRandomThresholdImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRandomThresholdImage">MagickRandomThresholdImage</a></h2>
 
 <p>MagickRandomThresholdImage() changes the value of individual pixels based on the intensity of each pixel compared to threshold.  The result is a high-contrast, two color image.</p>
 
@@ -5112,7 +5112,7 @@ MagickBooleanType MagickRandomThresholdImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickReadImage">MagickReadImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickReadImage">MagickReadImage</a></h2>
 
 <p>MagickReadImage() reads an image or image sequence.  The images are inserted at the current image pointer position.   Use MagickSetFirstIterator(), MagickSetLastIterator, or MagickSetIteratorIndex() to specify the current image pointer position at the beginning of the image list, the end, or anywhere in-between respectively.</p>
 
@@ -5138,7 +5138,7 @@ MagickBooleanType MagickReadImage(MagickWand *wand,const char *filename)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickReadImageBlob">MagickReadImageBlob</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickReadImageBlob">MagickReadImageBlob</a></h2>
 
 <p>MagickReadImageBlob() reads an image or image sequence from a blob.</p>
 
@@ -5169,7 +5169,7 @@ MagickBooleanType MagickReadImageBlob(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickReadImageFile">MagickReadImageFile</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickReadImageFile">MagickReadImageFile</a></h2>
 
 <p>MagickReadImageFile() reads an image or image sequence from an open file descriptor.</p>
 
@@ -5195,7 +5195,7 @@ MagickBooleanType MagickReadImageFile(MagickWand *wand,FILE *file)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRemapImage">MagickRemapImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRemapImage">MagickRemapImage</a></h2>
 
 <p>MagickRemapImage() replaces the colors of an image with the closest color from a reference image.</p>
 
@@ -5226,7 +5226,7 @@ MagickBooleanType MagickRemapImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRemoveImage">MagickRemoveImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRemoveImage">MagickRemoveImage</a></h2>
 
 <p>MagickRemoveImage() removes an image from the image list.</p>
 
@@ -5252,7 +5252,7 @@ MagickBooleanType MagickRemoveImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickResampleImage">MagickResampleImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickResampleImage">MagickResampleImage</a></h2>
 
 <p>MagickResampleImage() resample image to desired resolution.</p>
 
@@ -5296,7 +5296,7 @@ MagickBooleanType MagickResampleImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickResetImagePage">MagickResetImagePage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickResetImagePage">MagickResetImagePage</a></h2>
 
 <p>MagickResetImagePage() resets the Wand page canvas and position.</p>
 
@@ -5323,7 +5323,7 @@ MagickBooleanType MagickResetImagePage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickResizeImage">MagickResizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickResizeImage">MagickResizeImage</a></h2>
 
 <p>MagickResizeImage() scales an image to the desired dimensions with one of these filters:</p>
 
@@ -5373,7 +5373,7 @@ MagickBooleanType MagickResizeImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRollImage">MagickRollImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRollImage">MagickRollImage</a></h2>
 
 <p>MagickRollImage() offsets an image as defined by x and y.</p>
 
@@ -5404,7 +5404,7 @@ MagickBooleanType MagickRollImage(MagickWand *wand,const ssize_t x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRotateImage">MagickRotateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRotateImage">MagickRotateImage</a></h2>
 
 <p>MagickRotateImage() rotates an image the specified number of degrees. Empty triangles left over from rotating the image are filled with the background color.</p>
 
@@ -5437,7 +5437,7 @@ MagickBooleanType MagickRotateImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRotationalBlurImage">MagickRotationalBlurImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickRotationalBlurImage">MagickRotationalBlurImage</a></h2>
 
 <p>MagickRotationalBlurImage() rotational blurs an image.</p>
 
@@ -5470,7 +5470,7 @@ MagickBooleanType MagickRotationalBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSampleImage">MagickSampleImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSampleImage">MagickSampleImage</a></h2>
 
 <p>MagickSampleImage() scales an image to the desired dimensions with pixel sampling.  Unlike other scaling methods, this method does not introduce any additional color into the scaled image.</p>
 
@@ -5501,7 +5501,7 @@ MagickBooleanType MagickSampleImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickScaleImage">MagickScaleImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickScaleImage">MagickScaleImage</a></h2>
 
 <p>MagickScaleImage() scales the size of an image to the given dimensions.</p>
 
@@ -5532,7 +5532,7 @@ MagickBooleanType MagickScaleImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSegmentImage">MagickSegmentImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSegmentImage">MagickSegmentImage</a></h2>
 
 <p>MagickSegmentImage() segments an image by analyzing the histograms of the color components and identifying units that are homogeneous with the fuzzy C-means technique.</p>
 
@@ -5561,7 +5561,7 @@ MagickBooleanType MagickSegmentImage(MagickWand *wand,
 <dt>smooth_threshold</dt>
 <p>the smoothing threshold eliminates noise in the second derivative of the histogram.  As the value is increased, you can expect a smoother second derivative.</p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSelectiveBlurImage">MagickSelectiveBlurImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSelectiveBlurImage">MagickSelectiveBlurImage</a></h2>
 
 <p>MagickSelectiveBlurImage() selectively blur an image within a contrast threshold. It is similar to the unsharpen mask that sharpens everything with contrast above a certain threshold.</p>
 
@@ -5603,7 +5603,7 @@ MagickBooleanType MagickSelectiveBlurImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSeparateImageChannel">MagickSeparateImageChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSeparateImageChannel">MagickSeparateImageChannel</a></h2>
 
 <p>MagickSeparateImageChannel() separates a channel from the image and returns a grayscale image.  A channel is a particular color component of each pixel in the image.</p>
 
@@ -5630,7 +5630,7 @@ MagickBooleanType MagickSeparateImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSepiaToneImage">MagickSepiaToneImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSepiaToneImage">MagickSepiaToneImage</a></h2>
 
 <p>MagickSepiaToneImage() applies a special effect to the image, similar to the effect achieved in a photo darkroom by sepia toning.  Threshold ranges from 0 to QuantumRange and is a measure of the extent of the sepia toning.  A threshold of 80 is a good starting point for a reasonable tone.</p>
 
@@ -5657,7 +5657,7 @@ MagickBooleanType MagickSepiaToneImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImage">MagickSetImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImage">MagickSetImage</a></h2>
 
 <p>MagickSetImage() replaces the last image returned by MagickSetIteratorIndex(), MagickNextImage(), MagickPreviousImage() with the images from the specified wand.</p>
 
@@ -5684,7 +5684,7 @@ MagickBooleanType MagickSetImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageAlphaChannel">MagickSetImageAlphaChannel</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageAlphaChannel">MagickSetImageAlphaChannel</a></h2>
 
 <p>MagickSetImageAlphaChannel() activates, deactivates, resets, or sets the alpha channel.</p>
 
@@ -5711,7 +5711,7 @@ MagickBooleanType MagickSetImageAlphaChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBackgroundColor">MagickSetImageBackgroundColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBackgroundColor">MagickSetImageBackgroundColor</a></h2>
 
 <p>MagickSetImageBackgroundColor() sets the image background color.</p>
 
@@ -5738,7 +5738,7 @@ MagickBooleanType MagickSetImageBackgroundColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBias">MagickSetImageBias</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBias">MagickSetImageBias</a></h2>
 
 <p>MagickSetImageBias() sets the image bias for any method that convolves an image (e.g. MagickConvolveImage()).</p>
 
@@ -5765,7 +5765,7 @@ MagickBooleanType MagickSetImageBias(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBluePrimary">MagickSetImageBluePrimary</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBluePrimary">MagickSetImageBluePrimary</a></h2>
 
 <p>MagickSetImageBluePrimary() sets the image chromaticity blue primary point.</p>
 
@@ -5796,7 +5796,7 @@ MagickBooleanType MagickSetImageBluePrimary(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBorderColor">MagickSetImageBorderColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageBorderColor">MagickSetImageBorderColor</a></h2>
 
 <p>MagickSetImageBorderColor() sets the image border color.</p>
 
@@ -5823,7 +5823,7 @@ MagickBooleanType MagickSetImageBorderColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageChannelDepth">MagickSetImageChannelDepth</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageChannelDepth">MagickSetImageChannelDepth</a></h2>
 
 <p>MagickSetImageChannelDepth() sets the depth of a particular image channel.</p>
 
@@ -5854,7 +5854,7 @@ MagickBooleanType MagickSetImageChannelDepth(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageClipMask">MagickSetImageClipMask</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageClipMask">MagickSetImageClipMask</a></h2>
 
 <p>MagickSetImageClipMask() sets image clip mask.</p>
 
@@ -5881,7 +5881,7 @@ MagickBooleanType MagickSetImageClipMask(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageColor">MagickSetImageColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageColor">MagickSetImageColor</a></h2>
 
 <p>MagickSetImageColor() set the entire wand canvas to the specified color.</p>
 
@@ -5908,7 +5908,7 @@ MagickBooleanType MagickSetImageColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageColormapColor">MagickSetImageColormapColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageColormapColor">MagickSetImageColormapColor</a></h2>
 
 <p>MagickSetImageColormapColor() sets the color of the specified colormap index.</p>
 
@@ -5939,7 +5939,7 @@ MagickBooleanType MagickSetImageColormapColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageColorspace">MagickSetImageColorspace</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageColorspace">MagickSetImageColorspace</a></h2>
 
 <p>MagickSetImageColorspace() sets the image colorspace.</p>
 
@@ -5966,7 +5966,7 @@ MagickBooleanType MagickSetImageColorspace(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageCompose">MagickSetImageCompose</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageCompose">MagickSetImageCompose</a></h2>
 
 <p>MagickSetImageCompose() sets the image composite operator, useful for specifying how to composite the image thumbnail when using the MagickMontageImage() method.</p>
 
@@ -5993,7 +5993,7 @@ MagickBooleanType MagickSetImageCompose(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageCompression">MagickSetImageCompression</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageCompression">MagickSetImageCompression</a></h2>
 
 <p>MagickSetImageCompression() sets the image compression.</p>
 
@@ -6020,7 +6020,7 @@ MagickBooleanType MagickSetImageCompression(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageCompressionQuality">MagickSetImageCompressionQuality</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageCompressionQuality">MagickSetImageCompressionQuality</a></h2>
 
 <p>MagickSetImageCompressionQuality() sets the image compression quality.</p>
 
@@ -6047,7 +6047,7 @@ MagickBooleanType MagickSetImageCompressionQuality(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageDelay">MagickSetImageDelay</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageDelay">MagickSetImageDelay</a></h2>
 
 <p>MagickSetImageDelay() sets the image delay.</p>
 
@@ -6074,7 +6074,7 @@ MagickBooleanType MagickSetImageDelay(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageDepth">MagickSetImageDepth</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageDepth">MagickSetImageDepth</a></h2>
 
 <p>MagickSetImageDepth() sets the image depth.</p>
 
@@ -6101,7 +6101,7 @@ MagickBooleanType MagickSetImageDepth(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageDispose">MagickSetImageDispose</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageDispose">MagickSetImageDispose</a></h2>
 
 <p>MagickSetImageDispose() sets the image disposal method.</p>
 
@@ -6128,7 +6128,7 @@ MagickBooleanType MagickSetImageDispose(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageEndian">MagickSetImageEndian</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageEndian">MagickSetImageEndian</a></h2>
 
 <p>MagickSetImageEndian() sets the image endian method.</p>
 
@@ -6155,7 +6155,7 @@ MagickBooleanType MagickSetImageEndian(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageExtent">MagickSetImageExtent</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageExtent">MagickSetImageExtent</a></h2>
 
 <p>MagickSetImageExtent() sets the image size (i.e. columns &amp; rows).</p>
 
@@ -6186,7 +6186,7 @@ MagickBooleanType MagickSetImageExtent(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageFilename">MagickSetImageFilename</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageFilename">MagickSetImageFilename</a></h2>
 
 <p>MagickSetImageFilename() sets the filename of a particular image in a sequence.</p>
 
@@ -6213,7 +6213,7 @@ MagickBooleanType MagickSetImageFilename(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageFormat">MagickSetImageFormat</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageFormat">MagickSetImageFormat</a></h2>
 
 <p>MagickSetImageFormat() sets the format of a particular image in a sequence.</p>
 
@@ -6240,7 +6240,7 @@ MagickBooleanType MagickSetImageFormat(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageFuzz">MagickSetImageFuzz</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageFuzz">MagickSetImageFuzz</a></h2>
 
 <p>MagickSetImageFuzz() sets the image fuzz.</p>
 
@@ -6267,7 +6267,7 @@ MagickBooleanType MagickSetImageFuzz(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageGamma">MagickSetImageGamma</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageGamma">MagickSetImageGamma</a></h2>
 
 <p>MagickSetImageGamma() sets the image gamma.</p>
 
@@ -6294,7 +6294,7 @@ MagickBooleanType MagickSetImageGamma(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageGravity">MagickSetImageGravity</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageGravity">MagickSetImageGravity</a></h2>
 
 <p>MagickSetImageGravity() sets the image gravity type.</p>
 
@@ -6321,7 +6321,7 @@ MagickBooleanType MagickSetImageGravity(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageGreenPrimary">MagickSetImageGreenPrimary</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageGreenPrimary">MagickSetImageGreenPrimary</a></h2>
 
 <p>MagickSetImageGreenPrimary() sets the image chromaticity green primary point.</p>
 
@@ -6354,7 +6354,7 @@ MagickBooleanType MagickSetImageGreenPrimary(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageInterlaceScheme">MagickSetImageInterlaceScheme</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageInterlaceScheme">MagickSetImageInterlaceScheme</a></h2>
 
 <p>MagickSetImageInterlaceScheme() sets the image interlace scheme.</p>
 
@@ -6381,7 +6381,7 @@ MagickBooleanType MagickSetImageInterlaceScheme(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageInterpolateMethod">MagickSetImageInterpolateMethod</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageInterpolateMethod">MagickSetImageInterpolateMethod</a></h2>
 
 <p>MagickSetImageInterpolateMethod() sets the image interpolate pixel method.</p>
 
@@ -6408,7 +6408,7 @@ MagickBooleanType MagickSetImageInterpolateMethod(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageIterations">MagickSetImageIterations</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageIterations">MagickSetImageIterations</a></h2>
 
 <p>MagickSetImageIterations() sets the image iterations.</p>
 
@@ -6435,7 +6435,7 @@ MagickBooleanType MagickSetImageIterations(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageMatte">MagickSetImageMatte</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageMatte">MagickSetImageMatte</a></h2>
 
 <p>MagickSetImageMatte() sets the image matte channel.</p>
 
@@ -6462,7 +6462,7 @@ MagickBooleanType MagickSetImageMatteColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageMatteColor">MagickSetImageMatteColor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageMatteColor">MagickSetImageMatteColor</a></h2>
 
 <p>MagickSetImageMatteColor() sets the image matte color.</p>
 
@@ -6489,7 +6489,7 @@ MagickBooleanType MagickSetImageMatteColor(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageOpacity">MagickSetImageOpacity</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageOpacity">MagickSetImageOpacity</a></h2>
 
 <p>MagickSetImageOpacity() sets the image to the specified opacity level.</p>
 
@@ -6516,7 +6516,7 @@ MagickBooleanType MagickSetImageOpacity(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageOrientation">MagickSetImageOrientation</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageOrientation">MagickSetImageOrientation</a></h2>
 
 <p>MagickSetImageOrientation() sets the image orientation.</p>
 
@@ -6543,7 +6543,7 @@ MagickBooleanType MagickSetImageOrientation(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImagePage">MagickSetImagePage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImagePage">MagickSetImagePage</a></h2>
 
 <p>MagickSetImagePage() sets the page geometry of the image.</p>
 
@@ -6583,7 +6583,7 @@ MagickBooleanType MagickSetImagePage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageProgressMonitor">MagickSetImageProgressMonitor</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageProgressMonitor">MagickSetImageProgressMonitor</a></h2>
 
 <p>MagickSetImageProgressMonitor() sets the wand image progress monitor to the specified method and returns the previous progress monitor if any.  The progress monitor method looks like this:</p>
 
@@ -6622,7 +6622,7 @@ MagickProgressMonitor MagickSetImageProgressMonitor(MagickWand *wand
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageRedPrimary">MagickSetImageRedPrimary</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageRedPrimary">MagickSetImageRedPrimary</a></h2>
 
 <p>MagickSetImageRedPrimary() sets the image chromaticity red primary point.</p>
 
@@ -6653,7 +6653,7 @@ MagickBooleanType MagickSetImageRedPrimary(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageRenderingIntent">MagickSetImageRenderingIntent</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageRenderingIntent">MagickSetImageRenderingIntent</a></h2>
 
 <p>MagickSetImageRenderingIntent() sets the image rendering intent.</p>
 
@@ -6680,7 +6680,7 @@ MagickBooleanType MagickSetImageRenderingIntent(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageResolution">MagickSetImageResolution</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageResolution">MagickSetImageResolution</a></h2>
 
 <p>MagickSetImageResolution() sets the image resolution.</p>
 
@@ -6711,7 +6711,7 @@ MagickBooleanType MagickSetImageResolution(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageScene">MagickSetImageScene</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageScene">MagickSetImageScene</a></h2>
 
 <p>MagickSetImageScene() sets the image scene.</p>
 
@@ -6738,7 +6738,7 @@ MagickBooleanType MagickSetImageScene(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageTicksPerSecond">MagickSetImageTicksPerSecond</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageTicksPerSecond">MagickSetImageTicksPerSecond</a></h2>
 
 <p>MagickSetImageTicksPerSecond() sets the image ticks-per-second.</p>
 
@@ -6765,7 +6765,7 @@ MagickBooleanType MagickSetImageTicksPerSecond(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageType">MagickSetImageType</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageType">MagickSetImageType</a></h2>
 
 <p>MagickSetImageType() sets the image type.</p>
 
@@ -6792,7 +6792,7 @@ MagickBooleanType MagickSetImageType(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageUnits">MagickSetImageUnits</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageUnits">MagickSetImageUnits</a></h2>
 
 <p>MagickSetImageUnits() sets the image units of resolution.</p>
 
@@ -6819,7 +6819,7 @@ MagickBooleanType MagickSetImageUnits(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageVirtualPixelMethod">MagickSetImageVirtualPixelMethod</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageVirtualPixelMethod">MagickSetImageVirtualPixelMethod</a></h2>
 
 <p>MagickSetImageVirtualPixelMethod() sets the image virtual pixel method.</p>
 
@@ -6846,7 +6846,7 @@ VirtualPixelMethod MagickSetImageVirtualPixelMethod(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageWhitePoint">MagickSetImageWhitePoint</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSetImageWhitePoint">MagickSetImageWhitePoint</a></h2>
 
 <p>MagickSetImageWhitePoint() sets the image chromaticity white point.</p>
 
@@ -6877,7 +6877,7 @@ MagickBooleanType MagickSetImageWhitePoint(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShadeImage">MagickShadeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShadeImage">MagickShadeImage</a></h2>
 
 <p>MagickShadeImage() shines a distant light on an image to create a three-dimensional effect. You control the positioning of the light with azimuth and elevation; azimuth is measured in degrees off the x axis and elevation is measured in pixels above the Z axis.</p>
 
@@ -6909,7 +6909,7 @@ MagickBooleanType MagickShadeImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShadowImage">MagickShadowImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShadowImage">MagickShadowImage</a></h2>
 
 <p>MagickShadowImage() simulates an image shadow.</p>
 
@@ -6948,7 +6948,7 @@ MagickBooleanType MagickShadowImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSharpenImage">MagickSharpenImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSharpenImage">MagickSharpenImage</a></h2>
 
 <p>MagickSharpenImage() sharpens an image.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, the radius should be larger than sigma.  Use a radius of 0 and MagickSharpenImage() selects a suitable radius for you.</p>
 
@@ -6985,7 +6985,7 @@ MagickBooleanType MagickSharpenImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShaveImage">MagickShaveImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShaveImage">MagickShaveImage</a></h2>
 
 <p>MagickShaveImage() shaves pixels from the image edges.  It allocates the memory necessary for the new Image structure and returns a pointer to the new image.</p>
 
@@ -7018,7 +7018,7 @@ MagickBooleanType MagickShaveImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShearImage">MagickShearImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickShearImage">MagickShearImage</a></h2>
 
 <p>MagickShearImage() slides one edge of an image along the X or Y axis, creating a parallelogram.  An X direction shear slides an edge along the X axis, while a Y direction shear slides an edge along the Y axis.  The amount of the shear is controlled by a shear angle.  For X direction shears, x_shear is measured relative to the Y axis, and similarly, for Y direction shears y_shear is measured relative to the X axis.  Empty triangles left over from shearing the image are filled with the background color.</p>
 
@@ -7053,7 +7053,7 @@ MagickBooleanType MagickShearImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSigmoidalContrastImage">MagickSigmoidalContrastImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSigmoidalContrastImage">MagickSigmoidalContrastImage</a></h2>
 
 <p>MagickSigmoidalContrastImage() adjusts the contrast of an image with a non-linear sigmoidal contrast algorithm.  Increase the contrast of the image using a sigmoidal transfer function without saturating highlights or shadows.  Contrast indicates how much to increase the contrast (0 is none; 3 is typical; 20 is pushing it); mid-point indicates where midtones fall in the resultant image (0 is white; 50 is middle-gray; 100 is black).  Set sharpen to MagickTrue to increase the image contrast otherwise the contrast is reduced.</p>
 
@@ -7095,7 +7095,7 @@ MagickBooleanType MagickSigmoidalContrastImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSimilarityImage">MagickSimilarityImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSimilarityImage">MagickSimilarityImage</a></h2>
 
 <p>MagickSimilarityImage() compares the reference image of the image and returns the best match offset.  In addition, it returns a similarity image such that an exact match location is completely white and if none of the pixels match, black, otherwise some gray level in-between.</p>
 
@@ -7130,7 +7130,7 @@ MagickWand *MagickSimilarityImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSketchImage">MagickSketchImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSketchImage">MagickSketchImage</a></h2>
 
 <p>MagickSketchImage() simulates a pencil sketch.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, radius should be larger than sigma.  Use a radius of 0 and SketchImage() selects a suitable radius for you. Angle gives the angle of the blurring motion.</p>
 
@@ -7165,7 +7165,7 @@ MagickBooleanType MagickSketchImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSmushImages">MagickSmushImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSmushImages">MagickSmushImages</a></h2>
 
 <p>MagickSmushImages() takes all images from the current image pointer to the end of the image list and smushs them to each other top-to-bottom if the stack parameter is true, otherwise left-to-right.</p>
 
@@ -7196,7 +7196,7 @@ MagickWand *MagickSmushImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSolarizeImage">MagickSolarizeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSolarizeImage">MagickSolarizeImage</a></h2>
 
 <p>MagickSolarizeImage() applies a special effect to the image, similar to the effect achieved in a photo darkroom by selectively exposing areas of photo sensitive paper to light.  Threshold ranges from 0 to QuantumRange and is a measure of the extent of the solarization.</p>
 
@@ -7229,7 +7229,7 @@ MagickBooleanType MagickSolarizeImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSparseColorImage">MagickSparseColorImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSparseColorImage">MagickSparseColorImage</a></h2>
 
 <p>MagickSparseColorImage(), given a set of coordinates, interpolates the colors found at those coordinates, across the whole image, using various methods.</p>
 
@@ -7273,7 +7273,7 @@ MagickBooleanType MagickSparseColorImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSpliceImage">MagickSpliceImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSpliceImage">MagickSpliceImage</a></h2>
 
 <p>MagickSpliceImage() splices a solid color into the image.</p>
 
@@ -7313,7 +7313,7 @@ MagickBooleanType MagickSpliceImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSpreadImage">MagickSpreadImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSpreadImage">MagickSpreadImage</a></h2>
 
 <p>MagickSpreadImage() is a special effects method that randomly displaces each pixel in a block defined by the radius parameter.</p>
 
@@ -7339,7 +7339,7 @@ MagickBooleanType MagickSpreadImage(MagickWand *wand,const double radius)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickStatisticImage">MagickStatisticImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickStatisticImage">MagickStatisticImage</a></h2>
 
 <p>MagickStatisticImage() replace each pixel with corresponding statistic from the neighborhood of the specified width and height.</p>
 
@@ -7381,7 +7381,7 @@ MagickBooleanType MagickStatisticImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSteganoImage">MagickSteganoImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSteganoImage">MagickSteganoImage</a></h2>
 
 <p>MagickSteganoImage() hides a digital watermark within the image. Recover the hidden watermark later to prove that the authenticity of an image.  Offset defines the start position within the image to hide the watermark.</p>
 
@@ -7412,7 +7412,7 @@ MagickWand *MagickSteganoImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickStereoImage">MagickStereoImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickStereoImage">MagickStereoImage</a></h2>
 
 <p>MagickStereoImage() composites two images and produces a single image that is the composite of a left and right image of a stereo pair</p>
 
@@ -7439,7 +7439,7 @@ MagickWand *MagickStereoImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickStripImage">MagickStripImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickStripImage">MagickStripImage</a></h2>
 
 <p>MagickStripImage() strips an image of all profiles and comments.</p>
 
@@ -7461,7 +7461,7 @@ MagickBooleanType MagickStripImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSwirlImage">MagickSwirlImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSwirlImage">MagickSwirlImage</a></h2>
 
 <p>MagickSwirlImage() swirls the pixels about the center of the image, where degrees indicates the sweep of the arc through which each pixel is moved. You get a more dramatic effect as the degrees move from 1 to 360.</p>
 
@@ -7487,7 +7487,7 @@ MagickBooleanType MagickSwirlImage(MagickWand *wand,const double degrees)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTextureImage">MagickTextureImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTextureImage">MagickTextureImage</a></h2>
 
 <p>MagickTextureImage() repeatedly tiles the texture image across and down the image canvas.</p>
 
@@ -7514,7 +7514,7 @@ MagickWand *MagickTextureImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickThresholdImage">MagickThresholdImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickThresholdImage">MagickThresholdImage</a></h2>
 
 <p>MagickThresholdImage() changes the value of individual pixels based on the intensity of each pixel compared to threshold.  The result is a high-contrast, two color image.</p>
 
@@ -7547,7 +7547,7 @@ MagickBooleanType MagickThresholdImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickThumbnailImage">MagickThumbnailImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickThumbnailImage">MagickThumbnailImage</a></h2>
 
 <p>MagickThumbnailImage()  changes the size of an image to the given dimensions and removes any associated profiles.  The goal is to produce small low cost thumbnail images suited for display on the Web.</p>
 
@@ -7578,7 +7578,7 @@ MagickBooleanType MagickThumbnailImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTintImage">MagickTintImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTintImage">MagickTintImage</a></h2>
 
 <p>MagickTintImage() applies a color vector to each pixel in the image.  The length of the vector is 0 for black and white and at its maximum for the midtones.  The vector weighting function is f(x)=(1-(4.0*((x-0.5)*(x-0.5)))).</p>
 
@@ -7609,7 +7609,7 @@ MagickBooleanType MagickTintImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransformImage">MagickTransformImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransformImage">MagickTransformImage</a></h2>
 
 <p>MagickTransformImage() is a convenience method that behaves like MagickResizeImage() or MagickCropImage() but accepts scaling and/or cropping information as a region geometry specification.  If the operation fails, a NULL image handle is returned.</p>
 
@@ -7640,7 +7640,7 @@ MagickWand *MagickTransformImage(MagickWand *wand,const char *crop,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransformImageColorspace">MagickTransformImageColorspace</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransformImageColorspace">MagickTransformImageColorspace</a></h2>
 
 <p>MagickTransformImageColorspace() transform the image colorspace, setting the images colorspace while transforming the images data to that colorspace.</p>
 
@@ -7667,7 +7667,7 @@ MagickBooleanType MagickTransformImageColorspace(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransparentPaintImage">MagickTransparentPaintImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransparentPaintImage">MagickTransparentPaintImage</a></h2>
 
 <p>MagickTransparentPaintImage() changes any pixel that matches color with the color defined by fill.</p>
 
@@ -7707,7 +7707,7 @@ MagickBooleanType MagickTransparentPaintImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransposeImage">MagickTransposeImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransposeImage">MagickTransposeImage</a></h2>
 
 <p>MagickTransposeImage() creates a vertical mirror image by reflecting the pixels around the central x-axis while rotating them 90-degrees.</p>
 
@@ -7729,7 +7729,7 @@ MagickBooleanType MagickTransposeImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransverseImage">MagickTransverseImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTransverseImage">MagickTransverseImage</a></h2>
 
 <p>MagickTransverseImage() creates a horizontal mirror image by reflecting the pixels around the central y-axis while rotating them 270-degrees.</p>
 
@@ -7751,7 +7751,7 @@ MagickBooleanType MagickTransverseImage(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTrimImage">MagickTrimImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickTrimImage">MagickTrimImage</a></h2>
 
 <p>MagickTrimImage() remove edges that are the background color from the image.</p>
 
@@ -7777,7 +7777,7 @@ MagickBooleanType MagickTrimImage(MagickWand *wand,const double fuzz)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickUniqueImageColors">MagickUniqueImageColors</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickUniqueImageColors">MagickUniqueImageColors</a></h2>
 
 <p>MagickUniqueImageColors() discards all but one of any pixel color.</p>
 
@@ -7799,7 +7799,7 @@ MagickBooleanType MagickUniqueImageColors(MagickWand *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickUnsharpMaskImage">MagickUnsharpMaskImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickUnsharpMaskImage">MagickUnsharpMaskImage</a></h2>
 
 <p>MagickUnsharpMaskImage() sharpens an image.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, radius should be larger than sigma.  Use a radius of 0 and UnsharpMaskImage() selects a suitable radius for you.</p>
 
@@ -7846,7 +7846,7 @@ MagickBooleanType MagickUnsharpMaskImageChannel(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickVignetteImage">MagickVignetteImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickVignetteImage">MagickVignetteImage</a></h2>
 
 <p>MagickVignetteImage() softens the edges of the image in vignette style.</p>
 
@@ -7882,7 +7882,7 @@ MagickBooleanType MagickVignetteImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWaveImage">MagickWaveImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWaveImage">MagickWaveImage</a></h2>
 
 <p>MagickWaveImage()  creates a "ripple" effect in the image by shifting the pixels vertically along a sine wave whose amplitude and wavelength is specified by the given parameters.</p>
 
@@ -7909,7 +7909,7 @@ MagickBooleanType MagickWaveImage(MagickWand *wand,const double amplitude,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWhiteThresholdImage">MagickWhiteThresholdImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWhiteThresholdImage">MagickWhiteThresholdImage</a></h2>
 
 <p>MagickWhiteThresholdImage() is like ThresholdImage() but  force all pixels above the threshold into white while leaving all pixels below the threshold unchanged.</p>
 
@@ -7936,7 +7936,7 @@ MagickBooleanType MagickWhiteThresholdImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImage">MagickWriteImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImage">MagickWriteImage</a></h2>
 
 <p>MagickWriteImage() writes an image to the specified filename.  If the filename parameter is NULL, the image is written to the filename set by MagickReadImage() or MagickSetImageFilename().</p>
 
@@ -7965,7 +7965,7 @@ MagickBooleanType MagickWriteImage(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImageFile">MagickWriteImageFile</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImageFile">MagickWriteImageFile</a></h2>
 
 <p>MagickWriteImageFile() writes an image to an open file descriptor.</p>
 
@@ -7991,7 +7991,7 @@ MagickBooleanType MagickWriteImageFile(MagickWand *wand,FILE *file)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImages">MagickWriteImages</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImages">MagickWriteImages</a></h2>
 
 <p>MagickWriteImages() writes an image or image sequence.</p>
 
@@ -8022,7 +8022,7 @@ MagickBooleanType MagickWriteImages(MagickWand *wand,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImagesFile">MagickWriteImagesFile</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickWriteImagesFile">MagickWriteImagesFile</a></h2>
 
 <p>MagickWriteImagesFile() writes an image sequence to an open file descriptor.</p>
 

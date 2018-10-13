@@ -1,6 +1,6 @@
 2014-11-05  6.8.9-8 Cristy  <quetzlzacatenango@image...>
   * Add support $image->Colorspace() (reference
-    https://www.imagemagick.org/discourse-server/viewtopic.php?f=7&t=30980).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=7&t=30980).
 
 2014-03-18  6.8.8-9 Cristy  <quetzlzacatenango@image...>
   * Quantize() arguments global and transparent switched (reference
@@ -25,15 +25,15 @@
 
 2011-01-25  6.6.7-3 Cristy  <quetzlzacatenango@image...>
   * Verify color parameter is a Perl array to avoid seg fault (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=7&t=17928).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=7&t=17928).
 
 2010-11-11  6.6.5-6 Cristy  <quetzlzacatenango@image...>
   * Check that image exists before accessing its member (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=2&t=17502).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=2&t=17502).
 
 2010-11-01  6.6.5-6 Cristy  <quetzlzacatenango@image...>
   * The gravity attribute must set the ImageInfo gravity property (reference
-    http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=17282).
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=17282).
 
 2009-12-08  6.5.8-5 <kmx@volny...>
   * A couple of minor changes to Makefile.PL to support Strawberry Perl.
@@ -81,9 +81,9 @@
 
 2008-04-07  6.4.0-5 Cristy  <quetzlzacatenango@image...>
   * X11 regression test passed if the DISPLAY variable is not defined (reference
-		http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=10979).
+		https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=10979).
   * Make regression test, x11/write.t, exit after 8 seconds as stated (reference
-		http://www.imagemagick.org/discourse-server/viewtopic.php?f=3&t=10979).
+		https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=10979).
 
 2007-11-07  6.3.7-0 Cristy  <quetzlzacatenango@image...>
   * Added gravity attribute to Transform() method.

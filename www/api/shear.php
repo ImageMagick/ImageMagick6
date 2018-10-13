@@ -82,11 +82,11 @@
 <div class="magick-header">
 <p class="text-center"><a href="shear.php#The XShearImage">The XShearImage</a> &bull; <a href="shear.php#DeskewImage">DeskewImage</a> &bull; <a href="shear.php#IntegralRotateImage">IntegralRotateImage</a> &bull; <a href="shear.php#ShearImage">ShearImage</a> &bull; <a href="shear.php#ShearRotateImage">ShearRotateImage</a></p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/shear_8c.html" id="The_XShearImage">The XShearImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/shear_8c.html" id="The_XShearImage">The XShearImage</a></h2>
 
 <p>The XShearImage() and YShearImage() methods are based on the paper "A Fast Algorithm for General Raster Rotation" by Alan W. Paeth, Graphics Interface '86 (Vancouver).  ShearRotateImage() is adapted from a similar method based on the Paeth paper written by Michael Halle of the Spatial Imaging Group, MIT Media Lab.</p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/shear_8c.html" id="DeskewImage">DeskewImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/shear_8c.html" id="DeskewImage">DeskewImage</a></h2>
 
 <p>DeskewImage() removes skew from the image.  Skew is an artifact that occurs in scanned images because of the camera being misaligned, imperfections in the scanning or surface, or simply because the paper was not placed completely flat when scanned.</p>
 
@@ -121,7 +121,7 @@ Image *DeskewImage(const Image *image,const double threshold,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://www.imagemagick.org/api/MagickCore/shear_8c.html" id="IntegralRotateImage">IntegralRotateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/shear_8c.html" id="IntegralRotateImage">IntegralRotateImage</a></h2>
 
 <p>IntegralRotateImage() rotates the image an integral of 90 degrees.  It allocates the memory necessary for the new Image structure and returns a pointer to the rotated image.</p>
 
@@ -140,7 +140,7 @@ Image *IntegralRotateImage(const Image *image,size_t rotations,
 <dt>rotations</dt>
 <p>Specifies the number of 90 degree rotations.</p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/shear_8c.html" id="ShearImage">ShearImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/shear_8c.html" id="ShearImage">ShearImage</a></h2>
 
 <p>ShearImage() creates a new image that is a shear_image copy of an existing one.  Shearing slides one edge of an image along the X or Y axis, creating a parallelogram.  An X direction shear slides an edge along the X axis, while a Y direction shear slides an edge along the Y axis.  The amount of the shear is controlled by a shear angle.  For X direction shears, x_shear is measured relative to the Y axis, and similarly, for Y direction shears y_shear is measured relative to the X axis.  Empty triangles left over from shearing the image are filled with the background color defined by member 'background_color' of the image..  ShearImage() allocates the memory necessary for the new Image structure and returns a pointer to the new image.</p>
 
@@ -164,7 +164,7 @@ Image *ShearImage(const Image *image,const double x_shear,
 <dt>exception</dt>
 <p>return any errors or warnings in this structure.</p>
 
-<h2><a href="http://www.imagemagick.org/api/MagickCore/shear_8c.html" id="ShearRotateImage">ShearRotateImage</a></h2>
+<h2><a href="https://imagemagick.org/api/MagickCore/shear_8c.html" id="ShearRotateImage">ShearRotateImage</a></h2>
 
 <p>ShearRotateImage() creates a new image that is a rotated copy of an existing one.  Positive angles rotate counter-clockwise (right-hand rule), while negative angles rotate clockwise.  Rotated images are usually larger than the originals and have 'empty' triangular corners.  X axis.  Empty triangles left over from shearing the image are filled with the background color defined by member 'background_color' of the image.  ShearRotateImage allocates the memory necessary for the new Image structure and returns a pointer to the new image.</p>
 
