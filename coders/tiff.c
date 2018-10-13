@@ -1582,12 +1582,15 @@ RestoreMSCWarning
             image->matte=MagickTrue;
             if (sample_info[i] == EXTRASAMPLE_ASSOCALPHA)
               {
-                SetQuantumAlphaType(quantum_info,DisassociatedQuantumAlpha);
+                SetQuantumAlphaType(quantum_info,AssociatedQuantumAlpha);
                 (void) SetImageProperty(image,"tiff:alpha","associated");
               }
             else
               if (sample_info[i] == EXTRASAMPLE_UNASSALPHA)
-               (void) SetImageProperty(image,"tiff:alpha","unassociated");
+                {
+                  SetQuantumAlphaType(quantum_info,DisassociatedQuantumAlpha);
+                  (void) SetImageProperty(image,"tiff:alpha","unassociated");
+                }
           }
       }
     if (image->matte != MagickFalse)
