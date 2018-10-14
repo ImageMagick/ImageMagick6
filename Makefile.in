@@ -2695,6 +2695,8 @@ LIBTOOL = @LIBTOOL@
 
 # Automagically reconfigure libtool
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
+LIBZSTD_CFLAGS = @LIBZSTD_CFLAGS@
+LIBZSTD_LIBS = @LIBZSTD_LIBS@
 LIB_BIN_BASEDIRNAME = @LIB_BIN_BASEDIRNAME@
 LIB_BIN_DIR = @LIB_BIN_DIR@
 LIB_BIN_DIR_PATH = @LIB_BIN_DIR_PATH@
@@ -2894,6 +2896,8 @@ X_PRE_LIBS = @X_PRE_LIBS@
 ZIP = @ZIP@
 ZLIB_CFLAGS = @ZLIB_CFLAGS@
 ZLIB_LIBS = @ZLIB_LIBS@
+ZSTD_CFLAGS = @ZSTD_CFLAGS@
+ZSTD_LIBS = @ZSTD_LIBS@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
