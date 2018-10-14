@@ -1397,49 +1397,46 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
       if (fabs(distortion[RedChannel]) < MagickEpsilon)
         distortion[RedChannel]=INFINITY;
       else
-        distortion[RedChannel]=20.0*MagickLog10(1.0/
-          sqrt(distortion[RedChannel]));
+        distortion[RedChannel]=10.0*MagickLog10(1.0)-10.0*
+          MagickLog10(distortion[RedChannel]);
     }
   if ((channel & GreenChannel) != 0)
     {
       if (fabs(distortion[GreenChannel]) < MagickEpsilon)
         distortion[GreenChannel]=INFINITY;
       else
-        distortion[GreenChannel]=20.0*MagickLog10(1.0/
-          sqrt(distortion[GreenChannel]));
+        distortion[GreenChannel]=10.0*MagickLog10(1.0)-10.0*
+          MagickLog10(distortion[GreenChannel]);
     }
   if ((channel & BlueChannel) != 0)
     {
       if (fabs(distortion[BlueChannel]) < MagickEpsilon)
         distortion[BlueChannel]=INFINITY;
       else
-        distortion[BlueChannel]=20.0*MagickLog10(1.0/
-          sqrt(distortion[BlueChannel]));
+        distortion[BlueChannel]=10.0*MagickLog10(1.0)-10.0*
+          MagickLog10(distortion[BlueChannel]);
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
       if (fabs(distortion[OpacityChannel]) < MagickEpsilon)
         distortion[OpacityChannel]=INFINITY;
       else
-        distortion[OpacityChannel]=20.0*MagickLog10(1.0/
-          sqrt(distortion[OpacityChannel]));
+        distortion[OpacityChannel]=10.0*MagickLog10(1.0)-10.0*
+          MagickLog10(distortion[OpacityChannel]);
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
       if (fabs(distortion[BlackChannel]) < MagickEpsilon)
         distortion[BlackChannel]=INFINITY;
       else
-        distortion[BlackChannel]=20.0*MagickLog10(1.0/
-          sqrt(distortion[BlackChannel]));
+        distortion[BlackChannel]=10.0*MagickLog10(1.0)-10.0*
+          MagickLog10(distortion[BlackChannel]);
     }
-  if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
-    {
-      if (fabs(distortion[CompositeChannels]) < MagickEpsilon)
-        distortion[CompositeChannels]=INFINITY;
-      else
-        distortion[CompositeChannels]=20.0*MagickLog10(1.0/
-          sqrt(distortion[CompositeChannels]));
-    }
+  if (fabs(distortion[CompositeChannels]) < MagickEpsilon)
+    distortion[CompositeChannels]=INFINITY;
+  else
+    distortion[CompositeChannels]=10.0*MagickLog10(1.0)-10.0*
+      MagickLog10(distortion[CompositeChannels]);
   return(status);
 }
 
@@ -1628,8 +1625,7 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
     sizeof(*channel_distortion));
   if (channel_distortion == (double *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) memset(channel_distortion,0,length*
-    sizeof(*channel_distortion));
+  (void) memset(channel_distortion,0,length*sizeof(*channel_distortion));
   switch (metric)
   {
     case AbsoluteErrorMetric:
