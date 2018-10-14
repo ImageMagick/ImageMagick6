@@ -46,7 +46,8 @@ typedef enum
   LZMACompression,            /* Lempel-Ziv-Markov chain algorithm */
   JBIG1Compression,           /* ISO/IEC std 11544 / ITU-T rec T.82 */
   JBIG2Compression,           /* ISO/IEC std 14492 / ITU-T rec T.88 */
-  ZstdCompression
+  ZstdCompression,
+  WebPCompression
 } CompressionType;
 
 typedef struct _Ascii85Info

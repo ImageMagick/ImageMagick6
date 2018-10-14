@@ -1455,6 +1455,9 @@ RestoreMSCWarning
       case COMPRESSION_LZW: image->compression=LZWCompression; break;
       case COMPRESSION_DEFLATE: image->compression=ZipCompression; break;
       case COMPRESSION_ADOBE_DEFLATE: image->compression=ZipCompression; break;
+#if defined(COMPRESSION_WEBP)
+      case COMPRESSION_WEBP: image->compression=WebPCompression; break;
+#endif
 #if defined(COMPRESSION_ZSTD)
       case COMPRESSION_ZSTD: image->compression=ZstdCompression; break;
 #endif
@@ -3342,6 +3345,13 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         compress_tag=COMPRESSION_PACKBITS;
         break;
       }
+#if defined(COMPRESSION_WEBP)
+      case WebPCompression:
+      {
+        compress_tag=COMPRESSION_WEBP;
+        break;
+      }
+#endif
       case ZipCompression:
       {
         compress_tag=COMPRESSION_ADOBE_DEFLATE;
@@ -3391,9 +3401,6 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
 #endif
 #if defined(ZIP_SUPPORT)
         case COMPRESSION_ADOBE_DEFLATE:
-#endif
-#if defined(ZSTD_SUPPORT)
-        case COMPRESSION_ZSTD:
 #endif
         case COMPRESSION_NONE:
           break;
@@ -3648,6 +3655,21 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
           predictor=PREDICTOR_HORIZONTAL;
         break;
       }
+#if defined(WEBP_SUPPORT) && defined(COMPRESSION_WEBP)
+      case COMPRESSION_WEBP:
+      {
+        (void) TIFFGetFieldDefaulted(tiff,TIFFTAG_BITSPERSAMPLE,
+          &bits_per_sample);
+        if (((photometric == PHOTOMETRIC_RGB) ||
+             (photometric == PHOTOMETRIC_MINISBLACK)) &&
+            ((bits_per_sample == 8) || (bits_per_sample == 16)))
+          predictor=PREDICTOR_HORIZONTAL;
+        (void) TIFFSetField(tiff,TIFFTAG_WEBP_LEVEL,mage_info->quality);
+        if (image_info->quality >= 100)
+          (void) TIFFSetField(tiff,TIFFTAG_WEBP_LOSSLESS,1);
+        break;
+      }
+#endif
 #if defined(ZSTD_SUPPORT) && defined(COMPRESSION_ZSTD)
       case COMPRESSION_ZSTD:
       {
