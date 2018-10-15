@@ -211,7 +211,7 @@ static void CL_API_CALL RelinquishPixelCachePixelsDelayed(
 
     status=clEnv->library->clGetEventInfo(info->events[i],
       CL_EVENT_COMMAND_EXECUTION_STATUS,sizeof(cl_int),&event_status,NULL);
-    if ((status == CL_SUCCESS) && (event_status != CL_COMPLETE))
+    if ((status == CL_SUCCESS) && (event_status > CL_COMPLETE))
       {
         clEnv->library->clSetEventCallback(info->events[i],CL_COMPLETE,
           &RelinquishPixelCachePixelsDelayed,info);
