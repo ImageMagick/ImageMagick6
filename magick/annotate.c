@@ -1508,6 +1508,9 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   code=0;
   for (i=0; i < (ssize_t) length; i++)
   {
+    FT_Outline
+      outline;
+
     /*
       Render UTF-8 sequence.
     */
@@ -1525,8 +1528,8 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     ft_status=FT_Get_Glyph(face->glyph,&glyph.image);
     if (ft_status != 0)
       continue;
-    ft_status=FT_Outline_Get_BBox(&((FT_OutlineGlyph) glyph.image)->outline,
-      &bounds);
+    outline=((FT_OutlineGlyph) glyph.image)->outline;
+    ft_status=FT_Outline_Get_BBox(&outline,&bounds);
     if (ft_status != 0)
       continue;
     if ((p == draw_info->text) || (bounds.xMin < metrics->bounds.x1))
@@ -1550,8 +1553,9 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         */
         annotate_info->affine.tx=glyph.origin.x/64.0;
         annotate_info->affine.ty=(-glyph.origin.y/64.0);
-        (void) FT_Outline_Decompose(&((FT_OutlineGlyph) glyph.image)->outline,
-          &OutlineMethods,annotate_info);
+        if ((outline.n_contours > 0) && (outline.n_points > 0))
+          ft_status=FT_Outline_Decompose(&outline,&OutlineMethods,
+            annotate_info);
       }
     FT_Vector_Transform(&glyph.origin,&affine);
     (void) FT_Glyph_Transform(glyph.image,&affine,&glyph.origin);
@@ -1658,7 +1662,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
                 double
                   Sa,
                   Da;
-                
+
                 Da=1.0-(QuantumScale*(QuantumRange-q->opacity));
                 Sa=fill_opacity;
                 fill_opacity=(1.0-RoundToUnity(Sa+Da-Sa*Da))*QuantumRange;
