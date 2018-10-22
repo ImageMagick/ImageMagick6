@@ -75,6 +75,7 @@
 #include "magick/string-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
+#include "magick/version.h"
 #if defined(MAGICKCORE_XML_DELEGATE)
 #  if defined(MAGICKCORE_WINDOWS_SUPPORT)
 #    if !defined(__MINGW32__)
