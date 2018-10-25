@@ -1103,19 +1103,28 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
               *comments;
 
             size_t
-              length;
+              extent,
+              offset;
 
-            /*
-              Read comment extension.
-            */
             comments=AcquireString((char *) NULL);
-            for (length=0; ; length+=count)
+            extent=MagickPathExtent;
+            for (offset=0; ; offset+=count)
             {
               count=ReadBlobBlock(image,buffer);
               if (count == 0)
                 break;
               buffer[count]='\0';
-              (void) ConcatenateString(&comments,(const char *) buffer);
+              if ((count+offset+MagickPathExtent) >= (ssize_t) extent)
+                {
+                  extent<<=1;
+                  comments=(char *) ResizeQuantumMemory(comments,extent+
+                    MagickPathExtent,sizeof(*comments));
+                  if (comments == (char *) NULL)
+                    ThrowGIFException(ResourceLimitError,
+                      "MemoryAllocationFailed");
+                }
+              (void) CopyMagickMemory(&comments[offset],(char *) buffer,extent-
+                offset);
             }
             (void) SetImageProperty(meta_image,"comment",comments);
             comments=DestroyString(comments);
@@ -1736,8 +1745,7 @@ static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
           0));
         (void) WriteBlobByte(image,(unsigned char) 0x00);
         value=GetImageProperty(image,"comment");
-        if ((LocaleCompare(write_info->magick,"GIF87") != 0) &&
-            (value != (const char *) NULL))
+        if (value != (const char *) NULL)
           {
             register const char
               *p;
