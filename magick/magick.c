@@ -1338,6 +1338,7 @@ MagickExport void MagickCoreGenesis(const char *path,
   (void) XComponentGenesis();
 #endif
   (void) RegistryComponentGenesis();
+  (void) MonitorComponentGenesis();
   instantiate_magickcore=MagickTrue;
   UnlockMagickMutex();
 }
@@ -1369,6 +1370,7 @@ MagickExport void MagickCoreTerminus(void)
       UnlockMagickMutex();
       return;
     }
+  MonitorComponentTerminus();
   RegistryComponentTerminus();
 #if defined(MAGICKCORE_X11_DELEGATE)
   XComponentTerminus();

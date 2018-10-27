@@ -522,9 +522,6 @@ MagickExport MagickBooleanType SeparateImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_SeparateImageChannel)
-#endif
         proceed=SetImageProgress(image,SeparateImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;

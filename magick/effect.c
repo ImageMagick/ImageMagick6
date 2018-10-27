@@ -395,9 +395,6 @@ MagickExport Image *AdaptiveBlurImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_AdaptiveBlurImageChannel)
-#endif
         proceed=SetImageProgress(image,AdaptiveBlurImageTag,progress++,
           image->rows);
         if (proceed == MagickFalse)
@@ -717,9 +714,6 @@ MagickExport Image *AdaptiveSharpenImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_AdaptiveSharpenImageChannel)
-#endif
         proceed=SetImageProgress(image,AdaptiveSharpenImageTag,progress++,
           image->rows);
         if (proceed == MagickFalse)
@@ -1787,9 +1781,6 @@ MagickExport Image *FilterImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_FilterImageChannel)
-#endif
         proceed=SetImageProgress(image,FilterImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2191,9 +2182,6 @@ MagickExport Image *MotionBlurImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_MotionBlurImageChannel)
-#endif
         proceed=SetImageProgress(image,BlurImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2450,9 +2438,6 @@ MagickExport Image *KuwaharaImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_KuwaharaImage)
-#endif
         proceed=SetImageProgress(image,KuwaharaImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -3557,9 +3542,6 @@ MagickExport Image *RotationalBlurImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_RotationalBlurImageChannel)
-#endif
         proceed=SetImageProgress(image,BlurImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -3992,9 +3974,6 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_SelectiveBlurImageChannel)
-#endif
         proceed=SetImageProgress(image,SelectiveBlurImageTag,progress++,
           image->rows);
         if (proceed == MagickFalse)
@@ -4209,9 +4188,6 @@ MagickExport Image *ShadeImage(const Image *image,const MagickBooleanType gray,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_ShadeImage)
-#endif
         proceed=SetImageProgress(image,ShadeImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -4498,9 +4474,6 @@ MagickExport Image *SpreadImage(const Image *image,const double radius,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_SpreadImage)
-#endif
         proceed=SetImageProgress(image,SpreadImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -4726,9 +4699,6 @@ MagickExport Image *UnsharpMaskImageChannel(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_UnsharpMaskImageChannel)
-#endif
         proceed=SetImageProgress(image,SharpenImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;

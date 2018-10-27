@@ -1767,9 +1767,6 @@ MagickExport Image *InterpolativeResizeImage(const Image *image,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_InterpolativeResizeImage)
-#endif
         proceed=SetImageProgress(image,InterpolativeResizeImageTag,progress++,
           image->rows);
         if (proceed == MagickFalse)
@@ -2195,9 +2192,6 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_MagnifyImage)
-#endif
         proceed=SetImageProgress(image,MagnifyImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2647,9 +2641,6 @@ static MagickBooleanType HorizontalFilter(const ResizeFilter *resize_filter,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_HorizontalFilter)
-#endif
         proceed=SetImageProgress(image,ResizeImageTag,(*offset)++,span);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2893,9 +2884,6 @@ static MagickBooleanType VerticalFilter(const ResizeFilter *resize_filter,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_VerticalFilter)
-#endif
         proceed=SetImageProgress(image,ResizeImageTag,(*offset)++,span);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -3199,9 +3187,6 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp critical (MagickCore_SampleImage)
-#endif
         proceed=SetImageProgress(image,SampleImageTag,progress++,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;

@@ -2754,9 +2754,6 @@ if ( d.x == 0.5 && d.y == 0.5 ) {
           MagickBooleanType
             proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-          #pragma omp critical (MagickCore_DistortImage)
-#endif
           proceed=SetImageProgress(image,DistortImageTag,progress++,
             image->rows);
           if (proceed == MagickFalse)
@@ -3245,9 +3242,6 @@ MagickExport Image *SparseColorImage(const Image *image,
           MagickBooleanType
             proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-          #pragma omp critical (MagickCore_SparseColorImage)
-#endif
           proceed=SetImageProgress(image,SparseColorTag,progress++,image->rows);
           if (proceed == MagickFalse)
             status=MagickFalse;

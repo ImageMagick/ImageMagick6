@@ -1105,9 +1105,6 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
             MagickBooleanType
               proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-            #pragma omp critical (MagickCore_RGBTransformImage)
-#endif
             proceed=SetImageProgress(image,RGBTransformImageTag,progress++,
               image->rows);
             if (proceed == MagickFalse)
@@ -2662,9 +2659,6 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
             MagickBooleanType
               proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-            #pragma omp critical (MagickCore_TransformRGBImage)
-#endif
             proceed=SetImageProgress(image,TransformRGBImageTag,progress++,
               image->rows);
             if (proceed == MagickFalse)
