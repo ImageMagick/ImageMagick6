@@ -2022,9 +2022,10 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
       }
       case PerspectiveDistortion:
       {
-        double *inverse;
+        double
+          *inverse;
 
-        inverse = (double *) AcquireQuantumMemory(8,sizeof(*inverse));
+        inverse=(double *) AcquireQuantumMemory(8,sizeof(*inverse));
         if (inverse == (double *) NULL)
           {
             coeff=(double *) RelinquishMagickMemory(coeff);
@@ -2051,18 +2052,22 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         (void) FormatLocaleFile(stderr,"%.1024s",image_gen);
         (void) FormatLocaleFile(stderr,
           "  -fx 'ii=i+page.x+0.5; jj=j+page.y+0.5;\n");
-        (void) FormatLocaleFile(stderr,"       rr=%+lf*ii %+lf*jj + 1;\n",
-          coeff[6],coeff[7]);
-        (void) FormatLocaleFile(stderr,"       xx=(%+lf*ii %+lf*jj %+lf)/rr;\n",
-          coeff[0],coeff[1], coeff[2]);
-        (void) FormatLocaleFile(stderr,"       yy=(%+lf*ii %+lf*jj %+lf)/rr;\n",
-          coeff[3],coeff[4], coeff[5]);
+        (void) FormatLocaleFile(stderr,"       rr=%+.*g*ii %+.*g*jj + 1;\n",
+          GetMagickPrecision(),coeff[6],GetMagickPrecision(),coeff[7]);
+        (void) FormatLocaleFile(stderr,
+          "       xx=(%+.*g*ii %+.*g*jj %+.*g)/rr;\n",
+          GetMagickPrecision(),coeff[0],GetMagickPrecision(),coeff[1],
+          GetMagickPrecision(),coeff[2]);
+        (void) FormatLocaleFile(stderr,
+          "       yy=(%+.*g*ii %+.*g*jj %+.*g)/rr;\n",
+          GetMagickPrecision(),coeff[3],GetMagickPrecision(),coeff[4],
+          GetMagickPrecision(),coeff[5]);
         (void) FormatLocaleFile(stderr,"       rr%s0 ? %s : blue' \\\n",
-          coeff[8] < 0 ? "<" : ">", lookup);
+          coeff[8] < 0.0 ? "<" : ">", lookup);
         break;
       }
-
       case BilinearForwardDistortion:
+      {
         (void) FormatLocaleFile(stderr,"BilinearForward Mapping Equations:\n");
         (void) FormatLocaleFile(stderr,"%s", image_gen);
         (void) FormatLocaleFile(stderr,"    i = %+lf*x %+lf*y %+lf*x*y %+lf;\n",
@@ -2103,8 +2108,9 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         else
           (void) FormatLocaleFile(stderr,"       %s' \\\n", lookup);
         break;
-
+      }
       case BilinearReverseDistortion:
+      {
 #if 0
         (void) FormatLocaleFile(stderr, "Polynomial Projection Distort:\n");
         (void) FormatLocaleFile(stderr, "  -distort PolynomialProjection \\\n");
@@ -2126,7 +2132,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
            coeff[6], coeff[7]);
         (void) FormatLocaleFile(stderr,"       %s' \\\n", lookup);
         break;
-
+      }
       case PolynomialDistortion:
       {
         size_t nterms = (size_t) coeff[1];
@@ -2252,11 +2258,15 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
       }
       case BarrelDistortion:
       case BarrelInverseDistortion:
-      { double xc,yc;
+      {
+        double
+          xc,
+          yc;
+
         /*
           NOTE: This does the barrel roll in pixel coords not image coords
-          The internal distortion must do it in image coordinates,
-          so that is what the center coeff (8,9) is given in.
+          The internal distortion must do it in image coordinates, so that is
+          what the center coeff (8,9) is given in.
         */
         xc=((double)image->columns-1.0)/2.0+image->page.x;
         yc=((double)image->rows-1.0)/2.0+image->page.y;
@@ -2284,11 +2294,10 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         break;
     }
   }
-
-  /* The user provided a 'scale' expert option will scale the
-     output image size, by the factor given allowing for super-sampling
-     of the distorted image space.  Any scaling factors must naturally
-     be halved as a result.
+  /*
+    The user provided a 'scale' expert option will scale the output image size,
+    by the factor given allowing for super-sampling of the distorted image
+    space.  Any scaling factors must naturally be halved as a result.
   */
   { const char *artifact;
     artifact=GetImageArtifact(image,"distort:scale");
