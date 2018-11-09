@@ -2332,7 +2332,14 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   if (profile != (StringInfo *) NULL)
     {
-      (void) SetImageProfile(image,GetStringInfoName(profile),profile);
+      printf("Profile: %s %lu\n",GetStringInfoName(profile),GetStringInfoLength(profile));
+//      (void) SetImageProfile(image,GetStringInfoName(profile),profile);
+      // duplicate the profile to all layers
+      Image *onelayer = image;
+      while (onelayer && onelayer->next != image) {
+        (void) SetImageProfile(onelayer,GetStringInfoName(profile),profile);
+        onelayer = onelayer->next;
+      }
       profile=DestroyStringInfo(profile);
     }
   (void) CloseBlob(image);
