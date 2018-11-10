@@ -132,7 +132,7 @@ MagickPrivate void MonitorComponentTerminus(void)
 %    o extent: the extent of the progress.
 %
 */
-MagickExport inline MagickBooleanType SetImageProgress(const Image *image,
+MagickExport MagickBooleanType SetImageProgress(const Image *image,
   const char *tag,const MagickOffsetType offset,const MagickSizeType extent)
 {
   char
