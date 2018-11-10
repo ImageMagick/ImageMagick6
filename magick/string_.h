@@ -71,8 +71,8 @@ extern MagickExport int
 
 extern MagickExport MagickBooleanType
   ConcatenateString(char **,const char *),
-  IsStringTrue(const char *),
-  IsStringNotFalse(const char *),
+  IsStringTrue(const char *) magick_attribute((__pure__)),
+  IsStringNotFalse(const char *) magick_attribute((__pure__)),
   SubstituteString(char **,const char *,const char *);
 
 extern MagickExport size_t

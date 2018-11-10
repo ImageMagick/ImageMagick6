@@ -4567,7 +4567,7 @@ MAGICK_PATCHLEVEL_VERSION=15
 
 MAGICK_VERSION=6.9.10-15
 
-MAGICK_GIT_REVISION=13955:5d7c61e33:20181031
+MAGICK_GIT_REVISION=13959:65d398a26:20181110
 
 
 # Substitute library versioning
@@ -10443,7 +10443,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
         DEF_THREAD="$PTHREAD_CFLAGS"
         CFLAGS="$CFLAGS $DEF_THREAD"
         CXXFLAGS="$CXXFLAGS $DEF_THREAD"
-	THREAD_LIBS="$PTHREAD_LIBS"
+        THREAD_LIBS="$PTHREAD_LIBS"
         if test "$CC" != "$PTHREAD_CC"; then
             { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Replacing compiler $CC with compiler $PTHREAD_CC to support pthreads." >&5
 $as_echo "$as_me: WARNING: Replacing compiler $CC with compiler $PTHREAD_CC to support pthreads." >&2;}

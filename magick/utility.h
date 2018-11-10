@@ -49,7 +49,7 @@ extern MagickExport MagickBooleanType
   IsPathAccessible(const char *);
 
 extern MagickExport size_t
-  MultilineCensus(const char *);
+  MultilineCensus(const char *) magick_attribute((__pure__));
 
 extern MagickExport ssize_t
   GetMagickPageSize(void);
