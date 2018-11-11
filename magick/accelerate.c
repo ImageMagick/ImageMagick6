@@ -2063,6 +2063,7 @@ static Image *ComputeDespeckleImage(const Image *image,
   clEnv = GetDefaultOpenCLEnv();
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
+  events = NULL;
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
   if (filteredImage == (Image *) NULL)
