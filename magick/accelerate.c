@@ -314,6 +314,10 @@ static Image *ComputeAddNoiseImage(const Image *image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -321,10 +325,6 @@ static Image *ComputeAddNoiseImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -550,6 +550,10 @@ static Image *ComputeBlurImage(const Image* image,const ChannelType channel,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -557,10 +561,6 @@ static Image *ComputeBlurImage(const Image* image,const ChannelType channel,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -1041,7 +1041,6 @@ static MagickBooleanType ComputeContrastImage(Image *image,
   clEnv = GetDefaultOpenCLEnv();
   context = GetOpenCLContext(clEnv);
 
-  /* Create and initialize OpenCL buffers. */
   imageBuffer=GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -1771,6 +1770,10 @@ static Image *ComputeConvolveImage(const Image* image,
 
   context = GetOpenCLContext(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -1778,10 +1781,6 @@ static Image *ComputeConvolveImage(const Image* image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer=GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -2065,6 +2064,10 @@ static Image *ComputeDespeckleImage(const Image *image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image, exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -2072,10 +2075,6 @@ static Image *ComputeDespeckleImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage, exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -3029,6 +3028,10 @@ static Image *ComputeLocalContrastImage(const Image *image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -3036,19 +3039,12 @@ static Image *ComputeLocalContrastImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  /* create output */
+  filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
+  if (filteredImageBuffer == (cl_mem) NULL)
   {
-    filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-    if (filteredImage == (Image *) NULL)
-      goto cleanup;
-    filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
-    if (filteredImageBuffer == (cl_mem) NULL)
-    {
-      (void) OpenCLThrowMagickException(exception,GetMagickModule(),
-      ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
-      goto cleanup;
-    }
+    (void) OpenCLThrowMagickException(exception,GetMagickModule(),
+    ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
+    goto cleanup;
   }
 
   {
@@ -3471,6 +3467,10 @@ static Image* ComputeMotionBlurImage(const Image *image,
   clEnv = GetDefaultOpenCLEnv();
   context = GetOpenCLContext(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image, exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -3478,10 +3478,6 @@ static Image* ComputeMotionBlurImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage, exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -3760,6 +3756,10 @@ static Image *ComputeRadialBlurImage(const Image *image,
   clEnv = GetDefaultOpenCLEnv();
   context = GetOpenCLContext(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image, exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -3767,10 +3767,6 @@ static Image *ComputeRadialBlurImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage, exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -4423,6 +4419,10 @@ static Image *ComputeResizeImage(const Image* image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage=CloneImage(image,resizedColumns,resizedRows,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer=GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -4430,10 +4430,6 @@ static Image *ComputeResizeImage(const Image* image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage=CloneImage(image,resizedColumns,resizedRows,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer=GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -4654,6 +4650,10 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer=GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -4661,10 +4661,6 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer=GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -4920,7 +4916,9 @@ static Image *ComputeUnsharpMaskImageSingle(const Image *image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
-  /* Create and initialize OpenCL buffers. */
+  filteredImage = CloneImage(image,0,0,MagickTrue,exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
 
   imageBuffer = GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
@@ -4929,19 +4927,12 @@ static Image *ComputeUnsharpMaskImageSingle(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  /* create output */
+  filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
+  if (filteredImageBuffer == (cl_mem) NULL)
   {
-    filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-    if (filteredImage == (Image *) NULL)
-      goto cleanup;
-    filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
-    if (filteredImageBuffer == (cl_mem) NULL)
-    {
-      (void) OpenCLThrowMagickException(exception,GetMagickModule(),
-        ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
-      goto cleanup;
-    }
+    (void) OpenCLThrowMagickException(exception,GetMagickModule(),
+      ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
+    goto cleanup;
   }
 
   /* create the blur kernel */
@@ -5132,6 +5123,10 @@ static Image *ComputeWaveletDenoiseImage(const Image *image,
   context = GetOpenCLContext(clEnv);
   queue = AcquireOpenCLCommandQueue(clEnv);
 
+  filteredImage = CloneImage(image,0,0,MagickTrue, exception);
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
+
   imageBuffer = GetAuthenticOpenCLBuffer(image,exception);
   if (imageBuffer == (cl_mem) NULL)
   {
@@ -5139,11 +5134,6 @@ static Image *ComputeWaveletDenoiseImage(const Image *image,
       ResourceLimitWarning,"GetAuthenticOpenCLBuffer failed.",".");
     goto cleanup;
   }
-
-  /* create output */
-  filteredImage = CloneImage(image,0,0,MagickTrue, exception);
-  if (filteredImage == (Image *) NULL)
-    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
