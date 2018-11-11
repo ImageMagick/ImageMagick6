@@ -122,6 +122,10 @@ static Image *ComputeUnsharpMaskImageSingle(const Image *image,
 static MagickBooleanType checkAccelerateCondition(const Image* image,
   const ChannelType channel)
 {
+  /* only direct class images are supported */
+  if (image->storage_class != DirectClass)
+    return(MagickFalse);
+
   /* check if the image's colorspace is supported */
   if (image->colorspace != RGBColorspace &&
       image->colorspace != sRGBColorspace &&
@@ -319,12 +323,8 @@ static Image *ComputeAddNoiseImage(const Image *image,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -559,12 +559,8 @@ static Image *ComputeBlurImage(const Image* image,const ChannelType channel,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage, DirectClass) != MagickTrue)
-  {
-	  (void)OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
-	  goto cleanup;
-  }
+  if (filteredImage == (Image *) NULL)
+    goto cleanup;
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -1784,12 +1780,8 @@ static Image *ComputeConvolveImage(const Image* image,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
   filteredImageBuffer=GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -2082,12 +2074,8 @@ static Image *ComputeDespeckleImage(const Image *image,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage, exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -3052,13 +3040,8 @@ static Image *ComputeLocalContrastImage(const Image *image,
   /* create output */
   {
     filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-    assert(filteredImage != NULL);
-    if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-    {
-      (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+    if (filteredImage == (Image *) NULL)
       goto cleanup;
-    }
-
     filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
     if (filteredImageBuffer == (cl_mem) NULL)
     {
@@ -3497,13 +3480,8 @@ static Image* ComputeMotionBlurImage(const Image *image,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) ThrowMagickException(exception, GetMagickModule(), 
-      ResourceLimitError, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage, exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -3791,12 +3769,8 @@ static Image *ComputeRadialBlurImage(const Image *image,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage, exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -4458,13 +4432,8 @@ static Image *ComputeResizeImage(const Image* image,
   }
 
   filteredImage=CloneImage(image,resizedColumns,resizedRows,MagickTrue,exception);
-  if (filteredImage == NULL)
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
-    goto cleanup;
-  }
   filteredImageBuffer=GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -4694,12 +4663,8 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
   }
 
   filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
   filteredImageBuffer=GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
@@ -4968,13 +4933,8 @@ static Image *ComputeUnsharpMaskImageSingle(const Image *image,
   /* create output */
   {
     filteredImage = CloneImage(image,0,0,MagickTrue,exception);
-    assert(filteredImage != NULL);
-    if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-    {
-      (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+    if (filteredImage == (Image *) NULL)
       goto cleanup;
-    }
-
     filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
     if (filteredImageBuffer == (cl_mem) NULL)
     {
@@ -5182,13 +5142,8 @@ static Image *ComputeWaveletDenoiseImage(const Image *image,
 
   /* create output */
   filteredImage = CloneImage(image,0,0,MagickTrue, exception);
-  assert(filteredImage != NULL);
-  if (SetImageStorageClass(filteredImage,DirectClass) != MagickTrue)
-  {
-    (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "CloneImage failed.", "'%s'", ".");
+  if (filteredImage == (Image *) NULL)
     goto cleanup;
-  }
-
   filteredImageBuffer = GetAuthenticOpenCLBuffer(filteredImage,exception);
   if (filteredImageBuffer == (cl_mem) NULL)
   {
