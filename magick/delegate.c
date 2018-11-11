@@ -800,6 +800,15 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
         image->page.width,(double) image->page.height);
       break;
     }
+    case '~':
+    {
+      /*
+        BPG Image compression quality.
+      */
+      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+        (100-(image->quality == 0 ? 92 : image->quality))/2);
+      break;
+    }
     case 'Q':
     {
       /*
