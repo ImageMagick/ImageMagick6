@@ -110,10 +110,10 @@ extern MagickExport const char
   *GetMagickMimeType(const MagickInfo *);
 
 extern MagickExport DecodeImageHandler
-  *GetImageDecoder(const MagickInfo *);
+  *GetImageDecoder(const MagickInfo *) magick_attribute((__pure__));
 
 extern MagickExport EncodeImageHandler
-  *GetImageEncoder(const MagickInfo *);
+  *GetImageEncoder(const MagickInfo *) magick_attribute((__pure__));
 
 extern MagickExport int
   GetMagickPrecision(void),
@@ -121,12 +121,12 @@ extern MagickExport int
 
 extern MagickExport MagickBooleanType
   GetImageMagick(const unsigned char *,const size_t,char *),
-  GetMagickAdjoin(const MagickInfo *),
-  GetMagickBlobSupport(const MagickInfo *),
-  GetMagickEndianSupport(const MagickInfo *),
-  GetMagickRawSupport(const MagickInfo *),
-  GetMagickSeekableStream(const MagickInfo *),
-  IsMagickCoreInstantiated(void),
+  GetMagickAdjoin(const MagickInfo *) magick_attribute((__pure__)),
+  GetMagickBlobSupport(const MagickInfo *) magick_attribute((__pure__)),
+  GetMagickEndianSupport(const MagickInfo *) magick_attribute((__pure__)),
+  GetMagickRawSupport(const MagickInfo *) magick_attribute((__pure__)),
+  GetMagickSeekableStream(const MagickInfo *) magick_attribute((__pure__)),
+  IsMagickCoreInstantiated(void) magick_attribute((__pure__)),
   MagickComponentGenesis(void),
   UnregisterMagickInfo(const char *);
 

@@ -63,7 +63,7 @@
   Forward declarations.
 */
 static MagickBooleanType
-  WriteNULLImage(const ImageInfo *,Image *);
+  WriteNULLImage(const ImageInfo *,Image *) magick_attribute((__pure__));
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
