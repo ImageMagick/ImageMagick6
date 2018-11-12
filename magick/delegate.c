@@ -806,7 +806,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
         BPG Image compression quality.
       */
       (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-        (100-(image->quality == 0 ? 92 : image->quality))/2);
+        (100-(image->quality == 0 ? 42 : image->quality))/2);
       break;
     }
     case 'Q':
