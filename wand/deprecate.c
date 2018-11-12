@@ -489,11 +489,13 @@ WandExport MagickBooleanType DuplexTransferPixelViewIterator(
         MagickBooleanType
           proceed;
 
+
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp critical (MagickWand_DuplexTransferPixelViewIterator)
+        #pragma omp atomic
 #endif
+        progress++;
         proceed=SetImageProgress(source_image,DuplexTransferPixelViewTag,
-          progress++,source->region.height);
+          progress,source->region.height);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -696,9 +698,10 @@ WandExport MagickBooleanType GetPixelViewIterator(PixelView *source,
           proceed;
 
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp critical (MagickWand_GetPixelViewIterator)
+        #pragma omp atomic
 #endif
-        proceed=SetImageProgress(source_image,GetPixelViewTag,progress++,
+        progress++;
+        proceed=SetImageProgress(source_image,GetPixelViewTag,progress,
           source->region.height);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2838,9 +2841,10 @@ WandExport MagickBooleanType SetPixelViewIterator(PixelView *destination,
           proceed;
 
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp critical (MagickWand_SetPixelViewIterator)
+        #pragma omp atomic
 #endif
-        proceed=SetImageProgress(destination_image,SetPixelViewTag,progress++,
+        progress++;
+        proceed=SetImageProgress(destination_image,SetPixelViewTag,progress,
           destination->region.height);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -3009,9 +3013,10 @@ WandExport MagickBooleanType TransferPixelViewIterator(PixelView *source,
           proceed;
 
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp critical (MagickWand_TransferPixelViewIterator)
+        #pragma omp atomic
 #endif
-        proceed=SetImageProgress(source_image,TransferPixelViewTag,progress++,
+        progress++;
+        proceed=SetImageProgress(source_image,TransferPixelViewTag,progress,
           source->region.height);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -3142,9 +3147,10 @@ WandExport MagickBooleanType UpdatePixelViewIterator(PixelView *source,
           proceed;
 
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp critical (MagickWand_UpdatePixelViewIterator)
+        #pragma omp atomic
 #endif
-        proceed=SetImageProgress(source_image,UpdatePixelViewTag,progress++,
+        progress++;
+        proceed=SetImageProgress(source_image,UpdatePixelViewTag,progress,
           source->region.height);
         if (proceed == MagickFalse)
           status=MagickFalse;

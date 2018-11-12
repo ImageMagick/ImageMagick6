@@ -522,8 +522,11 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,CannyEdgeImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,CannyEdgeImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -1963,8 +1966,11 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,HoughLineImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,HoughLineImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2341,8 +2347,11 @@ MagickExport Image *MeanShiftImage(const Image *image,const size_t width,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,MeanShiftImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,MeanShiftImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }

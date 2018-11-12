@@ -676,8 +676,12 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
         MagickBooleanType
           proceed;
 
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
         proceed=SetImageProgress(image,ColorDecisionListCorrectImageTag,
-          progress++,image->rows);
+          progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -866,7 +870,11 @@ MagickExport MagickBooleanType ClutImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ClutImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ClutImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -1027,7 +1035,11 @@ MagickExport MagickBooleanType ContrastImage(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ContrastImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ContrastImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -1525,7 +1537,11 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ContrastStretchImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ContrastStretchImageTag,progress,
           image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -1719,7 +1735,11 @@ MagickExport Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,EnhanceImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,EnhanceImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2046,7 +2066,11 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,EqualizeImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,EqualizeImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2337,7 +2361,11 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,GammaCorrectImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,GammaCorrectImageTag,progress,
           image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2545,8 +2573,11 @@ MagickExport MagickBooleanType GrayscaleImage(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,GrayscaleImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,GrayscaleImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2764,7 +2795,11 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,HaldClutImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,HaldClutImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -3026,7 +3061,11 @@ MagickExport MagickBooleanType LevelImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,LevelImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,LevelImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -3193,7 +3232,11 @@ MagickExport MagickBooleanType LevelizeImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,LevelizeImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,LevelizeImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -3876,7 +3919,11 @@ MagickExport MagickBooleanType ModulateImage(Image *image,const char *modulate)
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ModulateImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ModulateImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -4038,8 +4085,11 @@ MagickExport MagickBooleanType NegateImageChannel(Image *image,
             MagickBooleanType
               proceed;
 
-            proceed=SetImageProgress(image,NegateImageTag,progress++,
-              image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+            #pragma omp atomic
+#endif
+            progress++;
+            proceed=SetImageProgress(image,NegateImageTag,progress,image->rows);
             if (proceed == MagickFalse)
               status=MagickFalse;
           }
@@ -4104,7 +4154,11 @@ MagickExport MagickBooleanType NegateImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,NegateImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,NegateImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -4445,7 +4499,11 @@ MagickExport MagickBooleanType SigmoidalContrastImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,SigmoidalContrastImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,SigmoidalContrastImageTag,progress,
           image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;

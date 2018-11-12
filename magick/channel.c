@@ -272,7 +272,11 @@ MagickExport Image *CombineImages(const Image *image,const ChannelType channel,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,CombineImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,CombineImageTag,progress,
           combine_image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -522,7 +526,11 @@ MagickExport MagickBooleanType SeparateImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,SeparateImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,SeparateImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }

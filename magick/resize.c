@@ -1767,7 +1767,11 @@ MagickExport Image *InterpolativeResizeImage(const Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,InterpolativeResizeImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,InterpolativeResizeImageTag,progress,
           image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2192,7 +2196,11 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,MagnifyImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,MagnifyImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -3187,7 +3195,11 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,SampleImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,SampleImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }

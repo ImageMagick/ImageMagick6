@@ -620,7 +620,11 @@ MagickExport Image *EvaluateImages(const Image *images,
             MagickBooleanType
               proceed;
 
-            proceed=SetImageProgress(images,EvaluateImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+            #pragma omp atomic
+#endif
+            progress++;
+            proceed=SetImageProgress(images,EvaluateImageTag,progress,
               image->rows);
             if (proceed == MagickFalse)
               status=MagickFalse;

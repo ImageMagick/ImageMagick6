@@ -1105,7 +1105,11 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
             MagickBooleanType
               proceed;
 
-            proceed=SetImageProgress(image,RGBTransformImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+            #pragma omp atomic
+#endif
+            progress++;
+            proceed=SetImageProgress(image,RGBTransformImageTag,progress,
               image->rows);
             if (proceed == MagickFalse)
               status=MagickFalse;
@@ -2659,7 +2663,11 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
             MagickBooleanType
               proceed;
 
-            proceed=SetImageProgress(image,TransformRGBImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+            #pragma omp atomic
+#endif
+            progress++;
+            proceed=SetImageProgress(image,TransformRGBImageTag,progress,
               image->rows);
             if (proceed == MagickFalse)
               status=MagickFalse;

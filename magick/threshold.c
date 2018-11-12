@@ -347,8 +347,11 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ThresholdImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ThresholdImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -918,8 +921,11 @@ MagickExport MagickBooleanType BilevelImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ThresholdImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ThresholdImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -1089,8 +1095,11 @@ MagickExport MagickBooleanType BlackThresholdImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ThresholdImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ThresholdImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -1234,7 +1243,11 @@ MagickExport MagickBooleanType ClampImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ClampImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ClampImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2038,7 +2051,11 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
           MagickBooleanType
             proceed;
 
-          proceed=SetImageProgress(image,DitherImageTag,progress++,image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+          #pragma omp atomic
+#endif
+          progress++;
+          proceed=SetImageProgress(image,DitherImageTag,progress,image->rows);
           if (proceed == MagickFalse)
             status=MagickFalse;
         }
@@ -2199,7 +2216,11 @@ MagickExport MagickBooleanType PerceptibleImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,PerceptibleImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,PerceptibleImageTag,progress,
           image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
@@ -2399,7 +2420,11 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
             MagickBooleanType
               proceed;
 
-            proceed=SetImageProgress(image,ThresholdImageTag,progress++,
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+            #pragma omp atomic
+#endif
+            progress++;
+            proceed=SetImageProgress(image,ThresholdImageTag,progress,
               image->rows);
             if (proceed == MagickFalse)
               status=MagickFalse;
@@ -2527,8 +2552,11 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ThresholdImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ThresholdImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2699,8 +2727,11 @@ MagickExport MagickBooleanType WhiteThresholdImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ThresholdImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,ThresholdImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }

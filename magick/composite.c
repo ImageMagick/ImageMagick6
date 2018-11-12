@@ -2862,8 +2862,11 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,CompositeImageTag,progress++,
-          image->rows);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        progress++;
+        proceed=SetImageProgress(image,CompositeImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
