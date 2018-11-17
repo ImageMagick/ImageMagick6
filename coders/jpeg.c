@@ -1235,7 +1235,6 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   if (option != (const char *) NULL)
     jpeg_info.do_block_smoothing=IsStringTrue(option) != MagickFalse ? TRUE :
       FALSE;
-  jpeg_info.dct_method=JDCT_FLOAT;
   option=GetImageOption(image_info,"jpeg:dct-method");
   if (option != (const char *) NULL)
     switch (*option)
