@@ -2416,9 +2416,11 @@ static ContributionInfo **AcquireContributionThreadSet(const size_t count)
   return(contribution);
 }
 
-static MagickBooleanType HorizontalFilter(const ResizeFilter *resize_filter,
-  const Image *image,Image *resize_image,const MagickRealType x_factor,
-  const MagickSizeType span,MagickOffsetType *offset,ExceptionInfo *exception)
+static MagickBooleanType HorizontalFilter(
+  const ResizeFilter *magick_restrict resize_filter,
+  const Image *magick_restrict image,Image *magick_restrict resize_image,
+  const MagickRealType x_factor,const MagickSizeType span,
+  MagickOffsetType *magick_restrict offset,ExceptionInfo *exception)
 {
 #define ResizeImageTag  "Resize/Image"
 
@@ -2478,7 +2480,7 @@ static MagickBooleanType HorizontalFilter(const ResizeFilter *resize_filter,
   image_view=AcquireVirtualCacheView(image,exception);
   resize_view=AcquireAuthenticCacheView(resize_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status,offset) \
     magick_number_threads(image,resize_image,resize_image->columns,1)
 #endif
   for (x=0; x < (ssize_t) resize_image->columns; x++)
@@ -2649,7 +2651,11 @@ static MagickBooleanType HorizontalFilter(const ResizeFilter *resize_filter,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ResizeImageTag,(*offset)++,span);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        (*offset)++;
+        proceed=SetImageProgress(image,ResizeImageTag,*offset,span);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
@@ -2660,9 +2666,11 @@ static MagickBooleanType HorizontalFilter(const ResizeFilter *resize_filter,
   return(status);
 }
 
-static MagickBooleanType VerticalFilter(const ResizeFilter *resize_filter,
-  const Image *image,Image *resize_image,const MagickRealType y_factor,
-  const MagickSizeType span,MagickOffsetType *offset,ExceptionInfo *exception)
+static MagickBooleanType VerticalFilter(
+  const ResizeFilter *magick_restrict resize_filter,
+  const Image *magick_restrict image,Image *magick_restrict resize_image,
+  const MagickRealType y_factor,const MagickSizeType span,
+  MagickOffsetType *magick_restrict offset,ExceptionInfo *exception)
 {
   CacheView
     *image_view,
@@ -2720,7 +2728,7 @@ static MagickBooleanType VerticalFilter(const ResizeFilter *resize_filter,
   image_view=AcquireVirtualCacheView(image,exception);
   resize_view=AcquireAuthenticCacheView(resize_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(status,offset) \
     magick_number_threads(image,resize_image,resize_image->rows,1)
 #endif
   for (y=0; y < (ssize_t) resize_image->rows; y++)
@@ -2892,7 +2900,11 @@ static MagickBooleanType VerticalFilter(const ResizeFilter *resize_filter,
         MagickBooleanType
           proceed;
 
-        proceed=SetImageProgress(image,ResizeImageTag,(*offset)++,span);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp atomic
+#endif
+        (*offset)++;
+        proceed=SetImageProgress(image,ResizeImageTag,*offset,span);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
