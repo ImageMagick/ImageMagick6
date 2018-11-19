@@ -938,7 +938,7 @@ static void TIFFWarnings(const char *module,const char *format,va_list warning)
     *exception;
 
 #if defined(MAGICKCORE_HAVE_VSNPRINTF)
-  (void) vsnprintf(message,MaxTextExtentformat,warning);
+  (void) vsnprintf(message,MaxTextExtent,format,warning);
 #else
   (void) vsprintf(message,format,warning);
 #endif
