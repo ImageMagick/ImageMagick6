@@ -622,9 +622,25 @@ MagickPrivate double NTElapsedTime(void)
       filetime64;
   } elapsed_time;
 
+  LARGE_INTEGER
+    performance_count;
+
+  static LARGE_INTEGER
+    frequency = { 0 };
+
   SYSTEMTIME
     system_time;
 
+  if (frequency.QuadPart == 0)
+    {
+      if (QueryPerformanceFrequency(&frequency) == 0)
+        frequency.QuadPart=1;
+    }
+  if (frequency.QuadPart > 1)
+    {
+      QueryPerformanceCounter(&performance_count);
+      return((double) performance_count.QuadPart/frequency.QuadPart);
+    }
   GetSystemTime(&system_time);
   SystemTimeToFileTime(&system_time,&elapsed_time.filetime);
   return((double) 1.0e-7*elapsed_time.filetime64);
