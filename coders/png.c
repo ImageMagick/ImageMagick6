@@ -100,8 +100,8 @@
 /* PNG_PTR_NORETURN does not work on some platforms, in libpng-1.5.x */
 #define PNG_PTR_NORETURN
 
-#include "png.h"
-#include "zlib.h"
+#include <png.h>
+#include <zlib.h>
 
 /* ImageMagick differences */
 #define first_scene scene
@@ -11187,7 +11187,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       QuantumType
         quantum_type;
 
-      register const Quantum
+      register const PixelPacket
         *p;
 
       quantum_type=RedQuantum;
