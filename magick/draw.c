@@ -1334,7 +1334,7 @@ static MagickBooleanType DrawBoundingRectangles(Image *image,
   DrawInfo
     *clone_info;
 
-  MagickBooleanType
+  MagickStatusType
     status;
 
   PointInfo
@@ -1360,7 +1360,7 @@ static MagickBooleanType DrawBoundingRectangles(Image *image,
   if (status == MagickFalse)
     {
       clone_info=DestroyDrawInfo(clone_info);
-      return(status);
+      return(MagickFalse);
     }
   resolution.x=96.0;
   resolution.y=96.0;
@@ -1436,14 +1436,14 @@ static MagickBooleanType DrawBoundingRectangles(Image *image,
       if (i < (ssize_t) polygon_info->number_edges)
         {
           clone_info=DestroyDrawInfo(clone_info);
-          return(status);
+          return(status == 0 ? MagickFalse : MagickTrue);
         }
     }
   status=QueryColorDatabase("#00f",&clone_info->stroke,&image->exception);
   if (status == MagickFalse)
     {
       clone_info=DestroyDrawInfo(clone_info);
-      return(status);
+      return(MagickFalse);
     }
   start.x=(double) (bounds.x1-mid);
   start.y=(double) (bounds.y1-mid);
@@ -1456,7 +1456,7 @@ static MagickBooleanType DrawBoundingRectangles(Image *image,
   primitive_info[coordinates].primitive=UndefinedPrimitive;
   status=DrawPrimitive(image,clone_info,primitive_info);
   clone_info=DestroyDrawInfo(clone_info);
-  return(status);
+  return(status == 0 ? MagickFalse : MagickTrue);
 }
 
 /*
@@ -2223,8 +2223,8 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
     {
       if (extent <= (double) *mvg_info->extent)
         return(MagickTrue);
-      *mvg_info->primitive_info=ResizeQuantumMemory(*mvg_info->primitive_info,
-        (size_t) extent,quantum);
+      *mvg_info->primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
+        *mvg_info->primitive_info,(size_t) extent,quantum);
       if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
         {
           *mvg_info->extent=(size_t) extent;
@@ -2239,7 +2239,8 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
       *mvg_info->primitive_info);
   (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
     ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-  *mvg_info->primitive_info=AcquireCriticalMemory(PrimitiveExtentPad*quantum);
+  *mvg_info->primitive_info=(PrimitiveInfo *)  AcquireCriticalMemory(
+    PrimitiveExtentPad*quantum);
   (void) memset(*mvg_info->primitive_info,0,PrimitiveExtentPad*quantum);
   *mvg_info->extent=1;
   return(MagickFalse);
@@ -2458,7 +2459,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     {
       status=SetImageAlphaChannel(image,OpaqueAlphaChannel);
       if (status == MagickFalse)
-        return(status);
+        return(status == 0 ? MagickFalse : MagickTrue);
     }
   primitive=(char *) NULL;
   if (*draw_info->primitive != '@')
@@ -5829,7 +5830,7 @@ static MagickBooleanType TraceArcPath(MVGInfo *mvg_info,const PointInfo start,
     gamma,
     theta;
 
-  MagickBooleanType
+  MagickStatusType
     status;
 
   PointInfo
@@ -5959,7 +5960,7 @@ static MagickBooleanType TraceArcPath(MVGInfo *mvg_info,const PointInfo start,
     p->primitive=primitive_info->primitive;
     p--;
   }
-  return(status);
+  return(status == 0 ? MagickFalse : MagickTrue);
 }
 
 static MagickBooleanType TraceBezier(MVGInfo *mvg_info,
@@ -6204,7 +6205,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
     attribute,
     last_attribute;
 
-  MagickBooleanType
+  MagickStatusType
     status;
 
   PointInfo
