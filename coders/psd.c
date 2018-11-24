@@ -2130,7 +2130,6 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     {
       psd_info.min_channels=4;
       (void) SetImageColorspace(image,CMYKColorspace);
-      image->matte=psd_info.channels > 4 ? MagickTrue : MagickFalse;
     }
   else if ((psd_info.mode == BitmapMode) || (psd_info.mode == GrayscaleMode) ||
            (psd_info.mode == DuotoneMode))
@@ -2144,10 +2143,7 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
           "  Image colormap allocated");
       psd_info.min_channels=1;
       (void) SetImageColorspace(image,GRAYColorspace);
-      image->matte=psd_info.channels > 1 ? MagickTrue : MagickFalse;
     }
-  else
-    image->matte=psd_info.channels > 3 ? MagickTrue : MagickFalse;
   if (psd_info.channels < psd_info.min_channels)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   /*
