@@ -58,6 +58,7 @@
 #include "magick/magick.h"
 #include "magick/memory_.h"
 #include "magick/module.h"
+#include "magick/static.h"
 #include "magick/string_.h"
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__)
 #define WIN32_LEAN_AND_MEAN

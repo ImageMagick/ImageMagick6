@@ -92,15 +92,6 @@
 #include "lcms.h"
 #endif
 #endif
-#if defined(MAGICKCORE_XML_DELEGATE)
-#  if defined(MAGICKCORE_WINDOWS_SUPPORT)
-#    if !defined(__MINGW32__)
-#      include <win32config.h>
-#    endif
-#  endif
-#  include <libxml/parser.h>
-#  include <libxml/tree.h>
-#endif
 
 /*
   Define declarations.
@@ -1750,29 +1741,6 @@ static MagickBooleanType SkipXMPValue(const char *value)
   return(MagickTrue);
 }
 
-static MagickBooleanType ValidateXMPProfile(const char *profile,
-  const size_t length)
-{
-#if defined(MAGICKCORE_XML_DELEGATE)
-  {
-    xmlDocPtr
-      document;
-
-    /*
-      Parse XML profile.
-    */
-    document=xmlReadMemory(profile,length,"xmp.xml",NULL,XML_PARSE_NOERROR |
-      XML_PARSE_NOWARNING);
-    if (document == (xmlDocPtr) NULL)
-      return(MagickFalse);
-    xmlFreeDoc(document);
-    return(MagickTrue);
-  }
-#else
-  return(MagickFalse);
-#endif
-}
-
 static MagickBooleanType GetXMPProperty(const Image *image,const char *property)
 {
   char
@@ -1810,11 +1778,6 @@ static MagickBooleanType GetXMPProperty(const Image *image,const char *property)
   xmp_profile=StringInfoToString(profile);
   if (xmp_profile == (char *) NULL)
     return(MagickFalse);
-  if (ValidateXMPProfile(xmp_profile,GetStringInfoLength(profile)) == MagickFalse)
-    {
-      xmp_profile=DestroyString(xmp_profile);
-      return(MagickFalse);
-    }
   for (p=xmp_profile; *p != '\0'; p++)
     if ((*p == '<') && (*(p+1) == 'x'))
       break;
