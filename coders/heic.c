@@ -215,7 +215,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
       size_t
         exif_size;
 
-      void
+      unsigned char
         *exif_buffer;
 
       exif_size=heif_image_handle_get_metadata_size(image_handle,exif_id);
@@ -226,8 +226,8 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
           ThrowReaderException(CorruptImageError,
             "InsufficientImageDataInFile");
         }
-      exif_buffer=AcquireMagickMemory(exif_size);
-      if (exif_buffer != NULL)
+      exif_buffer=(unsigned char*) AcquireMagickMemory(exif_size);
+      if (exif_buffer != (unsigned char*) NULL)
         {
           error=heif_image_handle_get_metadata(image_handle,
             exif_id,exif_buffer);
@@ -236,7 +236,11 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
               StringInfo
                 *profile;
 
-              profile=BlobToStringInfo(exif_buffer,exif_size);
+              // The first 4 byte should be skipped since they indicate the
+              // offset to the start of the TIFF header of the Exif data.
+              profile=(StringInfo*) NULL;
+              if (exif_size > 8)
+                profile=BlobToStringInfo(exif_buffer+4,exif_size-4);
               if (profile != (StringInfo*) NULL)
                 {
                   SetImageProfile(image,"exif",profile);
