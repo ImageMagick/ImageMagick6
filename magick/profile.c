@@ -2174,7 +2174,7 @@ static MagickBooleanType SyncExifProfile(Image *image, StringInfo *profile)
         {
           if (number_bytes == 4)
             {
-              (void) WriteProfileLong(endian,(size_t) (image->resolution.x+
+              (void) WriteProfileLong(endian,(size_t) (image->x_resolution+
                 0.5),p);
               break;
             }
@@ -2185,7 +2185,7 @@ static MagickBooleanType SyncExifProfile(Image *image, StringInfo *profile)
         {
           if (number_bytes == 4)
             {
-              (void) WriteProfileLong(endian,(size_t) (image->resolution.y+
+              (void) WriteProfileLong(endian,(size_t) (image->y_resolution+
                 0.5),p);
               break;
             }
