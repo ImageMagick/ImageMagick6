@@ -1459,10 +1459,6 @@ MagickExport MagickBooleanType TransformImageColorspace(Image *image,
     return(MagickTrue);
   (void) DeleteImageProfile(image,"icc");
   (void) DeleteImageProfile(image,"icm");
-  if (colorspace == LinearGRAYColorspace)
-    return(GrayscaleImage(image,Rec709LuminancePixelIntensityMethod));
-  if (colorspace == GRAYColorspace)
-    return(GrayscaleImage(image,Rec709LumaPixelIntensityMethod));
   if (colorspace == UndefinedColorspace)
     return(SetImageColorspace(image,colorspace));
   /*
