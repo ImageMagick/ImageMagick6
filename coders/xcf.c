@@ -1114,6 +1114,8 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
+  if (status != MagickFalse)
+    status=ResetImagePixels(image,exception);
   if (image_type == GIMP_INDEXED)
     ThrowReaderException(CoderError,"ColormapTypeNotSupported");
   if (image_type == GIMP_RGB)
