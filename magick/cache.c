@@ -2929,24 +2929,23 @@ static inline ssize_t RandomY(RandomInfo *random_info,const size_t rows)
   return((ssize_t) (rows*GetPseudoRandomValue(random_info)));
 }
 
-/*
-  VirtualPixelModulo() computes the remainder of dividing offset by extent.  It
-  returns not only the quotient (tile the offset falls in) but also the positive
-  remainer within that tile such that 0 <= remainder < extent.  This method is
-  essentially a ldiv() using a floored modulo division rather than the normal
-  default truncated modulo division.
-*/
 static inline MagickModulo VirtualPixelModulo(const ssize_t offset,
   const size_t extent)
 {
   MagickModulo
     modulo;
 
+  /*
+    Compute the remainder of dividing offset by extent.  It returns not only
+    the quotient (tile the offset falls in) but also the positive remainer
+    within that tile such that 0 <= remainder < extent.  This method is
+    essentially a ldiv() using a floored modulo division rather than the
+    normal default truncated modulo division.
+  */
   modulo.quotient=offset/(ssize_t) extent;
   if (offset < 0L)
     modulo.quotient--;
-  modulo.remainder=(ssize_t) (offset-(MagickOffsetType) modulo.quotient*
-    (MagickOffsetType) extent);
+  modulo.remainder=(ssize_t) (offset-(double) modulo.quotient*extent);
   return(modulo);
 }
 
