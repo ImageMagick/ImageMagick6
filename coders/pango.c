@@ -72,6 +72,11 @@
 #include <pango/pango-features.h>
 #endif
 
+/*
+  Define declarations.
+*/
+#define DefaultPANGODensity  96.0
+
 #if defined(MAGICKCORE_PANGOCAIRO_DELEGATE)
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -199,7 +204,7 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
   */
   fontmap=pango_cairo_font_map_new();
   pango_cairo_font_map_set_resolution(PANGO_CAIRO_FONT_MAP(fontmap),
-    image->x_resolution == 0.0 ? 90.0 : image->x_resolution);
+    image->x_resolution == 0.0 ? DefaultPANGODensity : image->x_resolution);
   font_options=cairo_font_options_create();
   option=GetImageOption(image_info,"pango:hinting");
   if (option != (const char *) NULL)
@@ -299,8 +304,8 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
   option=GetImageOption(image_info,"pango:indent");
   if (option != (const char *) NULL)
     pango_layout_set_indent(layout,(int) ((StringToLong(option)*
-      (image->x_resolution == 0.0 ? 90.0 : image->x_resolution)*PANGO_SCALE+45)/
-      90.0+0.5));
+      (image->x_resolution == 0.0 ? DefaultPANGODensity : image->x_resolution)*
+      PANGO_SCALE+DefaultPANGODensity/2)/DefaultPANGODensity+0.5));
   switch (draw_info->align)
   {
     case CenterAlign: align=PANGO_ALIGN_CENTER; break;
@@ -357,8 +362,8 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
     {
       image->columns-=2*page.x;
       pango_layout_set_width(layout,(int) ((PANGO_SCALE*image->columns*
-        (image->x_resolution == 0.0 ? 90.0 : image->x_resolution)+45.0)/90.0+
-        0.5));
+        (image->x_resolution == 0.0 ? DefaultPANGODensity :
+        image->x_resolution)+DefaultPANGODensity/2)/DefaultPANGODensity+0.5));
     }
   if (image->rows == 0)
     {
@@ -369,8 +374,8 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
     {
       image->rows-=2*page.y;
       pango_layout_set_height(layout,(int) ((PANGO_SCALE*image->rows*
-        (image->y_resolution == 0.0 ? 90.0 : image->y_resolution)+45.0)/90.0+
-        0.5));
+        (image->y_resolution == 0.0 ? DefaultPANGODensity :
+        image->y_resolution)+DefaultPANGODensity/2)/DefaultPANGODensity+0.5));
     }
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
