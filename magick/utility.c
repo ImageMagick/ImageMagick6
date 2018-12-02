@@ -1225,36 +1225,6 @@ MagickExport void GetPathComponent(const char *path,PathType type,
       return;
     }
   (void) CopyMagickString(component,path,MaxTextExtent);
-  *magick='\0';
-#if defined(__OS2__)
-  if (path[1] != ":")
-#endif
-  for (p=component; *p != '\0'; p++)
-  {
-    if ((*p == '%') && (*(p+1) == '['))
-      {
-        /*
-          Skip over %[...].
-        */
-        for (p++; (*p != ']') && (*p != '\0'); p++) ;
-        if (*p == '\0')
-          break;
-      }
-    if ((p != component) && (*p == ':') && (IsPathDirectory(path) < 0) &&
-        (IsPathAccessible(path) == MagickFalse))
-      {
-        /*
-          Look for image format specification (e.g. ps3:image).
-        */
-        (void) CopyMagickString(magick,component,(size_t) (p-component+1));
-        if (IsMagickConflict(magick) != MagickFalse)
-          *magick='\0';
-        else
-          for (q=component; *q != '\0'; q++)
-            *q=(*++p);
-        break;
-      }
-  }
   *subimage='\0';
   p=component+strlen(component)-1;
   q=strrchr(component,'[');
@@ -1273,6 +1243,36 @@ MagickExport void GetPathComponent(const char *path,PathType type,
       else
         *q='\0';
     }
+  *magick='\0';
+#if defined(__OS2__)
+  if (path[1] != ":")
+#endif
+  for (p=component; *p != '\0'; p++)
+  {
+    if ((*p == '%') && (*(p+1) == '['))
+      {
+        /*
+          Skip over %[...].
+        */
+        for (p++; (*p != ']') && (*p != '\0'); p++) ;
+        if (*p == '\0')
+          break;
+      }
+    if ((p != component) && (*p == ':') && (IsPathDirectory(component) < 0) &&
+        (IsPathAccessible(component) == MagickFalse))
+      {
+        /*
+          Look for image format specification (e.g. ps3:image).
+        */
+        (void) CopyMagickString(magick,component,(size_t) (p-component+1));
+        if (IsMagickConflict(magick) != MagickFalse)
+          *magick='\0';
+        else
+          for (q=component; *q != '\0'; q++)
+            *q=(*++p);
+        break;
+      }
+  }
   p=component;
   if (*p != '\0')
     for (p=component+strlen(component)-1; p > component; p--)
