@@ -175,7 +175,7 @@ MagickProgressMonitor SetImageInfoProgressMonitor(ImageInfo *image_info,
     <a href="../script/support.php">Donate</a> •
     <a href="../script/contact.php">Contact Us</a>
     <br/>
-        <small>© 1999-2018 ImageMagick Studio LLC</small></p>
+        <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
