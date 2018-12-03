@@ -1226,22 +1226,25 @@ MagickExport void GetPathComponent(const char *path,PathType type,
     }
   (void) CopyMagickString(component,path,MaxTextExtent);
   *subimage='\0';
-  p=component+strlen(component)-1;
-  q=strrchr(component,'[');
-  if ((strlen(component) > 2) && (*p == ']') && (q != (char *) NULL) &&
-      ((q == component) || (*(q-1) != ']')) &&
-      (IsPathAccessible(path) == MagickFalse))
+  if (type != SubcanonicalPath)
     {
-      /*
-        Look for scene specification (e.g. img0001.pcd[4]).
-      */
-      (void) CopyMagickString(subimage,q+1,MaxTextExtent);
-      subimage[p-q-1]='\0';
-      if ((IsSceneGeometry(subimage,MagickFalse) == MagickFalse) &&
-          (IsGeometry(subimage) == MagickFalse))
-        *subimage='\0';
-      else
-        *q='\0';
+      p=component+strlen(component)-1;
+      q=strrchr(component,'[');
+      if ((strlen(component) > 2) && (*p == ']') && (q != (char *) NULL) &&
+          ((q == component) || (*(q-1) != ']')) &&
+          (IsPathAccessible(path) == MagickFalse))
+        {
+          /*
+            Look for scene specification (e.g. img0001.pcd[4]).
+          */
+          (void) CopyMagickString(subimage,q+1,MaxTextExtent);
+          subimage[p-q-1]='\0';
+          if ((IsSceneGeometry(subimage,MagickFalse) == MagickFalse) &&
+              (IsGeometry(subimage) == MagickFalse))
+            *subimage='\0';
+          else
+            *q='\0';
+        }
     }
   *magick='\0';
 #if defined(__OS2__)
@@ -1343,6 +1346,7 @@ MagickExport void GetPathComponent(const char *path,PathType type,
       (void) CopyMagickString(component,subimage,MaxTextExtent);
       break;
     }
+    case SubcanonicalPath:
     case CanonicalPath:
     case UndefinedPath:
       break;
