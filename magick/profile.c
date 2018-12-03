@@ -2172,24 +2172,16 @@ static MagickBooleanType SyncExifProfile(Image *image, StringInfo *profile)
       {
         case 0x011a:
         {
-          if (number_bytes == 4)
-            {
-              (void) WriteProfileLong(endian,(size_t) (image->x_resolution+
-                0.5),p);
-              break;
-            }
-          (void) WriteProfileLong(endian,1UL,p+4);
+          (void) WriteProfileLong(endian,(size_t) (image->x_resolution+0.5),p);
+          if (number_bytes == 8)
+            (void) WriteProfileLong(endian,1UL,p+4);
           break;
         }
         case 0x011b:
         {
-          if (number_bytes == 4)
-            {
-              (void) WriteProfileLong(endian,(size_t) (image->y_resolution+
-                0.5),p);
-              break;
-            }
-          (void) WriteProfileLong(endian,1UL,p+4);
+          (void) WriteProfileLong(endian,(size_t) (image->y_resolution+0.5),p);
+          if (number_bytes == 8)
+            (void) WriteProfileLong(endian,1UL,p+4);
           break;
         }
         case 0x0112:
