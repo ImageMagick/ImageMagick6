@@ -2320,7 +2320,7 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                     Extract macro.
                   */
                   GetNextToken(p,&p,extent,token);
-                  (void) CopyMagickString(macro,start,end-start);
+                  (void) CopyMagickString(macro,start,(size_t) (end-start));
                   (void) AddValueToSplayTree(macros,ConstantString(name),
                     ConstantString(macro));
                   break;
@@ -2497,9 +2497,9 @@ static MagickBooleanType RenderMVGContent(Image *image,
     }
   (void) memset(primitive_info,0,(size_t) number_points*
     sizeof(*primitive_info));
+  (void) memset(&mvg_info,0,sizeof(mvg_info));
   mvg_info.primitive_info=(&primitive_info);
   mvg_info.extent=(&number_points);
-  mvg_info.offset=0;
   mvg_info.exception=(&image->exception);
   graphic_context[n]=CloneDrawInfo((ImageInfo *) NULL,draw_info);
   graphic_context[n]->viewbox=image->page;
@@ -2837,7 +2837,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
             graphic_context[n]->fill_opacity=(QuantumRange-
               graphic_context[n]->fill_opacity)*(1.0-opacity);
             if (graphic_context[n]->fill.opacity != TransparentOpacity)
-              graphic_context[n]->fill.opacity=graphic_context[n]->fill_opacity;
+              graphic_context[n]->fill.opacity=(Quantum)
+                graphic_context[n]->fill_opacity;
             else
               graphic_context[n]->fill.opacity=ClampToQuantum(QuantumRange*
                 (1.0-opacity));
@@ -3616,7 +3617,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
             graphic_context[n]->stroke_opacity=(QuantumRange-
               graphic_context[n]->stroke_opacity)*(1.0-opacity);
             if (graphic_context[n]->stroke.opacity != TransparentOpacity)
-              graphic_context[n]->stroke.opacity=
+              graphic_context[n]->stroke.opacity=(Quantum)
                 graphic_context[n]->stroke_opacity;
             else
               graphic_context[n]->stroke.opacity=ClampToQuantum(QuantumRange*
@@ -3813,6 +3814,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
     /*
       Parse the primitive attributes.
     */
+    for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++)
+      if ((primitive_info[i].primitive == TextPrimitive) ||
+          (primitive_info[i].primitive == ImagePrimitive))
+        if (primitive_info[i].text != (char *) NULL)
+          primitive_info[i].text=DestroyString(primitive_info[i].text);
     i=0;
     mvg_info.offset=i;
     j=0;
@@ -3854,15 +3860,10 @@ static MagickBooleanType RenderMVGContent(Image *image,
     }
     if (status == MagickFalse)
       break;
-    if ((primitive_info[j].primitive == TextPrimitive) ||
-        (primitive_info[j].primitive == ImagePrimitive))
-      if (primitive_info[j].text != (char *) NULL)
-        primitive_info[j].text=DestroyString(primitive_info[j].text);
     primitive_info[j].primitive=primitive_type;
     primitive_info[j].coordinates=(size_t) x;
     primitive_info[j].method=FloodfillMethod;
     primitive_info[j].closed_subpath=MagickFalse;
-    primitive_info[j].text=(char *) NULL;
     /*
       Circumscribe primitive within a circle.
     */
