@@ -783,6 +783,10 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
         picon->colormap,(size_t) colors,sizeof(*picon->colormap));
       if (picon->colormap == (PixelPacket *) NULL)
         ThrowWriterException(ResourceLimitError,"MemoryAllocationError");
+      picon->colormap[colors-1].red=0;
+      picon->colormap[colors-1].green=0;
+      picon->colormap[colors-1].blue=0;
+      picon->colormap[colors-1].opacity=TransparentOpacity;
       for (y=0; y < (ssize_t) picon->rows; y++)
       {
         q=GetAuthenticPixels(picon,0,y,picon->columns,1,exception);
