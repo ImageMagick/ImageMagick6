@@ -6080,7 +6080,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                             (double) loop_level,(double)
                             mng_info->loop_count[loop_level]);
 
-                        if (mng_info->loop_count[loop_level] != 0)
+                        if (mng_info->loop_count[loop_level] > 0)
                           {
                             offset=SeekBlob(image,
                               mng_info->loop_jump[loop_level], SEEK_SET);
