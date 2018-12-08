@@ -1367,7 +1367,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
       if (LocaleCompare(encoding,"Latin-1") == 0)
         encoding_type=FT_ENCODING_ADOBE_LATIN_1;
 #endif
-#if defined(FT_ENCODING_ADOBE_LATIN_1)
+#if defined(FT_ENCODING_ADOBE_LATIN_2)
       if (LocaleCompare(encoding,"Latin-2") == 0)
         encoding_type=FT_ENCODING_OLD_LATIN_2;
 #endif
