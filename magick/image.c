@@ -2933,10 +2933,10 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
     {
       (void) CopyMagickString(magic,image_info->magick,MaxTextExtent);
       magick_info=GetMagickInfo(magic,sans_exception);
-      if (frames != 0)
-        GetPathComponent(image_info->filename,SubcanonicalPath,filename);
-      else
+      if (frames == 0)
         GetPathComponent(image_info->filename,CanonicalPath,filename);
+      else
+        GetPathComponent(image_info->filename,SubcanonicalPath,filename);
       (void) CopyMagickString(image_info->filename,filename,MaxTextExtent);
     }
   else
