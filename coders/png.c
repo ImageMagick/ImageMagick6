@@ -10095,6 +10095,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
          ping_bit_depth = mng_info->write_png_depth;
     }
 
+  (void) old_bit_depth;
   image_depth=ping_bit_depth;
 
   if (logging != MagickFalse)
