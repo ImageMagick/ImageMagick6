@@ -4567,7 +4567,7 @@ MAGICK_PATCHLEVEL_VERSION=17
 
 MAGICK_VERSION=6.9.10-17
 
-MAGICK_GIT_REVISION=14040:dbf2858f4:20181210
+MAGICK_GIT_REVISION=14042:3fc50e3a4:20181212
 
 
 # Substitute library versioning
@@ -35872,7 +35872,7 @@ windows_font_dir=''
 if test "${with_windows_font_dir}" != 'default'; then
   windows_font_dir="${with_windows_font_dir}/"
 else
-  for font_dir in '/usr/X11R6/lib/X11/fonts/truetype/' '/usr/X11R7/lib/X11/fonts/truetype/' '/usr/share/fonts/msttcore/'; do
+  for font_dir in '/usr/X11R6/lib/X11/fonts/truetype/' '/usr/X11R7/lib/X11/fonts/truetype/' '/usr/share/fonts/msttcore/' '/usr/share/fonts/microsoft/'; do
     if test -f "${font_dir}arial.ttf"; then
       windows_font_dir="${font_dir}"
       break 1
