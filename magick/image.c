@@ -3984,41 +3984,12 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
     image->type=(ImageType) ParseCommandOption(MagickTypeOptions,MagickFalse,
       option);
   option=GetImageOption(image_info,"units");
+  units=image_info->units;
   if (option != (const char *) NULL)
     units=(ResolutionType) ParseCommandOption(MagickResolutionOptions,
       MagickFalse,option);
-  else
-    units = image_info->units;
   if (units != UndefinedResolution)
-    {
-      if (image->units != units)
-        switch (image->units)
-        {
-          case PixelsPerInchResolution:
-          {
-            if (units == PixelsPerCentimeterResolution)
-              {
-                image->x_resolution/=2.54;
-                image->y_resolution/=2.54;
-              }
-            break;
-          }
-          case PixelsPerCentimeterResolution:
-          {
-            if (units == PixelsPerInchResolution)
-              {
-                image->x_resolution=(double) ((size_t) (100.0*2.54*
-                  image->x_resolution+0.5))/100.0;
-                image->y_resolution=(double) ((size_t) (100.0*2.54*
-                  image->y_resolution+0.5))/100.0;
-              }
-            break;
-          }
-          default:
-            break;
-        }
-      image->units=units;
-    }
+    image->units=units;
   option=GetImageOption(image_info,"white-point");
   if (option != (const char *) NULL)
     {
