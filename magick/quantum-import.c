@@ -4182,7 +4182,7 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
         q++;
       }
     }
-  if (quantum_info->alpha_type == DisassociatedQuantumAlpha)
+  if (quantum_info->alpha_type == AssociatedQuantumAlpha)
     {
       MagickRealType
         alpha;
