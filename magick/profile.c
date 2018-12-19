@@ -1727,7 +1727,7 @@ static MagickBooleanType SetImageProfileInternal(Image *image,const char *name,
     {
       (void) ThrowMagickException(&image->exception,GetMagickModule(),
         ImageWarning,"CorruptImageProfile","`%s'",name);
-      return(MagickFalse);
+      return(MagickTrue);
     }
   if (image->profiles == (SplayTreeInfo *) NULL)
     image->profiles=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
