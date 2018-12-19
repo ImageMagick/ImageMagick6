@@ -1,4 +1,7 @@
 2018-12-18  6.9.10-18 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-18, GIT revision 14061:2f9ab1cea:20181218
+
+2018-12-18  6.9.10-18 Cristy  <quetzlzacatenango@image...>
   * Revert MagickDoubleType patch to avoid i386 ABI break (reference
     https://github.com/ImageMagick/ImageMagick6/issues/31);
 
