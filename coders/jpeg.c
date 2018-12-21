@@ -1352,15 +1352,15 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
     jpeg_info.out_color_space);
   (void) SetImageProperty(image,"jpeg:colorspace",value);
+  if ((dct_method == (const char *) NULL) && (image->quality > 0) &&
+      (image->quality <= 90))
+    jpeg_info.dct_method=JDCT_IFAST;
   if (image_info->ping != MagickFalse)
     {
       jpeg_destroy_decompress(&jpeg_info);
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
-  if ((dct_method == (const char *) NULL) && (image->quality > 0) &&
-      (image->quality <= 90))
-    jpeg_info.dct_method=JDCT_IFAST;
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
