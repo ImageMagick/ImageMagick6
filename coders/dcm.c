@@ -4014,7 +4014,14 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
             for (i=0; i < (ssize_t) stream_info->offset_count; i++)
             {
-              stream_info->offsets[i]=(ssize_t) ReadBlobLSBSignedLong(image);
+              MagickOffsetType
+                offset;
+
+              offset=(MagickOffsetType) ReadBlobLSBSignedLong(image);
+              if (offset > (MagickOffsetType) GetBlobSize(image))
+                ThrowDCMException(CorruptImageError,
+                  "InsufficientImageDataInFile");
+              stream_info->offsets[i]=(ssize_t) offset;
               if (EOFBlob(image) != MagickFalse)
                 break;
             }
