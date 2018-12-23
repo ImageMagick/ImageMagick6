@@ -4126,6 +4126,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
             if (cache_info->pixels == (PixelPacket *) NULL)
               {
                 cache_info->type=DiskCache;
+                cache_info->mapped=source_info.mapped;
                 cache_info->pixels=source_info.pixels;
                 RelinquishMagickResource(MapResource,cache_info->length);
               }
