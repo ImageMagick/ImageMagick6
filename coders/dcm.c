@@ -2891,10 +2891,10 @@ static MagickBooleanType ReadDCMPixels(Image *image,DCMInfo *info,
             else
               {
                 if ((i & 0x01) != 0)
-                  { 
+                  {
                     pixel_value=byte;
                     byte=ReadDCMByte(stream_info,image);
-                    if (byte >= 0)  
+                    if (byte >= 0)
                       pixel_value|=(byte << 8);
                   }
                 else
@@ -3961,7 +3961,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         length=(size_t) (GetQuantumRange(info.depth)+1);
         if (length > (size_t) GetBlobSize(image))
           ThrowDCMException(CorruptImageError,"InsufficientImageDataInFile");
-        if (info.scale != (Quantum *) NULL) 
+        if (info.scale != (Quantum *) NULL)
           info.scale=(Quantum *) RelinquishMagickMemory(info.scale);
         info.scale=(Quantum *) AcquireQuantumMemory(MagickMax(length,MaxMap)+1,
           sizeof(*info.scale));
