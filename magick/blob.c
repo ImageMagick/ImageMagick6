@@ -4295,6 +4295,8 @@ MagickExport MagickOffsetType SeekBlob(Image *image,
         }
         case SEEK_CUR:
         {
+          if (blob_info->offset > (SSIZE_MAX-offset))
+            return(-1);
           if ((blob_info->offset+offset) < 0)
             return(-1);
           blob_info->offset+=offset;
