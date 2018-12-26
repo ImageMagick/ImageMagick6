@@ -312,6 +312,12 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   heif_image_release(heif_image);
   heif_image_handle_release(image_handle);
   heif_context_free(heif_context);
+  /*
+    There is a discrepancy between EXIF data and the actual orientation of
+    image pixels. ReadImage processes "exif:Orientation" expecting pixels to be
+    oriented accordingly. However, in HEIF the pixels are NOT rotated.
+   */
+  SetImageProperty(image, "exif:Orientation", "1", exception);
   return(GetFirstImageInList(image));
 }
 #endif
