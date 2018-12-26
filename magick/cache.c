@@ -5139,6 +5139,8 @@ static inline MagickBooleanType IsAuthenticPixelCache(
   */
   if (cache_info->type == PingCache)
     return(MagickTrue);
+  if (cache_info->pixels == (Quantum *) NULL)
+    return(MagickFalse);
   offset=(MagickOffsetType) nexus_info->region.y*cache_info->columns+
     nexus_info->region.x;
   status=nexus_info->pixels == (cache_info->pixels+offset) ? MagickTrue :
@@ -5208,8 +5210,7 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
           if (cache_info->active_index_channel != MagickFalse)
             nexus_info->indexes=cache_info->indexes+offset;
           PrefetchPixelCacheNexusPixels(nexus_info,mode);
-          nexus_info->authentic_pixel_cache=IsAuthenticPixelCache(cache_info,
-            nexus_info);
+          nexus_info->authentic_pixel_cache=MagickTrue;
           return(nexus_info->pixels);
         }
     }
