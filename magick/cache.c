@@ -1237,6 +1237,7 @@ static inline void RelinquishCacheNexusPixels(NexusInfo *nexus_info)
   nexus_info->indexes=(IndexPacket *) NULL;
   nexus_info->length=0;
   nexus_info->mapped=MagickFalse;
+  nexus_info->authentic_pixel_cache=MagickFalse;
 }
 
 MagickExport NexusInfo **DestroyPixelCacheNexus(NexusInfo **nexus_info,
@@ -3028,11 +3029,11 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
         MagickBooleanType
           status;
 
+        if (nexus_info->authentic_pixel_cache != MagickFalse)
+          return(pixels);
         /*
           Pixel request is inside cache extents.
         */
-        if (nexus_info->authentic_pixel_cache != MagickFalse)
-          return(pixels);
         status=ReadPixelCachePixels(cache_info,nexus_info,exception);
         if (status == MagickFalse)
           return((const PixelPacket *) NULL);
@@ -5097,24 +5098,25 @@ MagickExport void SetPixelCacheMethods(Cache cache,CacheMethods *cache_methods)
 */
 
 static inline MagickBooleanType AcquireCacheNexusPixels(
-  const CacheInfo *magick_restrict cache_info,NexusInfo *nexus_info,
-  ExceptionInfo *exception)
+  const CacheInfo *magick_restrict cache_info,const MagickOffsetType length,
+  NexusInfo *nexus_info,ExceptionInfo *exception)
 {
-  if (nexus_info->length != (MagickSizeType) ((size_t) nexus_info->length))
+  if (nexus_info->cache != (Quantum *) NULL)
+    RelinquishCacheNexusPixels(nexus_info);
+  if (length != (MagickSizeType) ((size_t) length))
     return(MagickFalse);
   if (cache_anonymous_memory <= 0)
     {
-      nexus_info->mapped=MagickFalse;
       nexus_info->cache=(PixelPacket *) MagickAssumeAligned(
-        AcquireAlignedMemory(1,(size_t) nexus_info->length));
+        AcquireAlignedMemory(1,(size_t) length));
       if (nexus_info->cache != (PixelPacket *) NULL)
-        (void) memset(nexus_info->cache,0,(size_t) nexus_info->length);
+        (void) memset(nexus_info->cache,0,(size_t) length);
     }
-  else
+  if (nexus_info->cache == (PixelPacket *) NULL)
     {
-      nexus_info->mapped=MagickTrue;
-      nexus_info->cache=(PixelPacket *) MapBlob(-1,IOMode,0,(size_t)
-        nexus_info->length);
+      nexus_info->cache=(PixelPacket *) MapBlob(-1,IOMode,0,(size_t) length);
+      if (nexus_info->cache != (PixelPacket *) NULL)
+        nexus_info->mapped=MagickTrue;
     }
   if (nexus_info->cache == (PixelPacket *) NULL)
     {
@@ -5123,6 +5125,8 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
         cache_info->filename);
       return(MagickFalse);
     }
+  nexus_info->length=length;
+  nexus_info->authentic_pixel_cache=MagickFalse;
   return(MagickTrue);
 }
 
@@ -5209,9 +5213,8 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
           nexus_info->indexes=(IndexPacket *) NULL;
           if (cache_info->active_index_channel != MagickFalse)
             nexus_info->indexes=cache_info->indexes+offset;
+          nexus_info->authentic_pixel_cache=MagickTrue;
           PrefetchPixelCacheNexusPixels(nexus_info,mode);
-          nexus_info->authentic_pixel_cache=IsAuthenticPixelCache(cache_info,
-            nexus_info);
           return(nexus_info->pixels);
         }
     }
@@ -5225,33 +5228,22 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
     length+=number_pixels*sizeof(IndexPacket);
   if (nexus_info->cache == (PixelPacket *) NULL)
     {
-      nexus_info->length=length;
-      status=AcquireCacheNexusPixels(cache_info,nexus_info,exception);
+      status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
       if (status == MagickFalse)
-        {
-          nexus_info->length=0;
-          return((PixelPacket *) NULL);
-        }
+        return((PixelPacket *) NULL);
     }
   else
     if (nexus_info->length < length)
       {
-        RelinquishCacheNexusPixels(nexus_info);
-        nexus_info->length=length;
-        status=AcquireCacheNexusPixels(cache_info,nexus_info,exception);
+        status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
         if (status == MagickFalse)
-          {
-            nexus_info->length=0;
-            return((PixelPacket *) NULL);
-          }
+          return((PixelPacket *) NULL);
       }
   nexus_info->pixels=nexus_info->cache;
   nexus_info->indexes=(IndexPacket *) NULL;
   if (cache_info->active_index_channel != MagickFalse)
     nexus_info->indexes=(IndexPacket *) (nexus_info->pixels+number_pixels);
   PrefetchPixelCacheNexusPixels(nexus_info,mode);
-  nexus_info->authentic_pixel_cache=IsAuthenticPixelCache(cache_info,
-    nexus_info);
   return(nexus_info->pixels);
 }
 
