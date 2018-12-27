@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>Formats @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, or convert bitmap images. You can resize your image, crop it, change its shades and colors, add captions, among other operations." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="formats, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -91,7 +91,7 @@
 
 <p>On some platforms, ImageMagick automagically processes these extensions: .gz for Zip compression, .Z for Unix compression, .bz2 for block compression, and .pgp for PGP encryption. For example, a PNM image called image.pnm.gz is automagically uncompressed.</p>
 
-<h2 class="magick-post-title"><a class="anchor" id="colorspace"></a>A Word about Colorspaces</h2>
+<h2><a class="anchor" id="colorspace"></a>A Word about Colorspaces</h2>
  <p>A majority of the image formats assume an sRGB
 colorspace (e.g. JPEG, PNG, etc.).  A few support only linear RGB (e.g. EXR,
 DPX, CIN, HDR) or only linear GRAY (e.g. PGM).  A few formats support CMYK.
@@ -142,7 +142,7 @@ example,</p>
 <pre class="highlight"><code>  convert lab.tif -colorspace RGB -resize 50% -colorspace Lab resize.jpg
 </code></pre>
 
-<h2 class="magick-post-title"><a class="anchor" id="supported"></a>Supported Image Formats</h2>
+<h2><a class="anchor" id="supported"></a>Supported Image Formats</h2>
 
 <p>ImageMagick supports reading over 100 major file formats (not
 including sub-formats). The following table provides a summary of
@@ -528,13 +528,6 @@ the supported image formats.</p>
     <td>W</td>
     <td>Format and characteristics of the image</td>
     <td></td>
-  </tr>
-
-  <tr>
-    <td>INLINE</td>
-    <td>RW</td>
-    <td>Base64-encoded inline image</td>
-    <td>The inline image look similar to <code>inline:data:;base64,/9j/4AAQSk...knrn//2Q==</code>.  If the inline image exceeds 5000 characters, reference it from a file (e.g. <code>inline:inline.txt</code>). You can also write a base64-encoded image.  Embed the mime type in the filename, for example, <code>convert myimage inline:jpeg:myimage.txt</code>.</td>
   </tr>
 
   <tr>
@@ -1271,7 +1264,7 @@ the supported image formats.</p>
 </table>
 </div>
 
-<h2 class="magick-post-title"><a class="anchor" id="pseudo"></a>Pseudo-image Formats</h2>
+<h2><a class="anchor" id="pseudo"></a>Pseudo-image Formats</h2>
 
 <p>ImageMagick supports a number of image format specifications which refer to images prepared via an algorithm, or input/output targets. The following table lists these pseudo-image formats:</p>
 
@@ -1340,7 +1333,7 @@ the supported image formats.</p>
     <td>HALD</td>
     <td>R</td>
     <td>Identity Hald CLUT Image</td>
-    <td>Select order with filename, e.g. hald:5 for order 5.</td>
+    <td>Select levels like this: hald:[8] for level 8</td>
   </tr>
 
   <tr>
@@ -1348,6 +1341,13 @@ the supported image formats.</p>
     <td>W</td>
     <td>Histogram of the image</td>
     <td>The histogram includes the unique colors of the image as an image comment.  If you have no need for the unique color list, use <code>-define histogram:unique-colors=false</code> to forego this expensive operation.</td>
+  </tr>
+
+  <tr>
+    <td>INLINE</td>
+    <td>RW</td>
+    <td>Base64-encoded inline image</td>
+    <td>The inline image look similar to <code>inline:data:;base64,/9j/4AAQSk...knrn//2Q==</code>.  If the inline image exceeds 5000 characters, reference it from a file (e.g. <code>inline:inline.txt</code>). You can also write a base64-encoded image.  Embed the mime type in the filename, for example, <code>convert myimage inline:jpeg:myimage.txt</code>.</td>
   </tr>
 
   <tr>
@@ -1497,7 +1497,7 @@ the supported image formats.</p>
 </table>
 </div>
 
-<h2 class="magick-post-title"><a class="anchor" id="builtin-images"></a>Built-in Images</h2>
+<h2><a class="anchor" id="builtin-images"></a>Built-in Images</h2>
 
 <p>ImageMagick includes a number of built-in (embedded) images which may be referenced as if they were an image file. The <code>magick:</code> format tag may be used via the syntax <code>magick:</code><var>name</var> to request an embedded image (e.g. <code>magick:logo</code>). For backwards compatibility, the image specifications <code>GRANITE:</code>, <code>LOGO:</code>, <code>NETSCAPE:</code>, and <code>ROSE:</code> may also be used to request images with those names.</p>
 
@@ -1547,7 +1547,7 @@ the supported image formats.</p>
 
 </table></div>
 
-<h2 class="magick-post-title"><a class="anchor" id="builtin-patterns"></a>Built-in Patterns</h2>
+<h2><a class="anchor" id="builtin-patterns"></a>Built-in Patterns</h2>
 
 <p>ImageMagick includes a number of built-in (embedded) patterns which may be referenced as if they were an image file. The <code>pattern:</code> format tag may be used via the syntax <code>pattern:</code><var>name</var> to request an embedded pattern (e.g. <code>pattern:checkerboard</code>). The pattern size is controlled with the <a href="command-line-options.html#size">-size</a> command line option.</p>
 
@@ -1939,7 +1939,7 @@ the supported image formats.</p>
   </tr>
 </table></div>
 
-<h2 class="magick-post-title"><a class="anchor" id="embedded"></a>Embedded Image Profiles</h2>
+<h2><a class="anchor" id="embedded"></a>Embedded Image Profiles</h2>
 
 <p>ImageMagick provides a number of format identifiers which are used to add, remove, and save embedded profiles for images which can support embedded profiles. Image types which may contain embedded profiles are TIFF, JPEG, and PDF.</p>
 
@@ -2020,11 +2020,11 @@ the supported image formats.</p>
     <a href="support.html">Donate</a> •
     <a href="https://legacy.imagemagick.org/script/contact.php">Contact Us</a>
     <br/>
-        <small>© 1999-2019 ImageMagick Studio LLC</small></p>
+    <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
   <script src="assets/magick.js" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="assets/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>

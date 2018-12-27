@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>MagickCore, C API: Count the Colors in an Image @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, or convert bitmap images. You can resize your image, crop it, change its shades and colors, add captions, among other operations." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, count, the, colors, in, an, image, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="color.html#AcquireColorCache">AcquireColorCache</a> &#8226; <a href="color.html#GetColorInfoList">GetColorInfoList</a> &#8226; <a href="color.html#GetColorList">GetColorList</a> &#8226; <a href="color.html#ListColorInfo">ListColorInfo</a> &#8226; <a href="color.html#QueryColorCompliance">QueryColorCompliance</a> &#8226; <a href="color.html#QueryColorDatabase">QueryColorDatabase</a> &#8226; <a href="color.html#QueryColorname">QueryColorname</a> &#8226; <a href="color.html#QueryMagickColorCompliance">QueryMagickColorCompliance</a> &#8226; <a href="color.html#QueryMagickColor">QueryMagickColor</a> &#8226; <a href="color.html#QueryMagickColorname">QueryMagickColorname</a></p>
 
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="AcquireColorCache">AcquireColorCache</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="AcquireColorCache">AcquireColorCache</a></h2>
 
 <p>AcquireColorCache() caches one or more color configurations which provides a mapping between color attributes and a color name.</p>
 
@@ -109,7 +109,7 @@ LinkedListInfo *AcquireColorCache(const char *filename,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="GetColorInfoList">GetColorInfoList</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="GetColorInfoList">GetColorInfoList</a></h2>
 
 <p>GetColorInfoList() returns any colors that match the specified pattern.</p>
 
@@ -140,7 +140,7 @@ const ColorInfo **GetColorInfoList(const char *pattern,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="GetColorList">GetColorList</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="GetColorList">GetColorList</a></h2>
 
 <p>GetColorList() returns any colors that match the specified pattern.</p>
 
@@ -171,7 +171,7 @@ char **GetColorList(const char *pattern,size_t *number_colors,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="ListColorInfo">ListColorInfo</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="ListColorInfo">ListColorInfo</a></h2>
 
 <p>ListColorInfo() lists color names to the specified file.  Color names are a convenience.  Rather than defining a color by its red, green, and blue intensities just use a color name such as white, blue, or yellow.</p>
 
@@ -189,7 +189,7 @@ MagickBooleanType ListColorInfo(FILE *file,ExceptionInfo *exception)
 <dt>exception</dt>
 <p>return any errors or warnings in this structure.</p>
 
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="QueryColorCompliance">QueryColorCompliance</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="QueryColorCompliance">QueryColorCompliance</a></h2>
 
 <p>QueryColorCompliance() returns the red, green, blue, and opacity intensities for a given color name.</p>
 
@@ -225,7 +225,7 @@ MagickBooleanType QueryColorCompliance(const char *name,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="QueryColorDatabase">QueryColorDatabase</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="QueryColorDatabase">QueryColorDatabase</a></h2>
 
 <p>QueryColorDatabase() returns the red, green, blue, and opacity intensities for a given color name.</p>
 
@@ -256,7 +256,7 @@ MagickBooleanType QueryColorDatabase(const char *name,PixelPacket *color,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="QueryColorname">QueryColorname</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="QueryColorname">QueryColorname</a></h2>
 
 <p>QueryColorname() returns a named color for the given color intensity.  If an exact match is not found, a rgb() color is returned instead.</p>
 
@@ -285,7 +285,7 @@ MagickBooleanType QueryColorname(const Image *image,
 <dt>exception</dt>
 <p>return any errors or warnings in this structure.</p>
 
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="QueryMagickColorCompliance">QueryMagickColorCompliance</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="QueryMagickColorCompliance">QueryMagickColorCompliance</a></h2>
 
 <p>QueryMagickColorCompliance() returns the red, green, blue, and opacity intensities for a given color name and standards compliance.</p>
 
@@ -321,7 +321,7 @@ MagickBooleanType QueryMagickColorCompiliance(const char *name,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="QueryMagickColor">QueryMagickColor</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="QueryMagickColor">QueryMagickColor</a></h2>
 
 <p>QueryMagickColor() returns the red, green, blue, and opacity intensities for a given color name.</p>
 
@@ -352,7 +352,7 @@ MagickBooleanType QueryMagickColor(const char *name,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/color_8c.html" id="QueryMagickColorname">QueryMagickColorname</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/color_8c.html" id="QueryMagickColorname">QueryMagickColorname</a></h2>
 
 <p>QueryMagickColorname() returns a named color for the given color intensity. If an exact match is not found, a hex value is returned instead.  For example an intensity of rgb:(0,0,0) returns black whereas rgb:(223,223,223) returns #dfdfdf.</p>
 
@@ -396,11 +396,11 @@ MagickBooleanType QueryMagickColorname(const Image *image,
     <a href="../www/support.html">Donate</a> •
     <a href="../www/contact.html">Contact Us</a>
     <br/>
-        <small>© 1999-2019 ImageMagick Studio LLC</small></p>
+    <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
   <script src="assets/magick.js" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="assets/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>

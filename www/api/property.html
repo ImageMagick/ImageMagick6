@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>MagickCore, C API: Get/Set Image Properties @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, or convert bitmap images. You can resize your image, crop it, change its shades and colors, add captions, among other operations." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, get/set, image, properties, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -82,7 +82,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="property.html#CloneImageProperties">CloneImageProperties</a> &#8226; <a href="property.html#DefineImageProperty">DefineImageProperty</a> &#8226; <a href="property.html#DeleteImageProperty">DeleteImageProperty</a> &#8226; <a href="property.html#DestroyImageProperties">DestroyImageProperties</a> &#8226; <a href="property.html#FormatImageProperty">FormatImageProperty</a> &#8226; <a href="property.html#GetImageProperty">GetImageProperty</a> &#8226; <a href="property.html#GetNextImageProperty">GetNextImageProperty</a> &#8226; <a href="property.html#InterpretImageProperties">InterpretImageProperties</a> &#8226; <a href="property.html#RemoveImageProperty">RemoveImageProperty</a> &#8226; <a href="property.html#ResetImagePropertyIterator">ResetImagePropertyIterator</a> &#8226; <a href="property.html#SetImageProperty">SetImageProperty</a></p>
 
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="CloneImageProperties">CloneImageProperties</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="CloneImageProperties">CloneImageProperties</a></h2>
 
 <p>CloneImageProperties() clones all the image properties to another image.</p>
 
@@ -109,7 +109,7 @@ MagickBooleanType CloneImageProperties(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="DefineImageProperty">DefineImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="DefineImageProperty">DefineImageProperty</a></h2>
 
 <p>DefineImageProperty() associates an assignment string of the form "key=value" with an artifact or options. It is equivelent to SetImageProperty().</p>
 
@@ -136,7 +136,7 @@ MagickBooleanType DefineImageProperty(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="DeleteImageProperty">DeleteImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="DeleteImageProperty">DeleteImageProperty</a></h2>
 
 <p>DeleteImageProperty() deletes an image property.</p>
 
@@ -162,7 +162,7 @@ MagickBooleanType DeleteImageProperty(Image *image,const char *property)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="DestroyImageProperties">DestroyImageProperties</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="DestroyImageProperties">DestroyImageProperties</a></h2>
 
 <p>DestroyImageProperties() destroys all properties and associated memory attached to the given image.</p>
 
@@ -184,7 +184,7 @@ void DestroyImageProperties(Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="FormatImageProperty">FormatImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="FormatImageProperty">FormatImageProperty</a></h2>
 
 <p>FormatImageProperty() permits formatted property/value pairs to be saved as an image property.</p>
 
@@ -206,7 +206,7 @@ MagickBooleanType FormatImageProperty(Image *image,const char *property,
 <dt> format</dt>
 <p>A string describing the format to use to write the remaining arguments.</p>
 
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="GetImageProperty">GetImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="GetImageProperty">GetImageProperty</a></h2>
 
 <p>GetImageProperty() gets a value associated with an image property.</p>
 
@@ -236,7 +236,7 @@ const char *GetImageProperty(const Image *image,const char *key)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="GetNextImageProperty">GetNextImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="GetNextImageProperty">GetNextImageProperty</a></h2>
 
 <p>GetNextImageProperty() gets the next free-form string property name.</p>
 
@@ -258,7 +258,7 @@ char *GetNextImageProperty(const Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="InterpretImageProperties">InterpretImageProperties</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="InterpretImageProperties">InterpretImageProperties</a></h2>
 
 <p>InterpretImageProperties() replaces any embedded formatting characters with the appropriate image property and returns the interpreted text.</p>
 
@@ -299,7 +299,7 @@ char *InterpretImageProperties(const ImageInfo *image_info,Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="RemoveImageProperty">RemoveImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="RemoveImageProperty">RemoveImageProperty</a></h2>
 
 <p>RemoveImageProperty() removes a property from the image and returns its value.</p>
 
@@ -327,7 +327,7 @@ char *RemoveImageProperty(Image *image,const char *property)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="ResetImagePropertyIterator">ResetImagePropertyIterator</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="ResetImagePropertyIterator">ResetImagePropertyIterator</a></h2>
 
 <p>ResetImagePropertyIterator() resets the image properties iterator.  Use it in conjunction with GetNextImageProperty() to iterate over all the values associated with an image property.</p>
 
@@ -349,7 +349,7 @@ ResetImagePropertyIterator(Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/property_8c.html" id="SetImageProperty">SetImageProperty</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/property_8c.html" id="SetImageProperty">SetImageProperty</a></h2>
 
 <p>SetImageProperty() saves the given string value either to specific known attribute or to a freeform property string.</p>
 
@@ -395,11 +395,11 @@ MagickBooleanType SetImageProperty(Image *image,const char *property,
     <a href="../www/support.html">Donate</a> •
     <a href="../www/contact.html">Contact Us</a>
     <br/>
-        <small>© 1999-2019 ImageMagick Studio LLC</small></p>
+    <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
   <script src="assets/magick.js" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="assets/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
