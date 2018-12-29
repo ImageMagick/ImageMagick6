@@ -429,10 +429,6 @@ static Image *ReadCUTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (status == MagickFalse)
     {
       InheritException(exception,&image->exception);
-      if (palette != NULL)
-        palette=DestroyImage(palette);
-      if (clone_info != NULL)
-        clone_info=DestroyImageInfo(clone_info);
       return(DestroyImageList(image));
     }
 
