@@ -5131,15 +5131,15 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
 static inline void PrefetchPixelCacheNexusPixels(const NexusInfo *nexus_info,
   const MapMode mode)
 {
-  magick_unreferenced(nexus_info);
-  magick_unreferenced(mode);
-
+  if (nexus_info->length < CACHE_LINE_SIZE)
+    return;
   if (mode == ReadMode)
     {
-      MagickCachePrefetch((unsigned char *) nexus_info->pixels,0,1);
+      MagickCachePrefetch((unsigned char *) nexus_info->pixels+CACHE_LINE_SIZE,
+        0,1);
       return;
     }
-  MagickCachePrefetch((unsigned char *) nexus_info->pixels,1,1);
+  MagickCachePrefetch((unsigned char *) nexus_info->pixels+CACHE_LINE_SIZE,1,1);
 }
 
 static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
@@ -5196,26 +5196,20 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
   length=MagickMax(number_pixels,cache_info->columns)*sizeof(PixelPacket);
   if (cache_info->active_index_channel != MagickFalse)
     length+=number_pixels*sizeof(IndexPacket);
+  status=MagickTrue;
   if (nexus_info->cache == (PixelPacket *) NULL)
-    {
-      status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
-      if (status == MagickFalse)
-        {
-          (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
-          return((PixelPacket *) NULL);
-        }
-    }
+    status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
   else
     if (nexus_info->length < length)
       {
         RelinquishCacheNexusPixels(nexus_info);
         status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
-        if (status == MagickFalse)
-          {
-            (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
-            return((PixelPacket *) NULL);
-          }
       }
+  if (status == MagickFalse)
+    {
+      (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
+      return((PixelPacket *) NULL);
+    }
   nexus_info->pixels=nexus_info->cache;
   nexus_info->indexes=(IndexPacket *) NULL;
   if (cache_info->active_index_channel != MagickFalse)
