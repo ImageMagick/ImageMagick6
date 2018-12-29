@@ -317,7 +317,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     image pixels. ReadImage processes "exif:Orientation" expecting pixels to be
     oriented accordingly. However, in HEIF the pixels are NOT rotated.
    */
-  SetImageProperty(image, "exif:Orientation", "1", exception);
+  SetImageProperty(image, "exif:Orientation", "1");
   return(GetFirstImageInList(image));
 }
 #endif
@@ -569,7 +569,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,Image *image
     for (y=0; y < (long) image->rows; y++)
     {
       p=GetVirtualPixels(image,0,y,image->columns,1,exception);
-      if (p == (const Quantum *) NULL)
+      if (p == (const PixelPacket *) NULL)
         {
           status=MagickFalse;
           break;
