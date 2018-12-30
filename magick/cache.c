@@ -5158,6 +5158,8 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
   assert(cache_info->signature == MagickCoreSignature);
   if (cache_info->type == UndefinedCache)
     return((PixelPacket *) NULL);
+  if ((region->width == 0) || (region->height == 0))
+    return((PixelPacket *) NULL);
   if (((cache_info->type == MemoryCache) || (cache_info->type == MapCache)) &&
       (buffered == MagickFalse))
     {
