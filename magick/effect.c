@@ -3394,10 +3394,10 @@ MagickExport Image *RotationalBlurImageChannel(const Image *image,
   if ((cos_theta == (MagickRealType *) NULL) ||
       (sin_theta == (MagickRealType *) NULL))
     {
-      if (cos_theta != (double *) NULL)
-        cos_theta=(double *) RelinquishMagickMemory(cos_theta);
-      if (sin_theta != (double *) NULL)
-        sin_theta=(double *) RelinquishMagickMemory(sin_theta);
+      if (cos_theta != (MagickRealType *) NULL)
+        cos_theta=(MagickRealType *) RelinquishMagickMemory(cos_theta);
+      if (sin_theta != (MagickRealType *) NULL)
+        sin_theta=(MagickRealType *) RelinquishMagickMemory(sin_theta);
       blur_image=DestroyImage(blur_image);
       ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
     }
