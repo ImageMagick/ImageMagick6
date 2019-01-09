@@ -81,6 +81,14 @@
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/xwindow-private.h"
+#if defined(MAGICKCORE_XML_DELEGATE)
+#  if defined(MAGICKCORE_WINDOWS_SUPPORT)
+#    if !defined(__MINGW32__)
+#      include <win32config.h>
+#    endif
+#  endif
+#  include <libxml/parser.h>
+#endif
 
 /*
   Define declarations.
@@ -1375,6 +1383,9 @@ MagickExport void MagickCoreTerminus(void)
   RegistryComponentTerminus();
 #if defined(MAGICKCORE_X11_DELEGATE)
   XComponentTerminus();
+#endif
+#if defined(MAGICKCORE_XML_DELEGATE)
+  xmlCleanupParser();
 #endif
   AnnotateComponentTerminus();
   MimeComponentTerminus();
