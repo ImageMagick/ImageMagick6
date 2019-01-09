@@ -675,9 +675,9 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       next->magick_columns=next->columns;
     if (next->magick_rows == 0)
       next->magick_rows=next->rows;
-    value=GetImageProperty(next,"tiff:Orientation");
+    value=GetImageProperty(next,"exif:Orientation");
     if (value == (char *) NULL)
-      value=GetImageProperty(next,"exif:Orientation");
+      value=GetImageProperty(next,"tiff:Orientation");
     if (value != (char *) NULL)
       {
         next->orientation=(OrientationType) StringToLong(value);
