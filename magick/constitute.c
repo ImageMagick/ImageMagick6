@@ -708,9 +708,9 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
           next->y_resolution=geometry_info.rho+geometry_info.sigma/1000.0;
         (void) DeleteImageProperty(next,"exif:YResolution");
       }
-    value=GetImageProperty(next,"tiff:ResolutionUnit");
+    value=GetImageProperty(next,"exif:ResolutionUnit");
     if (value == (char *) NULL)
-      value=GetImageProperty(next,"exif:ResolutionUnit");
+      value=GetImageProperty(next,"tiff:ResolutionUnit");
     if (value != (char *) NULL)
       {
         option_type=ParseCommandOption(MagickResolutionOptions,MagickFalse,
