@@ -1315,6 +1315,8 @@ MagickExport Image *EdgeImage(const Image *image,const double radius,
   if (edge_image == (Image *) NULL)
     edge_image=MorphologyImageChannel(image,DefaultChannels,ConvolveMorphology,
       1,kernel_info,exception);
+  if (edge_image != (Image *) NULL)
+    (void) ClampImage(edge_image);
   kernel_info=DestroyKernelInfo(kernel_info);
   return(edge_image);
 }
