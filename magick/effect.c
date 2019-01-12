@@ -1315,8 +1315,6 @@ MagickExport Image *EdgeImage(const Image *image,const double radius,
   if (edge_image == (Image *) NULL)
     edge_image=MorphologyImageChannel(image,DefaultChannels,ConvolveMorphology,
       1,kernel_info,exception);
-  if (edge_image != (Image *) NULL)
-    (void) ClampImage(edge_image);
   kernel_info=DestroyKernelInfo(kernel_info);
   return(edge_image);
 }
@@ -4056,6 +4054,8 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
 MagickExport Image *ShadeImage(const Image *image,const MagickBooleanType gray,
   const double azimuth,const double elevation,ExceptionInfo *exception)
 {
+#define GetShadeIntensity(image,pixel) \
+  ClampPixel(GetPixelIntensity((image),(pixel)))
 #define ShadeImageTag  "Shade/Image"
 
   CacheView
@@ -4168,18 +4168,18 @@ MagickExport Image *ShadeImage(const Image *image,const MagickBooleanType gray,
       s0=p+1;
       s1=s0+image->columns+2;
       s2=s1+image->columns+2;
-      normal.x=(double) (GetPixelIntensity(linear_image,s0-1)+
-        GetPixelIntensity(linear_image,s1-1)+
-        GetPixelIntensity(linear_image,s2-1)-
-        GetPixelIntensity(linear_image,s0+1)-
-        GetPixelIntensity(linear_image,s1+1)-
-        GetPixelIntensity(linear_image,s2+1));
-      normal.y=(double) (GetPixelIntensity(linear_image,s2-1)+
-        GetPixelIntensity(linear_image,s2)+
-        GetPixelIntensity(linear_image,s2+1)-
-        GetPixelIntensity(linear_image,s0-1)-
-        GetPixelIntensity(linear_image,s0)-
-        GetPixelIntensity(linear_image,s0+1));
+      normal.x=(double) (GetShadeIntensity(linear_image,s0-1)+
+        GetShadeIntensity(linear_image,s1-1)+
+        GetShadeIntensity(linear_image,s2-1)-
+        GetShadeIntensity(linear_image,s0+1)-
+        GetShadeIntensity(linear_image,s1+1)-
+        GetShadeIntensity(linear_image,s2+1));
+      normal.y=(double) (GetShadeIntensity(linear_image,s2-1)+
+        GetShadeIntensity(linear_image,s2)+
+        GetShadeIntensity(linear_image,s2+1)-
+        GetShadeIntensity(linear_image,s0-1)-
+        GetShadeIntensity(linear_image,s0)-
+        GetShadeIntensity(linear_image,s0+1));
       if ((fabs(normal.x) <= MagickEpsilon) &&
           (fabs(normal.y) <= MagickEpsilon))
         shade=light.z;
