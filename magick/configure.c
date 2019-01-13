@@ -151,7 +151,7 @@ static LinkedListInfo *AcquireConfigureCache(const char *filename,
   LinkedListInfo
     *cache;
 
-  MagickStatusType
+  MagickBooleanType
     status;
 
   register ssize_t
@@ -163,7 +163,6 @@ static LinkedListInfo *AcquireConfigureCache(const char *filename,
   cache=NewLinkedList(0);
   if (cache == (LinkedListInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  status=MagickTrue;
 #if !defined(MAGICKCORE_ZERO_CONFIGURATION_SUPPORT)
   {
     const StringInfo
@@ -176,7 +175,7 @@ static LinkedListInfo *AcquireConfigureCache(const char *filename,
     option=(const StringInfo *) GetNextValueInLinkedList(options);
     while (option != (const StringInfo *) NULL)
     {
-      status&=LoadConfigureCache(cache,(const char *)
+      (void) LoadConfigureCache(cache,(const char *)
         GetStringInfoDatum(option),GetStringInfoPath(option),0,exception);
       option=(const StringInfo *) GetNextValueInLinkedList(options);
     }
@@ -209,7 +208,7 @@ static LinkedListInfo *AcquireConfigureCache(const char *filename,
     configure_info->value=(char *) p->value;
     configure_info->exempt=MagickTrue;
     configure_info->signature=MagickCoreSignature;
-    status&=AppendValueToLinkedList(cache,configure_info);
+    status=AppendValueToLinkedList(cache,configure_info);
     if (status == MagickFalse)
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",
