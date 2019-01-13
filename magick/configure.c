@@ -53,6 +53,7 @@
 #include "magick/string_.h"
 #include "magick/token.h"
 #include "magick/utility.h"
+#include "magick/version.h"
 #include "magick/xml-tree.h"
 #include "magick/xml-tree-private.h"
 
