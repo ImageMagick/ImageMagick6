@@ -899,16 +899,14 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
         return(RenderX11(image,draw_info,offset,metrics));
       if (*draw_info->font == '^')
         return(RenderPostscript(image,draw_info,offset,metrics));
-      if (IsPathAccessible(draw_info->font) != MagickFalse)
-        {
-          status=RenderFreetype(image,draw_info,draw_info->encoding,offset,
-            metrics);
-          return(status);
-        }
       type_info=GetTypeInfo(draw_info->font,&image->exception);
       if (type_info == (const TypeInfo *) NULL)
-        (void) ThrowMagickException(&image->exception,GetMagickModule(),
-          TypeWarning,"UnableToReadFont","`%s'",draw_info->font);
+        if (IsPathAccessible(draw_info->font) != MagickFalse)
+          {
+            status=RenderFreetype(image,draw_info,draw_info->encoding,offset,
+              metrics);
+            return(status);
+          }
     }
   if ((type_info == (const TypeInfo *) NULL) &&
       (draw_info->family != (const char *) NULL))
