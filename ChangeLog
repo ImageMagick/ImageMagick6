@@ -1,3 +1,8 @@
+2019-01-19  6.9.10-25 Cristy  <quetzlzacatenango@image...>
+  * Eliminate spurious font warning (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1458).
+  * Support HEIC EXIF & XMP profiles.
+
 2019-01-12  6.9.10-24 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-24, GIT revision 14130:70079ed45:20190112
 

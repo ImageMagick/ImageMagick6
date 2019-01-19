@@ -52,6 +52,7 @@
 #include "magick/memory_.h"
 #include "magick/pixel-accessor.h"
 #include "magick/quantum-private.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/module.h"
@@ -252,7 +253,8 @@ static Image *ReadTTFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   */
   y=20;
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
-  draw_info->font=AcquireString(image->filename);
+  draw_info->font=AcquireString("");
+  (void) ImageToFile(image,draw_info->font,exception);
   ConcatenateString(&draw_info->primitive,"push graphic-context\n");
   (void) FormatLocaleString(buffer,MaxTextExtent," viewbox 0 0 %.20g %.20g\n",
     (double) image->columns,(double) image->rows);
@@ -287,6 +289,7 @@ static Image *ReadTTFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Relinquish resources.
   */
+  (void) RelinquishUniqueFileResource(draw_info->font);
   draw_info=DestroyDrawInfo(draw_info);
   (void) CloseBlob(image);
   return(GetFirstImageInList(image));
