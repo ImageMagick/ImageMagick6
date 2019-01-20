@@ -1110,7 +1110,7 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
       if (channel_statistics == (ChannelStatistics *) NULL)
         return(MagickFalse);
       (void) CopyMagickString(target,locate,MaxTextExtent);
-      *target=(char) toupper((int) ((unsigned char) *target));
+      *target=(char) LocaleUppercase((int) ((unsigned char) *target));
       (void) FormatLocaleFile(file,"    \"channel%s\": {\n",target);
       if (image->matte != MagickFalse)
         (void) PrintChannelLocations(file,image,AlphaChannel,"alpha",
