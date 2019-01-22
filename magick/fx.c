@@ -91,6 +91,7 @@
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/thread-private.h"
+#include "magick/threshold.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
 
@@ -628,6 +629,9 @@ MagickExport Image *CharcoalImage(const Image *image,const double radius,
     *charcoal_image,
     *edge_image;
 
+  MagickBooleanType
+    status;
+
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
@@ -637,13 +641,20 @@ MagickExport Image *CharcoalImage(const Image *image,const double radius,
   edge_image=EdgeImage(image,radius,exception);
   if (edge_image == (Image *) NULL)
     return((Image *) NULL);
-  charcoal_image=BlurImage(edge_image,radius,sigma,exception);
+  charcoal_image=(Image *) NULL;
+  status=ClampImage(edge_image);
+  if (status != MagickFalse)
+    charcoal_image=BlurImage(edge_image,radius,sigma,exception);
   edge_image=DestroyImage(edge_image);
   if (charcoal_image == (Image *) NULL)
     return((Image *) NULL);
-  (void) NormalizeImage(charcoal_image);
-  (void) NegateImage(charcoal_image,MagickFalse);
-  (void) GrayscaleImage(charcoal_image,image->intensity);
+  status=NormalizeImage(charcoal_image);
+  if (status != MagickFalse)
+    status=NegateImage(charcoal_image,MagickFalse);
+  if (status != MagickFalse)
+    status=GrayscaleImage(charcoal_image,image->intensity);
+  if (status == MagickFalse)
+    charcoal_image=DestroyImage(charcoal_image);
   return(charcoal_image);
 }
 
