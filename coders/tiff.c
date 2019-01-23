@@ -39,6 +39,9 @@
 /*
   Include declarations.
 */
+#ifdef __VMS
+#define JPEG_SUPPORT 1
+#endif
 #include "magick/studio.h"
 #include "magick/artifact.h"
 #include "magick/attribute.h"
@@ -87,10 +90,10 @@
 #include "magick/utility.h"
 #if defined(MAGICKCORE_TIFF_DELEGATE)
 # if defined(MAGICKCORE_HAVE_TIFFCONF_H)
-#  include "tiffconf.h"
+#  include <tiffconf.h>
 # endif
-# include "tiff.h"
-# include "tiffio.h"
+# include <tiff.h>
+# include <tiffio.h>
 # if !defined(COMPRESSION_ADOBE_DEFLATE)
 #  define COMPRESSION_ADOBE_DEFLATE  8
 # endif
@@ -222,13 +225,12 @@ static MagickBooleanType
   WritePTIFImage(const ImageInfo *,Image *),
   WriteTIFFImage(const ImageInfo *,Image *);
 
-static void InitPSDInfo(Image *image, Image *layer, PSDInfo *info)
+static void InitPSDInfo(Image *image,Image *layer,PSDInfo *info)
 {
   info->version=1;
   info->columns=layer->columns;
   info->rows=layer->rows;
-  /* Setting the mode to a value that won't change the colorspace */
-  info->mode=10;
+  info->mode=10; /* Set mode to a value that won't change the colorspace */
   /* Assume that image has matte */
   if (IsGrayImage(image,&image->exception) != MagickFalse)
     info->channels=2U;
@@ -326,7 +328,7 @@ static MagickBooleanType IsTIFF(const unsigned char *magick,const size_t length)
 %
 */
 
-static inline size_t WriteLSBLong(FILE *file,const size_t value)
+static inline size_t WriteLSBLong(FILE *file,const unsigned int value)
 {
   unsigned char
     buffer[4];
@@ -394,6 +396,8 @@ static Image *ReadGROUP4Image(const ImageInfo *image_info,
   if ((unique_file == -1) || (file == (FILE *) NULL))
     ThrowImageException(FileOpenError,"UnableToCreateTemporaryFile");
   length=fwrite("\111\111\052\000\010\000\000\000\016\000",1,10,file);
+  if (length != 10)
+    ThrowReaderException(CorruptImageError,"UnexpectedEndOfFile");
   length=fwrite("\376\000\003\000\001\000\000\000\000\000\000\000",1,12,file);
   length=fwrite("\000\001\004\000\001\000\000\000",1,8,file);
   length=WriteLSBLong(file,image->columns);
@@ -404,21 +408,21 @@ static Image *ReadGROUP4Image(const ImageInfo *image_info,
   length=fwrite("\006\001\003\000\001\000\000\000\000\000\000\000",1,12,file);
   length=fwrite("\021\001\003\000\001\000\000\000",1,8,file);
   strip_offset=10+(12*14)+4+8;
-  length=WriteLSBLong(file,(size_t) strip_offset);
+  length=WriteLSBLong(file,(unsigned int) strip_offset);
   length=fwrite("\022\001\003\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(size_t) image_info->orientation);
+  length=WriteLSBLong(file,(unsigned int) image_info->orientation);
   length=fwrite("\025\001\003\000\001\000\000\000\001\000\000\000",1,12,file);
   length=fwrite("\026\001\004\000\001\000\000\000",1,8,file);
   length=WriteLSBLong(file,image->rows);
   length=fwrite("\027\001\004\000\001\000\000\000\000\000\000\000",1,12,file);
   offset=(ssize_t) ftell(file)-4;
   length=fwrite("\032\001\005\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(size_t) (strip_offset-8));
+  length=WriteLSBLong(file,(unsigned int) (strip_offset-8));
   length=fwrite("\033\001\005\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(size_t) (strip_offset-8));
+  length=WriteLSBLong(file,(unsigned int) (strip_offset-8));
   length=fwrite("\050\001\003\000\001\000\000\000\002\000\000\000",1,12,file);
   length=fwrite("\000\000\000\000",1,4,file);
-  length=WriteLSBLong(file,(size_t) (image->x_resolution+0.5));
+  length=WriteLSBLong(file,(unsigned int) image->x_resolution);
   length=WriteLSBLong(file,1);
   status=MagickTrue;
   for (length=0; (c=ReadBlobByte(image)) != EOF; length++)
@@ -1224,9 +1228,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
   if (image_info->number_scenes != 0)
     {
       /*
-      Generate blank images for subimage specification (e.g. image.tif[4].
-      We need to check the number of directores because it is possible that
-      the subimage(s) are stored in the photoshop profile.
+        Generate blank images for subimage specification (e.g. image.tif[4].
+        We need to check the number of directores because it is possible that
+        the subimage(s) are stored in the photoshop profile.
       */
       if (image_info->scene < (size_t)TIFFNumberOfDirectories(tiff))
         {

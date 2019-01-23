@@ -1381,7 +1381,7 @@ static MagickBooleanType WriteDIBImage(const ImageInfo *image_info,Image *image)
             (1UL << dib_info.bits_per_pixel),4*sizeof(*dib_colormap));
           if (dib_colormap == (unsigned char *) NULL)
             {
-              pixels=(unsigned char *) RelinquishMagickMemory(pixels)
+              pixels=(unsigned char *) RelinquishMagickMemory(pixels);
               ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
             }
           q=dib_colormap;
