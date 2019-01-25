@@ -1103,7 +1103,7 @@ static void TIFFReadPhotoshopLayers(const ImageInfo *image_info,Image *image,
   clone_info=CloneImageInfo(image_info);
   clone_info->number_scenes=0;
   (void) ReadPSDLayers(layers,clone_info,&info,MagickFalse,exception);
-  clone_info=DestroyCloneInfo(clone_info);
+  clone_info=DestroyImageInfo(clone_info);
   /* we need to set the datum in case a realloc happend */
   ((StringInfo *) profile)->datum=GetBlobStreamData(layers);
   InheritException(exception,&layers->exception);
