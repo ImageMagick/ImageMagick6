@@ -1045,7 +1045,7 @@ static TIFFMethodType GetJPEGMethod(Image* image,TIFF *tiff,uint16 photometric,
   return(method);
 }
 
-static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
+static void TIFFReadPhotoshopLayers(const ImageInfo *image_info,Image *image,
   ExceptionInfo *exception)
 {
   const char
@@ -1056,6 +1056,9 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
 
   Image
     *layers;
+
+  ImageInfo
+    *clone_info;
 
   PSDInfo
     info;
@@ -1097,7 +1100,10 @@ static void TIFFReadPhotoshopLayers(Image* image,const ImageInfo *image_info,
   AttachBlob(layers->blob,profile->datum,profile->length);
   SeekBlob(layers,(MagickOffsetType) i,SEEK_SET);
   InitPSDInfo(image, layers, &info);
-  (void) ReadPSDLayers(layers,image_info,&info,MagickFalse,exception);
+  clone_info=CloneImageInfo(image_info);
+  clone_info->number_scenes=0;
+  (void) ReadPSDLayers(layers,clone_info,&info,MagickFalse,exception);
+  clone_info=DestroyCloneInfo(clone_info);
   /* we need to set the datum in case a realloc happend */
   ((StringInfo *) profile)->datum=GetBlobStreamData(layers);
   InheritException(exception,&layers->exception);
@@ -2178,7 +2184,7 @@ RestoreMSCWarning
       }
   } while ((status != MagickFalse) && (more_frames != MagickFalse));
   TIFFClose(tiff);
-  TIFFReadPhotoshopLayers(image,image_info,exception);
+  TIFFReadPhotoshopLayers(image_info,image,exception);
   if ((image_info->number_scenes != 0) &&
       (image_info->scene >= GetImageListLength(image)))
     status=MagickFalse;
