@@ -4639,9 +4639,13 @@ magick_number_threads(random_image,random_image,random_image->rows,key == ~0UL)
   blur_image=DestroyImage(blur_image);
   if (dodge_image == (Image *) NULL)
     return((Image *) NULL);
-  (void) NormalizeImage(dodge_image);
-  (void) NegateImage(dodge_image,MagickFalse);
-  (void) TransformImage(&dodge_image,(char *) NULL,"50%");
+  status=ClampImage(dodge_image);
+  if (status != MagickFalse)
+    status=NormalizeImage(dodge_image);
+  if (status != MagickFalse)
+    status=NegateImage(dodge_image,MagickFalse);
+  if (status != MagickFalse)
+    status=TransformImage(&dodge_image,(char *) NULL,"50%");
   sketch_image=CloneImage(image,0,0,MagickTrue,exception);
   if (sketch_image == (Image *) NULL)
     {
