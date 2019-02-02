@@ -2459,7 +2459,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     {
       status=SetImageAlphaChannel(image,OpaqueAlphaChannel);
       if (status == MagickFalse)
-        return(status == 0 ? MagickFalse : MagickTrue);
+        return(status);
     }
   primitive=(char *) NULL;
   if (*draw_info->primitive != '@')
