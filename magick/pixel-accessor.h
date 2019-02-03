@@ -111,7 +111,7 @@ static inline MagickRealType AbsolutePixelValue(const MagickRealType x)
 static inline Quantum ClampPixel(const MagickRealType value)
 { 
   if (value < 0.0f)
-    return(0); 
+    return((Quantum) 0); 
   if (value >= (MagickRealType) QuantumRange)
     return((Quantum) QuantumRange);
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
