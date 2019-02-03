@@ -195,6 +195,12 @@ typedef struct _SVGInfo
 } SVGInfo;
 
 /*
+  Static declarations.
+*/
+static char
+  SVGDensityGeometry[] = "96.0x96.0";
+
+/*
   Forward declarations.
 */
 static MagickBooleanType
@@ -238,7 +244,6 @@ static MagickBooleanType IsSVG(const unsigned char *magick,const size_t length)
   return(MagickFalse);
 }
 
-#if defined(MAGICKCORE_XML_DELEGATE)
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -266,6 +271,89 @@ static MagickBooleanType IsSVG(const unsigned char *magick,const size_t length)
 %
 */
 
+static Image *RenderSVGImage(const ImageInfo *image_info,Image *image,
+  ExceptionInfo *exception)
+{
+  char
+    background[MagickPathExtent],
+    command[MagickPathExtent],
+    *density,
+    input_filename[MagickPathExtent],
+    opacity[MagickPathExtent],
+    output_filename[MagickPathExtent],
+    unique[MagickPathExtent];
+
+  const DelegateInfo
+    *delegate_info;
+
+  Image
+    *next;
+
+  int
+    status;
+
+  struct stat
+    attributes;
+
+  /*
+    Our best hope for compliance with the SVG standard.
+  */
+  delegate_info=GetDelegateInfo("svg:decode",(char *) NULL,exception);
+  if (delegate_info == (const DelegateInfo *) NULL)
+    return((Image *) NULL);
+  status=AcquireUniqueSymbolicLink(image->filename,input_filename);
+  (void) AcquireUniqueFilename(output_filename);
+  (void) AcquireUniqueFilename(unique);
+  density=AcquireString("");
+  (void) FormatLocaleString(density,MagickPathExtent,"%.20g,%.20g",
+    image->x_resolution,image->y_resolution);
+  (void) FormatLocaleString(background,MagickPathExtent,
+    "rgb(%.20g%%,%.20g%%,%.20g%%)",
+    100.0*QuantumScale*image->background_color.red,
+    100.0*QuantumScale*image->background_color.green,
+    100.0*QuantumScale*image->background_color.blue);
+  (void) FormatLocaleString(opacity,MagickPathExtent,"%.20g",QuantumScale*
+    (QuantumRange-image->background_color.opacity));
+  (void) FormatLocaleString(command,MagickPathExtent,
+    GetDelegateCommands(delegate_info),input_filename,output_filename,density,
+    background,opacity,unique);
+  density=DestroyString(density);
+  status=ExternalDelegateCommand(MagickFalse,image_info->verbose,command,
+    (char *) NULL,exception);
+  (void) RelinquishUniqueFileResource(unique);
+  (void) RelinquishUniqueFileResource(input_filename);
+  if ((status == 0) && (stat(output_filename,&attributes) == 0) &&
+      (attributes.st_size > 0))
+    {
+      Image
+        *svg_image;
+
+      ImageInfo
+        *read_info;
+
+      read_info=CloneImageInfo(image_info);
+      (void) CopyMagickString(read_info->filename,output_filename,
+        MagickPathExtent);
+      svg_image=ReadImage(read_info,exception);
+      read_info=DestroyImageInfo(read_info);
+      if (svg_image != (Image *) NULL)
+        {
+          (void) RelinquishUniqueFileResource(output_filename);
+          for (next=GetFirstImageInList(svg_image); next != (Image *) NULL; )
+          {
+            (void) CopyMagickString(next->filename,image->filename,
+              MaxTextExtent);
+            (void) CopyMagickString(next->magick,image->magick,MaxTextExtent);
+            next=GetNextImageInList(next);
+          }
+          return(svg_image);
+        }
+    }
+  (void) RelinquishUniqueFileResource(output_filename);
+  return((Image *) NULL);
+}
+
+#if defined(MAGICKCORE_XML_DELEGATE)
 static SVGInfo *AcquireSVGInfo(void)
 {
   SVGInfo
@@ -3094,12 +3182,6 @@ static void SVGExternalSubset(void *context,const xmlChar *name,
 }
 #endif
 
-/*
-  Static declarations.
-*/
-static char
-  SVGDensityGeometry[] = "96.0x96.0";
-
 static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
   char
@@ -3165,81 +3247,14 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   if (LocaleCompare(image_info->magick,"MSVG") != 0)
     {
-      const DelegateInfo
-        *delegate_info;
+      Image
+        *svg_image;
 
-      delegate_info=GetDelegateInfo("svg:decode",(char *) NULL,exception);
-      if (delegate_info != (const DelegateInfo *) NULL)
+      svg_image=RenderSVGImage(image_info,image,exception);
+      if (svg_image != (Image *) NULL)
         {
-          char
-            background[MaxTextExtent],
-            command[MaxTextExtent],
-            *density,
-            input_filename[MaxTextExtent],
-            opacity[MaxTextExtent],
-            output_filename[MaxTextExtent],
-            unique[MaxTextExtent];
-
-          int
-            status;
-
-          struct stat
-            attributes;
-
-          /*
-            Our best hope for compliance with the SVG standard.
-          */
-          status=AcquireUniqueSymbolicLink(image->filename,input_filename);
-          (void) AcquireUniqueFilename(output_filename);
-          (void) AcquireUniqueFilename(unique);
-          density=AcquireString("");
-          (void) FormatLocaleString(density,MaxTextExtent,"%.20g,%.20g",
-            image->x_resolution,image->y_resolution);
-          (void) FormatLocaleString(background,MaxTextExtent,
-            "rgb(%.20g%%,%.20g%%,%.20g%%)",
-            100.0*QuantumScale*image->background_color.red,
-            100.0*QuantumScale*image->background_color.green,
-            100.0*QuantumScale*image->background_color.blue);
-          (void) FormatLocaleString(opacity,MaxTextExtent,"%.20g",QuantumScale*
-            (QuantumRange-image->background_color.opacity));
-          (void) FormatLocaleString(command,MaxTextExtent,GetDelegateCommands(
-            delegate_info),input_filename,output_filename,density,background,
-            opacity,unique);
-          density=DestroyString(density);
-          status=ExternalDelegateCommand(MagickFalse,image_info->verbose,
-            command,(char *) NULL,exception);
-          (void) RelinquishUniqueFileResource(unique);
-          (void) RelinquishUniqueFileResource(input_filename);
-          if ((status == 0) && (stat(output_filename,&attributes) == 0) &&
-              (attributes.st_size > 0))
-            {
-              Image
-                *svg_image;
-
-              ImageInfo
-                *read_info;
-
-              read_info=CloneImageInfo(image_info);
-              (void) CopyMagickString(read_info->filename,output_filename,
-                MaxTextExtent);
-              svg_image=ReadImage(read_info,exception);
-              read_info=DestroyImageInfo(read_info);
-              (void) RelinquishUniqueFileResource(output_filename);
-              if (svg_image != (Image *) NULL)
-                {
-                  for (next=GetFirstImageInList(svg_image); next != (Image *) NULL; )
-                  {
-                    (void) CopyMagickString(next->filename,image->filename,
-                      MaxTextExtent);
-                    (void) CopyMagickString(next->magick,image->magick,
-                      MaxTextExtent);
-                    next=GetNextImageInList(next);
-                  }
-                  image=DestroyImage(image);
-                  return(svg_image);
-                }
-            }
-          (void) RelinquishUniqueFileResource(output_filename);
+          image=DestroyImageList(image);
+          return(svg_image);
         }
       {
 #if defined(MAGICKCORE_RSVG_DELEGATE)
@@ -3634,6 +3649,49 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   }
   return(GetFirstImageInList(image));
 }
+#else
+static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
+{
+  Image
+    *image,
+    *svg_image;
+
+  MagickBooleanType
+    status;
+
+  assert(image_info != (const ImageInfo *) NULL);
+  assert(image_info->signature == MagickCoreSignature);
+  assert(exception != (ExceptionInfo *) NULL);
+  if (image_info->debug != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
+      image_info->filename);
+  assert(exception->signature == MagickCoreSignature);
+  image=AcquireImage(image_info);
+  status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
+  if (status == MagickFalse)
+    {
+      image=DestroyImageList(image);
+      return((Image *) NULL);
+    }
+  if ((fabs(image->x_resolution) < MagickEpsilon) ||
+      (fabs(image->y_resolution) < MagickEpsilon))
+    {
+      GeometryInfo
+        geometry_info;
+
+      MagickStatusType
+        flags;
+
+      flags=ParseGeometry(SVGDensityGeometry,&geometry_info);
+      image->x_resolution=geometry_info.rho;
+      image->y_resolution=geometry_info.sigma;
+      if ((flags & SigmaValue) == 0)
+        image->y_resolution=image->x_resolution;
+    }
+  svg_image=RenderSVGImage(image_info,image,exception);
+  image=DestroyImage(image);
+  return(svg_image);
+}
 #endif
 
 /*
@@ -3682,9 +3740,7 @@ ModuleExport size_t RegisterSVGImage(void)
   xmlInitParser();
 #endif
   entry=SetMagickInfo("SVG");
-#if defined(MAGICKCORE_XML_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadSVGImage;
-#endif
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->blob_support=MagickFalse;
   entry->seekable_stream=MagickFalse;
@@ -3851,7 +3907,7 @@ static MagickBooleanType IsPoint(const char *point)
   ssize_t
     value;
 
-  value=strtol(point,&p,10);
+  value=(ssize_t) strtol(point,&p,10);
   (void) value;
   return(p != point ? MagickTrue : MagickFalse);
 }
@@ -4004,7 +4060,7 @@ static MagickBooleanType TraceSVGImage(Image *image,ExceptionInfo *exception)
     (void) WriteBlobString(image,"</svg>\n");
   }
 #endif
-  CloseBlob(image);
+  (void) CloseBlob(image);
   return(MagickTrue);
 }
 
@@ -4135,7 +4191,7 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             case '<': (void) WriteBlobString(image,"&lt;"); break;
             case '>': (void) WriteBlobString(image,"&gt;"); break;
             case '&': (void) WriteBlobString(image,"&amp;"); break;
-            default: (void) WriteBlobByte(image,*q); break;
+            default: (void) WriteBlobByte(image,(unsigned char) *q); break;
           }
         (void) WriteBlobString(image,"</desc>\n");
         continue;
@@ -4866,7 +4922,7 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         }
     }
     primitive_info[j].primitive=primitive_type;
-    primitive_info[j].coordinates=x;
+    primitive_info[j].coordinates=(size_t) x;
     primitive_info[j].method=FloodfillMethod;
     primitive_info[j].text=(char *) NULL;
     if (active)
@@ -5109,7 +5165,7 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             case '<': (void) WriteBlobString(image,"&lt;"); break;
             case '>': (void) WriteBlobString(image,"&gt;"); break;
             case '&': (void) WriteBlobString(image,"&amp;"); break;
-            default: (void) WriteBlobByte(image,*p); break;
+            default: (void) WriteBlobByte(image,(unsigned char) *p); break;
           }
         (void) WriteBlobString(image,"</text>\n");
         break;
