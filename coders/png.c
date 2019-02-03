@@ -3781,7 +3781,14 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
             if (!png_get_valid(ping,ping_info,PNG_INFO_pHYs) ||
                 (LocaleCompare(text[i].key,"density") != 0 &&
                 LocaleCompare(text[i].key,"units") != 0))
-               (void) SetImageProperty(image,text[i].key,value);
+              {
+                char
+                  key[MaxTextExtent];
+
+                (void) FormatLocaleString(key,MaxTextExtent,"png:%s",
+                  text[i].key);
+                (void) SetImageProperty(image,key,value);
+              }
 
             if (logging != MagickFalse)
             {
