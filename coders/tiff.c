@@ -1921,6 +1921,7 @@ RestoreMSCWarning
         /*
           Convert stripped TIFF image to DirectClass MIFF image.
         */
+        (void) SetImageStorageClass(image,DirectClass);
         i=0;
         p=(uint32 *) NULL;
         for (y=0; y < (ssize_t) image->rows; y++)
@@ -2093,6 +2094,7 @@ RestoreMSCWarning
         /*
           Convert TIFF image to DirectClass MIFF image.
         */
+        (void) SetImageStorageClass(image,DirectClass);
         number_pixels=(MagickSizeType) image->columns*image->rows;
         if (HeapOverflowSanityCheck(image->rows,sizeof(*pixels)) != MagickFalse)
           ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
