@@ -634,27 +634,14 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
     (void) RelinquishUniqueFileResource(read_info->filename);
   if (IsSceneGeometry(read_info->scenes,MagickFalse) != MagickFalse)
     {
-      int 
-        first_scene,
-        last_scene,
-        n;
-
       Image
         *clones;
 
-      n=sscanf(read_info->scenes,"%d-%d",&first_scene,&last_scene);
-      if (n == 2)
+      clones=CloneImages(image,read_info->scenes,exception);
+      if (clones != (Image *) NULL)
         {
-          clones=CloneImages(image,read_info->scenes,exception);
-          if (clones == (Image *) NULL)
-            (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
-              "SubimageSpecificationReturnsNoImages","`%s'",
-              read_info->filename);
-          else
-            {
-              image=DestroyImageList(image);
-              image=GetFirstImageInList(clones);
-            }
+          image=DestroyImageList(image);
+          image=GetFirstImageInList(clones);
         }
     }
   for (next=image; next != (Image *) NULL; next=GetNextImageInList(next))
