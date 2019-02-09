@@ -1,5 +1,5 @@
 2019-02-09  6.9.10-27 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-27, GIT revision 14194:5f86a6ae9:20190209
+  * Release ImageMagick version 6.9.10-27, GIT revision 14197:4e00248f4:20190209
 
 2019-02-09  6.9.10-27 Cristy  <quetzlzacatenango@image...>
   * Mod patch to properly handle subimage ranges (e.g. image.gif[2-3]).
