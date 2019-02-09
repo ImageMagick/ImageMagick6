@@ -225,20 +225,21 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
       {
         case 32:
         {
-          *index=ConstrainColormapIndex(image,((size_t) *p << 24) |
-            ((size_t) *(p+1) << 16) | ((size_t) *(p+2) << 8) | (size_t) *(p+3));
+          *index=ConstrainColormapIndex(image,(ssize_t) (((size_t) *p << 24) |
+            ((size_t) *(p+1) << 16) | ((size_t) *(p+2) << 8) |
+            (size_t) *(p+3)));
           p+=4;
           break;
         }
         case 16:
         {
-          *index=ConstrainColormapIndex(image,(*p << 8) | *(p+1));
+          *index=ConstrainColormapIndex(image,(ssize_t) ((*p << 8) | *(p+1)));
           p+=2;
           break;
         }
         case 8:
         {
-          *index=ConstrainColormapIndex(image,*p);
+          *index=ConstrainColormapIndex(image,(ssize_t) *p);
           p++;
           break;
         }
@@ -1113,11 +1114,12 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     /*
       Verify that required image information is defined.
     */
-    if ((LocaleCompare(id,"ImageMagick") != 0) || (image->depth > 128) ||
+    if ((LocaleCompare(id,"ImageMagick") != 0) ||
         (image->storage_class == UndefinedClass) ||
         (image->compression == UndefinedCompression) ||
         (image->colorspace == UndefinedColorspace) ||
-        (image->columns == 0) || (image->rows == 0))
+        (image->columns == 0) || (image->rows == 0) ||
+        (image->depth == 0) || (image->depth > 64))
       {
         if (profiles != (LinkedListInfo *) NULL)
           profiles=DestroyLinkedList(profiles,RelinquishMagickMemory);
@@ -1330,6 +1332,8 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     compress_extent=MagickMax(MagickMax(BZipMaxExtent(packet_size*
       image->columns),LZMAMaxExtent(packet_size*image->columns)),
       ZipMaxExtent(packet_size*image->columns));
+    if (compress_extent < (packet_size*image->columns))
+      ThrowMIFFException(ResourceLimitError,"MemoryAllocationFailed");
     compress_pixels=(unsigned char *) AcquireQuantumMemory(compress_extent,
       sizeof(*compress_pixels));
     if (compress_pixels == (unsigned char *) NULL)
@@ -1595,7 +1599,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
             SetPixelOpacity(q,pixel.opacity);
             q++;
           }
-          extent=x;
+          extent=(size_t) x;
           break;
         }
         default:
@@ -2616,7 +2620,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
               code;
 
             lzma_info.next_out=compress_pixels;
-            lzma_info.avail_out=packet_size*image->columns;
+            lzma_info.avail_out=LZMAMaxExtent(packet_size*image->columns);
             code=lzma_code(&lzma_info,LZMA_RUN);
             if (code != LZMA_OK)
               status=MagickFalse;
