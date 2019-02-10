@@ -480,10 +480,10 @@ ModuleExport size_t RegisterWEBPImage(void)
 #if defined(MAGICKCORE_WEBP_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadWEBPImage;
   entry->encoder=(EncodeImageHandler *) WriteWEBPImage;
-  (void) FormatLocaleString(version,MaxTextExtent,"libwebp %d.%d.%d[%04X]",
-    (WebPGetDecoderVersion() >> 16) & 0xff,
-    (WebPGetDecoderVersion() >> 8) & 0xff,
-    (WebPGetDecoderVersion() >> 0) & 0xff,WEBP_DECODER_ABI_VERSION);
+  (void) FormatLocaleString(version,MaxTextExtent,"libwebp %d.%d.%d [%04X]",
+    (WebPGetEncoderVersion() >> 16) & 0xff,
+    (WebPGetEncoderVersion() >> 8) & 0xff,
+    (WebPGetEncoderVersion() >> 0) & 0xff,WEBP_ENCODER_ABI_VERSION);
 #endif
   entry->description=ConstantString("WebP Image Format");
   entry->mime_type=ConstantString("image/webp");
@@ -549,7 +549,7 @@ ModuleExport void UnregisterWEBPImage(void)
 */
 
 
-#if WEBP_DECODER_ABI_VERSION >= 0x0100
+#if WEBP_ENCODER_ABI_VERSION >= 0x0100
 static int WebPEncodeProgress(int percent,const WebPPicture* picture)
 {
 #define EncodeImageTag  "Encode/Image"
@@ -637,7 +637,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   picture.writer=WebPMemoryWrite;
   picture.custom_ptr=(&writer_info);
 #endif
-#if WEBP_DECODER_ABI_VERSION >= 0x0100
+#if WEBP_ENCODER_ABI_VERSION >= 0x0100
   picture.progress_hook=WebPEncodeProgress;
   picture.user_data=(void *) image;
 #endif
@@ -666,7 +666,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
         configure.image_hint=WEBP_HINT_PHOTO;
       if (LocaleCompare(value,"picture") == 0)
         configure.image_hint=WEBP_HINT_PICTURE;
-#if WEBP_DECODER_ABI_VERSION >= 0x0200
+#if WEBP_ENCODER_ABI_VERSION >= 0x0200
       if (LocaleCompare(value,"graph") == 0)
         configure.image_hint=WEBP_HINT_GRAPH;
 #endif
@@ -720,7 +720,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   value=GetImageOption(image_info,"webp:partition-limit");
   if (value != (char *) NULL)
     configure.partition_limit=StringToInteger(value);
-#if WEBP_DECODER_ABI_VERSION >= 0x0201
+#if WEBP_ENCODER_ABI_VERSION >= 0x0201
   value=GetImageOption(image_info,"webp:emulate-jpeg-size");
   if (value != (char *) NULL)
     configure.emulate_jpeg_size=(int) ParseCommandOption(MagickBooleanOptions,
@@ -733,7 +733,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   if (value != (char *) NULL)
     configure.thread_level=StringToInteger(value);
 #endif
-#if WEBP_DECODER_ABI_VERSION >= 0x020e
+#if WEBP_ENCODER_ABI_VERSION >= 0x020e
   value=GetImageOption(image_info,"webp:use-sharp-yuv");
   if (value != (char *) NULL)
     configure.use_sharp_yuv=StringToInteger(value);
@@ -831,7 +831,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
           message="file too big (> 4GB)";
           break;
         }
-#if WEBP_DECODER_ABI_VERSION >= 0x0100
+#if WEBP_ENCODER_ABI_VERSION >= 0x0100
         case VP8_ENC_ERROR_USER_ABORT:
         {
           message="user abort";
