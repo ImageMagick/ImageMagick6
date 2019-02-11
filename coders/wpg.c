@@ -899,7 +899,7 @@ static Image *ExtractPostscript(Image *image,const ImageInfo *image_info,
     } while (p != (Image *) NULL);
   }
 
-  if ((image->rows == 0 || image->columns == 0) && 
+  if ((image->rows == 0 || image->columns == 0) &&
       (image->previous != NULL || image->next != NULL))
   {
     DeleteImageFromList(&image);
@@ -1111,6 +1111,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   image->columns = 1;
   image->rows = 1;
   image->colors = 0;
+  image->storage_class=DirectClass;
   (void) ResetImagePixels(image,exception);
   bpp=0;
   BitmapHeader2.RotAngle=0;
@@ -1255,9 +1256,28 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
               else
                 {
                   if (bpp < 24)
-                    if ( (image->colors < (one << bpp)) && (bpp != 24) )
+                  if ( (image->colors < (one << bpp)) && (bpp != 24) )
+                    {
+                      PixelPacket
+                        *colormap;
+
+                      size_t
+                        colors;
+
+                      colormap=image->colormap;
+                      colors=image->colors;
+                      image->colormap=(PixelPacket *) NULL;
                       if (AcquireImageColormap(image,one << bpp) == MagickFalse)
-                        goto NoMemory;
+                        {
+                          colormap=(PixelPacket *)
+                            RelinquishMagickMemory(colormap);
+                          goto NoMemory;
+                        }
+                      (void) memcpy(image->colormap,colormap,colors*
+                        sizeof(*image->colormap));
+                      colormap=(PixelPacket *)
+                        RelinquishMagickMemory(colormap);
+                    }
                 }
 
               if ((bpp == 1) && (image->colors > 1))
