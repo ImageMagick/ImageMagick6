@@ -1952,7 +1952,9 @@ RestoreMSCWarning
               (TIFFGetG(*p))));
             SetPixelBlue(q,ScaleCharToQuantum((unsigned char)
               (TIFFGetB(*p))));
-            if (image->matte != MagickFalse)
+            if (image->matte == MagickFalse)
+              SetPixelOpacity(q,OpaqueOpacity);
+            else
               SetPixelOpacity(q,ScaleCharToQuantum((unsigned char)
                 (TIFFGetA(*p))));
             p++;
@@ -2056,6 +2058,7 @@ RestoreMSCWarning
                     TIFFGetG(*p)));
                   SetPixelBlue(q,ScaleCharToQuantum((unsigned char)
                     TIFFGetB(*p)));
+                  SetPixelOpacity(q,OpaqueOpacity);
                   q++;
                   p++;
                 }
@@ -2126,7 +2129,9 @@ RestoreMSCWarning
             SetPixelRed(q,ScaleCharToQuantum((unsigned char) TIFFGetR(*p)));
             SetPixelGreen(q,ScaleCharToQuantum((unsigned char) TIFFGetG(*p)));
             SetPixelBlue(q,ScaleCharToQuantum((unsigned char) TIFFGetB(*p)));
-            if (image->matte != MagickFalse)
+            if (image->matte == MagickFalse)
+              SetPixelOpacity(q,OpaqueOpacity);
+            else
               SetPixelAlpha(q,ScaleCharToQuantum((unsigned char) TIFFGetA(*p)));
             p--;
             q--;
