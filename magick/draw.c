@@ -2323,9 +2323,8 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                   */
                   GetNextToken(p,&p,extent,token);
                   (void) CopyMagickString(macro,start,(size_t) (end-start));
-                  if (LocaleCompare(name,"MVG") != 0)
-                    (void) AddValueToSplayTree(macros,ConstantString(name),
-                      ConstantString(macro));
+                  (void) AddValueToSplayTree(macros,ConstantString(name),
+                    ConstantString(macro));
                   break;
                 }
             }
@@ -2474,7 +2473,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
   if (primitive == (char *) NULL)
     return(MagickFalse);
   primitive_extent=(double) strlen(primitive);
-  (void) SetImageArtifact(image,"MVG",primitive);
+  (void) SetImageArtifact(image,"mvg:vector-graphics",primitive);
   n=0;
   /*
     Allocate primitive info memory.
