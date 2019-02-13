@@ -2323,8 +2323,9 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive)
                   */
                   GetNextToken(p,&p,extent,token);
                   (void) CopyMagickString(macro,start,(size_t) (end-start));
-                  (void) AddValueToSplayTree(macros,ConstantString(name),
-                    ConstantString(macro));
+                  if (LocaleCompare(name,"MVG") != 0)
+                    (void) AddValueToSplayTree(macros,ConstantString(name),
+                      ConstantString(macro));
                   break;
                 }
             }
