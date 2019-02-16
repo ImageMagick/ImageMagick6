@@ -1794,7 +1794,8 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
       break;
     if (fabs(length) < MagickEpsilon)
       {
-        n++;
+        if (draw_info->dash_pattern[n] != 0.0)
+          n++;
         if (fabs(draw_info->dash_pattern[n]) < MagickEpsilon)
           n=0;
         length=scale*draw_info->dash_pattern[n];
@@ -4907,6 +4908,15 @@ RestoreMSCWarning
 %
 */
 
+static inline double ConstrainCoordinate(double x)
+{
+  if (x < LONG_MIN)
+    return(LONG_MIN);
+  if (x > LONG_MAX)
+    return(LONG_MAX);
+  return(x);
+}
+
 static void LogPrimitiveInfo(const PrimitiveInfo *primitive_info)
 {
   const char
@@ -5048,8 +5058,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       status&=SetImageClipMask(image,draw_info->clipping_mask);
       status&=SetImageMask(image,draw_info->composite_mask);
     }
-  x=(ssize_t) ceil(primitive_info->point.x-0.5);
-  y=(ssize_t) ceil(primitive_info->point.y-0.5);
+  x=(ssize_t) ceil(ConstrainCoordinate(primitive_info->point.x-0.5));
+  y=(ssize_t) ceil(ConstrainCoordinate(primitive_info->point.y-0.5));
   image_view=AcquireAuthenticCacheView(image,exception);
   switch (primitive_info->primitive)
   {
