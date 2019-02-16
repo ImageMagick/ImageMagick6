@@ -393,6 +393,9 @@ ModuleExport size_t RegisterHEICImage(void)
   entry->magick=(IsImageFormatHandler *) IsHEIC;
   entry->description=ConstantString("Apple High efficiency Image Format");
   entry->mime_type=ConstantString("image/x-heic");
+#if defined(LIBHEIF_VERSION)
+  entry->version=ConstantString(LIBHEIF_VERSION);
+#endif
   entry->module=ConstantString("GIF");
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
