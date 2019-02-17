@@ -1773,7 +1773,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         *q='\0';
         (void) CopyMagickString(filename+(p-format-offset),value,(size_t)
           (MaxTextExtent-(p-format-offset)));
-        offset+=strlen(pattern)-strlen(option)+3;
+        offset+=strlen(pattern)-strlen(value)+3;
         *q=c;
         (void) ConcatenateMagickString(filename,r+1,MaxTextExtent);
         canonical=MagickTrue;
