@@ -666,9 +666,6 @@ static void TIFFGetProperties(TIFF *tiff,Image *image)
     length,
     type;
 
-  unsigned long
-    *tietz;
-
   if ((TIFFGetField(tiff,TIFFTAG_ARTIST,&text) == 1) &&
       (text != (char *) NULL))
     (void) SetImageProperty(image,"tiff:artist",text);
@@ -741,12 +738,6 @@ static void TIFFGetProperties(TIFF *tiff,Image *image)
       }
       default:
         break;
-    }
-  if ((TIFFGetField(tiff,37706,&length,&tietz) == 1) &&
-      (tietz != (unsigned long *) NULL))
-    {
-      (void) FormatLocaleString(message,MaxTextExtent,"%lu",tietz[0]);
-      (void) SetImageProperty(image,"tiff:tietz_offset",message);
     }
 }
 
