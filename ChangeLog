@@ -1,3 +1,12 @@
+2019-02-28  6.9.10-29 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-29, GIT revision 14235:eee85cacc:20190228
+
+2019-02-28  6.9.10-29 Cristy  <quetzlzacatenango@image...>
+  * Fixed a number of issues (reference
+    https://github.com/ImageMagick/ImageMagick/issues).
+  * Fixed numerous use of uninitialized values, integer overflow, memory
+    exceeded, and timeouts (credit to OSS Fuzz).
+
 2019-02-18  6.9.10-28 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-28, GIT revision 14227:580d9f9a6:20190218
 
