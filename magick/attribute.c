@@ -89,6 +89,7 @@
 #include "magick/segment.h"
 #include "magick/splay-tree.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
 #include "magick/thread-private.h"
 #include "magick/threshold.h"
 #include "magick/transform.h"
@@ -122,21 +123,36 @@
 %    o exception: return any errors or warnings in this structure.
 %
 */
-MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
+
+typedef struct _EdgeInfo
+{
+  double
+    left,
+    right,
+    top,
+    bottom;
+} EdgeInfo;
+
+static double GetEdgeBackgroundFactor(const Image *image,
+  const CacheView *image_view,const GravityType gravity,const size_t width,
+  const size_t height,const ssize_t x_offset,const ssize_t y_offset,
   ExceptionInfo *exception)
 {
   CacheView
-    *image_view;
+    *edge_view;
 
-  MagickBooleanType
-    status;
+  double
+    factor;
+
+  Image
+    *edge_image;
 
   MagickPixelPacket
-    target[3],
-    zero;
+    background,
+    pixel;
 
   RectangleInfo
-    bounds;
+    edge_geometry;
 
   register const PixelPacket
     *p;
@@ -144,112 +160,210 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
   ssize_t
     y;
 
+  /*
+    Determine the percent of image background for this edge.
+  */
+  switch (gravity)
+  {
+    case NorthWestGravity:
+    case NorthGravity:
+    default:
+    {
+      p=GetCacheViewVirtualPixels(image_view,0,0,1,1,exception);
+      break;
+    }
+    case NorthEastGravity:
+    case EastGravity:
+    {
+      p=GetCacheViewVirtualPixels(image_view,(ssize_t) image->columns-1,0,1,1,
+        exception);
+      break;
+    }
+    case SouthEastGravity:
+    case SouthGravity:
+    {
+      p=GetCacheViewVirtualPixels(image_view,(ssize_t) image->columns-1,
+        (ssize_t) image->rows-1,1,1,exception);
+      break;
+    }
+    case SouthWestGravity:
+    case WestGravity:
+    {
+      p=GetCacheViewVirtualPixels(image_view,0,(ssize_t) image->rows-1,1,1,
+        exception);
+      break;
+    }
+  }
+  GetMagickPixelPacket(image,&background);
+  SetMagickPixelPacket(image,p,(IndexPacket *) NULL,&background);
+  edge_geometry.width=width;
+  edge_geometry.height=height;
+  edge_geometry.x=x_offset;
+  edge_geometry.y=y_offset;
+  GravityAdjustGeometry(image->columns,image->rows,gravity,&edge_geometry);
+  edge_image=CropImage(image,&edge_geometry,exception);
+  if (edge_image == (Image *) NULL)
+    return(0.0);
+  factor=0.0;
+  GetMagickPixelPacket(edge_image,&pixel);
+  edge_view=AcquireVirtualCacheView(edge_image,exception);
+  for (y=0; y < (ssize_t) edge_image->rows; y++)
+  {
+    register ssize_t
+      x;
+
+    p=GetCacheViewVirtualPixels(edge_view,0,y,edge_image->columns,1,exception);
+    if (p == (const PixelPacket *) NULL)
+      break;
+    for (x=0; x < (ssize_t) edge_image->columns; x++)
+    {
+      SetMagickPixelPacket(edge_image,p,(IndexPacket *) NULL,&pixel);
+      if (IsMagickColorSimilar(&pixel,&background) == MagickFalse)
+        factor++;
+      p++;
+    }
+  }
+  factor/=((double) edge_image->columns*edge_image->rows);
+  edge_view=DestroyCacheView(edge_view);
+  edge_image=DestroyImage(edge_image);
+  return(factor);
+}
+
+static inline double GetMinEdgeBackgroundFactor(const EdgeInfo *edge)
+{
+  double
+    factor;
+
+  factor=MagickMin(MagickMin(MagickMin(edge->left,edge->right),edge->top),
+    edge->bottom);
+  return(factor);
+}
+
+MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
+  ExceptionInfo *exception)
+{
+  CacheView
+    *image_view;
+
+  const char
+    *artifact;
+
+  double
+    background_factor,
+    percent_background;
+
+  EdgeInfo
+    edge,
+    vertex;
+
+  RectangleInfo
+    bounds;
+
+  /*
+    Get the image bounding box.
+  */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  bounds.width=0;
-  bounds.height=0;
-  bounds.x=(ssize_t) image->columns;
-  bounds.y=(ssize_t) image->rows;
-  GetMagickPixelPacket(image,&target[0]);
+  SetGeometry(image,&bounds);
+  memset(&vertex,0,sizeof(vertex));
   image_view=AcquireVirtualCacheView(image,exception);
-  p=GetCacheViewVirtualPixels(image_view,0,0,1,1,exception);
-  if (p == (const PixelPacket *) NULL)
-    {
-      image_view=DestroyCacheView(image_view);
-      return(bounds);
-    }
-  SetMagickPixelPacket(image,p,GetCacheViewVirtualIndexQueue(image_view),
-    &target[0]);
-  GetMagickPixelPacket(image,&target[1]);
-  p=GetCacheViewVirtualPixels(image_view,(ssize_t) image->columns-1,0,1,1,
+  edge.left=GetEdgeBackgroundFactor(image,image_view,WestGravity,1,0,0,0,
     exception);
-  if (p != (const PixelPacket *) NULL)
-    SetMagickPixelPacket(image,p,GetCacheViewVirtualIndexQueue(image_view),
-      &target[1]);
-  GetMagickPixelPacket(image,&target[2]);
-  p=GetCacheViewVirtualPixels(image_view,0,(ssize_t) image->rows-1,1,1,
+  edge.right=GetEdgeBackgroundFactor(image,image_view,EastGravity,1,0,0,0,
     exception);
-  if (p != (const PixelPacket *) NULL)
-    SetMagickPixelPacket(image,p,GetCacheViewVirtualIndexQueue(image_view),
-      &target[2]);
-  status=MagickTrue;
-  GetMagickPixelPacket(image,&zero);
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
-#endif
-  for (y=0; y < (ssize_t) image->rows; y++)
+  edge.top=GetEdgeBackgroundFactor(image,image_view,NorthGravity,0,1,0,0,
+    exception);
+  edge.bottom=GetEdgeBackgroundFactor(image,image_view,SouthGravity,0,1,0,0,
+    exception);
+  percent_background=1.0;
+  artifact=GetImageArtifact(image,"trim:percent-background");
+  if (artifact != (const char *) NULL)
+    percent_background=StringToDouble(artifact,(char **) NULL)/100.0;
+  percent_background=MagickMin(MagickMax(1.0-percent_background,MagickEpsilon),
+    1.0);
+  background_factor=GetMinEdgeBackgroundFactor(&edge);
+  for ( ; background_factor < percent_background;
+          background_factor=GetMinEdgeBackgroundFactor(&edge))
   {
-    MagickPixelPacket
-      pixel;
-
-    RectangleInfo
-      bounding_box;
-
-    register const IndexPacket
-      *magick_restrict indexes;
-
-    register const PixelPacket
-      *magick_restrict p;
-
-    register ssize_t
-      x;
-
-    if (status == MagickFalse)
-      continue;
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-#   pragma omp critical (MagickCore_GetImageBoundingBox)
-#endif
-    bounding_box=bounds;
-    p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
-    if (p == (const PixelPacket *) NULL)
+    if ((bounds.width == 0) || (bounds.height == 0))
+      break;
+    if (fabs(edge.left-background_factor) < MagickEpsilon)
       {
-        status=MagickFalse;
+        /*
+          Trim left edge.
+        */
+        vertex.left++;
+        bounds.width--;
+        edge.left=GetEdgeBackgroundFactor(image,image_view,NorthWestGravity,
+          1,bounds.height,(ssize_t) vertex.left,(ssize_t) vertex.top,exception);
+        edge.top=GetEdgeBackgroundFactor(image,image_view,NorthWestGravity,
+          bounds.width,1,(ssize_t) vertex.left,(ssize_t) vertex.top,exception);
+        edge.bottom=GetEdgeBackgroundFactor(image,image_view,SouthWestGravity,
+          bounds.width,1,(ssize_t) vertex.left,(ssize_t) vertex.bottom,
+          exception);
         continue;
       }
-    indexes=GetCacheViewVirtualIndexQueue(image_view);
-    pixel=zero;
-    for (x=0; x < (ssize_t) image->columns; x++)
-    {
-      SetMagickPixelPacket(image,p,indexes+x,&pixel);
-      if ((x < bounding_box.x) &&
-          (IsMagickColorSimilar(&pixel,&target[0]) == MagickFalse))
-        bounding_box.x=x;
-      if ((x > (ssize_t) bounding_box.width) &&
-          (IsMagickColorSimilar(&pixel,&target[1]) == MagickFalse))
-        bounding_box.width=(size_t) x;
-      if ((y < bounding_box.y) &&
-          (IsMagickColorSimilar(&pixel,&target[0]) == MagickFalse))
-        bounding_box.y=y;
-      if ((y > (ssize_t) bounding_box.height) &&
-          (IsMagickColorSimilar(&pixel,&target[2]) == MagickFalse))
-        bounding_box.height=(size_t) y;
-      p++;
-    }
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-#   pragma omp critical (MagickCore_GetImageBoundingBox)
-#endif
-    {
-      if (bounding_box.x < bounds.x)
-        bounds.x=bounding_box.x;
-      if (bounding_box.y < bounds.y)
-        bounds.y=bounding_box.y;
-      if (bounding_box.width > bounds.width)
-        bounds.width=bounding_box.width;
-      if (bounding_box.height > bounds.height)
-        bounds.height=bounding_box.height;
-    }
+    if (fabs(edge.right-background_factor) < MagickEpsilon)
+      {
+        /*
+          Trim right edge.
+        */
+        vertex.right++;
+        bounds.width--;
+        edge.right=GetEdgeBackgroundFactor(image,image_view,NorthEastGravity,
+          1,bounds.height,(ssize_t) vertex.right,(ssize_t) vertex.top,
+          exception);
+        edge.top=GetEdgeBackgroundFactor(image,image_view,NorthWestGravity,
+          bounds.width,1,(ssize_t) vertex.left,(ssize_t) vertex.top,exception);
+        edge.bottom=GetEdgeBackgroundFactor(image,image_view,SouthWestGravity,
+          bounds.width,1,(ssize_t) vertex.left,(ssize_t) vertex.bottom,
+          exception);
+        continue;
+      }
+    if (fabs(edge.top-background_factor) < MagickEpsilon)
+      {
+        /*
+          Trim top edge.
+        */
+        vertex.top++;
+        bounds.height--;
+        edge.left=GetEdgeBackgroundFactor(image,image_view,NorthWestGravity,
+          1,bounds.height,(ssize_t) vertex.left,(ssize_t) vertex.top,exception);
+        edge.right=GetEdgeBackgroundFactor(image,image_view,NorthEastGravity,
+          1,bounds.height,(ssize_t) vertex.right,(ssize_t) vertex.top,
+          exception);
+        edge.top=GetEdgeBackgroundFactor(image,image_view,NorthWestGravity,
+          bounds.width,1,(ssize_t) vertex.left,(ssize_t) vertex.top,exception);
+        continue;
+      }
+    if (fabs(edge.bottom-background_factor) < MagickEpsilon)
+      {
+        /*
+          Trim bottom edge.
+        */
+        vertex.bottom++;
+        bounds.height--;
+        edge.left=GetEdgeBackgroundFactor(image,image_view,NorthWestGravity,
+          1,bounds.height,(ssize_t) vertex.left,(ssize_t) vertex.top,exception);
+        edge.right=GetEdgeBackgroundFactor(image,image_view,NorthEastGravity,
+          1,bounds.height,(ssize_t) vertex.right,(ssize_t) vertex.top,
+          exception);
+        edge.bottom=GetEdgeBackgroundFactor(image,image_view,SouthWestGravity,
+          bounds.width,1,(ssize_t) vertex.left,(ssize_t) vertex.bottom,
+          exception);
+        continue;
+      }
   }
   image_view=DestroyCacheView(image_view);
+  bounds.x=(ssize_t) vertex.left;
+  bounds.y=(ssize_t) vertex.top;
   if ((bounds.width == 0) || (bounds.height == 0))
-    (void) ThrowMagickException(exception,GetMagickModule(),OptionWarning,
-      "GeometryDoesNotContainImage","`%s'",image->filename);
-  else
     {
-      bounds.width-=(bounds.x-1);
-      bounds.height-=(bounds.y-1);
+      (void) ThrowMagickException(exception,GetMagickModule(),OptionWarning,
+        "GeometryDoesNotContainImage","`%s'",image->filename);
+      SetGeometry(image,&bounds);
     }
   return(bounds);
 }
