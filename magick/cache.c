@@ -5104,7 +5104,7 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
   if (length != (MagickSizeType) ((size_t) length))
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
-        ResourceLimitError,"MemoryAllocationFailed","`%s'",
+        ResourceLimitError,"PixelCacheAllocationFailed","`%s'",
         cache_info->filename);
       return(MagickFalse);
     }
@@ -5126,7 +5126,7 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
   if (nexus_info->cache == (PixelPacket *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
-        ResourceLimitError,"MemoryAllocationFailed","`%s'",
+        ResourceLimitError,"PixelCacheAllocationFailed","`%s'",
         cache_info->filename);
       return(MagickFalse);
     }
@@ -5165,7 +5165,19 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
   if (cache_info->type == UndefinedCache)
     return((PixelPacket *) NULL);
   if ((region->width == 0) || (region->height == 0))
-    return((PixelPacket *) NULL);
+   {
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "NoPixelsDefinedInCache","`%s'",cache_info->filename);
+      return((PixelPacket *) NULL);
+    }
+  assert(nexus_info->signature == MagickCoreSignature);
+  if ((AcquireMagickResource(WidthResource,region->width) == MagickFalse) ||
+      (AcquireMagickResource(HeightResource,region->height) == MagickFalse))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
+        "WidthOrHeightExceedsLimit","`%s'",cache_info->filename);
+      return((PixelPacket *) NULL);
+    }
   if (((cache_info->type == MemoryCache) || (cache_info->type == MapCache)) &&
       (buffered == MagickFalse))
     {
