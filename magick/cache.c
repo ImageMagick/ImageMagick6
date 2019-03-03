@@ -3092,7 +3092,7 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
       break;
     }
   }
-  virtual_index=0;
+  virtual_index=(IndexPacket) 0;
   for (v=0; v < (ssize_t) rows; v++)
   {
     ssize_t
@@ -5171,13 +5171,6 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
       return((PixelPacket *) NULL);
     }
   assert(nexus_info->signature == MagickCoreSignature);
-  if ((AcquireMagickResource(WidthResource,region->width) == MagickFalse) ||
-      (AcquireMagickResource(HeightResource,region->height) == MagickFalse))
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
-        "WidthOrHeightExceedsLimit","`%s'",cache_info->filename);
-      return((PixelPacket *) NULL);
-    }
   if (((cache_info->type == MemoryCache) || (cache_info->type == MapCache)) &&
       (buffered == MagickFalse))
     {
@@ -5212,6 +5205,15 @@ static PixelPacket *SetPixelCacheNexusPixels(const CacheInfo *cache_info,
   /*
     Pixels are stored in a staging region until they are synced to the cache.
   */
+  if (((region->x != (ssize_t) nexus_info->region.width) ||
+       (region->y != (ssize_t) nexus_info->region.height)) &&
+      ((AcquireMagickResource(WidthResource,region->width) == MagickFalse) ||
+       (AcquireMagickResource(HeightResource,region->height) == MagickFalse)))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
+        "WidthOrHeightExceedsLimit","`%s'",cache_info->filename);
+      return((PixelPacket *) NULL);
+    }
   number_pixels=(MagickSizeType) region->width*region->height;
   length=MagickMax(number_pixels,cache_info->columns)*sizeof(PixelPacket);
   if (cache_info->active_index_channel != MagickFalse)
