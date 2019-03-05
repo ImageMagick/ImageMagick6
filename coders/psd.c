@@ -1334,6 +1334,7 @@ static MagickBooleanType ReadPSDChannel(Image *image,
         layer_info->mask.page.height,MagickFalse,exception);
       if (mask != (Image *) NULL)
         {
+          (void) ResetImagePixels(mask,exception);
           mask->matte=MagickFalse;
           channel_image=mask;
         }
