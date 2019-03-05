@@ -72,6 +72,7 @@
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/module.h"
+#include "magick/utility.h"
 
 /*
   Typedef declarations.
@@ -742,6 +743,9 @@ static unsigned char *EncodeRLE(unsigned char *destination,
 
 static MagickBooleanType WritePDBImage(const ImageInfo *image_info,Image *image)
 {
+  char
+    filename[MaxTextExtent];
+
   const char
     *comment;
 
@@ -809,8 +813,8 @@ static MagickBooleanType WritePDBImage(const ImageInfo *image_info,Image *image)
   }
   (void) memset(&pdb_info,0,sizeof(pdb_info));
   (void) memset(&pdb_image,0,sizeof(pdb_image));
-  (void) CopyMagickString(pdb_info.name,image_info->filename,
-    sizeof(pdb_info.name));
+  GetPathComponent(image_info->filename,TailPath,filename);
+  (void) CopyMagickString(pdb_info.name,filename,sizeof(pdb_info.name));
   pdb_info.attributes=0;
   pdb_info.version=0;
   pdb_info.create_time=time(NULL);

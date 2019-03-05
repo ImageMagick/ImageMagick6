@@ -1476,9 +1476,6 @@ static inline const char *GetDPXProperty(const Image *image,
 static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
   Image *image)
 {
-  char
-    *url;
-
   const char
     *value;
 
@@ -1614,9 +1611,8 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
     dpx.file.timestamp);
   offset+=WriteBlob(image,sizeof(dpx.file.timestamp),(unsigned char *)
     dpx.file.timestamp);
-  url=GetMagickHomeURL();
-  (void) strncpy(dpx.file.creator,url,sizeof(dpx.file.creator)-1);
-  url=DestroyString(url);
+  (void) strncpy(dpx.file.creator,MagickAuthoritativeURL,
+    sizeof(dpx.file.creator)-1);
   value=GetDPXProperty(image,"dpx:file.creator");
   if (value != (const char *) NULL)
     (void) strncpy(dpx.file.creator,value,sizeof(dpx.file.creator)-1);
