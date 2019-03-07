@@ -185,7 +185,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   file_data=AcquireMagickMemory(length);
   if (file_data == (void *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-  if (ReadBlob(image,length,file_data) != (ssize_t) length)
+  if (ReadBlob(image,length,(unsigned char *) file_data) != (ssize_t) length)
     {
       file_data=RelinquishMagickMemory(file_data);
       ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
@@ -251,7 +251,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
                 }
             }
         }
-      exif_buffer=RelinquishMagickMemory(exif_buffer);
+      exif_buffer=(unsigned char *) RelinquishMagickMemory(exif_buffer);
   }
   /*
     Set image size
@@ -467,7 +467,7 @@ static struct heif_error heif_write_func(struct heif_context *ctx,const void* da
 
   (void) ctx;
   image=(Image*) userdata;
-  (void) WriteBlob(image,size,data);
+  (void) WriteBlob(image,size,(const unsigned char *) data);
   error_ok.code=heif_error_Ok;
   error_ok.subcode=heif_suberror_Unspecified;
   error_ok.message="ok";
@@ -586,7 +586,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,Image *image
               p_cr[y/2*stride_cr+x/2]=ScaleQuantumToChar(GetPixelBlue(p));
               p++;
 
-              if (x+1 < image->columns)
+              if ((x+1) < (ssize_t) image->columns)
                 {
                   p_y[y*stride_y + x+1]=ScaleQuantumToChar(GetPixelRed(p));
                   p++;

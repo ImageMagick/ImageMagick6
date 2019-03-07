@@ -2474,7 +2474,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     {
       status=SetImageAlphaChannel(image,OpaqueAlphaChannel);
       if (status == MagickFalse)
-        return(status);
+        return(MagickFalse);
     }
   primitive=(char *) NULL;
   if (*draw_info->primitive != '@')
