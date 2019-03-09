@@ -1333,6 +1333,8 @@ ExitLoop:
         for (i = 0; i < (ssize_t) MATLAB_HDR.SizeY; i++)
         {
           ReadBlobDoublesXXX(image2, ldblk, (double *)BImgBuff);
+          if (EOFBlob(image) != MagickFalse)
+            break;
           InsertComplexDoubleRow((double *)BImgBuff, i, image, MinVal, MaxVal);
         }
 
@@ -1340,6 +1342,8 @@ ExitLoop:
         for (i = 0; i < (ssize_t) MATLAB_HDR.SizeY; i++)
         {
           ReadBlobFloatsXXX(image2, ldblk, (float *)BImgBuff);
+          if (EOFBlob(image) != MagickFalse)
+            break;
           InsertComplexFloatRow((float *)BImgBuff, i, image, MinVal, MaxVal);
         }
     }
@@ -1427,10 +1431,10 @@ done_reading:
       clone_info=DestroyImageInfo(clone_info);
   }
 
+END_OF_READING:
   RelinquishMagickMemory(BImgBuff);
   if (quantum_info != (QuantumInfo *) NULL)
     quantum_info=DestroyQuantumInfo(quantum_info);
-END_OF_READING:
   CloseBlob(image);
 
 
