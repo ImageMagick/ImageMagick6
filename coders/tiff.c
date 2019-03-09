@@ -663,7 +663,6 @@ static void TIFFGetProperties(TIFF *tiff,Image *image)
 
   uint32
     count,
-    length,
     type;
 
   if ((TIFFGetField(tiff,TIFFTAG_ARTIST,&text) == 1) &&
