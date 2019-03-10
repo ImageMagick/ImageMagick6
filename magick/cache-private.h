@@ -240,6 +240,10 @@ typedef struct _CacheInfo
 
   OpenCLCacheInfo
     *opencl;
+
+  MagickSizeType
+    width_limit,
+    height_limit;
 } CacheInfo;
 
 extern MagickExport Cache
