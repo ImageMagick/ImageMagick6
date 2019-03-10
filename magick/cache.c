@@ -3910,7 +3910,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
   cache_info=(CacheInfo *) image->cache;
   assert(cache_info->signature == MagickCoreSignature);
   if (((MagickSizeType) image->columns > cache_info->width_limit) ||
-      ((MagickSizeType) image->rows > > cache_info->height_limit))
+      ((MagickSizeType) image->rows > cache_info->height_limit))
     ThrowBinaryException(ImageError,"WidthOrHeightExceedsLimit",
       image->filename);
   length=GetImageListLength(image);
