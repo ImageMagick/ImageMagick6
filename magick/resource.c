@@ -961,9 +961,11 @@ MagickExport MagickBooleanType ListMagickResourceInfo(FILE *file,
   LockSemaphoreInfo(resource_semaphore[FileResource]);
   (void) FormatPixelSize(resource_info.width_limit,MagickFalse,width_limit);
   (void) FormatPixelSize(resource_info.height_limit,MagickFalse,height_limit);
-  (void) FormatPixelSize(resource_info.list_length_limit,MagickFalse,
-    list_length_limit);
   (void) FormatPixelSize(resource_info.area_limit,MagickFalse,area_limit);
+  (void) CopyMagickString(list_length_limit,"unlimited",MaxTextExtent);
+  if (resource_info.list_length_limit != MagickResourceInfinity)
+    (void) FormatMagickSize(resource_info.list_length_limit,MagickTrue,
+      list_length_limit);
   (void) FormatMagickSize(resource_info.memory_limit,MagickTrue,memory_limit);
   (void) FormatMagickSize(resource_info.map_limit,MagickTrue,map_limit);
   (void) CopyMagickString(disk_limit,"unlimited",MaxTextExtent);
@@ -1426,7 +1428,7 @@ MagickExport void ResourceComponentTerminus(void)
 {
   register ssize_t
     i;
-  
+
   for (i=0; i < (ssize_t) NumberOfResourceTypes; i++)
     if (resource_semaphore[i] == (SemaphoreInfo *) NULL)
       ActivateSemaphoreInfo(&resource_semaphore[i]);
