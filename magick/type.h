@@ -98,7 +98,7 @@ extern MagickExport const TypeInfo
     const size_t,ExceptionInfo *),
   **GetTypeInfoList(const char *,size_t *,ExceptionInfo *);
 
-MagickExport void
+extern MagickExport void
   TypeComponentTerminus(void);
 
 #if defined(__cplusplus) || defined(c_plusplus)

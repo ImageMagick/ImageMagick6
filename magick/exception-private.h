@@ -96,9 +96,11 @@ extern "C" {
 }
 
 extern MagickPrivate MagickBooleanType
-  ClearExceptionInfo(ExceptionInfo *,MagickBooleanType);
+  ClearExceptionInfo(ExceptionInfo *,MagickBooleanType),
+  ExceptionComponentGenesis(void);
 
 extern MagickPrivate void
+  ExceptionComponentTerminus(void),
   InitializeExceptionInfo(ExceptionInfo *);
 
 #if defined(__cplusplus) || defined(c_plusplus)

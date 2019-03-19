@@ -1251,6 +1251,7 @@ MagickExport void MagickCoreGenesis(const char *path,
       return;
     }
   (void) SemaphoreComponentGenesis();
+  (void) ExceptionComponentGenesis();
   (void) LogComponentGenesis();
   (void) LocaleComponentGenesis();
   (void) RandomComponentGenesis();
@@ -1415,6 +1416,7 @@ MagickExport void MagickCoreTerminus(void)
   RandomComponentTerminus();
   LocaleComponentTerminus();
   LogComponentTerminus();
+  ExceptionComponentTerminus();
   instantiate_magickcore=MagickFalse;
   UnlockMagickMutex();
   SemaphoreComponentTerminus();
