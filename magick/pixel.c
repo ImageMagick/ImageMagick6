@@ -4330,10 +4330,10 @@ MagickExport MagickBooleanType ImportImagePixels(Image *image,const ssize_t x,
 %
 %  The format of the InterpolateMagickPixelPacket method is:
 %
-%      MagickBooleanType InterpolateMagickPixelPacket(const Image *image,
-%        const CacheView *image_view,const InterpolatePixelMethod method,
-%        const double x,const double y,MagickPixelPacket *pixel,
-%        ExceptionInfo *exception)
+%      MagickBooleanType InterpolateMagickPixelPacket(
+%        const Image *magick_restict image,const CacheView *image_view,
+%        const InterpolatePixelMethod method,const double x,const double y,
+%        MagickPixelPacket *pixel,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -4351,15 +4351,14 @@ MagickExport MagickBooleanType ImportImagePixels(Image *image,const ssize_t x,
 %
 */
 
-/*
-  Prepare pixels for weighted alpha blending.
-  Save PixelPacket/IndexPacket 'color'/'index' into 'pixel'/'alpha'
-  after multiplying colors by alpha.
-*/
 static inline void AlphaBlendMagickPixelPacket(const Image *image,
   const PixelPacket *color,const IndexPacket *indexes,MagickPixelPacket *pixel,
   MagickRealType *alpha)
 {
+  /*
+    Prepare pixels for weighted alpha blending.  Save PixelPacket/IndexPacket
+    'color'/'index' into 'pixel'/'alpha' after multiplying colors by alpha.
+  */
   if (image->matte == MagickFalse)
     {
       *alpha=1.0;
@@ -4443,10 +4442,10 @@ static inline double MeshInterpolate(const PointInfo *delta,const double p,
   return(delta->x*x+delta->y*y+(1.0-delta->x-delta->y)*p);
 }
 
-MagickExport MagickBooleanType InterpolateMagickPixelPacket(const Image *image,
-  const CacheView *image_view,const InterpolatePixelMethod method,
-  const double x,const double y,MagickPixelPacket *pixel,
-  ExceptionInfo *exception)
+MagickExport MagickBooleanType InterpolateMagickPixelPacket(
+  const Image *magick_restrict image,const CacheView *image_view,
+  const InterpolatePixelMethod method,const double x,const double y,
+  MagickPixelPacket *pixel,ExceptionInfo *exception)
 {
   double
     gamma;
@@ -4464,7 +4463,7 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(const Image *image,
     *indexes;
 
   register const PixelPacket
-    *p;
+    *magick_restrict p;
 
   register ssize_t
     i;
