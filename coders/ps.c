@@ -2272,8 +2272,13 @@ RestoreMSCWarning
                   p++;
                 }
                 q=PopHexPixel(hex_digits,(size_t) index,q);
-                q=PopHexPixel(hex_digits,(size_t)
-                  MagickMin(length,0xff),q);
+                q=PopHexPixel(hex_digits,(size_t) MagickMin(length,0xff),q);
+                if ((q-pixels+6) >= 80)
+                  {
+                    *q++='\n';
+                    (void) WriteBlob(image,q-pixels,pixels);
+                    q=pixels;
+                  }
                 if (image->previous == (Image *) NULL)
                   {
                     status=SetImageProgress(image,SaveImageTag,
