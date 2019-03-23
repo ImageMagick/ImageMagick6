@@ -4569,8 +4569,6 @@ MagickExport Image *SketchImage(const Image *image,const double radius,
     MagickTrue,exception);
   if (random_image == (Image *) NULL)
     return((Image *) NULL);
-  random_view=AcquireAuthenticCacheView(random_image,exception);
-
   status=MagickTrue;
   GetMagickPixelPacket(random_image,&zero);
   random_info=AcquireRandomInfoThreadSet();
