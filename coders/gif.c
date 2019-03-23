@@ -1046,6 +1046,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   meta_image=AcquireImage(image_info);  /* metadata container */
   meta_image->page.width=ReadBlobLSBShort(image);
   meta_image->page.height=ReadBlobLSBShort(image);
+  meta_image->iterations=1;
   flag=(unsigned char) ReadBlobByte(image);
   background=(unsigned char) ReadBlobByte(image);
   c=(unsigned char) ReadBlobByte(image);  /* reserved */
