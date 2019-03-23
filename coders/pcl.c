@@ -319,7 +319,10 @@ static Image *ReadPCLImage(const ImageInfo *image_info,ExceptionInfo *exception)
      else
        delegate_info=GetDelegateInfo("pcl:color",(char *) NULL,exception);
   if (delegate_info == (const DelegateInfo *) NULL)
-    return((Image *) NULL);
+    {
+      image=DestroyImage(image);
+      return((Image *) NULL);
+    }
   if ((page.width == 0) || (page.height == 0))
     (void) ParseAbsoluteGeometry(PSPageGeometry,&page);
   if (image_info->page != (char *) NULL)
