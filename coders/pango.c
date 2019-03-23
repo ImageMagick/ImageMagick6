@@ -198,8 +198,11 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
       property=InterpretImageProperties(image_info,image,option+6);
     else
       property=InterpretImageProperties(image_info,image,option);
-  (void) SetImageProperty(image,"caption",property);
-  property=DestroyString(property);
+  if (property != (char *) NULL)
+    {
+      (void) SetImageProperty(image,"caption",property);
+      property=DestroyString(property);
+    }
   caption=ConstantString(GetImageProperty(image,"caption"));
   /*
     Get context.

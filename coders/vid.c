@@ -176,8 +176,11 @@ static Image *ReadVIDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (next_image == (Image *) NULL)
       break;
     label=InterpretImageProperties(image_info,next_image,DefaultTileLabel);
-    (void) SetImageProperty(next_image,"label",label);
-    label=DestroyString(label);
+    if (label != (char *) NULL)
+      {
+        (void) SetImageProperty(next_image,"label",label);
+        label=DestroyString(label);
+      }
     if (image_info->debug != MagickFalse)
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "geometry: %.20gx%.20g",(double) next_image->columns,(double)
