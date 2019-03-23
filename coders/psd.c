@@ -88,8 +88,7 @@
 */
 #define MaxPSDChannels  56
 #define PSDQuantum(x) (((ssize_t) (x)+1) & -2)
-
-
+
 /*
   Enumerated declaractions.
 */
@@ -242,48 +241,67 @@ static MagickBooleanType IsPSD(const unsigned char *magick,const size_t length)
 %
 */
 
-static const char *CompositeOperatorToPSDBlendMode(CompositeOperator op)
+static const char *CompositeOperatorToPSDBlendMode(Image *image)
 {
-  const char
-    *blend_mode;
-
-  switch (op)
+  switch (image->compose)
   {
-    case ColorBurnCompositeOp:  blend_mode = "idiv";  break;
-    case ColorDodgeCompositeOp: blend_mode = "div ";  break;
-    case ColorizeCompositeOp:   blend_mode = "colr";  break;
-    case DarkenCompositeOp:     blend_mode = "dark";  break;
-    case DifferenceCompositeOp: blend_mode = "diff";  break;
-    case DissolveCompositeOp:   blend_mode = "diss";  break;
-    case ExclusionCompositeOp:  blend_mode = "smud";  break;
-    case HardLightCompositeOp:  blend_mode = "hLit";  break;
-    case HardMixCompositeOp:    blend_mode = "hMix";  break;
-    case HueCompositeOp:        blend_mode = "hue ";  break;
-    case LightenCompositeOp:    blend_mode = "lite";  break;
-    case LinearBurnCompositeOp: blend_mode = "lbrn";  break;
-    case LinearDodgeCompositeOp:blend_mode = "lddg";  break;
-    case LinearLightCompositeOp:blend_mode = "lLit";  break;
-    case LuminizeCompositeOp:   blend_mode = "lum ";  break;
-    case MultiplyCompositeOp:   blend_mode = "mul ";  break;
-    case OverCompositeOp:       blend_mode = "norm";  break;
-    case OverlayCompositeOp:    blend_mode = "over";  break;
-    case PinLightCompositeOp:   blend_mode = "pLit";  break;
-    case SaturateCompositeOp:   blend_mode = "sat ";  break;
-    case ScreenCompositeOp:     blend_mode = "scrn";  break;
-    case SoftLightCompositeOp:  blend_mode = "sLit";  break;
-    case VividLightCompositeOp: blend_mode = "vLit";  break;
-    default:                    blend_mode = "norm";  break;
+    case ColorBurnCompositeOp:
+      return(image->endian == LSBEndian ? "vidi" : "idiv");
+    case ColorDodgeCompositeOp:
+      return(image->endian == LSBEndian ? " vid" : "div ");
+    case ColorizeCompositeOp:
+      return(image->endian == LSBEndian ? "rloc" : "colr");
+    case DarkenCompositeOp:
+      return(image->endian == LSBEndian ? "krad" : "dark");
+    case DifferenceCompositeOp:
+      return(image->endian == LSBEndian ? "ffid" : "diff");
+    case DissolveCompositeOp:
+      return(image->endian == LSBEndian ? "ssid" : "diss");
+    case ExclusionCompositeOp:
+      return(image->endian == LSBEndian ? "dums" : "smud");
+    case HardLightCompositeOp:
+      return(image->endian == LSBEndian ? "tiLh" : "hLit");
+    case HardMixCompositeOp:
+      return(image->endian == LSBEndian ? "xiMh" : "hMix");
+    case HueCompositeOp:
+      return(image->endian == LSBEndian ? " euh" : "hue ");
+    case LightenCompositeOp:
+      return(image->endian == LSBEndian ? "etil" : "lite");
+    case LinearBurnCompositeOp:
+      return(image->endian == LSBEndian ? "nrbl" : "lbrn");
+    case LinearDodgeCompositeOp:
+      return(image->endian == LSBEndian ? "gddl" : "lddg");
+    case LinearLightCompositeOp:
+      return(image->endian == LSBEndian ? "tiLl" : "lLit");
+    case LuminizeCompositeOp:
+      return(image->endian == LSBEndian ? " mul" : "lum ");
+    case MultiplyCompositeOp:
+      return(image->endian == LSBEndian ? " lum" : "mul ");
+    case OverlayCompositeOp:
+      return(image->endian == LSBEndian ? "revo" : "over");
+    case PinLightCompositeOp:
+      return(image->endian == LSBEndian ? "tiLp" : "pLit");
+    case SaturateCompositeOp:
+      return(image->endian == LSBEndian ? " tas" : "sat ");
+    case ScreenCompositeOp:
+      return(image->endian == LSBEndian ? "nrcs" : "scrn");
+    case SoftLightCompositeOp:
+      return(image->endian == LSBEndian ? "tiLs" : "sLit");
+    case VividLightCompositeOp:
+      return(image->endian == LSBEndian ? "tiLv" : "vLit");
+    case OverCompositeOp:
+    default:
+      return(image->endian == LSBEndian ? "mron" : "norm");
   }
-  return(blend_mode);
 }
 
 /*
-For some reason Photoshop seems to blend semi-transparent pixels with white.
-This method reverts the blending. This can be disabled by setting the
-option 'psd:alpha-unblend' to off.
+  For some reason Photoshop seems to blend semi-transparent pixels with white.
+  This method reverts the blending. This can be disabled by setting the
+  option 'psd:alpha-unblend' to off.
 */
 static MagickBooleanType CorrectPSDAlphaBlend(const ImageInfo *image_info,
-  Image *image, ExceptionInfo* exception)
+  Image *image,ExceptionInfo* exception)
 {
   const char
     *option;
@@ -294,7 +312,7 @@ static MagickBooleanType CorrectPSDAlphaBlend(const ImageInfo *image_info,
   ssize_t
     y;
 
-  if (image->matte == MagickFalse || image->colorspace != sRGBColorspace)
+  if ((image->matte == MagickFalse) || (image->colorspace != sRGBColorspace))
     return(MagickTrue);
   option=GetImageOption(image_info,"psd:alpha-unblend");
   if (IsStringNotFalse(option) == MagickFalse)
@@ -667,19 +685,17 @@ static inline LayerInfo *DestroyLayerInfo(LayerInfo *layer_info,
   return (LayerInfo *) RelinquishMagickMemory(layer_info);
 }
 
-static inline size_t GetPSDPacketSize(Image *image)
+static inline size_t GetPSDPacketSize(const Image *image)
 {
   if (image->storage_class == PseudoClass)
     {
       if (image->colors > 256)
         return(2);
-      else if (image->depth > 8)
-        return(2);
     }
-  else
-    if (image->depth > 8)
-      return(2);
-
+  if (image->depth > 16)
+    return(4);
+  if (image->depth > 8)
+    return(2);
   return(1);
 }
 
@@ -749,7 +765,7 @@ static StringInfo *ParseImageResourceBlocks(Image *image,
     p+=4;
     p=PushShortPixel(MSBEndian,p,&id);
     p=PushCharPixel(p,&name_length);
-    if (name_length % 2 == 0)
+    if ((name_length % 2) == 0)
       name_length++;
     p+=name_length;
     if (p > (blocks+length-4))
@@ -917,7 +933,7 @@ static inline void SetPSDPixel(Image *image,const size_t channels,
     case 0:
     {
       SetPixelRed(q,pixel);
-      if (channels < 3 || type == -2)
+      if ((channels < 3) || (type == -2))
         {
           SetPixelGreen(q,GetPixelRed(q));
           SetPixelBlue(q,GetPixelRed(q));
@@ -993,13 +1009,23 @@ static MagickBooleanType ReadPSDChannelPixels(Image *image,
     if (packet_size == 1)
       pixel=ScaleCharToQuantum(*p++);
     else
-      {
-        p=PushShortPixel(MSBEndian,p,&nibble);
-        pixel=ScaleShortToQuantum(nibble);
-      }
+      if (packet_size == 2)
+        {
+          p=PushShortPixel(MSBEndian,p,&nibble);
+          pixel=ScaleShortToQuantum(nibble);
+        }
+      else
+        {
+          MagickFloatType
+            nibble;
+
+          p=PushFloatPixel(MSBEndian,p,&nibble);
+          pixel=ClampToQuantum((MagickRealType)QuantumRange*nibble);
+        }
     if (image->depth > 1)
       {
-        SetPSDPixel(image,channels,type,packet_size,pixel,q++,indexes,x);
+        SetPSDPixel(image,channels,type,packet_size,pixel,q,indexes,x);
+        q++;
       }
     else
       {
@@ -1452,6 +1478,13 @@ static MagickBooleanType ReadPSDLayer(Image *image,const ImageInfo *image_info,
         "    reading data for channel %.20g",(double) j);
 
     compression=(PSDCompressionType) ReadBlobShort(layer_info->image);
+    if ((compression == ZipWithPrediction) && (image->depth == 32))
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          TypeError,"CompressionNotSupported","ZipWithPrediction(32 bit)");
+        return(MagickFalse);
+      }
+
     layer_info->image->compression=ConvertPSDCompression(compression);
     if (layer_info->channel_info[j].type == -1)
       layer_info->image->matte=MagickTrue;
@@ -1472,7 +1505,7 @@ static MagickBooleanType ReadPSDLayer(Image *image,const ImageInfo *image_info,
       (layer_info->image->colorspace == CMYKColorspace))
     status=NegateImage(layer_info->image,MagickFalse);
 
-  if (status != MagickFalse && layer_info->mask.image != (Image *) NULL)
+  if ((status != MagickFalse) && (layer_info->mask.image != (Image *) NULL))
     {
       const char
         *option;
@@ -2104,7 +2137,8 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (psd_info.columns > 30000)))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   psd_info.depth=ReadBlobMSBShort(image);
-  if ((psd_info.depth != 1) && (psd_info.depth != 8) && (psd_info.depth != 16))
+  if ((psd_info.depth != 1) && (psd_info.depth != 8) &&
+      (psd_info.depth != 16) && (psd_info.depth != 32))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   psd_info.mode=ReadBlobMSBShort(image);
   if ((psd_info.mode == IndexedMode) && (psd_info.channels > 3))
@@ -2146,13 +2180,16 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   else if ((psd_info.mode == BitmapMode) || (psd_info.mode == GrayscaleMode) ||
            (psd_info.mode == DuotoneMode))
     {
-      status=AcquireImageColormap(image,(size_t) (psd_info.depth != 16 ? 256 :
-        65536));
-      if (status == MagickFalse)
-        ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-      if (image->debug != MagickFalse)
-        (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-          "  Image colormap allocated");
+      if (psd_info.depth != 32)
+        {
+          status=AcquireImageColormap(image,(size_t) (psd_info.depth != 16 ?
+            256 : 65536));
+          if (status == MagickFalse)
+            ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+          if (image->debug != MagickFalse)
+            (void) LogMagickEvent(CoderEvent,GetMagickModule(),
+              "  Image colormap allocated");
+        }
       psd_info.min_channels=1;
       (void) SetImageColorspace(image,GRAYColorspace);
     }
@@ -2169,17 +2206,12 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (image->debug != MagickFalse)
         (void) LogMagickEvent(CoderEvent,GetMagickModule(),
           "  reading colormap");
-      if (psd_info.mode == DuotoneMode)
+      if ((psd_info.mode == DuotoneMode) || (psd_info.depth == 32))
         {
           /*
             Duotone image data;  the format of this data is undocumented.
           */
-          data=(unsigned char *) AcquireQuantumMemory((size_t) length,
-            sizeof(*data));
-          if (data == (unsigned char *) NULL)
-            ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-          (void) ReadBlob(image,(size_t) length,data);
-          data=(unsigned char *) RelinquishMagickMemory(data);
+          (void) SeekBlob(image,(const MagickOffsetType) length,SEEK_CUR);
         }
       else
         {
@@ -3476,7 +3508,7 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
       size+=WriteChannelSize(&psd_info,image,-2);
     size+=WriteBlob(image,4,(const unsigned char *) "8BIM");
     size+=WriteBlob(image,4,(const unsigned char *)
-      CompositeOperatorToPSDBlendMode(next_image->compose));
+      CompositeOperatorToPSDBlendMode(next_image));
     property=GetImageArtifact(next_image,"psd:layer.opacity");
     if (property != (const char *) NULL)
       {
