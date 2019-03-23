@@ -252,10 +252,11 @@ MagickExport Image *AcquireImage(const ImageInfo *image_info)
         geometry_info;
 
       flags=ParseGeometry(image_info->density,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
+      if ((flags & RhoValue) != 0)
+        image->x_resolution=geometry_info.rho;
+      image->y_resolution=image->x_resolution;
+      if ((flags & SigmaValue) != 0)
+        image->y_resolution=geometry_info.sigma;
     }
   if (image_info->page != (char *) NULL)
     {
