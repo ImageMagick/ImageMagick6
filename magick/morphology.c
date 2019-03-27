@@ -2360,7 +2360,7 @@ static void ExpandMirrorKernelInfo(KernelInfo *kernel)
 %
 %  The format of the ExpandRotateKernelInfo method is:
 %
-%      void ExpandRotateKernelInfo(KernelInfo *kernel, double angle)
+%      void ExpandRotateKernelInfo(KernelInfo *kernel,double angle)
 %
 %  A description of each parameter follows:
 %
@@ -2375,7 +2375,7 @@ static void ExpandMirrorKernelInfo(KernelInfo *kernel)
 
 /* Internal Routine - Return true if two kernels are the same */
 static MagickBooleanType SameKernelInfo(const KernelInfo *kernel1,
-     const KernelInfo *kernel2)
+  const KernelInfo *kernel2)
 {
   register size_t
     i;
@@ -2402,12 +2402,13 @@ static MagickBooleanType SameKernelInfo(const KernelInfo *kernel1,
   return MagickTrue;
 }
 
-static void ExpandRotateKernelInfo(KernelInfo *kernel, const double angle)
+static void ExpandRotateKernelInfo(KernelInfo *kernel,const double angle)
 {
   KernelInfo
     *clone_info,
     *last;
 
+  clone_info=(KernelInfo *) NULL;
   last=kernel;
 DisableMSCWarning(4127)
   while (1) {
