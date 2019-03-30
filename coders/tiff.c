@@ -3280,7 +3280,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
     TIFFUnmapBlob);
   if (tiff == (TIFF *) NULL)
     return(MagickFalse);
-  if (exception->severity > ErrorException)
+  if (image->exception.severity > ErrorException)
     {
       TIFFClose(tiff);
       return(MagickFalse);
