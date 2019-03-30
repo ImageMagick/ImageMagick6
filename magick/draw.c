@@ -1590,7 +1590,8 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   status=RenderMVGContent(clip_mask,clone_info,0);
   clone_info=DestroyDrawInfo(clone_info);
   status&=SeparateImageChannel(clip_mask,TrueAlphaChannel);
-  status&=NegateImage(clip_mask,MagickFalse);
+  if (draw_info->compliance != SVGCompliance)
+    status&=NegateImage(clip_mask,MagickFalse);
   if (status == MagickFalse)
     clip_mask=DestroyImage(clip_mask);
   if (image->debug != MagickFalse)
@@ -2690,8 +2691,18 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 graphic_context[n]->clipping_mask=DrawClippingMask(image,
                   graphic_context[n],token,clip_path,&image->exception);
                 if (draw_info->compliance != SVGCompliance)
-                  status&=DrawClipPath(image,graphic_context[n],
-                    graphic_context[n]->clip_mask);
+                  {
+                    const char
+                      *clip_path;
+
+                    clip_path=(const char *) GetValueFromSplayTree(macros,
+                      graphic_context[n]->clip_mask);
+                    if (clip_path != (const char *) NULL)
+                      (void) SetImageArtifact(image,
+                        graphic_context[n]->clip_mask,clip_path);
+                    status&=DrawClipPath(image,graphic_context[n],
+                      graphic_context[n]->clip_mask);
+                  }
               }
             break;
           }
@@ -3217,17 +3228,23 @@ static MagickBooleanType RenderMVGContent(Image *image,
               }
             if (LocaleCompare("clip-path",token) == 0)
               {
-                char
-                  name[MaxTextExtent];
-
-                const char
-                  *clip_path;
-
                 GetNextToken(q,&q,extent,token);
-                (void) FormatLocaleString(name,MaxTextExtent,"%s",token);
-                clip_path=(const char *) GetValueFromSplayTree(macros,name);
-                if (clip_path != (const char *) NULL)
-                  (void) SetImageArtifact(image,name,clip_path);
+                for (p=q; *q != '\0'; )
+                {
+                  GetNextToken(q,&q,extent,token);
+                  if (LocaleCompare(token,"pop") != 0)
+                    continue;
+                  GetNextToken(q,(const char **) NULL,extent,token);
+                  if (LocaleCompare(token,"clip-path") != 0)
+                    continue;
+                  break;
+                }
+                if ((q == (char *) NULL) || (p == (char *) NULL) || ((q-4) < p))
+                  {
+                    status=MagickFalse;
+                    break;
+                  }
+                GetNextToken(q,&q,extent,token);
                 break;
               }
             if (LocaleCompare("defs",token) == 0)
@@ -4285,8 +4302,18 @@ static MagickBooleanType RenderMVGContent(Image *image,
             (graphic_context[n]->clip_mask != (char *) NULL) &&
             (LocaleCompare(graphic_context[n]->clip_mask,
              graphic_context[n-1]->clip_mask) != 0))
-          status&=DrawClipPath(image,graphic_context[n],
-            graphic_context[n]->clip_mask);
+          {
+            const char
+              *clip_path;
+
+            clip_path=(const char *) GetValueFromSplayTree(macros,
+              graphic_context[n]->clip_mask);
+            if (clip_path != (const char *) NULL)
+              (void) SetImageArtifact(image,graphic_context[n]->clip_mask,
+                clip_path);
+            status&=DrawClipPath(image,graphic_context[n],
+              graphic_context[n]->clip_mask);
+          }
         status&=DrawPrimitive(image,graphic_context[n],primitive_info);
       }
     proceed=SetImageProgress(image,RenderImageTag,q-primitive,(MagickSizeType)
@@ -4927,10 +4954,10 @@ RestoreMSCWarning
 
 static inline double ConstrainCoordinate(double x)
 {
-  if (x < -SSIZE_MAX)
-    return(-SSIZE_MAX);
-  if (x > SSIZE_MAX)
-    return(SSIZE_MAX);
+  if (x < (double) -SSIZE_MAX)
+    return((double) -SSIZE_MAX);
+  if (x > (double) SSIZE_MAX)
+    return((double) SSIZE_MAX);
   return(x);
 }
 
