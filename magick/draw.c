@@ -2872,7 +2872,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 graphic_context[n]->fill_opacity;
             else
               graphic_context[n]->fill.opacity=ClampToQuantum(QuantumRange*
-                (1.0-opacity));
+                opacity);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -3658,7 +3658,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 graphic_context[n]->stroke_opacity;
             else
               graphic_context[n]->stroke.opacity=ClampToQuantum(QuantumRange*
-                (1.0-opacity));
+                opacity);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
