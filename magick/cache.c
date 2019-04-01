@@ -5175,7 +5175,8 @@ static PixelPacket *SetPixelCacheNexusPixels(
       return((PixelPacket *) NULL);
     }
   number_pixels=(MagickSizeType) width*height;
-  length=MagickMax(number_pixels,cache_info->columns)*sizeof(PixelPacket);
+  length=MagickMax(number_pixels,MagickMax(cache_info->columns,
+    cache_info->rows))*sizeof(PixelPacket);
   if (cache_info->active_index_channel != MagickFalse)
     length+=number_pixels*sizeof(IndexPacket);
   status=MagickTrue;
