@@ -2166,7 +2166,7 @@ MagickExport MagickBooleanType GammaImage(Image *image,const char *level)
 MagickExport MagickBooleanType GammaImageChannel(Image *image,
   const ChannelType channel,const double gamma)
 {
-#define GammaCorrectImageTag  "GammaCorrect/Image"
+#define GammaImageTag  "Gamma/Image"
 
   CacheView
     *image_view;
@@ -2365,8 +2365,7 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
         #pragma omp atomic
 #endif
         progress++;
-        proceed=SetImageProgress(image,GammaCorrectImageTag,progress,
-          image->rows);
+        proceed=SetImageProgress(image,GammaImageTag,progress,image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
