@@ -949,7 +949,7 @@ static MagickBooleanType ClonePixelCacheRepository(
         status=ReadPixelCacheIndexes(cache_info,cache_nexus[id],exception);
         if (status == MagickFalse)
           continue;
-        pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y, 
+        pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y,
           clone_info->columns,1,MagickFalse,clone_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
           continue;
