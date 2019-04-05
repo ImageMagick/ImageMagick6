@@ -429,18 +429,20 @@ MagickExport NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
   register ssize_t
     i;
 
-  nexus_info=(NexusInfo **) MagickAssumeAligned(AcquireAlignedMemory(
+  nexus_info=(NexusInfo **) MagickAssumeAligned(AcquireAlignedMemory(2*
     number_threads,sizeof(*nexus_info)));
   if (nexus_info == (NexusInfo **) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  *nexus_info=(NexusInfo *) AcquireQuantumMemory(number_threads,
+  *nexus_info=(NexusInfo *) AcquireQuantumMemory(2*number_threads,
     sizeof(**nexus_info));
   if (*nexus_info == (NexusInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) memset(*nexus_info,0,number_threads*sizeof(**nexus_info));
-  for (i=0; i < (ssize_t) number_threads; i++)
+  (void) memset(*nexus_info,0,2*number_threads*sizeof(**nexus_info));
+  for (i=0; i < (ssize_t) (2*number_threads); i++)
   {
-    nexus_info[i]=(*nexus_info)+i;
+    nexus_info[i]=(*nexus_info+i);
+    if (i < (ssize_t) number_threads)
+      nexus_info[i]->pixel_nexus=(*nexus_info+number_threads+i);
     nexus_info[i]->signature=MagickCoreSignature;
   }
   return(nexus_info);
@@ -585,8 +587,7 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
     number_pixels;
 
   NexusInfo
-    **magick_restrict clip_nexus,
-    **magick_restrict image_nexus;
+    **magick_restrict clip_nexus;
 
   register const PixelPacket
     *magick_restrict r;
@@ -613,12 +614,11 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   cache_info=(CacheInfo *) image->cache;
   if (cache_info == (Cache) NULL)
     return(MagickFalse);
-  image_nexus=AcquirePixelCacheNexus(1);
   clip_nexus=AcquirePixelCacheNexus(1);
   p=GetAuthenticPixelCacheNexus(image,nexus_info->region.x,nexus_info->region.y,
-    nexus_info->region.width,nexus_info->region.height,image_nexus[0],
+    nexus_info->region.width,nexus_info->region.height,nexus_info->pixel_nexus,
     exception);
-  indexes=image_nexus[0]->indexes;
+  indexes=nexus_info->pixel_nexus->indexes;
   q=nexus_info->pixels;
   nexus_indexes=nexus_info->indexes;
   r=GetVirtualPixelCacheNexus(image->clip_mask,MaskVirtualPixelMethod,
@@ -654,7 +654,6 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
     r++;
   }
   clip_nexus=DestroyPixelCacheNexus(clip_nexus,1);
-  image_nexus=DestroyPixelCacheNexus(image_nexus,1);
   if (i < (ssize_t) number_pixels)
     return(MagickFalse);
   return(MagickTrue);
@@ -950,7 +949,7 @@ static MagickBooleanType ClonePixelCacheRepository(
         status=ReadPixelCacheIndexes(cache_info,cache_nexus[id],exception);
         if (status == MagickFalse)
           continue;
-        pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y,
+        pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y, 
           clone_info->columns,1,MagickFalse,clone_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
           continue;
@@ -1233,13 +1232,13 @@ MagickExport NexusInfo **DestroyPixelCacheNexus(NexusInfo **nexus_info,
     i;
 
   assert(nexus_info != (NexusInfo **) NULL);
-  for (i=0; i < (ssize_t) number_threads; i++)
+  for (i=0; i < (ssize_t) (2*number_threads); i++)
   {
     if (nexus_info[i]->cache != (PixelPacket *) NULL)
       RelinquishCacheNexusPixels(nexus_info[i]);
     nexus_info[i]->signature=(~MagickCoreSignature);
   }
-  *nexus_info=(NexusInfo *) RelinquishMagickMemory(nexus_info[0]);
+  *nexus_info=(NexusInfo *) RelinquishMagickMemory(*nexus_info);
   nexus_info=(NexusInfo **) RelinquishAlignedMemory(nexus_info);
   return(nexus_info);
 }
@@ -2934,6 +2933,8 @@ static inline MagickModulo VirtualPixelModulo(const ssize_t offset,
   if ((offset < 0L) && (modulo.quotient > (ssize_t) (-SSIZE_MAX)))
     modulo.quotient--;
   modulo.remainder=(ssize_t) (offset-(double) modulo.quotient*extent);
+  if (modulo.remainder == (ssize_t) extent)
+    modulo.remainder--;
   return(modulo);
 }
 
@@ -2954,9 +2955,6 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
   MagickSizeType
     length,
     number_pixels;
-
-  NexusInfo
-    **magick_restrict virtual_nexus;
 
   PixelPacket
     *magick_restrict pixels,
@@ -3030,7 +3028,6 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
   */
   q=pixels;
   indexes=nexus_info->indexes;
-  virtual_nexus=AcquirePixelCacheNexus(1);
   switch (virtual_pixel_method)
   {
     case BlackVirtualPixelMethod:
@@ -3120,10 +3117,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
             {
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
                 EdgeX(x_offset,cache_info->columns),
-                EdgeY(y_offset,cache_info->rows),1UL,1UL,*virtual_nexus,
-                exception);
+                EdgeY(y_offset,cache_info->rows),1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case RandomVirtualPixelMethod:
@@ -3133,19 +3130,19 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
                 RandomX(cache_info->random_info,cache_info->columns),
                 RandomY(cache_info->random_info,cache_info->rows),1UL,1UL,
-                *virtual_nexus,exception);
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case DitherVirtualPixelMethod:
             {
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
                 DitherX(x_offset,cache_info->columns),
-                DitherY(y_offset,cache_info->rows),1UL,1UL,*virtual_nexus,
-                exception);
+                DitherY(y_offset,cache_info->rows),1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case TileVirtualPixelMethod:
@@ -3153,10 +3150,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
               x_modulo=VirtualPixelModulo(x_offset,cache_info->columns);
               y_modulo=VirtualPixelModulo(y_offset,cache_info->rows);
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
-                x_modulo.remainder,y_modulo.remainder,1UL,1UL,*virtual_nexus,
-                exception);
+                x_modulo.remainder,y_modulo.remainder,1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case MirrorVirtualPixelMethod:
@@ -3170,10 +3167,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
                 y_modulo.remainder=(ssize_t) cache_info->rows-
                   y_modulo.remainder-1L;
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
-                x_modulo.remainder,y_modulo.remainder,1UL,1UL,*virtual_nexus,
-                exception);
+                x_modulo.remainder,y_modulo.remainder,1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case CheckerTileVirtualPixelMethod:
@@ -3187,10 +3184,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
                   break;
                 }
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
-                x_modulo.remainder,y_modulo.remainder,1UL,1UL,*virtual_nexus,
-                exception);
+                x_modulo.remainder,y_modulo.remainder,1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case HorizontalTileVirtualPixelMethod:
@@ -3204,10 +3201,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
               x_modulo=VirtualPixelModulo(x_offset,cache_info->columns);
               y_modulo=VirtualPixelModulo(y_offset,cache_info->rows);
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
-                x_modulo.remainder,y_modulo.remainder,1UL,1UL,*virtual_nexus,
-                exception);
+                x_modulo.remainder,y_modulo.remainder,1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case VerticalTileVirtualPixelMethod:
@@ -3221,10 +3218,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
               x_modulo=VirtualPixelModulo(x_offset,cache_info->columns);
               y_modulo=VirtualPixelModulo(y_offset,cache_info->rows);
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
-                x_modulo.remainder,y_modulo.remainder,1UL,1UL,*virtual_nexus,
-                exception);
+                x_modulo.remainder,y_modulo.remainder,1UL,1UL,
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case HorizontalTileEdgeVirtualPixelMethod:
@@ -3232,9 +3229,9 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
               x_modulo=VirtualPixelModulo(x_offset,cache_info->columns);
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
                 x_modulo.remainder,EdgeY(y_offset,cache_info->rows),1UL,1UL,
-                *virtual_nexus,exception);
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
             case VerticalTileEdgeVirtualPixelMethod:
@@ -3242,9 +3239,9 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
               y_modulo=VirtualPixelModulo(y_offset,cache_info->rows);
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
                 EdgeX(x_offset,cache_info->columns),y_modulo.remainder,1UL,1UL,
-                *virtual_nexus,exception);
+                nexus_info->pixel_nexus,exception);
               virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
-                *virtual_nexus);
+                nexus_info->pixel_nexus);
               break;
             }
           }
@@ -3260,10 +3257,11 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
         Transfer a run of pixels.
       */
       p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,x_offset,y_offset,
-        (size_t) length,1UL,*virtual_nexus,exception);
+        (size_t) length,1UL,nexus_info->pixel_nexus,exception);
       if (p == (const PixelPacket *) NULL)
         break;
-      virtual_indexes=GetVirtualIndexesFromNexus(cache_info,*virtual_nexus);
+      virtual_indexes=GetVirtualIndexesFromNexus(cache_info,
+        nexus_info->pixel_nexus);
       (void) memcpy(q,p,(size_t) length*sizeof(*p));
       q+=length;
       if ((indexes != (IndexPacket *) NULL) &&
@@ -3280,7 +3278,6 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
   /*
     Free resources.
   */
-  virtual_nexus=DestroyPixelCacheNexus(virtual_nexus,1);
   if (v < (ssize_t) rows)
     return((const PixelPacket *) NULL);
   return(pixels);
@@ -3600,7 +3597,6 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     number_pixels;
 
   NexusInfo
-    **magick_restrict image_nexus,
     **magick_restrict mask_nexus;
 
   register const PixelPacket
@@ -3627,12 +3623,10 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   cache_info=(CacheInfo *) image->cache;
   if (cache_info == (Cache) NULL)
     return(MagickFalse);
-  image_nexus=AcquirePixelCacheNexus(1);
   mask_nexus=AcquirePixelCacheNexus(1);
-  p=GetAuthenticPixelCacheNexus(image,nexus_info->region.x,
-    nexus_info->region.y,nexus_info->region.width,nexus_info->region.height,
-    image_nexus[0],exception);
-  indexes=image_nexus[0]->indexes;
+  p=GetAuthenticPixelCacheNexus(image,nexus_info->region.x,nexus_info->region.y,    nexus_info->region.width,nexus_info->region.height,nexus_info->pixel_nexus,
+    exception);
+  indexes=nexus_info->pixel_nexus->indexes;
   q=nexus_info->pixels;
   nexus_indexes=nexus_info->indexes;
   r=GetVirtualPixelCacheNexus(image->mask,MaskVirtualPixelMethod,
@@ -3661,7 +3655,6 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     r++;
   }
   mask_nexus=DestroyPixelCacheNexus(mask_nexus,1);
-  image_nexus=DestroyPixelCacheNexus(image_nexus,1);
   if (i < (ssize_t) number_pixels)
     return(MagickFalse);
   return(MagickTrue);
@@ -4319,7 +4312,8 @@ MagickExport MagickBooleanType PersistPixelCache(Image *image,
 */
 MagickExport PixelPacket *QueueAuthenticPixel(Image *image,const ssize_t x,
   const ssize_t y,const size_t columns,const size_t rows,
-  const MagickBooleanType clone,NexusInfo *nexus_info,ExceptionInfo *exception)
+  const MagickBooleanType clone,NexusInfo *nexus_info,
+  ExceptionInfo *exception)
 {
   return(QueueAuthenticPixelCacheNexus(image,x,y,columns,rows,clone,nexus_info,
     exception));
@@ -5407,7 +5401,7 @@ static void CopyOpenCLBuffer(CacheInfo *magick_restrict cache_info)
       context=GetOpenCLContext(clEnv);
       queue=AcquireOpenCLCommandQueue(clEnv);
       pixels=(PixelPacket *) clEnv->library->clEnqueueMapBuffer(queue,
-        cache_info->opencl->buffer,CL_TRUE,CL_MAP_READ | CL_MAP_WRITE,0,
+        cache_info->opencl->buffer,CL_TRUE, CL_MAP_READ | CL_MAP_WRITE,0,
         cache_info->length,event_count,events,NULL,&status);
       assert(pixels == cache_info->pixels);
       events=(cl_event *) RelinquishMagickMemory(events);
