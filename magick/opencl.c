@@ -3002,6 +3002,8 @@ void OpenCLLog(const char* message) {
 
 
       log = fopen(path, "ab");
+      if (log == (FILE *) NULL)
+        return;
       fwrite(message, sizeof(char), strlen(message), log);
       fwrite("\n", sizeof(char), 1, log);
 
