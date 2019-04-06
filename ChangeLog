@@ -1,4 +1,12 @@
-2019-04-06  6.9.108-38 Cristy  <quetzlzacatenango@image...>
+2019-04-07  6.9.10-39 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-39, GIT revision 14346:6b5a9cc87:20190406
+
+2019-04-06  6.9.10-39 Cristy  <quetzlzacatenango@image...>
+  * The -preview raise option now returns expected results.
+  * Initialise ghostscript instances with NULL (reference
+    https://github.com/ImageMagick/ImageMagick/pull/1538).
+
+2019-04-06  6.9.10-38 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-38, GIT revision 14341:09f7569e8:20190406
 
 2019-04-06  6.0.10-38 Cristy  <quetzlzacatenango@image...>
