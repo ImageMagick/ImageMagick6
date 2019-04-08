@@ -1176,7 +1176,12 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
                     *p++=LCMSScaleSource(GetPixelBlue(q));
                   }
                 if (source_channels > 3)
-                  *p++=LCMSScaleSource(GetPixelIndex(indexes+x));
+                  {
+                    *p=LCMSScaleSource(0);
+                    if (indexes != (IndexPacket *) NULL)
+                      *p=LCMSScaleSource(GetPixelIndex(indexes+x));
+                    p++;
+                  }
                 q++;
               }
               cmsDoTransform(transform[id],source_pixels[id],target_pixels[id],
@@ -1198,7 +1203,8 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
                   }
                 if (target_channels > 3)
                   {
-                    SetPixelIndex(indexes+x,LCMSScaleTarget(*p));
+                    if (indexes != (IndexPacket *) NULL)
+                      SetPixelIndex(indexes+x,LCMSScaleTarget(*p));
                     p++;
                   }
                 q++;
