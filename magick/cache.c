@@ -654,9 +654,7 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
     r++;
   }
   clip_nexus=DestroyPixelCacheNexus(clip_nexus,1);
-  if (i < (ssize_t) number_pixels)
-    return(MagickFalse);
-  return(MagickTrue);
+  return(i < (ssize_t) number_pixels ? MagickFalse : MagickTrue);
 }
 
 /*
