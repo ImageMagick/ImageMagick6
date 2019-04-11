@@ -117,7 +117,7 @@ static const unsigned char
   };
 
 static const char
-  *PageSizes[] =
+  *const PageSizes[] =
   {
     "Letter",
     "Tabloid",
@@ -140,7 +140,7 @@ static const char
   Help widget declarations.
 */
 static const char
-  *ImageAnnotateHelp[] =
+  *const ImageAnnotateHelp[] =
   {
     "In annotate mode, the Command widget has these options:",
     "",
@@ -237,7 +237,7 @@ static const char
     "PseudoClass image to remain PseudoClass, use -colors.",
     (char *) NULL,
   },
-  *ImageChopHelp[] =
+  *const ImageChopHelp[] =
   {
     "In chop mode, the Command widget has these options:",
     "",
@@ -265,7 +265,7 @@ static const char
     "starting point of the line and release the button.",
     (char *) NULL,
   },
-  *ImageColorEditHelp[] =
+  *const ImageColorEditHelp[] =
   {
     "In color edit mode, the Command widget has these options:",
     "",
@@ -341,7 +341,7 @@ static const char
     "PseudoClass image to remain PseudoClass, use -colors.",
     (char *) NULL,
   },
-  *ImageCompositeHelp[] =
+  *const ImageCompositeHelp[] =
   {
     "First a widget window is displayed requesting you to enter an",
     "image name. Press Composite, Grab or type a file name.",
@@ -505,7 +505,7 @@ static const char
     "to remain PseudoClass, use -colors.",
     (char *) NULL,
   },
-  *ImageCutHelp[] =
+  *const ImageCutHelp[] =
   {
     "In cut mode, the Command widget has these options:",
     "",
@@ -529,7 +529,7 @@ static const char
     "exit without cutting the image, press Dismiss.",
     (char *) NULL,
   },
-  *ImageCopyHelp[] =
+  *const ImageCopyHelp[] =
   {
     "In copy mode, the Command widget has these options:",
     "",
@@ -553,7 +553,7 @@ static const char
     "exit without copying the image, press Dismiss.",
     (char *) NULL,
   },
-  *ImageCropHelp[] =
+  *const ImageCropHelp[] =
   {
     "In crop mode, the Command widget has these options:",
     "",
@@ -577,7 +577,7 @@ static const char
     "exit without cropping the image, press Dismiss.",
     (char *) NULL,
   },
-  *ImageDrawHelp[] =
+  *const ImageDrawHelp[] =
   {
     "The cursor changes to a crosshair to indicate you are in",
     "draw mode.  To exit immediately, press Dismiss.  In draw mode,",
@@ -657,7 +657,7 @@ static const char
     "starting point of the line and release the button.",
     (char *) NULL,
   },
-  *DisplayHelp[] =
+  *const DisplayHelp[] =
   {
     "BUTTONS",
     "  The effects of each button press is described below.  Three",
@@ -986,7 +986,7 @@ static const char
     "  from any side of the image.",
     (char *) NULL,
   },
-  *ImageMatteEditHelp[] =
+  *const ImageMatteEditHelp[] =
   {
     "Matte information within an image is useful for some",
     "operations such as image compositing (See IMAGE",
@@ -1065,7 +1065,7 @@ static const char
     "DirectColor visual or a Standard Colormap.",
     (char *) NULL,
   },
-  *ImagePanHelp[] =
+  *const ImagePanHelp[] =
   {
     "When an image exceeds the width or height of the X server",
     "screen, display maps a small panning icon.  The rectangle",
@@ -1084,7 +1084,7 @@ static const char
     "than the dimensions of the X server screen.",
     (char *) NULL,
   },
-  *ImagePasteHelp[] =
+  *const ImagePasteHelp[] =
   {
     "A small window appears showing the location of the cursor in",
     "the image window. You are now in paste mode.  To exit",
@@ -1206,7 +1206,7 @@ static const char
     "to remain PseudoClass, use -colors.",
     (char *) NULL,
   },
-  *ImageROIHelp[] =
+  *const ImageROIHelp[] =
   {
     "In region of interest mode, the Command widget has these",
     "options:",
@@ -1287,7 +1287,7 @@ static const char
     "Dismiss.",
     (char *) NULL,
   },
-  *ImageRotateHelp[] =
+  *const ImageRotateHelp[] =
   {
     "In rotate mode, the Command widget has these options:",
     "",
@@ -1786,7 +1786,7 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
   XResourceInfo *resource_info,XWindows *windows,Image *image)
 {
   static const char
-    *AnnotateMenu[] =
+    *const AnnotateMenu[] =
     {
       "Font Name",
       "Font Color",
@@ -1796,7 +1796,7 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
       "Dismiss",
       (char *) NULL
     },
-    *TextMenu[] =
+    *const TextMenu[] =
     {
       "Help",
       "Apply",
@@ -2074,7 +2074,7 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
               angle[MaxTextExtent] = "30.0";
 
             static const char
-              *RotateMenu[] =
+              *const RotateMenu[] =
               {
                 "-90",
                 "-45",
@@ -2828,7 +2828,7 @@ static MagickBooleanType XChopImage(Display *display,
   XResourceInfo *resource_info,XWindows *windows,Image **image)
 {
   static const char
-    *ChopMenu[] =
+    *const ChopMenu[] =
     {
       "Direction",
       "Help",
@@ -2931,7 +2931,7 @@ static MagickBooleanType XChopImage(Display *display,
               command[MaxTextExtent];
 
             static const char
-              *Directions[] =
+              *const Directions[] =
               {
                 "horizontal",
                 "vertical",
@@ -3250,7 +3250,7 @@ static MagickBooleanType XColorEditImage(Display *display,
   XResourceInfo *resource_info,XWindows *windows,Image **image)
 {
   static const char
-    *ColorEditMenu[] =
+    *const ColorEditMenu[] =
     {
       "Method",
       "Pixel Color",
@@ -3483,7 +3483,7 @@ static MagickBooleanType XColorEditImage(Display *display,
               fuzz[MaxTextExtent];
 
             static const char
-              *FuzzMenu[] =
+              *const FuzzMenu[] =
               {
                 "0%",
                 "2%",
@@ -3871,7 +3871,7 @@ static MagickBooleanType XCompositeImage(Display *display,
     filename[MaxTextExtent] = "\0";
 
   static const char
-    *CompositeMenu[] =
+    *const CompositeMenu[] =
     {
       "Operators",
       "Dissolve",
@@ -4530,7 +4530,7 @@ static MagickBooleanType XCropImage(Display *display,
   const ClipboardMode mode)
 {
   static const char
-    *CropModeMenu[] =
+    *const CropModeMenu[] =
     {
       "Help",
       "Dismiss",
@@ -5366,7 +5366,7 @@ static MagickBooleanType XDrawEditImage(Display *display,
   XResourceInfo *resource_info,XWindows *windows,Image **image)
 {
   static const char
-    *DrawMenu[] =
+    *const DrawMenu[] =
     {
       "Element",
       "Color",
@@ -5513,7 +5513,7 @@ static MagickBooleanType XDrawEditImage(Display *display,
             case DrawElementCommand:
             {
               static const char
-                *Elements[] =
+                *const Elements[] =
                 {
                   "point",
                   "line",
@@ -5722,7 +5722,7 @@ static MagickBooleanType XDrawEditImage(Display *display,
                 width[MaxTextExtent] = "0";
 
               static const char
-                *WidthsMenu[] =
+                *const WidthsMenu[] =
                 {
                   "1",
                   "2",
@@ -9563,7 +9563,7 @@ static MagickBooleanType XMatteEditImage(Display *display,
     matte[MaxTextExtent] = "0";
 
   static const char
-    *MatteEditMenu[] =
+    *const MatteEditMenu[] =
     {
       "Method",
       "Border Color",
@@ -9741,7 +9741,7 @@ static MagickBooleanType XMatteEditImage(Display *display,
               fuzz[MaxTextExtent];
 
             static const char
-              *FuzzMenu[] =
+              *const FuzzMenu[] =
               {
                 "0%",
                 "2%",
@@ -9781,7 +9781,7 @@ static MagickBooleanType XMatteEditImage(Display *display,
               message[MaxTextExtent];
 
             static const char
-              *MatteMenu[] =
+              *const MatteMenu[] =
               {
                 "Opaque",
                 "Transparent",
@@ -10494,7 +10494,7 @@ static MagickBooleanType XPasteImage(Display *display,
   XResourceInfo *resource_info,XWindows *windows,Image *image)
 {
   static const char
-    *PasteMenu[] =
+    *const PasteMenu[] =
     {
       "Operator",
       "Help",
@@ -10947,13 +10947,13 @@ static MagickBooleanType XROIImage(Display *display,
 #define ApplyMenus  7
 
   static const char
-    *ROIMenu[] =
+    *const ROIMenu[] =
     {
       "Help",
       "Dismiss",
       (char *) NULL
     },
-    *ApplyMenu[] =
+    *const ApplyMenu[] =
     {
       "File",
       "Edit",
@@ -10966,19 +10966,19 @@ static MagickBooleanType XROIImage(Display *display,
       "Dismiss",
       (char *) NULL
     },
-    *FileMenu[] =
+    *const FileMenu[] =
     {
       "Save...",
       "Print...",
       (char *) NULL
     },
-    *EditMenu[] =
+    *const EditMenu[] =
     {
       "Undo",
       "Redo",
       (char *) NULL
     },
-    *TransformMenu[] =
+    *const TransformMenu[] =
     {
       "Flop",
       "Flip",
@@ -10986,7 +10986,7 @@ static MagickBooleanType XROIImage(Display *display,
       "Rotate Left",
       (char *) NULL
     },
-    *EnhanceMenu[] =
+    *const EnhanceMenu[] =
     {
       "Hue...",
       "Saturation...",
@@ -11004,7 +11004,7 @@ static MagickBooleanType XROIImage(Display *display,
       "Quantize...",
       (char *) NULL
     },
-    *EffectsMenu[] =
+    *const EffectsMenu[] =
     {
       "Despeckle",
       "Emboss",
@@ -11020,7 +11020,7 @@ static MagickBooleanType XROIImage(Display *display,
       "Segment...",
       (char *) NULL
     },
-    *FXMenu[] =
+    *const FXMenu[] =
     {
       "Solarize...",
       "Sepia Tone...",
@@ -11032,7 +11032,7 @@ static MagickBooleanType XROIImage(Display *display,
       "Charcoal Draw...",
       (char *) NULL
     },
-    *MiscellanyMenu[] =
+    *const MiscellanyMenu[] =
     {
       "Image Info",
       "Zoom Image",
@@ -11043,7 +11043,7 @@ static MagickBooleanType XROIImage(Display *display,
     };
 
   static const char
-    **Menus[ApplyMenus] =
+    *const *Menus[ApplyMenus] =
     {
       FileMenu,
       EditMenu,
@@ -11895,7 +11895,7 @@ static MagickBooleanType XRotateImage(Display *display,
   XResourceInfo *resource_info,XWindows *windows,double degrees,Image **image)
 {
   static const char
-    *RotateMenu[] =
+    *const RotateMenu[] =
     {
       "Pixel Color",
       "Direction",
@@ -12054,7 +12054,7 @@ static MagickBooleanType XRotateImage(Display *display,
               case RotateDirectionCommand:
               {
                 static const char
-                  *Directions[] =
+                  *const Directions[] =
                   {
                     "horizontal",
                     "vertical",
@@ -12922,7 +12922,7 @@ static Image *XTileImage(Display *display,XResourceInfo *resource_info,
   XWindows *windows,Image *image,XEvent *event)
 {
   static const char
-    *VerbMenu[] =
+    *const VerbMenu[] =
     {
       "Load",
       "Next",
@@ -13938,7 +13938,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
 #define MagickTitle  "Commands"
 
   static const char
-    *CommandMenu[] =
+    *const CommandMenu[] =
     {
       "File",
       "Edit",
@@ -15154,7 +15154,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
               factor;
 
             static const char
-              *MagnifyMenu[] =
+              *const MagnifyMenu[] =
               {
                 "2",
                 "4",

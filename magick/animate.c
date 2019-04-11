@@ -87,7 +87,7 @@
   Static declarations.
 */
 static const char
-  *AnimateHelp[]=
+  *const AnimateHelp[] =
   {
     "BUTTONS",
     "",
@@ -158,7 +158,7 @@ static const char
   Constant declarations.
 */
 static const char
-  *PageSizes[]=
+  *const PageSizes[] =
   {
     "Letter",
     "Tabloid",
