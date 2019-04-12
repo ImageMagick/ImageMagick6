@@ -1703,15 +1703,23 @@ static MagickBooleanType WriteMATImage(const ImageInfo *image_info,Image *image)
       ssize_t
         y;
 
-      for (y=0; y < (ssize_t)image->columns; y++)
+      for (y=0; y < (ssize_t) image->columns; y++)
       {
+        size_t
+          length;
+
         p=GetVirtualPixels(image,y,0,1,image->rows,&image->exception);
         if (p == (const PixelPacket *) NULL)
           break;
-        (void) ExportQuantumPixels(image,(const CacheView *) NULL,quantum_info,
+        length=ExportQuantumPixels(image,(const CacheView *) NULL,quantum_info,
           z2qtype[z],pixels,exception);
-        (void) WriteBlob(image,image->rows,pixels);
+        if (length != image->columns)
+          break;
+        if (WriteBlob(image,image->rows,pixels) != image->rows)
+          break;
       }
+      if (y < (ssize_t) image->columns)
+        break;
       if (!SyncAuthenticPixels(image,exception))
         break;
     } while (z-- >= 2);
