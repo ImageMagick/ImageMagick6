@@ -1523,7 +1523,16 @@ MagickExport MagickSizeType GetBlobSize(const Image *image)
     }
     case FileStream:
     {
-      if (fstat(fileno(blob_info->file_info.file),&blob_info->properties) == 0)
+      int
+        file_descriptor;
+
+      extent=(MagickSizeType) blob_info->properties.st_size;
+      if (extent == 0)
+        extent=blob_info->size;
+      file_descriptor=fileno(blob_info->file_info.file);
+      if (file_descriptor == -1)
+        break;
+      if (fstat(file_descriptor,&blob_info->properties) == 0)
         extent=(MagickSizeType) blob_info->properties.st_size;
       break;
     }
@@ -2750,6 +2759,8 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
               magick[3];
 
             blob_info->type=FileStream;
+            (void) fstat(fileno(blob_info->file_info.file),
+              &blob_info->properties);
             (void) SetStreamBuffering(image_info,image);
             (void) memset(magick,0,sizeof(magick));
             count=fread(magick,1,sizeof(magick),blob_info->file_info.file);
