@@ -96,6 +96,7 @@
 #include "magick/thread-private.h"
 #include "magick/threshold.h"
 #include "magick/timer.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/token-private.h"
 #include "magick/utility.h"
@@ -202,7 +203,7 @@ MagickExport Image *AcquireImage(const ImageInfo *image_info)
   image->ping=MagickFalse;
   image->cache=AcquirePixelCache(0);
   image->blob=CloneBlobInfo((BlobInfo *) NULL);
-  image->timestamp=time((time_t *) NULL);
+  image->timestamp=GetMagickTime();
   image->debug=IsEventLogging();
   image->reference_count=1;
   image->semaphore=AllocateSemaphoreInfo();

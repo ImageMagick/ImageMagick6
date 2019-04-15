@@ -51,6 +51,7 @@
 #include "magick/signature.h"
 #include "magick/signature-private.h"
 #include "magick/string_.h"
+#include "magick/timer-private.h"
 /*
   Define declarations.
 */

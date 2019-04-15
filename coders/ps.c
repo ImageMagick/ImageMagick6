@@ -61,6 +61,7 @@
 #include "magick/list.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/nt-base-private.h"
@@ -73,7 +74,7 @@
 #include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
-#include "magick/module.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
@@ -1705,7 +1706,7 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
         (void) FormatLocaleString(buffer,MaxTextExtent,"%%%%Title: (%s)\n",
           image->filename);
         (void) WriteBlobString(image,buffer);
-        timer=time((time_t *) NULL);
+        timer=GetMagickTime();
         (void) FormatMagickTime(timer,MaxTextExtent,date);
         (void) FormatLocaleString(buffer,MaxTextExtent,
           "%%%%CreationDate: (%s)\n",date);

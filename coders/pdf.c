@@ -63,6 +63,7 @@
 #include "magick/magick.h"
 #include "magick/magick-type.h"
 #include "magick/memory_.h"
+#include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/nt-base-private.h"
@@ -76,11 +77,10 @@
 #include "magick/signature.h"
 #include "magick/static.h"
 #include "magick/string_.h"
-#include "magick/module.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
-#include "magick/module.h"
 
 /*
   Define declarations.
@@ -1473,7 +1473,7 @@ RestoreMSCWarning
       value=GetImageProperty(image,"date:create");
       if (value != (const char *) NULL)
         (void) CopyMagickString(create_date,value,MaxTextExtent);
-      (void) FormatMagickTime(time((time_t *) NULL),MaxTextExtent,timestamp);
+      (void) FormatMagickTime(GetMagickTime(),MaxTextExtent,timestamp);
       url=(char *) MagickAuthoritativeURL;
       escape=EscapeParenthesis(basename);
       i=FormatLocaleString(xmp_profile,MaxTextExtent,XMPProfile,
@@ -2999,7 +2999,7 @@ RestoreMSCWarning
         }
     }
   (void) WriteBlobString(image,buffer);
-  seconds=time((time_t *) NULL);
+  seconds=GetMagickTime();
 #if defined(MAGICKCORE_HAVE_LOCALTIME_R)
   (void) localtime_r(&seconds,&local_time);
 #else

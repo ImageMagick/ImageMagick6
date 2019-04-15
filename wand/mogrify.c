@@ -48,14 +48,15 @@
 #include "wand/MagickWand.h"
 #include "wand/magick-wand-private.h"
 #include "wand/mogrify-private.h"
+#include "magick/blob-private.h"
 #include "magick/color-private.h"
 #include "magick/image-private.h"
 #include "magick/monitor-private.h"
 #include "magick/pixel-private.h"
 #include "magick/thread-private.h"
 #include "magick/string-private.h"
+#include "magick/timer-private.h"
 #include "magick/utility-private.h"
-#include "magick/blob-private.h"
 #if defined(MAGICKCORE_HAVE_UTIME_H)
 #include <utime.h>
 #endif
@@ -7488,7 +7489,7 @@ WandExport MagickBooleanType MogrifyImageInfo(ImageInfo *image_info,
 
             if (*option == '+')
               {
-                seed=(unsigned long) time((time_t *) NULL);
+                seed=(unsigned long) GetMagickTime();
                 SetRandomSecretKey(seed);
                 break;
               }

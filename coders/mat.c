@@ -63,6 +63,7 @@
 #include "magick/list.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/option.h"
@@ -72,7 +73,7 @@
 #include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
-#include "magick/module.h"
+#include "magick/timer-private.h"
 #include "magick/transform.h"
 #include "magick/utility-private.h"
 #if defined(MAGICKCORE_ZLIB_DELEGATE)
@@ -1614,7 +1615,7 @@ static MagickBooleanType WriteMATImage(const ImageInfo *image_info,Image *image)
     return(MagickFalse);
   image->depth=8;
 
-  current_time=time((time_t *) NULL);
+  current_time=GetMagickTime();
 #if defined(MAGICKCORE_HAVE_LOCALTIME_R)
   (void) localtime_r(&current_time,&local_time);
 #else

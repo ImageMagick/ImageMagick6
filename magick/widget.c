@@ -49,6 +49,7 @@
 #include "magick/magick.h"
 #include "magick/memory_.h"
 #include "magick/string_.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/xwindow-private.h"
@@ -8176,11 +8177,11 @@ MagickExport void XNoticeWidget(Display *display,XWindows *windows,
   /*
     Respond to X events.
   */
-  timer=time((time_t *) NULL)+Timeout;
+  timer=GetMagickTime()+Timeout;
   state=UpdateConfigurationState;
   do
   {
-    if (time((time_t *) NULL) > timer)
+    if (GetMagickTime() > timer)
       break;
     if (state & UpdateConfigurationState)
       {

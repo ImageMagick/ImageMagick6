@@ -85,6 +85,7 @@
 #include "magick/statistic.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
+#include "magick/timer-private.h"
 #include "magick/transform.h"
 #include "magick/threshold.h"
 #include "magick/utility.h"
@@ -14923,7 +14924,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
     Respond to events.
   */
   delay=display_image->delay/MagickMax(display_image->ticks_per_second,1L);
-  timer=time((time_t *) NULL)+(delay == 0 ? 1 : delay)+1;
+  timer=GetMagickTime()+(delay == 0 ? 1 : delay)+1;
   update_time=0;
   if (resource_info->update != MagickFalse)
     {
@@ -14948,7 +14949,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
     if (windows->image.mapped != MagickFalse)
       if ((display_image->delay != 0) || (resource_info->update != 0))
         {
-          if (timer < time((time_t *) NULL))
+          if (timer < GetMagickTime())
             {
               if (resource_info->update == MagickFalse)
                 *state|=NextImageState | ExitState;
@@ -14978,7 +14979,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
                       }
                   delay=display_image->delay/MagickMax(
                     display_image->ticks_per_second,1L);
-                  timer=time((time_t *) NULL)+(delay == 0 ? 1 : delay)+1;
+                  timer=GetMagickTime()+(delay == 0 ? 1 : delay)+1;
                 }
             }
           if (XEventsQueued(display,QueuedAfterFlush) == 0)
@@ -14990,13 +14991,13 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
               continue;
             }
         }
-    timestamp=time((time_t *) NULL);
+    timestamp=GetMagickTime();
     (void) XNextEvent(display,&event);
     if (windows->image.stasis == MagickFalse)
-      windows->image.stasis=(time((time_t *) NULL)-timestamp) > 0 ?
+      windows->image.stasis=(GetMagickTime()-timestamp) > 0 ?
         MagickTrue : MagickFalse;
     if (windows->magnify.stasis == MagickFalse)
-      windows->magnify.stasis=(time((time_t *) NULL)-timestamp) > 0 ?
+      windows->magnify.stasis=(GetMagickTime()-timestamp) > 0 ?
         MagickTrue : MagickFalse;
     if (event.xany.window == windows->command.id)
       {
@@ -15218,7 +15219,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
           }
         delay=display_image->delay/MagickMax(display_image->ticks_per_second,
           1L);
-        timer=time((time_t *) NULL)+(delay == 0 ? 1 : delay)+1;
+        timer=GetMagickTime()+(delay == 0 ? 1 : delay)+1;
         break;
       }
       case ButtonRelease:
@@ -15610,7 +15611,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
             XRefreshWindow(display,&windows->image,&event);
             delay=display_image->delay/MagickMax(
               display_image->ticks_per_second,1L);
-            timer=time((time_t *) NULL)+(delay == 0 ? 1 : delay)+1;
+            timer=GetMagickTime()+(delay == 0 ? 1 : delay)+1;
             break;
           }
         if ((event.xexpose.window == windows->magnify.id) &&
@@ -15670,7 +15671,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
           }
         delay=display_image->delay/MagickMax(
           display_image->ticks_per_second,1L);
-        timer=time((time_t *) NULL)+(delay == 0 ? 1 : delay)+1;
+        timer=GetMagickTime()+(delay == 0 ? 1 : delay)+1;
         break;
       }
       case KeyRelease:

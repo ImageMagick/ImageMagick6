@@ -65,6 +65,7 @@
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
+#include "magick/timer-private.h"
 
 /*
   Define declaration.
@@ -1606,7 +1607,7 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
     (void) strncpy(dpx.file.filename,value,sizeof(dpx.file.filename)-1);
   offset+=WriteBlob(image,sizeof(dpx.file.filename),(unsigned char *)
     dpx.file.filename);
-  seconds=time((time_t *) NULL);
+  seconds=GetMagickTime();
   (void) FormatMagickTime(seconds,sizeof(dpx.file.timestamp),
     dpx.file.timestamp);
   offset+=WriteBlob(image,sizeof(dpx.file.timestamp),(unsigned char *)

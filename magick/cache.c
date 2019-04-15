@@ -73,6 +73,7 @@
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/thread-private.h"
+#include "magick/timer-private.h"
 #include "magick/utility.h"
 #include "magick/utility-private.h"
 #if defined(MAGICKCORE_ZLIB_DELEGATE)
@@ -1837,11 +1838,11 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
       /*
         Set the expire time in seconds.
       */
-      cache_epoch=time((time_t *) NULL);
+      cache_epoch=GetMagickTime();
       cache_timelimit=GetMagickResourceLimit(TimeResource);
     }
   if ((cache_timelimit != MagickResourceInfinity) &&
-      ((MagickSizeType) (time((time_t *) NULL)-cache_epoch) >= cache_timelimit))
+      ((MagickSizeType) (GetMagickTime()-cache_epoch) >= cache_timelimit))
     {
 #if defined(ECANCELED)
       errno=ECANCELED;

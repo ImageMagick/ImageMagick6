@@ -57,6 +57,7 @@
 #include "magick/token.h"
 #include "magick/thread_.h"
 #include "magick/thread-private.h"
+#include "magick/timer-private.h"
 #include "magick/utility.h"
 #include "magick/utility-private.h"
 #include "magick/version.h"
@@ -976,7 +977,7 @@ static char *TranslateEvent(const LogEventType magick_unused(type),
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
-  seconds=time((time_t *) NULL);
+  seconds=GetMagickTime();
   elapsed_time=GetElapsedTime(&log_info->timer);
   user_time=GetUserTime(&log_info->timer);
   text=AcquireString(event);

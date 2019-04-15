@@ -272,6 +272,7 @@ MAGICK_BASE_SRCS = \
 	magick/thread-private.h \
 	magick/timer.c \
 	magick/timer.h \
+	magick/timer-private.h \
 	magick/token.c \
 	magick/token.h \
 	magick/token-private.h \
@@ -453,6 +454,7 @@ MAGICK_NOINST_HDRS = \
 	magick/string-private.h \
 	magick/thread_.h \
 	magick/thread-private.h \
+	magick/timer-private.h \
 	magick/token-private.h \
 	magick/utility-private.h \
 	magick/version-private.h \

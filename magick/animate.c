@@ -66,6 +66,7 @@
 #include "magick/resource_.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
+#include "magick/timer-private.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
 #include "magick/version.h"
@@ -2166,10 +2167,10 @@ MagickExport Image *XAnimateImages(Display *display,
     /*
       Handle a window event.
     */
-    timestamp=time((time_t *) NULL);
+    timestamp=GetMagickTime();
     (void) XNextEvent(display,&event);
     if (windows->image.stasis == MagickFalse)
-      windows->image.stasis=(time((time_t *) NULL)-timestamp) > 0 ?
+      windows->image.stasis=(GetMagickTime()-timestamp) > 0 ?
         MagickTrue : MagickFalse;
     if (event.xany.window == windows->command.id)
       {
