@@ -47,6 +47,7 @@
 #include "magick/log.h"
 #include "magick/memory_.h"
 #include "magick/nt-base-private.h"
+#include "magick/string-private.h"
 #include "magick/timer.h"
 #include "magick/timer-private.h"
 
@@ -358,6 +359,18 @@ MagickExport double GetElapsedTime(TimerInfo *time_info)
 */
 MagickPrivate time_t GetMagickTime(void)
 {
+  char
+    *source_date_epoch = getenv("SOURCE_DATE_EPOCH");
+
+  if (source_date_epoch != (char *) NULL)
+    {
+      time_t
+        epoch;
+
+      epoch=(time_t) StringToDouble(source_date_epoch,(char **) NULL);
+      if ((epoch > 0) && (epoch <= time((time_t *) NULL)))
+        return(epoch);
+    }
   return(time((time_t *) NULL));
 }
 
