@@ -82,6 +82,7 @@
 #include "magick/statistic.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
+#include "magick/timer-private.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
 #if defined(MAGICKCORE_PNG_DELEGATE)
@@ -8123,7 +8124,7 @@ static void write_tIME_chunk(Image *image,png_struct *ping,png_info *info,
   ptime.hour = hour;
   ptime.minute = minute;
   ptime.second = second;
-
+  png_convert_from_time_t(&ptime,GetMagickTime());
   LogMagickEvent(CoderEvent,GetMagickModule(),
       "      png_set_tIME: y=%d, m=%d, d=%d, h=%d, m=%d, s=%d, ah=%d, am=%d",
       ptime.year, ptime.month, ptime.day, ptime.hour, ptime.minute,
