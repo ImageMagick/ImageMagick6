@@ -7489,7 +7489,7 @@ WandExport MagickBooleanType MogrifyImageInfo(ImageInfo *image_info,
 
             if (*option == '+')
               {
-                seed=(unsigned long) GetMagickTime();
+                seed=(unsigned long) time((time_t *) NULL);
                 SetRandomSecretKey(seed);
                 break;
               }
