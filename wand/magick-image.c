@@ -12998,7 +12998,8 @@ WandExport MagickBooleanType MagickUnsharpMaskImageChannel(MagickWand *wand,
 %
 */
 WandExport MagickBooleanType MagickVignetteImage(MagickWand *wand,
-  const double black_point,const double white_point,const ssize_t x,const ssize_t y)
+  const double black_point,const double white_point,const ssize_t x,
+  const ssize_t y)
 {
   Image
     *vignette_image;
@@ -13034,8 +13035,8 @@ WandExport MagickBooleanType MagickVignetteImage(MagickWand *wand,
 %
 %  The format of the MagickWaveImage method is:
 %
-%      MagickBooleanType MagickWaveImage(MagickWand *wand,const double amplitude,
-%        const double wave_length)
+%      MagickBooleanType MagickWaveImage(MagickWand *wand,
+%        const double amplitude,const double wave_length)
 %
 %  A description of each parameter follows:
 %
