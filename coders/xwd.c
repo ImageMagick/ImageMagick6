@@ -241,6 +241,8 @@ static Image *ReadXWDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     ThrowReaderException(CorruptImageError,"FileFormatVersionMismatch");
   if (header.header_size < sz_XWDheader)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  if ((MagickSizeType) header.xoffset >= GetBlobSize(image))
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   switch (header.visual_class)
   {
     case StaticGray:
@@ -690,6 +692,7 @@ ModuleExport size_t RegisterXWDImage(void)
   entry->encoder=(EncodeImageHandler *) WriteXWDImage;
 #endif
   entry->magick=(IsImageFormatHandler *) IsXWD;
+  entry->seekable_stream=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("X Windows system window dump (color)");
   entry->module=ConstantString("XWD");
