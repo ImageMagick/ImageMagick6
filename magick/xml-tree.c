@@ -1401,8 +1401,6 @@ static char *ParseEntities(char *xml,char **entities,int state)
       if (*xml == '\n')
         (void) memmove(xml,xml+1,strlen(xml));
     }
-  if (*xml == '\0')
-    return(ConstantString(xml));
   for (xml=p; ; )
   {
     while ((*xml != '\0') && (*xml != '&') && ((*xml != '%') ||
@@ -1484,19 +1482,24 @@ static char *ParseEntities(char *xml,char **entities,int state)
                     offset=(ssize_t) (xml-p);
                     extent=(size_t) (offset+length+strlen(entity));
                     if (p != q)
-                      p=(char *) ResizeQuantumMemory(p,extent,sizeof(*p));
+                      {
+                        p=(char *) ResizeQuantumMemory(p,extent+1,sizeof(*p));
+                        p[extent]='\0';
+                      }
                     else
                       {
                         char
-                          *xml;
+                          *extent_xml;
 
-                        xml=(char *) AcquireQuantumMemory(extent,sizeof(*xml));
-                        if (xml != (char *) NULL)
+                        extent_xml=(char *) AcquireQuantumMemory(extent+1,
+                          sizeof(*extent_xml));
+                        if (extent_xml != (char *) NULL)
                           {
-                            memset(xml,0,extent*sizeof(*xml));
-                            (void) CopyMagickString(xml,p,extent*sizeof(*xml));
+                            memset(extent_xml,0,extent*sizeof(*extent_xml));
+                            (void) CopyMagickString(extent_xml,p,extent*
+                              sizeof(*extent_xml));
                           }
-                        p=xml;
+                        p=extent_xml;
                       }
                     if (p == (char *) NULL)
                       ThrowFatalException(ResourceLimitFatalError,
