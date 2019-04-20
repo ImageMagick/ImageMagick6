@@ -241,7 +241,7 @@ static Image *ReadXWDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     ThrowReaderException(CorruptImageError,"FileFormatVersionMismatch");
   if (header.header_size < sz_XWDheader)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-  if ((MagickSizeType) header.xoffset >= GetBlobSize(image))
+  if (header.xoffset >= header.pixmap_width)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   switch (header.visual_class)
   {
@@ -360,10 +360,11 @@ static Image *ReadXWDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ximage->red_mask=header.red_mask;
   ximage->green_mask=header.green_mask;
   ximage->blue_mask=header.blue_mask;
-  if ((ximage->width < 0) || (ximage->height < 0) || (ximage->depth < 0) ||
-      (ximage->format < 0) || (ximage->byte_order < 0) ||
-      (ximage->bitmap_bit_order < 0) || (ximage->bitmap_pad < 0) ||
-      (ximage->bytes_per_line < 0))
+  if ((ximage->depth < 0) || (ximage->format < 0) || (ximage->xoffset < 0) ||
+      (ximage->width < 0) || (ximage->height < 0) || (ximage->bitmap_pad < 0) ||
+      (ximage->bytes_per_line < 0) || (ximage->byte_order < 0) ||
+      (ximage->bitmap_unit < 0) || (ximage->bitmap_bit_order < 0) ||
+      (ximage->bits_per_pixel < 0))
     {
       ximage=(XImage *) RelinquishMagickMemory(ximage);
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
@@ -692,7 +693,6 @@ ModuleExport size_t RegisterXWDImage(void)
   entry->encoder=(EncodeImageHandler *) WriteXWDImage;
 #endif
   entry->magick=(IsImageFormatHandler *) IsXWD;
-  entry->seekable_stream=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("X Windows system window dump (color)");
   entry->module=ConstantString("XWD");
