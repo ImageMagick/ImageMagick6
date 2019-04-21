@@ -3119,14 +3119,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
               ThrowPointExpectedException(image,token);
             graphic_context[n]->fill_opacity=(QuantumRange-
               graphic_context[n]->fill_opacity)*(1.0-opacity);
-            if (graphic_context[n]->fill_opacity != OpaqueOpacity)
-              graphic_context[n]->fill.opacity=ClampToQuantum(
-                graphic_context[n]->fill_opacity);
             graphic_context[n]->stroke_opacity=(QuantumRange-
               graphic_context[n]->stroke_opacity)*(1.0-opacity);
-            if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
-              graphic_context[n]->stroke.opacity=ClampToQuantum(
-                graphic_context[n]->stroke_opacity);
             break;
           }
         status=MagickFalse;
