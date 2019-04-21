@@ -97,7 +97,7 @@ typedef struct _EventInfo
 typedef struct _HandlerInfo
 {
   const char
-    *name;
+    name[10];
 
   LogHandlerType
     handler;
@@ -167,31 +167,31 @@ static const HandlerInfo
     { "None", NoHandler },
     { "Stderr", StderrHandler },
     { "Stdout", StdoutHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler },
-    { (char *) NULL, UndefinedHandler }
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler },
+    { "", UndefinedHandler }
   };
 
 static const LogMapInfo
@@ -786,7 +786,7 @@ MagickExport MagickBooleanType ListLogInfo(FILE *file,ExceptionInfo *exception)
           size_t
             mask;
 
-          if (LogHandlers[j].name == (const char *) NULL)
+          if (*LogHandlers[j].name == '\0')
             break;
           mask=1;
           mask<<=j;
@@ -1700,7 +1700,7 @@ static LogHandlerType ParseLogHandlers(const char *handlers)
     while ((*p != '\0') && ((isspace((int) ((unsigned char) *p)) != 0) ||
            (*p == ',')))
       p++;
-    for (i=0; LogHandlers[i].name != (char *) NULL; i++)
+    for (i=0; *LogHandlers[i].name != '\0'; i++)
     {
       length=strlen(LogHandlers[i].name);
       if (LocaleNCompare(p,LogHandlers[i].name,length) == 0)
@@ -1709,7 +1709,7 @@ static LogHandlerType ParseLogHandlers(const char *handlers)
           break;
         }
     }
-    if (LogHandlers[i].name == (char *) NULL)
+    if (*LogHandlers[i].name == '\0')
       return(UndefinedHandler);
   }
   return(handler_mask);
