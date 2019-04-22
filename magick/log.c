@@ -890,11 +890,8 @@ static void *DestroyLogElement(void *log_info)
     p->path=DestroyString(p->path);
   if (p->filename != (char *) NULL)
     p->filename=DestroyString(p->filename);
-  if (p->event_semaphore == (SemaphoreInfo *) NULL)
-    ActivateSemaphoreInfo(&p->event_semaphore);
-  LockSemaphoreInfo(p->event_semaphore);
-  UnlockSemaphoreInfo(p->event_semaphore);
-  DestroySemaphoreInfo(&p->event_semaphore);
+  if (p->event_semaphore != (SemaphoreInfo *) NULL)
+    DestroySemaphoreInfo(&p->event_semaphore);
   p=(LogInfo *) RelinquishMagickMemory(p);
   return((void *) NULL);
 }
