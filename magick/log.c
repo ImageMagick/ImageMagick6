@@ -134,11 +134,14 @@ struct _LogInfo
   TimerInfo
     timer;
 
-  size_t
-    signature;
-
   MagickLogMethod
     method;
+
+  SemaphoreInfo
+    *event_semaphore;
+
+  size_t
+    signature;
 };
 
 typedef struct _LogMapInfo
@@ -211,7 +214,6 @@ static MagickBooleanType
   event_logging = MagickFalse;
 
 static SemaphoreInfo
-  *event_semaphore = (SemaphoreInfo *) NULL,
   *log_semaphore = (SemaphoreInfo *) NULL;
 
 /*
@@ -848,7 +850,6 @@ MagickExport MagickBooleanType LogComponentGenesis(void)
   exception=AcquireExceptionInfo();
   (void) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
-  event_semaphore=AllocateSemaphoreInfo();
   return(MagickTrue);
 }
 
@@ -889,17 +890,17 @@ static void *DestroyLogElement(void *log_info)
     p->path=DestroyString(p->path);
   if (p->filename != (char *) NULL)
     p->filename=DestroyString(p->filename);
+  if (p->event_semaphore == (SemaphoreInfo *) NULL)
+    ActivateSemaphoreInfo(&p->event_semaphore);
+  LockSemaphoreInfo(p->event_semaphore);
+  UnlockSemaphoreInfo(p->event_semaphore);
+  DestroySemaphoreInfo(&p->event_semaphore);
   p=(LogInfo *) RelinquishMagickMemory(p);
   return((void *) NULL);
 }
 
 MagickExport void LogComponentTerminus(void)
 {
-  if (event_semaphore == (SemaphoreInfo *) NULL)
-    ActivateSemaphoreInfo(&event_semaphore);
-  LockSemaphoreInfo(event_semaphore);
-  UnlockSemaphoreInfo(event_semaphore);
-  DestroySemaphoreInfo(&event_semaphore);
   if (log_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&log_semaphore);
   LockSemaphoreInfo(log_semaphore);
@@ -1292,12 +1293,12 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
-  if (event_semaphore == (SemaphoreInfo *) NULL)
-    ActivateSemaphoreInfo(&event_semaphore);
-  LockSemaphoreInfo(event_semaphore);
+  if (log_info->event_semaphore == (SemaphoreInfo *) NULL)
+    ActivateSemaphoreInfo(&log_info->event_semaphore);
+  LockSemaphoreInfo(log_info->event_semaphore);
   if ((log_info->event_mask & type) == 0)
     {
-      UnlockSemaphoreInfo(event_semaphore);
+      UnlockSemaphoreInfo(log_info->event_semaphore);
       return(MagickTrue);
     }
   domain=CommandOptionToMnemonic(MagickLogEventOptions,type);
@@ -1312,7 +1313,7 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
   if (text == (char *) NULL)
     {
       (void) ContinueTimer((TimerInfo *) &log_info->timer);
-      UnlockSemaphoreInfo(event_semaphore);
+      UnlockSemaphoreInfo(log_info->event_semaphore);
       return(MagickFalse);
     }
   if ((log_info->handler_mask & ConsoleHandler) != 0)
@@ -1341,7 +1342,7 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
       file_info.st_size=0;
       if (log_info->file != (FILE *) NULL)
         (void) fstat(fileno(log_info->file),&file_info);
-      if (file_info.st_size > (ssize_t) (1024*1024*log_info->limit))
+      if (file_info.st_size > (MagickOffsetType) (1024*1024*log_info->limit))
         {
           (void) FormatLocaleFile(log_info->file,"</log>\n");
           (void) fclose(log_info->file);
@@ -1356,7 +1357,7 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
           if (filename == (char *) NULL)
             {
               (void) ContinueTimer((TimerInfo *) &log_info->timer);
-              UnlockSemaphoreInfo(event_semaphore);
+              UnlockSemaphoreInfo(log_info->event_semaphore);
               return(MagickFalse);
             }
           log_info->append=IsPathAccessible(filename);
@@ -1364,7 +1365,7 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
           filename=(char  *) RelinquishMagickMemory(filename);
           if (log_info->file == (FILE *) NULL)
             {
-              UnlockSemaphoreInfo(event_semaphore);
+              UnlockSemaphoreInfo(log_info->event_semaphore);
               return(MagickFalse);
             }
           log_info->generation++;
@@ -1393,7 +1394,7 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
     }
   text=(char  *) RelinquishMagickMemory(text);
   (void) ContinueTimer((TimerInfo *) &log_info->timer);
-  UnlockSemaphoreInfo(event_semaphore);
+  UnlockSemaphoreInfo(log_info->event_semaphore);
   return(MagickTrue);
 }
 
