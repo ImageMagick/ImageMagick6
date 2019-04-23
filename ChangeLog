@@ -41,14 +41,14 @@
 
 2019-04-06  6.0.10-38 Cristy  <quetzlzacatenango@image...>
   * Modulo off by one patch for -virtual-pixel option (reference
-    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=35789) 
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=35789)
 
 2019-04-03  6.9.10-37 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-37, GIT revision 14329:0dc57c67b:20190403
 
 2019-04-03  6.0.10-37 Cristy  <quetzlzacatenango@image...>
   * Fixed -virtual-pixel option (reference
-    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=35789) 
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=35789)
 
 2019-03-31  6.9.10-36 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-36, GIT revision 14321:3b6ba12f4:20190331
@@ -240,7 +240,7 @@
   * Non-HDRI ScaleLongToQuantum() private method no longer adds a half interval.
   * Fixed memset() negative-size-param (reference
     https://github.com/ImageMagick/ImageMagick/issues/1217).
-  
+
 2018-07-16  6.9.10-7 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-7, GIT revision 13676:dab6babe2:20180716.
 
