@@ -1672,9 +1672,9 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
     (void) ConcatenateMagickString(page_geometry,">",MaxTextExtent);
     (void) ParseMetaGeometry(page_geometry,&geometry.x,&geometry.y,
       &geometry.width,&geometry.height);
-    scale.x=(double) (geometry.width*delta.x)/resolution.x;
+    scale.x=PerceptibleReciprocal(resolution.x)*geometry.width*delta.x;
     geometry.width=(size_t) floor(scale.x+0.5);
-    scale.y=(double) (geometry.height*delta.y)/resolution.y;
+    scale.y=PerceptibleReciprocal(resolution.y)*geometry.height*delta.y;
     geometry.height=(size_t) floor(scale.y+0.5);
     (void) ParseAbsoluteGeometry(page_geometry,&media_info);
     (void) ParseGravityGeometry(image,page_geometry,&page_info,
@@ -1976,7 +1976,8 @@ RestoreMSCWarning
                 break;
               for (x=0; x < (ssize_t) image->columns; x++)
               {
-                pixel=ScaleQuantumToChar(ClampToQuantum(GetPixelLuma(image,p)));
+                pixel=(Quantum) ScaleQuantumToChar(ClampToQuantum(
+                  GetPixelLuma(image,p)));
                 q=PopHexPixel(hex_digits,(size_t) pixel,q);
                 if ((q-pixels+8) >= 80)
                   {

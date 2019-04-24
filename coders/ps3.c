@@ -963,8 +963,8 @@ static MagickBooleanType WritePS3Image(const ImageInfo *image_info,Image *image)
       }
     if (image->units == PixelsPerCentimeterResolution)
       {
-        resolution.x=(size_t) (100.0*2.54*resolution.x+0.5)/100.0;
-        resolution.y=(size_t) (100.0*2.54*resolution.y+0.5)/100.0;
+        resolution.x=(100.0*2.54*resolution.x+0.5)/100.0;
+        resolution.y=(100.0*2.54*resolution.y+0.5)/100.0;
       }
     SetGeometry(image,&geometry);
     (void) FormatLocaleString(page_geometry,MaxTextExtent,"%.20gx%.20g",
@@ -983,9 +983,9 @@ static MagickBooleanType WritePS3Image(const ImageInfo *image_info,Image *image)
     (void) ConcatenateMagickString(page_geometry,">",MaxTextExtent);
     (void) ParseMetaGeometry(page_geometry,&geometry.x,&geometry.y,
       &geometry.width,&geometry.height);
-    scale.x=(double) (geometry.width*delta.x)/resolution.x;
+    scale.x=PerceptibleReciprocal(resolution.x)*geometry.width*delta.x;
     geometry.width=(size_t) floor(scale.x+0.5);
-    scale.y=(double) (geometry.height*delta.y)/resolution.y;
+    scale.y=PerceptibleReciprocal(resolution.y)*geometry.height*delta.y;
     geometry.height=(size_t) floor(scale.y+0.5);
     (void) ParseAbsoluteGeometry(page_geometry,&media_info);
     (void) ParseGravityGeometry(image,page_geometry,&page_info,
