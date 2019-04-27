@@ -970,10 +970,10 @@ MATLAB_KO:
     }
 
   filepos = TellBlob(image);
-  while(!EOFBlob(image)) /* object parser loop */
+  while(filepos < GetBlobSize(image) && !EOFBlob(image)) /* object parser loop */
   {
     Frames = 1;
-    if (filepos != (unsigned int) filepos)
+    if(filepos > GetBlobSize(image) || filepos < 0)
       break;
     if(SeekBlob(image,filepos,SEEK_SET) != filepos) break;
     /* printf("pos=%X\n",TellBlob(image)); */
@@ -982,7 +982,7 @@ MATLAB_KO:
     if(EOFBlob(image)) break;
     MATLAB_HDR.ObjectSize = ReadBlobXXXLong(image);
     if(EOFBlob(image)) break;
-    if((MagickSizeType) (MATLAB_HDR.ObjectSize+filepos) > GetBlobSize(image))
+    if((MagickSizeType) (MATLAB_HDR.ObjectSize+filepos) >= GetBlobSize(image))
       goto MATLAB_KO;
     filepos += (MagickOffsetType) MATLAB_HDR.ObjectSize + 4 + 4;
 
@@ -1285,6 +1285,7 @@ RestoreMSCWarning
           {
             if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
               "  MAT cannot read scanrow %u from a file.", (unsigned)(MATLAB_HDR.SizeY-i-1));
+            ThrowReaderException(CorruptImageError,"UnexpectedEndOfFile");
             goto ExitLoop;
           }
         if((CellType==miINT8 || CellType==miUINT8) && (MATLAB_HDR.StructureFlag & FLAG_LOGICAL))
