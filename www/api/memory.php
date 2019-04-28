@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no" >
   <title>MagickCore, C API: Memory Allocation @ ImageMagick</title>
   <meta name="application-name" content="ImageMagick">
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, convert bitmap images. With ImageMagick you can resize your image, crop it, change its shades and colors, add captions, among other operations.">
+  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more.">
   <meta name="application-url" content="https://imagemagick.org">
   <meta name="generator" content="PHP">
   <meta name="keywords" content="magickcore, c, api:, memory, allocation, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert">
@@ -19,9 +19,15 @@
   <meta name="author" content="ImageMagick Studio LLC">
   <meta name="revisit-after" content="2 DAYS">
   <meta name="resource-type" content="document">
-  <meta name="copyright" content="Copyright (c) 1999-2017 ImageMagick Studio LLC">
+  <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC">
   <meta name="distribution" content="Global">
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1">
+  <meta property='og:url' content='https://imagemagick.org/' />
+  <meta property='og:title' content='ImageMagick' />
+  <meta property='og:image' content='https://imagemagick.org/image/logo.png' />
+  <meta property='og:type' content='website' />
+  <meta property='og:site_name' content='ImageMagick' />
+  <meta property='og:description' content="Convert, Edit, or Compose Bitmap Images" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4">
   <link href="https://imagemagick.org/api/memory.php" rel="canonical">
   <link href="../image/wand.png" rel="icon">
@@ -30,13 +36,13 @@
 </head>
 <body>
   <header>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../image/wand.ico"/></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="../index.html"><img class="d-block" id="icon" alt="ImageMagick" width="32" height="32" src="../image/wand.ico"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-collapse collapse" id="navbarsExampleDefault" style="">
+    <div class="navbar-collapse collapse" id="navbarsMagick" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item ">
         <a class="nav-link" href="../index.php">Home <span class="sr-only">(current)</span></a>
@@ -60,7 +66,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="../script/search.php">
+    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -75,6 +81,7 @@
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
+
   </div>
   </header>
   <main class="container">
@@ -82,7 +89,7 @@
 <div class="magick-header">
 <p class="text-center"><a href="memory.php#AcquireAlignedMemory">AcquireAlignedMemory</a> &bull; <a href="memory.php#AcquireMagickMemory">AcquireMagickMemory</a> &bull; <a href="memory.php#AcquireQuantumMemory">AcquireQuantumMemory</a> &bull; <a href="memory.php#AcquireVirtualMemory">AcquireVirtualMemory</a> &bull; <a href="memory.php#CopyMagickMemory">CopyMagickMemory</a> &bull; <a href="memory.php#GetMagickMemoryMethods">GetMagickMemoryMethods</a> &bull; <a href="memory.php#GetVirtualMemoryBlob">GetVirtualMemoryBlob</a> &bull; <a href="memory.php#RelinquishAlignedMemory">RelinquishAlignedMemory</a> &bull; <a href="memory.php#RelinquishMagickMemory">RelinquishMagickMemory</a> &bull; <a href="memory.php#RelinquishVirtualMemory">RelinquishVirtualMemory</a> &bull; <a href="memory.php#ResetMagickMemory">ResetMagickMemory</a> &bull; <a href="memory.php#ResizeMagickMemory">ResizeMagickMemory</a> &bull; <a href="memory.php#ResizeQuantumMemory">ResizeQuantumMemory</a> &bull; <a href="memory.php#SetMagickMemoryMethods">SetMagickMemoryMethods</a></p>
 
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireAlignedMemory">AcquireAlignedMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireAlignedMemory">AcquireAlignedMemory</a></h2>
 
 <p>AcquireAlignedMemory() returns a pointer to a block of memory at least size bytes whose address is aligned on a cache line or page boundary.</p>
 
@@ -108,7 +115,7 @@ void *AcquireAlignedMemory(const size_t count,const size_t quantum)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireMagickMemory">AcquireMagickMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireMagickMemory">AcquireMagickMemory</a></h2>
 
 <p>AcquireMagickMemory() returns a pointer to a block of memory at least size bytes suitably aligned for any use.</p>
 
@@ -130,7 +137,7 @@ void *AcquireMagickMemory(const size_t size)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireQuantumMemory">AcquireQuantumMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireQuantumMemory">AcquireQuantumMemory</a></h2>
 
 <p>AcquireQuantumMemory() returns a pointer to a block of memory at least count * quantum bytes suitably aligned for any use.</p>
 
@@ -156,7 +163,7 @@ void *AcquireQuantumMemory(const size_t count,const size_t quantum)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireVirtualMemory">AcquireVirtualMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireVirtualMemory">AcquireVirtualMemory</a></h2>
 
 <p>AcquireVirtualMemory() allocates a pointer to a block of memory at least size bytes suitably aligned for any use. In addition to heap, it also supports memory-mapped and file-based memory-mapped memory requests.</p>
 
@@ -182,7 +189,7 @@ MemoryInfo *AcquireVirtualMemory(const size_t count,const size_t quantum)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="CopyMagickMemory">CopyMagickMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="CopyMagickMemory">CopyMagickMemory</a></h2>
 
 <p>CopyMagickMemory() copies size bytes from memory area source to the destination.  Copying between objects that overlap will take place correctly.  It returns destination.</p>
 
@@ -213,7 +220,7 @@ void *CopyMagickMemory(void *destination,const void *source,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="GetMagickMemoryMethods">GetMagickMemoryMethods</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="GetMagickMemoryMethods">GetMagickMemoryMethods</a></h2>
 
 <p>GetMagickMemoryMethods() gets the methods to acquire, resize, and destroy memory.</p>
 
@@ -245,7 +252,7 @@ void GetMagickMemoryMethods(AcquireMemoryHandler *acquire_memory_handler,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="GetVirtualMemoryBlob">GetVirtualMemoryBlob</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="GetVirtualMemoryBlob">GetVirtualMemoryBlob</a></h2>
 
 <p>GetVirtualMemoryBlob() returns the virtual memory blob associated with the specified MemoryInfo structure.</p>
 
@@ -265,7 +272,7 @@ void *GetVirtualMemoryBlob(const MemoryInfo *memory_info)
 <dt>memory_info</dt>
 <dd>The MemoryInfo structure.  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishAlignedMemory">RelinquishAlignedMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishAlignedMemory">RelinquishAlignedMemory</a></h2>
 
 <p>RelinquishAlignedMemory() frees memory acquired with AcquireAlignedMemory() or reuse.</p>
 
@@ -287,7 +294,7 @@ void *RelinquishAlignedMemory(void *memory)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishMagickMemory">RelinquishMagickMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishMagickMemory">RelinquishMagickMemory</a></h2>
 
 <p>RelinquishMagickMemory() frees memory acquired with AcquireMagickMemory() or AcquireQuantumMemory() for reuse.</p>
 
@@ -309,7 +316,7 @@ void *RelinquishMagickMemory(void *memory)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishVirtualMemory">RelinquishVirtualMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishVirtualMemory">RelinquishVirtualMemory</a></h2>
 
 <p>RelinquishVirtualMemory() frees memory acquired with AcquireVirtualMemory().</p>
 
@@ -331,7 +338,7 @@ MemoryInfo *RelinquishVirtualMemory(MemoryInfo *memory_info)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="ResetMagickMemory">ResetMagickMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="ResetMagickMemory">ResetMagickMemory</a></h2>
 
 <p>ResetMagickMemory() fills the first size bytes of the memory area pointed to by memory with the constant byte c.</p>
 
@@ -361,7 +368,7 @@ void *ResetMagickMemory(void *memory,int byte,const size_t size)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeMagickMemory">ResizeMagickMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeMagickMemory">ResizeMagickMemory</a></h2>
 
 <p>ResizeMagickMemory() changes the size of the memory and returns a pointer to the (possibly moved) block.  The contents will be unchanged up to the lesser of the new and old sizes.</p>
 
@@ -387,7 +394,7 @@ void *ResizeMagickMemory(void *memory,const size_t size)
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeQuantumMemory">ResizeQuantumMemory</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeQuantumMemory">ResizeQuantumMemory</a></h2>
 
 <p>ResizeQuantumMemory() changes the size of the memory and returns a pointer to the (possibly moved) block.  The contents will be unchanged up to the lesser of the new and old sizes.</p>
 
@@ -418,7 +425,7 @@ void *ResizeQuantumMemory(void *memory,const size_t count,
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://imagemagick.org/api/MagickCore/memory_8c.html" id="SetMagickMemoryMethods">SetMagickMemoryMethods</a></h2>
+<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="SetMagickMemoryMethods">SetMagickMemoryMethods</a></h2>
 
 <p>SetMagickMemoryMethods() sets the methods to acquire, resize, and destroy memory. Your custom memory methods must be set prior to the MagickCoreGenesis() method.</p>
 
@@ -455,21 +462,23 @@ SetMagickMemoryMethods(AcquireMemoryHandler acquire_memory_handler,
   </main><!-- /.container -->
   <footer class="magick-footer">
     <p><a href="../script/security-policy.php">Security</a> •
-    <a href="../script/architecture.php">Architecture</a> •
+    <a href="../script/architecture.php">Architecture</a>
+    &nbsp;
+    <a href="memory.php#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../image/wand.ico"/></a>
+    &nbsp;
     <a href="../script/links.php">Related</a> •
      <a href="../script/sitemap.php">Sitemap</a>
-    &nbsp; &nbsp;
-    <a href="memory.php#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../image/wand.ico"/></a>
-    &nbsp; &nbsp;
-    <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
-    <a href="../script/support.php">Donate</a> •
-    <a href="../script/contact.php">Contact Us</a>
     <br/>
-        <small>© 1999-2019 ImageMagick Studio LLC</small></p>
+    <a href="../script/support.php">Donate</a> •
+    <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
+    <a href="../script/contact.php">Contact Us</a> 
+    <br/>
+    <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
   <script src="../assets/magick-js.php" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="../assets/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
+<!-- Magick Cache 24th April 2019 08:13 -->

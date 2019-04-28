@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
-  <title>Command-line Options @ ImageMagick</title>
+  <title>ImageMagick - Command-line Options</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, or convert bitmap images. You can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="command-line, options, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -22,11 +22,17 @@
   <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
+  <meta property='og:url' content='https://imagemagick.org/' />
+  <meta property='og:title' content='ImageMagick' />
+  <meta property='og:image' content='https://imagemagick.org/images/logo.png' />
+  <meta property='og:type' content='website' />
+  <meta property='og:site_name' content='ImageMagick' />
+  <meta property='og:description' content="Convert, Edit, or Compose Bitmap Images" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
   <link href="https://imagemagick.org/www/command-line-options.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
-  <link href="assets/magick.css" rel="stylesheet" />
+  <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
   <header>
@@ -60,7 +66,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
+    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -176,7 +182,7 @@ coordinates (<var>x'</var>, <var>y'</var>) of a pixel at
 position (<var>x</var>, <var>y</var>) in the original
 image are calculated using the following matrix equation.</p>
 
-<p class="text-center"><img class="img-thumbnail" alt="affine transformation"  src="../images/affine.png"/> </p>
+<p class="text-center"><img class="img-thumbnail" alt="affine transformation"  src="https://legacy.imagemagick.org/images/affine.png"/> </p>
 
 <p> The size of the resulting image is that of the smallest rectangle that
 contains the transformed source image.  The parameters 
@@ -351,7 +357,7 @@ conventionally considered to be <var>downward</var> for images.)</p>
 <p>The new (transformed) coordinates (<var>x'</var>, <var>y'</var>) of a pixel at position (<var>x</var>, <var>y</var>) in the image are calculated using the following matrix
 equation.</p>
 
-<p class="text-center"><img class="img-thumbnail" alt="annotate transformation"  src="../images/annotate.png"/></p>
+<p class="text-center"><img class="img-thumbnail" alt="annotate transformation"  src="https://legacy.imagemagick.org/images/annotate.png"/></p>
 
 <p>If <var>t<sub>x</sub></var> and <var>t<sub>y</sub></var> are omitted, they default to 0. This makes the
 bottom-left of the text becomes the upper-left corner of the image, which is
@@ -623,7 +629,7 @@ the background image is weighted by the exact opposite amount. That is a
 <p>Convolve the image with a Gaussian or normal distribution using the given
 <var >Sigma</var> value.  The formula is:</p>
 
-<p class="text-center"><img class="img-thumbnail" alt="gaussian distribution" width="243px" height="42px" src="../images/gaussian-blur.png"/></p>
+<p class="text-center"><img class="img-thumbnail" alt="gaussian distribution" width="243px" height="42px" src="https://legacy.imagemagick.org/images/gaussian-blur.png"/></p>
 
 <p>The <var >Sigma</var> value is the important argument, and
 determines the actual amount of blurring that will take place. </p>
@@ -781,7 +787,7 @@ option has been given.  To modify a caption of images already in memory use
 "<code><a href="command-line-options.html#set">-set</a> caption</code>". </p>
 
 <p>The caption can contain special format characters listed in the <a
-href="escape.html">Format and
+href="https://legacy.imagemagick.org/www/escape.html">Format and
 Print Image Properties</a>. These attributes are expanded when the caption
 is finally assigned to the individual images. </p>
 
@@ -936,7 +942,7 @@ include the following.
 </p>
 
 <p>Warning, some operators behave differently when the <a href="command-line-options.html#channel"
->+channel</a> default setting is in effect, verses ANY user defined <a
+>+channel</a> default setting is in effect, versus ANY user defined <a
 href="command-line-options.html#channel" >-channel</a> setting (including the equivalent of the
 default). These operators have yet to be made to understand the newer 'Sync'
 flag. </p>
@@ -955,7 +961,7 @@ resulting in 'halo' effects. The newer <a href="command-line-options.html#morpho
 convolution equivalents however does have a understanding of the 'Sync' flag
 and will thus handle transparency correctly by default. </p>
 
-<p>As a alpha channel is optional within images, some operators will read the
+<p>As an alpha channel is optional within images, some operators will read the
 color channels of an image as a greyscale alpha mask, when the image has no
 alpha channel present, and the <a href="command-line-options.html#channel" >-channel</a> setting tells
 the operator to apply the operation using alpha channels. The <a
@@ -1068,7 +1074,7 @@ spaces (e.g. <code>0,2,5</code>).  A value of '<code>0−−1</code> will
 effectively clone all the images. </p>
 
 <p>The <a href="command-line-options.html#clone">+clone</a> will simply make a copy of the last image
-in the image sequence, and is thus equivalent to using a argument of
+in the image sequence, and is thus equivalent to using an argument of
 '<code>−1</code>'. </p>
 
 <div style="margin: auto;">
@@ -1179,7 +1185,7 @@ duplicate or unused colors removed.  The ordering of an existing color
 palette may be altered. When converting an image from color to grayscale,
 it is more efficient to convert the image to the gray colorspace before
 reducing the number of colors. Refer to
-the <a href="quantize.html">
+the <a href="https://legacy.imagemagick.org/www/quantize.html">
 color reduction algorithm</a> for more details.</p>
 
 <div style="margin: auto;">
@@ -1360,7 +1366,7 @@ option has been given.  To modify a comment of images already in memory use
 "<code><a href="command-line-options.html#set">-set</a> comment</code>". </p>
 
 <p>The comment can contain special format characters listed in the <a
-href="escape.html">Format and
+href="https://legacy.imagemagick.org/www/escape.html">Format and
 Print Image Properties</a>. These attributes are expanded when the comment
 is finally assigned to the individual images. </p>
 
@@ -1423,7 +1429,7 @@ subtract
 
 <p class="magick-description">Set the type of image composition.</p>
 
-<p>See <a href="compose.html">Alpha Compositing</a> for
+<p>See <a href="https://legacy.imagemagick.org/www/compose.html">Alpha Compositing</a> for
 a detailed discussion of alpha compositing.</p>
 
 <p>This setting affects image processing operators that merge two (or more)
@@ -1759,7 +1765,7 @@ previously created.  Use <a href="command-line-options.html#define">+define "*"<
 existing definitions.</p>
 
 <p>The same 'artifact' settings can also be defined using the <a
-href="command-line-options.html#set" >-set "option:<var>key</var>" "<var>value</var>"</a> option, which also allows the use of <a href="escape.html" >Format and Print Image
+href="command-line-options.html#set" >-set "option:<var>key</var>" "<var>value</var>"</a> option, which also allows the use of <a href="https://legacy.imagemagick.org/www/escape.html" >Format and Print Image
 Properties</a> in the defined value. </p>
 
 <p>The <var>option</var> and <var>key</var> are case-independent (they are
@@ -1914,6 +1920,11 @@ available:</p>
     <td>Sets the viewport for use with <a href="command-line-options.html#distort">-distort</a></td>
   </tr>
 
+  <tr>
+    <td>dither:diffusion-amount=<var>X%</var></td>
+    <td>Sets the amount of diffusion to use with Floyd-Steinberg diffusion</td>
+  </tr>
+  
   <tr>
     <td>dot:layout-engine=<var>value</var></td>
      <td>Specifies the layout engine for the DOT image format (e.g.
@@ -2858,7 +2869,16 @@ and meaning of the floating point values depends on the distortion <var>method</
        'Perspective' distortion, or by calculating them yourself.
        If the last two perspective scaling coefficients are zero, the
        remaining 6 represents a transposed 'Affine Matrix'. </td>
+  </tr>
 
+  <tr>
+    <td>Polynomial</td>
+    <td>
+       Do an Nth order 2D 'Polynomial' distortion using a set of corresponding 
+       control points. The order of the polynomial dictates the minimum number of 
+       control points needed. Order 1 is the same as -distort Affine. Order 1.5 is the 
+       same as -distort BilinearReverse. Typical use is for a 2nd order distortion. 
+       There is no +distort polynomial.</td>
   </tr>
 
   <tr>
@@ -3116,7 +3136,7 @@ lookup value. This is typically only used for debugging EWA resampling. </p>
 
 <p class="magick-description">Apply a Riemersma or Floyd-Steinberg error diffusion dither to
 images when general color reduction is applied via an option, or automagically
-when saving to specific formats. This enabled by default.</p>
+when saving to specific formats. This is enabled by default.</p>
 
 <p>Dithering places two or more colors in neighboring pixels so that to the
 eye a closer approximation of the images original color is reproduced. This
@@ -3293,7 +3313,7 @@ filename:</p>
 
 <p>You can use 0,0 for the image size, which means to use the actual
 dimensions found in the image header. Otherwise, it is scaled to the given
-dimensions. See <a href="compose.html">Alpha Compositing</a> for
+dimensions. See <a href="https://legacy.imagemagick.org/www/compose.html">Alpha Compositing</a> for
 a detailed discussion of alpha composition methods that are available. </p>
 
 <p>The "special augmented compose operators" such as "dissolve" that require
@@ -3461,12 +3481,12 @@ image into some other color space, such as HSL, OHTA, YIQ or YUV, then
 equalize the appropriate intensity-like channel, then convert back to RGB.</p>
 
 <p>For example using HSL, we have: ... <code>-colorspace HSL -channel lightness
--equalize -colorspace RGB</code> ...</p>
+-equalize -colorspace sRGB</code> ...</p>
 
 <p>For YIQ, YUV and OHTA use the red channel. For example, OHTA is a principal
 components transformation that puts most of the information in the first
 channel. Here we have ... <code>-colorspace OHTA -channel red -equalize
--colorspace RGB</code> ...</p>
+-colorspace sRGB</code> ...</p>
 
 <div style="margin: auto;">
   <h3><a class="anchor" id="evaluate"></a>-evaluate <var>operator value</var></h3>
@@ -3640,7 +3660,7 @@ image is centered on an 800x600 black canvas: </p>
   -gravity center -extent 800x600 -quality 92 output.jpg
 </code></pre>
 
-<p>See <a href="command-line-processing.html#geometry">Image Geometry</a> for complete details about the <em class="arg">geometry</em> argument.</p>
+<p>Extent supports geometry offsets as well as aspect ratio control. See <a href="command-line-processing.html#geometry">Image Geometry</a> for complete details about the <em class="arg">geometry</em> argument.</p>
 
 <div style="margin: auto;">
   <h3><a class="anchor" id="extract"></a>-extract <var>geometry</var></h3>
@@ -4133,7 +4153,7 @@ filename becomes <var>image.tiff</var>.</p>
 
 <p class="magick-description">output formatted image characteristics.</p>
 
-<p>See <a href="escape.html">Format and Print Image
+<p>See <a href="https://legacy.imagemagick.org/www/escape.html">Format and Print Image
 Properties</a> for an explanation on how to specify the argument to this
 option.</p>
 
@@ -4415,7 +4435,7 @@ chunk, use</p>
 <p>Convolve the image with a Gaussian or normal distribution using the given
 <var >Sigma</var> value.  The formula is:</p>
 
-<p class="text-center"><img class="img-thumbnail" alt="gaussian distribution" width="243px" height="42px" src="../images/gaussian-blur.png"/> </p>
+<p class="text-center"><img class="img-thumbnail" alt="gaussian distribution" width="243px" height="42px" src="https://legacy.imagemagick.org/images/gaussian-blur.png"/> </p>
 
 <p>The <var >Sigma</var> value is the important argument, and
 determines the actual amount of blurring that will take place. </p>
@@ -4649,7 +4669,7 @@ a description of the image class.</p>
 
 <p>If <a href="command-line-options.html#colors">-colors</a> is also specified, the total unique colors
 in the image and color reduction error values are printed. Refer to <a
-href="quantize.html">color
+href="https://legacy.imagemagick.org/www/quantize.html">color
 reduction algorithm</a> for a description of these values.</p>
 
 <p>If <a href="command-line-options.html#verbose">-verbose</a> precedes this option, copious
@@ -4933,7 +4953,7 @@ assigned to an image is used as a header string to print above the postscript
 image. </p>
 
 <p>You can include the image filename, type, width, height, or other image
-attribute by embedding special format character.  See <a href="escape.html">Format and Print Image
+attribute by embedding special format character.  See <a href="https://legacy.imagemagick.org/www/escape.html">Format and Print Image
 Properties</a> for details of the percent escape codes.</p>
 
 <p>For example,</p>
@@ -6851,7 +6871,7 @@ assigned before the image is read in, by using a <var>key</var> of
 the same name. </p>
 
 <p>If the given <var>key</var> does not match a specific known
-'attribute ', such as shown above, the setting is stored as a a free form
+'attribute ', such as shown above, the setting is stored as a free form
 'property' string.  Such settings are listed in <a href="command-line-options.html#verbose"
 >-verbose</a> information ("<code>info:</code>" output format) as "Properties".
 </p>
@@ -6859,7 +6879,7 @@ the same name. </p>
 <p>This includes string 'properties' that are set by and assigned to images
 using the options <a href="command-line-options.html#comment" >-comment</a>, <a href="command-line-options.html#label"
 >-label</a>, <a href="command-line-options.html#caption" >-caption</a>. These options actually assign
-a global 'artifact' which are automatically assigned (and any <a href="escape.html" >Format Percent
+a global 'artifact' which are automatically assigned (and any <a href="https://legacy.imagemagick.org/www/escape.html" >Format Percent
 Escapes</a> expanded) to images as they are read in.  For example:</p>
 
 <pre class="highlight"><code>-> convert rose: -set comment 'Rose is a rose is a rose is a rose' rose.png
@@ -6867,7 +6887,7 @@ identify -format %c rose.png
 Rose is a rose is a rose is a rose
 </code></pre>
 
-<p>The set value can also make use of <a href="escape.html" >Format and Print Image
+<p>The set value can also make use of <a href="https://legacy.imagemagick.org/www/escape.html" >Format and Print Image
 Properties</a> in the defined value.  For example:</p>
 
 <pre class="highlight"><code>-> convert rose: -set origsize '%wx%h' -resize 50% \
@@ -6910,7 +6930,7 @@ the original image has long since been modified or destroyed. For example: </p>
   label:'%[rosesize]'   label_size_of_rose.gif"
 </code></pre>
 
-<p>Note that <a href="escape.html" >Format Percent Escapes</a> will only match
+<p>Note that <a href="https://legacy.imagemagick.org/www/escape.html" >Format Percent Escapes</a> will only match
 a 'artifact' if the given <var>key</var> does not match an existing
 'attribute' or 'property'.  </p>
 
@@ -7653,7 +7673,7 @@ the use of an optimal tree depth for the color reduction algorithm.</p>
 image with the fastest computational speed and the least amount of memory.
 However, the default depth is inappropriate for some images. To assure the
 best representation, try values between 2 and 8 for this parameter.  Refer to
-the <a href="quantize.html"
+the <a href="https://legacy.imagemagick.org/www/quantize.html"
 >color reduction algorithm</a> for more details.</p>
 
 <p>The <a href="command-line-options.html#colors">-colors</a> or <a href="command-line-options.html#monochrome">-monochrome</a>
@@ -7678,6 +7698,8 @@ information if it is unwanted.</p>
 <p>If the trimmed image 'disappears' an warning is produced, and a special
 single pixel transparent 'missed' image is returned, in the same way as when a
 <a href="command-line-options.html#crop">-crop</a> operation 'misses' the image proper. </p>
+
+<p>Use <code><a href="command-line-options.html#define">-define</a> trim:percent-background=0%</code> to remove all the background from the image.  The amount of background that is tolerated in an edge specified as a percent.  0% means no background is tolerated.  50% means an edge can contain up to 50% pixels that are background per the fuzz-factor.</p>
 
 
 <div style="margin: auto;">
@@ -7978,21 +8000,24 @@ href="command-line-options.html#colors">-colors</a> to reduce the number of colo
   </main><!-- /.container -->
   <footer class="magick-footer">
     <p><a href="security-policy.html">Security</a> •
-    <a href="architecture.html">Architecture</a> •
+    <a href="architecture.html">Architecture</a>
+     
+    <a href="command-line-options.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+     
     <a href="links.html">Related</a> •
      <a href="sitemap.html">Sitemap</a>
+    <br/>
        
-    <a href="command-line-options.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
-       
-    <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
     <a href="support.html">Donate</a> •
-    <a href="https://legacy.imagemagick.org/script/contact.php">Contact Us</a>
+    <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
+    <a href="https://www.imagemagick.org/script/contact.php">Contact Us</a> 
     <br/>
     <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
-  <script src="assets/magick.js" crossorigin="anonymous"></script>
+  <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
+<!-- Magick Cache 27th April 2019 18:50 -->

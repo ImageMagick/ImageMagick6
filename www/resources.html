@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
-  <title>Resources @ ImageMagick</title>
+  <title>ImageMagick - Resources</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, or convert bitmap images. You can resize your image, crop it, change its shades and colors, add captions, among other operations." />
+  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="resources, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -22,11 +22,17 @@
   <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
+  <meta property='og:url' content='https://imagemagick.org/' />
+  <meta property='og:title' content='ImageMagick' />
+  <meta property='og:image' content='https://imagemagick.org/images/logo.png' />
+  <meta property='og:type' content='website' />
+  <meta property='og:site_name' content='ImageMagick' />
+  <meta property='og:description' content="Convert, Edit, or Compose Bitmap Images" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
   <link href="https://imagemagick.org/www/resources.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
-  <link href="assets/magick.css" rel="stylesheet" />
+  <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
   <header>
@@ -60,7 +66,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/script/search.php">
+    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -89,53 +95,53 @@
 <p>ImageMagick depends on a number of external configuration files detailed here:</p>
 
 <dl class="row">
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/coder.xml">coder.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/coder.xml">coder.xml</a></dt>
   <dd class="col-md-8">Associate an image format with the specified coder module.
 
   ImageMagick has a number of coder modules to support the reading and/or writing of an image format (e.g. JPEG).  Some coder modules support more than one associated image format and the mapping between an associated format and its respective coder module is defined in this configuration file.  For example, the PNG coder module not only supports the PNG image format, but the JNG and MNG formats as well.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/colors.xml">colors.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/colors.xml">colors.xml</a></dt>
   <dd class="col-md-8">Associate a color name with its red, green, blue, and alpha intensities.
 
   A number of command line options require a <a href="color.html">color parameter</a>.  It is often convenient to refer to a color by name (e.g. white) rather than by hex value (e.g. #fff).  This file maps a color name to its equivalent red, green, blue, and alpha intensities (e.g. for white, red = 255, green = 255, blue = 255, and alpha = 0).
   </dd>
 
-<dt class="col-md-4"><a class="anchor" id="configure.xml"/><a href="https://legacy.imagemagick.org/source/configure.xml">configure.xml</a></dt>
+<dt class="col-md-4"><a class="anchor" id="configure.xml"/><a href="https://www.imagemagick.org/source/configure.xml">configure.xml</a></dt>
   <dd class="col-md-8">Set ImageMagick build parameters and system-wide environment variables (e.g. MAGICK_TEMPORARY_PATH).
   As ImageMagick is built, a number of build parameters are saved to this configuration file.  They include the version, release date, dependent delegate libraries, and quantum depth among others.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/delegates.xml">delegates.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/delegates.xml">delegates.xml</a></dt>
   <dd class="col-md-8">Associate delegate programs with certain image formats.
 
   ImageMagick relies on a number of delegate programs to support certain image formats such as <a href="http://ufraw.sourceforge.net/">ufraw-batch</a> to read raw camera formats or <a href="http://www.cs.wisc.edu/~ghost/">Ghostscript</a> to read Postscript images.  Use this configuration file to map an input or output format to an external delegate program.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/english.xml">english.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/english.xml">english.xml</a></dt>
   <dd class="col-md-8">Associate message tags with English translations.</dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/francais.xml">francais.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/francais.xml">francais.xml</a></dt>
   <dd class="col-md-8">Associate message tags with French translations.  </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/locale.xml">locale.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/locale.xml">locale.xml</a></dt>
   <dd class="col-md-8">Associate message tags with a  translation for your locale.
 
   ImageMagick has a number of informational, warning, and error messages that are represented as tags.  Tags are short descriptions of a message such as
   <var>FileNotFound</var> or <var>MemoryAllocationFailed</var>.  This configuration file lists locales that have a translation for each tag recognized by ImageMagick.  Currently only English and French translations are available in the <code>english.xml</code> and <code>francais.xml</code> configuration files.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/log.xml">log.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/log.xml">log.xml</a></dt>
   <dd class="col-md-8">Configure logging parameters.
   ImageMagick is capable of spewing copious amounts of informational or debugging statements.  Use this file to configure how the information will appear in a log message and where you want the logging messages posted.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/magic.xml">magic.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/magic.xml">magic.xml</a></dt>
   <dd class="col-md-8">Associate an image format with a unique identifier.
   Many image formats have identifiers that uniquely identify a particular image format.  For example, the GIF image format always begins with <code>GIF8</code> as the first 4 characters of the image.  ImageMagick uses this information to quickly determine the type of image it is dealing with when it reads an image.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/mime.xml">mime.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/mime.xml">mime.xml</a></dt>
   <dd class="col-md-8">Associate an internet media type with a unique identifier.
   Many files and data streams have identifiers that uniquely identify a
 particular internet media type. For example, files in the "Corel Draw
@@ -146,7 +152,7 @@ when available, to attempt to quickly determine the internet media type of a
 file or data stream.
 </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/policy.xml">policy.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/policy.xml">policy.xml</a></dt>
   <dd class="col-md-8">Configure ImageMagick policies.
   By default any coder, delegate, filter, or file path is permitted.  Use a policy to deny access to, for example, the MPEG video delegate, or permit reading images from a file system but deny writing to that same file system.  Or use the resource policy to set resource limits.  Policies are useful for multi-user servers that want to limit the overall impact ImageMagick has on the system.  For example, to limit the maximum image size in memory to 100MP:
 
@@ -163,23 +169,23 @@ To limit the elapsed time of any ImageMagick command to 5 minutes, use this poli
 <pre class="highlight"><code>&lt;policy domain="resource" name="time" value="300"/></code></pre>
 Define arguments for the memory, map, and disk resources with SI prefixes (.e.g 100MB).  In addition, resource policies are maximums for each instance of ImageMagick (e.g. policy memory limit 1GB, the <code>-limit 2GB</code> option exceeds policy maximum so memory limit is 1GB). </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/quantization-table.xml">quantization-table.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/quantization-table.xml">quantization-table.xml</a></dt>
   <dd class="col-md-8">Custom JPEG quantization tables. Activate with <code>-define:q-table=quantization-table.xml</code>.</dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/thresholds.xml">thresholds.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/thresholds.xml">thresholds.xml</a></dt>
   <dd class="col-md-8">Set threshold maps for ordered posterized dither.</dd>
 
-<dt class="col-md-4"><a class="anchor" id="type.xml"></a><a href="https://legacy.imagemagick.org/source/type.xml">type.xml</a></dt>
+<dt class="col-md-4"><a class="anchor" id="type.xml"></a><a href="https://www.imagemagick.org/source/type.xml">type.xml</a></dt>
   <dd class="col-md-8">Configure fonts.
   Define the font name, family, foundry, style, format, metrics, and glyphs for any font you want to use within ImageMagick.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/type-ghostscript.xml">type-ghostscript.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/type-ghostscript.xml">type-ghostscript.xml</a></dt>
   <dd class="col-md-8">Configure <a href="http://www.cs.wisc.edu/~ghost/">Ghostscript</a> fonts.
   The Ghostscript package includes a number of <a href="https://sourceforge.net/projects/gs-fonts/">fonts</a> that can be accessed with ImageMagick.
   </dd>
 
-<dt class="col-md-4"><a href="https://legacy.imagemagick.org/source/type-windows.xml">type-windows.xml</a></dt>
+<dt class="col-md-4"><a href="https://www.imagemagick.org/source/type-windows.xml">type-windows.xml</a></dt>
   <dd class="col-md-8">Associate names with Windows font glyphs.</dd>
 </dl>
 
@@ -375,21 +381,24 @@ $MAGICK_FONT_PATH</code></pre>
   </main><!-- /.container -->
   <footer class="magick-footer">
     <p><a href="security-policy.html">Security</a> •
-    <a href="architecture.html">Architecture</a> •
+    <a href="architecture.html">Architecture</a>
+     
+    <a href="resources.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+     
     <a href="links.html">Related</a> •
      <a href="sitemap.html">Sitemap</a>
+    <br/>
        
-    <a href="resources.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
-       
-    <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
     <a href="support.html">Donate</a> •
-    <a href="https://legacy.imagemagick.org/script/contact.php">Contact Us</a>
+    <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
+    <a href="https://www.imagemagick.org/script/contact.php">Contact Us</a> 
     <br/>
     <small>© 1999-2019 ImageMagick Studio LLC</small></p>
   </footer>
 
   <!-- Javascript assets -->
-  <script src="assets/magick.js" crossorigin="anonymous"></script>
+  <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
+<!-- Magick Cache 27th April 2019 19:53 -->
