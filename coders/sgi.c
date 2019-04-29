@@ -959,8 +959,6 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  if ((image->columns > 65535UL) || (image->rows > 65535UL))
-    ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
   status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
@@ -971,6 +969,8 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
     /*
       Initialize SGI raster file header.
     */
+    if ((image->columns > 65535UL) || (image->rows > 65535UL))
+      ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
     (void) TransformImageColorspace(image,sRGBColorspace);
     (void) memset(&iris_info,0,sizeof(iris_info));
     iris_info.magic=0x01DA;
