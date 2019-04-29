@@ -9189,6 +9189,7 @@ static Window XSelectWindow(Display *display,RectangleInfo *crop_info)
   target_window=(Window) NULL;
   x_offset=0;
   y_offset=0;
+  (void) XGrabServer(display);
   do
   {
     if ((crop_info->width*crop_info->height) >= MinimumCropArea)
@@ -9257,6 +9258,7 @@ static Window XSelectWindow(Display *display,RectangleInfo *crop_info)
         break;
     }
   } while ((target_window == (Window) NULL) || (presses > 0));
+  (void) XUngrabServer(display);
   (void) XUngrabPointer(display,CurrentTime);
   (void) XFreeCursor(display,target_cursor);
   (void) XFreeGC(display,annotate_context);
