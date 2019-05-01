@@ -3712,7 +3712,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
              (photometric == PHOTOMETRIC_MINISBLACK)) &&
             ((bits_per_sample == 8) || (bits_per_sample == 16)))
           predictor=PREDICTOR_HORIZONTAL;
-        (void) TIFFSetField(tiff,TIFFTAG_WEBP_LEVEL,mage_info->quality);
+        (void) TIFFSetField(tiff,TIFFTAG_WEBP_LEVEL,image_info->quality);
         if (image_info->quality >= 100)
           (void) TIFFSetField(tiff,TIFFTAG_WEBP_LOSSLESS,1);
         break;
