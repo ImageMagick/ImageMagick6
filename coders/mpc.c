@@ -110,7 +110,7 @@ static MagickBooleanType IsMPC(const unsigned char *magick,const size_t length)
 {
   if (length < 14)
     return(MagickFalse);
-  if (LocaleNCompare((const char *) magick,"id=MagickCache",14) == 0)
+  if (LocaleNCompare((const char *) magick,"id=MagickPixelCache",14) == 0)
     return(MagickTrue);
   return(MagickFalse);
 }
@@ -766,7 +766,7 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
     /*
       Verify that required image information is defined.
     */
-    if ((LocaleCompare(id,"MagickCache") != 0) ||
+    if ((LocaleCompare(id,"MagickPixelCache") != 0) ||
         (image->storage_class == UndefinedClass) ||
         (image->compression == UndefinedCompression) ||
         (image->columns == 0) || (image->rows == 0) ||
@@ -1150,7 +1150,7 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
     if ((image->storage_class == PseudoClass) &&
         (image->colors > (one << depth)))
       image->storage_class=DirectClass;
-    (void) WriteBlobString(image,"id=MagickCache\n");
+    (void) WriteBlobString(image,"id=MagickPixelCache\n");
     (void) FormatLocaleString(buffer,MaxTextExtent,"magick-signature=%u\n",
       GetMagickCoreSignature((const StringInfo *) NULL));
     (void) WriteBlobString(image,buffer);
