@@ -10946,26 +10946,35 @@ WandExport MagickBooleanType MagickSetImagePage(MagickWand *wand,
 WandExport MagickBooleanType MagickSetImagePixelColor(MagickWand *wand,
   const ssize_t x,const ssize_t y,const PixelWand *color)
 {
-  register Quantum
-    *p;
+  IndexPacket
+    *indexes;
+
+  register PixelPacket
+    *q;
 
   CacheView
     *image_view;
 
   assert(wand != (MagickWand *) NULL);
-  assert(wand->signature == MagickWandSignature);
+  assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
-  image_view=AcquireAuthenticCacheView(wand->images,wand->exception);
-  p=GetCacheViewAuthenticPixels(image_view,x,y,1,1,wand->exception);
-  if (p == (Quantum *) NULL)
+  image_view=AcquireVirtualCacheView(wand->images,wand->exception);
+  q=GetCacheViewAuthenticPixels(image_view,x,y,1,1,wand->exception);
+  if (q == (PixelPacket *) NULL)
     {
       image_view=DestroyCacheView(image_view);
       return(MagickFalse);
     }
-  PixelSetQuantumPixel(wand->images,p,color);
+  indexes=GetCacheViewAuthenticIndexQueue(image_view);
+  PixelGetQuantumColor(color,q);
+  if (GetCacheViewColorspace(image_view) == CMYKColorspace)
+    *indexes=PixelGetBlackQuantum(color);
+  else
+    if (GetCacheViewStorageClass(image_view) == PseudoClass)
+      *indexes=PixelGetIndex(color);
   image_view=DestroyCacheView(image_view);
   return(MagickTrue);
 }
