@@ -10921,6 +10921,60 @@ WandExport MagickBooleanType MagickSetImagePage(MagickWand *wand,
 %                                                                             %
 %                                                                             %
 %                                                                             %
+%   M a g i c k S e t I m a g e P i x e l C o l o r                           %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  MagickSetImagePixelColor() sets the color of the specified pixel.
+%
+%  The format of the MagickSetImagePixelColor method is:
+%
+%      MagickBooleanType MagickSetImagePixelColor(MagickWand *wand,
+%        const ssize_t x,const ssize_t y,const PixelWand *color)
+%
+%  A description of each parameter follows:
+%
+%    o wand: the magick wand.
+%
+%    o x,y: the pixel offset into the image.
+%
+%    o color: Return the colormap color in this wand.
+%
+*/
+WandExport MagickBooleanType MagickSetImagePixelColor(MagickWand *wand,
+  const ssize_t x,const ssize_t y,const PixelWand *color)
+{
+  register Quantum
+    *p;
+
+  CacheView
+    *image_view;
+
+  assert(wand != (MagickWand *) NULL);
+  assert(wand->signature == MagickWandSignature);
+  if (wand->debug != MagickFalse)
+    (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
+  if (wand->images == (Image *) NULL)
+    ThrowWandException(WandError,"ContainsNoImages",wand->name);
+  image_view=AcquireAuthenticCacheView(wand->images,wand->exception);
+  p=GetCacheViewAuthenticPixels(image_view,x,y,1,1,wand->exception);
+  if (p == (Quantum *) NULL)
+    {
+      image_view=DestroyCacheView(image_view);
+      return(MagickFalse);
+    }
+  PixelSetQuantumPixel(wand->images,p,color);
+  image_view=DestroyCacheView(image_view);
+  return(MagickTrue);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 %   M a g i c k S e t I m a g e P r o g r e s s M o n i t o r                 %
 %                                                                             %
 %                                                                             %

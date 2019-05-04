@@ -327,6 +327,8 @@ extern WandExport MagickBooleanType
   MagickSetImageRenderingIntent(MagickWand *,const RenderingIntent),
   MagickSetImageResolution(MagickWand *,const double,const double),
   MagickSetImageScene(MagickWand *,const size_t),
+  MagickSetImagePixelColor(MagickWand *,const ssize_t,const ssize_t,
+    const PixelWand *),
   MagickSetImageTicksPerSecond(MagickWand *,const ssize_t),
   MagickSetImageType(MagickWand *,const ImageType),
   MagickSetImageUnits(MagickWand *,const ResolutionType),
