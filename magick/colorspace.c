@@ -851,13 +851,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) MaxMap; i++)
       {
         x_map[i].x=(MagickRealType) (0.33333*(double) i);
-        y_map[i].x=(MagickRealType) (0.33334*(double) i);
-        z_map[i].x=(MagickRealType) (0.33333*(double) i);
         x_map[i].y=(MagickRealType) (0.50000*(double) i);
-        y_map[i].y=(MagickRealType) (0.00000*(double) i);
-        z_map[i].y=(MagickRealType) (-0.50000*(double) i);
         x_map[i].z=(MagickRealType) (-0.25000*(double) i);
+        y_map[i].x=(MagickRealType) (0.33334*(double) i);
+        y_map[i].y=(MagickRealType) (0.00000*(double) i);
         y_map[i].z=(MagickRealType) (0.50000*(double) i);
+        z_map[i].x=(MagickRealType) (0.33333*(double) i);
+        z_map[i].y=(MagickRealType) (-0.50000*(double) i);
         z_map[i].z=(MagickRealType) (-0.25000*(double) i);
       }
       break;
@@ -875,13 +875,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) MaxMap; i++)
       {
         x_map[i].x=(MagickRealType) (0.298839*(double) i);
-        y_map[i].x=(MagickRealType) (0.586811*(double) i);
-        z_map[i].x=(MagickRealType) (0.114350*(double) i);
         x_map[i].y=(MagickRealType) (0.298839*(double) i);
-        y_map[i].y=(MagickRealType) (0.586811*(double) i);
-        z_map[i].y=(MagickRealType) (0.114350*(double) i);
         x_map[i].z=(MagickRealType) (0.298839*(double) i);
+        y_map[i].x=(MagickRealType) (0.586811*(double) i);
+        y_map[i].y=(MagickRealType) (0.586811*(double) i);
         y_map[i].z=(MagickRealType) (0.586811*(double) i);
+        z_map[i].x=(MagickRealType) (0.114350*(double) i);
+        z_map[i].y=(MagickRealType) (0.114350*(double) i);
         z_map[i].z=(MagickRealType) (0.114350*(double) i);
       }
       break;
@@ -906,13 +906,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) MaxMap; i++)
       {
         x_map[i].x=(MagickRealType) (0.298839*(double) i);
-        y_map[i].x=(MagickRealType) (0.586811*(double) i);
-        z_map[i].x=(MagickRealType) (0.114350*(double) i);
         x_map[i].y=(MagickRealType) (-0.1687367*(double) i);
-        y_map[i].y=(MagickRealType) (-0.331264*(double) i);
-        z_map[i].y=(MagickRealType) (0.500000*(double) i);
         x_map[i].z=(MagickRealType) (0.500000*(double) i);
+        y_map[i].x=(MagickRealType) (0.586811*(double) i);
+        y_map[i].y=(MagickRealType) (-0.331264*(double) i);
         y_map[i].z=(MagickRealType) (-0.418688*(double) i);
+        z_map[i].x=(MagickRealType) (0.114350*(double) i);
+        z_map[i].y=(MagickRealType) (0.500000*(double) i);
         z_map[i].z=(MagickRealType) (-0.081312*(double) i);
       }
       break;
@@ -930,13 +930,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) MaxMap; i++)
       {
         x_map[i].x=(MagickRealType) (0.212656*(double) i);
-        y_map[i].x=(MagickRealType) (0.715158*(double) i);
-        z_map[i].x=(MagickRealType) (0.072186*(double) i);
         x_map[i].y=(MagickRealType) (0.212656*(double) i);
-        y_map[i].y=(MagickRealType) (0.715158*(double) i);
-        z_map[i].y=(MagickRealType) (0.072186*(double) i);
         x_map[i].z=(MagickRealType) (0.212656*(double) i);
+        y_map[i].x=(MagickRealType) (0.715158*(double) i);
+        y_map[i].y=(MagickRealType) (0.715158*(double) i);
         y_map[i].z=(MagickRealType) (0.715158*(double) i);
+        z_map[i].x=(MagickRealType) (0.072186*(double) i);
+        z_map[i].y=(MagickRealType) (0.072186*(double) i);
         z_map[i].z=(MagickRealType) (0.072186*(double) i);
       }
       break;
@@ -961,13 +961,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) MaxMap; i++)
       {
         x_map[i].x=(MagickRealType) (0.212656*(double) i);
-        y_map[i].x=(MagickRealType) (0.715158*(double) i);
-        z_map[i].x=(MagickRealType) (0.072186*(double) i);
         x_map[i].y=(MagickRealType) (-0.114572*(double) i);
-        y_map[i].y=(MagickRealType) (-0.385428*(double) i);
-        z_map[i].y=(MagickRealType) (0.500000*(double) i);
         x_map[i].z=(MagickRealType) (0.500000*(double) i);
+        y_map[i].x=(MagickRealType) (0.715158*(double) i);
+        y_map[i].y=(MagickRealType) (-0.385428*(double) i);
         y_map[i].z=(MagickRealType) (-0.454153*(double) i);
+        z_map[i].x=(MagickRealType) (0.072186*(double) i);
+        z_map[i].y=(MagickRealType) (0.500000*(double) i);
         z_map[i].z=(MagickRealType) (-0.045847*(double) i);
       }
       break;
@@ -988,25 +988,25 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) (0.018*MaxMap); i++)
       {
         x_map[i].x=0.005382*i;
-        y_map[i].x=0.010566*i;
-        z_map[i].x=0.002052*i;
         x_map[i].y=(-0.003296)*i;
-        y_map[i].y=(-0.006471)*i;
-        z_map[i].y=0.009768*i;
         x_map[i].z=0.009410*i;
+        y_map[i].x=0.010566*i;
+        y_map[i].y=(-0.006471)*i;
         y_map[i].z=(-0.007880)*i;
+        z_map[i].x=0.002052*i;
+        z_map[i].y=0.009768*i;
         z_map[i].z=(-0.001530)*i;
       }
       for ( ; i <= (ssize_t) MaxMap; i++)
       {
         x_map[i].x=0.298839*(1.099*i-0.099);
-        y_map[i].x=0.586811*(1.099*i-0.099);
-        z_map[i].x=0.114350*(1.099*i-0.099);
         x_map[i].y=(-0.298839)*(1.099*i-0.099);
-        y_map[i].y=(-0.586811)*(1.099*i-0.099);
-        z_map[i].y=0.88600*(1.099*i-0.099);
         x_map[i].z=0.70100*(1.099*i-0.099);
+        y_map[i].x=0.586811*(1.099*i-0.099);
+        y_map[i].y=(-0.586811)*(1.099*i-0.099);
         y_map[i].z=(-0.586811)*(1.099*i-0.099);
+        z_map[i].x=0.114350*(1.099*i-0.099);
+        z_map[i].y=0.88600*(1.099*i-0.099);
         z_map[i].z=(-0.114350)*(1.099*i-0.099);
       }
       break;
