@@ -882,7 +882,7 @@ static MagickBooleanType ClonePixelCacheRepository(
     Mismatched pixel cache morphology.
   */
   cache_nexus=AcquirePixelCacheNexus(cache_info->number_threads);
-  clone_nexus=AcquirePixelCacheNexus(cache_info->number_threads);
+  clone_nexus=AcquirePixelCacheNexus(clone_info->number_threads);
   length=(size_t) MagickMin(cache_info->columns,clone_info->columns)*
     sizeof(*cache_info->pixels);
   status=MagickTrue;
@@ -956,8 +956,8 @@ static MagickBooleanType ClonePixelCacheRepository(
         status=WritePixelCacheIndexes(clone_info,clone_nexus[id],exception);
       }
     }
+  clone_nexus=DestroyPixelCacheNexus(clone_nexus,clone_info->number_threads);
   cache_nexus=DestroyPixelCacheNexus(cache_nexus,cache_info->number_threads);
-  clone_nexus=DestroyPixelCacheNexus(clone_nexus,cache_info->number_threads);
   if (cache_info->debug != MagickFalse)
     {
       char
