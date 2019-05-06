@@ -3988,7 +3988,6 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
       option);
   option=GetImageOption(image_info,"units");
   units=image_info->units;
-  option=GetImageOption(image_info,"units");
   if (option != (const char *) NULL)
     units=(ResolutionType) ParseCommandOption(MagickResolutionOptions,
       MagickFalse,option);
@@ -4021,6 +4020,15 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
             break;
         }
       image->units=units;
+      option=GetImageOption(image_info,"density");
+      if (option != (const char *) NULL)
+        {
+          flags=ParseGeometry(option,&geometry_info);
+          image->x_resolution=geometry_info.rho;
+          image->y_resolution=geometry_info.sigma;
+          if ((flags & SigmaValue) == 0)
+            image->y_resolution=image->x_resolution;
+        }
     }
   option=GetImageOption(image_info,"white-point");
   if (option != (const char *) NULL)
