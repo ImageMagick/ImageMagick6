@@ -214,6 +214,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
       heif_context_free(heif_context);
       return(DestroyImageList(image));
     }
+#if LIBHEIF_NUMERIC_VERSION >= 0x01040000
   length=heif_image_handle_get_raw_color_profile_size(image_handle);
   if (length > 0)
     {
@@ -249,6 +250,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
         }
       color_buffer=(unsigned char *) RelinquishMagickMemory(color_buffer);
     }
+#endif
   count=heif_image_handle_get_list_of_metadata_block_IDs(image_handle,"Exif",
     &exif_id,1);
   if (count > 0)
@@ -574,8 +576,10 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     const PixelPacket
       *p;
 
+#if LIBHEIF_NUMERIC_VERSION >= 0x01040000
     const StringInfo
       *profile;
+#endif
 
     int
       stride_y,
@@ -608,10 +612,12 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     status=IsHeifSuccess(&error,image);
     if (status == MagickFalse)
       break;
+#if LIBHEIF_NUMERIC_VERSION >= 0x01040000
     profile=GetImageProfile(image,"icc");
     if (profile != (StringInfo *) NULL)
       (void) heif_image_set_raw_color_profile(heif_image,"prof",
         GetStringInfoDatum(profile),GetStringInfoLength(profile));
+#endif
     error=heif_image_add_plane(heif_image,heif_channel_Y,(int) image->columns,
       (int) image->rows,8);
     status=IsHeifSuccess(&error,image);
