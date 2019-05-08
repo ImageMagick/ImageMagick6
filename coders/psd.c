@@ -2095,9 +2095,6 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   StringInfo
     *profile;
 
-  unsigned char
-    *data;
-
   /*
     Open image file.
   */
