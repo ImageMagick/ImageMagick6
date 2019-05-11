@@ -6003,8 +6003,8 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
           /*
             Convert to 8 bit color-mapped X canvas.
           */
-          if (resource_info->color_recovery &&
-              resource_info->quantize_info->dither)
+          if ((resource_info->color_recovery != MagickFalse) &&
+              (resource_info->quantize_info->dither != MagickFalse))
             {
               XDitherImage(canvas,ximage);
               break;
@@ -6161,8 +6161,8 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
           /*
             Convert to contiguous 8 bit continuous-tone X canvas.
           */
-          if (resource_info->color_recovery &&
-              resource_info->quantize_info->dither)
+          if ((resource_info->color_recovery != MagickFalse) &&
+              (resource_info->quantize_info->dither != MagickFalse))
             {
               XDitherImage(canvas,ximage);
               break;
