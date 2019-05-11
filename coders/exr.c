@@ -272,6 +272,8 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
         SetPixelOpacity(q,image->background_color.opacity);
         q++;
       }
+      if (SyncAuthenticPixels(image,exception) == MagickFalse)
+        break;
       continue;
     }
     memset(scanline,0,columns*sizeof(*scanline));

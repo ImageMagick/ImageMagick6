@@ -2132,10 +2132,8 @@ MagickExport MagickBooleanType GetImageQuantizeError(Image *image)
     mean_error,
     mean_error_per_pixel;
 
-  size_t
-    index;
-
   ssize_t
+    index,
     y;
 
   assert(image != (Image *) NULL);
@@ -2168,7 +2166,7 @@ MagickExport MagickBooleanType GetImageQuantizeError(Image *image)
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      index=1UL*GetPixelIndex(indexes+x);
+      index=(ssize_t) GetPixelIndex(indexes+x);
       if (image->matte != MagickFalse)
         {
           alpha=(MagickRealType) (QuantumScale*(GetPixelAlpha(p)));
@@ -3215,16 +3213,16 @@ extern "C" {
 
 static int IntensityCompare(const void *x,const void *y)
 {
+  double
+    intensity;
+
   PixelPacket
     *color_1,
     *color_2;
 
-  int
-    intensity;
-
   color_1=(PixelPacket *) x;
   color_2=(PixelPacket *) y;
-  intensity=PixelPacketIntensity(color_1)-(int) PixelPacketIntensity(color_2);
+  intensity=PixelPacketIntensity(color_1)-PixelPacketIntensity(color_2);
   return((int) intensity);
 }
 
@@ -3249,6 +3247,9 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
   register ssize_t
     i;
 
+  size_t
+    extent;
+
   ssize_t
     *colormap_index,
     j,
@@ -3259,19 +3260,15 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
   exception=(&image->exception);
   if (image->type != GrayscaleType)
     (void) TransformImageColorspace(image,GRAYColorspace);
-  if (image->storage_class == PseudoClass)
-    colormap_index=(ssize_t *) AcquireQuantumMemory(MagickMax(image->colors+1,
-      MaxMap),sizeof(*colormap_index));
-  else
-    colormap_index=(ssize_t *) AcquireQuantumMemory(MagickMax(MaxColormapSize+1,
-      MaxMap),sizeof(*colormap_index));
+  extent=MagickMax(image->colors+1,MagickMax(MaxColormapSize,MaxMap+1));
+  colormap_index=(ssize_t *) AcquireQuantumMemory(extent,
+    sizeof(*colormap_index));
   if (colormap_index == (ssize_t *) NULL)
     ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   if (image->storage_class != PseudoClass)
     {
-      (void) memset(colormap_index,(-1),MaxColormapSize*
-        sizeof(*colormap_index));
+      (void) memset(colormap_index,(-1),extent*sizeof(*colormap_index));
       if (AcquireImageColormap(image,MaxColormapSize) == MagickFalse)
         {
           colormap_index=(ssize_t *) RelinquishMagickMemory(colormap_index);
@@ -3334,6 +3331,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
       }
       image_view=DestroyCacheView(image_view);
     }
+  (void) memset(colormap_index,0,extent*sizeof(*colormap_index));
   for (i=0; i < (ssize_t) image->colors; i++)
     image->colormap[i].opacity=(unsigned short) i;
   qsort((void *) image->colormap,image->colors,sizeof(PixelPacket),
