@@ -8420,7 +8420,8 @@ MagickExport void XMakeWindow(Display *display,Window parent,char **argv,
       window_info->shape=MagickFalse;
 #endif
     }
-  if (window_info->shared_memory)
+  window_info->shape=MagickFalse;  /* Fedora 30 has a broken shape extention */
+  if (window_info->shared_memory != MagickFalse)
     {
 #if defined(MAGICKCORE_HAVE_SHARED_MEMORY)
       /*
