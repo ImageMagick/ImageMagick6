@@ -172,12 +172,6 @@ static Image *ReadTTFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     buffer[MaxTextExtent],
     *text;
 
-  const char
-    *Text = (char *)
-      "abcdefghijklmnopqrstuvwxyz\n"
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
-      "0123456789.:,;(*!?}^)#${%^&-+@\n";
-
   const TypeInfo
     *type_info;
 
@@ -202,6 +196,12 @@ static Image *ReadTTFImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
   ssize_t
     y;
+
+  static const char
+    Text[] =
+      "abcdefghijklmnopqrstuvwxyz\n"
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ\n"
+      "0123456789.:,;(*!?}^)#${%^&-+@\n";
 
   /*
     Open image file.
