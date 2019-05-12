@@ -82,124 +82,101 @@
 
 static MagickBooleanType CompareUsage(void)
 {
-  const char
-    **p;
-
   static const char
-    *miscellaneous[]=
-    {
-      "-debug events        display copious debugging information",
-      "-help                print program options",
-      "-list type           print a list of supported option arguments",
-      "-log format          format of debugging information",
-      (char *) NULL
-    },
-    *operators[]=
-    {
-      "-brightness-contrast geometry",
-      "                     improve brightness / contrast of the image",
-      "-distort method args",
-      "                     distort images according to given method and args",
-      "-level value         adjust the level of image contrast",
-      "-resize geometry     resize the image",
-      "-rotate degrees      apply Paeth rotation to the image",
-      "-sigmoidal-contrast geometry",
-      "                     increase the contrast without saturating highlights or",
-      "-trim                trim image edges",
-      (char *) NULL
-    },
-    *sequence_operators[]=
-    {
-      "-crop geometry       cut out a rectangular region of the image",
-      "-separate            separate an image channel into a grayscale image",
-      "-write filename      write images to this file",
-      (char *) NULL
-    },
-    *settings[]=
-    {
-      "-alpha option        on, activate, off, deactivate, set, opaque, copy",
-      "                     transparent, extract, background, or shape",
-      "-authenticate password",
-      "                     decipher image with this password",
-      "-background color    background color",
-      "-channel type        apply option to select image channels",
-      "-colorspace type     alternate image colorspace",
-      "-compose operator    set image composite operator",
-      "-compress type       type of pixel compression when writing the image",
-      "-decipher filename   convert cipher pixels to plain pixels",
-      "-define format:option",
-      "                     define one or more image format options",
-      "-density geometry    horizontal and vertical density of the image",
-      "-depth value         image depth",
-      "-dissimilarity-threshold value",
-      "                     maximum distortion for (sub)image match",
-      "-encipher filename   convert plain pixels to cipher pixels",
-      "-extract geometry    extract area from image",
-      "-format \"string\"     output formatted image characteristics",
-      "-fuzz distance       colors within this distance are considered equal",
-      "-gravity type        horizontal and vertical text placement",
-      "-highlight-color color",
-      "                     empasize pixel differences with this color",
-      "-identify            identify the format and characteristics of the image",
-      "-interlace type      type of image interlacing scheme",
-      "-limit type value    pixel cache resource limit",
-      "-lowlight-color color",
-      "                     de-emphasize pixel differences with this color",
-      "-mask filename       associate a mask with the image",
-      "-metric type         measure differences between images with this metric",
-      "-monitor             monitor progress",
-      "-passphrase filename get the passphrase from this file",
-      "-profile filename    add, delete, or apply an image profile",
-      "-quality value       JPEG/MIFF/PNG compression level",
-      "-quiet               suppress all warning messages",
-      "-quantize colorspace reduce colors in this colorspace",
-      "-regard-warnings     pay attention to warning messages",
-      "-repage geometry     size and location of an image canvas",
-      "-respect-parentheses settings remain in effect until parenthesis boundary",
-      "-sampling-factor geometry",
-      "                     horizontal and vertical sampling factor",
-      "-seed value          seed a new sequence of pseudo-random numbers",
-      "-set attribute value set an image attribute",
-      "-quality value       JPEG/MIFF/PNG compression level",
-      "-similarity-threshold value",
-      "                     minimum distortion for (sub)image match",
-      "-size geometry       width and height of image",
-      "-subimage-search     search for subimage",
-      "-synchronize         synchronize image to storage device",
-      "-taint               declare the image as modified",
-      "-transparent-color color",
-      "                     transparent color",
-      "-type type           image type",
-      "-verbose             print detailed information about the image",
-      "-version             print version information",
-      "-virtual-pixel method",
-      "                     virtual pixel access method",
-      (char *) NULL
-    },
-    *stack_operators[]=
-    {
-      "-delete indexes      delete the image from the image sequence",
-      (char *) NULL
-    };
+    miscellaneous[] =
+      "  -debug events        display copious debugging information\n"
+      "  -help                print program options\n"
+      "  -list type           print a list of supported option arguments\n"
+      "  -log format          format of debugging information",
+    operators[] =
+      "  -brightness-contrast geometry\n"
+      "                       improve brightness / contrast of the image\n"
+      "  -distort method args\n"
+      "                       distort images according to given method and args\n"
+      "  -level value         adjust the level of image contrast\n"
+      "  -resize geometry     resize the image\n"
+      "  -rotate degrees      apply Paeth rotation to the image\n"
+      "  -sigmoidal-contrast geometry\n"
+      "                       increase the contrast without saturating highlights or\n"
+      "  -trim                trim image edges",
+    sequence_operators[] =
+      "  -crop geometry       cut out a rectangular region of the image\n"
+      "  -separate            separate an image channel into a grayscale image\n"
+      "  -write filename      write images to this file",
+    settings[] =
+      "  -alpha option        on, activate, off, deactivate, set, opaque, copy\n"
+      "                       transparent, extract, background, or shape\n"
+      "  -authenticate password\n"
+      "                       decipher image with this password\n"
+      "  -background color    background color\n"
+      "  -channel type        apply option to select image channels\n"
+      "  -colorspace type     alternate image colorspace\n"
+      "  -compose operator    set image composite operator\n"
+      "  -compress type       type of pixel compression when writing the image\n"
+      "  -decipher filename   convert cipher pixels to plain pixels\n"
+      "  -define format:option\n"
+      "                       define one or more image format options\n"
+      "  -density geometry    horizontal and vertical density of the image\n"
+      "  -depth value         image depth\n"
+      "  -dissimilarity-threshold value\n"
+      "                       maximum distortion for (sub)image match\n"
+      "  -encipher filename   convert plain pixels to cipher pixels\n"
+      "  -extract geometry    extract area from image\n"
+      "  -format \"string\"     output formatted image characteristics\n"
+      "  -fuzz distance       colors within this distance are considered equal\n"
+      "  -gravity type        horizontal and vertical text placement\n"
+      "  -highlight-color color\n"
+      "                       empasize pixel differences with this color\n"
+      "  -identify            identify the format and characteristics of the image\n"
+      "  -interlace type      type of image interlacing scheme\n"
+      "  -limit type value    pixel cache resource limit\n"
+      "  -lowlight-color color\n"
+      "                       de-emphasize pixel differences with this color\n"
+      "  -mask filename       associate a mask with the image\n"
+      "  -metric type         measure differences between images with this metric\n"
+      "  -monitor             monitor progress\n"
+      "  -passphrase filename get the passphrase from this file\n"
+      "  -profile filename    add, delete, or apply an image profile\n"
+      "  -quality value       JPEG/MIFF/PNG compression level\n"
+      "  -quiet               suppress all warning messages\n"
+      "  -quantize colorspace reduce colors in this colorspace\n"
+      "  -regard-warnings     pay attention to warning messages\n"
+      "  -repage geometry     size and location of an image canvas\n"
+      "  -respect-parentheses settings remain in effect until parenthesis boundary\n"
+      "  -sampling-factor geometry\n"
+      "                       horizontal and vertical sampling factor\n"
+      "  -seed value          seed a new sequence of pseudo-random numbers\n"
+      "  -set attribute value set an image attribute\n"
+      "  -quality value       JPEG/MIFF/PNG compression level\n"
+      "  -similarity-threshold value\n"
+      "                       minimum distortion for (sub)image match\n"
+      "  -size geometry       width and height of image\n"
+      "  -subimage-search     search for subimage\n"
+      "  -synchronize         synchronize image to storage device\n"
+      "  -taint               declare the image as modified\n"
+      "  -transparent-color color\n"
+      "                       transparent color\n"
+      "  -type type           image type\n"
+      "  -verbose             print detailed information about the image\n"
+      "  -version             print version information\n"
+      "  -virtual-pixel method\n"
+      "                       virtual pixel access method",
+    stack_operators[] =
+      "  -delete indexes      delete the image from the image sequence";
 
   ListMagickVersion(stdout);
   (void) printf("Usage: %s [options ...] image reconstruct difference\n",
     GetClientName());
   (void) printf("\nImage Settings:\n");
-  for (p=settings; *p != (char *) NULL; p++)
-    (void) printf("  %s\n",*p);
+  (void) puts(settings);
   (void) printf("\nImage Operators:\n");
-  for (p=operators; *p != (char *) NULL; p++)
-    (void) printf("  %s\n",*p);
+  (void) puts(operators);
   (void) printf("\nImage Sequence Operators:\n");
-  for (p=sequence_operators; *p != (char *) NULL; p++)
-    (void) printf("  %s\n",*p);
+  (void) puts(sequence_operators);
   (void) printf("\nImage Stack Operators:\n");
-  for (p=stack_operators; *p != (char *) NULL; p++)
-    (void) printf("  %s\n",*p);
+  (void) puts(stack_operators);
   (void) printf("\nMiscellaneous Options:\n");
-  for (p=miscellaneous; *p != (char *) NULL; p++)
-    (void) printf("  %s\n",*p);
+  (void) puts(miscellaneous);
   (void) printf(
     "\nBy default, the image format of `file' is determined by its magic\n");
   (void) printf(
