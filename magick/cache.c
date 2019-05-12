@@ -771,8 +771,7 @@ MagickExport void ClonePixelCacheMethods(Cache clone,const Cache cache)
 */
 
 static MagickBooleanType ClonePixelCacheOnDisk(
-  CacheInfo *magick_restrict cache_info,CacheInfo *magick_restrict clone_info,
-  ExceptionInfo *exception)
+  CacheInfo *magick_restrict cache_info,CacheInfo *magick_restrict clone_info)
 {
   MagickSizeType
     extent;
@@ -876,7 +875,7 @@ static MagickBooleanType ClonePixelCacheRepository(
           return(MagickTrue);
         }
       if ((cache_info->type == DiskCache) && (clone_info->type == DiskCache))
-        return(ClonePixelCacheOnDisk(cache_info,clone_info,exception));
+        return(ClonePixelCacheOnDisk(cache_info,clone_info));
     }
   /*
     Mismatched pixel cache morphology.
@@ -5136,7 +5135,7 @@ static inline void PrefetchPixelCacheNexusPixels(const NexusInfo *nexus_info,
 static PixelPacket *SetPixelCacheNexusPixels(
   const CacheInfo *magick_restrict cache_info,const MapMode mode,
   const ssize_t x,const ssize_t y,const size_t width,const size_t height,
-  const MagickBooleanType buffered,NexusInfo *nexus_info,
+  const MagickBooleanType buffered,NexusInfo *magick_restrict nexus_info,
   ExceptionInfo *exception)
 {
   MagickBooleanType

@@ -1114,6 +1114,7 @@ cleanup:
   /*
     Simple layout for bi-directional text (right-to-left or left-to-right).
   */
+  magick_unreferenced(image);
   *grapheme=(GraphemeInfo *) AcquireQuantumMemory(length+1,sizeof(**grapheme));
   if (*grapheme == (GraphemeInfo *) NULL)
     return(0);

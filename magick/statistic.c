@@ -149,8 +149,7 @@ static MagickPixelPacket **DestroyPixelThreadSet(MagickPixelPacket **pixels)
   return(pixels);
 }
 
-static MagickPixelPacket **AcquirePixelThreadSet(const Image *image,
-  const size_t number_images)
+static MagickPixelPacket **AcquirePixelThreadSet(const Image *image)
 {
   MagickPixelPacket
     **pixels;
@@ -506,8 +505,7 @@ MagickExport Image *EvaluateImages(const Image *images,
       image=DestroyImage(image);
       return((Image *) NULL);
     }
-  number_images=GetImageListLength(images);
-  evaluate_pixels=AcquirePixelThreadSet(images,number_images);
+  evaluate_pixels=AcquirePixelThreadSet(images);
   if (evaluate_pixels == (MagickPixelPacket **) NULL)
     {
       image=DestroyImage(image);
@@ -520,6 +518,7 @@ MagickExport Image *EvaluateImages(const Image *images,
   */
   status=MagickTrue;
   progress=0;
+  number_images=GetImageListLength(images);
   GetMagickPixelPacket(images,&zero);
   random_info=AcquireRandomInfoThreadSet();
   evaluate_view=AcquireAuthenticCacheView(image,exception);
@@ -2755,9 +2754,6 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
     **magick_restrict polynomial_pixels,
     zero;
 
-  size_t
-    number_images;
-
   ssize_t
     y;
 
@@ -2776,8 +2772,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
       image=DestroyImage(image);
       return((Image *) NULL);
     }
-  number_images=GetImageListLength(images);
-  polynomial_pixels=AcquirePixelThreadSet(images,number_images);
+  polynomial_pixels=AcquirePixelThreadSet(images);
   if (polynomial_pixels == (MagickPixelPacket **) NULL)
     {
       image=DestroyImage(image);
@@ -2820,6 +2815,9 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
       i,
       x;
 
+    size_t
+      number_images;
+
     if (status == MagickFalse)
       continue;
     q=QueueCacheViewAuthenticPixels(polynomial_view,0,y,image->columns,1,
@@ -2834,6 +2832,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
     for (x=0; x < (ssize_t) image->columns; x++)
       polynomial_pixel[x]=zero;
     next=images;
+    number_images=GetImageListLength(images);
     for (i=0; i < (ssize_t) number_images; i++)
     {
       register const IndexPacket

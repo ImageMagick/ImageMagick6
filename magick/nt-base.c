@@ -1755,7 +1755,7 @@ MagickPrivate DIR *NTOpenDirectory(const char *path)
   if (length == 0)
     return((DIR *) NULL);
   length=MultiByteToWideChar(CP_UTF8,0,DirectorySeparator,-1,
-    directory_separator,strlen(DirectorySeparator)+1);
+    directory_separator,(int) strlen(DirectorySeparator)+1);
   if (length == 0)
     return((DIR *) NULL);
   if (wcsncat(file_specification,directory_separator,

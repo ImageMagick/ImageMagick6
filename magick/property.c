@@ -808,7 +808,7 @@ static inline unsigned short ReadPropertyUnsignedShort(const EndianType endian,
 }
 
 static MagickBooleanType GetEXIFProperty(const Image *image,
-  const char *property,ExceptionInfo *exception)
+  const char *property)
 {
 #define MaxDirectoryStack  16
 #define EXIF_DELIMITER  "\n"
@@ -899,7 +899,7 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
       tag;
 
     const char
-      description[35];
+      description[36];
   } TagInfo;
 
   static const TagInfo
@@ -2274,7 +2274,7 @@ MagickExport const char *GetImageProperty(const Image *image,
     {
       if (LocaleNCompare("exif:",property,5) == 0)
         {
-          (void) GetEXIFProperty(image,property,exception);
+          (void) GetEXIFProperty(image,property);
           break;
         }
       break;

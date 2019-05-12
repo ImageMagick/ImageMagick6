@@ -1174,6 +1174,7 @@ MagickExport MagickBooleanType IsGrayImage(const Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
+  magick_unreferenced(exception);
   if ((image->type == BilevelType) || (image->type == GrayscaleType) ||
       (image->type == GrayscaleMatteType))
     return(MagickTrue);
@@ -1210,6 +1211,7 @@ MagickExport MagickBooleanType IsMonochromeImage(const Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
+  magick_unreferenced(image);
   if (image->type == BilevelType)
     return(MagickTrue);
   return(MagickFalse);
