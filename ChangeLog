@@ -1,8 +1,8 @@
 2019-05-14  6.9.10-46 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-46, GIT revision 14...
+  * Release ImageMagick version 6.9.10-46, GIT revision 14488:81bd40c09:20190518
 
 2019-05-14  6.9.10-46 Cristy  <quetzlzacatenango@image...>
-  * 
+  * Builds under MacOS X and FreeBSD works again.
 
 2019-05-12  6.9.10-45 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-45, GIT revision 14473:2116be83b:20190512
