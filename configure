@@ -3623,7 +3623,7 @@ ac_aux_dir=
 for ac_dir in config "$srcdir"/config; do
   if test -f "$ac_dir/install-sh"; then
     ac_aux_dir=$ac_dir
-    ac_install_sh="$ac_aux_dir/install-sh -c"
+    ac_install_sh="$SHELL $ac_pwd/$ac_aux_dir/install-sh -c"
     break
   elif test -f "$ac_dir/install.sh"; then
     ac_aux_dir=$ac_dir
@@ -4567,7 +4567,7 @@ MAGICK_PATCHLEVEL_VERSION=46
 
 MAGICK_VERSION=6.9.10-46
 
-MAGICK_GIT_REVISION=14486:7280fd47d:20190517
+MAGICK_GIT_REVISION=14487:957159ea0:20190517
 
 
 # Substitute library versioning
