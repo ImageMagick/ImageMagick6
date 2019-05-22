@@ -1207,8 +1207,8 @@ MagickExport Image *XAnimateImages(Display *display,
 #define MaXWindows  8
 #define MagickTitle  "Commands"
 
-  static const char
-    *CommandMenu[]=
+  const char
+    *const CommandMenu[]=
     {
       "Animate",
       "Speed",
@@ -1218,7 +1218,7 @@ MagickExport Image *XAnimateImages(Display *display,
       "Quit",
       (char *) NULL
     },
-    *AnimateMenu[]=
+    *const AnimateMenu[]=
     {
       "Open...",
       "Play",
@@ -1228,19 +1228,19 @@ MagickExport Image *XAnimateImages(Display *display,
       "Save...",
       (char *) NULL
     },
-    *SpeedMenu[]=
+    *const SpeedMenu[]=
     {
       "Faster",
       "Slower",
       (char *) NULL
     },
-    *DirectionMenu[]=
+    *const DirectionMenu[]=
     {
       "Forward",
       "Reverse",
       (char *) NULL
     },
-    *HelpMenu[]=
+    *const HelpMenu[]=
     {
       "Overview",
       "Browse Documentation",
@@ -1248,8 +1248,8 @@ MagickExport Image *XAnimateImages(Display *display,
       (char *) NULL
     };
 
-  static const char
-    **Menus[MagickMenus]=
+  const char
+    *const *Menus[MagickMenus]=
     {
       AnimateMenu,
       SpeedMenu,
