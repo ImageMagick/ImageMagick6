@@ -3674,7 +3674,6 @@ static MagickBooleanType RenderMVGContent(Image *image,
         if (LocaleCompare("text",keyword) == 0)
           {
             primitive_type=TextPrimitive;
-            cursor=0.0;
             break;
           }
         if (LocaleCompare("text-align",keyword) == 0)
