@@ -4231,6 +4231,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
           primitive_info->point.x,primitive_info->point.y);
         clone_info->render=MagickFalse;
         clone_info->text=AcquireString(token);
+        (void) ConcatenateString(&clone_info->text," ");
         status&=GetTypeMetrics(image,clone_info,&metrics);
         clone_info=DestroyDrawInfo(clone_info);
         cursor+=metrics.width;
