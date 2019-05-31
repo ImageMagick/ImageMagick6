@@ -675,7 +675,7 @@ static inline void CheckEventLogging()
 
       ResetLinkedListIterator(log_cache);
       p=(LogInfo *) GetNextValueInLinkedList(log_cache);
-      event_logging=(p != (LogInfo *) NULL) && (p->event_mask != NoEvents) ? 
+      event_logging=(p != (LogInfo *) NULL) && (p->event_mask != NoEvents) ?
         MagickTrue: MagickFalse;
     }
 }
@@ -1096,6 +1096,12 @@ static char *TranslateEvent(const LogEventType magick_unused(type),
           }
         q+=FormatLocaleString(q,extent,"%.20g",(double) (log_info->generation %
           log_info->generations));
+        break;
+      }
+      case 'i':
+      {
+        q+=FormatLocaleString(q,extent,"%.20g",(double)
+          GetMagickThreadSignature());
         break;
       }
       case 'l':
