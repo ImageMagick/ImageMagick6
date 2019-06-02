@@ -1452,6 +1452,10 @@ MagickPrivate int NTGhostscriptFonts(char *path,int length)
       DirectorySeparator);
     if (IsPathAccessible(filename) != MagickFalse)
       return(TRUE);
+    (void) FormatLocaleString(filename,MaxTextExtent,"%s%sn019003l.pfb",path,
+      DirectorySeparator);
+    if (IsPathAccessible(filename) != MagickFalse)
+      return(TRUE);
   }
   *path='\0';
   return(FALSE);
