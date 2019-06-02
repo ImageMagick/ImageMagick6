@@ -2618,7 +2618,8 @@ MagickExport MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
       if (SetImageGray(image,&image->exception) != MagickFalse)
         (void) SetGrayscaleImage(image);
     }
-  if ((image->storage_class == PseudoClass) &&
+  if ((quantize_info->dither == MagickFalse) &&
+      (image->storage_class == PseudoClass) &&
       (image->colors <= maximum_colors))
     {
       if ((quantize_info->colorspace != UndefinedColorspace) &&
