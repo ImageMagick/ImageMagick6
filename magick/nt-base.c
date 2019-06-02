@@ -1677,6 +1677,7 @@ MagickExport MagickBooleanType NTLongPathsEnabled()
       if (status != ERROR_SUCCESS)
       {
         long_paths_enabled=0;
+        RegCloseKey(registry_key);
         return(MagickFalse);
       }
       value=(PVOID) NULL;
@@ -1685,10 +1686,12 @@ MagickExport MagickBooleanType NTLongPathsEnabled()
       if ((status != ERROR_SUCCESS) || (type != REG_DWORD))
       {
         long_paths_enabled=0;
+        RegCloseKey(registry_key);
         return(MagickFalse);
       }
       status=RegQueryValueExA(registry_key,"LongPathsEnabled",0,&type,&value,
         &size);
+      RegCloseKey(registry_key);
       if (status != ERROR_SUCCESS)
       {
         long_paths_enabled=0;
