@@ -1051,7 +1051,7 @@ MagickExport void *RelinquishAlignedMemory(void *memory)
 #elif defined(MAGICKCORE_HAVE__ALIGNED_MALLOC)
   _aligned_free(memory);
 #else
-  free(*((void **) memory-1));
+  RelinquishMagickMemory(*((void **) memory-1));
 #endif
   return(NULL);
 }
