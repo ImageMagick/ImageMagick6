@@ -1809,7 +1809,7 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
   if (p == NULL)
     return DS_INVALID_PROFILE;
 
-  profile = (ds_profile*)malloc(sizeof(ds_profile));
+  profile = (ds_profile*)AcquireMagickMemory(sizeof(ds_profile));
   if (profile == NULL)
     return DS_MEMORY_ERROR;
 
@@ -1817,7 +1817,7 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
 
   OpenCLLib->clGetPlatformIDs(0, NULL, &numPlatforms);
   if (numPlatforms > 0) {
-    platforms = (cl_platform_id*)malloc(numPlatforms*sizeof(cl_platform_id));
+    platforms = (cl_platform_id*)AcquireMagickMemory(numPlatforms*sizeof(cl_platform_id));
     if (platforms == NULL) {
       status = DS_MEMORY_ERROR;
       goto cleanup;
@@ -1832,7 +1832,7 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
 
   profile->numDevices = numDevices+1;     /* +1 to numDevices to include the native CPU */
 
-  profile->devices = (ds_device*)malloc(profile->numDevices*sizeof(ds_device));
+  profile->devices = (ds_device*)AcquireMagickMemory(profile->numDevices*sizeof(ds_device));
   if (profile->devices == NULL) {
     profile->numDevices = 0;
     status = DS_MEMORY_ERROR;
@@ -1841,7 +1841,7 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
   memset(profile->devices, 0, profile->numDevices*sizeof(ds_device));
 
   if (numDevices > 0) {
-    devices = (cl_device_id*)malloc(numDevices*sizeof(cl_device_id));
+    devices = (cl_device_id*)AcquireMagickMemory(numDevices*sizeof(cl_device_id));
     if (devices == NULL) {
       status = DS_MEMORY_ERROR;
       goto cleanup;
@@ -1874,13 +1874,13 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
 
           OpenCLLib->clGetDeviceInfo(profile->devices[next].oclDeviceID, CL_DEVICE_NAME
             , 0, NULL, &length);
-          profile->devices[next].oclDeviceName = (char*)malloc(sizeof(char)*length);
+          profile->devices[next].oclDeviceName = (char*)AcquireMagickMemory(sizeof(char)*length);
           OpenCLLib->clGetDeviceInfo(profile->devices[next].oclDeviceID, CL_DEVICE_NAME
             , length, profile->devices[next].oclDeviceName, NULL);
 
           OpenCLLib->clGetDeviceInfo(profile->devices[next].oclDeviceID, CL_DRIVER_VERSION
             , 0, NULL, &length);
-          profile->devices[next].oclDriverVersion = (char*)malloc(sizeof(char)*length);
+          profile->devices[next].oclDriverVersion = (char*)AcquireMagickMemory(sizeof(char)*length);
           OpenCLLib->clGetDeviceInfo(profile->devices[next].oclDeviceID, CL_DRIVER_VERSION
             , length, profile->devices[next].oclDriverVersion, NULL);
 
@@ -2093,7 +2093,7 @@ static ds_status readProFile(const char* fileName, char** content, size_t* conte
   fseek(input, 0L, SEEK_END);
   size = ftell(input);
   rewind(input);
-  binary = (char*)malloc(size);
+  binary = (char*)AcquireMagickMemory(size);
   if(binary == NULL) {
     status = DS_FILE_ERROR;
     goto cleanup;
@@ -2515,7 +2515,7 @@ static ds_status AcceleratePerfEvaluator(ds_device *device,
   /* end of microbenchmark */
 
   if (device->score == NULL)
-    device->score=malloc(sizeof(AccelerateScoreType));
+    device->score=AcquireMagickMemory(sizeof(AccelerateScoreType));
 
   if (status != MagickFalse)
     *(AccelerateScoreType*)device->score=readAccelerateTimer(&timer);
@@ -2529,7 +2529,7 @@ ds_status AccelerateScoreSerializer(ds_device* device, void** serializedScore, u
   if (device
      && device->score) {
     /* generate a string from the score */
-    char* s = (char*)malloc(sizeof(char)*256);
+    char* s = (char*)AcquireMagickMemory(sizeof(char)*256);
     sprintf(s,"%.4f",*((AccelerateScoreType*)device->score));
     *serializedScore = (void*)s;
     *serializedScoreSize = (unsigned int) strlen(s);
@@ -2543,10 +2543,10 @@ ds_status AccelerateScoreSerializer(ds_device* device, void** serializedScore, u
 ds_status AccelerateScoreDeserializer(ds_device* device, const unsigned char* serializedScore, unsigned int serializedScoreSize) {
   if (device) {
     /* convert the string back to an int */
-    char* s = (char*)malloc(serializedScoreSize+1);
+    char* s = (char*)AcquireMagickMemory(serializedScoreSize+1);
     memcpy(s, serializedScore, serializedScoreSize);
     s[serializedScoreSize] = (char)'\0';
-    device->score = malloc(sizeof(AccelerateScoreType));
+    device->score = AcquireMagickMemory(sizeof(AccelerateScoreType));
     *((AccelerateScoreType*)device->score) = (AccelerateScoreType)
       strtod(s, (char **) NULL);
     free(s);
