@@ -1,5 +1,9 @@
-2019-06-01  6.9.10-48 Cristy  <quetzlzacatenango@image...>
+2019-07-01  6.9.10-48 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-48, GIT revision 14511:fbf846d4b:20190601
+
+2019-06-04  6.9.10-48 Cristy  <quetzlzacatenango@image...>
+  * Use user defined allocator instead of `malloc` (reference
+    https://github.com/ImageMagick/ImageMagick6/pull/49/).
 
 2019-05-26  6.9.10-47 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-47, GIT revision 14507:321f99ca6:20190526

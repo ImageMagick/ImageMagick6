@@ -286,7 +286,7 @@ MagickExport void *AcquireAlignedMemory(const size_t count,const size_t quantum)
     extent=(size+alignment-1)+sizeof(void *);
     if (extent > size)
       {
-        p=malloc(extent);
+        p=AcquireMagickMemory(extent);
         if (p != NULL)
           {
             memory=(void *) AlignedExtent((size_t) p+sizeof(void *),alignment);
@@ -1051,7 +1051,7 @@ MagickExport void *RelinquishAlignedMemory(void *memory)
 #elif defined(MAGICKCORE_HAVE__ALIGNED_MALLOC)
   _aligned_free(memory);
 #else
-  free(*((void **) memory-1));
+  RelinquishMagickMemor(*((void **) memory-1));
 #endif
   return(NULL);
 }
