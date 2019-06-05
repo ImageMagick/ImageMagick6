@@ -1001,7 +1001,7 @@ cleanup:
   if (fileHandle != NULL)
     fclose(fileHandle);
   if (binaryFileName != NULL)
-    RelinqishMagickMemory(binaryFileName);
+    RelinquishMagickMemory(binaryFileName);
   if (binaryProgram != NULL)
     RelinquishMagickMemory(binaryProgram);
 
@@ -1771,8 +1771,8 @@ typedef ds_status (*ds_score_release)(void* score);
 static ds_status releaseDeviceResource(ds_device* device, ds_score_release sr) {
   ds_status status = DS_SUCCESS;
   if (device) {
-    if (device->oclDeviceName)      RelinqishMagickMemory(device->oclDeviceName);
-    if (device->oclDriverVersion)   RelinqishMagickMemory(device->oclDriverVersion);
+    if (device->oclDeviceName)      RelinquishMagickMemory(device->oclDeviceName);
+    if (device->oclDriverVersion)   RelinquishMagickMemory(device->oclDriverVersion);
     if (device->score)              status = sr(device->score);
   }
   return status;
@@ -1788,9 +1788,9 @@ static ds_status releaseDSProfile(ds_profile* profile, ds_score_release sr) {
         if (status != DS_SUCCESS)
           break;
       }
-      RelinqishMagickMemory(profile->devices);
+      RelinquishMagickMemory(profile->devices);
     }
-    RelinqishMagickMemory(profile);
+    RelinquishMagickMemory(profile);
   }
   return status;
 }
@@ -1901,16 +1901,16 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
   profile->version = version;
 
 cleanup:
-  if (platforms)  RelinqishMagickMemory(platforms);
-  if (devices)    RelinqishMagickMemory(devices);
+  if (platforms)  RelinquishMagickMemory(platforms);
+  if (devices)    RelinquishMagickMemory(devices);
   if (status == DS_SUCCESS) {
     *p = profile;
   }
   else {
     if (profile) {
       if (profile->devices)
-        RelinqishMagickMemory(profile->devices);
-      RelinqishMagickMemory(profile);
+        RelinquishMagickMemory(profile->devices);
+      RelinquishMagickMemory(profile);
     }
   }
   return status;
@@ -2063,7 +2063,7 @@ static ds_status writeProfileToFile(ds_profile* profile, ds_score_serializer ser
       status = serializer(profile->devices+i, &serializedScore, &serializedScoreSize);
       if (status == DS_SUCCESS && serializedScore!=NULL && serializedScoreSize > 0) {
         fwrite(serializedScore, sizeof(char), serializedScoreSize, profileFile);
-        RelinqishMagickMemory(serializedScore);
+        RelinquishMagickMemory(serializedScore);
       }
       fwrite(DS_TAG_SCORE_END, sizeof(char), strlen(DS_TAG_SCORE_END), profileFile);
       fwrite(DS_TAG_DEVICE_END, sizeof(char), strlen(DS_TAG_DEVICE_END), profileFile);
@@ -2111,7 +2111,7 @@ cleanup:
   if (input != NULL) fclose(input);
   if (status != DS_SUCCESS
       && binary != NULL) {
-      RelinqishMagickMemory(binary);
+      RelinquishMagickMemory(binary);
       *content = NULL;
       *contentSize = 0;
   }
@@ -2353,7 +2353,7 @@ RestoreMSCWarning
     }
   }
 cleanup:
-  if (contentStart!=NULL) RelinqishMagickMemory(contentStart);
+  if (contentStart!=NULL) RelinquishMagickMemory(contentStart);
   return status;
 }
 
@@ -2515,7 +2515,7 @@ static ds_status AcceleratePerfEvaluator(ds_device *device,
   /* end of microbenchmark */
 
   if (device->score == NULL)
-    device->score= AcquireQuantumMemory(sizeof(AccelerateScoreType));
+    device->score= AcquireMagickMemory(sizeof(AccelerateScoreType));
 
   if (status != MagickFalse)
     *(AccelerateScoreType*) device->score=readAccelerateTimer(&timer);
@@ -2549,7 +2549,7 @@ ds_status AccelerateScoreDeserializer(ds_device* device, const unsigned char* se
     device->score = AcquireMagickMemory(sizeof(AccelerateScoreType));
     *((AccelerateScoreType*)device->score) = (AccelerateScoreType)
       strtod(s, (char **) NULL);
-    RelinqishMagickMemory(s);
+    RelinquishMagickMemory(s);
     return DS_SUCCESS;
   }
   else {
@@ -2559,7 +2559,7 @@ ds_status AccelerateScoreDeserializer(ds_device* device, const unsigned char* se
 
 ds_status AccelerateScoreRelease(void* score) {
   if (score!=NULL) {
-    RelinqishMagickMemory(score);
+    RelinquishMagickMemory(score);
   }
   return DS_SUCCESS;
 }
