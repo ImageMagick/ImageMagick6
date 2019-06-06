@@ -4,6 +4,8 @@
 2019-06-04  6.9.10-48 Cristy  <quetzlzacatenango@image...>
   * Use user defined allocator instead of `malloc` (reference
     https://github.com/ImageMagick/ImageMagick6/pull/49/).
+  * Add static decorator to accelerator kernels (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1366).
 
 2019-05-26  6.9.10-47 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-47, GIT revision 14507:321f99ca6:20190526
