@@ -272,7 +272,7 @@ const char* accelerateKernels =
 OPENCL_IF((MAGICKCORE_QUANTUM_DEPTH == 8))
 
   STRINGIFY(
-    inline CLQuantum ScaleCharToQuantum(const unsigned char value)
+    static inline CLQuantum ScaleCharToQuantum(const unsigned char value)
     {
       return((CLQuantum) value);
     }
@@ -281,7 +281,7 @@ OPENCL_IF((MAGICKCORE_QUANTUM_DEPTH == 8))
 OPENCL_ELIF((MAGICKCORE_QUANTUM_DEPTH == 16))
 
   STRINGIFY(
-    inline CLQuantum ScaleCharToQuantum(const unsigned char value)
+    static inline CLQuantum ScaleCharToQuantum(const unsigned char value)
     {
       return((CLQuantum) (257.0f*value));
     }
@@ -290,7 +290,7 @@ OPENCL_ELIF((MAGICKCORE_QUANTUM_DEPTH == 16))
 OPENCL_ELIF((MAGICKCORE_QUANTUM_DEPTH == 32))
 
   STRINGIFY(
-    inline CLQuantum ScaleCharToQuantum(const unsigned char value)
+    static inline CLQuantum ScaleCharToQuantum(const unsigned char value)
     {
       return((CLQuantum) (16843009.0*value));
     }
@@ -301,7 +301,7 @@ OPENCL_ENDIF()
 OPENCL_IF((MAGICKCORE_HDRI_SUPPORT == 1))
 
   STRINGIFY(
-    inline CLQuantum ClampToQuantum(const float value)
+    static inline CLQuantum ClampToQuantum(const float value)
     {
       return (CLQuantum) value;
     }
@@ -310,7 +310,7 @@ OPENCL_IF((MAGICKCORE_HDRI_SUPPORT == 1))
 OPENCL_ELSE()
 
   STRINGIFY(
-    inline CLQuantum ClampToQuantum(const float value)
+    static inline CLQuantum ClampToQuantum(const float value)
     {
       return (CLQuantum) (clamp(value, 0.0f, QuantumRange) + 0.5f);
     }
@@ -319,21 +319,21 @@ OPENCL_ELSE()
 OPENCL_ENDIF()
 
   STRINGIFY(
-    inline int ClampToCanvas(const int offset, const int range)
+    static inline int ClampToCanvas(const int offset, const int range)
     {
       return clamp(offset, (int)0, range - 1);
     }
   )
 
   STRINGIFY(
-    inline int ClampToCanvasWithHalo(const int offset, const int range, const int edge, const int section)
+    static inline int ClampToCanvasWithHalo(const int offset, const int range, const int edge, const int section)
     {
       return clamp(offset, section ? (int)(0 - edge) : (int)0, section ? (range - 1) : (range - 1 + edge));
     }
   )
 
   STRINGIFY(
-    inline uint ScaleQuantumToMap(CLQuantum value)
+    static inline uint ScaleQuantumToMap(CLQuantum value)
     {
       if (value >= (CLQuantum)MaxMap)
         return ((uint)MaxMap);
@@ -343,7 +343,7 @@ OPENCL_ENDIF()
   )
 
   STRINGIFY(
-    inline float PerceptibleReciprocal(const float x)
+    static inline float PerceptibleReciprocal(const float x)
     {
       float sign = x < (float) 0.0 ? (float)-1.0 : (float) 1.0;
       return((sign*x) >= MagickEpsilon ? (float) 1.0 / x : sign*((float) 1.0 / MagickEpsilon));
@@ -351,7 +351,7 @@ OPENCL_ENDIF()
   )
 
   STRINGIFY(
-    inline float RoundToUnity(const float value)
+    static inline float RoundToUnity(const float value)
     {
       return clamp(value, 0.0f, 1.0f);
     }
@@ -359,29 +359,29 @@ OPENCL_ENDIF()
 
     STRINGIFY(
 
-      inline CLQuantum getBlue(CLPixelType p) { return p.x; }
-  inline void setBlue(CLPixelType* p, CLQuantum value) { (*p).x = value; }
-  inline float getBlueF4(float4 p) { return p.x; }
-  inline void setBlueF4(float4* p, float value) { (*p).x = value; }
+      static inline CLQuantum getBlue(CLPixelType p) { return p.x; }
+  static inline void setBlue(CLPixelType* p, CLQuantum value) { (*p).x = value; }
+  static inline float getBlueF4(float4 p) { return p.x; }
+  static inline void setBlueF4(float4* p, float value) { (*p).x = value; }
 
-  inline CLQuantum getGreen(CLPixelType p) { return p.y; }
-  inline void setGreen(CLPixelType* p, CLQuantum value) { (*p).y = value; }
-  inline float getGreenF4(float4 p) { return p.y; }
-  inline void setGreenF4(float4* p, float value) { (*p).y = value; }
+  static inline CLQuantum getGreen(CLPixelType p) { return p.y; }
+  static inline void setGreen(CLPixelType* p, CLQuantum value) { (*p).y = value; }
+  static inline float getGreenF4(float4 p) { return p.y; }
+  static inline void setGreenF4(float4* p, float value) { (*p).y = value; }
 
-  inline CLQuantum getRed(CLPixelType p) { return p.z; }
-  inline void setRed(CLPixelType* p, CLQuantum value) { (*p).z = value; }
-  inline float getRedF4(float4 p) { return p.z; }
-  inline void setRedF4(float4* p, float value) { (*p).z = value; }
+  static inline CLQuantum getRed(CLPixelType p) { return p.z; }
+  static inline void setRed(CLPixelType* p, CLQuantum value) { (*p).z = value; }
+  static inline float getRedF4(float4 p) { return p.z; }
+  static inline void setRedF4(float4* p, float value) { (*p).z = value; }
 
-  inline CLQuantum getOpacity(CLPixelType p) { return p.w; }
-  inline void setOpacity(CLPixelType* p, CLQuantum value) { (*p).w = value; }
-  inline float getOpacityF4(float4 p) { return p.w; }
-  inline void setOpacityF4(float4* p, float value) { (*p).w = value; }
+  static inline CLQuantum getOpacity(CLPixelType p) { return p.w; }
+  static inline void setOpacity(CLPixelType* p, CLQuantum value) { (*p).w = value; }
+  static inline float getOpacityF4(float4 p) { return p.w; }
+  static inline void setOpacityF4(float4* p, float value) { (*p).w = value; }
 
-  inline void setGray(CLPixelType* p, CLQuantum value) { (*p).z = value; (*p).y = value; (*p).x = value; }
+  static inline void setGray(CLPixelType* p, CLQuantum value) { (*p).z = value; (*p).y = value; (*p).x = value; }
 
-  inline float GetPixelIntensity(const int method, const int colorspace, CLPixelType p)
+  static inline float GetPixelIntensity(const int method, const int colorspace, CLPixelType p)
   {
     float red = getRed(p);
     float green = getGreen(p);
@@ -974,7 +974,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 */
 
   STRINGIFY(
-    inline float ColorDodge(const float Sca,
+    static inline float ColorDodge(const float Sca,
       const float Sa,const float Dca,const float Da)
     {
       /*
@@ -1015,7 +1015,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
       */
     }
 
-    inline void CompositeColorDodge(const float4 *p,
+    static inline void CompositeColorDodge(const float4 *p,
       const float4 *q,float4 *composite) {
 
       float 
@@ -1038,7 +1038,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
   )
 
   STRINGIFY(
-    inline void MagickPixelCompositePlus(const float4 *p,
+    static inline void MagickPixelCompositePlus(const float4 *p,
       const float alpha,const float4 *q,
       const float beta,float4 *composite)
     {
@@ -1063,7 +1063,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
   )
 
   STRINGIFY(
-    inline void MagickPixelCompositeBlend(const float4 *p,
+    static inline void MagickPixelCompositeBlend(const float4 *p,
       const float alpha,const float4 *q,
       const float beta,float4 *composite)
     {
@@ -1164,7 +1164,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 
   STRINGIFY(
 
-  inline float3 ConvertRGBToHSB(CLPixelType pixel) {
+  static inline float3 ConvertRGBToHSB(CLPixelType pixel) {
     float3 HueSaturationBrightness;
     HueSaturationBrightness.x = 0.0f; // Hue
     HueSaturationBrightness.y = 0.0f; // Saturation
@@ -1192,7 +1192,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
     return HueSaturationBrightness;
   }
 
-  inline CLPixelType ConvertHSBToRGB(float3 HueSaturationBrightness) {
+  static inline CLPixelType ConvertHSBToRGB(float3 HueSaturationBrightness) {
 
     float hue = HueSaturationBrightness.x;
     float brightness = HueSaturationBrightness.z;
@@ -2074,11 +2074,11 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 */
 
     STRINGIFY(
-      inline int mirrorBottom(int value)
+      static inline int mirrorBottom(int value)
       {
           return (value < 0) ? - (value) : value;
       }
-      inline int mirrorTop(int value, int width)
+      static inline int mirrorTop(int value, int width)
       {
           return (value >= width) ? (2 * width - value - 1) : value;
       }
@@ -2204,7 +2204,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 
   STRINGIFY(
 
-  inline void ConvertRGBToHSL(const CLQuantum red,const CLQuantum green, const CLQuantum blue,
+  static inline void ConvertRGBToHSL(const CLQuantum red,const CLQuantum green, const CLQuantum blue,
     float *hue, float *saturation, float *lightness)
   {
   float
@@ -2247,7 +2247,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
     *saturation=c/(2.0-2.0*(*lightness));
   }
 
-  inline void ConvertHSLToRGB(const float hue,const float saturation, const float lightness,
+  static inline void ConvertHSLToRGB(const float hue,const float saturation, const float lightness,
       CLQuantum *red,CLQuantum *green,CLQuantum *blue)
   {
     float
@@ -2327,7 +2327,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
     *blue=ClampToQuantum(QuantumRange*b);
   }
 
-  inline void ModulateHSL(const float percent_hue, const float percent_saturation,const float percent_lightness, 
+  static inline void ModulateHSL(const float percent_hue, const float percent_saturation,const float percent_lightness, 
     CLQuantum *red,CLQuantum *green,CLQuantum *blue)
   {
     float
@@ -2704,7 +2704,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 
 
   STRINGIFY(
-  inline float applyResizeFilter(const float x, const ResizeWeightingFunctionType filterType, const __global float* filterCoefficients)
+  static inline float applyResizeFilter(const float x, const ResizeWeightingFunctionType filterType, const __global float* filterCoefficients)
   {
     switch (filterType)
     {
@@ -2734,7 +2734,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 
 
   STRINGIFY(
-  inline float getResizeFilterWeight(const __global float* resizeFilterCubicCoefficients, const ResizeWeightingFunctionType resizeFilterType
+  static inline float getResizeFilterWeight(const __global float* resizeFilterCubicCoefficients, const ResizeWeightingFunctionType resizeFilterType
            , const ResizeWeightingFunctionType resizeWindowType
            , const float resizeFilterScale, const float resizeWindowSupport, const float resizeFilterBlur, const float x)
   {
@@ -2761,13 +2761,13 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 
   STRINGIFY(
 
-  inline unsigned int getNumWorkItemsPerPixel(const unsigned int pixelPerWorkgroup, const unsigned int numWorkItems) {
+  static inline unsigned int getNumWorkItemsPerPixel(const unsigned int pixelPerWorkgroup, const unsigned int numWorkItems) {
     return (numWorkItems/pixelPerWorkgroup);
   }
 
   // returns the index of the pixel for the current workitem to compute.
   // returns -1 if this workitem doesn't need to participate in any computation
-  inline int pixelToCompute(const unsigned itemID, const unsigned int pixelPerWorkgroup, const unsigned int numWorkItems) {
+  static inline int pixelToCompute(const unsigned itemID, const unsigned int pixelPerWorkgroup, const unsigned int numWorkItems) {
     const unsigned int numWorkItemsPerPixel = getNumWorkItemsPerPixel(pixelPerWorkgroup, numWorkItems);
     int pixelIndex = itemID/numWorkItemsPerPixel;
     pixelIndex = (pixelIndex<pixelPerWorkgroup)?pixelIndex:-1;
