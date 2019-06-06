@@ -2483,12 +2483,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
         return(MagickFalse);
     }
   primitive=(char *) NULL;
-  if (*draw_info->primitive != '@')
-    primitive=AcquireString(draw_info->primitive);
+  if ((*draw_info->primitive == '@') && (strlen(draw_info->primitive) > 1) &&
+      (*(draw_info->primitive+1) != '-') && (depth == 1))
+    primitive=FileToString(draw_info->primitive+1,~0UL,&image->exception);
   else
-    if ((strlen(draw_info->primitive) > 1) &&
-        (*(draw_info->primitive+1) != '-') && (depth == 1))
-      primitive=FileToString(draw_info->primitive+1,~0UL,&image->exception);
+    primitive=AcquireString(draw_info->primitive);
   if (primitive == (char *) NULL)
     return(MagickFalse);
   primitive_extent=(double) strlen(primitive);
