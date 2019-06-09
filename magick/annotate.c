@@ -212,7 +212,9 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
   const DrawInfo *draw_info)
 {
   char
+    *p,
     primitive[MaxTextExtent],
+    *text,
     **textlist;
 
   DrawInfo
@@ -234,9 +236,6 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
   register ssize_t
     i;
 
-  size_t
-    length;
-
   TypeMetric
     metrics;
 
@@ -254,16 +253,38 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
     return(MagickFalse);
   if (*draw_info->text == '\0')
     return(MagickTrue);
-  textlist=StringToList(draw_info->text);
+  annotate=CloneDrawInfo((ImageInfo *) NULL,draw_info);
+  text=annotate->text;
+  annotate->text=(char *) NULL;
+  annotate_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
+  number_lines=1;
+  for (p=text; *p != '\0'; p++)
+    if (*p == '\n')
+      number_lines++;
+  textlist=AcquireQuantumMemory(number_lines+1,sizeof(*textlist));
   if (textlist == (char **) NULL)
     return(MagickFalse);
-  length=strlen(textlist[0]);
-  for (i=1; textlist[i] != (char *) NULL; i++)
-    if (strlen(textlist[i]) > length)
-      length=strlen(textlist[i]);
-  number_lines=(size_t) i;
-  annotate=CloneDrawInfo((ImageInfo *) NULL,draw_info);
-  annotate_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
+  p=text;
+  for (i=0; i < number_lines; i++)
+  {
+    char
+      *q;
+
+    textlist[i]=p;
+    for (q=p; *q != '\0'; q++)
+      if ((*q == '\r') || (*q == '\n'))
+        break;
+    if (*q == '\r')
+      {
+        *q='\0';
+        q++;
+      }
+    *q='\0';
+    p=q+1;
+  }
+  textlist[i]=(char *) NULL;
+  if (textlist == (char **) NULL)
+    return(MagickFalse);
   SetGeometry(image,&geometry);
   SetGeometryInfo(&geometry_info);
   if (annotate_info->geometry != (char *) NULL)
@@ -488,8 +509,6 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
   */
   annotate_info=DestroyDrawInfo(annotate_info);
   annotate=DestroyDrawInfo(annotate);
-  for (i=0; textlist[i] != (char *) NULL; i++)
-    textlist[i]=DestroyString(textlist[i]);
   textlist=(char **) RelinquishMagickMemory(textlist);
   return(status);
 }
