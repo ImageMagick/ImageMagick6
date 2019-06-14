@@ -203,11 +203,13 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     Decode HEIF file
   */
   heif_context=heif_context_alloc();
-  error=heif_context_read_from_memory(heif_context,file_data,length,NULL);
+  error=heif_context_read_from_memory_without_copy(heif_context,file_data,
+    length,NULL);
   file_data=RelinquishMagickMemory(file_data);
   if (IsHeifSuccess(&error,image) == MagickFalse)
     {
       heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
       return(DestroyImageList(image));
     }
   image_handle=(struct heif_image_handle *) NULL;
@@ -215,6 +217,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   if (IsHeifSuccess(&error,image) == MagickFalse)
     {
       heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
       return(DestroyImageList(image));
     }
 #if LIBHEIF_NUMERIC_VERSION >= 0x01040000
@@ -231,6 +234,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
         {
           heif_image_handle_release(image_handle);
           heif_context_free(heif_context);
+          file_data=RelinquishMagickMemory(file_data);
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         }
       color_buffer=(unsigned char *) AcquireMagickMemory(length);
@@ -272,6 +276,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
         {
           heif_image_handle_release(image_handle);
           heif_context_free(heif_context);
+          file_data=RelinquishMagickMemory(file_data);
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         }
       exif_buffer=(unsigned char*) AcquireMagickMemory(exif_size);
@@ -311,6 +316,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
       image->colorspace=YCbCrColorspace;
       heif_image_handle_release(image_handle);
       heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
       return(GetFirstImageInList(image));
     }
   status=SetImageExtent(image,image->columns,image->rows);
@@ -318,6 +324,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     {
       heif_image_handle_release(image_handle);
       heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
       return(DestroyImageList(image));
     }
   /*
@@ -349,6 +356,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     {
       heif_image_handle_release(image_handle);
       heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
       return(DestroyImageList(image));
     }
   p_y=heif_image_get_plane(heif_image,heif_channel_Y,&stride_y);
@@ -381,6 +389,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   heif_image_release(heif_image);
   heif_image_handle_release(image_handle);
   heif_context_free(heif_context);
+  file_data=RelinquishMagickMemory(file_data);
   profile=GetImageProfile(image,"icc");
   if (profile != (const StringInfo *) NULL)
     (void) TransformImageColorspace(image,sRGBColorspace);
