@@ -932,8 +932,6 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
       /*
         Handle ICO mask.
       */
-      image->storage_class=DirectClass;
-      image->matte=MagickTrue;
       for (y=0; y < (ssize_t) image->rows; y++)
       {
         register ssize_t
@@ -948,16 +946,24 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         for (x=0; x < ((ssize_t) image->columns-7); x+=8)
         {
           c=ReadBlobByte(image);
-          for (bit=0; bit < 8; bit++)
+					for (bit=0; bit < 8; bit++)
+          {
             SetPixelOpacity(q+x+bit,c & (0x80 >> bit) ? TransparentOpacity :
               OpaqueOpacity);
+            if (c & (0x80 >> bit))
+              image->matte=MagickTrue;
+          }
         }
         if ((image->columns % 8) != 0)
           {
             c=ReadBlobByte(image);
             for (bit=0; bit < (ssize_t) (image->columns % 8); bit++)
+            {
               SetPixelOpacity(q+x+bit,c & (0x80 >> bit) ? TransparentOpacity :
                 OpaqueOpacity);
+              if (c & (0x80 >> bit))
+                image->matte=MagickTrue;
+            }
           }
         if (image->columns % 32)
           for (x=0; x < (ssize_t) ((32-(image->columns % 32))/8); x++)
@@ -965,6 +971,8 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         if (SyncAuthenticPixels(image,exception) == MagickFalse)
           break;
       }
+      if ((image->storage_class == PseudoClass) && (image->matte == MagickTrue))
+        image->storage_class=DirectClass;
     }
   if (dib_info.height < 0)
     {
