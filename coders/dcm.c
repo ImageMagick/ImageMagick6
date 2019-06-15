@@ -3182,9 +3182,9 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         Check for "explicitness", but meta-file headers always explicit.
       */
       if ((explicit_file == MagickFalse) && (group != 0x0002))
-        explicit_file=(isupper((unsigned char) *explicit_vr) != MagickFalse) &&
-          (isupper((unsigned char) *(explicit_vr+1)) != MagickFalse) ?
-          MagickTrue : MagickFalse;
+        explicit_file=(isupper((unsigned char) *explicit_vr) != 0) &&
+          (isupper((unsigned char) *(explicit_vr+1)) != 0) ? MagickTrue :
+          MagickFalse;
       use_explicit=((group == 0x0002) && (explicit_retry == MagickFalse)) ||
         (explicit_file != MagickFalse) ? MagickTrue : MagickFalse;
       if ((use_explicit != MagickFalse) && (strncmp(implicit_vr,"xs",2) == 0))
@@ -3264,7 +3264,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           /*
             Display Dicom info.
           */
-          if (use_explicit == MagickFalse)
+          if (isprint((int) explicit_vr[0]) == 0)
             explicit_vr[0]='\0';
           for (i=0; dicom_info[i].description != (char *) NULL; i++)
             if ((group == dicom_info[i].group) &&
@@ -3730,7 +3730,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               attribute=AcquireString("dcm:");
               (void) ConcatenateString(&attribute,dicom_info[i].description);
               for (i=0; i < (ssize_t) MagickMax(length,4); i++)
-                if (isprint((int) data[i]) == MagickFalse)
+                if (isprint((int) data[i]) == 0)
                   break;
               if ((i == (ssize_t) length) || (length > 4))
                 {
@@ -3750,7 +3750,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 Display group data.
               */
               for (i=0; i < (ssize_t) MagickMax(length,4); i++)
-                if (isprint((int) data[i]) == MagickFalse)
+                if (isprint((int) data[i]) == 0)
                   break;
               if ((i != (ssize_t) length) && (length <= 4))
                 {
@@ -3764,7 +3764,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 }
               else
                 for (i=0; i < (ssize_t) length; i++)
-                  if (isprint((int) data[i]) != MagickFalse)
+                  if (isprint((int) data[i]) != 0)
                     (void) FormatLocaleFile(stdout,"%c",data[i]);
                   else
                     (void) FormatLocaleFile(stdout,"%c",'.');
