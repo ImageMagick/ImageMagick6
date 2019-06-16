@@ -1225,6 +1225,11 @@ static char *TranslateFilename(const LogInfo *log_info)
     p++;
     switch (*p)
     {
+      case '\0':
+      {
+        p--;
+        break;
+      }
       case 'c':
       {
         q+=CopyMagickString(q,GetClientName(),extent);
