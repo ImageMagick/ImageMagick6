@@ -266,6 +266,7 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
     {
       annotate_info=DestroyDrawInfo(annotate_info);
       annotate=DestroyDrawInfo(annotate);
+      text=DestroyString(text);
       return(MagickFalse);
     }
   p=text;
@@ -300,6 +301,7 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
       annotate_info=DestroyDrawInfo(annotate_info);
       annotate=DestroyDrawInfo(annotate);
       textlist=(char **) RelinquishMagickMemory(textlist);
+      text=DestroyString(text);
       return(MagickFalse);
     }
   if (IsGrayColorspace(image->colorspace) != MagickFalse)
@@ -517,6 +519,7 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
   annotate_info=DestroyDrawInfo(annotate_info);
   annotate=DestroyDrawInfo(annotate);
   textlist=(char **) RelinquishMagickMemory(textlist);
+  text=DestroyString(text);
   return(status);
 }
 
