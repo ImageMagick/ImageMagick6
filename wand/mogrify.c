@@ -1429,8 +1429,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             if (arguments == (double *) NULL)
               ThrowWandFatalException(ResourceLimitFatalError,
                 "MemoryAllocationFailed",(*image)->filename);
-            (void) memset(arguments,0,number_arguments*
-              sizeof(*arguments));
+            (void) memset(arguments,0,number_arguments*sizeof(*arguments));
             p=(char *) args;
             for (x=0; (x < (ssize_t) number_arguments) && (*p != '\0'); x++)
             {
