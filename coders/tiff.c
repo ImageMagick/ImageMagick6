@@ -1691,7 +1691,7 @@ RestoreMSCWarning
     number_pixels=MagickMax(TIFFScanlineSize(tiff),MagickMax((ssize_t)
       image->columns*samples_per_pixel*pow(2.0,ceil(log(bits_per_sample)/
       log(2.0))),image->columns*rows_per_strip));
-    pixel_info=AcquireVirtualMemory(number_pixels,sizeof(uint32)); 
+    pixel_info=AcquireVirtualMemory(number_pixels,sizeof(uint32));
     if (pixel_info == (MemoryInfo *) NULL)
       ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
     pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
@@ -2986,12 +2986,10 @@ static MagickBooleanType GetTIFFInfo(const ImageInfo *image_info,TIFF *tiff,
       uint32
         rows_per_strip;
 
+      rows_per_strip=0;  /* use default */
       option=GetImageOption(image_info,"tiff:rows-per-strip");
       if (option != (const char *) NULL)
         rows_per_strip=(size_t) strtol(option,(char **) NULL,10);
-      else
-        if (TIFFGetField(tiff,TIFFTAG_IMAGELENGTH,&rows_per_strip) == 0)
-          rows_per_strip=0;  /* use default */
       rows_per_strip=TIFFDefaultStripSize(tiff,rows_per_strip);
       (void) TIFFSetField(tiff,TIFFTAG_ROWSPERSTRIP,rows_per_strip);
       return(MagickTrue);
