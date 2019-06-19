@@ -5149,12 +5149,6 @@ static PixelPacket *SetPixelCacheNexusPixels(
   assert(cache_info->signature == MagickCoreSignature);
   if (cache_info->type == UndefinedCache)
     return((PixelPacket *) NULL);
-  if ((width == 0) || (height == 0))
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
-        "NoPixelsDefinedInCache","`%s'",cache_info->filename);
-      return((PixelPacket *) NULL);
-    }
   (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
   assert(nexus_info->signature == MagickCoreSignature);
   if (((cache_info->type == MemoryCache) || (cache_info->type == MapCache)) &&
