@@ -2532,7 +2532,6 @@ ModuleExport size_t RegisterTIFFImage(void)
   entry->decoder=(DecodeImageHandler *) ReadTIFFImage;
   entry->encoder=(EncodeImageHandler *) WriteTIFFImage;
 #endif
-  entry->adjoin=MagickFalse;
   entry->endian_support=MagickTrue;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Tagged Image File Format (64-bit)");
