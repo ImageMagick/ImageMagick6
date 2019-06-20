@@ -916,8 +916,6 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
   status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
-  if ((image->columns > 65535UL) || (image->rows > 65535UL))
-    ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
   (void) TransformImageColorspace(image,sRGBColorspace);
   page_table=(MagickOffsetType *) NULL;
   if ((LocaleCompare(image_info->magick,"DCX") == 0) ||
@@ -983,7 +981,8 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
           pcx_info.planes++;
       }
     length=(((size_t) image->columns*pcx_info.bits_per_pixel+7)/8);
-    if (length > 65535UL)
+    if ((image->columns > 65535UL) || (image->rows > 65535UL) ||
+        (length > 65535UL))
       {
         if (page_table != (MagickOffsetType *) NULL)
           page_table=(MagickOffsetType *) RelinquishMagickMemory(page_table);
