@@ -1106,7 +1106,8 @@ static void XEditText(Display *display,XWidgetInfo *text_info,
       if (text_info->cursor != text_info->text)
         {
           text_info->cursor--;
-          (void) memmove(text_info->cursor,text_info->cursor+1,MaxTextExtent);
+          (void) memmove(text_info->cursor,text_info->cursor+1,
+            strlen(text_info->cursor+1)+1);
           text_info->highlight=MagickFalse;
           break;
         }
