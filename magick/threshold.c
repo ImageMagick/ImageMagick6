@@ -202,7 +202,7 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
   threshold_image=CloneImage(image,0,0,MagickTrue,exception);
   if (threshold_image == (Image *) NULL)
     return((Image *) NULL);
-  if (width == 0)
+  if ((width == 0) || (height == 0))
     return(threshold_image);
   if (SetImageStorageClass(threshold_image,DirectClass) == MagickFalse)
     {
