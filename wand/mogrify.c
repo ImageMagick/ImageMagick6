@@ -8147,7 +8147,7 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
               MagickTrue : MagickFalse,exception);
             if (fourier_image == (Image *) NULL)
               break;
-            *images=DestroyImage(*images);
+            *images=DestroyImageList(*images);
             *images=fourier_image;
             break;
           }
