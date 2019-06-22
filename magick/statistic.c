@@ -163,18 +163,17 @@ static MagickPixelPacket **AcquirePixelThreadSet(const Image *images)
 
   size_t
     columns,
-    number_threads;
+    rows;
 
-  number_threads=(size_t) GetMagickResourceLimit(ThreadResource);
-  pixels=(MagickPixelPacket **) AcquireQuantumMemory(number_threads,
-    sizeof(*pixels));
+  rows=MagickMax(GetImageListLength(images),
+    (size_t) GetMagickResourceLimit(ThreadResource));
+  pixels=(MagickPixelPacket **) AcquireQuantumMemory(rows,sizeof(*pixels));
   if (pixels == (MagickPixelPacket **) NULL)
     return((MagickPixelPacket **) NULL);
-  (void) memset(pixels,0,number_threads*sizeof(*pixels));
   columns=images->columns;
   for (next=images; next != (Image *) NULL; next=next->next)
     columns=MagickMax(next->columns,columns);
-  for (i=0; i < (ssize_t) number_threads; i++)
+  for (i=0; i < (ssize_t) rows; i++)
   {
     pixels[i]=(MagickPixelPacket *) AcquireQuantumMemory(columns,
       sizeof(**pixels));
