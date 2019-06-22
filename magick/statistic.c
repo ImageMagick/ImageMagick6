@@ -177,7 +177,7 @@ static MagickPixelPacket **AcquirePixelThreadSet(const Image *images)
   if (pixels == (MagickPixelPacket **) NULL)
     return((MagickPixelPacket **) NULL);
   (void) memset(pixels,0,rows*sizeof(*pixels));
-  columns=images->columns;
+  columns=GetImageListLength(images);
   for (next=images; next != (Image *) NULL; next=next->next)
     columns=MagickMax(next->columns,columns);
   for (i=0; i < (ssize_t) rows; i++)
