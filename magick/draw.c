@@ -2530,12 +2530,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
     }
   token=AcquireString(primitive);
   extent=strlen(token)+MaxTextExtent;
-  (void) QueryColorDatabase("#000000",&start_color,&image->exception);
   cursor=0.0;
   defsDepth=0;
   symbolDepth=0;
   macros=GetMVGMacros(primitive);
-  status=MagickTrue;
+  status=QueryColorDatabase("#000000",&start_color,&image->exception);
   for (q=primitive; *q != '\0'; )
   {
     /*
@@ -2557,6 +2556,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     primitive_type=UndefinedPrimitive;
     current=graphic_context[n]->affine;
     GetAffineMatrix(&affine);
+    (void) memset(token,0,primitive_extent+1);
     switch (*keyword)
     {
       case ';':
