@@ -324,7 +324,7 @@ MagickExport Image *CoalesceImages(const Image *image,ExceptionInfo *exception)
       Clear the overlaid area of the coalesced bounds for background disposal
     */
     if (next->previous->dispose == BackgroundDispose)
-      ClearBounds(dispose_image, &bounds);
+      ClearBounds(dispose_image,&bounds);
     /*
       Next image is the dispose image, overlaid with next frame in sequence.
     */
@@ -579,7 +579,7 @@ static MagickBooleanType ComparePixels(const ImageLayerMethod method,
 %  The format of the CompareImageBounds method is:
 %
 %      RectangleInfo *CompareImageBounds(const ImageLayerMethod method,
-%        const Image *image1, const Image *image2, ExceptionInfo *exception)
+%        const Image *image1,const Image *image2,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -764,7 +764,7 @@ static RectangleInfo CompareImageBounds(const Image *image1,const Image *image2,
 */
 
 MagickExport Image *CompareImageLayers(const Image *image,
-  const ImageLayerMethod method, ExceptionInfo *exception)
+  const ImageLayerMethod method,ExceptionInfo *exception)
 {
   Image
     *image_a,
@@ -900,7 +900,7 @@ MagickExport Image *CompareImageLayers(const Image *image,
 %
 %  The format of the DeconstructImages method is:
 %
-%      Image *DeconstructImages(const Image *images, ExceptionInfo *exception)
+%      Image *DeconstructImages(const Image *images,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -939,7 +939,7 @@ MagickExport Image *DeconstructImages(const Image *images,
 %  The format of the OptimizeLayerFrames method is:
 %
 %      static Image *OptimizeLayerFrames(const Image *image,
-%               const ImageLayerMethod method, ExceptionInfo *exception)
+%               const ImageLayerMethod method,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -968,7 +968,7 @@ MagickExport Image *DeconstructImages(const Image *images,
 #define DEBUG_OPT_FRAME 0
 
 static Image *OptimizeLayerFrames(const Image *image,
-  const ImageLayerMethod method, ExceptionInfo *exception)
+  const ImageLayerMethod method,ExceptionInfo *exception)
 {
   ExceptionInfo
     *sans_exception;
@@ -1067,7 +1067,7 @@ static Image *OptimizeLayerFrames(const Image *image,
   */
 #if DEBUG_OPT_FRAME
   i=0;
-  (void) FormatLocaleFile(stderr, "frame %.20g :-\n", (double) i);
+  (void) FormatLocaleFile(stderr,"frame %.20g :-\n",(double) i);
 #endif
   disposals[0]=NoneDispose;
   bounds[0]=CompareImageBounds(prev_image,curr,CompareAnyLayer,exception);
@@ -1090,7 +1090,7 @@ static Image *OptimizeLayerFrames(const Image *image,
   for ( ; curr != (const Image *) NULL; curr=GetNextImageInList(curr))
   {
 #if DEBUG_OPT_FRAME
-    (void) FormatLocaleFile(stderr, "frame %.20g :-\n", (double) i);
+    (void) FormatLocaleFile(stderr,"frame %.20g :-\n",(double) i);
 #endif
     /*
       Assume none disposal is the best
@@ -1141,9 +1141,9 @@ static Image *OptimizeLayerFrames(const Image *image,
             bounds[i]=try_bounds;
             disposals[i-1]=PreviousDispose;
 #if DEBUG_OPT_FRAME
-            (void) FormatLocaleFile(stderr, "previous: accepted\n");
+            (void) FormatLocaleFile(stderr,"previous: accepted\n");
           } else {
-            (void) FormatLocaleFile(stderr, "previous: rejected\n");
+            (void) FormatLocaleFile(stderr,"previous: rejected\n");
 #endif
           }
 
@@ -1303,9 +1303,9 @@ static Image *OptimizeLayerFrames(const Image *image,
               dup_image=DestroyImage(dup_image);
             disposals[i-1]=BackgroundDispose;
 #if DEBUG_OPT_FRAME
-    (void) FormatLocaleFile(stderr, "expand_bgnd: accepted\n");
+    (void) FormatLocaleFile(stderr,"expand_bgnd: accepted\n");
           } else {
-    (void) FormatLocaleFile(stderr, "expand_bgnd: reject\n");
+    (void) FormatLocaleFile(stderr,"expand_bgnd: reject\n");
 #endif
           }
       }
@@ -1332,7 +1332,7 @@ static Image *OptimizeLayerFrames(const Image *image,
         if ( disposals[i-1] != PreviousDispose )
           prev_image=DestroyImage(prev_image);
         if ( disposals[i-1] == BackgroundDispose )
-          prev_image=bgnd_image,  bgnd_image=(Image *) NULL;
+          prev_image=bgnd_image, bgnd_image=(Image *) NULL;
         if (bgnd_image != (Image *) NULL)
           bgnd_image=DestroyImage(bgnd_image);
         if ( disposals[i-1] == NoneDispose )
@@ -1352,17 +1352,17 @@ static Image *OptimizeLayerFrames(const Image *image,
 #if DEBUG_OPT_FRAME
     (void) FormatLocaleFile(stderr, "final   %.20g : %s  %.20gx%.20g%+.20g%+.20g\n",
          (double) i-1,
-         CommandOptionToMnemonic(MagickDisposeOptions, disposals[i-1]),
-         (double) bounds[i-1].width, (double) bounds[i-1].height,
-         (double) bounds[i-1].x, (double) bounds[i-1].y );
+         CommandOptionToMnemonic(MagickDisposeOptions,disposals[i-1]),
+         (double) bounds[i-1].width,(double) bounds[i-1].height,
+         (double) bounds[i-1].x,(double) bounds[i-1].y );
 #endif
 #if DEBUG_OPT_FRAME
     (void) FormatLocaleFile(stderr, "interum %.20g : %s  %.20gx%.20g%+.20g%+.20g\n",
          (double) i,
-         CommandOptionToMnemonic(MagickDisposeOptions, disposals[i]),
-         (double) bounds[i].width, (double) bounds[i].height,
-         (double) bounds[i].x, (double) bounds[i].y );
-    (void) FormatLocaleFile(stderr, "\n");
+         CommandOptionToMnemonic(MagickDisposeOptions,disposals[i]),
+         (double) bounds[i].width,(double) bounds[i].height,
+         (double) bounds[i].x,(double) bounds[i].y );
+    (void) FormatLocaleFile(stderr,"\n");
 #endif
     i++;
   }
@@ -1479,7 +1479,7 @@ MagickExport Image *OptimizeImageLayers(const Image *image,
 MagickExport Image *OptimizePlusImageLayers(const Image *image,
   ExceptionInfo *exception)
 {
-  return OptimizeLayerFrames(image, OptimizePlusLayer, exception);
+  return OptimizeLayerFrames(image,OptimizePlusLayer,exception);
 }
 
 /*
@@ -1558,7 +1558,7 @@ MagickExport void OptimizeImageTransparency(const Image *image,
         return;
       }
     (void) CompositeImage(current_image,next->matte != MagickFalse ?
-      OverCompositeOp : CopyCompositeOp, next,next->page.x,next->page.y);
+      OverCompositeOp : CopyCompositeOp,next,next->page.x,next->page.y);
     /*
       At this point the image would be displayed, for the delay period
     **
@@ -1585,7 +1585,7 @@ MagickExport void OptimizeImageTransparency(const Image *image,
           }
         if ((ssize_t) (bounds.y+bounds.height) > (ssize_t) current_image->rows)
           bounds.height=current_image->rows-bounds.y;
-        ClearBounds(current_image, &bounds);
+        ClearBounds(current_image,&bounds);
       }
     if (next->dispose != PreviousDispose)
       {
@@ -1599,9 +1599,9 @@ MagickExport void OptimizeImageTransparency(const Image *image,
       Optimize Transparency of the next frame (if present)
     */
     next=GetNextImageInList(next);
-    if ( next != (Image *) NULL ) {
-      (void) CompositeImage(next, ChangeMaskCompositeOp,
-          dispose_image, -(next->page.x), -(next->page.y) );
+    if (next != (Image *) NULL) {
+      (void) CompositeImage(next,ChangeMaskCompositeOp,dispose_image,
+        -(next->page.x),-(next->page.y));
     }
   }
   dispose_image=DestroyImage(dispose_image);
@@ -1630,7 +1630,7 @@ MagickExport void OptimizeImageTransparency(const Image *image,
 %
 %  The format of the RemoveDuplicateLayers method is:
 %
-%      void RemoveDuplicateLayers(Image **image, ExceptionInfo *exception)
+%      void RemoveDuplicateLayers(Image **image,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1711,7 +1711,7 @@ MagickExport void RemoveDuplicateLayers(Image **images,
 %
 %  The format of the RemoveZeroDelayLayers method is:
 %
-%      void RemoveZeroDelayLayers(Image **image, ExceptionInfo *exception)
+%      void RemoveZeroDelayLayers(Image **image,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1831,7 +1831,7 @@ MagickExport void CompositeLayers(Image *destination,
   assert(exception->signature == MagickCoreSignature);
   if (source->debug != MagickFalse || destination->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s - %s",
-         source->filename, destination->filename);
+      source->filename,destination->filename);
 
   /*
     Overlay single source image over destation image/list
@@ -1839,7 +1839,7 @@ MagickExport void CompositeLayers(Image *destination,
   if ( source->next == (Image *) NULL )
     while ( destination != (Image *) NULL )
     {
-      CompositeCanvas(destination, compose, source, x_offset, y_offset);
+      CompositeCanvas(destination,compose,source,x_offset,y_offset);
       destination=GetNextImageInList(destination);
     }
 
@@ -1854,7 +1854,7 @@ MagickExport void CompositeLayers(Image *destination,
   {
     Image *dest = CloneImage(destination,0,0,MagickTrue,exception);
 
-    CompositeCanvas(destination, compose, source, x_offset, y_offset);
+    CompositeCanvas(destination,compose,source,x_offset,y_offset);
     /* copy source image attributes ? */
     if ( source->next != (Image *) NULL )
       {
@@ -1869,7 +1869,7 @@ MagickExport void CompositeLayers(Image *destination,
            CloneImage(dest,0,0,MagickTrue,exception));
       destination=GetLastImageInList(destination);
 
-      CompositeCanvas(destination, compose, source, x_offset, y_offset);
+      CompositeCanvas(destination,compose,source,x_offset,y_offset);
       destination->delay = source->delay;
       destination->iterations = source->iterations;
       source=GetNextImageInList(source);
@@ -1884,7 +1884,7 @@ MagickExport void CompositeLayers(Image *destination,
   else
     while ( source != (Image *) NULL && destination != (Image *) NULL )
     {
-      CompositeCanvas(destination, compose, source, x_offset, y_offset);
+      CompositeCanvas(destination,compose,source,x_offset,y_offset);
       source=GetNextImageInList(source);
       destination=GetNextImageInList(destination);
     }
@@ -1912,7 +1912,7 @@ MagickExport void CompositeLayers(Image *destination,
 %  The format of the MergeImageLayers is:
 %
 %      Image *MergeImageLayers(const Image *image,
-%        const ImageLayerMethod method, ExceptionInfo *exception)
+%        const ImageLayerMethod method,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %

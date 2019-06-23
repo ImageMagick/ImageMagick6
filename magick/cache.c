@@ -612,6 +612,8 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   if ((image->clip_mask == (Image *) NULL) ||
       (image->storage_class == PseudoClass))
     return(MagickTrue);
+  if ((nexus_info->region.width == 0) || (nexus_info->region.height == 0))
+    return(MagickTrue);
   cache_info=(CacheInfo *) image->cache;
   if (cache_info == (Cache) NULL)
     return(MagickFalse);
@@ -3615,6 +3617,8 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((image->mask == (Image *) NULL) || (image->storage_class == PseudoClass))
     return(MagickTrue);
+  if ((nexus_info->region.width == 0) || (nexus_info->region.height == 0))
+    return(MagickTrue);
   cache_info=(CacheInfo *) image->cache;
   if (cache_info == (Cache) NULL)
     return(MagickFalse);
@@ -5149,8 +5153,14 @@ static PixelPacket *SetPixelCacheNexusPixels(
   assert(cache_info->signature == MagickCoreSignature);
   if (cache_info->type == UndefinedCache)
     return((PixelPacket *) NULL);
-  (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
   assert(nexus_info->signature == MagickCoreSignature);
+  (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
+  if ((width == 0) || (height == 0))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "NoPixelsDefinedInCache","`%s'",cache_info->filename);
+      return((PixelPacket *) NULL);
+    }
   if (((cache_info->type == MemoryCache) || (cache_info->type == MapCache)) &&
       (buffered == MagickFalse))
     {
