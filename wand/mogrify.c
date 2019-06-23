@@ -7923,6 +7923,8 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
               channel,metric,&distortion,exception);
             if (difference_image == (Image *) NULL)
               break;
+            reconstruct_image=DestroyImage(reconstruct_image);
+            image=DestroyImage(image);
             if (*images != (Image *) NULL)
               *images=DestroyImageList(*images);
             *images=difference_image;
@@ -8265,6 +8267,7 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
                    q=GetImageFromList(*images,index-1);
                    if (q == (Image *) NULL)
                      {
+                       p=DestroyImage(p);
                        (void) ThrowMagickException(exception,GetMagickModule(),
                          OptionError,"NoSuchImage","`%s'",argv[i+1]);
                        status=MagickFalse;
