@@ -1,5 +1,5 @@
 2019-06-23  6.9.10-50 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-50, GIT revision 14580:5982632:20190623
+  * Release ImageMagick version 6.9.10-50, GIT revision 14583:598f03b:20190623
 
 2019-06-16  6.9.10-50 Cristy  <quetzlzacatenango@image...>
   * Heap-buffer-overflow in MagickCore/fourier.c (reference
