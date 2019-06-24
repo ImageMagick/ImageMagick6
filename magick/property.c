@@ -1456,6 +1456,8 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
             buffer[MaxTextExtent],
             *value;
 
+          if ((p < exif) || (p > (exif+length-tag_bytes[format])))
+            break;
           value=(char *) NULL;
           *buffer='\0';
           switch (format)
@@ -1517,9 +1519,11 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
               EXIFMultipleValues(8,"%f",*(double *) p1);
               break;
             }
-            default:
             case EXIF_FMT_STRING:
+            default:
             {
+              if ((p < exif) || (p > (exif+length-number_bytes)))
+                break;
               value=(char *) NULL;
               if (~((size_t) number_bytes) >= 1)
                 value=(char *) AcquireQuantumMemory((size_t) number_bytes+1UL,
