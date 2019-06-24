@@ -14575,28 +14575,30 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
 
       title=InterpretImageProperties(resource_info->image_info,display_image,
         resource_info->title);
-      (void) CopyMagickString(windows->image.name,title,MaxTextExtent);
-      (void) CopyMagickString(windows->image.icon_name,title,MaxTextExtent);
+      (void) CloneString(&windows->image.name,title);
+      (void) CloneString(&windows->image.icon_name,title);
       title=DestroyString(title);
     }
   else
     {
       char
-        filename[MaxTextExtent];
+        filename[MaxTextExtent],
+        window_name[MaxTextExtent];
 
       /*
         Window name is the base of the filename.
       */
       GetPathComponent(display_image->magick_filename,TailPath,filename);
       if (display_image->scene == 0)
-        (void) FormatLocaleString(windows->image.name,MaxTextExtent,
-          "%s: %s",MagickPackageName,filename);
+        (void) FormatLocaleString(window_name,MaxTextExtent,"%s: %s",
+          MagickPackageName,filename);
       else
-        (void) FormatLocaleString(windows->image.name,MaxTextExtent,
+        (void) FormatLocaleString(window_name,MaxTextExtent,
           "%s: %s[scene: %.20g frames: %.20g]",MagickPackageName,filename,
           (double) display_image->scene,(double) GetImageListLength(
           display_image));
-      (void) CopyMagickString(windows->image.icon_name,filename,MaxTextExtent);
+      (void) CloneString(&windows->image.name,window_name);
+      (void) CloneString(&windows->image.icon_name,filename);
     }
   if (resource_info->immutable)
     windows->image.immutable=MagickTrue;

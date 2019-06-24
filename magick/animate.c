@@ -479,7 +479,8 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
     case PlayCommand:
     {
       char
-        basename[MaxTextExtent];
+        basename[MaxTextExtent],
+        name[MaxTextExtent];
 
       int
         status;
@@ -490,8 +491,9 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
       *state|=PlayAnimationState;
       *state&=(~AutoReverseAnimationState);
       GetPathComponent((*image)->magick_filename,BasePath,basename);
-      (void) FormatLocaleString(windows->image.name,MaxTextExtent,
-        "%s: %s",MagickPackageName,basename);
+      (void) FormatLocaleString(name,MaxTextExtent,"%s: %s", MagickPackageName,
+        basename);
+      (void) CloneString(&windows->image.name,name);
       if (resource_info->title != (char *) NULL)
         {
           char
@@ -499,7 +501,7 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
 
           title=InterpretImageProperties(resource_info->image_info,*image,
             resource_info->title);
-          (void) CopyMagickString(windows->image.name,title,MaxTextExtent);
+          (void) CloneString(&windows->image.name,title);
           title=DestroyString(title);
         }
       status=XStringListToTextProperty(&windows->image.name,1,&window_name);
@@ -1657,23 +1659,25 @@ MagickExport Image *XAnimateImages(Display *display,
 
       title=InterpretImageProperties(resource_info->image_info,display_image,
         resource_info->title);
-      (void) CopyMagickString(windows->image.name,title,MaxTextExtent);
-      (void) CopyMagickString(windows->image.icon_name,title,MaxTextExtent);
+      (void) CloneString(&windows->image.name,title);
+      (void) CloneString(&windows->image.icon_name,title);
       title=DestroyString(title);
     }
   else
     {
       char
-        filename[MaxTextExtent];
+        filename[MaxTextExtent],
+        window_name[MaxTextExtent];
 
       /*
         Window name is the base of the filename.
       */
       GetPathComponent(display_image->magick_filename,TailPath,filename);
-      (void) FormatLocaleString(windows->image.name,MaxTextExtent,
+      (void) FormatLocaleString(window_name,MaxTextExtent,
         "%s: %s[scene: %.20g frames: %.20g]",MagickPackageName,filename,(double)
         display_image->scene,(double) number_scenes);
-      (void) CopyMagickString(windows->image.icon_name,filename,MaxTextExtent);
+      (void) CloneString(&windows->image.name,window_name);
+      (void) CloneString(&windows->image.icon_name,filename);
     }
   if (resource_info->immutable != MagickFalse)
     windows->image.immutable=MagickTrue;
@@ -1967,18 +1971,22 @@ MagickExport Image *XAnimateImages(Display *display,
 
         title=InterpretImageProperties(resource_info->image_info,
           image_list[scene],resource_info->title);
-        (void) CopyMagickString(windows->image.name,title,MaxTextExtent);
+        (void) CloneString(&windows->image.name,title);
         title=DestroyString(title);
       }
     else
       {
+        char
+          window_name[MaxTextExtent];
+
         p=image_list[scene]->magick_filename+
           strlen(image_list[scene]->magick_filename)-1;
         while ((p > image_list[scene]->magick_filename) && (*(p-1) != '/'))
           p--;
-        (void) FormatLocaleString(windows->image.name,MaxTextExtent,
+        (void) FormatLocaleString(window_name,MaxTextExtent,
           "%s: %s[%.20g of %.20g]",MagickPackageName,p,(double) scene+1,
           (double) number_scenes);
+        (void) CloneString(&windows->image.name,window_name);
       }
     status=XStringListToTextProperty(&windows->image.name,1,&window_name);
     if (status != Success)
@@ -2088,6 +2096,9 @@ MagickExport Image *XAnimateImages(Display *display,
           if ((state & StepAnimationState) ||
               (resource_info->title != (char *) NULL))
             {
+              char
+                name[MaxTextExtent];
+
               /*
                 Update window title.
               */
@@ -2095,9 +2106,10 @@ MagickExport Image *XAnimateImages(Display *display,
                 strlen(image_list[scene]->filename)-1;
               while ((p > image_list[scene]->filename) && (*(p-1) != '/'))
                 p--;
-              (void) FormatLocaleString(windows->image.name,MaxTextExtent,
-                "%s: %s[%.20g of %.20g]",MagickPackageName,p,(double)
-                scene+1,(double) number_scenes);
+              (void) FormatLocaleString(name,MaxTextExtent,
+                "%s: %s[%.20g of %.20g]",MagickPackageName,p,(double) scene+1,
+                (double) number_scenes);
+              (void) CloneString(&windows->image.name,name);
               if (resource_info->title != (char *) NULL)
                 {
                   char
@@ -2105,8 +2117,7 @@ MagickExport Image *XAnimateImages(Display *display,
 
                   title=InterpretImageProperties(resource_info->image_info,
                     image,resource_info->title);
-                  (void) CopyMagickString(windows->image.name,title,
-                    MaxTextExtent);
+                  (void) CloneString(&windows->image.name,title);
                   title=DestroyString(title);
                 }
               status=XStringListToTextProperty(&windows->image.name,1,
