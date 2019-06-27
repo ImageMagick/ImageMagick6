@@ -2868,7 +2868,8 @@ static ssize_t WritePSDChannels(const PSDInfo *psd_info,
       offset_length=(next_image->rows*(psd_info->version == 1 ? 2 : 4));
     }
   size_offset+=2;
-  if (next_image->storage_class == PseudoClass)
+  if ((next_image->storage_class == PseudoClass) &&
+      (IsGrayImage(next_image,&next_image->exception) == MagickFalse))
     {
       length=WritePSDChannel(psd_info,image_info,image,next_image,
         IndexQuantum,compact_pixels,rows_offset,separate);
