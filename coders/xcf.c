@@ -974,8 +974,8 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
   /* read in the hierarchy */
   offset=SeekBlob(image, (MagickOffsetType) hierarchy_offset, SEEK_SET);
   if (offset != (MagickOffsetType) hierarchy_offset)
-    (void) ThrowMagickException(&image->exception,GetMagickModule(),
-      CorruptImageError,"InvalidImageHeader","`%s'",image->filename);
+    ThrowBinaryImageException(CorruptImageError,"InvalidImageHeader",
+      image->filename);
   if (load_hierarchy (image, inDocInfo, outLayer) == 0)
     return(MagickFalse);
 
