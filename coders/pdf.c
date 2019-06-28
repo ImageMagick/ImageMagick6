@@ -863,7 +863,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         SetStringInfoLength(profile,(size_t) i);
         (void) SetImageProfile(image,"xmp",profile);
         profile=DestroyStringInfo(profile);
-        continue;
+        break;
       }
   }
   (void) CloseBlob(image);
