@@ -586,7 +586,7 @@ static inline size_t StringToSizeType(const char *string,const double interval)
 
   value=SiPrefixToDoubleInterval(string,interval);
   if (value >= (double) MagickULLConstant(~0))
-    return((size_t) MagickULLConstant(~0));
+    return(~0UL);
   return((size_t) value);
 }
 
