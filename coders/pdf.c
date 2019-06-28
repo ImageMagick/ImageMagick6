@@ -1450,8 +1450,7 @@ RestoreMSCWarning
         create_date[MaxTextExtent],
         modify_date[MaxTextExtent],
         timestamp[MaxTextExtent],
-        xmp_profile[MaxTextExtent],
-        *url;
+        xmp_profile[MaxTextExtent];
 
       /*
         Write XMP object.
