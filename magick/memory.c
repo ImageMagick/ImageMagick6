@@ -946,7 +946,7 @@ MagickExport size_t GetMaxMemoryRequest(void)
           value=DestroyString(value);
         }
       else
-        max_memory_request=(size_t) MagickULLConstant(~0);
+        max_memory_request=~0UL;
     }
   return(max_memory_request);
 }
