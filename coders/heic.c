@@ -342,6 +342,11 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     (void) SetImageProperty(image,"exif:Orientation","1");
   error=heif_decode_image(image_handle,&heif_image,heif_colorspace_YCbCr,
     heif_chroma_420,NULL);
+  if (IsHeifSuccess(&error,image,exception) == MagickFalse)
+    {
+      heif_image_handle_release(image_handle);
+      return(MagickFalse);
+    }
   if (decode_options != (struct heif_decoding_options *) NULL)
     {
       /*
@@ -351,13 +356,12 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
       image->rows=(size_t) heif_image_get_height(heif_image,heif_channel_Y);
       status=SetImageExtent(image,image->columns,image->rows);
       heif_decoding_options_free(decode_options);
-    }
-  if (IsHeifSuccess(&error,image) == MagickFalse)
-    {
-      heif_image_handle_release(image_handle);
-      heif_context_free(heif_context);
-      file_data=RelinquishMagickMemory(file_data);
-      return(DestroyImageList(image));
+      if (status == MagickFalse)
+        {
+          heif_image_release(heif_image);
+          heif_image_handle_release(image_handle);
+          return(MagickFalse);
+        }
     }
   p_y=heif_image_get_plane(heif_image,heif_channel_Y,&stride_y);
   p_cb=heif_image_get_plane(heif_image,heif_channel_Cb,&stride_cb);
