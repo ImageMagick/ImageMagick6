@@ -507,7 +507,6 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
         break;
       }
       case UnderlineDecoration:
-      default:
       {
         annotate_info->affine.ty-=(draw_info->affine.sy*
           metrics.underline_position);
@@ -523,6 +522,8 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
         (void) DrawImage(image,annotate_info);
         break;
       }
+      default:
+        break;
     }
     status=RenderType(image,annotate,&offset,&metrics);
     if (status == MagickFalse)
