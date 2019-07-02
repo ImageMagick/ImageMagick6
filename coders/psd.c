@@ -3619,6 +3619,8 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
         compression;
 
       compression=image->compression;
+      if (image_info->compression != UndefinedCompression)
+        image->compression=image_info->compression;
       if (image->compression == ZipCompression)
         image->compression=RLECompression;
       if (WritePSDChannels(&psd_info,image_info,image,image,0,
