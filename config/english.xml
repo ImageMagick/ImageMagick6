@@ -634,6 +634,9 @@
         <message name="ImagePagesAreNotCoalesced">
           image pages are not coalesced
         </message>
+        <message name="ImageSequenceRequired">
+          image sequence is required
+        </message>
         <message name="ImageSizeMustExceedBevelWidth">
           size must exceed bevel width
         </message>
