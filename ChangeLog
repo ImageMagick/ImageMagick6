@@ -4,6 +4,8 @@
 2019-07-01  6.9.10-52 Cristy  <quetzlzacatenango@image...>
   * Eliminate buffer overflow in TranslateEvent() (reference
     https://github.com/ImageMagick/ImageMagick/issues/1621).
+  * Fix -fx parsing issue (reference
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=36314).
 
 2019-06-30  6.9.10-51 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-51, GIT revision 14607:cec35fb:20190630.
