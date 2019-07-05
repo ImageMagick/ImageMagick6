@@ -342,7 +342,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     (void) SetImageProperty(image,"exif:Orientation","1");
   error=heif_decode_image(image_handle,&heif_image,heif_colorspace_YCbCr,
     heif_chroma_420,NULL);
-  if (IsHeifSuccess(&error,image,exception) == MagickFalse)
+  if (IsHeifSuccess(&error,image) == MagickFalse)
     {
       heif_image_handle_release(image_handle);
       return(MagickFalse);

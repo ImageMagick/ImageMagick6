@@ -1,3 +1,10 @@
+2019-07-05  6.9.10-53 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-53, GIT revision 14625:70fb1c6:20190705.
+
+2019-07-05  6.9.10-53 Cristy  <quetzlzacatenango@image...>
+  * Coder heic.c build failure  (reference
+    https://github.com/ImageMagick/ImageMagick6/issues/50).
+
 2019-07-05  6.9.10-52 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-52, GIT revision 14623:672ff6a:20190705.
 
