@@ -117,14 +117,12 @@ typedef struct _PDFBuffer
   Image
     *image;
 
-  size_t
-    offset;
-
   ssize_t
+    offset,
     count;
 
   unsigned char
-    data[MagickPathExtent];
+    data[8192];
 } PDFBuffer;
 
 /*
@@ -407,13 +405,11 @@ static MagickBooleanType IsPDFRendered(const char *path)
   return(MagickFalse);
 }
 
-
-
 static inline int ReadPDFByte(PDFBuffer *buffer)
 {
-  if (((ssize_t)buffer->offset == buffer->count) && (buffer->offset > 0))
+  if ((buffer->offset == buffer->count) && (buffer->offset > 0))
     {
-      if (buffer->count != sizeof(buffer->data))
+      if (buffer->count != (ssize_t) sizeof(buffer->data))
         return(EOF);
       buffer->offset=0;
     }
@@ -432,10 +428,9 @@ static char *MovePDFBuffer(PDFBuffer *buffer)
     i;
 
   i=1; /* Skip first to avoid reload of buffer; */
-  while ((ssize_t)buffer->offset < buffer->count)
+  while (buffer->offset < buffer->count)
     buffer->data[i++]=buffer->data[buffer->offset++];
-  buffer->count=ReadBlob(buffer->image,sizeof(buffer->data)-i,
-    buffer->data+i);
+  buffer->count=ReadBlob(buffer->image,sizeof(buffer->data)-i,buffer->data+i);
   buffer->count+=i;
   buffer->offset=1;
   return((char *) buffer->data+1);
@@ -443,14 +438,14 @@ static char *MovePDFBuffer(PDFBuffer *buffer)
 
 static inline void CheckRemainingPDFBuffer(PDFBuffer *buffer,size_t length)
 {
-  if (buffer->offset+length > sizeof(buffer->data))
+  if ((buffer->offset+length) > (ssize_t) sizeof(buffer->data))
     (void) MovePDFBuffer(buffer);
 }
 
 static inline void SkipPDFBytes(PDFBuffer *buffer,size_t count)
 {
   CheckRemainingPDFBuffer(buffer,count);
-  if (buffer->offset+count < buffer->count)
+  if ((buffer->offset+count) < buffer->count)
     buffer->offset+=count;
 }
 
@@ -482,7 +477,9 @@ static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
     *p;
 
   size_t
-    length,
+    length;
+
+  ssize_t
     count;
 
   if (pdf_info->profile != (StringInfo *) NULL)
@@ -497,7 +494,7 @@ static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
   count=1;
   for (c=ReadPDFByte(buffer); c != EOF; c=ReadPDFByte(buffer))
   {
-    if (count == length)
+    if (count == (ssize_t) length)
       {
         length+=MagickPathExtent;
         SetStringInfoLength(pdf_info->profile,length);
@@ -509,14 +506,15 @@ static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
       found_end=ComparePDFBuffer(EndXMPPacket,buffer,strlen(EndXMPPacket));
     else
       {
-        if (c == (int)'>')
+        if (c == (int) '>')
           break;
       }
   }
-  SetStringInfoLength(pdf_info->profile,count);
+  SetStringInfoLength(pdf_info->profile,(size_t) count);
 }
 
-static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_info)
+static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
+  PDFInfo *pdf_info)
 {
 #define CMYKProcessColor  "CMYKProcessColor"
 #define CropBox  "CropBox"
@@ -554,11 +552,11 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_in
 
   (void) memset(&bounds,0,sizeof(bounds));
   (void) memset(pdf_info,0,sizeof(*pdf_info));
-  pdf_info->cmyk=image_info->colorspace == CMYKColorspace ? MagickTrue : MagickFalse;
+  pdf_info->cmyk=image_info->colorspace == CMYKColorspace ? MagickTrue :
+    MagickFalse;
   pdf_info->cropbox=IsStringTrue(GetImageOption(image_info,"pdf:use-cropbox"));
   pdf_info->trimbox=IsStringTrue(GetImageOption(image_info,"pdf:use-trimbox"));
-
-  version[0]='\0';
+  *version='\0';
   spotcolor=0;
   (void) memset(&buffer,0,sizeof(buffer));
   buffer.image=image;
@@ -567,7 +565,8 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_in
     switch(c)
     {
       case '%':
-        if (version[0] == '\0')
+      {
+        if (*version == '\0')
           {
             i=0;
             for (c=ReadPDFByte(&buffer); c != EOF; c=ReadPDFByte(&buffer))
@@ -579,9 +578,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_in
             version[i]='\0';
           }
         continue;
+      }
       case '<':
+      {
         ReadPDFXMPProfile(pdf_info,&buffer);
         continue;
+      }
       case '/':
         break;
       default:
@@ -641,11 +643,11 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_in
               Note region defined by crop box.
             */
             p=MovePDFBuffer(&buffer);
-            count=(ssize_t) sscanf(p,"CropBox [%lf %lf %lf %lf",
-              &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
+            count=(ssize_t) sscanf(p,"CropBox [%lf %lf %lf %lf",&bounds.x1,
+              &bounds.y1,&bounds.x2,&bounds.y2);
             if (count != 4)
-              count=(ssize_t) sscanf(p,"CropBox[%lf %lf %lf %lf",
-                &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
+              count=(ssize_t) sscanf(p,"CropBox[%lf %lf %lf %lf",&bounds.x1,
+                &bounds.y1,&bounds.x2,&bounds.y2);
           }
       }
     else
@@ -657,11 +659,11 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_in
                 Note region defined by trim box.
               */
               p=MovePDFBuffer(&buffer);
-              count=(ssize_t) sscanf(p,"TrimBox [%lf %lf %lf %lf",
-                &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
+              count=(ssize_t) sscanf(p,"TrimBox [%lf %lf %lf %lf",&bounds.x1,
+                &bounds.y1,&bounds.x2,&bounds.y2);
               if (count != 4)
-                count=(ssize_t) sscanf(p,"TrimBox[%lf %lf %lf %lf",
-                  &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
+                count=(ssize_t) sscanf(p,"TrimBox[%lf %lf %lf %lf",&bounds.x1,
+                  &bounds.y1,&bounds.x2,&bounds.y2);
             }
         }
       else
@@ -671,11 +673,11 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,PDFInfo *pdf_in
               Note region defined by media box.
             */
             p=MovePDFBuffer(&buffer);
-            count=(ssize_t) sscanf(p,"MediaBox [%lf %lf %lf %lf",
-              &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
+            count=(ssize_t) sscanf(p,"MediaBox [%lf %lf %lf %lf",&bounds.x1,
+              &bounds.y1,&bounds.x2,&bounds.y2);
             if (count != 4)
-              count=(ssize_t) sscanf(p,"MediaBox[%lf %lf %lf %lf",
-                &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
+              count=(ssize_t) sscanf(p,"MediaBox[%lf %lf %lf %lf",&bounds.x1,
+                &bounds.y1,&bounds.x2,&bounds.y2);
           }
     if (count != 4)
       continue;
@@ -844,10 +846,10 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
           image=DestroyImage(image);
           return((Image *) NULL);
         }
-      page.width=(size_t) ceil((double) (page.width*image->x_resolution/delta.x)
-        -0.5);
+      page.width=(size_t) ceil((double) (page.width*image->x_resolution/
+        delta.x)-0.5);
       page.height=(size_t) ceil((double) (page.height*image->y_resolution/
-        delta.y) -0.5);
+        delta.y)-0.5);
       geometry=DestroyString(geometry);
       fitPage=MagickTrue;
     }
