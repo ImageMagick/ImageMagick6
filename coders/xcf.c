@@ -643,7 +643,10 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
     ThrowBinaryException(CorruptImageError,"UnexpectedEndOfFile", 
       image->filename);
   if (offset == 0)
-    return(MagickTrue);
+    {
+      (void) SetImageBackgroundColor(image);
+      return(MagickTrue);
+    }
   /*
     Initialize the reference for the in-memory tile-compression.
   */
