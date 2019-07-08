@@ -52,6 +52,7 @@
 #include "magick/exception-private.h"
 #include "magick/image-private.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/semaphore.h"
 #include "magick/random_.h"
 #include "magick/resource_.h"
