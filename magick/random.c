@@ -170,9 +170,7 @@ MagickExport RandomInfo *AcquireRandomInfo(void)
     *key,
     *nonce;
 
-  random_info=(RandomInfo *) AcquireMagickMemory(sizeof(*random_info));
-  if (random_info == (RandomInfo *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  random_info=(RandomInfo *) AcquireCriticalMemory(sizeof(*random_info));
   (void) memset(random_info,0,sizeof(*random_info));
   random_info->signature_info=AcquireSignatureInfo();
   random_info->nonce=AcquireStringInfo(2*GetSignatureDigestsize(
@@ -483,9 +481,6 @@ static StringInfo *GenerateEntropicChaos(RandomInfo *random_info)
     LARGE_INTEGER
       nanoseconds;
 
-    MagickBooleanType
-      status;
-
     /*
       Not crytographically strong but better than nothing.
     */
@@ -503,8 +498,7 @@ static StringInfo *GenerateEntropicChaos(RandomInfo *random_info)
       Our best hope for true entropy.
     */
     SetStringInfoLength(chaos,MaxEntropyExtent);
-    status=NTGatherRandomData(MaxEntropyExtent,GetStringInfoDatum(chaos));
-    (void) status;
+    (void) NTGatherRandomData(MaxEntropyExtent,GetStringInfoDatum(chaos));
     ConcatenateStringInfo(entropy,chaos);
   }
 #else
