@@ -136,6 +136,7 @@ static MagickBooleanType CompareUsage(void)
       "  -metric type         measure differences between images with this metric\n"
       "  -monitor             monitor progress\n"
       "  -passphrase filename get the passphrase from this file\n"
+      "  -precision value     maximum number of significant digits to print\n"
       "  -profile filename    add, delete, or apply an image profile\n"
       "  -quality value       JPEG/MIFF/PNG compression level\n"
       "  -quiet               suppress all warning messages\n"
@@ -856,6 +857,17 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       }
       case 'p':
       {
+        if (LocaleCompare("precision",option+1) == 0)
+          {
+            if (*option == '+')
+              break;
+            i++;
+            if (i == (ssize_t) argc)
+              ThrowCompareException(OptionError,"MissingArgument",option);
+            if (IsGeometry(argv[i]) == MagickFalse)
+              ThrowCompareInvalidArgumentException(option,argv[i]);
+            break;
+          }
         if (LocaleCompare("passphrase",option+1) == 0)
           {
             if (*option == '+')
@@ -1226,7 +1238,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case PeakAbsoluteErrorMetric:
             case RootMeanSquaredErrorMetric:
             {
-              (void) FormatLocaleFile(stderr,"%g (%g)",QuantumRange*distortion,
+              (void) FormatLocaleFile(stderr,"%.*g (%.*g)",GetMagickPrecision(),
+                QuantumRange*distortion,GetMagickPrecision(),
                 (double) distortion);
               break;
             }
@@ -1235,14 +1248,16 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case PeakSignalToNoiseRatioMetric:
             case PerceptualHashErrorMetric:
             {
-              (void) FormatLocaleFile(stderr,"%g",distortion);
+              (void) FormatLocaleFile(stderr,"%.*g",GetMagickPrecision(),
+                distortion);
               break;
             }
             case MeanErrorPerPixelMetric:
             {
-              (void) FormatLocaleFile(stderr,"%g (%g, %g)",distortion,
-                image->error.normalized_mean_error,
-                image->error.normalized_maximum_error);
+              (void) FormatLocaleFile(stderr,"%.*g (%.*g, %.*g)",
+                GetMagickPrecision(),distortion,
+                GetMagickPrecision(),image->error.normalized_mean_error,
+                GetMagickPrecision(),image->error.normalized_maximum_error);
               break;
             }
             case UndefinedErrorMetric:
@@ -1279,56 +1294,68 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 case RGBColorspace:
                 default:
                 {
-                  (void) FormatLocaleFile(stderr,"    red: %g (%g)\n",
-                    QuantumRange*channel_distortion[RedChannel],
+                  (void) FormatLocaleFile(stderr,"    red: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[RedChannel],GetMagickPrecision(),
                     channel_distortion[RedChannel]);
-                  (void) FormatLocaleFile(stderr,"    green: %g (%g)\n",
-                    QuantumRange*channel_distortion[GreenChannel],
+                  (void) FormatLocaleFile(stderr,"    green: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[GreenChannel],GetMagickPrecision(),
                     channel_distortion[GreenChannel]);
-                  (void) FormatLocaleFile(stderr,"    blue: %g (%g)\n",
-                    QuantumRange*channel_distortion[BlueChannel],
+                  (void) FormatLocaleFile(stderr,"    blue: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[BlueChannel],GetMagickPrecision(),
                     channel_distortion[BlueChannel]);
                   if (image->matte != MagickFalse)
-                    (void) FormatLocaleFile(stderr,"    alpha: %g (%g)\n",
-                      QuantumRange*channel_distortion[OpacityChannel],
+                    (void) FormatLocaleFile(stderr,"    alpha: %.*g (%.*g)\n",
+                      GetMagickPrecision(),QuantumRange*
+                      channel_distortion[OpacityChannel],GetMagickPrecision(),
                       channel_distortion[OpacityChannel]);
                   break;
                 }
                 case CMYKColorspace:
                 {
-                  (void) FormatLocaleFile(stderr,"    cyan: %g (%g)\n",
-                    QuantumRange*channel_distortion[CyanChannel],
+                  (void) FormatLocaleFile(stderr,"    cyan: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[CyanChannel],GetMagickPrecision(),
                     channel_distortion[CyanChannel]);
-                  (void) FormatLocaleFile(stderr,"    magenta: %g (%g)\n",
-                    QuantumRange*channel_distortion[MagentaChannel],
+                  (void) FormatLocaleFile(stderr,"    magenta: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[MagentaChannel],GetMagickPrecision(),
                     channel_distortion[MagentaChannel]);
-                  (void) FormatLocaleFile(stderr,"    yellow: %g (%g)\n",
-                    QuantumRange*channel_distortion[YellowChannel],
+                  (void) FormatLocaleFile(stderr,"    yellow: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[YellowChannel],GetMagickPrecision(),
                     channel_distortion[YellowChannel]);
-                  (void) FormatLocaleFile(stderr,"    black: %g (%g)\n",
-                    QuantumRange*channel_distortion[BlackChannel],
+                  (void) FormatLocaleFile(stderr,"    black: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[BlackChannel],GetMagickPrecision(),
                     channel_distortion[BlackChannel]);
                   if (image->matte != MagickFalse)
-                    (void) FormatLocaleFile(stderr,"    alpha: %g (%g)\n",
-                      QuantumRange*channel_distortion[OpacityChannel],
+                    (void) FormatLocaleFile(stderr,"    alpha: %.*g (%.*g)\n",
+                      GetMagickPrecision(),QuantumRange*
+                      channel_distortion[OpacityChannel],GetMagickPrecision(),
                       channel_distortion[OpacityChannel]);
                   break;
                 }
                 case LinearGRAYColorspace:
                 case GRAYColorspace:
                 {
-                  (void) FormatLocaleFile(stderr,"    gray: %g (%g)\n",
-                    QuantumRange*channel_distortion[GrayChannel],
+                  (void) FormatLocaleFile(stderr,"    gray: %.*g (%.*g)\n",
+                    GetMagickPrecision(),QuantumRange*
+                    channel_distortion[GrayChannel],GetMagickPrecision(),
                     channel_distortion[GrayChannel]);
                   if (image->matte != MagickFalse)
-                    (void) FormatLocaleFile(stderr,"    alpha: %g (%g)\n",
-                      QuantumRange*channel_distortion[OpacityChannel],
+                    (void) FormatLocaleFile(stderr,"    alpha: %.*g (%.*g)\n",
+                      GetMagickPrecision(),QuantumRange*
+                      channel_distortion[OpacityChannel],GetMagickPrecision(),
                       channel_distortion[OpacityChannel]);
                   break;
                 }
               }
-              (void) FormatLocaleFile(stderr,"    all: %g (%g)\n",
-                QuantumRange*channel_distortion[CompositeChannels],
+              (void) FormatLocaleFile(stderr,"    all: %.*g (%.*g)\n",
+                GetMagickPrecision(),QuantumRange*
+                channel_distortion[CompositeChannels],GetMagickPrecision(),
                 channel_distortion[CompositeChannels]);
               break;
             }
@@ -1342,53 +1369,53 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 case RGBColorspace:
                 default:
                 {
-                  (void) FormatLocaleFile(stderr,"    red: %g\n",
-                    channel_distortion[RedChannel]);
-                  (void) FormatLocaleFile(stderr,"    green: %g\n",
-                    channel_distortion[GreenChannel]);
-                  (void) FormatLocaleFile(stderr,"    blue: %g\n",
-                    channel_distortion[BlueChannel]);
+                  (void) FormatLocaleFile(stderr,"    red: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[RedChannel]);
+                  (void) FormatLocaleFile(stderr,"    green: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[GreenChannel]);
+                  (void) FormatLocaleFile(stderr,"    blue: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[BlueChannel]);
                   if (image->matte != MagickFalse)
-                    (void) FormatLocaleFile(stderr,"    alpha: %g\n",
-                      channel_distortion[OpacityChannel]);
+                    (void) FormatLocaleFile(stderr,"    alpha: %.*g\n",
+                      GetMagickPrecision(),channel_distortion[OpacityChannel]);
                   break;
                 }
                 case CMYKColorspace:
                 {
-                  (void) FormatLocaleFile(stderr,"    cyan: %g\n",
-                    channel_distortion[CyanChannel]);
-                  (void) FormatLocaleFile(stderr,"    magenta: %g\n",
-                    channel_distortion[MagentaChannel]);
-                  (void) FormatLocaleFile(stderr,"    yellow: %g\n",
-                    channel_distortion[YellowChannel]);
-                  (void) FormatLocaleFile(stderr,"    black: %g\n",
-                    channel_distortion[BlackChannel]);
+                  (void) FormatLocaleFile(stderr,"    cyan: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[CyanChannel]);
+                  (void) FormatLocaleFile(stderr,"    magenta: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[MagentaChannel]);
+                  (void) FormatLocaleFile(stderr,"    yellow: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[YellowChannel]);
+                  (void) FormatLocaleFile(stderr,"    black: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[BlackChannel]);
                   if (image->matte != MagickFalse)
-                    (void) FormatLocaleFile(stderr,"    alpha: %g\n",
-                      channel_distortion[OpacityChannel]);
+                    (void) FormatLocaleFile(stderr,"    alpha: %.*g\n",
+                      GetMagickPrecision(),channel_distortion[OpacityChannel]);
                   break;
                 }
                 case LinearGRAYColorspace:
                 case GRAYColorspace:
                 {
-                  (void) FormatLocaleFile(stderr,"    gray: %g\n",
-                    channel_distortion[GrayChannel]);
+                  (void) FormatLocaleFile(stderr,"    gray: %.*g\n",
+                    GetMagickPrecision(),channel_distortion[GrayChannel]);
                   if (image->matte != MagickFalse)
-                    (void) FormatLocaleFile(stderr,"    alpha: %g\n",
-                      channel_distortion[OpacityChannel]);
+                    (void) FormatLocaleFile(stderr,"    alpha: %.*g\n",
+                      GetMagickPrecision(),channel_distortion[OpacityChannel]);
                   break;
                 }
               }
-              (void) FormatLocaleFile(stderr,"    all: %g\n",
-                channel_distortion[CompositeChannels]);
+              (void) FormatLocaleFile(stderr,"    all: %.*g\n",
+                GetMagickPrecision(),channel_distortion[CompositeChannels]);
               break;
             }
             case MeanErrorPerPixelMetric:
             {
-              (void) FormatLocaleFile(stderr,"    %g (%g, %g)\n",
-                channel_distortion[CompositeChannels],
-                image->error.normalized_mean_error,
-                image->error.normalized_maximum_error);
+              (void) FormatLocaleFile(stderr,"    %.*g (%.*g, %.*g)\n",
+                GetMagickPrecision(),channel_distortion[CompositeChannels],
+                GetMagickPrecision(),image->error.normalized_mean_error,
+                GetMagickPrecision(),image->error.normalized_maximum_error);
               break;
             }
             case UndefinedErrorMetric:
