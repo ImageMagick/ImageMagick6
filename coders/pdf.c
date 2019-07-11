@@ -81,6 +81,7 @@
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
+#include "byte-buffer-private.h"
 
 /*
   Define declarations.
@@ -111,19 +112,6 @@ typedef struct _PDFInfo
     *profile;
 
 } PDFInfo;
-
-typedef struct _PDFBuffer
-{
-  Image
-    *image;
-
-  ssize_t
-    offset,
-    count;
-
-  unsigned char
-    data[8192];
-} PDFBuffer;
 
 /*
   Forward declarations.
@@ -405,64 +393,7 @@ static MagickBooleanType IsPDFRendered(const char *path)
   return(MagickFalse);
 }
 
-static inline int ReadPDFByte(PDFBuffer *buffer)
-{
-  if ((buffer->offset == buffer->count) && (buffer->offset > 0))
-    {
-      if (buffer->count != (ssize_t) sizeof(buffer->data))
-        return(EOF);
-      buffer->offset=0;
-    }
-  if (buffer->offset == 0)
-    {
-      buffer->count=ReadBlob(buffer->image,sizeof(buffer->data),buffer->data);
-      if (buffer->count < 1)
-        return(EOF);
-    }
-  return(buffer->data[buffer->offset++]);
-}
-
-static char *MovePDFBuffer(PDFBuffer *buffer)
-{
-  ssize_t
-    i;
-
-  i=1; /* Skip first to avoid reload of buffer; */
-  while (buffer->offset < buffer->count)
-    buffer->data[i++]=buffer->data[buffer->offset++];
-  buffer->count=ReadBlob(buffer->image,sizeof(buffer->data)-i,buffer->data+i);
-  buffer->count+=i;
-  buffer->offset=1;
-  return((char *) buffer->data+1);
-}
-
-static inline void CheckRemainingPDFBuffer(PDFBuffer *buffer,size_t length)
-{
-  if ((buffer->offset+length) > (ssize_t) sizeof(buffer->data))
-    (void) MovePDFBuffer(buffer);
-}
-
-static inline void SkipPDFBytes(PDFBuffer *buffer,size_t length)
-{
-  CheckRemainingPDFBuffer(buffer,length);
-  if ((buffer->offset+length) < buffer->count)
-    buffer->offset+=length;
-}
-
-static inline MagickBooleanType ComparePDFBuffer(const char *p,
-  PDFBuffer *buffer,const size_t length)
-{
-  const char
-    *q;
-
-  CheckRemainingPDFBuffer(buffer,length);
-  q=(const char *) buffer->data+buffer->offset;
-  if (LocaleNCompare(p,q,length) != 0)
-    return(MagickFalse);
-  return(MagickTrue);
-}
-
-static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
+static void ReadPDFXMPProfile(PDFInfo *pdf_info,ByteBuffer *buffer)
 {
 #define BeginXMPPacket  "?xpacket begin="
 #define EndXMPPacket  "<?xpacket end="
@@ -484,7 +415,7 @@ static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
 
   if (pdf_info->profile != (StringInfo *) NULL)
     return;
-  if (ComparePDFBuffer(BeginXMPPacket,buffer,strlen(BeginXMPPacket)) == MagickFalse)
+  if (CompareByteBuffer(BeginXMPPacket,buffer,strlen(BeginXMPPacket)) == MagickFalse)
     return;
   length=8192;
   pdf_info->profile=AcquireStringInfo(length);
@@ -492,7 +423,7 @@ static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
   p=(char *) GetStringInfoDatum(pdf_info->profile);
   *p++='<';
   count=1;
-  for (c=ReadPDFByte(buffer); c != EOF; c=ReadPDFByte(buffer))
+  for (c=ReadByteBuffer(buffer); c != EOF; c=ReadByteBuffer(buffer))
   {
     if (count == (ssize_t) length)
       {
@@ -503,7 +434,7 @@ static void ReadPDFXMPProfile(PDFInfo *pdf_info,PDFBuffer *buffer)
     count++;
     *p++=(char) c;
     if (found_end == MagickFalse)
-      found_end=ComparePDFBuffer(EndXMPPacket,buffer,strlen(EndXMPPacket));
+      found_end=CompareByteBuffer(EndXMPPacket,buffer,strlen(EndXMPPacket));
     else
       {
         if (c == (int) '>')
@@ -532,7 +463,7 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
   int
     c;
 
-  PDFBuffer
+  ByteBuffer
     buffer;
 
   register char
@@ -560,7 +491,7 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
   spotcolor=0;
   (void) memset(&buffer,0,sizeof(buffer));
   buffer.image=image;
-  for (c=ReadPDFByte(&buffer); c != EOF; c=ReadPDFByte(&buffer))
+  for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
   {
     switch(c)
     {
@@ -569,7 +500,7 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
         if (*version == '\0')
           {
             i=0;
-            for (c=ReadPDFByte(&buffer); c != EOF; c=ReadPDFByte(&buffer))
+            for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
             {
               if ((c == '\r') || (c == '\n') || ((i+1) == MagickPathExtent))
                 break;
@@ -589,22 +520,22 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
       default:
         continue;
     }
-    if (ComparePDFBuffer(PDFRotate,&buffer,strlen(PDFRotate)) != MagickFalse)
+    if (CompareByteBuffer(PDFRotate,&buffer,strlen(PDFRotate)) != MagickFalse)
       {
-        p=MovePDFBuffer(&buffer);
+        p=GetByteBufferDatum(&buffer);
         (void) sscanf(p,PDFRotate" %lf",&pdf_info->angle);
       }
     if (pdf_info->cmyk == MagickFalse)
       {
-        if ((ComparePDFBuffer(DefaultCMYK,&buffer,strlen(DefaultCMYK)) != MagickFalse) ||
-            (ComparePDFBuffer(DeviceCMYK,&buffer,strlen(DeviceCMYK)) != MagickFalse) ||
-            (ComparePDFBuffer(CMYKProcessColor,&buffer,strlen(CMYKProcessColor)) != MagickFalse))
+        if ((CompareByteBuffer(DefaultCMYK,&buffer,strlen(DefaultCMYK)) != MagickFalse) ||
+            (CompareByteBuffer(DeviceCMYK,&buffer,strlen(DeviceCMYK)) != MagickFalse) ||
+            (CompareByteBuffer(CMYKProcessColor,&buffer,strlen(CMYKProcessColor)) != MagickFalse))
           {
             pdf_info->cmyk=MagickTrue;
             continue;
           }
       }
-    if (ComparePDFBuffer(SpotColor,&buffer,strlen(SpotColor)) != MagickFalse)
+    if (CompareByteBuffer(SpotColor,&buffer,strlen(SpotColor)) != MagickFalse)
       {
         char
           name[MagickPathExtent],
@@ -617,8 +548,8 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
         (void) FormatLocaleString(property,MagickPathExtent,
           "pdf:SpotColor-%.20g",(double) spotcolor++);
         i=0;
-        SkipPDFBytes(&buffer,strlen(SpotColor)+1);
-        for (c=ReadPDFByte(&buffer); c != EOF; c=ReadPDFByte(&buffer))
+        SkipByteBuffer(&buffer,strlen(SpotColor)+1);
+        for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
         {
           if ((isspace(c) != 0) || (c == '/') || ((i+1) == MagickPathExtent))
             break;
@@ -637,12 +568,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
     count=0;
     if (pdf_info->cropbox != MagickFalse)
       {
-        if (ComparePDFBuffer(CropBox,&buffer,strlen(CropBox)) != MagickFalse)
+        if (CompareByteBuffer(CropBox,&buffer,strlen(CropBox)) != MagickFalse)
           {
             /*
               Note region defined by crop box.
             */
-            p=MovePDFBuffer(&buffer);
+            p=GetByteBufferDatum(&buffer);
             count=(ssize_t) sscanf(p,"CropBox [%lf %lf %lf %lf",&bounds.x1,
               &bounds.y1,&bounds.x2,&bounds.y2);
             if (count != 4)
@@ -653,12 +584,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
     else
       if (pdf_info->trimbox != MagickFalse)
         {
-          if (ComparePDFBuffer(TrimBox,&buffer,strlen(TrimBox)) != MagickFalse)
+          if (CompareByteBuffer(TrimBox,&buffer,strlen(TrimBox)) != MagickFalse)
             {
               /*
                 Note region defined by trim box.
               */
-              p=MovePDFBuffer(&buffer);
+              p=GetByteBufferDatum(&buffer);
               count=(ssize_t) sscanf(p,"TrimBox [%lf %lf %lf %lf",&bounds.x1,
                 &bounds.y1,&bounds.x2,&bounds.y2);
               if (count != 4)
@@ -667,12 +598,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
             }
         }
       else
-        if (ComparePDFBuffer(MediaBox,&buffer,strlen(MediaBox)) != MagickFalse)
+        if (CompareByteBuffer(MediaBox,&buffer,strlen(MediaBox)) != MagickFalse)
           {
             /*
               Note region defined by media box.
             */
-            p=MovePDFBuffer(&buffer);
+            p=GetByteBufferDatum(&buffer);
             count=(ssize_t) sscanf(p,"MediaBox [%lf %lf %lf %lf",&bounds.x1,
               &bounds.y1,&bounds.x2,&bounds.y2);
             if (count != 4)
