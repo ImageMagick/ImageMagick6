@@ -6855,7 +6855,7 @@ WandExport MagickBooleanType MagickLabelImage(MagickWand *wand,
 %
 %    o wand: the magick wand.
 %
-%    o channel: Identify which channel to level: RedChannel, GreenChannel,
+%    o channel: Identify which channel to level: RedChannel, GreenChannel, etc.
 %
 %    o black_point: the black point.
 %
@@ -6900,6 +6900,82 @@ WandExport MagickBooleanType MagickLevelImageChannel(MagickWand *wand,
 %                                                                             %
 %                                                                             %
 %                                                                             %
+%   M a g i c k L e v e l I m a g e C o l o r s                               %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  MagickLevelImageColors() maps the given color to "black" and "white" values,
+%  linearly spreading out the colors, and level values on a channel by channel
+%  bases, as per LevelImage().  The given colors allows you to specify
+%  different level ranges for each of the color channels separately.
+%
+%  The format of the MagickLevelImageColors method is:
+%
+%      MagickBooleanType MagickLevelImageColors(MagickWand *wand,
+%        const PixelWand *black_color,const PixelWand *white_color,
+%        const MagickBooleanType invert)
+%      MagickBooleanType MagickLevelImageColorsChannel(MagickWand *wand,
+%        const ChannelType channel,const PixelWand *black_color,
+%        const PixelWand *white_color,const MagickBooleanType invert)
+%
+%  A description of each parameter follows:
+%
+%    o wand: the magick wand.
+%
+%    o channel: Identify which channel to level: RedChannel, GreenChannel, etc.
+%
+%    o black_color: the black color.
+%
+%    o white_color: the white color.
+%
+%    o invert: if true map the colors (levelize), rather than from (level)
+%
+*/
+
+WandExport MagickBooleanType MagickLevelImageColors(MagickWand *wand,
+  const PixelWand *black_color,const PixelWand *white_color,
+  const MagickBooleanType invert)
+{
+  MagickBooleanType
+    status;
+
+  status=MagickLevelImageColorsChannel(wand,DefaultChannels,black_color,
+    white_color,invert);
+  return(status);
+}
+
+WandExport MagickBooleanType MagickLevelImageColorsChannel(MagickWand *wand,
+  const ChannelType channel,const PixelWand *black_color,
+  const PixelWand *white_color,const MagickBooleanType invert)
+{
+  MagickBooleanType
+    status;
+
+  MagickPixelPacket
+    black,
+    white;
+
+  assert(wand != (MagickWand *) NULL);
+  assert(wand->signature == WandSignature);
+  if (wand->debug != MagickFalse)
+    (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
+  if (wand->images == (Image *) NULL)
+    ThrowWandException(WandError,"ContainsNoImages",wand->name);
+  PixelGetMagickColor(black_color,&black);
+  PixelGetMagickColor(white_color,&white);
+  status=LevelColorsImageChannel(wand->images,channel,&black,&white,invert);
+  if (status == MagickFalse)
+    InheritException(wand->exception,&wand->images->exception);
+  return(status);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 %   M a g i c k L e v e l i z e I m a g e                                     %
 %                                                                             %
 %                                                                             %
@@ -6922,6 +6998,8 @@ WandExport MagickBooleanType MagickLevelImageChannel(MagickWand *wand,
 %  A description of each parameter follows:
 %
 %    o wand: the magick wand.
+%
+%    o channel: Identify which channel to level: RedChannel, GreenChannel, etc.
 %
 %    o black_point: The level to map zero (black) to.
 %
