@@ -292,16 +292,20 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
   buffer.image=image;
   for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
   {
-    if (c == '<')
+    switch(c)
+    {
+      case '<':
       {
         ReadGhostScriptXMPProfile(&buffer,&ps_info->xmp_profile);
         continue;
       }
-    /*
-      Note document structuring comments.
-    */
-    if (strchr("\n\r%",c) == (char *) NULL)
-      continue;
+      case '\n':
+      case '\r':
+      case '%':
+        break;
+      default:
+        continue;
+    }
     /*
       Skip %%BeginDocument thru %%EndDocument.
     */
