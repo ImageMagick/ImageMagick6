@@ -3743,6 +3743,10 @@ MAGICK_CODER_SRCS = \
   $(MAGICK_WMF_SRCS) \
   $(MAGICK_X11_SRCS)
 
+CODERS_NOINST_HDRS = \
+  coders/byte-buffer-private.h \
+  coders/ghostscript-private.h
+
 @WITH_MODULES_FALSE@coders_LTLIBRARIES = 
 @WITH_MODULES_TRUE@coders_LTLIBRARIES = \
 @WITH_MODULES_TRUE@	coders/aai.la \
