@@ -4234,6 +4234,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
         status&=GetTypeMetrics(image,clone_info,&metrics);
         clone_info=DestroyDrawInfo(clone_info);
         cursor+=metrics.width;
+        if (draw_info->compliance != SVGCompliance)
+          cursor=0.0;
         break;
       }
       case ImagePrimitive:
