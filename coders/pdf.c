@@ -81,7 +81,7 @@
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
-#include "byte-buffer-private.h"
+#include "bytebuffer-private.h"
 #include "ghostscript-private.h"
 
 /*
@@ -200,7 +200,7 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
   int
     c;
 
-  ByteBuffer
+  MagickByteBuffer
     buffer;
 
   register char
@@ -228,7 +228,7 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
   spotcolor=0;
   (void) memset(&buffer,0,sizeof(buffer));
   buffer.image=image;
-  for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
+  for (c=ReadMagickByteBuffer(&buffer); c != EOF; c=ReadMagickByteBuffer(&buffer))
   {
     switch(c)
     {
@@ -237,7 +237,7 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
         if (*version == '\0')
           {
             i=0;
-            for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
+            for (c=ReadMagickByteBuffer(&buffer); c != EOF; c=ReadMagickByteBuffer(&buffer))
             {
               if ((c == '\r') || (c == '\n') || ((i+1) == MagickPathExtent))
                 break;
@@ -257,22 +257,22 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
       default:
         continue;
     }
-    if (CompareByteBuffer(PDFRotate,&buffer,strlen(PDFRotate)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,PDFRotate,strlen(PDFRotate)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         (void) sscanf(p,PDFRotate" %lf",&pdf_info->angle);
       }
     if (pdf_info->cmyk == MagickFalse)
       {
-        if ((CompareByteBuffer(DefaultCMYK,&buffer,strlen(DefaultCMYK)) != MagickFalse) ||
-            (CompareByteBuffer(DeviceCMYK,&buffer,strlen(DeviceCMYK)) != MagickFalse) ||
-            (CompareByteBuffer(CMYKProcessColor,&buffer,strlen(CMYKProcessColor)) != MagickFalse))
+        if ((CompareMagickByteBuffer(&buffer,DefaultCMYK,strlen(DefaultCMYK)) != MagickFalse) ||
+            (CompareMagickByteBuffer(&buffer,DeviceCMYK,strlen(DeviceCMYK)) != MagickFalse) ||
+            (CompareMagickByteBuffer(&buffer,CMYKProcessColor,strlen(CMYKProcessColor)) != MagickFalse))
           {
             pdf_info->cmyk=MagickTrue;
             continue;
           }
       }
-    if (CompareByteBuffer(SpotColor,&buffer,strlen(SpotColor)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,SpotColor,strlen(SpotColor)) != MagickFalse)
       {
         char
           name[MagickPathExtent],
@@ -285,8 +285,8 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
         (void) FormatLocaleString(property,MagickPathExtent,
           "pdf:SpotColor-%.20g",(double) spotcolor++);
         i=0;
-        SkipByteBuffer(&buffer,strlen(SpotColor)+1);
-        for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
+        SkipMagickByteBuffer(&buffer,strlen(SpotColor)+1);
+        for (c=ReadMagickByteBuffer(&buffer); c != EOF; c=ReadMagickByteBuffer(&buffer))
         {
           if ((isspace(c) != 0) || (c == '/') || ((i+1) == MagickPathExtent))
             break;
@@ -305,12 +305,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
     count=0;
     if (pdf_info->cropbox != MagickFalse)
       {
-        if (CompareByteBuffer(CropBox,&buffer,strlen(CropBox)) != MagickFalse)
+        if (CompareMagickByteBuffer(&buffer,CropBox,strlen(CropBox)) != MagickFalse)
           {
             /*
               Note region defined by crop box.
             */
-            p=GetByteBufferDatum(&buffer);
+            p=GetMagickByteBufferDatum(&buffer);
             count=(ssize_t) sscanf(p,"CropBox [%lf %lf %lf %lf",&bounds.x1,
               &bounds.y1,&bounds.x2,&bounds.y2);
             if (count != 4)
@@ -321,12 +321,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
     else
       if (pdf_info->trimbox != MagickFalse)
         {
-          if (CompareByteBuffer(TrimBox,&buffer,strlen(TrimBox)) != MagickFalse)
+          if (CompareMagickByteBuffer(&buffer,TrimBox,strlen(TrimBox)) != MagickFalse)
             {
               /*
                 Note region defined by trim box.
               */
-              p=GetByteBufferDatum(&buffer);
+              p=GetMagickByteBufferDatum(&buffer);
               count=(ssize_t) sscanf(p,"TrimBox [%lf %lf %lf %lf",&bounds.x1,
                 &bounds.y1,&bounds.x2,&bounds.y2);
               if (count != 4)
@@ -335,12 +335,12 @@ static void ReadPDFInfo(const ImageInfo *image_info,Image *image,
             }
         }
       else
-        if (CompareByteBuffer(MediaBox,&buffer,strlen(MediaBox)) != MagickFalse)
+        if (CompareMagickByteBuffer(&buffer,MediaBox,strlen(MediaBox)) != MagickFalse)
           {
             /*
               Note region defined by media box.
             */
-            p=GetByteBufferDatum(&buffer);
+            p=GetMagickByteBufferDatum(&buffer);
             count=(ssize_t) sscanf(p,"MediaBox [%lf %lf %lf %lf",&bounds.x1,
               &bounds.y1,&bounds.x2,&bounds.y2);
             if (count != 4)

@@ -78,7 +78,7 @@
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
-#include "byte-buffer-private.h"
+#include "bytebuffer-private.h"
 #include "ghostscript-private.h"
 
 /*
@@ -172,7 +172,7 @@ static MagickBooleanType IsPS(const unsigned char *magick,const size_t length)
 %
 */
 
-static inline int ProfileInteger(ByteBuffer *buffer,short int *hex_digits)
+static inline int ProfileInteger(MagickByteBuffer *buffer,short int *hex_digits)
 {
   int
     c,
@@ -186,7 +186,7 @@ static inline int ProfileInteger(ByteBuffer *buffer,short int *hex_digits)
   value=0;
   for (i=0; i < 2; )
   {
-    c=ReadByteBuffer(buffer);
+    c=ReadMagickByteBuffer(buffer);
     if ((c == EOF) || ((c == '%') && (l == '%')))
       {
         value=(-1);
@@ -222,7 +222,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
 #define ICCProfile "BeginICCProfile:"
 #define PhotoshopProfile  "BeginPhotoshop:"
 
-  ByteBuffer
+  MagickByteBuffer
     buffer;
 
   int
@@ -290,7 +290,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
   skip=MagickFalse;
   (void) memset(&buffer,0,sizeof(buffer));
   buffer.image=image;
-  for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
+  for (c=ReadMagickByteBuffer(&buffer); c != EOF; c=ReadMagickByteBuffer(&buffer))
   {
     switch(c)
     {
@@ -309,42 +309,42 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
     /*
       Skip %%BeginDocument thru %%EndDocument.
     */
-    if (CompareByteBuffer(BeginDocument,&buffer,strlen(BeginDocument)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,BeginDocument,strlen(BeginDocument)) != MagickFalse)
       skip=MagickTrue;
-    if (CompareByteBuffer(EndDocument,&buffer,strlen(EndDocument)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,EndDocument,strlen(EndDocument)) != MagickFalse)
       skip=MagickFalse;
     if (skip != MagickFalse)
       continue;
-    if (CompareByteBuffer(PostscriptLevel,&buffer,strlen(PostscriptLevel)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,PostscriptLevel,strlen(PostscriptLevel)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer)+4;
+        p=GetMagickByteBufferDatum(&buffer)+4;
         (void) SetImageProperty(image,"ps:Level",p);
       }
-    if (CompareByteBuffer(ImageData,&buffer,strlen(ImageData)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,ImageData,strlen(ImageData)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         (void) sscanf(p,ImageData " %lu %lu",&ps_info->columns,&ps_info->rows);
       }
     /*
       Is this a CMYK document?
     */
     length=strlen(DocumentProcessColors);
-    if (CompareByteBuffer(DocumentProcessColors,&buffer,length) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,DocumentProcessColors,length) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         if ((GlobExpression(p,"*Cyan*",MagickTrue) != MagickFalse) ||
             (GlobExpression(p,"*Magenta*",MagickTrue) != MagickFalse) ||
             (GlobExpression(p,"*Yellow*",MagickTrue) != MagickFalse))
           ps_info->cmyk=MagickTrue;
       }
-    if (CompareByteBuffer(CMYKCustomColor,&buffer,strlen(CMYKCustomColor)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,CMYKCustomColor,strlen(CMYKCustomColor)) != MagickFalse)
       ps_info->cmyk=MagickTrue;
-    if (CompareByteBuffer(CMYKProcessColor,&buffer,strlen(CMYKProcessColor)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,CMYKProcessColor,strlen(CMYKProcessColor)) != MagickFalse)
       ps_info->cmyk=MagickTrue;
     length=strlen(DocumentCustomColors);
-    if ((CompareByteBuffer(DocumentCustomColors,&buffer,length) != MagickFalse) ||
-        (CompareByteBuffer(CMYKCustomColor,&buffer,strlen(CMYKCustomColor)) != MagickFalse) ||
-        (CompareByteBuffer(SpotColor,&buffer,strlen(SpotColor)) != MagickFalse))
+    if ((CompareMagickByteBuffer(&buffer,DocumentCustomColors,length) != MagickFalse) ||
+        (CompareMagickByteBuffer(&buffer,CMYKCustomColor,strlen(CMYKCustomColor)) != MagickFalse) ||
+        (CompareMagickByteBuffer(&buffer,SpotColor,strlen(SpotColor)) != MagickFalse))
       {
         char
           name[MagickPathExtent],
@@ -357,7 +357,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
         (void) FormatLocaleString(property,MagickPathExtent,
           "pdf:SpotColor-%.20g",(double) spotcolor++);
         i=0;
-        for (c=ReadByteBuffer(&buffer); c != EOF; c=ReadByteBuffer(&buffer))
+        for (c=ReadMagickByteBuffer(&buffer); c != EOF; c=ReadMagickByteBuffer(&buffer))
         {
           if ((isspace(c) != 0) || ((i+1) == MagickPathExtent))
             break;
@@ -374,7 +374,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
         continue;
       }
     if ((ps_info->icc_profile == (StringInfo *) NULL) &&
-        (CompareByteBuffer(ICCProfile,&buffer,strlen(ICCProfile)) != MagickFalse))
+        (CompareMagickByteBuffer(&buffer,ICCProfile,strlen(ICCProfile)) != MagickFalse))
       {
         unsigned char
           *datum;
@@ -397,7 +397,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
         continue;
       }
     if ((ps_info->photoshop_profile == (StringInfo *) NULL) &&
-        (CompareByteBuffer(PhotoshopProfile,&buffer,strlen(PhotoshopProfile)) != MagickFalse))
+        (CompareMagickByteBuffer(&buffer,PhotoshopProfile,strlen(PhotoshopProfile)) != MagickFalse))
       {
         unsigned char
           *q;
@@ -405,7 +405,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
         /*
           Read Photoshop profile.
         */
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         count=(ssize_t) sscanf(p,PhotoshopProfile " %lu",&extent);
         if (count != 1)
           continue;
@@ -430,37 +430,37 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
     */
     count=0;
     i=0;
-    if (CompareByteBuffer(BoundingBox,&buffer,strlen(BoundingBox)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,BoundingBox,strlen(BoundingBox)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         count=(ssize_t) sscanf(p,BoundingBox " %lf %lf %lf %lf",
           &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
         i=2;
       }
-    if (CompareByteBuffer(DocumentMedia,&buffer,strlen(DocumentMedia)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,DocumentMedia,strlen(DocumentMedia)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         count=(ssize_t) sscanf(p,DocumentMedia " %lf %lf %lf %lf",
           &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
         i=1;
       }
-    if (CompareByteBuffer(HiResBoundingBox,&buffer,strlen(HiResBoundingBox)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,HiResBoundingBox,strlen(HiResBoundingBox)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         count=(ssize_t) sscanf(p,HiResBoundingBox " %lf %lf %lf %lf",
           &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
         i=3;
       }
-    if (CompareByteBuffer(PageBoundingBox,&buffer,strlen(PageBoundingBox)) != MagickFalse)
+    if (CompareMagickByteBuffer(&buffer,PageBoundingBox,strlen(PageBoundingBox)) != MagickFalse)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         count=(ssize_t) sscanf(p,PageBoundingBox " %lf %lf %lf %lf",
           &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
         i=1;
       }
-    if (CompareByteBuffer(PageMedia,&buffer,strlen(PageMedia)) == 0)
+    if (CompareMagickByteBuffer(&buffer,PageMedia,strlen(PageMedia)) == 0)
       {
-        p=GetByteBufferDatum(&buffer);
+        p=GetMagickByteBufferDatum(&buffer);
         count=(ssize_t) sscanf(p,PageMedia " %lf %lf %lf %lf",
           &bounds.x1,&bounds.y1,&bounds.x2,&bounds.y2);
         i=1;
@@ -673,6 +673,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
       count=write(file,translate_geometry,(unsigned int)
         strlen(translate_geometry));
     }
+  (void) count;
   file=close(file)-1;
   /*
     Render Postscript with the Ghostscript delegate.

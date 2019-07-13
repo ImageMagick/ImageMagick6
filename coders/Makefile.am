@@ -226,7 +226,7 @@ MAGICK_CODER_SRCS = \
   $(MAGICK_X11_SRCS)
 
 CODERS_NOINST_HDRS = \
-  coders/byte-buffer-private.h \
+  coders/bytebuffer-private.h \
   coders/ghostscript-private.h
 
 if WITH_MODULES
