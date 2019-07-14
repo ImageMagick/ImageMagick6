@@ -81,8 +81,8 @@
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
-#include "bytebuffer-private.h"
-#include "ghostscript-private.h"
+#include "coders/bytebuffer-private.h"
+#include "coders/ghostscript-private.h"
 
 /*
   Define declarations.
