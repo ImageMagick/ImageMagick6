@@ -103,6 +103,7 @@ MAGICK_CODER_SRCS = \
 	coders/bgr.c \
 	coders/bmp.c \
 	coders/braille.c \
+  coders/bytebuffer-private.h \
 	coders/cals.c \
 	coders/caption.c \
 	coders/cin.c \
@@ -119,6 +120,7 @@ MAGICK_CODER_SRCS = \
 	coders/dpx.c \
 	coders/fax.c \
 	coders/fits.c \
+  coders/ghostscript-private.h \
 	coders/gif.c \
 	coders/gradient.c \
 	coders/gray.c \
