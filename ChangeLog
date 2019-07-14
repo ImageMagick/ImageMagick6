@@ -1,5 +1,5 @@
 2019-07-14  6.9.10-54 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-54, GIT revision 14673:cfb6437:20190714.
+  * Release ImageMagick version 6.9.10-54, GIT revision 14675:d1a5271:20190714.
 
 2019-07-08  6.9.10-54 Cristy  <quetzlzacatenango@image...>
   * Avoid divide by zero (reference
