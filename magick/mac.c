@@ -1428,7 +1428,7 @@ static Boolean SearchForFile(OSType creator_type,OSType file_type,FSSpec *file,
     serial_number;
 
   ssize_t
-    buffer_size = 16384;
+    buffer_size = MagickMinBufferExtent;
 
   serial_number.lowLongOfPSN=kCurrentProcess;
   serial_number.highLongOfPSN=0;
