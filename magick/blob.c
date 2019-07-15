@@ -808,7 +808,7 @@ MagickExport MagickBooleanType DiscardBlobBytes(Image *image,
     count;
 
   unsigned char
-    buffer[MagickMinBufferExtent];
+    buffer[MagickMinBufferExtent >> 1];
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
