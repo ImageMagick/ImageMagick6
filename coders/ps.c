@@ -411,7 +411,8 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
           continue;
         if ((MagickSizeType) extent > GetBlobSize(image))
           continue;
-        ps_info->photoshop_profile=AcquireStringInfo((size_t) extent);
+        length=(size_t) extent;
+        ps_info->photoshop_profile=AcquireStringInfo(length+1U);
         q=GetStringInfoDatum(ps_info->photoshop_profile);
         while (extent > 0)
         {
@@ -421,6 +422,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
           *q++=(unsigned char) c;
           extent-=2;
         }
+        SetStringInfoLength(ps_info->icc_profile,length);
         continue;
       }
     if (image_info->page != (char *) NULL)
