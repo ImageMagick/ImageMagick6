@@ -71,6 +71,7 @@
 #include "magick/image-private.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/opencl-private.h"
@@ -148,16 +149,16 @@ struct _FxInfo
 %
 %  The format of the AcquireFxInfo method is:
 %
-%      FxInfo *AcquireFxInfo(Image *image,const char *expression)
+%      FxInfo *AcquireFxInfo(Image *images,const char *expression)
 %
 %  A description of each parameter follows:
 %
-%    o image: the image.
+%    o images: the image sequence.
 %
 %    o expression: the expression.
 %
 */
-MagickExport FxInfo *AcquireFxInfo(const Image *image,const char *expression)
+MagickExport FxInfo *AcquireFxInfo(const Image *images,const char *expression)
 {
   char
     fx_op[2];
@@ -171,14 +172,12 @@ MagickExport FxInfo *AcquireFxInfo(const Image *image,const char *expression)
   register ssize_t
     i;
 
-  fx_info=(FxInfo *) AcquireMagickMemory(sizeof(*fx_info));
-  if (fx_info == (FxInfo *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  fx_info=(FxInfo *) AcquireCriticalMemory(sizeof(*fx_info));
   (void) memset(fx_info,0,sizeof(*fx_info));
   fx_info->exception=AcquireExceptionInfo();
-  fx_info->images=image;
+  fx_info->images=images;
   fx_info->colors=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
-    RelinquishAlignedMemory);
+    RelinquishMagickMemory);
   fx_info->symbols=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
     RelinquishMagickMemory);
   fx_info->view=(CacheView **) AcquireQuantumMemory(GetImageListLength(
@@ -1257,7 +1256,7 @@ static inline MagickBooleanType IsFxFunction(const char *expression,
 
   c=expression[length];
   if ((LocaleNCompare(expression,name,length) == 0) &&
-      ((isspace(c) != 0) || (c == '(')))
+      ((isspace(c) == 0) || (c == '(')))
     return(MagickTrue);
   return(MagickFalse);
 }
@@ -1453,12 +1452,9 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
   status=InterpolateMagickPixelPacket(image,fx_info->view[i],image->interpolate,
     point.x,point.y,&pixel,exception);
   (void) status;
-  if ((strlen(p) > 2) &&
-      (LocaleCompare(p,"intensity") != 0) &&
-      (LocaleCompare(p,"luma") != 0) &&
-      (LocaleCompare(p,"luminance") != 0) &&
-      (LocaleCompare(p,"hue") != 0) &&
-      (LocaleCompare(p,"saturation") != 0) &&
+  if ((strlen(p) > 2) && (LocaleCompare(p,"intensity") != 0) &&
+      (LocaleCompare(p,"luma") != 0) && (LocaleCompare(p,"luminance") != 0) &&
+      (LocaleCompare(p,"hue") != 0) && (LocaleCompare(p,"saturation") != 0) &&
       (LocaleCompare(p,"lightness") != 0))
     {
       char
@@ -2229,7 +2225,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
           *beta=fabs(floor((*beta)+0.5));
-          FxReturn(fmod(alpha,(double) *beta));
+          FxReturn(fmod(alpha,*beta));
         }
         case '+':
         {
@@ -2247,7 +2243,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           gamma=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          if ((size_t) (gamma+0.5) > (8*sizeof(size_t)))
+          if ((size_t) (gamma+0.5) >= (8*sizeof(size_t)))
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
@@ -2260,7 +2256,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           gamma=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          if ((size_t) (gamma+0.5) > (8*sizeof(size_t)))
+          if ((size_t) (gamma+0.5) >= (8*sizeof(size_t)))
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
@@ -2593,7 +2589,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
               default: type="unknown"; break;
             }
           *subexpression='\0';
-          if (strlen(subexpression) > 1)
+          if (strlen(expression) > 6)
             (void) CopyMagickString(subexpression,expression+6,MaxTextExtent);
           if (strlen(subexpression) > 1)
             subexpression[strlen(subexpression)-1]='\0';
@@ -2618,7 +2614,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
       if (LocaleCompare(expression,"epsilon") == 0)
         FxReturn(MagickEpsilon);
 #if defined(MAGICKCORE_HAVE_ERF)
-      if (LocaleNCompare(expression,"erp",3) == 0)
+      if (IsFxFunction(expression,"erf",3) != MagickFalse)
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
@@ -2631,7 +2627,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             depth+1,beta,exception);
           FxReturn(exp(alpha));
         }
-      if (LocaleCompare(expression,"e") != MagickFalse)
+      if (LocaleCompare(expression,"e") == 0)
         FxReturn(2.7182818284590452354);
       break;
     }
@@ -2663,8 +2659,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
 
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
-          gcd=FxGCD((MagickOffsetType) (alpha+0.5),(MagickOffsetType)
-            (*beta+0.5));
+          gcd=FxGCD((MagickOffsetType) (alpha+0.5),(MagickOffsetType) (*beta+
+            0.5));
           FxReturn((double) gcd);
         }
       if (LocaleCompare(expression,"g") == 0)
@@ -2894,7 +2890,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             depth+1,beta,exception);
           if (alpha == 0)
             FxReturn(1.0);
-          gamma=(sin((MagickPI*alpha))/(MagickPI*alpha));
+          gamma=sin((MagickPI*alpha))/(MagickPI*alpha);
           FxReturn(gamma);
         }
       if (IsFxFunction(expression,"sinh",4) != MagickFalse)
@@ -2971,7 +2967,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
     case 'W':
     case 'w':
     {
-      if (LocaleNCompare(expression,"while(",6) == 0)
+      if (IsFxFunction(expression,"while",5) != MagickFalse)
         {
           do
           {
