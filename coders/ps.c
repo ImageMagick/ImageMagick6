@@ -222,14 +222,17 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
 #define ICCProfile "BeginICCProfile:"
 #define PhotoshopProfile  "BeginPhotoshop:"
 
-  MagickByteBuffer
-    buffer;
+  char
+    version[128];
 
   int
     c;
 
   MagickBooleanType
     skip;
+
+  MagickByteBuffer
+    buffer;
 
   register char
     *p;
@@ -286,6 +289,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
   hex_digits[(int) 'F']=15;
   extent=0;
   priority=0;
+  *version='\0';
   spotcolor=0;
   skip=MagickFalse;
   (void) memset(&buffer,0,sizeof(buffer));
@@ -315,10 +319,17 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
       skip=MagickFalse;
     if (skip != MagickFalse)
       continue;
-    if (CompareMagickByteBuffer(&buffer,PostscriptLevel,strlen(PostscriptLevel)) != MagickFalse)
+    if ((*version == '\0') &&
+        (CompareMagickByteBuffer(&buffer,PostscriptLevel,strlen(PostscriptLevel)) != MagickFalse))
       {
-        p=GetMagickByteBufferDatum(&buffer)+4;
-        (void) SetImageProperty(image,"ps:Level",p);
+        i=0;
+        for (c=ReadMagickByteBuffer(&buffer); c != EOF; c=ReadMagickByteBuffer(&buffer))
+        {
+          if ((c == '\r') || (c == '\n') || ((i+1) == sizeof(version)))
+            break;
+          version[i++]=(char) c;
+        }
+        version[i]='\0';
       }
     if (CompareMagickByteBuffer(&buffer,ImageData,strlen(ImageData)) != MagickFalse)
       {
@@ -476,6 +487,8 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
     ps_info->bounds=bounds;
     priority=i;
   }
+  if (version[0] != '\0')
+    (void) SetImageProperty(image,"ps:Level",version);
 }
 
 static inline void CleanupPSInfo(PSInfo *pdf_info)
