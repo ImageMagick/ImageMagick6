@@ -1127,18 +1127,12 @@ static inline void CompositeMinus(const MagickPixelPacket *p,
   }
 }
 
-static inline MagickRealType ModulusAdd(const MagickRealType p,
-  const MagickRealType Sa,const MagickRealType q,const MagickRealType Da)
+static inline MagickRealType ModulusAdd(const MagickRealType Sc,
+  const MagickRealType Sa,const MagickRealType Dc,const MagickRealType Da)
 {
-  MagickRealType
-    pixel;
-
-  pixel=p+q;
-  while (pixel > QuantumRange)
-    pixel-=QuantumRange;
-  while (pixel < 0.0)
-    pixel+=QuantumRange;
-  return(pixel*Sa*Da+p*Sa*(1.0-Da)+q*Da*(1.0-Sa));
+  if (((Sc*Sa)+(Dc*Da)) <= QuantumRange)
+    return((Sc*Sa)+Dc*Da);
+  return(((Sc*Sa)+Dc*Da)-QuantumRange);
 }
 
 static inline void CompositeModulusAdd(const MagickPixelPacket *p,
@@ -1179,18 +1173,12 @@ static inline void CompositeModulusAdd(const MagickPixelPacket *p,
   }
 }
 
-static inline MagickRealType ModulusSubtract(const MagickRealType p,
-  const MagickRealType Sa,const MagickRealType q,const MagickRealType Da)
+static inline MagickRealType ModulusSubtract(const MagickRealType Sc,
+  const MagickRealType Sa,const MagickRealType Dc,const MagickRealType Da)
 {
-  MagickRealType
-    pixel;
-
-  pixel=p-q;
-  while (pixel > QuantumRange)
-    pixel-=QuantumRange;
-  while (pixel < 0.0)
-    pixel+=QuantumRange;
-  return(pixel*Sa*Da+p*Sa*(1.0-Da)+q*Da*(1.0-Sa));
+  if (((Sc*Sa)-(Dc*Da)) <= 0.0)
+    return((Sc*Sa)-Dc*Da);
+  return(((Sc*Sa)-Dc*Da)+QuantumRange);
 }
 
 static inline void CompositeModulusSubtract(const MagickPixelPacket *p,
