@@ -3075,7 +3075,7 @@ MagickExport void *GetMagickRegistry(const ssize_t id,RegistryType *type,
 */
 MagickExport void GetMagickToken(const char *start,const char **end,char *token)
 {
-  GetNextToken(start,end,~0UL,token);
+  (void) GetNextToken(start,end,~0UL,token);
 }
 
 /*

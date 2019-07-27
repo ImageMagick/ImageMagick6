@@ -459,9 +459,9 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
           p=(const char *) content;
           for (i=0; (*p != '\0') && (i < 3); i++)
           {
-            GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
-              GetNextToken(p,&p,MaxTextExtent,token);
+              (void) GetNextToken(p,&p,MaxTextExtent,token);
             switch (i)
             {
               case 0:
@@ -491,9 +491,9 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
           p=(const char *) content;
           for (i=0; (*p != '\0') && (i < 3); i++)
           {
-            GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
-              GetNextToken(p,&p,MaxTextExtent,token);
+              (void) GetNextToken(p,&p,MaxTextExtent,token);
             switch (i)
             {
               case 0:
@@ -524,9 +524,9 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
           p=(const char *) content;
           for (i=0; (*p != '\0') && (i < 3); i++)
           {
-            GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == ',')
-              GetNextToken(p,&p,MaxTextExtent,token);
+              (void) GetNextToken(p,&p,MaxTextExtent,token);
             switch (i)
             {
               case 0:
@@ -561,7 +561,7 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
         {
           content=GetXMLTreeContent(saturation);
           p=(const char *) content;
-          GetNextToken(p,&p,MaxTextExtent,token);
+          (void) GetNextToken(p,&p,MaxTextExtent,token);
           color_correction.saturation=StringToDouble(token,(char **) NULL);
         }
     }

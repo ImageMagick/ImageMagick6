@@ -768,9 +768,9 @@ MagickExport MagickStatusType ParseAffineGeometry(const char *geometry,
   p=(char *) geometry;
   for (i=0; (*p != '\0') && (i < 6); i++)
   {
-    GetNextToken(p,&p,MaxTextExtent,token);
+    (void) GetNextToken(p,&p,MaxTextExtent,token);
     if (*token == ',')
-      GetNextToken(p,&p,MaxTextExtent,token);
+      (void) GetNextToken(p,&p,MaxTextExtent,token);
     switch (i)
     {
       case 0:
