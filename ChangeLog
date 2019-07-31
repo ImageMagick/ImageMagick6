@@ -1,3 +1,10 @@
+2019-08-01  6.9.10-59 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-59, GIT revision 14...
+
+2019-08-01  6.9.10-59 Cristy  <quetzlzacatenango@image...>
+  * Module is a reserved keyword for C++ 20 (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1650).
+
 2019-07-29  6.9.10-58 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-58, GIT revision 14723:fffbce8:20190729.
 
