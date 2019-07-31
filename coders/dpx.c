@@ -1371,7 +1371,7 @@ ModuleExport size_t RegisterDPXImage(void)
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("SMPTE 268M-2003 (DPX 2.0)");
   entry->note=ConstantString(DPXNote);
-  entry->module=ConstantString("DPX");
+  entry->magick_module=ConstantString("DPX");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

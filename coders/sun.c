@@ -692,14 +692,14 @@ ModuleExport size_t RegisterSUNImage(void)
   entry->magick=(IsImageFormatHandler *) IsSUN;
   entry->description=ConstantString("SUN Rasterfile");
   entry->seekable_stream=MagickTrue;
-  entry->module=ConstantString("SUN");
+  entry->magick_module=ConstantString("SUN");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("SUN");
   entry->decoder=(DecodeImageHandler *) ReadSUNImage;
   entry->encoder=(EncodeImageHandler *) WriteSUNImage;
   entry->description=ConstantString("SUN Rasterfile");
   entry->seekable_stream=MagickTrue;
-  entry->module=ConstantString("SUN");
+  entry->magick_module=ConstantString("SUN");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

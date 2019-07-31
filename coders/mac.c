@@ -289,7 +289,7 @@ ModuleExport size_t RegisterMACImage(void)
   entry=SetMagickInfo("MAC");
   entry->decoder=(DecodeImageHandler *) ReadMACImage;
   entry->description=ConstantString("MAC Paint");
-  entry->module=ConstantString("MAC");
+  entry->magick_module=ConstantString("MAC");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

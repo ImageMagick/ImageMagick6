@@ -2989,7 +2989,7 @@ ModuleExport size_t RegisterWMFImage(void)
   entry->decoder=ReadWMFImage;
 #endif
   entry->description=ConstantString("Compressed Windows Meta File");
-  entry->module=ConstantString("WMF");
+  entry->magick_module=ConstantString("WMF");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("WMF");
@@ -2997,7 +2997,7 @@ ModuleExport size_t RegisterWMFImage(void)
   entry->decoder=ReadWMFImage;
 #endif
   entry->description=ConstantString("Windows Meta File");
-  entry->module=ConstantString("WMF");
+  entry->magick_module=ConstantString("WMF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

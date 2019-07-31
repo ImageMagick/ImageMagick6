@@ -255,7 +255,7 @@ ModuleExport size_t RegisterVIDImage(void)
   entry->encoder=(EncodeImageHandler *) WriteVIDImage;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Visual Image Directory");
-  entry->module=ConstantString("VID");
+  entry->magick_module=ConstantString("VID");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

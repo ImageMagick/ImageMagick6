@@ -928,7 +928,7 @@ ModuleExport size_t RegisterPCDImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Photo CD");
-  entry->module=ConstantString("PCD");
+  entry->magick_module=ConstantString("PCD");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PCDS");
   entry->decoder=(DecodeImageHandler *) ReadPCDImage;
@@ -936,7 +936,7 @@ ModuleExport size_t RegisterPCDImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Photo CD");
-  entry->module=ConstantString("PCD");
+  entry->magick_module=ConstantString("PCD");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

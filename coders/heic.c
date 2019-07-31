@@ -475,7 +475,7 @@ ModuleExport size_t RegisterHEICImage(void)
 #if defined(LIBHEIF_VERSION)
   entry->version=ConstantString(LIBHEIF_VERSION);
 #endif
-  entry->module=ConstantString("GIF");
+  entry->magick_module=ConstantString("GIF");
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);

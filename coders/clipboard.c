@@ -240,7 +240,7 @@ ModuleExport size_t RegisterCLIPBOARDImage(void)
   entry->adjoin=MagickFalse;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("The system clipboard");
-  entry->module=ConstantString("CLIPBOARD");
+  entry->magick_module=ConstantString("CLIPBOARD");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

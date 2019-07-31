@@ -178,7 +178,7 @@ ModuleExport size_t RegisterTILEImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Tile image with a texture");
-  entry->module=ConstantString("TILE");
+  entry->magick_module=ConstantString("TILE");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

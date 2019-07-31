@@ -13108,7 +13108,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->adjoin=MagickFalse;
   entry->stealth=MagickTrue;
   entry->description=ConstantString("Granite texture");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
 
   entry=SetMagickInfo("H");
@@ -13116,7 +13116,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->adjoin=MagickFalse;
   entry->stealth=MagickFalse;
   entry->description=ConstantString("Image expressed as a 'C/C++' char array");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
 
   entry=SetMagickInfo("LOGO");
@@ -13124,7 +13124,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->adjoin=MagickFalse;
   entry->stealth=MagickTrue;
   entry->description=ConstantString("ImageMagick Logo");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
 
   entry=SetMagickInfo("MAGICK");
@@ -13134,7 +13134,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->stealth=MagickFalse;
   entry->description=ConstantString(
     "Predefined Magick Image (LOGO, ROSE, etc.); output same as 'H'");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
 
   entry=SetMagickInfo("NETSCAPE");
@@ -13142,7 +13142,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->adjoin=MagickFalse;
   entry->stealth=MagickTrue;
   entry->description=ConstantString("Netscape 216 color cube");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
 
   entry=SetMagickInfo("ROSE");
@@ -13150,7 +13150,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->adjoin=MagickFalse;
   entry->stealth=MagickTrue;
   entry->description=ConstantString("70x46 Truecolor rose");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
 
   entry=SetMagickInfo("WIZARD");
@@ -13158,7 +13158,7 @@ ModuleExport size_t RegisterMAGICKImage(void)
   entry->adjoin=MagickFalse;
   entry->stealth=MagickTrue;
   entry->description=ConstantString("ImageMagick Wizard");
-  entry->module=ConstantString("MAGICK");
+  entry->magick_module=ConstantString("MAGICK");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

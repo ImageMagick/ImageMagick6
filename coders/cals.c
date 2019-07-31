@@ -332,7 +332,7 @@ ModuleExport size_t RegisterCALSImage(void)
   entry->magick=(IsImageFormatHandler *) IsCALS;
   entry->description=ConstantString(CALSDescription);
   entry->note=ConstantString(CALSNote);
-  entry->module=ConstantString("CALS");
+  entry->magick_module=ConstantString("CALS");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("CALS");
   entry->decoder=(DecodeImageHandler *) ReadCALSImage;
@@ -343,7 +343,7 @@ ModuleExport size_t RegisterCALSImage(void)
   entry->magick=(IsImageFormatHandler *) IsCALS;
   entry->description=ConstantString(CALSDescription);
   entry->note=ConstantString(CALSNote);
-  entry->module=ConstantString("CALS");
+  entry->magick_module=ConstantString("CALS");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

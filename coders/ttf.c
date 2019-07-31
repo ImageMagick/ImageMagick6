@@ -341,7 +341,7 @@ ModuleExport size_t RegisterTTFImage(void)
   entry->description=ConstantString("Multi-face font package");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("TTF");
+  entry->magick_module=ConstantString("TTF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PFA");
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
@@ -352,7 +352,7 @@ ModuleExport size_t RegisterTTFImage(void)
   entry->description=ConstantString("Postscript Type 1 font (ASCII)");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("TTF");
+  entry->magick_module=ConstantString("TTF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PFB");
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
@@ -363,7 +363,7 @@ ModuleExport size_t RegisterTTFImage(void)
   entry->description=ConstantString("Postscript Type 1 font (binary)");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("TTF");
+  entry->magick_module=ConstantString("TTF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("OTF");
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
@@ -374,7 +374,7 @@ ModuleExport size_t RegisterTTFImage(void)
   entry->description=ConstantString("Open Type font");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("TTF");
+  entry->magick_module=ConstantString("TTF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TTC");
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
@@ -385,7 +385,7 @@ ModuleExport size_t RegisterTTFImage(void)
   entry->description=ConstantString("TrueType font collection");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("TTF");
+  entry->magick_module=ConstantString("TTF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TTF");
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
@@ -396,7 +396,7 @@ ModuleExport size_t RegisterTTFImage(void)
   entry->description=ConstantString("TrueType font");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("TTF");
+  entry->magick_module=ConstantString("TTF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

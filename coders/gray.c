@@ -804,7 +804,7 @@ ModuleExport size_t RegisterGRAYImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Raw gray samples");
-  entry->module=ConstantString("GRAY");
+  entry->magick_module=ConstantString("GRAY");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("GRAYA");
   entry->decoder=(DecodeImageHandler *) ReadGRAYImage;
@@ -812,7 +812,7 @@ ModuleExport size_t RegisterGRAYImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Raw gray and alpha samples");
-  entry->module=ConstantString("GRAY");
+  entry->magick_module=ConstantString("GRAY");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

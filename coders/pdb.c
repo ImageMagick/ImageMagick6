@@ -672,7 +672,7 @@ ModuleExport size_t RegisterPDBImage(void)
   entry->encoder=(EncodeImageHandler *) WritePDBImage;
   entry->magick=(IsImageFormatHandler *) IsPDB;
   entry->description=ConstantString("Palm Database ImageViewer Format");
-  entry->module=ConstantString("PDB");
+  entry->magick_module=ConstantString("PDB");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

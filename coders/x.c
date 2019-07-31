@@ -150,7 +150,7 @@ ModuleExport size_t RegisterXImage(void)
 #endif
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("X Image");
-  entry->module=ConstantString("X");
+  entry->magick_module=ConstantString("X");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

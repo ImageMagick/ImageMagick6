@@ -55,7 +55,7 @@ typedef struct _MagickInfo
     *description,
     *version,
     *note,
-    *module;
+    *magick_module;
 
   ImageInfo
     *image_info;

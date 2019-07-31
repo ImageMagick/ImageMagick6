@@ -754,7 +754,7 @@ ModuleExport size_t RegisterRLEImage(void)
   entry->seekable_stream=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Utah Run length encoded image");
-  entry->module=ConstantString("RLE");
+  entry->magick_module=ConstantString("RLE");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

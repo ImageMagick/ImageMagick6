@@ -322,7 +322,7 @@ ModuleExport size_t RegisterPWPImage(void)
   entry->decoder=(DecodeImageHandler *) ReadPWPImage;
   entry->magick=(IsImageFormatHandler *) IsPWP;
   entry->description=ConstantString("Seattle Film Works");
-  entry->module=ConstantString("PWP");
+  entry->magick_module=ConstantString("PWP");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

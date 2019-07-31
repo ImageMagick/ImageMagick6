@@ -1534,7 +1534,7 @@ ModuleExport size_t RegisterMATImage(void)
   entry->blob_support=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=AcquireString("MATLAB level 5 image format");
-  entry->module=AcquireString("MAT");
+  entry->magick_module=AcquireString("MAT");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

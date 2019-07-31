@@ -285,7 +285,7 @@ ModuleExport size_t RegisterSCREENSHOTImage(void)
   entry->decoder=(DecodeImageHandler *) ReadSCREENSHOTImage;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Screen shot");
-  entry->module=ConstantString("SCREENSHOT");
+  entry->magick_module=ConstantString("SCREENSHOT");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

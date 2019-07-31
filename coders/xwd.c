@@ -695,7 +695,7 @@ ModuleExport size_t RegisterXWDImage(void)
   entry->magick=(IsImageFormatHandler *) IsXWD;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("X Windows system window dump (color)");
-  entry->module=ConstantString("XWD");
+  entry->magick_module=ConstantString("XWD");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

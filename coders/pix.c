@@ -300,7 +300,7 @@ ModuleExport size_t RegisterPIXImage(void)
   entry=SetMagickInfo("PIX");
   entry->decoder=(DecodeImageHandler *) ReadPIXImage;
   entry->description=ConstantString("Alias/Wavefront RLE image format");
-  entry->module=ConstantString("PIX");
+  entry->magick_module=ConstantString("PIX");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

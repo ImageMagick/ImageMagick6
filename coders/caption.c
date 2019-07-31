@@ -346,7 +346,7 @@ ModuleExport size_t RegisterCAPTIONImage(void)
   entry->decoder=(DecodeImageHandler *) ReadCAPTIONImage;
   entry->description=ConstantString("Caption");
   entry->adjoin=MagickFalse;
-  entry->module=ConstantString("CAPTION");
+  entry->magick_module=ConstantString("CAPTION");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

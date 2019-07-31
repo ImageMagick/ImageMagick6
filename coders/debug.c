@@ -107,7 +107,7 @@ ModuleExport size_t RegisterDEBUGImage(void)
   entry->raw=MagickTrue;
   entry->stealth=MagickTrue;
   entry->description=ConstantString("Image pixel values for debugging");
-  entry->module=ConstantString("DEBUG");
+  entry->magick_module=ConstantString("DEBUG");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

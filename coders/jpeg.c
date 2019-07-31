@@ -1649,7 +1649,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
-  entry->module=ConstantString("JPEG");
+  entry->magick_module=ConstantString("JPEG");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("JPEG");
 #if (JPEG_LIB_VERSION < 80) && !defined(LIBJPEG_TURBO_VERSION)
@@ -1666,7 +1666,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
-  entry->module=ConstantString("JPEG");
+  entry->magick_module=ConstantString("JPEG");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("JPG");
 #if (JPEG_LIB_VERSION < 80) && !defined(LIBJPEG_TURBO_VERSION)
@@ -1682,7 +1682,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
-  entry->module=ConstantString("JPEG");
+  entry->magick_module=ConstantString("JPEG");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("JPS");
 #if (JPEG_LIB_VERSION < 80) && !defined(LIBJPEG_TURBO_VERSION)
@@ -1698,7 +1698,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
-  entry->module=ConstantString("JPEG");
+  entry->magick_module=ConstantString("JPEG");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PJPEG");
 #if (JPEG_LIB_VERSION < 80) && !defined(LIBJPEG_TURBO_VERSION)
@@ -1714,7 +1714,7 @@ ModuleExport size_t RegisterJPEGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jpeg");
-  entry->module=ConstantString("JPEG");
+  entry->magick_module=ConstantString("JPEG");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

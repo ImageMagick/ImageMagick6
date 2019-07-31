@@ -314,7 +314,7 @@ ModuleExport size_t RegisterLABELImage(void)
   entry->adjoin=MagickFalse;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Image label");
-  entry->module=ConstantString("LABEL");
+  entry->magick_module=ConstantString("LABEL");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

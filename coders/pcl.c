@@ -429,7 +429,7 @@ ModuleExport size_t RegisterPCLImage(void)
   entry->seekable_stream=MagickTrue;
   entry->thread_support=EncoderThreadSupport;
   entry->description=ConstantString("Printer Control Language");
-  entry->module=ConstantString("PCL");
+  entry->magick_module=ConstantString("PCL");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

@@ -580,7 +580,7 @@ ModuleExport size_t RegisterJP2Image(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jp2");
-  entry->module=ConstantString("JP2");
+  entry->magick_module=ConstantString("JP2");
   entry->magick=(IsImageFormatHandler *) IsJP2;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
@@ -594,7 +594,7 @@ ModuleExport size_t RegisterJP2Image(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jp2");
-  entry->module=ConstantString("JP2");
+  entry->magick_module=ConstantString("JP2");
   entry->magick=(IsImageFormatHandler *) IsJ2K;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
@@ -608,7 +608,7 @@ ModuleExport size_t RegisterJP2Image(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jp2");
-  entry->module=ConstantString("JP2");
+  entry->magick_module=ConstantString("JP2");
   entry->magick=(IsImageFormatHandler *) IsJ2K;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
@@ -622,7 +622,7 @@ ModuleExport size_t RegisterJP2Image(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jp2");
-  entry->module=ConstantString("JP2");
+  entry->magick_module=ConstantString("JP2");
   entry->magick=(IsImageFormatHandler *) IsJP2;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
@@ -636,7 +636,7 @@ ModuleExport size_t RegisterJP2Image(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jp2");
-  entry->module=ConstantString("JP2");
+  entry->magick_module=ConstantString("JP2");
   entry->magick=(IsImageFormatHandler *) IsJP2;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
@@ -650,7 +650,7 @@ ModuleExport size_t RegisterJP2Image(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/jp2");
-  entry->module=ConstantString("JP2");
+  entry->magick_module=ConstantString("JP2");
   entry->magick=(IsImageFormatHandler *) IsJP2;
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;

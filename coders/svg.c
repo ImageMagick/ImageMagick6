@@ -3749,7 +3749,7 @@ ModuleExport size_t RegisterSVGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->magick=(IsImageFormatHandler *) IsSVG;
-  entry->module=ConstantString("SVG");
+  entry->magick_module=ConstantString("SVG");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("SVGZ");
 #if defined(MAGICKCORE_XML_DELEGATE)
@@ -3766,7 +3766,7 @@ ModuleExport size_t RegisterSVGImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->magick=(IsImageFormatHandler *) IsSVG;
-  entry->module=ConstantString("SVG");
+  entry->magick_module=ConstantString("SVG");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("MSVG");
 #if defined(MAGICKCORE_XML_DELEGATE)
@@ -3780,7 +3780,7 @@ ModuleExport size_t RegisterSVGImage(void)
 #endif
   entry->description=ConstantString("ImageMagick's own SVG internal renderer");
   entry->magick=(IsImageFormatHandler *) IsSVG;
-  entry->module=ConstantString("SVG");
+  entry->magick_module=ConstantString("SVG");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

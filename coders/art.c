@@ -238,7 +238,7 @@ ModuleExport size_t RegisterARTImage(void)
   entry->raw=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("PFS: 1st Publisher Clip Art");
-  entry->module=ConstantString("ART");
+  entry->magick_module=ConstantString("ART");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

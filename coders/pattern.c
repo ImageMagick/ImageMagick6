@@ -1024,7 +1024,7 @@ ModuleExport size_t RegisterPATTERNImage(void)
   entry->decoder=(DecodeImageHandler *) ReadPATTERNImage;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Predefined pattern");
-  entry->module=ConstantString("PATTERN");
+  entry->magick_module=ConstantString("PATTERN");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

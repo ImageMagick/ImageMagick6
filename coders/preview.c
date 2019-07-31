@@ -105,7 +105,7 @@ ModuleExport size_t RegisterPREVIEWImage(void)
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString(
     "Show a preview an image enhancement, effect, or f/x");
-  entry->module=ConstantString("PREVIEW");
+  entry->magick_module=ConstantString("PREVIEW");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

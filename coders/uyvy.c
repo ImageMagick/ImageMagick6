@@ -224,7 +224,7 @@ ModuleExport size_t RegisterUYVYImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("16bit/pixel interleaved YUV");
-  entry->module=ConstantString("UYVY");
+  entry->magick_module=ConstantString("UYVY");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("UYVY");
   entry->decoder=(DecodeImageHandler *) ReadUYVYImage;
@@ -233,7 +233,7 @@ ModuleExport size_t RegisterUYVYImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("16bit/pixel interleaved YUV");
-  entry->module=ConstantString("UYVY");
+  entry->magick_module=ConstantString("UYVY");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

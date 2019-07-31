@@ -234,7 +234,7 @@ ModuleExport size_t RegisterMONOImage(void)
   entry->endian_support=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Raw bi-level bitmap");
-  entry->module=ConstantString("MONO");
+  entry->magick_module=ConstantString("MONO");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

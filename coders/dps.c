@@ -567,7 +567,7 @@ ModuleExport size_t RegisterDPSImage(void)
 #endif
   entry->blob_support=MagickFalse;
   entry->description=ConstantString("Display Postscript Interpreter");
-  entry->module=ConstantString("DPS");
+  entry->magick_module=ConstantString("DPS");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

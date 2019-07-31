@@ -452,7 +452,7 @@ ModuleExport size_t RegisterXBMImage(void)
   entry->adjoin=MagickFalse;
   entry->description=ConstantString(
     "X Windows system bitmap (black and white)");
-  entry->module=ConstantString("XBM");
+  entry->magick_module=ConstantString("XBM");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

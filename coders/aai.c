@@ -271,7 +271,7 @@ ModuleExport size_t RegisterAAIImage(void)
   entry->decoder=(DecodeImageHandler *) ReadAAIImage;
   entry->encoder=(EncodeImageHandler *) WriteAAIImage;
   entry->description=ConstantString("AAI Dune image");
-  entry->module=ConstantString("AAI");
+  entry->magick_module=ConstantString("AAI");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

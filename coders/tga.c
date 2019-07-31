@@ -602,7 +602,7 @@ ModuleExport size_t RegisterTGAImage(void)
   entry->encoder=(EncodeImageHandler *) WriteTGAImage;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Truevision Targa image");
-  entry->module=ConstantString("TGA");
+  entry->magick_module=ConstantString("TGA");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TGA");
@@ -610,7 +610,7 @@ ModuleExport size_t RegisterTGAImage(void)
   entry->encoder=(EncodeImageHandler *) WriteTGAImage;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Truevision Targa image");
-  entry->module=ConstantString("TGA");
+  entry->magick_module=ConstantString("TGA");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("VDA");
@@ -618,7 +618,7 @@ ModuleExport size_t RegisterTGAImage(void)
   entry->encoder=(EncodeImageHandler *) WriteTGAImage;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Truevision Targa image");
-  entry->module=ConstantString("TGA");
+  entry->magick_module=ConstantString("TGA");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("VST");
@@ -626,7 +626,7 @@ ModuleExport size_t RegisterTGAImage(void)
   entry->encoder=(EncodeImageHandler *) WriteTGAImage;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Truevision Targa image");
-  entry->module=ConstantString("TGA");
+  entry->magick_module=ConstantString("TGA");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);

@@ -1601,7 +1601,7 @@ ModuleExport size_t RegisterPICTImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Apple Macintosh QuickDraw/PICT");
   entry->magick=(IsImageFormatHandler *) IsPICT;
-  entry->module=ConstantString("PICT");
+  entry->magick_module=ConstantString("PICT");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PICT");
   entry->decoder=(DecodeImageHandler *) ReadPICTImage;
@@ -1610,7 +1610,7 @@ ModuleExport size_t RegisterPICTImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Apple Macintosh QuickDraw/PICT");
   entry->magick=(IsImageFormatHandler *) IsPICT;
-  entry->module=ConstantString("PICT");
+  entry->magick_module=ConstantString("PICT");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

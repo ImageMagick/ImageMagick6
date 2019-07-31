@@ -283,7 +283,7 @@ ModuleExport size_t RegisterMVGImage(void)
   entry->seekable_stream=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Magick Vector Graphics");
-  entry->module=ConstantString("MVG");
+  entry->magick_module=ConstantString("MVG");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

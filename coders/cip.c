@@ -102,7 +102,7 @@ ModuleExport size_t RegisterCIPImage(void)
   entry->encoder=(EncodeImageHandler *) WriteCIPImage;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Cisco IP phone image format");
-  entry->module=ConstantString("CIP");
+  entry->magick_module=ConstantString("CIP");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

@@ -411,7 +411,7 @@ ModuleExport size_t RegisterSFWImage(void)
   entry->seekable_stream=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Seattle Film Works");
-  entry->module=ConstantString("SFW");
+  entry->magick_module=ConstantString("SFW");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

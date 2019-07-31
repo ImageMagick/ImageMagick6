@@ -816,8 +816,8 @@ static void *DestroyMagickNode(void *magick_info)
     *p;
 
   p=(MagickInfo *) magick_info;
-  if (p->module != (char *) NULL)
-    p->module=DestroyString(p->module);
+  if (p->magick_module != (char *) NULL)
+    p->magick_module=DestroyString(p->magick_module);
   if (p->note != (char *) NULL)
     p->note=DestroyString(p->note);
   if (p->mime_type != (char *) NULL)
@@ -969,14 +969,15 @@ MagickExport MagickBooleanType ListMagickInfo(FILE *file,
 #if defined(MAGICKCORE_MODULES_SUPPORT)
     {
       char
-        module[MaxTextExtent];
+        magick_module[MaxTextExtent];
 
-      *module='\0';
-      if (magick_info[i]->module != (char *) NULL)
-        (void) CopyMagickString(module,magick_info[i]->module,MaxTextExtent);
-      (void) ConcatenateMagickString(module,"          ",MaxTextExtent);
-      module[9]='\0';
-      (void) FormatLocaleFile(file,"%9s ",module);
+      *magick_module='\0';
+      if (magick_info[i]->magick_module != (char *) NULL)
+        (void) CopyMagickString(magick_module,magick_info[i]->magick_module,
+          MaxTextExtent);
+      (void) ConcatenateMagickString(magick_module,"          ",MaxTextExtent);
+      magick_module[9]='\0';
+      (void) FormatLocaleFile(file,"%9s ",magick_module);
     }
 #endif
     (void) FormatLocaleFile(file,"%c%c%c ",magick_info[i]->decoder ? 'r' : '-',

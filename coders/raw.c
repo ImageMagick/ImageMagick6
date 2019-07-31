@@ -331,7 +331,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw red samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("C");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -340,7 +340,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw cyan samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("G");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -349,7 +349,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw green samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("M");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -358,7 +358,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw magenta samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("B");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -367,7 +367,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw blue samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("Y");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -376,7 +376,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw yellow samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("A");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -385,7 +385,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw alpha samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("O");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -394,7 +394,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw opacity samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("K");
   entry->decoder=(DecodeImageHandler *) ReadRAWImage;
@@ -403,7 +403,7 @@ ModuleExport size_t RegisterRAWImage(void)
   entry->endian_support=MagickTrue;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Raw black samples");
-  entry->module=ConstantString("RAW");
+  entry->magick_module=ConstantString("RAW");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

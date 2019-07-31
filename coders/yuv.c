@@ -543,7 +543,7 @@ ModuleExport size_t RegisterYUVImage(void)
   entry->adjoin=MagickFalse;
   entry->raw=MagickTrue;
   entry->description=ConstantString("CCIR 601 4:1:1 or 4:2:2");
-  entry->module=ConstantString("YUV");
+  entry->magick_module=ConstantString("YUV");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

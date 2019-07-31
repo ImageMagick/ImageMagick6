@@ -380,7 +380,7 @@ ModuleExport size_t RegisterXPSImage(void)
   entry->seekable_stream=MagickTrue;
   entry->thread_support=EncoderThreadSupport;
   entry->description=ConstantString("Microsoft XML Paper Specification");
-  entry->module=ConstantString("XPS");
+  entry->magick_module=ConstantString("XPS");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

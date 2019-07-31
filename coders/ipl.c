@@ -458,7 +458,7 @@ ModuleExport size_t RegisterIPLImage(void)
   entry->magick=(IsImageFormatHandler *) IsIPL;
   entry->adjoin=MagickTrue;
   entry->description=ConstantString("IPL Image Sequence");
-  entry->module=ConstantString("IPL");
+  entry->magick_module=ConstantString("IPL");
   entry->endian_support=MagickTrue;
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);

@@ -260,7 +260,7 @@ ModuleExport size_t RegisterRGFImage(void)
   entry->adjoin=MagickFalse;
   entry->description=ConstantString(
     "LEGO Mindstorms EV3 Robot Graphic Format (black and white)");
-  entry->module=ConstantString("RGF");
+  entry->magick_module=ConstantString("RGF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

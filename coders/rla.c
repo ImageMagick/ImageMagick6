@@ -451,7 +451,7 @@ ModuleExport size_t RegisterRLAImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Alias/Wavefront image");
-  entry->module=ConstantString("RLA");
+  entry->magick_module=ConstantString("RLA");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

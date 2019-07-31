@@ -1519,7 +1519,7 @@ ModuleExport size_t RegisterXCFImage(void)
   entry->decoder=(DecodeImageHandler *) ReadXCFImage;
   entry->magick=(IsImageFormatHandler *) IsXCF;
   entry->description=ConstantString("GIMP image");
-  entry->module=ConstantString("XCF");
+  entry->magick_module=ConstantString("XCF");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);

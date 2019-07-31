@@ -2496,7 +2496,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Raw CCITT Group4");
   entry->mime_type=ConstantString("image/tiff");
-  entry->module=ConstantString("TIFF");
+  entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PTIF");
 #if defined(MAGICKCORE_TIFF_DELEGATE)
@@ -2507,7 +2507,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Pyramid encoded TIFF");
   entry->mime_type=ConstantString("image/tiff");
-  entry->module=ConstantString("TIFF");
+  entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TIF");
 #if defined(MAGICKCORE_TIFF_DELEGATE)
@@ -2521,7 +2521,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/tiff");
-  entry->module=ConstantString("TIFF");
+  entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TIFF");
 #if defined(MAGICKCORE_TIFF_DELEGATE)
@@ -2535,7 +2535,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/tiff");
-  entry->module=ConstantString("TIFF");
+  entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TIFF64");
 #if defined(TIFF_VERSION_BIG)
@@ -2548,7 +2548,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/tiff");
-  entry->module=ConstantString("TIFF");
+  entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

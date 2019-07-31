@@ -514,7 +514,7 @@ ModuleExport size_t RegisterFPXImage(void)
   entry->seekable_stream=MagickTrue;
   entry->blob_support=MagickFalse;
   entry->description=ConstantString("FlashPix Format");
-  entry->module=ConstantString("FPX");
+  entry->magick_module=ConstantString("FPX");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

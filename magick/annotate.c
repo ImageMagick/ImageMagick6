@@ -265,7 +265,7 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
   for (p=text; *p != '\0'; p++)
     if (*p == '\n')
       number_lines++;
-  textlist=AcquireQuantumMemory(number_lines+1,sizeof(*textlist));
+  textlist=(char **) AcquireQuantumMemory(number_lines+1,sizeof(*textlist));
   if (textlist == (char **) NULL)
     {
       annotate_info=DestroyDrawInfo(annotate_info);
@@ -274,7 +274,7 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
       return(MagickFalse);
     }
   p=text;
-  for (i=0; i < number_lines; i++)
+  for (i=0; i < (ssize_t) number_lines; i++)
   {
     char
       *q;

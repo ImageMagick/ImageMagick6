@@ -1197,7 +1197,7 @@ ModuleExport size_t RegisterCMYKImage(void)
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Raw cyan, magenta, yellow, and black "
     "samples");
-  entry->module=ConstantString("CMYK");
+  entry->magick_module=ConstantString("CMYK");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("CMYKA");
   entry->decoder=(DecodeImageHandler *) ReadCMYKImage;
@@ -1206,7 +1206,7 @@ ModuleExport size_t RegisterCMYKImage(void)
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Raw cyan, magenta, yellow, black, and "
     "alpha samples");
-  entry->module=ConstantString("CMYK");
+  entry->magick_module=ConstantString("CMYK");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

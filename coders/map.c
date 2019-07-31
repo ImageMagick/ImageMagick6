@@ -295,7 +295,7 @@ ModuleExport size_t RegisterMAPImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Colormap intensities and indices");
-  entry->module=ConstantString("MAP");
+  entry->magick_module=ConstantString("MAP");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

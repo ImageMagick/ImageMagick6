@@ -276,7 +276,7 @@ ModuleExport size_t RegisterMTVImage(void)
   entry->decoder=(DecodeImageHandler *) ReadMTVImage;
   entry->encoder=(EncodeImageHandler *) WriteMTVImage;
   entry->description=ConstantString("MTV Raytracing image format");
-  entry->module=ConstantString("MTV");
+  entry->magick_module=ConstantString("MTV");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

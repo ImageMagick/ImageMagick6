@@ -4370,7 +4370,7 @@ ModuleExport size_t RegisterDCMImage(void)
   entry->description=ConstantString(
     "Digital Imaging and Communications in Medicine image");
   entry->note=ConstantString(DCMNote);
-  entry->module=ConstantString("DCM");
+  entry->magick_module=ConstantString("DCM");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

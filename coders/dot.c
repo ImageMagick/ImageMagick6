@@ -203,7 +203,7 @@ ModuleExport size_t RegisterDOTImage(void)
 #endif
   entry->blob_support=MagickFalse;
   entry->description=ConstantString("Graphviz");
-  entry->module=ConstantString("DOT");
+  entry->magick_module=ConstantString("DOT");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("GV");
 #if defined(MAGICKCORE_GVC_DELEGATE)
@@ -211,7 +211,7 @@ ModuleExport size_t RegisterDOTImage(void)
 #endif
   entry->blob_support=MagickFalse;
   entry->description=ConstantString("Graphviz");
-  entry->module=ConstantString("DOT");
+  entry->magick_module=ConstantString("DOT");
   (void) RegisterMagickInfo(entry);
 #if defined(MAGICKCORE_GVC_DELEGATE)
   graphic_context=gvContext();

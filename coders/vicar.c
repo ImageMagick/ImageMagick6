@@ -364,7 +364,7 @@ ModuleExport size_t RegisterVICARImage(void)
   entry->magick=(IsImageFormatHandler *) IsVICAR;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("VICAR rasterfile format");
-  entry->module=ConstantString("VICAR");
+  entry->magick_module=ConstantString("VICAR");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

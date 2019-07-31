@@ -901,7 +901,7 @@ ModuleExport size_t RegisterPSImage(void)
   entry->description=ConstantString(
    "Encapsulated PostScript Interchange format");
   entry->mime_type=ConstantString("application/postscript");
-  entry->module=ConstantString("PS");
+  entry->magick_module=ConstantString("PS");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("EPS");
   entry->decoder=(DecodeImageHandler *) ReadPSImage;
@@ -913,7 +913,7 @@ ModuleExport size_t RegisterPSImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Encapsulated PostScript");
   entry->mime_type=ConstantString("application/postscript");
-  entry->module=ConstantString("PS");
+  entry->magick_module=ConstantString("PS");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("EPSF");
   entry->decoder=(DecodeImageHandler *) ReadPSImage;
@@ -925,7 +925,7 @@ ModuleExport size_t RegisterPSImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Encapsulated PostScript");
   entry->mime_type=ConstantString("application/postscript");
-  entry->module=ConstantString("PS");
+  entry->magick_module=ConstantString("PS");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("EPSI");
   entry->decoder=(DecodeImageHandler *) ReadPSImage;
@@ -938,7 +938,7 @@ ModuleExport size_t RegisterPSImage(void)
   entry->description=ConstantString(
     "Encapsulated PostScript Interchange format");
   entry->mime_type=ConstantString("application/postscript");
-  entry->module=ConstantString("PS");
+  entry->magick_module=ConstantString("PS");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PS");
   entry->decoder=(DecodeImageHandler *) ReadPSImage;
@@ -946,7 +946,7 @@ ModuleExport size_t RegisterPSImage(void)
   entry->seekable_stream=MagickTrue;
   entry->magick=(IsImageFormatHandler *) IsPS;
   entry->mime_type=ConstantString("application/postscript");
-  entry->module=ConstantString("PS");
+  entry->magick_module=ConstantString("PS");
   entry->blob_support=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("PostScript");

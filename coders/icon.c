@@ -783,7 +783,7 @@ ModuleExport size_t RegisterICONImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Microsoft icon");
-  entry->module=ConstantString("ICON");
+  entry->magick_module=ConstantString("ICON");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("ICO");
   entry->decoder=(DecodeImageHandler *) ReadICONImage;
@@ -791,7 +791,7 @@ ModuleExport size_t RegisterICONImage(void)
   entry->adjoin=MagickTrue;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Microsoft icon");
-  entry->module=ConstantString("ICON");
+  entry->magick_module=ConstantString("ICON");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("ICON");
   entry->decoder=(DecodeImageHandler *) ReadICONImage;
@@ -799,7 +799,7 @@ ModuleExport size_t RegisterICONImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Microsoft icon");
-  entry->module=ConstantString("ICON");
+  entry->magick_module=ConstantString("ICON");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

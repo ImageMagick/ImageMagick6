@@ -826,7 +826,7 @@ ModuleExport size_t RegisterCINImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Cineon Image File");
-  entry->module=ConstantString("CIN");
+  entry->magick_module=ConstantString("CIN");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

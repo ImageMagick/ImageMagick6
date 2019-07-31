@@ -209,7 +209,7 @@ ModuleExport size_t RegisterXTRNImage(void)
   entry->stealth=MagickTrue;
   entry->description=ConstantString(
     "External transfer via a smart array interface");
-  entry->module=ConstantString("XTRN");
+  entry->magick_module=ConstantString("XTRN");
   RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

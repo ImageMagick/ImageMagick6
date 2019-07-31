@@ -276,7 +276,7 @@ ModuleExport size_t RegisterAVSImage(void)
   entry->decoder=(DecodeImageHandler *) ReadAVSImage;
   entry->encoder=(EncodeImageHandler *) WriteAVSImage;
   entry->description=ConstantString("AVS X image");
-  entry->module=ConstantString("AVS");
+  entry->magick_module=ConstantString("AVS");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

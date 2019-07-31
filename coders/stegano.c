@@ -259,7 +259,7 @@ ModuleExport size_t RegisterSTEGANOImage(void)
   entry->decoder=(DecodeImageHandler *) ReadSTEGANOImage;
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Steganographic image");
-  entry->module=ConstantString("STEGANO");
+  entry->magick_module=ConstantString("STEGANO");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

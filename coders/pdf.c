@@ -748,7 +748,7 @@ ModuleExport size_t RegisterPDFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Adobe Illustrator CS2");
   entry->mime_type=ConstantString("application/pdf");
-  entry->module=ConstantString("PDF");
+  entry->magick_module=ConstantString("PDF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("EPDF");
   entry->decoder=(DecodeImageHandler *) ReadPDFImage;
@@ -758,7 +758,7 @@ ModuleExport size_t RegisterPDFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Encapsulated Portable Document Format");
   entry->mime_type=ConstantString("application/pdf");
-  entry->module=ConstantString("PDF");
+  entry->magick_module=ConstantString("PDF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PDF");
   entry->decoder=(DecodeImageHandler *) ReadPDFImage;
@@ -768,7 +768,7 @@ ModuleExport size_t RegisterPDFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Portable Document Format");
   entry->mime_type=ConstantString("application/pdf");
-  entry->module=ConstantString("PDF");
+  entry->magick_module=ConstantString("PDF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PDFA");
   entry->decoder=(DecodeImageHandler *) ReadPDFImage;
@@ -778,7 +778,7 @@ ModuleExport size_t RegisterPDFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Portable Document Archive Format");
   entry->mime_type=ConstantString("application/pdf");
-  entry->module=ConstantString("PDF");
+  entry->magick_module=ConstantString("PDF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

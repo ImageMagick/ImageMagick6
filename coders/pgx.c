@@ -269,7 +269,7 @@ ModuleExport size_t RegisterPGXImage(void)
   entry->magick=(IsImageFormatHandler *) IsPGX;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("JPEG 2000 uncompressed format");
-  entry->module=ConstantString("PGX");
+  entry->magick_module=ConstantString("PGX");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

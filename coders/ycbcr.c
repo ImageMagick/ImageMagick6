@@ -1026,7 +1026,7 @@ ModuleExport size_t RegisterYCBCRImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Raw Y, Cb, and Cr samples");
-  entry->module=ConstantString("YCbCr");
+  entry->magick_module=ConstantString("YCbCr");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("YCbCrA");
   entry->decoder=(DecodeImageHandler *) ReadYCBCRImage;
@@ -1034,7 +1034,7 @@ ModuleExport size_t RegisterYCBCRImage(void)
   entry->raw=MagickTrue;
   entry->endian_support=MagickTrue;
   entry->description=ConstantString("Raw Y, Cb, Cr, and alpha samples");
-  entry->module=ConstantString("YCbCr");
+  entry->magick_module=ConstantString("YCbCr");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

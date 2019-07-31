@@ -742,7 +742,7 @@ ModuleExport size_t RegisterPCXImage(void)
   entry->seekable_stream=MagickTrue;
   entry->magick=(IsImageFormatHandler *) IsDCX;
   entry->description=ConstantString("ZSoft IBM PC multi-page Paintbrush");
-  entry->module=ConstantString("PCX");
+  entry->magick_module=ConstantString("PCX");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PCX");
   entry->decoder=(DecodeImageHandler *) ReadPCXImage;
@@ -751,7 +751,7 @@ ModuleExport size_t RegisterPCXImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("ZSoft IBM PC Paintbrush");
-  entry->module=ConstantString("PCX");
+  entry->magick_module=ConstantString("PCX");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

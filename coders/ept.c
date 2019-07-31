@@ -307,7 +307,7 @@ ModuleExport size_t RegisterEPTImage(void)
   entry->blob_support=MagickFalse;
   entry->description=ConstantString(
     "Encapsulated PostScript with TIFF preview");
-  entry->module=ConstantString("EPT");
+  entry->magick_module=ConstantString("EPT");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("EPT2");
   entry->decoder=(DecodeImageHandler *) ReadEPTImage;
@@ -318,7 +318,7 @@ ModuleExport size_t RegisterEPTImage(void)
   entry->blob_support=MagickFalse;
   entry->description=ConstantString(
     "Encapsulated PostScript Level II with TIFF preview");
-  entry->module=ConstantString("EPT");
+  entry->magick_module=ConstantString("EPT");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("EPT3");
   entry->decoder=(DecodeImageHandler *) ReadEPTImage;
@@ -328,7 +328,7 @@ ModuleExport size_t RegisterEPTImage(void)
   entry->blob_support=MagickFalse;
   entry->description=ConstantString(
     "Encapsulated PostScript Level III with TIFF preview");
-  entry->module=ConstantString("EPT");
+  entry->magick_module=ConstantString("EPT");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

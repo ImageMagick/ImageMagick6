@@ -1786,7 +1786,7 @@ ModuleExport size_t RegisterMIFFImage(void)
   entry->description=ConstantString("Magick Image File Format");
   if (*version != '\0')
     entry->version=ConstantString(version);
-  entry->module=ConstantString("MIFF");
+  entry->magick_module=ConstantString("MIFF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

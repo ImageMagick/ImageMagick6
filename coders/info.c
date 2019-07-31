@@ -101,7 +101,7 @@ ModuleExport size_t RegisterINFOImage(void)
   entry->encoder=(EncodeImageHandler *) WriteINFOImage;
   entry->blob_support=MagickFalse;
   entry->description=ConstantString("The image format and characteristics");
-  entry->module=ConstantString("INFO");
+  entry->magick_module=ConstantString("INFO");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
