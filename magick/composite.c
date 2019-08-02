@@ -253,7 +253,7 @@ static MagickRealType ColorBurn(const MagickRealType Sca,
     return(Sa*Da+Dca*(1.0-Sa));
   if (Sca < MagickEpsilon)
     return(Dca*(1.0-Sa));
-  SaSca=Sa*PerceptibleReciprocal(Sca);    
+  SaSca=Sa*PerceptibleReciprocal(Sca);
   return(Sa*Da-Sa*MagickMin(Da,(Da-Dca)*SaSca)+Sca*(1.0-Da)+Dca*(1.0-Sa));
 }
 
@@ -2806,7 +2806,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         {
           if (source.colorspace != CMYKColorspace)
             ConvertRGBToCMYK(&source);
-          composite.index=QuantumRange-source.index;
+          composite.index=source.index;
           break;
         }
         /* compose methods that are already handled */
