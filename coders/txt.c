@@ -391,6 +391,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     text[MaxTextExtent];
 
   double
+    max_value,
     x_offset,
     y_offset;
 
@@ -424,7 +425,6 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   unsigned long
     depth,
     height,
-    max_value,
     width;
 
   /*
@@ -454,17 +454,17 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   {
     width=0;
     height=0;
-    max_value=0;
+    max_value=0.0;
     *colorspace='\0';
-    count=(ssize_t) sscanf(text+32,"%lu,%lu,%lu,%32s",&width,&height,&max_value,
+    count=(ssize_t) sscanf(text+32,"%lu,%lu,%lf,%32s",&width,&height,&max_value,
       colorspace);
-    if ((count != 4) || (width == 0) || (height == 0) || (max_value == 0))
+    if ((count != 4) || (width == 0) || (height == 0) || (max_value == 0.0))
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     image->columns=width;
     image->rows=height;
-    if ((max_value == 0) || (max_value > 4294967295U))
+    if ((max_value == 0.0) || (max_value > 18446744073709551615.0))
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-    for (depth=1; (GetQuantumRange(depth)+1) < max_value; depth++) ;
+    for (depth=1; (GetQuantumRange(depth)+1.0) < max_value; depth++) ;
     image->depth=depth;
     status=SetImageExtent(image,image->columns,image->rows);
     if (status != MagickFalse)
@@ -807,8 +807,8 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
           MAGICKCORE_QUANTUM_DEPTH;
         (void) FormatLocaleString(buffer,MaxTextExtent,
           "# ImageMagick pixel enumeration: %.20g,%.20g,%.20g,%s\n",(double)
-          image->columns,(double) image->rows,(double) ((MagickOffsetType)
-          GetQuantumRange(depth)),colorspace);
+          image->columns,(double) image->rows,(double) GetQuantumRange(depth),
+          colorspace);
         (void) WriteBlobString(image,buffer);
       }
     GetMagickPixelPacket(image,&pixel);
