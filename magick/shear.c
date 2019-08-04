@@ -1413,9 +1413,6 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
 #endif
   for (x=0; x < (ssize_t) width; x++)
   {
-    ssize_t
-      step;
-
     MagickPixelPacket
       pixel,
       source,
@@ -1438,6 +1435,9 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
 
     ShearDirection
       direction;
+
+    ssize_t
+      step;
 
     if (status == MagickFalse)
       continue;
