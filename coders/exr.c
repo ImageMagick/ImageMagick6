@@ -65,15 +65,15 @@
 /*
   Typedef declaractions.
 */
-typedef struct _ExrWindow
+typedef struct _EXRWindowInfo
 {
   int
     max_x,
     max_y,
     min_x,
     min_y;
-} ExrWindow;
-
+} EXRWindowInfo;
+
 /*
   Forward declarations.
 */
@@ -147,15 +147,12 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   const ImfHeader
     *hdr_info;
 
-  ExrWindow
+  EXRWindowInfo
     data_window,
     display_window;
 
   Image
     *image;
-
-  ImageInfo
-    *read_info;
 
   ImfInputFile
     *file;
@@ -166,14 +163,13 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register ssize_t
-    x;
-
   register PixelPacket
     *q;
 
+  size_t
+    columns;
+
   ssize_t
-    columns,
     y;
 
   /*
@@ -193,37 +189,25 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
-  read_info=CloneImageInfo(image_info);
-  if (IsPathAccessible(read_info->filename) == MagickFalse)
-    {
-      (void) AcquireUniqueFilename(read_info->filename);
-      (void) ImageToFile(image,read_info->filename,exception);
-    }
-  file=ImfOpenInputFile(read_info->filename);
+  file=ImfOpenInputFile(image->filename);
   if (file == (ImfInputFile *) NULL)
     {
       ThrowFileException(exception,BlobError,"UnableToOpenBlob",
         ImfErrorMessage());
-      if (LocaleCompare(image_info->filename,read_info->filename) != 0)
-        (void) RelinquishUniqueFileResource(read_info->filename);
-      read_info=DestroyImageInfo(read_info);
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
   hdr_info=ImfInputHeader(file);
   ImfHeaderDisplayWindow(hdr_info,&display_window.min_x,&display_window.min_y,
     &display_window.max_x,&display_window.max_y);
-  image->columns=display_window.max_x-display_window.min_x+1UL;
-  image->rows=display_window.max_y-display_window.min_y+1UL;
+  image->columns=(size_t) (display_window.max_x-display_window.min_x+1UL);
+  image->rows=(size_t) (display_window.max_y-display_window.min_y+1UL);
   image->matte=MagickTrue;
-  SetImageColorspace(image,RGBColorspace);
+  (void) SetImageColorspace(image,RGBColorspace);
   image->gamma=1.0;
   if (image_info->ping != MagickFalse)
     {
       (void) ImfCloseInputFile(file);
-      if (LocaleCompare(image_info->filename,read_info->filename) != 0)
-        (void) RelinquishUniqueFileResource(read_info->filename);
-      read_info=DestroyImageInfo(read_info);
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
@@ -235,7 +219,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   ImfHeaderDataWindow(hdr_info,&data_window.min_x,&data_window.min_y,
     &data_window.max_x,&data_window.max_y);
-  columns=(ssize_t) data_window.max_x-data_window.min_x+1UL;
+  columns=(size_t) (data_window.max_x-data_window.min_x+1UL);
   if ((display_window.min_x > data_window.max_x) ||
       (display_window.min_x+(int) image->columns <= data_window.min_x))
     scanline=(ImfRgba *) NULL;
@@ -245,9 +229,6 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (scanline == (ImfRgba *) NULL)
         {
           (void) ImfCloseInputFile(file);
-          if (LocaleCompare(image_info->filename,read_info->filename) != 0)
-            (void) RelinquishUniqueFileResource(read_info->filename);
-          read_info=DestroyImageInfo(read_info);
           image=DestroyImageList(image);
           ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
         }
@@ -257,10 +238,13 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
     int
       yy;
 
+    register ssize_t
+      x;
+
     q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)
       break;
-    yy=display_window.min_y+y;
+    yy=(int) (display_window.min_y+y);
     if ((yy < data_window.min_y) || (yy > data_window.max_y) ||
         (scanline == (ImfRgba *) NULL))
     {
@@ -276,7 +260,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
         break;
       continue;
     }
-    memset(scanline,0,columns*sizeof(*scanline));
+    (void) memset(scanline,0,columns*sizeof(*scanline));
     ImfInputSetFrameBuffer(file,scanline-data_window.min_x-columns*yy,1,
       columns);
     ImfInputReadPixels(file,yy,yy);
@@ -285,7 +269,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
       int
         xx;
 
-      xx=display_window.min_x+((int) x-data_window.min_x);
+      xx=(int) (display_window.min_x+x-data_window.min_x);
       if ((xx < 0) || (display_window.min_x+(int) x > data_window.max_x))
         {
           SetPixelRed(q,image->background_color.red);
@@ -311,9 +295,6 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   }
   scanline=(ImfRgba *) RelinquishMagickMemory(scanline);
   (void) ImfCloseInputFile(file);
-  if (LocaleCompare(image_info->filename,read_info->filename) != 0)
-    (void) RelinquishUniqueFileResource(read_info->filename);
-  read_info=DestroyImageInfo(read_info);
   (void) CloseBlob(image);
   return(GetFirstImageInList(image));
 }
@@ -356,6 +337,7 @@ ModuleExport size_t RegisterEXRImage(void)
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("High Dynamic-range (HDR)");
   entry->blob_support=MagickFalse;
+  entry->seekable_stream=MagickTrue;
   entry->magick_module=ConstantString("EXR");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
