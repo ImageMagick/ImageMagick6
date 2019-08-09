@@ -1,5 +1,5 @@
-2019-08-07  6.9.10-60 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-60, GIT revision 14730:b2d457b:20190803.
+2019-08-00  6.9.10-60 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-60, GIT revision 14741:abdcf74:20190809.
 
 2019-08-07  6.9.10-60 Cristy  <quetzlzacatenango@image...>
   * Enable reading EXR image file from stdin.
