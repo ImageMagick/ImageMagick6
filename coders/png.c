@@ -5897,7 +5897,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                 if (SetImageBackgroundColor(image) == MagickFalse)
                   {
                     chunk=(unsigned char *) RelinquishMagickMemory(chunk);
-                    InheritException(exception,&image->exception); 
+                    InheritException(exception,&image->exception);
                     return(DestroyImageList(image));
                   }
                 if (logging != MagickFalse)
@@ -6848,7 +6848,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                   if (y < (ssize_t) image->rows-1)
                     {
                       n=GetAuthenticPixels(image,0,y+1,image->columns,1,
-                          exception);
+                        exception);
                       (void) memcpy(next,n,length);
                     }
 
@@ -8563,8 +8563,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
            for (y=0; y < (ssize_t) image->rows; y++)
            {
-             r=GetAuthenticPixels(image,0,y,image->columns,1,
-                 exception);
+             r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
              if (r == (PixelPacket *) NULL)
                break;
@@ -8594,8 +8593,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
            for (y=0; y < (ssize_t) image->rows; y++)
            {
-             r=GetAuthenticPixels(image,0,y,image->columns,1,
-                 exception);
+             r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
              if (r == (PixelPacket *) NULL)
                break;
@@ -8625,8 +8623,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
            for (y=0; y < (ssize_t) image->rows; y++)
            {
-             r=GetAuthenticPixels(image,0,y,image->columns,1,
-                 exception);
+             r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
              if (r == (PixelPacket *) NULL)
                break;
@@ -8722,8 +8719,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
   tried_333 = MagickFalse;
   tried_444 = MagickFalse;
 
-  if (image->depth != GetImageDepth(image,&image->exception))
-    (void) SetImageDepth(image,image->depth);
+  (void) SetImageDepth(image,image->depth);
   for (j=0; j<6; j++)
   {
     /*
@@ -9143,8 +9139,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
             for (y=0; y < (ssize_t) image->rows; y++)
             {
-              q=GetAuthenticPixels(image,0,y,image->columns,1,
-                  exception);
+              q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
               if (q == (PixelPacket *) NULL)
                 break;
@@ -9268,8 +9263,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          r=GetAuthenticPixels(image,0,y,image->columns,1,
-              exception);
+          r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
           if (r == (PixelPacket *) NULL)
             break;
@@ -9322,8 +9316,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
         {
           for (y=0; y < (ssize_t) image->rows; y++)
           {
-            r=GetAuthenticPixels(image,0,y,image->columns,1,
-                exception);
+            r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
             if (r == (PixelPacket *) NULL)
               break;
@@ -9373,8 +9366,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
         {
           for (y=0; y < (ssize_t) image->rows; y++)
           {
-            r=GetAuthenticPixels(image,0,y,image->columns,1,
-                exception);
+            r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
             if (r == (PixelPacket *) NULL)
               break;
@@ -9427,8 +9419,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
         {
           for (y=0; y < (ssize_t) image->rows; y++)
           {
-            r=GetAuthenticPixels(image,0,y,image->columns,1,
-                exception);
+            r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
             if (r == (PixelPacket *) NULL)
               break;
@@ -9485,8 +9476,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       {
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          r=GetAuthenticPixels(image,0,y,image->columns,1,
-              exception);
+          r=GetAuthenticPixels(image,0,y,image->columns,1,exception);
 
           if (r == (PixelPacket *) NULL)
             break;
