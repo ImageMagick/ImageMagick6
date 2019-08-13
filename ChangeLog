@@ -1,3 +1,10 @@
+2019-08-12  6.9.10-61 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-61, GIT revision 14
+
+2019-08-12  6.9.10-60 Cristy  <quetzlzacatenango@image...>
+  * Fixed bug when writing MPC to PNG (reference
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=36518).
+
 2019-08-10  6.9.10-60 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-60, GIT revision 14745:ce6bac3:20190810.
 
