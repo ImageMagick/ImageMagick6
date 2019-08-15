@@ -7419,7 +7419,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
 
   image=GetFirstImageInList(image);
 #ifdef MNG_COALESCE_LAYERS
-  if (insert_layers)
+  if (insert_layers && image->next)
     {
       Image
         *next_image,
@@ -7433,11 +7433,13 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
 
       scene=image->scene;
       next_image=CoalesceImages(image,exception);
-
-      if (next_image == (Image *) NULL)
-        ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-
       image=DestroyImageList(image);
+      if (next_image == (Image *) NULL)
+        {
+          mng_info=MngInfoFreeStruct(mng_info);
+          return((Image *) NULL);
+        }
+
       image=next_image;
 
       for (next=image; next != (Image *) NULL; next=next_image)
