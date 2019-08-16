@@ -1,5 +1,5 @@
-2019-08-12  6.9.10-61 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-61, GIT revision 14
+2019-08-16  6.9.10-61 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-61, GIT revision 14755:2cfba7f:20190816.
 
 2019-08-12  6.9.10-60 Cristy  <quetzlzacatenango@image...>
   * Fixed bug when writing MPC to PNG (reference
