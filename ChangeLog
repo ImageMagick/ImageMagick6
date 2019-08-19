@@ -1,7 +1,14 @@
+2019-08-19  6.9.10-62 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-62, GIT revision 14...
+
+2019-08-19  6.9.10-62 Cristy  <quetzlzacatenango@image...>
+  * Conditionally compile call to AcquireCLocale() (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1669).
+
 2019-08-16  6.9.10-61 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-61, GIT revision 14757:36133aa:20190816.
 
-2019-08-12  6.9.10-60 Cristy  <quetzlzacatenango@image...>
+2019-08-12  6.9.10-61 Cristy  <quetzlzacatenango@image...>
   * Fixed bug when writing MPC to PNG (reference
     https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=36518).
 
