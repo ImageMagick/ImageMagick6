@@ -8514,14 +8514,15 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
   if (ping_preserve_colormap == MagickFalse)
     {
-      if (image->storage_class != PseudoClass && image->colormap != NULL)
+      if ((image->storage_class != PseudoClass) &&
+          (image->colormap != (PixelPacket *) NULL))
         {
           /* Free the bogus colormap; it can cause trouble later */
            if (logging != MagickFalse)
               (void) LogMagickEvent(CoderEvent,GetMagickModule(),
               "    Freeing bogus colormap");
-           (void) RelinquishMagickMemory(image->colormap);
-           image->colormap=NULL;
+           image->colormap=(PixelPacket *) RelinquishMagickMemory(
+             image->colormap);
         }
     }
 
