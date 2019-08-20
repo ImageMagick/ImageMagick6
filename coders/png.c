@@ -12295,33 +12295,37 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
 
   for (source=0; source<8; source++)
   {
-    value = NULL;
+    value = (const char *) NULL;
 
-    if (source == 0)
-      value=GetImageOption(image_info,"png:exclude-chunks");
+    switch(source)
+    {
+      case 0:
+        value=GetImageOption(image_info,"png:exclude-chunks");
+        break;
+      case 1:
+        value=GetImageArtifact(image,"png:exclude-chunks");
+        break;
+      case 2:
+        value=GetImageOption(image_info,"png:exclude-chunk");
+        break;
+      case 3:
+        value=GetImageArtifact(image,"png:exclude-chunk");
+        break;
+      case 4:
+        value=GetImageOption(image_info,"png:include-chunks");
+        break;
+      case 5:
+        value=GetImageArtifact(image,"png:include-chunks");
+        break;
+      case 6:
+        value=GetImageOption(image_info,"png:include-chunk");
+        break;
+      case 7:
+        value=GetImageArtifact(image,"png:include-chunk");
+        break;
+    }
 
-    if (source == 1)
-      value=GetImageArtifact(image,"png:exclude-chunks");
-
-    if (source == 2)
-      value=GetImageOption(image_info,"png:exclude-chunk");
-
-    if (source == 3)
-      value=GetImageArtifact(image,"png:exclude-chunk");
-
-    if (source == 4)
-      value=GetImageOption(image_info,"png:include-chunks");
-
-    if (source == 5)
-      value=GetImageArtifact(image,"png:include-chunks");
-
-    if (source == 6)
-      value=GetImageOption(image_info,"png:include-chunk");
-
-    if (source == 7)
-      value=GetImageArtifact(image,"png:include-chunk");
-
-    if (value == NULL)
+    if (value == (const char *) NULL)
        continue;
 
     if (source < 4)
