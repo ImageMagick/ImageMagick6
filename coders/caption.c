@@ -179,8 +179,7 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
       if (draw_info->gravity == UndefinedGravity)
         (void) CloneString(&draw_info->geometry,geometry);
       status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-      width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
-      image->columns=width;
+      image->columns=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
     }
   if (image->rows == 0)
     {
