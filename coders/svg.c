@@ -4015,7 +4015,7 @@ static MagickBooleanType TraceSVGImage(Image *image,ExceptionInfo *exception)
     (void) FormatLocaleString(filename,MagickPathExtent,"trace:%s",
       image_info->filename);
     (void) CopyMagickString(image_info->filename,filename,MagickPathExtent);
-    status=WriteImage(image_info,image,exception);
+    status=WriteImage(image_info,image);
     image_info=DestroyImageInfo(image_info);
     if (status != MagickFalse)
       return(status);
