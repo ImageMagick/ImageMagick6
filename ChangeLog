@@ -4,6 +4,7 @@
 2019-08-19  6.9.10-62 Cristy  <quetzlzacatenango@image...>
   * Conditionally compile call to AcquireCLocale() (reference
     https://github.com/ImageMagick/ImageMagick/issues/1669).
+  * More robust support for converting bitmap to vector.
 
 2019-08-16  6.9.10-61 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-61, GIT revision 14757:36133aa:20190816.
