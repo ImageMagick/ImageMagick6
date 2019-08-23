@@ -1,5 +1,5 @@
-2019-08-19  6.9.10-62 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-62, GIT revision 14...
+2019-08-23  6.9.10-62 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-62, GIT revision 14779:2da539a:20190823.
 
 2019-08-19  6.9.10-62 Cristy  <quetzlzacatenango@image...>
   * Conditionally compile call to AcquireCLocale() (reference
