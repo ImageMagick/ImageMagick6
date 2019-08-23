@@ -3624,7 +3624,7 @@ ac_aux_dir=
 for ac_dir in config "$srcdir"/config; do
   if test -f "$ac_dir/install-sh"; then
     ac_aux_dir=$ac_dir
-    ac_install_sh="$SHELL $ac_pwd/$ac_aux_dir/install-sh -c"
+    ac_install_sh="$ac_aux_dir/install-sh -c"
     break
   elif test -f "$ac_dir/install.sh"; then
     ac_aux_dir=$ac_dir
@@ -4568,7 +4568,7 @@ MAGICK_PATCHLEVEL_VERSION=62
 
 MAGICK_VERSION=6.9.10-62
 
-MAGICK_GIT_REVISION=14768:a244d3ad0:20190821
+MAGICK_GIT_REVISION=14778:c869f544f:20190823
 
 
 # Substitute library versioning
@@ -9283,7 +9283,9 @@ $as_echo "$ax_cv_gcc_archflag" >&6; }
 if test "x$ax_cv_gcc_archflag" = xunknown; then
   :
 else
+
   CFLAGS="$CFLAGS $ax_cv_gcc_archflag"
+  CXXFLAGS="$CXXFLAGS $ax_cv_gcc_archflag"
 fi
 
 
