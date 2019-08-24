@@ -141,7 +141,9 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     *file;
 
   Image
-    *image;
+    *image,
+    *images,
+    *next;
 
   ImageInfo
     *read_info;
@@ -149,24 +151,19 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
   int
     unique_file;
 
+  images=(Image *) NULL;
+  image=AcquireImage(image_info);
   read_info=CloneImageInfo(image_info);
   SetImageInfoBlob(read_info,(void *) NULL,0);
 #if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__MINGW32__)
   if (LocaleCompare(read_info->magick,"https") == 0)
     {
-      Image
-        *image,
-        *images,
-        *next;
-
       MagickBooleanType
         status;
 
       /*
         Leverage delegate to read HTTPS link.
       */
-      images=(Image *) NULL;
-      image=AcquireImage(image_info);
       status=InvokeDelegate(read_info,image,"https:decode",(char *) NULL,
         exception);
       if (status != MagickFalse)
@@ -183,9 +180,9 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
             for (next=images; next != (Image *) NULL; next=next->next)
             {
               (void) CopyMagickString(next->filename,image->filename,
-                MagickPathExtent);
+                MaxTextExtent);
               (void) CopyMagickString(next->magick,read_info->magick,
-                MagickPathExtent);
+                MaxTextExtent);
             }
         }
       read_info=DestroyImageInfo(read_info);
@@ -198,9 +195,10 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (void) CopyMagickString(read_info->filename,image_info->filename+2,
         MaxTextExtent);
       *read_info->magick='\0';
-      image=ReadImage(read_info,exception);
+      images=ReadImage(read_info,exception);
       read_info=DestroyImageInfo(read_info);
-      return(GetFirstImageInList(image));
+      image=DestroyImage(image);
+      return(GetFirstImageInList(images));
     }
   file=(FILE *) NULL;
   unique_file=AcquireUniqueFileResource(read_info->filename);
@@ -211,14 +209,14 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
       ThrowFileException(exception,FileOpenError,"UnableToCreateTemporaryFile",
         read_info->filename);
       read_info=DestroyImageInfo(read_info);
+      image=DestroyImage(image);
       return((Image *) NULL);
     }
   (void) CopyMagickString(filename,image_info->magick,MaxTextExtent);
   (void) ConcatenateMagickString(filename,":",MaxTextExtent);
   LocaleLower(filename);
   (void) ConcatenateMagickString(filename,image_info->filename,MaxTextExtent);
-#if defined(MAGICKCORE_WINDOWS_SUPPORT) && \
-    !defined(__MINGW32__)
+#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__)
   (void) fclose(file);
   if (URLDownloadToFile(NULL,filename,read_info->filename,0,NULL) != S_OK)
     {
@@ -226,6 +224,7 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
         filename);
       (void) RelinquishUniqueFileResource(read_info->filename);
       read_info=DestroyImageInfo(read_info);
+      image=DestroyImage(image);
       return((Image *) NULL);
     }
 #else
@@ -279,18 +278,27 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) fclose(file);
 #endif
   *read_info->magick='\0';
-  image=ReadImage(read_info,exception);
+  images=ReadImage(read_info,exception);
   (void) RelinquishUniqueFileResource(read_info->filename);
+  (void) CopyMagickString(read_info->filename,image->filename,MaxTextExtent);
+  (void) SetImageInfo(read_info,1,exception);
+  if (images != (Image *) NULL)
+    for (next=images; next != (Image *) NULL; next=next->next)
+    {
+      (void) CopyMagickString(next->filename,image->filename,MaxTextExtent);
+      (void) CopyMagickString(next->magick,read_info->magick,MaxTextExtent);
+    }
   read_info=DestroyImageInfo(read_info);
-  if (image != (Image *) NULL)
-    GetPathComponent(image_info->filename,TailPath,image->filename);
+  if (images != (Image *) NULL)
+    GetPathComponent(image_info->filename,TailPath,images->filename);
   else
     {
       (void) ThrowMagickException(exception,GetMagickModule(),CoderError,
         "NoDataReturned","`%s'",filename);
       return((Image *) NULL);
     }
-  return(GetFirstImageInList(image));
+  image=DestroyImage(image);
+  return(GetFirstImageInList(images));
 }
 
 /*
