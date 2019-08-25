@@ -670,7 +670,15 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         }
     }
   if (info.profile != (StringInfo *) NULL)
-    (void) SetImageProfile(image,"xmp",info.profile);
+    {
+      char
+        *profile;
+
+      (void) SetImageProfile(image,"xmp",info.profile);
+      profile=(char *) GetStringInfoDatum(info.profile);
+      if (strstr(profile,"Adobe Illustrator") != (char *) NULL)
+        (void) CopyMagickString(image->magick,"AI",MagickPathExtent);
+    }
   CleanupPDFInfo(&info);
   (void) CloseBlob(image);
   if (image_info->number_scenes != 0)
