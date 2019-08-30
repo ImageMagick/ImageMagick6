@@ -10521,8 +10521,9 @@ WandExport MagickBooleanType MagickSetImageFilename(MagickWand *wand,
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
-  if (filename != (const char *) NULL)
-    (void) CopyMagickString(wand->images->filename,filename,MaxTextExtent);
+  if (filename == (const char *) NULL)
+    return(MagickFalse);
+  (void) CopyMagickString(wand->images->filename,filename,MaxTextExtent);
   return(MagickTrue);
 }
 
