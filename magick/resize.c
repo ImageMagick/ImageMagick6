@@ -155,10 +155,8 @@ static MagickRealType Blackman(const MagickRealType x,
     Refactored by Chantal Racette and Nicolas Robidoux to one trig call and
     five flops.
   */
-  const MagickRealType cosine=cos((double) (MagickPI*x));
-
+  const MagickRealType cosine = cos((double) (MagickPI*x));
   magick_unreferenced(resize_filter);
-
   return(0.34+cosine*(0.5+cosine*0.16));
 }
 
@@ -173,11 +171,9 @@ static MagickRealType Bohman(const MagickRealType x,
     taking advantage of the fact that the support of Bohman is 1.0 (so that we
     know that sin(pi x) >= 0).
   */
-  const double cosine=cos((double) (MagickPI*x));
-  const double sine=sqrt(1.0-cosine*cosine);
-
+  const double cosine = cos((double) (MagickPI*x));
+  const double sine = sqrt(1.0-cosine*cosine);
   magick_unreferenced(resize_filter);
-
   return((MagickRealType) ((1.0-x)*cosine+(1.0/MagickPI)*sine));
 }
 
@@ -203,8 +199,7 @@ static MagickRealType Cosine(const MagickRealType x,
       cos((pi/2)*x).
   */
   magick_unreferenced(resize_filter);
-
-  return((MagickRealType)cos((double) (MagickPI2*x)));
+  return((MagickRealType) cos((double) (MagickPI2*x)));
 }
 
 static MagickRealType CubicBC(const MagickRealType x,
@@ -291,10 +286,8 @@ static MagickRealType Hanning(const MagickRealType x,
     Cosine window function:
       0.5+0.5*cos(pi*x).
   */
-  const MagickRealType cosine=cos((double) (MagickPI*x));
-
+  const MagickRealType cosine = cos((double) (MagickPI*x));
   magick_unreferenced(resize_filter);
-
   return(0.5+0.5*cosine);
 }
 
@@ -305,10 +298,8 @@ static MagickRealType Hamming(const MagickRealType x,
     Offset cosine window function:
      .54 + .46 cos(pi x).
   */
-  const MagickRealType cosine=cos((double) (MagickPI*x));
-
+  const MagickRealType cosine = cos((double) (MagickPI*x));
   magick_unreferenced(resize_filter);
-
   return(0.54+0.46*cosine);
 }
 
