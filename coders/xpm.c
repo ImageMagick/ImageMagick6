@@ -73,6 +73,12 @@
 #include "magick/utility.h"
 
 /*
+  Global declarations.
+*/
+static SplayTreeInfo
+  *xpm_symbolic = (SplayTreeInfo *) NULL;
+
+/*
   Forward declarations.
 */
 static MagickBooleanType
@@ -389,6 +395,9 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   next=NextXPMLine(xpm_buffer);
   for (j=0; (j < (ssize_t) image->colors) && (next != (char *) NULL); j++)
   {
+    char
+      symbolic[MagickPathExtent];
+
     MagickPixelPacket
       pixel;
 
@@ -407,6 +416,7 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     q=(char *) NULL;
     if (strlen(p) > width)
       q=ParseXPMColor(p+width,MagickTrue);
+    *symbolic='\0';
     if (q != (char *) NULL)
       {
         while ((isspace((int) ((unsigned char) *q)) == 0) && (*q != '\0'))
@@ -419,10 +429,15 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         else
           (void) CopyMagickString(target,q,MaxTextExtent);
         q=ParseXPMColor(target,MagickFalse);
+        (void) CopyXPMColor(symbolic,q,MagickMin((size_t) (next-q),
+          MagickPathExtent-1));
         if (q != (char *) NULL)
           *q='\0';
       }
     StripString(target);
+    if (*symbolic != '\0')
+      (void) AddValueToSplayTree(xpm_symbolic,ConstantString(target),
+        ConstantString(symbolic));
     grey=strstr(target,"grey");
     if (grey != (char *) NULL)
       grey[2]='a';
@@ -532,6 +547,9 @@ ModuleExport size_t RegisterXPMImage(void)
   MagickInfo
     *entry;
 
+  if (xpm_symbolic == (SplayTreeInfo *) NULL)
+    xpm_symbolic=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
+      RelinquishMagickMemory);
   entry=SetMagickInfo("PICON");
   entry->decoder=(DecodeImageHandler *) ReadXPMImage;
   entry->encoder=(EncodeImageHandler *) WritePICONImage;
@@ -582,6 +600,8 @@ ModuleExport void UnregisterXPMImage(void)
   (void) UnregisterMagickInfo("PICON");
   (void) UnregisterMagickInfo("PM");
   (void) UnregisterMagickInfo("XPM");
+  if (xpm_symbolic != (SplayTreeInfo *) NULL)
+    xpm_symbolic=DestroySplayTree(xpm_symbolic);
 }
 
 /*
@@ -833,6 +853,9 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
   GetMagickPixelPacket(image,&pixel);
   for (i=0; i < (ssize_t) colors; i++)
   {
+    const char
+      *symbolic;
+
     /*
       Define XPM color.
     */
@@ -858,8 +881,13 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
       symbol[j]=Cixel[k];
     }
     symbol[j]='\0';
-    (void) FormatLocaleString(buffer,MaxTextExtent,"\"%.1024s c %.1024s\",\n",
-      symbol,name);
+    symbolic=GetValueFromSplayTree(xpm_symbolic,name);
+    if (symbolic == (const char *) NULL)
+      (void) FormatLocaleString(buffer,MaxTextExtent,"\"%.1024s c %.1024s\",\n",
+        symbol,name);
+    else
+      (void) FormatLocaleString(buffer,MaxTextExtent,
+        "\"%.1024s c %.1024s %.1024s\",\n",symbol,name,symbolic);
     (void) WriteBlobString(image,buffer);
   }
   /*
