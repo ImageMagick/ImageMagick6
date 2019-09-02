@@ -7565,10 +7565,11 @@ WandExport MagickWand *MagickMorphImages(MagickWand *wand,
 %  The format of the MagickMorphologyImage method is:
 %
 %      MagickBooleanType MagickMorphologyImage(MagickWand *wand,
-%        MorphologyMethod method,const ssize_t iterations,KernelInfo *kernel)
+%        const MorphologyMethod method,const ssize_t iterations,
+%        const KernelInfo *kernel)
 %      MagickBooleanType MagickMorphologyImageChannel(MagickWand *wand,
-%        ChannelType channel,MorphologyMethod method,const ssize_t iterations,
-%        KernelInfo *kernel)
+%        ChannelType channel,const MorphologyMethod method,
+%        const ssize_t iterations,const KernelInfo *kernel)
 %
 %  A description of each parameter follows:
 %
@@ -7587,7 +7588,8 @@ WandExport MagickWand *MagickMorphImages(MagickWand *wand,
 */
 
 WandExport MagickBooleanType MagickMorphologyImage(MagickWand *wand,
-  MorphologyMethod method,const ssize_t iterations,KernelInfo *kernel)
+  const MorphologyMethod method,const ssize_t iterations,
+  const KernelInfo *kernel)
 {
   MagickBooleanType
     status;
@@ -7598,8 +7600,8 @@ WandExport MagickBooleanType MagickMorphologyImage(MagickWand *wand,
 }
 
 WandExport MagickBooleanType MagickMorphologyImageChannel(MagickWand *wand,
-  const ChannelType channel,MorphologyMethod method,const ssize_t iterations,
-  KernelInfo *kernel)
+  const ChannelType channel,const MorphologyMethod method,
+  const ssize_t iterations,const KernelInfo *kernel)
 {
   Image
     *morphology_image;
