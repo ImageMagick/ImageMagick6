@@ -37,7 +37,7 @@
 <body>
   <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-    <a class="navbar-brand" href="../index.html"><img class="d-block" id="icon" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
+    <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -77,17 +77,17 @@
          style="display:block"
          data-ad-client="ca-pub-3129977114552745"
          data-ad-slot="6345125851"
-         data-ad-format="auto"></ins>
+         data-full-width-responsive="true"
+         data-ad-format="horizontal"></ins>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-
   </div>
   </header>
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
-<p class="text-center"><a href="blob.html#BlobToImage">BlobToImage</a> &#8226; <a href="blob.html#CustomStreamToImage">CustomStreamToImage</a> &#8226; <a href="blob.html#FileToBlob">FileToBlob</a> &#8226; <a href="blob.html#FileToImage">FileToImage</a> &#8226; <a href="blob.html#GetBlobProperties">GetBlobProperties</a> &#8226; <a href="blob.html#ImageToBlob">ImageToBlob</a> &#8226; <a href="blob.html#ImageToFile">ImageToFile</a> &#8226; <a href="blob.html#ImagesToBlob">ImagesToBlob</a> &#8226; <a href="blob.html#InjectImageBlob">InjectImageBlob</a> &#8226; <a href="blob.html#IsBlobExempt">IsBlobExempt</a> &#8226; <a href="blob.html#IsBlobSeekable">IsBlobSeekable</a> &#8226; <a href="blob.html#IsBlobTemporary">IsBlobTemporary</a></p>
+<p class="text-center"><a href="blob.html#BlobToImage">BlobToImage</a> &#8226; <a href="blob.html#FileToBlob">FileToBlob</a> &#8226; <a href="blob.html#FileToImage">FileToImage</a> &#8226; <a href="blob.html#GetBlobProperties">GetBlobProperties</a> &#8226; <a href="blob.html#ImageToBlob">ImageToBlob</a> &#8226; <a href="blob.html#ImageToFile">ImageToFile</a> &#8226; <a href="blob.html#ImagesToBlob">ImagesToBlob</a> &#8226; <a href="blob.html#InjectImageBlob">InjectImageBlob</a> &#8226; <a href="blob.html#IsBlobExempt">IsBlobExempt</a> &#8226; <a href="blob.html#IsBlobTemporary">IsBlobTemporary</a></p>
 
 <h2><a href="http://imagemagick.org/api/MagickCore/blob_8c.html" id="BlobToImage">BlobToImage</a></h2>
 
@@ -124,33 +124,6 @@ Image *BlobToImage(const ImageInfo *image_info,const void *blob,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/blob_8c.html" id="CustomStreamToImage">CustomStreamToImage</a></h2>
-
-<p>CustomStreamToImage() is the equivalent of ReadImage(), but reads the formatted "file" from the suplied method rather than to an actual file.</p>
-
-<p>The format of the CustomStreamToImage method is:</p>
-
-<pre class="text">
-Image *CustomStreamToImage(const ImageInfo *image_info,
-   ExceptionInfo *exception)
-</pre>
-
-<p>A description of each parameter follows:</p>
-
-<dd>
-</dd>
-
-<dd> </dd>
-<dl class="dl-horizontal">
-<dt>image_info</dt>
-<dd>the image info. </dd>
-
-<dd> </dd>
-<dt>exception</dt>
-<dd>return any errors or warnings in this structure. </dd>
-
-<dd>  </dd>
-</dl>
 <h2><a href="http://imagemagick.org/api/MagickCore/blob_8c.html" id="FileToBlob">FileToBlob</a></h2>
 
 <p>FileToBlob() returns the contents of a file as a buffer terminated with the '\0' character.  The length of the buffer (not including the extra terminating '\0' character) is returned via the 'length' parameter.  Free the buffer with RelinquishMagickMemory().</p>
@@ -158,7 +131,7 @@ Image *CustomStreamToImage(const ImageInfo *image_info,
 <p>The format of the FileToBlob method is:</p>
 
 <pre class="text">
-void *FileToBlob(const char *filename,const size_t extent,
+unsigned char *FileToBlob(const char *filename,const size_t extent,
   size_t *length,ExceptionInfo *exception)
 </pre>
 
@@ -245,7 +218,7 @@ const struct stat *GetBlobProperties(const Image *image)
 <p>The format of the ImageToBlob method is:</p>
 
 <pre class="text">
-void *ImageToBlob(const ImageInfo *image_info,Image *image,
+unsigned char *ImageToBlob(const ImageInfo *image_info,Image *image,
   size_t *length,ExceptionInfo *exception)
 </pre>
 
@@ -313,7 +286,7 @@ void *ImageToBlob(const ImageInfo *image_info,Image *image,
 <p>The format of the ImagesToBlob method is:</p>
 
 <pre class="text">
-void *ImagesToBlob(const ImageInfo *image_info,Image *images,
+unsigned char *ImagesToBlob(const ImageInfo *image_info,Image *images,
   size_t *length,ExceptionInfo *exception)
 </pre>
 
@@ -403,28 +376,6 @@ MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/blob_8c.html" id="IsBlobSeekable">IsBlobSeekable</a></h2>
-
-<p>IsBlobSeekable() returns true if the blob is seekable.</p>
-
-<p>The format of the IsBlobSeekable method is:</p>
-
-<pre class="text">
- MagickBooleanType IsBlobSeekable(const Image *image)
-</pre>
-
-<p>A description of each parameter follows:</p>
-
-<dd>
-</dd>
-
-<dd> </dd>
-<dl class="dl-horizontal">
-<dt>image</dt>
-<dd>the image. </dd>
-
-<dd>  </dd>
-</dl>
 <h2><a href="http://imagemagick.org/api/MagickCore/blob_8c.html" id="IsBlobTemporary">IsBlobTemporary</a></h2>
 
 <p>IsBlobTemporary() returns true if the blob is temporary.</p>
@@ -459,6 +410,7 @@ MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
     <a href="../links.html">Related</a> •
      <a href="../sitemap.html">Sitemap</a>
     <br/>
+       
     <a href="../support.html">Donate</a> •
     <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
     <a href="https://www.imagemagick.org/script/contact.php">Contact Us</a> 
@@ -471,4 +423,3 @@ MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
   <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
-<!-- Magick Cache 26th April 2019 06:38 -->

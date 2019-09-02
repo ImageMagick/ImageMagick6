@@ -77,7 +77,8 @@
          style="display:block"
          data-ad-client="ca-pub-3129977114552745"
          data-ad-slot="6345125851"
-         data-ad-format="auto"></ins>
+         data-full-width-responsive="true"
+         data-ad-format="horizontal"></ins>
     <script>
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
@@ -88,13 +89,13 @@
 <div class="magick-header">
 <p class="lead magick-description">Connected-component labeling (alternatively connected-component analysis, blob extraction, region labeling, blob discovery, or region extraction) uniquely labels connected components in an image.  The labeling process scans the image, pixel-by-pixel from top-left to bottom-right, in order to identify connected pixel regions, i.e. regions of adjacent pixels which share the same set of intensity values.  For example, let's find the objects in this image:</p>
 <ul>
-  <a href="../images/objects.gif"><img src="../images/objects.gif" width="256" height="171" class="image-slices" alt="purse" /></a>
+  <a href="https://legacy.imagemagick.org/images/objects.gif"><img src="https://legacy.imagemagick.org/images/objects.gif" width="256" height="171" class="image-slices" alt="purse" /></a>
 </ul>
 <p>To identify the objects in this image, use this command:</p>
 <pre class="highlight"><code>convert objects.gif -connected-components 4 -auto-level -depth 8 objects.png</code></pre>
 <p>The detected objects are uniquely labeled.  Use auto leveling to visualize the detected objects:</p>
 <ul>
-  <a href="../images/objects.png"><img src="../images/objects.png" width="256" height="171" class="image-slices" alt="Objects" /></a>
+  <a href="https://legacy.imagemagick.org/images/objects.png"><img src="https://legacy.imagemagick.org/images/objects.png" width="256" height="171" class="image-slices" alt="Objects" /></a>
 </ul>
 <p>Object statistics is useful to review.  To display them, use this command:</p>
 <pre class="highlight"><code>convert objects.gif -define connected-components:verbose=true -connected-components 4 objects.png</code></pre>
