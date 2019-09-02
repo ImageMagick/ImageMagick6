@@ -260,11 +260,11 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register IndexPacket
     *indexes;
 
-  register ssize_t
-    x;
-
   register PixelPacket
     *r;
+
+  register ssize_t
+    x;
 
   size_t
     length;
@@ -470,7 +470,10 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         indexes=GetAuthenticIndexQueue(image);
         for (x=0; x < (ssize_t) image->columns; x++)
         {
-          ssize_t count=CopyXPMColor(key,p,MagickMin(width,MaxTextExtent-1));
+          ssize_t
+            count;
+
+          count=CopyXPMColor(key,p,MagickMin(width,MaxTextExtent-1));
           if (count != (ssize_t) width)
             break;
           j=(ssize_t) GetValueFromSplayTree(xpm_colors,key);
