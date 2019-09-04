@@ -1209,7 +1209,10 @@ MagickExport MagickBooleanType SetImageColorspace(Image *image,
   if (IsGrayColorspace(colorspace) != MagickFalse)
     {
       if (colorspace == LinearGRAYColorspace)
-        image->gamma=1.0;
+        {
+          image->gamma=1.0;
+          image->intensity=Rec709LuminancePixelIntensityMethod;
+        }
       type=GrayscaleType;
     }
   else
