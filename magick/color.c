@@ -2849,7 +2849,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
           if ((icc_color == MagickFalse) &&
               (color->colorspace == LinearGRAYColorspace))
             {
-              color->colorspace=LinearGRAYColorspace;
+              color->colorspace=GRAYColorspace;
               color->depth=8;
             }
         }
