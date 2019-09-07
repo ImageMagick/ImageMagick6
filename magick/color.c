@@ -2846,12 +2846,6 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
           if (((flags & SigmaValue) != 0) && (color->matte != MagickFalse))
             color->opacity=(MagickRealType) ClampToQuantum((MagickRealType)
               (QuantumRange-QuantumRange*geometry_info.sigma));
-          if ((icc_color == MagickFalse) &&
-              (color->colorspace == LinearGRAYColorspace))
-            {
-              color->colorspace=GRAYColorspace;
-              color->depth=8;
-            }
         }
       if ((LocaleCompare(colorspace,"HCL") == 0) ||
           (LocaleCompare(colorspace,"HSB") == 0) ||
