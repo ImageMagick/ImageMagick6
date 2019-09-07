@@ -345,7 +345,9 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   if (IsHeifSuccess(&error,image) == MagickFalse)
     {
       heif_image_handle_release(image_handle);
-      return(MagickFalse);
+      heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
+      return(DestroyImageList(image));
     }
   if (decode_options != (struct heif_decoding_options *) NULL)
     {
@@ -360,7 +362,9 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
         {
           heif_image_release(heif_image);
           heif_image_handle_release(image_handle);
-          return(MagickFalse);
+          heif_context_free(heif_context);
+          file_data=RelinquishMagickMemory(file_data);
+          return(DestroyImageList(image));
         }
     }
   p_y=heif_image_get_plane(heif_image,heif_channel_Y,&stride_y);
