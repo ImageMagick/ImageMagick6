@@ -4091,25 +4091,30 @@ AC_OUTPUT
 # ==============================================================================
 AC_MSG_NOTICE([
 ==============================================================================
-ImageMagick is configured as follows. Please verify that this configuration
-matches your expectations.
+${PACKAGE_NAME} ${PACKAGE_VERSION}${PACKAGE_VERSION_ADDENDUM} is configured as follows. Please verify that this
+configuration matches your expectations.
 
-  Host system type: $host
-  Build system type: $build
+Host system type: $host
+Build system type: $build
 
-                 Option                        Value
-  ------------------------------------------------------------------------------
-  Shared libraries  --enable-shared=$enable_shared		$libtool_build_shared_libs
-  Static libraries  --enable-static=$enable_static		$libtool_build_static_libs
-  Module support    --with-modules=$build_modules		$build_modules
-  GNU ld            --with-gnu-ld=$with_gnu_ld		$lt_cv_prog_gnu_ld
-  Quantum depth     --with-quantum-depth=$with_quantum_depth	$with_quantum_depth
-  High Dynamic Range Imagery
-                    --enable-hdri=$enable_hdri		$enable_hdri
+               Option                        Value
+------------------------------------------------------------------------------
+Shared libraries  --enable-shared=$enable_shared		$libtool_build_shared_libs
+Static libraries  --enable-static=$enable_static		$libtool_build_static_libs
+Module support    --with-modules=$build_modules		$build_modules
+GNU ld            --with-gnu-ld=$with_gnu_ld		$lt_cv_prog_gnu_ld
+Quantum depth     --with-quantum-depth=$with_quantum_depth	$with_quantum_depth
+High Dynamic Range Imagery
+                  --enable-hdri=$enable_hdri		$enable_hdri
 
-  Install documentation:			$wantdocs
+Install documentation:				$wantdocs
 
-  Delegate Library Configuration:
+Memory Allocation Library:
+  JEMalloc          --with-jemalloc=$with_jemalloc		$have_jemalloc
+  TCMalloc          --with-tcmalloc=$with_tcmalloc		$have_tcmalloc
+  UMem              --with-umem=$with_umem		$have_umem
+
+Delegate Library Configuration:
   BZLIB             --with-bzlib=$with_bzlib		$have_bzlib
   Autotrace         --with-autotrace=$with_autotrace		$have_autotrace
   DJVU              --with-djvu=$with_djvu		$have_djvu
@@ -4121,7 +4126,7 @@ matches your expectations.
   FreeType          --with-freetype=$with_freetype		$have_freetype
   Ghostscript lib   --with-gslib=$with_gslib		$have_gslib
   Graphviz          --with-gvc=$with_gvc		$have_gvc
-  HEIC              --with-heic=$with_heic    $have_heic
+  HEIC              --with-heic=$with_heic             $have_heic
   JBIG              --with-jbig=$with_jbig		$have_jbig
   JPEG v1           --with-jpeg=$with_jpeg		$have_jpeg
   LCMS              --with-lcms=$with_lcms		$have_lcms
@@ -4135,7 +4140,7 @@ matches your expectations.
   PERL              --with-perl=$with_perl		$have_perl
   PNG               --with-png=$with_png		$have_png
   RAQM              --with-raqm=$with_raqm		$have_raqm
-  RAW               --with-raw=$with_raw    	$have_raw
+  RAW               --with-raw=$with_raw 	   	$have_raw
   RSVG              --with-rsvg=$with_rsvg		$have_rsvg
   TIFF              --with-tiff=$with_tiff		$have_tiff
   WEBP              --with-webp=$with_webp		$have_webp
@@ -4145,38 +4150,38 @@ matches your expectations.
   ZLIB              --with-zlib=$with_zlib		$have_zlib
   ZSTD              --with-zstd=$with_zstd		$have_zstd
 
-  Delegate Program Configuration:
-  GhostPCL          None				$PCLDelegate ($PCLVersion)
-  GhostXPS          None				$XPSDelegate ($XPSVersion)
-  Ghostscript       None				$PSDelegate ($GSVersion)
+Delegate Program Configuration:
+  GhostPCL          None			$PCLDelegate ($PCLVersion)
+  GhostXPS          None			$XPSDelegate ($XPSVersion)
+  Ghostscript       None			$PSDelegate ($GSVersion)
 
-  Font Configuration:
+Font Configuration:
   Apple fonts       --with-apple-font-dir=$with_apple_font_dir	$result_apple_font_dir
   Dejavu fonts      --with-dejavu-font-dir=$with_dejavu_font_dir	$result_dejavu_font_dir
-  Ghostscript fonts --with-gs-font-dir=$with_gs_font_dir	$result_ghostscript_font_dir
-  URW-base35 fonts  --with-urw-base35-font-dir=$with_urw_base35_font_dir  $result_urw_base35_font_dir
+  Ghostscript fonts --with-gs-font-dir=$with_gs_font_dir		$result_ghostscript_font_dir
+  URW-base35 fonts  --with-urw-base35-font-dir=$with_urw_base35_font_dir	$result_urw_base35_font_dir
   Windows fonts     --with-windows-font-dir=$with_windows_font_dir	$result_windows_font_dir
 
-  X11 Configuration:
-        X_CFLAGS        = $X_CFLAGS
-        X_PRE_LIBS      = $X_PRE_LIBS
-        X_LIBS          = $X_LIBS
-        X_EXTRA_LIBS    = $X_EXTRA_LIBS
+X11 Configuration:
+  X_CFLAGS        = $X_CFLAGS
+  X_PRE_LIBS      = $X_PRE_LIBS
+  X_LIBS          = $X_LIBS
+  X_EXTRA_LIBS    = $X_EXTRA_LIBS
 
-  Options used to compile and link:
-    PREFIX          = $PREFIX_DIR
-    EXEC-PREFIX     = $EXEC_PREFIX_DIR
-    VERSION         = $PACKAGE_VERSION
-    CC              = $CC
-    CFLAGS          = $CFLAGS
-    CPPFLAGS        = $CPPFLAGS
-    PCFLAGS         = $PCFLAGS
-    DEFS            = $DEFS
-    LDFLAGS         = $LDFLAGS
-    LIBS            = $MAGICK_DEP_LIBS
-    CXX             = $CXX
-    CXXFLAGS        = $CXXFLAGS
-    FEATURES        = $MAGICK_FEATURES
-    DELEGATES       = $MAGICK_DELEGATES
+Options used to compile and link:
+  PREFIX          = $PREFIX_DIR
+  EXEC-PREFIX     = $EXEC_PREFIX_DIR
+  VERSION         = $PACKAGE_VERSION
+  CC              = $CC
+  CFLAGS          = $CFLAGS
+  CPPFLAGS        = $CPPFLAGS
+  PCFLAGS         = $PCFLAGS
+  DEFS            = $DEFS
+  LDFLAGS         = $LDFLAGS
+  LIBS            = $MAGICK_DEP_LIBS
+  CXX             = $CXX
+  CXXFLAGS        = $CXXFLAGS
+  FEATURES        = $MAGICK_FEATURES
+  DELEGATES       = $MAGICK_DELEGATES
 ==============================================================================
 ])
