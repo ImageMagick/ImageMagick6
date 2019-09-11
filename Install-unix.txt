@@ -231,8 +231,8 @@ Configure
       enable 'gprof' profiling support (default disabled).
   
     --enable-gcov
-   
-     enable 'gcov' profiling support (default disabled).
+      enable 'gcov' profiling support (default disabled).
+
     --disable-openmp
       disable OpenMP (default enabled).
   
