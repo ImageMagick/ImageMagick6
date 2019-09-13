@@ -381,11 +381,6 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       return(status);
     }
     case LinearGRAYColorspace:
-    {
-      if ((image->intensity != Rec601LuminancePixelIntensityMethod) &&
-          (image->intensity != Rec709LuminancePixelIntensityMethod))
-        image->intensity=Rec709LuminancePixelIntensityMethod;
-    }
     case GRAYColorspace:
     {
       /*
@@ -425,6 +420,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
           }
         for (x=0; x < (ssize_t) image->columns; x++)
         {
+          MagickRealType
+            gray;
+
+          gray=(MagickRealType) GetPixelIntensity(image,q);
+          if ((image->intensity == Rec601LumaPixelIntensityMethod) ||
+              (image->intensity == Rec709LumaPixelIntensityMethod))
+            gray=DecodePixelGamma(gray);
           SetPixelGray(q,ClampToQuantum(GetPixelIntensity(image,q)));
           q++;
         }
@@ -1979,6 +1981,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         return(MagickFalse);
       return(status);
     }
+    case LinearGRAYColorspace:
     case GRAYColorspace:
     case Rec601LumaColorspace:
     case Rec709LumaColorspace:
@@ -2025,13 +2028,11 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
           MagickRealType
             gray;
 
-          gray=(MagickRealType) GetPixelGray(q);
+          gray=(MagickRealType) GetPixelIntensity(image,q);
           if ((image->intensity == Rec601LuminancePixelIntensityMethod) ||
               (image->intensity == Rec709LuminancePixelIntensityMethod))
             gray=EncodePixelGamma(gray);
-          SetPixelRed(q,ClampToQuantum(gray));
-          SetPixelGreen(q,ClampToQuantum(gray));
-          SetPixelBlue(q,ClampToQuantum(gray));
+          SetPixelGray(q,ClampToQuantum(gray));
           q++;
         }
         sync=SyncCacheViewAuthenticPixels(image_view,exception);
