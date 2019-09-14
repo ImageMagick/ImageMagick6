@@ -422,7 +422,8 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
           MagickRealType
             gray;
 
-          gray=(MagickRealType) GetPixelIntensity(image,q);
+          gray=0.212656*GetPixelRed(q)+0.715158*GetPixelGreen(q)+
+            0.072186*GetPixelBlue(q);
           SetPixelGray(q,ClampToQuantum(DecodePixelGamma(gray)));
           q++;
         }
@@ -478,7 +479,8 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
           MagickRealType
             gray;
 
-          gray=(MagickRealType) GetPixelIntensity(image,q);
+          gray=0.212656*GetPixelRed(q)+0.715158*GetPixelGreen(q)+
+            0.072186*GetPixelBlue(q);
           SetPixelGray(q,ClampToQuantum(gray));
           q++;
         }
@@ -2078,8 +2080,12 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
           MagickRealType
             gray;
 
-          gray=(MagickRealType) GetPixelIntensity(image,q);
-          SetPixelGray(q,ClampToQuantum(gray));
+          gray=0.212656*GetPixelRed(q)+0.715158*GetPixelGreen(q)+
+            0.072186*GetPixelBlue(q);
+          gray=EncodePixelGamma(gray);
+          SetPixelRed(q,ClampToQuantum(gray));
+          SetPixelGreen(q,ClampToQuantum(gray));
+          SetPixelBlue(q,ClampToQuantum(gray));
           q++;
         }
         sync=SyncCacheViewAuthenticPixels(image_view,exception);
@@ -2136,8 +2142,11 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
           MagickRealType
             gray;
 
-          gray=(MagickRealType) GetPixelIntensity(image,q);
-          SetPixelGray(q,ClampToQuantum(EncodePixelGamma(gray)));
+          gray=0.212656*GetPixelRed(q)+0.715158*GetPixelGreen(q)+
+            0.072186*GetPixelBlue(q);
+          SetPixelRed(q,ClampToQuantum(gray));
+          SetPixelGreen(q,ClampToQuantum(gray));
+          SetPixelBlue(q,ClampToQuantum(gray));
           q++;
         }
         sync=SyncCacheViewAuthenticPixels(image_view,exception);
