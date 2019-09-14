@@ -381,6 +381,61 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       return(status);
     }
     case LinearGRAYColorspace:
+    {
+      /*
+        Transform image from sRGB to GRAY.
+      */
+      if (image->storage_class == PseudoClass)
+        {
+          if (SyncImage(image) == MagickFalse)
+            return(MagickFalse);
+          if (SetImageStorageClass(image,DirectClass) == MagickFalse)
+            return(MagickFalse);
+        }
+      image_view=AcquireAuthenticCacheView(image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+      #pragma omp parallel for schedule(static) shared(status) \
+        magick_number_threads(image,image,image->rows,1)
+#endif
+      for (y=0; y < (ssize_t) image->rows; y++)
+      {
+        MagickBooleanType
+          sync;
+
+        register ssize_t
+          x;
+
+        register PixelPacket
+          *magick_restrict q;
+
+        if (status == MagickFalse)
+          continue;
+        q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,
+          exception);
+        if (q == (PixelPacket *) NULL)
+          {
+            status=MagickFalse;
+            continue;
+          }
+        for (x=0; x < (ssize_t) image->columns; x++)
+        {
+          MagickRealType
+            gray;
+
+          gray=(MagickRealType) GetPixelIntensity(image,q);
+          SetPixelGray(q,ClampToQuantum(DecodePixelGamma(gray)));
+          q++;
+        }
+        sync=SyncCacheViewAuthenticPixels(image_view,exception);
+        if (sync == MagickFalse)
+          status=MagickFalse;
+      }
+      image_view=DestroyCacheView(image_view);
+      if (SetImageColorspace(image,colorspace) == MagickFalse)
+        return(MagickFalse);
+      image->type=GrayscaleType;
+      return(status);
+    }
     case GRAYColorspace:
     {
       /*
@@ -1979,9 +2034,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
       return(status);
     }
     case LinearGRAYColorspace:
-    case GRAYColorspace:
     case Rec601LumaColorspace:
-    case Rec709LumaColorspace:
     {
       /*
         Transform linear RGB to sRGB colorspace.
@@ -2027,6 +2080,64 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
 
           gray=(MagickRealType) GetPixelIntensity(image,q);
           SetPixelGray(q,ClampToQuantum(gray));
+          q++;
+        }
+        sync=SyncCacheViewAuthenticPixels(image_view,exception);
+        if (sync == MagickFalse)
+          status=MagickFalse;
+      }
+      image_view=DestroyCacheView(image_view);
+      if (SetImageColorspace(image,sRGBColorspace) == MagickFalse)
+        return(MagickFalse);
+      return(status);
+    }
+    case GRAYColorspace:
+    case Rec709LumaColorspace:
+    {
+      /*
+        Transform linear RGB to sRGB colorspace.
+      */
+      if (image->storage_class == PseudoClass)
+        {
+          if (SyncImage(image) == MagickFalse)
+            return(MagickFalse);
+          if (SetImageStorageClass(image,DirectClass) == MagickFalse)
+            return(MagickFalse);
+        }
+      if (SetImageColorspace(image,sRGBColorspace) == MagickFalse)
+        return(MagickFalse);
+      image_view=AcquireAuthenticCacheView(image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+      #pragma omp parallel for schedule(static) shared(status) \
+        magick_number_threads(image,image,image->rows,1)
+#endif
+      for (y=0; y < (ssize_t) image->rows; y++)
+      {
+        MagickBooleanType
+          sync;
+
+        register ssize_t
+          x;
+
+        register PixelPacket
+          *magick_restrict q;
+
+        if (status == MagickFalse)
+          continue;
+        q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,
+          exception);
+        if (q == (PixelPacket *) NULL)
+          {
+            status=MagickFalse;
+            continue;
+          }
+        for (x=(ssize_t) image->columns; x != 0; x--)
+        {
+          MagickRealType
+            gray;
+
+          gray=(MagickRealType) GetPixelIntensity(image,q);
+          SetPixelGray(q,ClampToQuantum(EncodePixelGamma(gray)));
           q++;
         }
         sync=SyncCacheViewAuthenticPixels(image_view,exception);
