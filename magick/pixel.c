@@ -2336,7 +2336,8 @@ MagickExport MagickRealType GetPixelIntensity(const Image *image,
     }
     case Rec601LumaPixelIntensityMethod:
     {
-      if (image->colorspace == RGBColorspace)
+      if ((image->colorspace == RGBColorspace) ||
+          (image->colorspace == LinearGRAYColorspace))
         {
           red=EncodePixelGamma(red);
           green=EncodePixelGamma(green);
@@ -2347,7 +2348,8 @@ MagickExport MagickRealType GetPixelIntensity(const Image *image,
     }
     case Rec601LuminancePixelIntensityMethod:
     {
-      if (image->colorspace == sRGBColorspace)
+      if ((image->colorspace == sRGBColorspace) ||
+          (image->colorspace == GRAYColorspace))
         {
           red=DecodePixelGamma(red);
           green=DecodePixelGamma(green);
@@ -2359,7 +2361,8 @@ MagickExport MagickRealType GetPixelIntensity(const Image *image,
     case Rec709LumaPixelIntensityMethod:
     default:
     {
-      if (image->colorspace == RGBColorspace)
+      if ((image->colorspace == RGBColorspace) ||
+          (image->colorspace == LinearGRAYColorspace))
         {
           red=EncodePixelGamma(red);
           green=EncodePixelGamma(green);
@@ -2370,7 +2373,8 @@ MagickExport MagickRealType GetPixelIntensity(const Image *image,
     }
     case Rec709LuminancePixelIntensityMethod:
     {
-      if (image->colorspace == sRGBColorspace)
+      if ((image->colorspace == sRGBColorspace) ||
+          (image->colorspace == GRAYColorspace))
         {
           red=DecodePixelGamma(red);
           green=DecodePixelGamma(green);
@@ -4546,7 +4550,7 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
       IndexPacket
         index;
 
-      index=0;  /* CMYK index -- What should we do?  -- This is a HACK */
+      index=(IndexPacket) 0;
       SetMagickPixelPacket(image,&image->background_color,&index,pixel);
       break;
     }
