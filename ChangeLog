@@ -1,5 +1,5 @@
-2019-09-09  6.9.10-65 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-65, GIT revision 14...
+2019-09-14  6.9.10-65 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-65, GIT revision 14829:1a6dc73:20190915/
 
 2019-09-09  6.9.10-65 Cristy  <quetzlzacatenango@image...>
   * Eliminate fault when trace delegate is not available.
