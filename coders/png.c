@@ -1711,8 +1711,10 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
 
   size_t
     extent,
-    length,
     nibbles;
+
+  ssize_t
+    length;
 
   StringInfo
     *profile;
@@ -1727,6 +1729,11 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
 
   sp=text[ii].text+1;
   extent=text[ii].text_length;
+  if ((sp+extent) < sp)
+    {
+      png_warning(ping,"invalid profile length");
+      return(MagickFalse);
+    }
   /* look for newline */
   while ((*sp != '\n') && extent--)
     sp++;
