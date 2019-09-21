@@ -1,8 +1,8 @@
-2019-09-20  6.9.10-66 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-66, GIT revision 14...
+2019-09-21  6.9.10-66 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-66, GIT revision 14834:9b20f2e:20190921.
 
-2019-09-20  6.9.10-65 Cristy  <quetzlzacatenango@image...>
-  * Compound statements are not permitted in the FX while() (reference
+2019-09-20  6.9.10-66 Cristy  <quetzlzacatenango@image...>
+  * Support compound statements in the FX while() expression (reference
     https://github.com/ImageMagick/ImageMagick/issues/1701).
 
 2019-09-14  6.9.10-65 Cristy  <quetzlzacatenango@image...>
