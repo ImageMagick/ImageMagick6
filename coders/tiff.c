@@ -3392,8 +3392,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
     default: mode="w"; break;
   }
 #if defined(TIFF_VERSION_BIG)
-  if ((LocaleCompare(image_info->magick,"TIFF64") == 0) ||
-      (((MagickOffsetType) image->columns*image->rows) > SSIZE_MAX))
+  if (LocaleCompare(image_info->magick,"TIFF64") == 0)
     switch (endian_type)
     {
       case LSBEndian: mode="wl8"; break;
