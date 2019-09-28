@@ -1,3 +1,10 @@
+2019-09-28  6.9.10-67 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-67, GIT revision 14...
+
+2019-09-28  6.9.10-67 Cristy  <quetzlzacatenango@image...>
+  * line endings renedered as empty boxes (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1704).
+
 2019-09-21  6.9.10-66 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-66, GIT revision 14834:9b20f2e:20190921.
 
