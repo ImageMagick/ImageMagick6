@@ -1268,7 +1268,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   FT_UInt
     first_glyph_id,
     last_glyph_id,
-    space_glyph_id;
+    missing_glyph_id;
 
   FT_Vector
     origin;
@@ -1518,7 +1518,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     }
   grapheme=(GraphemeInfo *) NULL;
   length=ComplexTextLayout(image,draw_info,p,strlen(p),face,flags,&grapheme);
-  space_glyph_id=FT_Get_Char_Index(face,' ');
+  missing_glyph_id=FT_Get_Char_Index(face,' ');
   code=0;
   for (i=0; i < (ssize_t) length; i++)
   {
@@ -1530,7 +1530,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     */
     glyph.id=grapheme[i].index;
     if (glyph.id == 0)
-      glyph.id=space_glyph_id;
+      glyph.id=missing_glyph_id;
     if ((glyph.id != 0) && (last_glyph_id != 0))
       origin.x+=(FT_Pos) (64.0*draw_info->kerning);
     glyph.origin=origin;
