@@ -1996,7 +1996,7 @@ Optional Packages:
   --includearch-dir=DIR   ARCH specific include directory
   --sharearch-dir=DIR     ARCH specific config directory
   --with-pkgconfigdir=DIR Path to the pkgconfig directory [LIBDIR/pkgconfig]
-  --without-threads       disable threads support
+  --without-threads       disable POSIX threads API support
   --with-pic[=PKGS]       try to use only PIC/non-PIC objects [default=use
                           both]
   --with-aix-soname=aix|svr4|both
@@ -2021,7 +2021,7 @@ Optional Packages:
                           options to pass on command-line when generating
                           PerlMagick build file
   --with-jemalloc         enable jemalloc memory allocation library support
-  --with-tcmalloc         enable tcmalloc memory allocation libary support
+  --with-tcmalloc         enable tcmalloc memory allocation library support
   --with-umem             enable umem memory allocation library support
   --with-libstdc=DIR      use libstdc++ in DIR (for GNU C++)
   --without-bzlib         disable BZLIB support
@@ -4573,7 +4573,7 @@ MAGICK_PATCHLEVEL_VERSION=68
 
 MAGICK_VERSION=6.9.10-68
 
-MAGICK_GIT_REVISION=14843:618d7599a:20190929
+MAGICK_GIT_REVISION=14844:d9ca1e8db:20190930
 
 
 # Substitute library versioning
@@ -9796,9 +9796,7 @@ fi
 
 
 #
-# Enable support for threads
-#
-# Find Posix threads library
+# Enable support for POSIX thread APIs
 #
 
 # Check whether --with-threads was given.
@@ -33561,19 +33559,19 @@ $as_echo "yes" >&6; }
 fi
 
 pkg_failed=no
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libwebpmux >= 0.4.4" >&5
-$as_echo_n "checking for libwebpmux >= 0.4.4... " >&6; }
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4" >&5
+$as_echo_n "checking for libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4... " >&6; }
 
 if test -n "$WEBPMUX_CFLAGS"; then
     pkg_cv_WEBPMUX_CFLAGS="$WEBPMUX_CFLAGS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libwebpmux >= 0.4.4\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libwebpmux >= 0.4.4") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_WEBPMUX_CFLAGS=`$PKG_CONFIG --cflags "libwebpmux >= 0.4.4" 2>/dev/null`
+  pkg_cv_WEBPMUX_CFLAGS=`$PKG_CONFIG --cflags "libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
@@ -33585,12 +33583,12 @@ if test -n "$WEBPMUX_LIBS"; then
     pkg_cv_WEBPMUX_LIBS="$WEBPMUX_LIBS"
  elif test -n "$PKG_CONFIG"; then
     if test -n "$PKG_CONFIG" && \
-    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libwebpmux >= 0.4.4\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libwebpmux >= 0.4.4") 2>&5
+    { { $as_echo "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4") 2>&5
   ac_status=$?
   $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
   test $ac_status = 0; }; then
-  pkg_cv_WEBPMUX_LIBS=`$PKG_CONFIG --libs "libwebpmux >= 0.4.4" 2>/dev/null`
+  pkg_cv_WEBPMUX_LIBS=`$PKG_CONFIG --libs "libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes
 else
   pkg_failed=yes
@@ -33611,9 +33609,9 @@ else
         _pkg_short_errors_supported=no
 fi
         if test $_pkg_short_errors_supported = yes; then
-	        WEBPMUX_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libwebpmux >= 0.4.4" 2>&1`
+	        WEBPMUX_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4" 2>&1`
         else
-	        WEBPMUX_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libwebpmux >= 0.4.4" 2>&1`
+	        WEBPMUX_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4" 2>&1`
         fi
 	# Put the nasty error message in config.log where it belongs
 	echo "$WEBPMUX_PKG_ERRORS" >&5
@@ -33921,7 +33919,7 @@ fi
 
 # Check for functions
 #
-for ac_func in acosh _aligned_malloc asinh atanh atoll atexit cabs carg cimag creal clock clock_getres clock_gettime ctime_r directio erf _exit execvp fchmod floor fork ftime ftruncate getc_unlocked getcwd getpid getexecname getdtablesize getpagesize getrlimit getrusage gettimeofday gmtime_r isnan j0 j1 lltostr localtime_r lstat memmove memset mkstemp munmap nanosleep newlocale _NSGetExecutablePath pclose _pclose poll popen _popen posix_fadvise posix_fallocate posix_madvise posix_spawnp pow pread pwrite qsort_r raise rand_r readlink realpath select seekdir sendfile setlocale socket sqrt setvbuf stat strchr strrchr strcspn strdup strpbrk strspn strstr strtod strtod_l strtol strtoul symlink sysconf sigemptyset sigaction spawnvp strerror strlcat strlcpy strcasecmp strncasecmp telldir tempnam times ulltostr uselocale usleep utime vfprintf vfprintf_l vsprintf vsnprintf vsnprintf_l waitpid _wfopen _wstat
+for ac_func in acosh _aligned_malloc asinh atanh atoll atexit cabs carg cimag creal clock clock_getres clock_gettime ctime_r directio erf _exit execvp fchmod floor fork ftime ftruncate getc_unlocked getcwd getpid getexecname getdtablesize getpagesize getrlimit getrusage gettimeofday gmtime_r isnan j0 j1 lltostr localtime_r lstat memmove memset mkstemp munmap nanosleep newlocale _NSGetExecutablePath pclose _pclose poll popen _popen posix_fadvise posix_fallocate posix_madvise posix_memalign posix_spawnp pow pread pwrite qsort_r raise rand_r readlink realpath select seekdir sendfile setlocale socket sqrt setvbuf stat strchr strrchr strcspn strdup strpbrk strspn strstr strtod strtod_l strtol strtoul symlink sysconf sigemptyset sigaction spawnvp strerror strlcat strlcpy strcasecmp strncasecmp telldir tempnam times ulltostr uselocale usleep utime vfprintf vfprintf_l vsprintf vsnprintf vsnprintf_l waitpid _wfopen _wstat
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -34249,7 +34247,7 @@ fi
 RMDelegateDefault='rm'
 RSVGDecodeDelegateDefault='rsvg-convert'
 SVGDecodeDelegateDefault='inkscape'
-TraceEncodeDelegateDefault='trace'
+TraceEncodeDelegateDefault='potrace'
 UniconvertorDelegateDefault='uniconvertor'
 WebPDecodeDelegateDefault='dwebp'
 WebPEncodeDelegateDefault='cwebp'
@@ -35626,8 +35624,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""TraceEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "TraceEncodeDelegateDefault"; ac_word=$2
+# Extract the first word of ""$TraceEncodeDelegateDefault"", so it can be a program name with args.
+set dummy "$TraceEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_TraceEncodeDelegate+:} false; then :
@@ -35653,7 +35651,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_TraceEncodeDelegate" && ac_cv_path_TraceEncodeDelegate=""TraceEncodeDelegateDefault""
+  test -z "$ac_cv_path_TraceEncodeDelegate" && ac_cv_path_TraceEncodeDelegate=""$TraceEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -37065,7 +37063,7 @@ fi
 #
 
 if test "$build_modules" != 'no'; then
-    MAGICK_DEP_LIBS="$USER_LIBS $LCMS_LIBS $FREETYPE_LIBS $RAQM_LIBS $LQR_LIBS $FFTW_LIBS $FLIF_LIBS $XML_LIBS $FONTCONFIG_LIBS $XEXT_LIBS $IPC_LIBS $X11_LIBS $XT_LIBS $LZMA_LIBS $BZLIB_LIBS $ZLIB_LIBS $ZSTD_LIBS $LTDL_LIBS $GDI32_LIBS $WS2_32_LIBS $MATH_LIBS $CL_LIBS $UMEM_LIBS $JEMALLOC_LIBS $THREAD_LIBS $TCMALLOC_LIBS"
+    MAGICK_DEP_LIBS="$USER_LIBS $LCMS_LIBS $FREETYPE_LIBS $RAQM_LIBS $LQR_LIBS $FFTW_LIBS $XML_LIBS $FLIF_LIBS $FONTCONFIG_LIBS $XEXT_LIBS $IPC_LIBS $X11_LIBS $XT_LIBS $LZMA_LIBS $BZLIB_LIBS $ZLIB_LIBS $ZSTD_LIBS $LTDL_LIBS $GDI32_LIBS $WS2_32_LIBS $MATH_LIBS $CL_LIBS $UMEM_LIBS $JEMALLOC_LIBS $THREAD_LIBS $TCMALLOC_LIBS"
 else
     MAGICK_DEP_LIBS="$USER_LIBS $JBIG_LIBS $LCMS_LIBS $TIFF_LIBS $FREETYPE_LIBS $RAQM_LIBS $JPEG_LIBS $GS_LIBS $LQR_LIBS $PNG_LIBS $AUTOTRACE_LIBS $DJVU_LIBS $FFTW_LIBS $FLIF_LIBS $FPX_LIBS $FONTCONFIG_LIBS $HEIF_LIBS $WEBPMUX_LIBS $WEBP_LIBS $WMF_LIBS $DPS_LIBS $XEXT_LIBS $XT_LIBS $IPC_LIBS $X11_LIBS $LZMA_LIBS $BZLIB_LIBS $OPENEXR_LIBS $LIBOPENJP2_LIBS $PANGO_LIBS $RAW_R_LIBS $RSVG_LIBS $XML_LIBS $GVC_LIBS $ZLIB_LIBS $ZSTD_LIBS $LTDL_LIBS $GDI32_LIBS $WS2_32_LIBS $MATH_LIBS $CL_LIBS $UMEM_LIBS $JEMALLOC_LIBS $THREAD_LIBS $TCMALLOC_LIBS"
 fi

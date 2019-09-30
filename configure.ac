@@ -472,12 +472,10 @@ AC_ARG_WITH([pkgconfigdir], AS_HELP_STRING([--with-pkgconfigdir=DIR],
 AC_SUBST([pkgconfigdir])
 
 #
-# Enable support for threads
-#
-# Find Posix threads library
+# Enable support for POSIX thread APIs
 #
 AC_ARG_WITH([threads],
-    [AC_HELP_STRING([--without-threads], [disable threads support])],
+    [AC_HELP_STRING([--without-threads], [disable POSIX threads API support])],
     [with_threads=$withval],
     [with_threads='yes'])
 
@@ -873,7 +871,7 @@ fi
 # Enable use of TCMalloc library.
 AC_ARG_WITH(tcmalloc,
    AS_HELP_STRING([--with-tcmalloc],
-                  [enable tcmalloc memory allocation libary support]),
+                  [enable tcmalloc memory allocation library support]),
    [with_tcmalloc=$withval],
    [with_tcmalloc='no'])
 if test "$with_tcmalloc" != 'no' ; then
@@ -1190,7 +1188,7 @@ AC_TRY_COMPILE([],
    [{ const char *func = __FUNCTION__; return(func != 0 ? 0 : 1); }],
    AC_MSG_RESULT([yes])
    AC_DEFINE(__func__, __FUNCTION__,
-     [Define to appropriate substitue if compiler does not have __func__]),
+     [Define to appropriate substitute if compiler does not have __func__]),
    AC_MSG_RESULT([no])
    AC_DEFINE(__func__, __FILE__,
      [Define to appropriate substitue if compiler does not have __func__])))
@@ -2877,7 +2875,7 @@ WEBPMUX_PKG=""
 if test "x$with_webp" = "xyes"; then
   AC_MSG_RESULT([-------------------------------------------------------------])
   PKG_CHECK_MODULES(WEBP,[libwebp], have_webp=yes, have_webp=no)
-  PKG_CHECK_MODULES(WEBPMUX,[libwebpmux >= 0.4.4], have_webpmux=yes, have_webpmux=no)
+  PKG_CHECK_MODULES(WEBPMUX,[libwebpmux >= 0.4.4 libwebpdemux >= 0.4.4], have_webpmux=yes, have_webpmux=no)
   AC_MSG_RESULT([])
 fi
 
@@ -3004,7 +3002,7 @@ dnl ===========================================================================
 
 # Check for functions
 #
-AC_CHECK_FUNCS([acosh _aligned_malloc asinh atanh atoll atexit cabs carg cimag creal clock clock_getres clock_gettime ctime_r directio erf _exit execvp fchmod floor fork ftime ftruncate getc_unlocked getcwd getpid getexecname getdtablesize getpagesize getrlimit getrusage gettimeofday gmtime_r isnan j0 j1 lltostr localtime_r lstat memmove memset mkstemp munmap nanosleep newlocale _NSGetExecutablePath pclose _pclose poll popen _popen posix_fadvise posix_fallocate posix_madvise posix_spawnp pow pread pwrite qsort_r raise rand_r readlink realpath select seekdir sendfile setlocale socket sqrt setvbuf stat strchr strrchr strcspn strdup strpbrk strspn strstr strtod strtod_l strtol strtoul symlink sysconf sigemptyset sigaction spawnvp strerror strlcat strlcpy strcasecmp strncasecmp telldir tempnam times ulltostr uselocale usleep utime vfprintf vfprintf_l vsprintf vsnprintf vsnprintf_l waitpid _wfopen _wstat])
+AC_CHECK_FUNCS([acosh _aligned_malloc asinh atanh atoll atexit cabs carg cimag creal clock clock_getres clock_gettime ctime_r directio erf _exit execvp fchmod floor fork ftime ftruncate getc_unlocked getcwd getpid getexecname getdtablesize getpagesize getrlimit getrusage gettimeofday gmtime_r isnan j0 j1 lltostr localtime_r lstat memmove memset mkstemp munmap nanosleep newlocale _NSGetExecutablePath pclose _pclose poll popen _popen posix_fadvise posix_fallocate posix_madvise posix_memalign posix_spawnp pow pread pwrite qsort_r raise rand_r readlink realpath select seekdir sendfile setlocale socket sqrt setvbuf stat strchr strrchr strcspn strdup strpbrk strspn strstr strtod strtod_l strtol strtoul symlink sysconf sigemptyset sigaction spawnvp strerror strlcat strlcpy strcasecmp strncasecmp telldir tempnam times ulltostr uselocale usleep utime vfprintf vfprintf_l vsprintf vsnprintf vsnprintf_l waitpid _wfopen _wstat])
 
 # Substitute compiler name to build/link PerlMagick
 #
@@ -3240,7 +3238,7 @@ fi
 RMDelegateDefault='rm'
 RSVGDecodeDelegateDefault='rsvg-convert'
 SVGDecodeDelegateDefault='inkscape'
-TraceEncodeDelegateDefault='trace'
+TraceEncodeDelegateDefault='potrace'
 UniconvertorDelegateDefault='uniconvertor'
 WebPDecodeDelegateDefault='dwebp'
 WebPEncodeDelegateDefault='cwebp'
@@ -3287,7 +3285,7 @@ AC_PATH_PROGS(PSDelegate, gsx gsc "$PSDelegateDefault", "$PSDelegateDefault")
 AC_PATH_PROG(RMDelegate, "$RMDelegateDefault", "$RMDelegateDefault")
 AC_PATH_PROG(RSVGDecodeDelegate, "$RSVGDecodeDelegateDefault", "$RSVGDecodeDelegateDefault")
 AC_PATH_PROG(SVGDecodeDelegate, "$SVGDecodeDelegateDefault", "$SVGDecodeDelegateDefault")
-AC_PATH_PROG(TraceEncodeDelegate, "TraceEncodeDelegateDefault", "TraceEncodeDelegateDefault")
+AC_PATH_PROG(TraceEncodeDelegate, "$TraceEncodeDelegateDefault", "$TraceEncodeDelegateDefault")
 AC_PATH_PROG(UniconvertorDelegate, "$UniconvertorDelegateDefault", "$UniconvertorDelegateDefault")
 AC_PATH_PROG(WebPDecodeDelegate, "$WebPDecodeDelegateDefault", "$WebPDecodeDelegateDefault")
 AC_PATH_PROG(WebPEncodeDelegate, "$WebPEncodeDelegateDefault", "$WebPEncodeDelegateDefault")
@@ -3965,7 +3963,7 @@ fi
 #
 
 if test "$build_modules" != 'no'; then
-    MAGICK_DEP_LIBS="$USER_LIBS $LCMS_LIBS $FREETYPE_LIBS $RAQM_LIBS $LQR_LIBS $FFTW_LIBS $FLIF_LIBS $XML_LIBS $FONTCONFIG_LIBS $XEXT_LIBS $IPC_LIBS $X11_LIBS $XT_LIBS $LZMA_LIBS $BZLIB_LIBS $ZLIB_LIBS $ZSTD_LIBS $LTDL_LIBS $GDI32_LIBS $WS2_32_LIBS $MATH_LIBS $CL_LIBS $UMEM_LIBS $JEMALLOC_LIBS $THREAD_LIBS $TCMALLOC_LIBS"
+    MAGICK_DEP_LIBS="$USER_LIBS $LCMS_LIBS $FREETYPE_LIBS $RAQM_LIBS $LQR_LIBS $FFTW_LIBS $XML_LIBS $FLIF_LIBS $FONTCONFIG_LIBS $XEXT_LIBS $IPC_LIBS $X11_LIBS $XT_LIBS $LZMA_LIBS $BZLIB_LIBS $ZLIB_LIBS $ZSTD_LIBS $LTDL_LIBS $GDI32_LIBS $WS2_32_LIBS $MATH_LIBS $CL_LIBS $UMEM_LIBS $JEMALLOC_LIBS $THREAD_LIBS $TCMALLOC_LIBS"
 else
     MAGICK_DEP_LIBS="$USER_LIBS $JBIG_LIBS $LCMS_LIBS $TIFF_LIBS $FREETYPE_LIBS $RAQM_LIBS $JPEG_LIBS $GS_LIBS $LQR_LIBS $PNG_LIBS $AUTOTRACE_LIBS $DJVU_LIBS $FFTW_LIBS $FLIF_LIBS $FPX_LIBS $FONTCONFIG_LIBS $HEIF_LIBS $WEBPMUX_LIBS $WEBP_LIBS $WMF_LIBS $DPS_LIBS $XEXT_LIBS $XT_LIBS $IPC_LIBS $X11_LIBS $LZMA_LIBS $BZLIB_LIBS $OPENEXR_LIBS $LIBOPENJP2_LIBS $PANGO_LIBS $RAW_R_LIBS $RSVG_LIBS $XML_LIBS $GVC_LIBS $ZLIB_LIBS $ZSTD_LIBS $LTDL_LIBS $GDI32_LIBS $WS2_32_LIBS $MATH_LIBS $CL_LIBS $UMEM_LIBS $JEMALLOC_LIBS $THREAD_LIBS $TCMALLOC_LIBS"
 fi
