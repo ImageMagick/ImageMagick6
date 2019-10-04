@@ -347,7 +347,7 @@ static MagickBooleanType WriteCLIPBOARDImage(const ImageInfo *image_info,
       ThrowWriterException(CoderError,"UnableToWriteImageData");
     }
   clip_mem=GlobalLock(clip_handle);
-  if (clip_handle == (LPVOID) NULL)
+  if (clip_mem == (LPVOID) NULL)
     {
       (void) GlobalFree((HGLOBAL) clip_handle);
       clip_data=RelinquishMagickMemory(clip_data);
