@@ -4573,7 +4573,7 @@ MAGICK_PATCHLEVEL_VERSION=68
 
 MAGICK_VERSION=6.9.10-68
 
-MAGICK_GIT_REVISION=14844:d9ca1e8db:20190930
+MAGICK_GIT_REVISION=14847:f9e8cfb50:20191005
 
 
 # Substitute library versioning
@@ -9288,9 +9288,7 @@ $as_echo "$ax_cv_gcc_archflag" >&6; }
 if test "x$ax_cv_gcc_archflag" = xunknown; then
   :
 else
-
-  CFLAGS="$CFLAGS $ax_cv_gcc_archflag"
-  CXXFLAGS="$CXXFLAGS $ax_cv_gcc_archflag"
+  CFLAGS="$CFLAGS $ax_cv_gcc_archflag" CXXFLAGS="$CXXFLAGS $ax_cv_gcc_archflag"
 fi
 
 
