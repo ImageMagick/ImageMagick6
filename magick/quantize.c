@@ -3212,16 +3212,17 @@ extern "C" {
 
 static int IntensityCompare(const void *x,const void *y)
 {
-  double
-    intensity;
-
   PixelPacket
     *color_1,
     *color_2;
 
+  ssize_t
+    intensity;
+
   color_1=(PixelPacket *) x;
   color_2=(PixelPacket *) y;
-  intensity=PixelPacketIntensity(color_1)-PixelPacketIntensity(color_2);
+  intensity=(ssize_t) (PixelPacketIntensity(color_1)-
+    PixelPacketIntensity(color_2));
   return((int) intensity);
 }
 
