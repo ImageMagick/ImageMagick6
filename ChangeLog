@@ -1,3 +1,10 @@
+2019-10-06  6.9.10-69 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-69, GIT revision 14...
+
+2019-10-06  6.9.10-69 Cristy  <quetzlzacatenango@image...>
+  * Fixed numerous issues  posted to GitHub (reference
+		https://github.com/ImageMagick/ImageMagick/issues).
+
 2019-10-05  6.9.10-68 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-68, GIT revision 14874:eb58b7e:20191005.
 
