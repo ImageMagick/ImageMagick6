@@ -2534,7 +2534,7 @@ MagickExport MagickBooleanType SubstituteString(char **string,
   {
     if (search_extent == 0)
       search_extent=strlen(search);
-    if ((*p != *search) || (strncmp(p,search,search_extent) != 0))
+    if (strncmp(p,search,search_extent) != 0)
       continue;
     /*
       We found a match.
