@@ -259,7 +259,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case AndEvaluateOperator:
     {
-      result=(MagickRealType) ((size_t) pixel & (size_t) (value+0.5));
+      result=(MagickRealType) ((ssize_t) pixel & (ssize_t) (value+0.5));
       break;
     }
     case CosineEvaluateOperator:
@@ -299,7 +299,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case LeftShiftEvaluateOperator:
     {
-      result=(MagickRealType) ((size_t) pixel << (size_t) (value+0.5));
+      result=(MagickRealType) ((ssize_t) pixel << (ssize_t) (value+0.5));
       break;
     }
     case LogEvaluateOperator:
@@ -342,7 +342,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case OrEvaluateOperator:
     {
-      result=(MagickRealType) ((size_t) pixel | (size_t) (value+0.5));
+      result=(MagickRealType) ((ssize_t) pixel | (ssize_t) (value+0.5));
       break;
     }
     case PoissonNoiseEvaluateOperator:
@@ -359,7 +359,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case RightShiftEvaluateOperator:
     {
-      result=(MagickRealType) ((size_t) pixel >> (size_t) (value+0.5));
+      result=(MagickRealType) ((ssize_t) pixel >> (ssize_t) (value+0.5));
       break;
     }
     case RootMeanSquareEvaluateOperator:
@@ -413,7 +413,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case XorEvaluateOperator:
     {
-      result=(MagickRealType) ((size_t) pixel ^ (size_t) (value+0.5));
+      result=(MagickRealType) ((ssize_t) pixel ^ (ssize_t) (value+0.5));
       break;
     }
   }
