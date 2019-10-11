@@ -230,6 +230,9 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
   MagickRealType
     result;
 
+  register ssize_t
+    i;
+
   result=0.0;
   switch (op)
   {
@@ -299,7 +302,9 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case LeftShiftEvaluateOperator:
     {
-      result=(MagickRealType) ((ssize_t) pixel << (ssize_t) (value+0.5));
+      result=(double) pixel;
+      for (i=0; i < (ssize_t) value; i++)
+        result*=2.0;
       break;
     }
     case LogEvaluateOperator:
@@ -363,7 +368,9 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case RightShiftEvaluateOperator:
     {
-      result=(MagickRealType) ((ssize_t) pixel >> (ssize_t) (value+0.5));
+      result=(MagickRealType) pixel;
+      for (i=0; i < (ssize_t) value; i++)
+        result/=2.0;
       break;
     }
     case RootMeanSquareEvaluateOperator:
