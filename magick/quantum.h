@@ -18,6 +18,7 @@
 #ifndef MAGICKCORE_QUANTUM_H
 #define MAGICKCORE_QUANTUM_H
 
+#include <float.h>
 #include "magick/image.h"
 #include "magick/semaphore.h"
 
@@ -87,6 +88,10 @@ typedef struct _QuantumInfo
 static inline Quantum ClampToQuantum(const MagickRealType value)
 {
 #if defined(MAGICKCORE_HDRI_SUPPORT)
+  if (value < FLT_MIN)
+    return((Quantum) FLT_MIN);
+  if (value > FLT_MAX)
+    return((Quantum) FLT_MAX);
   return((Quantum) value);
 #else
   if (value <= 0.0f)
@@ -103,7 +108,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
   return((unsigned char) quantum);
 #else
-  if (quantum <= 0.0)
+  if ((IsNaN(quantum) != MagickFalse) || (quantum <= 0.0))
     return(0);
   if (quantum >= 255.0)
     return(255);
@@ -116,7 +121,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
   return((unsigned char) (((quantum+128UL)-((quantum+128UL) >> 8)) >> 8));
 #else
-  if (quantum <= 0.0)
+  if ((IsNaN(quantum) != MagickFalse) || (quantum <= 0.0))
     return(0);
   if ((quantum/257.0) >= 255.0)
     return(255);
@@ -130,7 +135,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
   return((unsigned char) ((quantum+MagickULLConstant(8421504))/
     MagickULLConstant(16843009)));
 #else
-  if (quantum <= 0.0)
+  if ((IsNaN(quantum) != MagickFalse) || (quantum <= 0.0))
     return(0);
   if ((quantum/16843009.0) >= 255.0)
     return(255);
@@ -143,7 +148,7 @@ static inline unsigned char ScaleQuantumToChar(const Quantum quantum)
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
   return((unsigned char) (quantum/72340172838076673.0+0.5));
 #else
-  if (quantum <= 0.0)
+  if ((IsNaN(quantum) != MagickFalse) || (quantum <= 0.0))
     return(0);
   if ((quantum/72340172838076673.0) >= 255.0)
     return(255);
