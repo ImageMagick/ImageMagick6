@@ -228,6 +228,7 @@ static MagickBooleanType
 
 static void InitPSDInfo(Image *image,Image *layer,PSDInfo *info)
 {
+  (void) memset(info,0,sizeof(*info));
   info->version=1;
   info->columns=layer->columns;
   info->rows=layer->rows;
@@ -1104,7 +1105,7 @@ static void TIFFReadPhotoshopLayers(const ImageInfo *image_info,Image *image,
   (void) DeleteImageProfile(layers,"tiff:37724");
   AttachBlob(layers->blob,profile->datum,profile->length);
   SeekBlob(layers,(MagickOffsetType) i,SEEK_SET);
-  InitPSDInfo(image, layers, &info);
+  InitPSDInfo(image,layers,&info);
   clone_info=CloneImageInfo(image_info);
   clone_info->number_scenes=0;
   (void) ReadPSDLayers(layers,clone_info,&info,MagickFalse,exception);
