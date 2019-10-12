@@ -209,8 +209,9 @@ static MagickBooleanType IsWEBPImageLossless(const unsigned char *stream,
   return(MagickFalse);
 }
 
-static int FillBasicWEBPInfo(Image *image, const uint8_t *stream,
-			size_t length, WebPDecoderConfig *configure){
+static int FillBasicWEBPInfo(Image *image,const uint8_t *stream,size_t length,
+  WebPDecoderConfig *configure)
+{
   WebPBitstreamFeatures
     *magick_restrict features = &configure->input;
 
@@ -230,8 +231,9 @@ static int FillBasicWEBPInfo(Image *image, const uint8_t *stream,
   return webp_status;
 }
 
-static int ReadSingleWEBPImage(Image *image, const uint8_t *stream, size_t length,
-			   WebPDecoderConfig *configure, ExceptionInfo *exception){
+static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
+  size_t length,WebPDecoderConfig *configure,ExceptionInfo *exception)
+{
   int
     webp_status;
 
@@ -344,9 +346,10 @@ static int ReadSingleWEBPImage(Image *image, const uint8_t *stream, size_t lengt
 }
 
 #if defined(MAGICKCORE_WEBPMUX_DELEGATE)
-static int ReadAnimatedWEBPImage(const ImageInfo *image_info, Image *image,
-	uint8_t *stream, size_t length, WebPDecoderConfig *configure,
-	ExceptionInfo *exception) {
+static int ReadAnimatedWEBPImage(const ImageInfo *image_info,Image *image,
+  uint8_t *stream,size_t length,WebPDecoderConfig *configure,
+  ExceptionInfo *exception)
+{
   WebPData data = {.bytes=stream, .size=length};
 
   WebPDemuxer* demux = WebPDemux(&data);
@@ -692,7 +695,7 @@ static void FreePictureMemoryList (PictureMemory* head) {
 }
 
 static MagickBooleanType WriteSingleWEBPImage(const ImageInfo *image_info,
-  Image *image,WebPPicture *picture, PictureMemory *picture_memory,
+  Image *image,WebPPicture *picture,PictureMemory *picture_memory,
   ExceptionInfo *exception)
 {
   MagickBooleanType
@@ -757,8 +760,8 @@ static MagickBooleanType WriteSingleWEBPImage(const ImageInfo *image_info,
 
 #if defined(MAGICKCORE_WEBPMUX_DELEGATE)
 static MagickBooleanType WriteAnimatedWEBPImage(const ImageInfo *image_info,
-		Image *image, WebPConfig *configure,
-		WebPMemoryWriter *writer_info, ExceptionInfo *exception)
+  Image *image, WebPConfig *configure,WebPMemoryWriter *writer_info,
+  ExceptionInfo *exception)
 {
   WebPAnimEncoderOptions
 	  enc_options;
