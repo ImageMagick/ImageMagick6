@@ -5363,7 +5363,9 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
         {
           (void) CopyMagickString(clone_info->filename,primitive_info->text,
             MaxTextExtent);
-          composite_images=ReadImage(clone_info,&image->exception);
+          SetImageInfo(clone_info,0,exception);
+          if (*clone_info->filename != '\0')
+            composite_images=ReadImage(clone_info,&image->exception);
         }
       clone_info=DestroyImageInfo(clone_info);
       if (composite_images == (Image *) NULL)
