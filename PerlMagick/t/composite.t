@@ -154,7 +154,7 @@ testCompositeCompare('gradient:white-black',q/size=>"100x80"/,
 ++$test;
 testCompositeCompare('gradient:white-black',q/size=>"100x80"/,
   'input.miff', q//, q/, gravity=>'Center', compose=>'Subtract'/,
-  'reference/composite/Subtract.miff', 0.1, 1.03);
+  'reference/composite/Subtract.miff', 0.145, 1.03);
 
 #
 # Xor
