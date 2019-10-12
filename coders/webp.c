@@ -275,7 +275,7 @@ static int ReadSingleWEBPImage(Image *image, const uint8_t *stream, size_t lengt
       SetPixelRed(q,ScaleCharToQuantum(*p++));
       SetPixelGreen(q,ScaleCharToQuantum(*p++));
       SetPixelBlue(q,ScaleCharToQuantum(*p++));
-      SetPixelOpacity(q,ScaleCharToQuantum(*p++));
+      SetPixelAlpha(q,ScaleCharToQuantum(*p++));
       q++;
     }
     if (SyncAuthenticPixels(image,exception) == MagickFalse)
@@ -568,7 +568,7 @@ static Image *ReadWEBPImage(const ImageInfo *image_info,
 ModuleExport size_t RegisterWEBPImage(void)
 {
   char
-    version[MaxTextExtent];
+    version[MagickPathExtent];
 
   MagickInfo
     *entry;
@@ -578,7 +578,7 @@ ModuleExport size_t RegisterWEBPImage(void)
 #if defined(MAGICKCORE_WEBP_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadWEBPImage;
   entry->encoder=(EncodeImageHandler *) WriteWEBPImage;
-  (void) FormatLocaleString(version,MaxTextExtent,"libwebp %d.%d.%d [%04X]",
+  (void) FormatLocaleString(version,MagickPathExtent,"libwebp %d.%d.%d [%04X]",
     (WebPGetEncoderVersion() >> 16) & 0xff,
     (WebPGetEncoderVersion() >> 8) & 0xff,
     (WebPGetEncoderVersion() >> 0) & 0xff,WEBP_ENCODER_ABI_VERSION);
@@ -691,8 +691,9 @@ static void FreePictureMemoryList (PictureMemory* head) {
   }
 }
 
-static MagickBooleanType WriteSingleWEBPImage(const ImageInfo *image_info, Image *image,
-  WebPPicture *picture, PictureMemory *picture_memory, ExceptionInfo *exception)
+static MagickBooleanType WriteSingleWEBPImage(const ImageInfo *image_info,
+  Image *image,WebPPicture *picture, PictureMemory *picture_memory,
+  ExceptionInfo *exception)
 {
   MagickBooleanType
     status = MagickFalse;
@@ -740,7 +741,7 @@ static MagickBooleanType WriteSingleWEBPImage(const ImageInfo *image_info, Image
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       *q++=(uint32_t) (image->matte != MagickFalse ? (uint32_t)
-        ScaleQuantumToChar(GetPixelOpacity(p)) << 24 : 0xff000000) |
+        ScaleQuantumToChar(GetPixelAlpha(p)) << 24 : 0xff000000) |
         ((uint32_t) ScaleQuantumToChar(GetPixelRed(p)) << 16) |
         ((uint32_t) ScaleQuantumToChar(GetPixelGreen(p)) << 8) |
         ((uint32_t) ScaleQuantumToChar(GetPixelBlue(p)));
