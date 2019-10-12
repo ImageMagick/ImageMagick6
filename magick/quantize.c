@@ -2293,8 +2293,8 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
   const ChannelType channel,const size_t levels,const MagickBooleanType dither)
 {
 #define PosterizeImageTag  "Posterize/Image"
-#define PosterizePixel(pixel) (Quantum) (QuantumRange*(MagickRound( \
-  QuantumScale*pixel*(levels-1)))/MagickMax((ssize_t) levels-1,1))
+#define PosterizePixel(pixel) ClampToQuantum((MagickRealType) QuantumRange*( \
+  MagickRound(QuantumScale*pixel*(levels-1)))/MagickMax((ssize_t) levels-1,1))
 
   CacheView
     *image_view;
@@ -3333,7 +3333,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
     }
   (void) memset(colormap_index,0,extent*sizeof(*colormap_index));
   for (i=0; i < (ssize_t) image->colors; i++)
-    image->colormap[i].opacity=(unsigned short) i;
+    image->colormap[i].opacity=(Quantum) i;
   qsort((void *) image->colormap,image->colors,sizeof(PixelPacket),
     IntensityCompare);
   colormap=(PixelPacket *) AcquireQuantumMemory(image->colors,
