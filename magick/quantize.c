@@ -2655,13 +2655,10 @@ MagickExport MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
   if (status != MagickFalse)
     {
       /*
-        Reduce the number of colors in the image if it contains more than the
-        maximum, otherwise we can disable dithering to improve the performance.
+        Reduce the number of colors in the image.
       */
       if (cube_info->colors > cube_info->maximum_colors)
         ReduceImageColors(image,cube_info);
-      else
-        cube_info->quantize_info->dither_method=NoDitherMethod;
       status=AssignImageColors(image,cube_info);
     }
   DestroyCubeInfo(cube_info);
