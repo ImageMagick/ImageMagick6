@@ -545,7 +545,8 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       image=DestroyImage(image);
       return((Image *) NULL);
     }
-  (void) write(file," ",1);
+  if (write(file," ",1) != 1)
+    ;
   file=close(file)-1;
   /*
     Render Postscript with the Ghostscript delegate.
