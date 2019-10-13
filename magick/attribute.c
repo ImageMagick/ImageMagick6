@@ -141,6 +141,9 @@ static double GetEdgeBackgroundFactor(const Image *image,
   CacheView
     *edge_view;
 
+  const char
+    *artifact;
+
   double
     factor;
 
@@ -195,6 +198,9 @@ static double GetEdgeBackgroundFactor(const Image *image,
     }
   }
   GetMagickPixelPacket(image,&background);
+  artifact=GetImageArtifact(image,"trim:background-color");
+  if (artifact != (const char *) NULL)
+    (void) QueryMagickColor(artifact,&background,exception);
   SetMagickPixelPacket(image,p,(IndexPacket *) NULL,&background);
   edge_geometry.width=width;
   edge_geometry.height=height;
