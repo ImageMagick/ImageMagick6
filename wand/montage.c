@@ -133,6 +133,7 @@ static MagickBooleanType MontageUsage(void)
       "  -compress type       type of pixel compression when writing the image\n"
       "  -define format:option\n"
       "                       define one or more image format options\n"
+      "  -delay value         display the next image after pausing\n"
       "  -density geometry    horizontal and vertical density of the image\n"
       "  -depth value         image depth\n"
       "  -display server      query font from this X server\n"
@@ -763,6 +764,17 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
             if (i == (ssize_t) argc)
               ThrowMontageException(OptionError,"MissingArgument",option);
             if (IsSceneGeometry(argv[i],MagickFalse) == MagickFalse)
+              ThrowMontageInvalidArgumentException(option,argv[i]);
+            break;
+          }
+        if (LocaleCompare("delay",option+1) == 0)
+          {
+            if (*option == '+')
+              break;
+            i++;
+            if (i == (ssize_t) argc)
+              ThrowMontageException(OptionError,"MissingArgument",option);
+            if (IsGeometry(argv[i]) == MagickFalse)
               ThrowMontageInvalidArgumentException(option,argv[i]);
             break;
           }
