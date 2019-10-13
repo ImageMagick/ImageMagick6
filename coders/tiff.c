@@ -648,9 +648,20 @@ static void TIFFGetProfiles(TIFF *tiff,Image *image)
   if ((TIFFGetField(tiff,TIFFTAG_XMLPACKET,&length,&profile) == 1) &&
       (profile != (unsigned char *) NULL))
     {
+      StringInfo
+        *dng;
+
       (void) ReadProfile(image,"xmp",profile,(ssize_t) length);
-      if (strstr((char *) profile,"dc:format=\"image/dng\"") != (char *) NULL)
-        (void) CopyMagickString(image->magick,"DNG",MagickPathExtent);
+      dng=BlobToStringInfo(profile,length);
+      if (dng != (StringInfo *) NULL)
+        {
+          const char
+            *target = "dc:format=\"image/dng\"";
+
+          if (strstr((char *) GetStringInfoDatum(dng),target) != (char *) NULL)
+            (void) CopyMagickString(image->magick,"DNG",MagickPathExtent);
+          dng=DestroyStringInfo(dng);
+        }
     }
 #endif
   if ((TIFFGetField(tiff,34118,&length,&profile) == 1) &&
