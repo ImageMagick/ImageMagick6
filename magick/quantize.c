@@ -3218,8 +3218,8 @@ static int IntensityCompare(const void *x,const void *y)
 
   color_1=(PixelPacket *) x;
   color_2=(PixelPacket *) y;
-  intensity=(ssize_t) (PixelPacketIntensity(color_1)-
-    PixelPacketIntensity(color_2));
+  intensity=(ssize_t) PixelPacketIntensity(color_1)-
+    (ssize_t) PixelPacketIntensity(color_2));
   return((int) intensity);
 }
 
