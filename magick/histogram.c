@@ -1157,11 +1157,11 @@ static int HistogramCompare(const void *x,const void *y)
   color_1=(const ColorPacket *) x;
   color_2=(const ColorPacket *) y;
   if (color_2->pixel.red != color_1->pixel.red)
-    return((int) ((ssize_t) color_1->red-(ssize_t) color_2->red));
+    return((int) ((ssize_t) color_1->pixel.red-(ssize_t) color_2->pixel.red));
   if (color_2->pixel.green != color_1->pixel.green)
-    return((int) ((ssize_t) color_1->green-(ssize_t) color_2->green));
+    return((int) ((ssize_t) color_1->pixel.green-(ssize_t) color_2->pixel.green));
   if (color_2->pixel.blue != color_1->pixel.blue)
-    return((int) ((ssize_t) color_1->blue-(ssize_t) color_2->blue));
+    return((int) ((ssize_t) color_1->pixel.blue-(ssize_t) color_2->pixel.blue));
   return((int) ((ssize_t) color_2->count-(ssize_t) color_1->count));
 }
 
