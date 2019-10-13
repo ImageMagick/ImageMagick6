@@ -198,10 +198,10 @@ static double GetEdgeBackgroundFactor(const Image *image,
     }
   }
   GetMagickPixelPacket(image,&background);
+  SetMagickPixelPacket(image,p,(IndexPacket *) NULL,&background);
   artifact=GetImageArtifact(image,"trim:background-color");
   if (artifact != (const char *) NULL)
     (void) QueryMagickColor(artifact,&background,exception);
-  SetMagickPixelPacket(image,p,(IndexPacket *) NULL,&background);
   edge_geometry.width=width;
   edge_geometry.height=height;
   edge_geometry.x=x_offset;
