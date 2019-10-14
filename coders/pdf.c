@@ -1991,7 +1991,7 @@ RestoreMSCWarning
                   break;
                 indexes=GetVirtualIndexQueue(image);
                 for (x=0; x < (ssize_t) image->columns; x++)
-                  *q++=(unsigned char) GetPixelIndex(indexes+x);
+                  *q++=(unsigned char) ((ssize_t) GetPixelIndex(indexes+x));
                 if (image->previous == (Image *) NULL)
                   {
                     status=SetImageProgress(image,SaveImageTag,
@@ -2033,7 +2033,7 @@ RestoreMSCWarning
                 indexes=GetVirtualIndexQueue(image);
                 for (x=0; x < (ssize_t) image->columns; x++)
                   Ascii85Encode(image,(unsigned char)
-                    GetPixelIndex(indexes+x));
+                    ((ssize_t) GetPixelIndex(indexes+x)));
                 if (image->previous == (Image *) NULL)
                   {
                     status=SetImageProgress(image,SaveImageTag,
@@ -2491,7 +2491,7 @@ RestoreMSCWarning
                   break;
                 indexes=GetVirtualIndexQueue(tile_image);
                 for (x=0; x < (ssize_t) tile_image->columns; x++)
-                  *q++=(unsigned char) GetPixelIndex(indexes+x);
+                  *q++=(unsigned char) ((ssize_t) GetPixelIndex(indexes+x));
               }
 #if defined(MAGICKCORE_ZLIB_DELEGATE)
               if (compression == ZipCompression)
@@ -2525,7 +2525,8 @@ RestoreMSCWarning
                   break;
                 indexes=GetVirtualIndexQueue(tile_image);
                 for (x=0; x < (ssize_t) tile_image->columns; x++)
-                  Ascii85Encode(image,(unsigned char) GetPixelIndex(indexes+x));
+                  Ascii85Encode(image,(unsigned char)
+                    ((ssize_t) GetPixelIndex(indexes+x)));
               }
               Ascii85Flush(image);
               break;
