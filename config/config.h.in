@@ -456,6 +456,9 @@
 /* Define to 1 if you have the `strcasecmp' function. */
 #undef HAVE_STRCASECMP
 
+/* Define to 1 if you have the `strcasestr' function. */
+#undef HAVE_STRCASESTR
+
 /* Define to 1 if you have the `strchr' function. */
 #undef HAVE_STRCHR
 
@@ -744,6 +747,9 @@
 
 /* Define if you have JPEG library */
 #undef JPEG_DELEGATE
+
+/* Define if you have brunsli library */
+#undef JXL_DELEGATE
 
 /* Define if you have LCMS library */
 #undef LCMS_DELEGATE
@@ -1080,7 +1086,7 @@
 # undef __CHAR_UNSIGNED__
 #endif
 
-/* Define to appropriate substitue if compiler does not have __func__ */
+/* Define to appropriate substitute if compiler does not have __func__ */
 #undef __func__
 
 /* Define to empty if `const' does not conform to ANSI C. */
