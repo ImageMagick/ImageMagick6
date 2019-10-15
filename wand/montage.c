@@ -104,6 +104,7 @@ static MagickBooleanType MontageUsage(void)
       "  -flip                flip image in the vertical direction\n"
       "  -flop                flop image in the horizontal direction\n"
       "  -frame geometry      surround image with an ornamental border\n"
+      "  -layers method       optimize, merge, or compare image layers\n"
       "  -monochrome          transform image to black and white\n"
       "  -polaroid angle      simulate a Polaroid picture\n"
       "  -resize geometry     resize the image\n"
@@ -1129,6 +1130,22 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
             i++;
             if (i == (ssize_t) argc)
               ThrowMontageException(OptionError,"MissingArgument",option);
+            break;
+          }
+        if (LocaleCompare("layers",option+1) == 0)
+          {
+            ssize_t
+              type;
+
+            if (*option == '+')
+              break;
+            i++;
+            if (i == (ssize_t) argc)
+              ThrowMontageException(OptionError,"MissingArgument",option);
+            type=ParseCommandOption(MagickLayerOptions,MagickFalse,argv[i]);
+            if (type < 0)
+              ThrowMontageException(OptionError,"UnrecognizedLayerMethod",
+                argv[i]);
             break;
           }
         if (LocaleCompare("limit",option+1) == 0)

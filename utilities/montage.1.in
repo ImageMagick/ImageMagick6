@@ -104,6 +104,7 @@ Image Operators:
   \-flip                flip image in the vertical direction
   \-flop                flop image in the horizontal direction
   \-frame geometry      surround image with an ornamental border
+  \-layers method       optimize or compare image layers
   \-monochrome          transform image to black and white
   \-polaroid angle      simulate a Polaroid picture
   \-resize geometry     resize the image
