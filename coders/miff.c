@@ -224,6 +224,7 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
       switch (image->depth)
       {
         case 32:
+        default:
         {
           *index=ConstrainColormapIndex(image,(ssize_t) (((size_t) *p << 24) |
             ((size_t) *(p+1) << 16) | ((size_t) *(p+2) << 8) |
@@ -244,9 +245,6 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
           p++;
           break;
         }
-        default:
-          (void) ThrowMagickException(&image->exception,GetMagickModule(),
-            CorruptImageError,"ImageDepthNotSupported","`%s'",image->filename);
       }
       *pixel=image->colormap[(ssize_t) *index];
       switch (image->depth)
@@ -277,6 +275,7 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
           break;
         }
         case 32:
+        default:
         {
           unsigned int
             quantum;
@@ -289,9 +288,6 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
             }
           break;
         }
-        default:
-          (void) ThrowMagickException(&image->exception,GetMagickModule(),
-            CorruptImageError,"ImageDepthNotSupported","`%s'",image->filename);
       }
       *length=((size_t) *p++)+1;
       return;
@@ -359,6 +355,7 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
       break;
     }
     case 32:
+    default:
     {
       unsigned int
         quantum;
@@ -390,9 +387,6 @@ static void PushRunlengthPacket(Image *image,const unsigned char *pixels,
         }
       break;
     }
-    default:
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        CorruptImageError,"ImageDepthNotSupported","`%s'",image->filename);
   }
   *length=(size_t) (*p++)+1;
 }
@@ -1120,7 +1114,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
         (image->compression == UndefinedCompression) ||
         (image->colorspace == UndefinedColorspace) ||
         (image->columns == 0) || (image->rows == 0) ||
-        (image->depth == 0) || (image->depth > 64))
+        (image->depth == 0) || (image->depth > 32))
       {
         if (profiles != (LinkedListInfo *) NULL)
           profiles=DestroyLinkedList(profiles,RelinquishMagickMemory);
@@ -1239,9 +1233,6 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
             p=colormap;
             switch (image->depth)
             {
-              default:
-                colormap=(unsigned char *) RelinquishMagickMemory(colormap);
-                ThrowMIFFException(CorruptImageError,"ImageDepthNotSupported");
               case 8:
               {
                 unsigned char
@@ -1275,6 +1266,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
                 break;
               }
               case 32:
+              default:
               {
                 unsigned int
                   pixel;
@@ -1855,6 +1847,7 @@ static unsigned char *PopRunlengthPacket(Image *image,unsigned char *pixels,
       switch (image->depth)
       {
         case 32:
+        default:
         {
           *pixels++=(unsigned char) (value >> 24);
           *pixels++=(unsigned char) (value >> 16);
@@ -1866,13 +1859,11 @@ static unsigned char *PopRunlengthPacket(Image *image,unsigned char *pixels,
           *pixels++=(unsigned char) value;
           break;
         }
-        default:
-          (void) ThrowMagickException(&image->exception,GetMagickModule(),
-            CorruptImageError,"ImageDepthNotSupported","`%s'",image->filename);
       }
       switch (image->depth)
       {
         case 32:
+        default:
         {
           unsigned int
             value;
@@ -1908,9 +1899,6 @@ static unsigned char *PopRunlengthPacket(Image *image,unsigned char *pixels,
             }
           break;
         }
-        default:
-          (void) ThrowMagickException(&image->exception,GetMagickModule(),
-            CorruptImageError,"ImageDepthNotSupported","`%s'",image->filename);
       }
       *pixels++=(unsigned char) length;
       return(pixels);
@@ -1918,6 +1906,7 @@ static unsigned char *PopRunlengthPacket(Image *image,unsigned char *pixels,
   switch (image->depth)
   {
     case 32:
+    default:
     {
       unsigned int
         value;
@@ -1995,9 +1984,6 @@ static unsigned char *PopRunlengthPacket(Image *image,unsigned char *pixels,
         }
       break;
     }
-    default:
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        CorruptImageError,"ImageDepthNotSupported","`%s'",image->filename);
   }
   *pixels++=(unsigned char) length;
   return(pixels);
@@ -2091,8 +2077,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
     if ((image->storage_class == PseudoClass) &&
         (image->colors > (size_t) (GetQuantumRange(image->depth)+1)))
       (void) SetImageStorageClass(image,DirectClass);
-    image->depth=image->depth <= 8 ? 8UL : image->depth <= 16 ? 16UL :
-      image->depth <= 32 ? 32UL : 64UL;
+    image->depth=image->depth <= 8 ? 8UL : image->depth <= 16 ? 16UL : 32UL;
     quantum_info=AcquireQuantumInfo(image_info,image);
     if (quantum_info == (QuantumInfo *) NULL)
       ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
@@ -2449,13 +2434,8 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         {
           switch (quantum_info->depth)
           {
-            default:
-            {
-              colormap=(unsigned char *) RelinquishMagickMemory(colormap);
-              ThrowWriterException(CorruptImageError,"ImageDepthNotSupported");
-              break;
-            }
             case 32:
+            default:
             {
               register unsigned int
                 pixel;
