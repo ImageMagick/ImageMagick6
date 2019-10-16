@@ -1945,7 +1945,7 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
       (void) WriteBlobMSBShort(image,0x0000);
       (void) WriteBlobMSBShort(image,(unsigned short) y_resolution);
       (void) WriteBlobMSBShort(image,0x0000);
-      (void) WriteBlobMSBLong(image,length);
+      (void) WriteBlobMSBLong(image,(unsigned int) length);
       (void) WriteBlobMSBShort(image,0x0001);
       (void) WriteBlobMSBLong(image,0x0B466F74U);
       (void) WriteBlobMSBLong(image,0x6F202D20U);
