@@ -243,9 +243,6 @@ extern "C" {
 #if !defined(strcasecmp)
 #  define strcasecmp  _stricmp
 #endif
-#if !defined(strcasestr)
-#  define strcasestr  StrStrIA
-#endif
 #if !defined(strncasecmp)
 #  define strncasecmp  _strnicmp
 #endif
@@ -332,6 +329,41 @@ extern MagickExport int
 extern MagickExport void
   NTErrorHandler(const ExceptionType,const char *,const char *),
   NTWarningHandler(const ExceptionType,const char *,const char *);
+
+#if !defined(strcasestr)
+static inline char *strcasestr(const char *haystack,const char *needle)
+{
+  size_t
+    length_needle,
+    length_haystack;
+
+  register ssize_t
+    i;
+
+  if (!haystack || !needle)
+    return(NULL);
+  length_needle=strlen(needle);
+  length_haystack=strlen(haystack)-length_needle+1;
+  for (i=0; i < (ssize_t) length_haystack; i++)
+  {
+    register size_t
+      j;
+
+    for (j=0; j < (ssize_t) length_needle; j++)
+    {
+      unsigned char c1 = haystack[i+j];
+      unsigned char c2 = needle[j];
+      if (toupper(c1) != toupper(c2))
+        goto next;
+    }
+    return((char *) haystack+i);
+    next:
+     ;
+  }
+  return(NULL);
+}
+#endif
+
 #endif
 
 #if defined(__cplusplus) || defined(c_plusplus)
