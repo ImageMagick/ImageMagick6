@@ -1218,6 +1218,7 @@ MagickExport MagickBooleanType IsMonochromeImage(const Image *image,
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   magick_unreferenced(image);
+  magick_unreferenced(exception);
   if (image->type == BilevelType)
     return(MagickTrue);
   return(MagickFalse);
