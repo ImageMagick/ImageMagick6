@@ -600,6 +600,7 @@ static double TriangleThreshold(const Image *image,const double *histogram)
   /*
     Compute optimal threshold with triangle algorithm.
   */
+  magick_unreferenced(image);
   start=0;  /* find start bin, first bin not zero count */
   for (i=0; i <= (ssize_t) MaxIntensity; i++)
     if (histogram[i] > 0.0)
@@ -904,7 +905,7 @@ MagickExport MagickBooleanType BilevelImageChannel(Image *image,
               SetPixelOpacity(q,(MagickRealType) GetPixelOpacity(q) <=
                 threshold ? 0 : QuantumRange);
             else
-              SetPixelAlpha(q,(MagickRealType) GetPixelAlpha(q) <= threshold ? 
+              SetPixelAlpha(q,(MagickRealType) GetPixelAlpha(q) <= threshold ?
                 OpaqueOpacity : TransparentOpacity);
           }
         if (((channel & IndexChannel) != 0) &&
