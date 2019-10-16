@@ -735,6 +735,8 @@ MagickExport Image *IntegralRotateImage(const Image *image,size_t rotations,
   assert(image != (Image *) NULL);
   page=image->page;
   rotations%=4;
+  rotate_image=(Image *) NULL;
+  rotate_view=(CacheView *) NULL;
   switch (rotations)
   {
     case 0:
