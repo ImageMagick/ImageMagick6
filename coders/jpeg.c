@@ -122,6 +122,9 @@ typedef struct _DestinationManager
 
 typedef struct _ErrorManager
 {
+  jmp_buf
+    error_recovery;
+
   Image
     *image;
 
@@ -130,9 +133,6 @@ typedef struct _ErrorManager
 
   StringInfo
     *profile;
-
-  jmp_buf
-    error_recovery;
 } ErrorManager;
 
 typedef struct _SourceManager
