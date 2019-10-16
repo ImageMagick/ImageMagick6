@@ -793,7 +793,7 @@ MagickExport
       *((char **) data),NULL);
     status = MagickTrue;
     break;
-  
+
   default:
     goto cleanup;
   };
@@ -867,9 +867,11 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
   char
     *filename;
 
-  cl_uint
-    num_devices,
+  cl_int
     status;
+
+  cl_uint
+    num_devices;
 
   size_t
     i,
@@ -2484,7 +2486,7 @@ static ds_status AcceleratePerfEvaluator(ds_device *device,
       resizedImage=ResizeImage(unsharpedImage,640,480,LanczosFilter,1.0,
         exception);
 
-      /* 
+      /*
         We need this to get a proper performance benchmark, the operations
         are executed asynchronous.
       */
