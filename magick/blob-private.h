@@ -143,9 +143,7 @@ extern MagickExport void
   AttachBlob(BlobInfo *,const void *,const size_t),
   GetBlobInfo(BlobInfo *),
   MSBOrderLong(unsigned char *,const size_t),
-  MSBOrderShort(unsigned char *,const size_t),
-  *ReadBlobZC(Image *,const size_t),
-  *RelinquishBlobZC(Image *,void *);
+  MSBOrderShort(unsigned char *,const size_t);
 
 extern MagickPrivate void
   DisassociateBlob(Image *);
