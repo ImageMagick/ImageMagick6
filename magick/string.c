@@ -2350,6 +2350,9 @@ MagickExport char **StringToList(const char *text)
       p=text;
       for (i=0; i < (ssize_t) lines; i++)
       {
+        ssize_t
+          length;
+
         textlist[i]=(char *) AcquireQuantumMemory(2UL*MaxTextExtent,
           sizeof(**textlist));
         if (textlist[i] == (char *) NULL)
@@ -2357,7 +2360,8 @@ MagickExport char **StringToList(const char *text)
         (void) FormatLocaleString(textlist[i],MaxTextExtent,"0x%08lx: ",
           (long) (CharsPerLine*i));
         q=textlist[i]+strlen(textlist[i]);
-        for (j=1; j <= (ssize_t) MagickMin(strlen(p),CharsPerLine); j++)
+        length=strlen(p);
+        for (j=1; j <= (ssize_t) MagickMin(length,CharsPerLine); j++)
         {
           (void) FormatLocaleString(hex_string,MaxTextExtent,"%02x",*(p+j));
           (void) CopyMagickString(q,hex_string,MaxTextExtent);
@@ -2373,7 +2377,7 @@ MagickExport char **StringToList(const char *text)
             *q++=' ';
         }
         *q++=' ';
-        for (j=1; j <= (ssize_t) MagickMin(strlen(p),CharsPerLine); j++)
+        for (j=1; j <= (ssize_t) MagickMin(length,CharsPerLine); j++)
         {
           if (isprint((int) ((unsigned char) *p)) != 0)
             *q++=(*p);
