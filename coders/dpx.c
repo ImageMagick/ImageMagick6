@@ -1158,6 +1158,9 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   for (n=0; n < (ssize_t) dpx.image.number_elements; n++)
   {
+    unsigned char
+      *pixels;
+
     /*
       Convert DPX raster image to pixel packets.
     */
@@ -1253,10 +1256,11 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     SetQuantumQuantum(quantum_info,32);
     SetQuantumPack(quantum_info,dpx.image.image_element[n].packing == 0 ?
       MagickTrue : MagickFalse);
+    pixels=GetQuantumPixels(quantum_info);
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      const unsigned char
-        *pixels;
+      const void
+        *stream;
 
       MagickBooleanType
         sync;
@@ -1271,8 +1275,7 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
         count,
         offset;
 
-      pixels=(const unsigned char *) ReadBlobStream(image,extent,
-        GetQuantumPixels(quantum_info),&count);
+      stream=ReadBlobStream(image,extent,pixels,&count);
       if (count != (ssize_t) extent)
         break;
       if ((image->progress_monitor != (MagickProgressMonitor) NULL) &&
@@ -1291,7 +1294,7 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (q == (PixelPacket *) NULL)
         break;
       length=ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-        quantum_type,pixels,exception);
+        quantum_type,stream,exception);
       (void) length;
       sync=SyncAuthenticPixels(image,exception);
       if (sync == MagickFalse)

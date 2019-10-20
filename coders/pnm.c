@@ -241,6 +241,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   CommentInfo
     comment_info;
 
+  const void
+    *stream;
+
   double
     quantum_scale;
 
@@ -268,6 +271,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     count,
     row,
     y;
+
+  unsigned char
+    *pixels;
 
   /*
     Open image file.
@@ -607,11 +613,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ThrowPNMException(ResourceLimitError,"MemoryAllocationFailed");
         SetQuantumMinIsWhite(quantum_info,MagickTrue);
         extent=GetQuantumExtent(image,quantum_info,quantum_type);
+        pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          const unsigned char
-            *pixels;
-
           MagickBooleanType
             sync;
 
@@ -625,8 +629,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           size_t
             length;
 
-          pixels=(unsigned char *) ReadBlobStream(image,extent,
-            GetQuantumPixels(quantum_info),&count);
+          stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
             break;
           if ((image->progress_monitor != (MagickProgressMonitor) NULL) &&
@@ -645,7 +648,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-            quantum_type,pixels,exception);
+            quantum_type,stream,exception);
           if (length != extent)
             break;
           sync=SyncAuthenticPixels(image,exception);
@@ -668,11 +671,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         quantum_info=AcquireQuantumInfo(image_info,image);
         if (quantum_info == (QuantumInfo *) NULL)
           ThrowPNMException(ResourceLimitError,"MemoryAllocationFailed");
+        pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          const unsigned char
-            *pixels;
-
           MagickBooleanType
             sync;
 
@@ -689,8 +690,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             count,
             offset;
 
-          pixels=(unsigned char *) ReadBlobStream(image,extent,
-            GetQuantumPixels(quantum_info),&count);
+          stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
             break;
           if ((image->progress_monitor != (MagickProgressMonitor) NULL) &&
@@ -708,7 +708,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           q=QueueAuthenticPixels(image,0,offset,image->columns,1,exception);
           if (q == (PixelPacket *) NULL)
             break;
-          p=pixels;
+          p=(unsigned char *) stream;
           switch (image->depth)
           {
             case 8:
@@ -716,7 +716,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             case 32:
             {
               (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-                quantum_type,pixels,exception);
+                quantum_type,stream,exception);
               break;
             }
             default:
@@ -785,11 +785,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         if (quantum_info == (QuantumInfo *) NULL)
           ThrowPNMException(ResourceLimitError,"MemoryAllocationFailed");
         (void) SetQuantumEndian(image,quantum_info,MSBEndian);
+        pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          const unsigned char
-            *pixels;
-
           MagickBooleanType
             sync;
 
@@ -806,8 +804,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             count,
             offset;
 
-          pixels=(unsigned char *) ReadBlobStream(image,extent,
-            GetQuantumPixels(quantum_info),&count);
+          stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
             break;
           if ((image->progress_monitor != (MagickProgressMonitor) NULL) &&
@@ -825,7 +822,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           q=QueueAuthenticPixels(image,0,offset,image->columns,1,exception);
           if (q == (PixelPacket *) NULL)
             break;
-          p=pixels;
+          p=(unsigned char *) stream;
           switch (image->depth)
           {
             case 8:
@@ -977,11 +974,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         quantum_info=AcquireQuantumInfo(image_info,image);
         if (quantum_info == (QuantumInfo *) NULL)
           ThrowPNMException(ResourceLimitError,"MemoryAllocationFailed");
+        pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          const unsigned char
-            *pixels;
-
           MagickBooleanType
             sync;
 
@@ -998,8 +993,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             count,
             offset;
 
-          pixels=(unsigned char *) ReadBlobStream(image,extent,
-            GetQuantumPixels(quantum_info),&count);
+          stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
             break;
           if ((image->progress_monitor != (MagickProgressMonitor) NULL) &&
@@ -1018,7 +1012,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (q == (PixelPacket *) NULL)
             break;
           indexes=GetAuthenticIndexQueue(image);
-          p=pixels;
+          p=(unsigned char *) stream;
           switch (image->depth)
           {
             case 8:
@@ -1026,7 +1020,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             case 32:
             {
               (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-                quantum_type,pixels,exception);
+                quantum_type,stream,exception);
               break;
             }
             default:
@@ -1289,11 +1283,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         SetQuantumScale(quantum_info,(MagickRealType) QuantumRange*
           fabs(quantum_scale));
         extent=GetQuantumExtent(image,quantum_info,quantum_type);
+        pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          const unsigned char
-            *pixels;
-
           MagickBooleanType
             sync;
 
@@ -1307,8 +1299,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           size_t
             length;
 
-          pixels=(unsigned char *) ReadBlobStream(image,extent,
-            GetQuantumPixels(quantum_info),&count);
+          stream=ReadBlobStream(image,extent,pixels,&count);
           if ((size_t) count != extent)
             break;
           if ((image->progress_monitor != (MagickProgressMonitor) NULL) &&
@@ -1328,7 +1319,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-            quantum_type,pixels,exception);
+            quantum_type,stream,exception);
           if (length != extent)
             break;
           sync=SyncAuthenticPixels(image,exception);
