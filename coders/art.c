@@ -98,9 +98,6 @@ static MagickBooleanType
 */
 static Image *ReadARTImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
-  const unsigned char
-    *pixels;
-
   Image
     *image;
 
@@ -119,6 +116,9 @@ static Image *ReadARTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     count,
     y;
+
+  unsigned char
+    *pixels;
 
   /*
     Open image file.
@@ -170,22 +170,25 @@ static Image *ReadARTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (quantum_info == (QuantumInfo *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   length=GetQuantumExtent(image,quantum_info,quantum_type);
+  pixels=GetQuantumPixels(quantum_info);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
+    const void
+      *stream;
+
     register PixelPacket
       *magick_restrict q;
 
     q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)
       break;
-    pixels=(const unsigned char *) ReadBlobStream(image,length,
-      GetQuantumPixels(quantum_info),&count);
+    stream=ReadBlobStream(image,length,pixels,&count);
     if (count != (ssize_t) length)
       break;
     (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-      quantum_type,pixels,exception);
-    (void) ReadBlobStream(image,(size_t) (-(ssize_t) length) & 0x01,
-      GetQuantumPixels(quantum_info),&count);
+      quantum_type,stream,exception);
+    stream=ReadBlobStream(image,(size_t) (-(ssize_t) length) & 0x01,
+      pixels,&count);
     if (SyncAuthenticPixels(image,exception) == MagickFalse)
       break;
     status=SetImageProgress(image,LoadImageTag,(MagickOffsetType) y,

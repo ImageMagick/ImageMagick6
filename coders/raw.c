@@ -95,8 +95,8 @@ static MagickBooleanType
 */
 static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
-  const unsigned char
-    *pixels;
+  const void
+    *stream;
 
   Image
     *canvas_image,
@@ -120,6 +120,9 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     count,
     y;
+
+  unsigned char
+    *pixels;
 
   /*
     Open image file.
@@ -164,7 +167,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
       canvas_image=DestroyImage(canvas_image);
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
     }
-  pixels=(const unsigned char *) NULL;
+  pixels=GetQuantumPixels(quantum_info);
   if (image_info->number_scenes != 0)
     while (image->scene < image_info->scene)
     {
@@ -175,8 +178,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
       length=GetQuantumExtent(canvas_image,quantum_info,quantum_type);
       for (y=0; y < (ssize_t) image->rows; y++)
       {
-        pixels=(const unsigned char *) ReadBlobStream(image,length,
-          GetQuantumPixels(quantum_info),&count);
+        stream=ReadBlobStream(image,length,pixels,&count);
         if (count != (ssize_t) length)
           break;
       }
@@ -185,6 +187,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
   count=0;
   length=0;
   status=MagickTrue;
+  stream=NULL;
   do
   {
     /*
@@ -199,8 +202,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (scene == 0)
       {
         length=GetQuantumExtent(canvas_image,quantum_info,quantum_type);
-        pixels=(const unsigned char *) ReadBlobStream(image,length,
-          GetQuantumPixels(quantum_info),&count);
+        stream=ReadBlobStream(image,length,pixels,&count);
         if (count != (ssize_t) length)
           break;
       }
@@ -226,7 +228,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (q == (PixelPacket *) NULL)
         break;
       length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,quantum_info,
-        quantum_type,pixels,exception);
+        quantum_type,stream,exception);
       if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
         break;
       if (((y-image->extract_info.y) >= 0) &&
@@ -256,8 +258,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (status == MagickFalse)
             break;
         }
-      pixels=(const unsigned char *) ReadBlobStream(image,length,
-        GetQuantumPixels(quantum_info),&count);
+      stream=ReadBlobStream(image,length,pixels,&count);
       if (count != (ssize_t) length)
         break;
     }
