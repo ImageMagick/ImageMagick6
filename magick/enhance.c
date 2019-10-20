@@ -2704,6 +2704,7 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     double
+      area,
       offset;
 
     HaldInfo
@@ -2758,8 +2759,11 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
         width),&pixel2,exception);
       if (status == MagickFalse)
         break;
+      area=point.y;
+      if (hald_image->interpolate == NearestNeighborInterpolatePixel)
+        area=(point.y < 0.5) ? 0.0 : 1.0;
       MagickPixelCompositeAreaBlend(&pixel1,pixel1.opacity,&pixel2,
-        pixel2.opacity,point.y,&pixel3);
+        pixel2.opacity,area,&pixel3);
       offset+=cube_size;
       status=InterpolateMagickPixelPacket(image,hald_view,
         UndefinedInterpolatePixel,fmod(offset,width),floor(offset/width),
@@ -2772,9 +2776,12 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
       if (status == MagickFalse)
         break;
       MagickPixelCompositeAreaBlend(&pixel1,pixel1.opacity,&pixel2,
-        pixel2.opacity,point.y,&pixel4);
+        pixel2.opacity,area,&pixel4);
+      area=point.z;
+      if (hald_image->interpolate == NearestNeighborInterpolatePixel)
+        area=(point.z < 0.5)? 0.0 : 1.0;
       MagickPixelCompositeAreaBlend(&pixel3,pixel3.opacity,&pixel4,
-        pixel4.opacity,point.z,&pixel);
+        pixel4.opacity,area,&pixel);
       if ((channel & RedChannel) != 0)
         SetPixelRed(q,ClampToQuantum(pixel.red));
       if ((channel & GreenChannel) != 0)
