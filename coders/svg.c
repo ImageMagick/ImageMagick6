@@ -65,10 +65,11 @@
 #include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
+#include "magick/option.h"
 #include "magick/pixel-accessor.h"
-#include "magick/quantum-private.h"
 #include "magick/pixel-private.h"
 #include "magick/property.h"
+#include "magick/quantum-private.h"
 #include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
@@ -3579,9 +3580,13 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   message[n]='\0';
   if (n > 0)
     {
+      const char
+        *value;
+
       svg_info->parser=xmlCreatePushParserCtxt(sax_handler,svg_info,(char *)
         message,n,image->filename);
-      (void) xmlCtxtUseOptions(svg_info->parser,XML_PARSE_HUGE);
+      if ((value != (char *) NULL) && (IsStringTrue(value) != MagickFalse))
+        (void) xmlCtxtUseOptions(svg_info->parser,XML_PARSE_HUGE);
       while ((n=ReadBlob(image,MaxTextExtent-1,message)) != 0)
       {
         message[n]='\0';
