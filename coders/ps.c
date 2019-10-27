@@ -612,8 +612,10 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) ParseAbsoluteGeometry(image_info->page,&page);
   resolution.x=image->x_resolution;
   resolution.y=image->y_resolution;
-  page.width=(size_t) ceil((double) (page.width*resolution.x/delta.x)-0.5);
-  page.height=(size_t) ceil((double) (page.height*resolution.y/delta.y)-0.5);
+  page.width=(size_t) ((ssize_t) ceil((double) (page.width*
+    resolution.x/delta.x)-0.5));
+  page.height=(size_t) ((ssize_t) ceil((double) (page.height*
+    resolution.y/delta.y)-0.5));
   /*
     Determine page geometry from the Postscript bounding box.
   */
@@ -629,10 +631,10 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
         info.bounds.x2-info.bounds.x1,info.bounds.y2-info.bounds.y1,
         info.bounds.x1,info.bounds.y1);
       (void) SetImageProperty(image,"ps:HiResBoundingBox",geometry);
-      page.width=(size_t) ceil((double) ((info.bounds.x2-info.bounds.x1)*
-        resolution.x/delta.x));
-      page.height=(size_t) ceil((double) ((info.bounds.y2-info.bounds.y1)*
-        resolution.y/delta.y));
+      page.width=(size_t) ((ssize_t) ceil((double) ((info.bounds.x2-
+        info.bounds.x1)*resolution.x/delta.x)-0.5));
+      page.height=(size_t) ((ssize_t) ceil((double) ((info.bounds.y2-
+        info.bounds.y1)*resolution.y/delta.y)-0.5));
     }
   fitPage=MagickFalse;
   option=GetImageOption(image_info,"eps:fit-page");
@@ -655,10 +657,10 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
           image=DestroyImage(image);
           return((Image *) NULL);
         }
-      page.width=(size_t) ceil((double) (page.width*image->x_resolution/delta.x)
-        -0.5);
-      page.height=(size_t) ceil((double) (page.height*image->y_resolution/
-        delta.y) -0.5);
+      page.width=(size_t) ((size_t) ceil((double) (page.width*
+        image->x_resolution/delta.x)-0.5));
+      page.height=(size_t) ((size_t) ceil((double) (page.height*
+        image->y_resolution/delta.y)-0.5));
       geometry=DestroyString(geometry);
       fitPage=MagickTrue;
     }
