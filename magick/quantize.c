@@ -3207,28 +3207,22 @@ MagickExport MagickBooleanType RemapImages(const QuantizeInfo *quantize_info,
 extern "C" {
 #endif
 
-static inline double ConstrainPixelIntensity(double x)
-{
-  if (x < (double) -(SSIZE_MAX-512))
-    return((double) -(SSIZE_MAX-512));
-  if (x > (double) (SSIZE_MAX-512))
-    return((double) (SSIZE_MAX-512));
-  return(x);
-}
-
 static int IntensityCompare(const void *x,const void *y)
 {
+  double
+    intensity;
+
   PixelPacket
     *color_1,
     *color_2;
 
-  ssize_t
-    intensity;
-
   color_1=(PixelPacket *) x;
   color_2=(PixelPacket *) y;
-  intensity=(ssize_t) ConstrainPixelIntensity(PixelPacketIntensity(color_1))-
-    (ssize_t) ConstrainPixelIntensity(PixelPacketIntensity(color_2));
+  intensity=PixelPacketIntensity(color_1)-PixelPacketIntensity(color_2);
+  if (intensity < (double) INT_MIN)
+    intensity=(double) INT_MIN;
+  if (intensity > (double) INT_MAX)
+    intensity=(double) INT_MAX;
   return((int) intensity);
 }
 
