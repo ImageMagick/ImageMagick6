@@ -648,7 +648,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-            quantum_type,stream,exception);
+            quantum_type,(unsigned char *) stream,exception);
           if (length != extent)
             break;
           sync=SyncAuthenticPixels(image,exception);
@@ -716,7 +716,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             case 32:
             {
               (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-                quantum_type,stream,exception);
+                quantum_type,(unsigned char *) stream,exception);
               break;
             }
             default:
@@ -1020,7 +1020,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             case 32:
             {
               (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-                quantum_type,stream,exception);
+                quantum_type,(unsigned char *) stream,exception);
               break;
             }
             default:
@@ -1319,7 +1319,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-            quantum_type,stream,exception);
+            quantum_type,(unsigned char *) stream,exception);
           if (length != extent)
             break;
           sync=SyncAuthenticPixels(image,exception);

@@ -260,7 +260,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,quantum_type,stream,exception);
+            quantum_info,quantum_type,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -354,7 +354,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
             if (q == (PixelPacket *) NULL)
               break;
             length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-              quantum_info,quantum_type,stream,exception);
+              quantum_info,quantum_type,(unsigned char *) stream,exception);
             if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
               break;
             if (((y-image->extract_info.y) >= 0) &&
@@ -453,7 +453,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,CyanQuantum,stream,exception);
+            quantum_info,CyanQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -506,7 +506,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,MagentaQuantum,stream,exception);
+            quantum_info,MagentaQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -558,7 +558,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,YellowQuantum,stream,exception);
+            quantum_info,YellowQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -617,7 +617,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,BlackQuantum,stream,exception);
+            quantum_info,BlackQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -675,7 +675,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if (q == (PixelPacket *) NULL)
                 break;
               length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-                quantum_info,AlphaQuantum,stream,exception);
+                quantum_info,AlphaQuantum,(unsigned char *) stream,exception);
               if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
                 break;
               if (((y-image->extract_info.y) >= 0) &&
@@ -768,7 +768,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,CyanQuantum,stream,exception);
+            quantum_info,CyanQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -840,7 +840,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,MagentaQuantum,stream,exception);
+            quantum_info,MagentaQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -912,7 +912,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,YellowQuantum,stream,exception);
+            quantum_info,YellowQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -990,7 +990,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
           if (q == (PixelPacket *) NULL)
             break;
           length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-            quantum_info,BlackQuantum,stream,exception);
+            quantum_info,BlackQuantum,(unsigned char *) stream,exception);
           if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
             break;
           if (((y-image->extract_info.y) >= 0) &&
@@ -1067,7 +1067,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if (q == (PixelPacket *) NULL)
                 break;
               length=ImportQuantumPixels(canvas_image,(CacheView *) NULL,
-                quantum_info,YellowQuantum,stream,exception);
+                quantum_info,YellowQuantum,(unsigned char *) stream,exception);
               if (SyncAuthenticPixels(canvas_image,exception) == MagickFalse)
                 break;
               if (((y-image->extract_info.y) >= 0) &&

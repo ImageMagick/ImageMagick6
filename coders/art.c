@@ -186,7 +186,7 @@ static Image *ReadARTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (count != (ssize_t) length)
       break;
     (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-      quantum_type,stream,exception);
+      quantum_type,(unsigned char *) stream,exception);
     stream=ReadBlobStream(image,(size_t) (-(ssize_t) length) & 0x01,
       pixels,&count);
     if (SyncAuthenticPixels(image,exception) == MagickFalse)

@@ -881,7 +881,7 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
       symbol[j]=Cixel[k];
     }
     symbol[j]='\0';
-    symbolic=GetValueFromSplayTree(xpm_symbolic,name);
+    symbolic=(const char *) GetValueFromSplayTree(xpm_symbolic,name);
     if (symbolic == (const char *) NULL)
       (void) FormatLocaleString(buffer,MaxTextExtent,"\"%.1024s c %.1024s\",\n",
         symbol,name);
