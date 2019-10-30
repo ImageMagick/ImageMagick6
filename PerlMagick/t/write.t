@@ -107,7 +107,7 @@ print("Portable bitmap format (black and white), binary format ...\n");
 testReadWrite( 'PBM:input_p4.pbm',
   'PBM:output_p4.pbm',
   q//,
-  '217921c0cce7fff17eea865d2ee2075afbc054ce7f4209b3cfeb22f58d8b3e3e');
+  '83175f7bcc43fb71212dee254c85e355c18bcd25f35d3b9caba66fff7341fa64');
 
 print("ZSoft IBM PC Paintbrush file ...\n");
 ++$test;
