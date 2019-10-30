@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Working with Image Lists</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, working, with, image, lists, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="list.html#AppendImageToList">AppendImageToList</a> &#8226; <a href="list.html#CloneImageList">CloneImageList</a> &#8226; <a href="list.html#CloneImages">CloneImages</a> &#8226; <a href="list.html#DeleteImageFromList">DeleteImageFromList</a> &#8226; <a href="list.html#DeleteImages">DeleteImages</a> &#8226; <a href="list.html#DestroyImageList">DestroyImageList</a> &#8226; <a href="list.html#DuplicateImages">DuplicateImages</a> &#8226; <a href="list.html#GetFirstImageInList">GetFirstImageInList</a> &#8226; <a href="list.html#GetImageFromList">GetImageFromList</a> &#8226; <a href="list.html#GetImageIndexInList">GetImageIndexInList</a> &#8226; <a href="list.html#GetImageListLength">GetImageListLength</a> &#8226; <a href="list.html#GetLastImageInList">GetLastImageInList</a> &#8226; <a href="list.html#GetNextImageInList">GetNextImageInList</a> &#8226; <a href="list.html#GetPreviousImageInList">GetPreviousImageInList</a> &#8226; <a href="list.html#ImageListToArray">ImageListToArray</a> &#8226; <a href="list.html#InsertImageInList">InsertImageInList</a> &#8226; <a href="list.html#NewImageList">NewImageList</a> &#8226; <a href="list.html#PrependImageToList">PrependImageToList</a> &#8226; <a href="list.html#RemoveImageFromList">RemoveImageFromList</a> &#8226; <a href="list.html#RemoveFirstImageFromList">RemoveFirstImageFromList</a> &#8226; <a href="list.html#RemoveLastImageFromList">RemoveLastImageFromList</a> &#8226; <a href="list.html#ReplaceImageInList">ReplaceImageInList</a> &#8226; <a href="list.html#ReplaceImageInListReturnLast">ReplaceImageInListReturnLast</a> &#8226; <a href="list.html#ReverseImageList">ReverseImageList</a> &#8226; <a href="list.html#SpliceImageIntoList">SpliceImageIntoList</a> &#8226; <a href="list.html#SplitImageList">SplitImageList</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="AppendImageToList">AppendImageToList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="AppendImageToList">AppendImageToList</a></h2>
 
 <p>AppendImageToList() appends the second image list to the end of the first list.  The given image list pointer is left unchanged, unless it was empty.</p>
 
@@ -115,7 +114,7 @@ AppendImageToList(Image *images,const Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="CloneImageList">CloneImageList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="CloneImageList">CloneImageList</a></h2>
 
 <p>CloneImageList() returns a duplicate of the image list.</p>
 
@@ -141,7 +140,7 @@ Image *CloneImageList(const Image *images,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="CloneImages">CloneImages</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="CloneImages">CloneImages</a></h2>
 
 <p>CloneImages() clones one or more images from an image sequence, using a comma separated list of image numbers or ranges.</p>
 
@@ -176,7 +175,7 @@ Image *CloneImages(const Image *images,const char *scenes,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="DeleteImageFromList">DeleteImageFromList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="DeleteImageFromList">DeleteImageFromList</a></h2>
 
 <p>DeleteImageFromList() deletes an image from the list. List pointer is moved to the next image, if one is present. See RemoveImageFromList().</p>
 
@@ -198,7 +197,7 @@ DeleteImageFromList(Image **images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="DeleteImages">DeleteImages</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="DeleteImages">DeleteImages</a></h2>
 
 <p>DeleteImages() deletes one or more images from an image sequence, using a comma separated list of image numbers or ranges.</p>
 
@@ -232,7 +231,7 @@ DeleteImages(Image **images,const char *scenes,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="DestroyImageList">DestroyImageList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="DestroyImageList">DestroyImageList</a></h2>
 
 <p>DestroyImageList() destroys an image list.</p>
 
@@ -254,7 +253,7 @@ Image *DestroyImageList(Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="DuplicateImages">DuplicateImages</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="DuplicateImages">DuplicateImages</a></h2>
 
 <p>DuplicateImages() duplicates one or more images from an image sequence, using a count and a comma separated list of image numbers or ranges.</p>
 
@@ -291,7 +290,7 @@ Image *DuplicateImages(Image *images,const size_t number_duplicates,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetFirstImageInList">GetFirstImageInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetFirstImageInList">GetFirstImageInList</a></h2>
 
 <p>GetFirstImageInList() returns a pointer to the first image in the list.</p>
 
@@ -313,7 +312,7 @@ Image *GetFirstImageInList(const Image *images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetImageFromList">GetImageFromList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetImageFromList">GetImageFromList</a></h2>
 
 <p>GetImageFromList() returns an image at the specified index from the image list. Starting with 0 as the first image in the list.</p>
 
@@ -343,7 +342,7 @@ Image *GetImageFromList(const Image *images,const ssize_t index)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetImageIndexInList">GetImageIndexInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetImageIndexInList">GetImageIndexInList</a></h2>
 
 <p>GetImageIndexInList() returns the offset in the list of the specified image.</p>
 
@@ -365,7 +364,7 @@ ssize_t GetImageIndexInList(const Image *images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetImageListLength">GetImageListLength</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetImageListLength">GetImageListLength</a></h2>
 
 <p>GetImageListLength() returns the length of the list (the number of images in the list).</p>
 
@@ -387,7 +386,7 @@ size_t GetImageListLength(const Image *images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetLastImageInList">GetLastImageInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetLastImageInList">GetLastImageInList</a></h2>
 
 <p>GetLastImageInList() returns a pointer to the last image in the list.</p>
 
@@ -409,7 +408,7 @@ Image *GetLastImageInList(const Image *images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetNextImageInList">GetNextImageInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetNextImageInList">GetNextImageInList</a></h2>
 
 <p>GetNextImageInList() returns the next image in the list.</p>
 
@@ -431,7 +430,7 @@ Image *GetNextImageInList(const Image *images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="GetPreviousImageInList">GetPreviousImageInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="GetPreviousImageInList">GetPreviousImageInList</a></h2>
 
 <p>GetPreviousImageInList() returns the previous image in the list.</p>
 
@@ -453,7 +452,7 @@ Image *GetPreviousImageInList(const Image *images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="ImageListToArray">ImageListToArray</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="ImageListToArray">ImageListToArray</a></h2>
 
 <p>ImageListToArray() is a convenience method that converts an image list to a sequential array, with a NULL image pointer at the end of the array.</p>
 
@@ -483,7 +482,7 @@ Image **ImageListToArray(const Image *images,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="InsertImageInList">InsertImageInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="InsertImageInList">InsertImageInList</a></h2>
 
 <p>InsertImageInList() insert the given image or image list, into the first image list, immediately AFTER the image pointed to.  The given image list pointer is left unchanged unless previously empty.</p>
 
@@ -509,7 +508,7 @@ InsertImageInList(Image **images,Image *insert)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="NewImageList">NewImageList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="NewImageList">NewImageList</a></h2>
 
 <p>NewImageList() creates an empty image list.</p>
 
@@ -519,7 +518,7 @@ InsertImageInList(Image **images,Image *insert)
 Image *NewImageList(void)
 </pre>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="PrependImageToList">PrependImageToList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="PrependImageToList">PrependImageToList</a></h2>
 
 <p>PrependImageToList() prepends the image to the beginning of the list.</p>
 
@@ -545,7 +544,7 @@ PrependImageToList(Image *images,Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="RemoveImageFromList">RemoveImageFromList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="RemoveImageFromList">RemoveImageFromList</a></h2>
 
 <p>RemoveImageFromList() removes and returns the image pointed to.</p>
 
@@ -569,7 +568,7 @@ Image *RemoveImageFromList(Image **images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="RemoveFirstImageFromList">RemoveFirstImageFromList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="RemoveFirstImageFromList">RemoveFirstImageFromList</a></h2>
 
 <p>RemoveFirstImageFromList() removes and returns the first image in the list.</p>
 
@@ -593,7 +592,7 @@ Image *RemoveFirstImageFromList(Image **images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="RemoveLastImageFromList">RemoveLastImageFromList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="RemoveLastImageFromList">RemoveLastImageFromList</a></h2>
 
 <p>RemoveLastImageFromList() removes and returns the last image from the list.</p>
 
@@ -617,7 +616,7 @@ Image *RemoveLastImageFromList(Image **images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="ReplaceImageInList">ReplaceImageInList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="ReplaceImageInList">ReplaceImageInList</a></h2>
 
 <p>ReplaceImageInList() replaces an image in the list with the given image, or list of images.  Old image is destroyed.</p>
 
@@ -645,7 +644,7 @@ ReplaceImageInList(Image **images,Image *replace)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="ReplaceImageInListReturnLast">ReplaceImageInListReturnLast</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="ReplaceImageInListReturnLast">ReplaceImageInListReturnLast</a></h2>
 
 <p>ReplaceImageInListReturnLast() is exactly as ReplaceImageInList() except the images pointer is set to the last image in the list of replacement images.</p>
 
@@ -673,7 +672,7 @@ ReplaceImageInListReturnLast(Image **images,Image *replace)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="ReverseImageList">ReverseImageList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="ReverseImageList">ReverseImageList</a></h2>
 
 <p>ReverseImageList() reverses the order of an image list. The list pointer is reset to that start of the re-ordered list.</p>
 
@@ -695,7 +694,7 @@ void ReverseImageList(Image **images)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="SpliceImageIntoList">SpliceImageIntoList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="SpliceImageIntoList">SpliceImageIntoList</a></h2>
 
 <p>SpliceImageIntoList() removes 'length' images from the list and replaces them with the specified splice. Removed images are returned.</p>
 
@@ -726,7 +725,7 @@ SpliceImageIntoList(Image **images,const size_t,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/list_8c.html" id="SplitImageList">SplitImageList</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="SplitImageList">SplitImageList</a></h2>
 
 <p>SplitImageList() splits an image into two lists, after given image The list that was split off is returned, which may be empty.</p>
 

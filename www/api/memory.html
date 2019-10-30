@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Memory Allocation</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, memory, allocation, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="memory.html#AcquireAlignedMemory">AcquireAlignedMemory</a> &#8226; <a href="memory.html#AcquireMagickMemory">AcquireMagickMemory</a> &#8226; <a href="memory.html#AcquireQuantumMemory">AcquireQuantumMemory</a> &#8226; <a href="memory.html#AcquireVirtualMemory">AcquireVirtualMemory</a> &#8226; <a href="memory.html#CopyMagickMemory">CopyMagickMemory</a> &#8226; <a href="memory.html#GetMagickMemoryMethods">GetMagickMemoryMethods</a> &#8226; <a href="memory.html#GetVirtualMemoryBlob">GetVirtualMemoryBlob</a> &#8226; <a href="memory.html#RelinquishAlignedMemory">RelinquishAlignedMemory</a> &#8226; <a href="memory.html#RelinquishMagickMemory">RelinquishMagickMemory</a> &#8226; <a href="memory.html#RelinquishVirtualMemory">RelinquishVirtualMemory</a> &#8226; <a href="memory.html#ResetMagickMemory">ResetMagickMemory</a> &#8226; <a href="memory.html#ResizeMagickMemory">ResizeMagickMemory</a> &#8226; <a href="memory.html#ResizeQuantumMemory">ResizeQuantumMemory</a> &#8226; <a href="memory.html#SetMagickMemoryMethods">SetMagickMemoryMethods</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireAlignedMemory">AcquireAlignedMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireAlignedMemory">AcquireAlignedMemory</a></h2>
 
 <p>AcquireAlignedMemory() returns a pointer to a block of memory at least size bytes whose address is aligned on a cache line or page boundary.</p>
 
@@ -115,7 +114,7 @@ void *AcquireAlignedMemory(const size_t count,const size_t quantum)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireMagickMemory">AcquireMagickMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireMagickMemory">AcquireMagickMemory</a></h2>
 
 <p>AcquireMagickMemory() returns a pointer to a block of memory at least size bytes suitably aligned for any use.</p>
 
@@ -137,7 +136,7 @@ void *AcquireMagickMemory(const size_t size)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireQuantumMemory">AcquireQuantumMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireQuantumMemory">AcquireQuantumMemory</a></h2>
 
 <p>AcquireQuantumMemory() returns a pointer to a block of memory at least count * quantum bytes suitably aligned for any use.</p>
 
@@ -163,7 +162,7 @@ void *AcquireQuantumMemory(const size_t count,const size_t quantum)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireVirtualMemory">AcquireVirtualMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireVirtualMemory">AcquireVirtualMemory</a></h2>
 
 <p>AcquireVirtualMemory() allocates a pointer to a block of memory at least size bytes suitably aligned for any use. In addition to heap, it also supports memory-mapped and file-based memory-mapped memory requests.</p>
 
@@ -189,7 +188,7 @@ MemoryInfo *AcquireVirtualMemory(const size_t count,const size_t quantum)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="CopyMagickMemory">CopyMagickMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="CopyMagickMemory">CopyMagickMemory</a></h2>
 
 <p>CopyMagickMemory() copies size bytes from memory area source to the destination.  Copying between objects that overlap will take place correctly.  It returns destination.</p>
 
@@ -220,7 +219,7 @@ void *CopyMagickMemory(void *destination,const void *source,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="GetMagickMemoryMethods">GetMagickMemoryMethods</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="GetMagickMemoryMethods">GetMagickMemoryMethods</a></h2>
 
 <p>GetMagickMemoryMethods() gets the methods to acquire, resize, and destroy memory.</p>
 
@@ -252,7 +251,7 @@ void GetMagickMemoryMethods(AcquireMemoryHandler *acquire_memory_handler,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="GetVirtualMemoryBlob">GetVirtualMemoryBlob</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="GetVirtualMemoryBlob">GetVirtualMemoryBlob</a></h2>
 
 <p>GetVirtualMemoryBlob() returns the virtual memory blob associated with the specified MemoryInfo structure.</p>
 
@@ -272,7 +271,7 @@ void *GetVirtualMemoryBlob(const MemoryInfo *memory_info)
 <dt>memory_info</dt>
 <dd>The MemoryInfo structure.  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishAlignedMemory">RelinquishAlignedMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishAlignedMemory">RelinquishAlignedMemory</a></h2>
 
 <p>RelinquishAlignedMemory() frees memory acquired with AcquireAlignedMemory() or reuse.</p>
 
@@ -294,7 +293,7 @@ void *RelinquishAlignedMemory(void *memory)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishMagickMemory">RelinquishMagickMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishMagickMemory">RelinquishMagickMemory</a></h2>
 
 <p>RelinquishMagickMemory() frees memory acquired with AcquireMagickMemory() or AcquireQuantumMemory() for reuse.</p>
 
@@ -316,7 +315,7 @@ void *RelinquishMagickMemory(void *memory)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishVirtualMemory">RelinquishVirtualMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="RelinquishVirtualMemory">RelinquishVirtualMemory</a></h2>
 
 <p>RelinquishVirtualMemory() frees memory acquired with AcquireVirtualMemory().</p>
 
@@ -338,7 +337,7 @@ MemoryInfo *RelinquishVirtualMemory(MemoryInfo *memory_info)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="ResetMagickMemory">ResetMagickMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="ResetMagickMemory">ResetMagickMemory</a></h2>
 
 <p>ResetMagickMemory() fills the first size bytes of the memory area pointed to by memory with the constant byte c.</p>
 
@@ -368,7 +367,7 @@ void *ResetMagickMemory(void *memory,int byte,const size_t size)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeMagickMemory">ResizeMagickMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeMagickMemory">ResizeMagickMemory</a></h2>
 
 <p>ResizeMagickMemory() changes the size of the memory and returns a pointer to the (possibly moved) block.  The contents will be unchanged up to the lesser of the new and old sizes.</p>
 
@@ -394,7 +393,7 @@ void *ResizeMagickMemory(void *memory,const size_t size)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeQuantumMemory">ResizeQuantumMemory</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="ResizeQuantumMemory">ResizeQuantumMemory</a></h2>
 
 <p>ResizeQuantumMemory() changes the size of the memory and returns a pointer to the (possibly moved) block.  The contents will be unchanged up to the lesser of the new and old sizes.</p>
 
@@ -425,7 +424,7 @@ void *ResizeQuantumMemory(void *memory,const size_t count,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/memory_8c.html" id="SetMagickMemoryMethods">SetMagickMemoryMethods</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="SetMagickMemoryMethods">SetMagickMemoryMethods</a></h2>
 
 <p>SetMagickMemoryMethods() sets the methods to acquire, resize, and destroy memory. Your custom memory methods must be set prior to the MagickCoreGenesis() method.</p>
 

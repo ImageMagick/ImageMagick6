@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Set Text Attributes</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, set, text, attributes, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="attribute.html#GetImageChannelDepth">GetImageChannelDepth</a> &#8226; <a href="attribute.html#GetImageQuantumDepth">GetImageQuantumDepth</a> &#8226; <a href="attribute.html#GetImageType">GetImageType</a> &#8226; <a href="attribute.html#IdentifyImageMonochrome">IdentifyImageMonochrome</a> &#8226; <a href="attribute.html#IdentifyImageType">IdentifyImageType</a> &#8226; <a href="attribute.html#IsGrayImage">IsGrayImage</a> &#8226; <a href="attribute.html#IsMonochromeImage">IsMonochromeImage</a> &#8226; <a href="attribute.html#IsOpaqueImage">IsOpaqueImage</a> &#8226; <a href="attribute.html#SetImageChannelDepth">SetImageChannelDepth</a> &#8226; <a href="attribute.html#SetImageType">SetImageType</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageChannelDepth">GetImageChannelDepth</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageChannelDepth">GetImageChannelDepth</a></h2>
 
 <p>GetImageChannelDepth() returns the depth of a particular image channel.</p>
 
@@ -121,7 +120,7 @@ size_t GetImageChannelDepth(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageQuantumDepth">GetImageQuantumDepth</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageQuantumDepth">GetImageQuantumDepth</a></h2>
 
 <p>GetImageQuantumDepth() returns the depth of the image rounded to a legal quantum depth: 8, 16, or 32.</p>
 
@@ -148,7 +147,7 @@ size_t GetImageQuantumDepth(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageType">GetImageType</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageType">GetImageType</a></h2>
 
 <p>GetImageType() returns the potential type of image:</p>
 
@@ -182,7 +181,7 @@ ImageType GetImageType(const Image *image,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="IdentifyImageMonochrome">IdentifyImageMonochrome</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="IdentifyImageMonochrome">IdentifyImageMonochrome</a></h2>
 
 <p>IdentifyImageMonochrome() returns MagickTrue if all the pixels in the image have the same red, green, and blue intensities and the intensity is either 0 or QuantumRange.</p>
 
@@ -209,7 +208,7 @@ MagickBooleanType IdentifyImageMonochrome(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="IdentifyImageType">IdentifyImageType</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="IdentifyImageType">IdentifyImageType</a></h2>
 
 <p>IdentifyImageType() returns the potential type of image:</p>
 
@@ -243,7 +242,7 @@ ImageType IdentifyImageType(const Image *image,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="IsGrayImage">IsGrayImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="IsGrayImage">IsGrayImage</a></h2>
 
 <p>IsGrayImage() returns MagickTrue if the type of the image is grayscale or bi-level.</p>
 
@@ -270,7 +269,7 @@ MagickBooleanType IsGrayImage(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="IsMonochromeImage">IsMonochromeImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="IsMonochromeImage">IsMonochromeImage</a></h2>
 
 <p>IsMonochromeImage() returns MagickTrue if type of the image is bi-level.</p>
 
@@ -297,7 +296,7 @@ MagickBooleanType IsMonochromeImage(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="IsOpaqueImage">IsOpaqueImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="IsOpaqueImage">IsOpaqueImage</a></h2>
 
 <p>IsOpaqueImage() returns MagickTrue if none of the pixels in the image have an opacity value other than opaque (0).</p>
 
@@ -324,7 +323,7 @@ MagickBooleanType IsOpaqueImage(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="SetImageChannelDepth">SetImageChannelDepth</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="SetImageChannelDepth">SetImageChannelDepth</a></h2>
 
 <p>SetImageChannelDepth() sets the depth of the image.</p>
 
@@ -356,7 +355,7 @@ MagickBooleanType SetImageChannelDepth(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/attribute_8c.html" id="SetImageType">SetImageType</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="SetImageType">SetImageType</a></h2>
 
 <p>SetImageType() sets the type of image.  Choose from these types:</p>
 

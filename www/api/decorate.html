@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Decorate an Image</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, decorate, an, image, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="decorate.html#BorderImage">BorderImage</a> &#8226; <a href="decorate.html#FrameImage">FrameImage</a> &#8226; <a href="decorate.html#RaiseImage">RaiseImage</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/decorate_8c.html" id="BorderImage">BorderImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/decorate_8c.html" id="BorderImage">BorderImage</a></h2>
 
 <p>BorderImage() surrounds the image with a border of the color defined by the bordercolor member of the image structure.  The width and height of the border are defined by the corresponding members of the border_info structure.</p>
 
@@ -120,7 +119,7 @@ Image *BorderImage(const Image *image,const RectangleInfo *border_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/decorate_8c.html" id="FrameImage">FrameImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/decorate_8c.html" id="FrameImage">FrameImage</a></h2>
 
 <p>FrameImage() adds a simulated three-dimensional border around the image. The color of the border is defined by the matte_color member of image. Members width and height of frame_info specify the border width of the vertical and horizontal sides of the frame.  Members inner and outer indicate the width of the inner and outer shadows of the frame.</p>
 
@@ -151,7 +150,7 @@ Image *FrameImage(const Image *image,const FrameInfo *frame_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/decorate_8c.html" id="RaiseImage">RaiseImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/decorate_8c.html" id="RaiseImage">RaiseImage</a></h2>
 
 <p>RaiseImage() creates a simulated three-dimensional button-like effect by lightening and darkening the edges of the image.  Members width and height of raise_info define the width of the vertical and horizontal edge of the effect.</p>
 

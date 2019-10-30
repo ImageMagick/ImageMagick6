@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Add an Effect</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, add, an, effect, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="effect.html#AdaptiveBlurImage">AdaptiveBlurImage</a> &#8226; <a href="effect.html#AdaptiveSharpenImage">AdaptiveSharpenImage</a> &#8226; <a href="effect.html#BlurImage">BlurImage</a> &#8226; <a href="effect.html#ConvolveImage">ConvolveImage</a> &#8226; <a href="effect.html#DespeckleImage">DespeckleImage</a> &#8226; <a href="effect.html#EdgeImage">EdgeImage</a> &#8226; <a href="effect.html#EmbossImage">EmbossImage</a> &#8226; <a href="effect.html#FilterImage">FilterImage</a> &#8226; <a href="effect.html#GaussianBlurImage">GaussianBlurImage</a> &#8226; <a href="effect.html#MotionBlurImage">MotionBlurImage</a> &#8226; <a href="effect.html#KuwaharaImage">KuwaharaImage</a> &#8226; <a href="effect.html#PreviewImage">PreviewImage</a> &#8226; <a href="effect.html#RotationalBlurImage">RotationalBlurImage</a> &#8226; <a href="effect.html#SelectiveBlurImage">SelectiveBlurImage</a> &#8226; <a href="effect.html#ShadeImage">ShadeImage</a> &#8226; <a href="effect.html#SharpenImage">SharpenImage</a> &#8226; <a href="effect.html#SpreadImage">SpreadImage</a> &#8226; <a href="effect.html#UnsharpMaskImage">UnsharpMaskImage</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="AdaptiveBlurImage">AdaptiveBlurImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="AdaptiveBlurImage">AdaptiveBlurImage</a></h2>
 
 <p>AdaptiveBlurImage() adaptively blurs the image by blurring less intensely near image edges and more intensely far from edges.  We blur the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and AdaptiveBlurImage() selects a suitable radius for you.</p>
 
@@ -131,7 +130,7 @@ Image *AdaptiveBlurImageChannel(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="AdaptiveSharpenImage">AdaptiveSharpenImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="AdaptiveSharpenImage">AdaptiveSharpenImage</a></h2>
 
 <p>AdaptiveSharpenImage() adaptively sharpens the image by sharpening more intensely near image edges and less intensely far from edges. We sharpen the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and AdaptiveSharpenImage() selects a suitable radius for you.</p>
 
@@ -173,7 +172,7 @@ Image *AdaptiveSharpenImageChannel(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="BlurImage">BlurImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="BlurImage">BlurImage</a></h2>
 
 <p>BlurImage() blurs an image.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, the radius should be larger than sigma.  Use a radius of 0 and BlurImage() selects a suitable radius for you.</p>
 
@@ -214,7 +213,7 @@ Image *BlurImageChannel(const Image *image,const ChannelType channel,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="ConvolveImage">ConvolveImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="ConvolveImage">ConvolveImage</a></h2>
 
 <p>ConvolveImage() applies a custom convolution kernel to the image.</p>
 
@@ -255,7 +254,7 @@ Image *ConvolveImageChannel(const Image *image,const ChannelType channel,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="DespeckleImage">DespeckleImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="DespeckleImage">DespeckleImage</a></h2>
 
 <p>DespeckleImage() reduces the speckle noise in an image while perserving the edges of the original image.  A speckle removing filter uses a complementary hulling technique (raising pixels that are darker than their surrounding neighbors, then complementarily lowering pixels that are brighter than their surrounding neighbors) to reduce the speckle index of that image (reference Crimmins speckle removal).</p>
 
@@ -281,7 +280,7 @@ Image *DespeckleImage(const Image *image,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="EdgeImage">EdgeImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="EdgeImage">EdgeImage</a></h2>
 
 <p>EdgeImage() finds edges in an image.  Radius defines the radius of the convolution filter.  Use a radius of 0 and EdgeImage() selects a suitable radius for you.</p>
 
@@ -312,7 +311,7 @@ Image *EdgeImage(const Image *image,const double radius,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="EmbossImage">EmbossImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="EmbossImage">EmbossImage</a></h2>
 
 <p>EmbossImage() returns a grayscale image with a three-dimensional effect. We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and Emboss() selects a suitable radius for you.</p>
 
@@ -347,7 +346,7 @@ Image *EmbossImage(const Image *image,const double radius,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="FilterImage">FilterImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="FilterImage">FilterImage</a></h2>
 
 <p>FilterImage() applies a custom convolution kernel to the image.</p>
 
@@ -384,7 +383,7 @@ Image *FilterImageChannel(const Image *image,const ChannelType channel,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="GaussianBlurImage">GaussianBlurImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="GaussianBlurImage">GaussianBlurImage</a></h2>
 
 <p>GaussianBlurImage() blurs an image.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, the radius should be larger than sigma.  Use a radius of 0 and GaussianBlurImage() selects a suitable radius for you</p>
 
@@ -426,7 +425,7 @@ Image *GaussianBlurImageChannel(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="MotionBlurImage">MotionBlurImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="MotionBlurImage">MotionBlurImage</a></h2>
 
 <p>MotionBlurImage() simulates motion blur.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, radius should be larger than sigma.  Use a radius of 0 and MotionBlurImage() selects a suitable radius for you. Angle gives the angle of the blurring motion.</p>
 
@@ -474,7 +473,7 @@ ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="KuwaharaImage">KuwaharaImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="KuwaharaImage">KuwaharaImage</a></h2>
 
 <p>KuwaharaImage() is an edge preserving noise reduction filter.</p>
 
@@ -515,7 +514,7 @@ Image *KuwaharaImageChannel(const Image *image,const ChannelType channel,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="PreviewImage">PreviewImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="PreviewImage">PreviewImage</a></h2>
 
 <p>PreviewImage() tiles 9 thumbnails of the specified image with an image processing operation applied with varying parameters.  This may be helpful pin-pointing an appropriate parameter for a particular image processing operation.</p>
 
@@ -546,7 +545,7 @@ Image *PreviewImages(const Image *image,const PreviewType preview,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="RotationalBlurImage">RotationalBlurImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="RotationalBlurImage">RotationalBlurImage</a></h2>
 
 <p>RotationalBlurImage() applies a rotational blur to the image.</p>
 
@@ -585,7 +584,7 @@ const ChannelType channel,const double angle,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="SelectiveBlurImage">SelectiveBlurImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="SelectiveBlurImage">SelectiveBlurImage</a></h2>
 
 <p>SelectiveBlurImage() selectively blur pixels within a contrast threshold. It is similar to the unsharpen mask that sharpens everything with contrast above a certain threshold.</p>
 
@@ -631,7 +630,7 @@ Image *SelectiveBlurImageChannel(const Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="ShadeImage">ShadeImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="ShadeImage">ShadeImage</a></h2>
 
 <p>ShadeImage() shines a distant light on an image to create a three-dimensional effect. You control the positioning of the light with azimuth and elevation; azimuth is measured in degrees off the x axis and elevation is measured in pixels above the Z axis.</p>
 
@@ -666,7 +665,7 @@ Image *ShadeImage(const Image *image,const MagickBooleanType gray,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="SharpenImage">SharpenImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="SharpenImage">SharpenImage</a></h2>
 
 <p>SharpenImage() sharpens the image.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and SharpenImage() selects a suitable radius for you.</p>
 
@@ -709,7 +708,7 @@ const double radius,const double sigma,ExceptionInfo *exception)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="SpreadImage">SpreadImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="SpreadImage">SpreadImage</a></h2>
 
 <p>SpreadImage() is a special effects method that randomly displaces each pixel in a block defined by the radius parameter.</p>
 
@@ -740,7 +739,7 @@ Image *SpreadImage(const Image *image,const double radius,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/effect_8c.html" id="UnsharpMaskImage">UnsharpMaskImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/effect_8c.html" id="UnsharpMaskImage">UnsharpMaskImage</a></h2>
 
 <p>UnsharpMaskImage() sharpens one or more image channels.  We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma).  For reasonable results, radius should be larger than sigma.  Use a radius of 0 and UnsharpMaskImage() selects a suitable radius for you.</p>
 

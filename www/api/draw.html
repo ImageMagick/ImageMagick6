@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Draw on an Image</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, draw, on, an, image, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="draw.html#AcquireDrawInfo">AcquireDrawInfo</a> &#8226; <a href="draw.html#CloneDrawInfo">CloneDrawInfo</a> &#8226; <a href="draw.html#DestroyDrawInfo">DestroyDrawInfo</a> &#8226; <a href="draw.html#DrawAffineImage">DrawAffineImage</a> &#8226; <a href="draw.html#DrawClipPath">DrawClipPath</a> &#8226; <a href="draw.html#DrawClippingMask">DrawClippingMask</a> &#8226; <a href="draw.html#DrawCompositeMask">DrawCompositeMask</a> &#8226; <a href="draw.html#DrawGradientImage">DrawGradientImage</a> &#8226; <a href="draw.html#DrawImage">DrawImage</a> &#8226; <a href="draw.html#DrawPatternPath">DrawPatternPath</a> &#8226; <a href="draw.html#DrawPrimitive">DrawPrimitive</a> &#8226; <a href="draw.html#GetAffineMatrix">GetAffineMatrix</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="AcquireDrawInfo">AcquireDrawInfo</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="AcquireDrawInfo">AcquireDrawInfo</a></h2>
 
 <p>AcquireDrawInfo() returns a DrawInfo structure properly initialized.</p>
 
@@ -99,7 +98,7 @@
 DrawInfo *AcquireDrawInfo(void)
 </pre>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="CloneDrawInfo">CloneDrawInfo</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="CloneDrawInfo">CloneDrawInfo</a></h2>
 
 <p>CloneDrawInfo() makes a copy of the given draw_info structure.  If NULL is specified, a new DrawInfo structure is created initialized to default values.</p>
 
@@ -126,7 +125,7 @@ DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DestroyDrawInfo">DestroyDrawInfo</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DestroyDrawInfo">DestroyDrawInfo</a></h2>
 
 <p>DestroyDrawInfo() deallocates memory associated with an DrawInfo structure.</p>
 
@@ -148,7 +147,7 @@ DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawAffineImage">DrawAffineImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawAffineImage">DrawAffineImage</a></h2>
 
 <p>DrawAffineImage() composites the source over the destination image as dictated by the affine transform.</p>
 
@@ -179,7 +178,7 @@ MagickBooleanType DrawAffineImage(Image *image,const Image *source,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawClipPath">DrawClipPath</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawClipPath">DrawClipPath</a></h2>
 
 <p>DrawClipPath() draws the clip path on the image mask.</p>
 
@@ -210,7 +209,7 @@ MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawClippingMask">DrawClippingMask</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawClippingMask">DrawClippingMask</a></h2>
 
 <p>DrawClippingMask() draws the clip path and returns it as an image clipping mask.</p>
 
@@ -249,7 +248,7 @@ Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawCompositeMask">DrawCompositeMask</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawCompositeMask">DrawCompositeMask</a></h2>
 
 <p>DrawCompositeMask() draws the mask path and returns it as an image mask.</p>
 
@@ -288,7 +287,7 @@ Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawGradientImage">DrawGradientImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawGradientImage">DrawGradientImage</a></h2>
 
 <p>DrawGradientImage() draws a linear gradient on the image.</p>
 
@@ -315,7 +314,7 @@ MagickBooleanType DrawGradientImage(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawImage">DrawImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawImage">DrawImage</a></h2>
 
 <p>DrawImage() draws a graphic primitive on your image.  The primitive may be represented as a string or filename.  Precede the filename with an "at" sign (@) and the contents of the file are drawn on the image.  You can affect how text is drawn by setting one or more members of the draw info structure.</p>
 
@@ -341,7 +340,7 @@ MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawPatternPath">DrawPatternPath</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawPatternPath">DrawPatternPath</a></h2>
 
 <p>DrawPatternPath() draws a pattern.</p>
 
@@ -376,7 +375,7 @@ MagickBooleanType DrawPatternPath(Image *image,const DrawInfo *draw_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="DrawPrimitive">DrawPrimitive</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="DrawPrimitive">DrawPrimitive</a></h2>
 
 <p>DrawPrimitive() draws a primitive (line, rectangle, ellipse) on the image.</p>
 
@@ -407,7 +406,7 @@ MagickBooleanType DrawPrimitive(Image *image,const DrawInfo *draw_info,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/draw_8c.html" id="GetAffineMatrix">GetAffineMatrix</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="GetAffineMatrix">GetAffineMatrix</a></h2>
 
 <p>GetAffineMatrix() returns an AffineMatrix initialized to the identity matrix.</p>
 

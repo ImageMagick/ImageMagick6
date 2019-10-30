@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Dealing with Image Profiles</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, dealing, with, image, profiles, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="profile.html#CloneImageProfiles">CloneImageProfiles</a> &#8226; <a href="profile.html#DeleteImageProfile">DeleteImageProfile</a> &#8226; <a href="profile.html#DestroyImageProfiles">DestroyImageProfiles</a> &#8226; <a href="profile.html#GetImageProfile">GetImageProfile</a> &#8226; <a href="profile.html#GetNextImageProfile">GetNextImageProfile</a> &#8226; <a href="profile.html#ProfileImage">ProfileImage</a> &#8226; <a href="profile.html#RemoveImageProfile">RemoveImageProfile</a> &#8226; <a href="profile.html#ResetImageProfileIterator">ResetImageProfileIterator</a> &#8226; <a href="profile.html#SetImageProfile">SetImageProfile</a> &#8226; <a href="profile.html#SyncImageProfiles">SyncImageProfiles</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="CloneImageProfiles">CloneImageProfiles</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="CloneImageProfiles">CloneImageProfiles</a></h2>
 
 <p>CloneImageProfiles() clones one or more image profiles.</p>
 
@@ -116,7 +115,7 @@ MagickBooleanType CloneImageProfiles(Image *image,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="DeleteImageProfile">DeleteImageProfile</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="DeleteImageProfile">DeleteImageProfile</a></h2>
 
 <p>DeleteImageProfile() deletes a profile from the image by its name.</p>
 
@@ -142,7 +141,7 @@ MagickBooleanTyupe DeleteImageProfile(Image *image,const char *name)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="DestroyImageProfiles">DestroyImageProfiles</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="DestroyImageProfiles">DestroyImageProfiles</a></h2>
 
 <p>DestroyImageProfiles() releases memory associated with an image profile map.</p>
 
@@ -164,7 +163,7 @@ void DestroyImageProfiles(Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="GetImageProfile">GetImageProfile</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="GetImageProfile">GetImageProfile</a></h2>
 
 <p>GetImageProfile() gets a profile associated with an image by name.</p>
 
@@ -190,7 +189,7 @@ const StringInfo *GetImageProfile(const Image *image,const char *name)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="GetNextImageProfile">GetNextImageProfile</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="GetNextImageProfile">GetNextImageProfile</a></h2>
 
 <p>GetNextImageProfile() gets the next profile name for an image.</p>
 
@@ -212,7 +211,7 @@ char *GetNextImageProfile(const Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="ProfileImage">ProfileImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="ProfileImage">ProfileImage</a></h2>
 
 <p>ProfileImage() associates, applies, or removes an ICM, IPTC, or generic profile with / to / from an image.  If the profile is NULL, it is removed from the image otherwise added or applied.  Use a name of '*' and a profile of NULL to remove all profiles from the image.</p>
 
@@ -253,7 +252,7 @@ MagickBooleanType ProfileImage(Image *image,const char *name,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="RemoveImageProfile">RemoveImageProfile</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="RemoveImageProfile">RemoveImageProfile</a></h2>
 
 <p>RemoveImageProfile() removes a named profile from the image and returns its value.</p>
 
@@ -279,7 +278,7 @@ void *RemoveImageProfile(Image *image,const char *name)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="ResetImageProfileIterator">ResetImageProfileIterator</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="ResetImageProfileIterator">ResetImageProfileIterator</a></h2>
 
 <p>ResetImageProfileIterator() resets the image profile iterator.  Use it in conjunction with GetNextImageProfile() to iterate over all the profiles associated with an image.</p>
 
@@ -301,7 +300,7 @@ ResetImageProfileIterator(Image *image)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="SetImageProfile">SetImageProfile</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="SetImageProfile">SetImageProfile</a></h2>
 
 <p>SetImageProfile() adds a named profile to the image.  If a profile with the same name already exists, it is replaced.  This method differs from the ProfileImage() method in that it does not apply CMS color profiles.</p>
 
@@ -332,7 +331,7 @@ MagickBooleanType SetImageProfile(Image *image,const char *name,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/profile_8c.html" id="SyncImageProfiles">SyncImageProfiles</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/profile_8c.html" id="SyncImageProfiles">SyncImageProfiles</a></h2>
 
 <p>SyncImageProfiles() synchronizes image properties with the image profiles. Currently we only support updating the EXIF resolution and orientation.</p>
 

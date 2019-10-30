@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Monitor or Limit Resource Consumption</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, monitor, or, limit, resource, consumption, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="resource.html#AcquireMagickResource">AcquireMagickResource</a> &#8226; <a href="resource.html#AcquireUniqueFileResource">AcquireUniqueFileResource</a> &#8226; <a href="resource.html#GetMagickResource">GetMagickResource</a> &#8226; <a href="resource.html#GetMagickResourceLimit">GetMagickResourceLimit</a> &#8226; <a href="resource.html#ListMagickResourceInfo">ListMagickResourceInfo</a> &#8226; <a href="resource.html#RelinquishMagickResource">RelinquishMagickResource</a> &#8226; <a href="resource.html#RelinquishUniqueFileResource">RelinquishUniqueFileResource</a> &#8226; <a href="resource.html#SetMagickResourceLimit">SetMagickResourceLimit</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="AcquireMagickResource">AcquireMagickResource</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="AcquireMagickResource">AcquireMagickResource</a></h2>
 
 <p>AcquireMagickResource() acquires resources of the specified type. MagickFalse is returned if the specified resource is exhausted otherwise MagickTrue.</p>
 
@@ -116,7 +115,7 @@ MagickBooleanType AcquireMagickResource(const ResourceType type,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="AcquireUniqueFileResource">AcquireUniqueFileResource</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="AcquireUniqueFileResource">AcquireUniqueFileResource</a></h2>
 
 <p>AcquireUniqueFileResource() returns a unique file name, and returns a file descriptor for the file open for reading and writing.</p>
 
@@ -138,7 +137,7 @@ int AcquireUniqueFileResource(char *path)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="GetMagickResource">GetMagickResource</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="GetMagickResource">GetMagickResource</a></h2>
 
 <p>GetMagickResource() returns the specified resource.</p>
 
@@ -160,7 +159,7 @@ MagickSizeType GetMagickResource(const ResourceType type)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="GetMagickResourceLimit">GetMagickResourceLimit</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="GetMagickResourceLimit">GetMagickResourceLimit</a></h2>
 
 <p>GetMagickResourceLimit() returns the specified resource limit.</p>
 
@@ -182,7 +181,7 @@ MagickSizeType GetMagickResourceLimit(const ResourceType type)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="ListMagickResourceInfo">ListMagickResourceInfo</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="ListMagickResourceInfo">ListMagickResourceInfo</a></h2>
 
 <p>ListMagickResourceInfo() lists the resource info to a file.</p>
 
@@ -201,7 +200,7 @@ MagickBooleanType ListMagickResourceInfo(FILE *file,
 <dt>exception</dt>
 <p>return any errors or warnings in this structure.</p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="RelinquishMagickResource">RelinquishMagickResource</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="RelinquishMagickResource">RelinquishMagickResource</a></h2>
 
 <p>RelinquishMagickResource() relinquishes resources of the specified type.</p>
 
@@ -228,7 +227,7 @@ void RelinquishMagickResource(const ResourceType type,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="RelinquishUniqueFileResource">RelinquishUniqueFileResource</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="RelinquishUniqueFileResource">RelinquishUniqueFileResource</a></h2>
 
 <p>RelinquishUniqueFileResource() relinquishes a unique file resource.</p>
 
@@ -250,7 +249,7 @@ MagickBooleanType RelinquishUniqueFileResource(const char *path)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/resource_8c.html" id="SetMagickResourceLimit">SetMagickResourceLimit</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="SetMagickResourceLimit">SetMagickResourceLimit</a></h2>
 
 <p>SetMagickResourceLimit() sets the limit for a particular resource.</p>
 

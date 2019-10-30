@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Shear or Rotate an Image by an Arbitrary Angle</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, shear, or, rotate, an, image, by, an, arbitrary, angle, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,17 +82,17 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="shear.html#The XShearImage">The XShearImage</a> &#8226; <a href="shear.html#DeskewImage">DeskewImage</a> &#8226; <a href="shear.html#IntegralRotateImage">IntegralRotateImage</a> &#8226; <a href="shear.html#ShearImage">ShearImage</a> &#8226; <a href="shear.html#ShearRotateImage">ShearRotateImage</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/shear_8c.html" id="The_XShearImage">The XShearImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/shear_8c.html" id="The_XShearImage">The XShearImage</a></h2>
 
 <p>The XShearImage() and YShearImage() methods are based on the paper "A Fast Algorithm for General Raster Rotation" by Alan W. Paeth, Graphics Interface '86 (Vancouver).  ShearRotateImage() is adapted from a similar method based on the Paeth paper written by Michael Halle of the Spatial Imaging Group, MIT Media Lab.</p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/shear_8c.html" id="DeskewImage">DeskewImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/shear_8c.html" id="DeskewImage">DeskewImage</a></h2>
 
 <p>DeskewImage() removes skew from the image.  Skew is an artifact that occurs in scanned images because of the camera being misaligned, imperfections in the scanning or surface, or simply because the paper was not placed completely flat when scanned.</p>
 
@@ -128,7 +127,7 @@ Image *DeskewImage(const Image *image,const double threshold,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/shear_8c.html" id="IntegralRotateImage">IntegralRotateImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/shear_8c.html" id="IntegralRotateImage">IntegralRotateImage</a></h2>
 
 <p>IntegralRotateImage() rotates the image an integral of 90 degrees.  It allocates the memory necessary for the new Image structure and returns a pointer to the rotated image.</p>
 
@@ -147,7 +146,7 @@ Image *IntegralRotateImage(const Image *image,size_t rotations,
 <dt>rotations</dt>
 <p>Specifies the number of 90 degree rotations.</p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/shear_8c.html" id="ShearImage">ShearImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/shear_8c.html" id="ShearImage">ShearImage</a></h2>
 
 <p>ShearImage() creates a new image that is a shear_image copy of an existing one.  Shearing slides one edge of an image along the X or Y axis, creating a parallelogram.  An X direction shear slides an edge along the X axis, while a Y direction shear slides an edge along the Y axis.  The amount of the shear is controlled by a shear angle.  For X direction shears, x_shear is measured relative to the Y axis, and similarly, for Y direction shears y_shear is measured relative to the X axis.  Empty triangles left over from shearing the image are filled with the background color defined by member 'background_color' of the image..  ShearImage() allocates the memory necessary for the new Image structure and returns a pointer to the new image.</p>
 
@@ -171,7 +170,7 @@ Image *ShearImage(const Image *image,const double x_shear,
 <dt>exception</dt>
 <p>return any errors or warnings in this structure.</p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/shear_8c.html" id="ShearRotateImage">ShearRotateImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/shear_8c.html" id="ShearRotateImage">ShearRotateImage</a></h2>
 
 <p>ShearRotateImage() creates a new image that is a rotated copy of an existing one.  Positive angles rotate counter-clockwise (right-hand rule), while negative angles rotate clockwise.  Rotated images are usually larger than the originals and have 'empty' triangular corners.  X axis.  Empty triangles left over from shearing the image are filled with the background color defined by member 'background_color' of the image.  ShearRotateImage allocates the memory necessary for the new Image structure and returns a pointer to the new image.</p>
 

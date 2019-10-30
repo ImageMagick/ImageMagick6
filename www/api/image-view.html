@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - MagickCore, C API: Image View Methods</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickcore, c, api:, image, view, methods, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/www/search.html">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,13 +82,13 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="text-center"><a href="image-view.html#CloneImageView">CloneImageView</a> &#8226; <a href="image-view.html#DestroyImageView">DestroyImageView</a> &#8226; <a href="image-view.html#DuplexTransferImageViewIterator">DuplexTransferImageViewIterator</a> &#8226; <a href="image-view.html#GetImageViewAuthenticIndexes">GetImageViewAuthenticIndexes</a> &#8226; <a href="image-view.html#GetImageViewAuthenticPixels">GetImageViewAuthenticPixels</a> &#8226; <a href="image-view.html#GetImageViewException">GetImageViewException</a> &#8226; <a href="image-view.html#GetImageViewExtent">GetImageViewExtent</a> &#8226; <a href="image-view.html#GetImageViewImage">GetImageViewImage</a> &#8226; <a href="image-view.html#GetImageViewIterator">GetImageViewIterator</a> &#8226; <a href="image-view.html#GetImageViewVirtualIndexes">GetImageViewVirtualIndexes</a> &#8226; <a href="image-view.html#GetImageViewVirtualPixels">GetImageViewVirtualPixels</a> &#8226; <a href="image-view.html#IsImageView">IsImageView</a> &#8226; <a href="image-view.html#NewImageView">NewImageView</a> &#8226; <a href="image-view.html#NewImageViewRegion">NewImageViewRegion</a> &#8226; <a href="image-view.html#SetImageViewDescription">SetImageViewDescription</a> &#8226; <a href="image-view.html#SetImageViewIterator">SetImageViewIterator</a> &#8226; <a href="image-view.html#SetImageViewThreads">SetImageViewThreads</a> &#8226; <a href="image-view.html#TransferImageViewIterator">TransferImageViewIterator</a> &#8226; <a href="image-view.html#UpdateImageViewIterator">UpdateImageViewIterator</a></p>
 
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="CloneImageView">CloneImageView</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="CloneImageView">CloneImageView</a></h2>
 
 <p>CloneImageView() makes a copy of the specified image view.</p>
 
@@ -111,7 +110,7 @@ ImageView *CloneImageView(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="DestroyImageView">DestroyImageView</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="DestroyImageView">DestroyImageView</a></h2>
 
 <p>DestroyImageView() deallocates memory associated with a image view.</p>
 
@@ -133,7 +132,7 @@ ImageView *DestroyImageView(ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="DuplexTransferImageViewIterator">DuplexTransferImageViewIterator</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="DuplexTransferImageViewIterator">DuplexTransferImageViewIterator</a></h2>
 
 <p>DuplexTransferImageViewIterator() iterates over three image views in parallel and calls your transfer method for each scanline of the view.  The source and duplex pixel extent is not confined to the image canvas-- that is you can include negative offsets or widths or heights that exceed the image dimension.  However, the destination image view is confined to the image canvas-- that is no negative offsets or widths or heights that exceed the image dimension are permitted.</p>
 
@@ -189,7 +188,7 @@ MagickBooleanType DuplexTransferImageViewIterator(ImageView *source,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewAuthenticIndexes">GetImageViewAuthenticIndexes</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewAuthenticIndexes">GetImageViewAuthenticIndexes</a></h2>
 
 <p>GetImageViewAuthenticIndexes() returns the image view authentic indexes.</p>
 
@@ -211,7 +210,7 @@ IndexPacket *GetImageViewAuthenticIndexes(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewAuthenticPixels">GetImageViewAuthenticPixels</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewAuthenticPixels">GetImageViewAuthenticPixels</a></h2>
 
 <p>GetImageViewAuthenticPixels() returns the image view authentic pixels.</p>
 
@@ -233,7 +232,7 @@ PixelPacket *GetImageViewAuthenticPixels(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewException">GetImageViewException</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewException">GetImageViewException</a></h2>
 
 <p>GetImageViewException() returns the severity, reason, and description of any error that occurs when utilizing a image view.</p>
 
@@ -260,7 +259,7 @@ char *GetImageViewException(const PixelImage *image_view,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewExtent">GetImageViewExtent</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewExtent">GetImageViewExtent</a></h2>
 
 <p>GetImageViewExtent() returns the image view extent.</p>
 
@@ -282,7 +281,7 @@ RectangleInfo GetImageViewExtent(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewImage">GetImageViewImage</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewImage">GetImageViewImage</a></h2>
 
 <p>GetImageViewImage() returns the image associated with the image view.</p>
 
@@ -304,7 +303,7 @@ MagickCore *GetImageViewImage(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewIterator">GetImageViewIterator</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewIterator">GetImageViewIterator</a></h2>
 
 <p>GetImageViewIterator() iterates over the image view in parallel and calls your get method for each scanline of the view.  The pixel extent is not confined to the image canvas-- that is you can include negative offsets or widths or heights that exceed the image dimension.  Any updates to the pixels in your callback are ignored.</p>
 
@@ -350,7 +349,7 @@ MagickBooleanType GetImageViewIterator(ImageView *source,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewVirtualIndexes">GetImageViewVirtualIndexes</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewVirtualIndexes">GetImageViewVirtualIndexes</a></h2>
 
 <p>GetImageViewVirtualIndexes() returns the image view virtual indexes.</p>
 
@@ -373,7 +372,7 @@ const IndexPacket *GetImageViewVirtualIndexes(
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewVirtualPixels">GetImageViewVirtualPixels</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="GetImageViewVirtualPixels">GetImageViewVirtualPixels</a></h2>
 
 <p>GetImageViewVirtualPixels() returns the image view virtual pixels.</p>
 
@@ -395,7 +394,7 @@ const PixelPacket *GetImageViewVirtualPixels(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="IsImageView">IsImageView</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="IsImageView">IsImageView</a></h2>
 
 <p>IsImageView() returns MagickTrue if the the parameter is verified as a image view object.</p>
 
@@ -417,7 +416,7 @@ MagickBooleanType IsImageView(const ImageView *image_view)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="NewImageView">NewImageView</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="NewImageView">NewImageView</a></h2>
 
 <p>NewImageView() returns a image view required for all other methods in the Image View API.</p>
 
@@ -439,7 +438,7 @@ ImageView *NewImageView(MagickCore *wand)
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="NewImageViewRegion">NewImageViewRegion</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="NewImageViewRegion">NewImageViewRegion</a></h2>
 
 <p>NewImageViewRegion() returns a image view required for all other methods in the Image View API.</p>
 
@@ -466,7 +465,7 @@ ImageView *NewImageViewRegion(MagickCore *wand,const ssize_t x,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewDescription">SetImageViewDescription</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewDescription">SetImageViewDescription</a></h2>
 
 <p>SetImageViewDescription() associates a description with an image view.</p>
 
@@ -493,7 +492,7 @@ void SetImageViewDescription(ImageView *image_view,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewIterator">SetImageViewIterator</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewIterator">SetImageViewIterator</a></h2>
 
 <p>SetImageViewIterator() iterates over the image view in parallel and calls your set method for each scanline of the view.  The pixel extent is confined to the image canvas-- that is no negative offsets or widths or heights that exceed the image dimension.  The pixels are initiallly undefined and any settings you make in the callback method are automagically synced back to your image.</p>
 
@@ -539,7 +538,7 @@ MagickBooleanType SetImageViewIterator(ImageView *destination,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewThreads">SetImageViewThreads</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewThreads">SetImageViewThreads</a></h2>
 
 <p>SetImageViewThreads() sets the number of threads in a thread team.</p>
 
@@ -566,7 +565,7 @@ void SetImageViewThreads(ImageView *image_view,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="TransferImageViewIterator">TransferImageViewIterator</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="TransferImageViewIterator">TransferImageViewIterator</a></h2>
 
 <p>TransferImageViewIterator() iterates over two image views in parallel and calls your transfer method for each scanline of the view.  The source pixel extent is not confined to the image canvas-- that is you can include negative offsets or widths or heights that exceed the image dimension. However, the destination image view is confined to the image canvas-- that is no negative offsets or widths or heights that exceed the image dimension are permitted.</p>
 
@@ -617,7 +616,7 @@ MagickBooleanType TransferImageViewIterator(ImageView *source,
 
 <dd>  </dd>
 </dl>
-<h2><a href="http://imagemagick.org/api/MagickCore/image-view_8c.html" id="UpdateImageViewIterator">UpdateImageViewIterator</a></h2>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="UpdateImageViewIterator">UpdateImageViewIterator</a></h2>
 
 <p>UpdateImageViewIterator() iterates over the image view in parallel and calls your update method for each scanline of the view.  The pixel extent is confined to the image canvas-- that is no negative offsets or widths or heights that exceed the image dimension are permitted.  Updates to pixels in your callback are automagically synced back to the image.</p>
 

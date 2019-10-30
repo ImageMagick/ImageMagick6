@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,shrink-to-fit=no"  />
   <title>ImageMagick - Connected Components Labeling</title>
   <meta name="application-name" content="ImageMagick" />
-  <meta name="description" content="ImageMagick® creates, edits, composes, and converts bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="connected, components, labeling, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
@@ -35,7 +35,6 @@
   <link href="../assets/magick-css.html" rel="stylesheet" />
 </head>
 <body>
-  <header>
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="../index.html"><img class="d-block" id="wand" alt="ImageMagick" width="32" height="32" src="../images/wand.ico"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsMagick" aria-controls="navbarsMagick" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +65,7 @@
         <a class="nav-link" target="_blank" href="https://imagemagick.org/discourse-server/">Community</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0" action="https://legacy.imagemagick.org/https://www.imagemagick.org/script/search.php">
+    <form class="form-inline my-2 my-lg-0" action="https://www.imagemagick.org/script/search.php">
       <input class="form-control mr-sm-2" type="text" name="q" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="sa">Search</button>
     </form>
@@ -83,19 +82,19 @@
       (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
   </div>
-  </header>
+
   <main class="container">
     <div class="magick-template">
 <div class="magick-header">
 <p class="lead magick-description">Connected-component labeling (alternatively connected-component analysis, blob extraction, region labeling, blob discovery, or region extraction) uniquely labels connected components in an image.  The labeling process scans the image, pixel-by-pixel from top-left to bottom-right, in order to identify connected pixel regions, i.e. regions of adjacent pixels which share the same set of intensity values.  For example, let's find the objects in this image:</p>
 <ul>
-  <a href="https://legacy.imagemagick.org/images/objects.gif"><img src="https://legacy.imagemagick.org/images/objects.gif" width="256" height="171" class="image-slices" alt="purse" /></a>
+  <a href="../images/objects.gif"><img src="../images/objects.gif" width="256" height="171" class="image-slices" alt="purse" /></a>
 </ul>
 <p>To identify the objects in this image, use this command:</p>
 <pre class="highlight"><code>convert objects.gif -connected-components 4 -auto-level -depth 8 objects.png</code></pre>
 <p>The detected objects are uniquely labeled.  Use auto leveling to visualize the detected objects:</p>
 <ul>
-  <a href="https://legacy.imagemagick.org/images/objects.png"><img src="https://legacy.imagemagick.org/images/objects.png" width="256" height="171" class="image-slices" alt="Objects" /></a>
+  <a href="../images/objects.png"><img src="../images/objects.png" width="256" height="171" class="image-slices" alt="Objects" /></a>
 </ul>
 <p>Object statistics is useful to review.  To display them, use this command:</p>
 <pre class="highlight"><code>convert objects.gif -define connected-components:verbose=true -connected-components 4 objects.png</code></pre>
