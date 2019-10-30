@@ -546,7 +546,8 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       thread_support=GetMagickThreadSupport(magick_info);
       if ((thread_support & DecoderThreadSupport) == 0)
         LockSemaphoreInfo(magick_info->semaphore);
-      status=IsCoderAuthorized(read_info->magick,ReadPolicyRights,exception);
+      status=IsCoderAuthorized(GetMagickModuleName(magick_info),
+        ReadPolicyRights,exception);
       image=(Image *) NULL;
       if (status != MagickFalse)
         image=GetImageDecoder(magick_info)(read_info,exception);
@@ -611,7 +612,8 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       thread_support=GetMagickThreadSupport(magick_info);
       if ((thread_support & DecoderThreadSupport) == 0)
         LockSemaphoreInfo(magick_info->semaphore);
-      status=IsCoderAuthorized(read_info->magick,ReadPolicyRights,exception);
+      status=IsCoderAuthorized(GetMagickModuleName(magick_info),
+        ReadPolicyRights,exception);
       image=(Image *) NULL;
       if (status != MagickFalse)
         image=(Image *) (GetImageDecoder(magick_info))(read_info,exception);
@@ -1181,7 +1183,8 @@ MagickExport MagickBooleanType WriteImage(const ImageInfo *image_info,
       thread_support=GetMagickThreadSupport(magick_info);
       if ((thread_support & EncoderThreadSupport) == 0)
         LockSemaphoreInfo(magick_info->semaphore);
-      status=IsCoderAuthorized(write_info->magick,WritePolicyRights,exception);
+      status=IsCoderAuthorized(GetMagickModuleName(magick_info),
+        WritePolicyRights,exception);
       if (status != MagickFalse)
         status=GetImageEncoder(magick_info)(write_info,image);
       if ((thread_support & EncoderThreadSupport) == 0)
@@ -1253,8 +1256,8 @@ MagickExport MagickBooleanType WriteImage(const ImageInfo *image_info,
               thread_support=GetMagickThreadSupport(magick_info);
               if ((thread_support & EncoderThreadSupport) == 0)
                 LockSemaphoreInfo(magick_info->semaphore);
-              status=IsCoderAuthorized(write_info->magick,WritePolicyRights,
-                exception);
+              status=IsCoderAuthorized(GetMagickModuleName(magick_info),
+                WritePolicyRights,exception);
               if (status != MagickFalse)
                 status=GetImageEncoder(magick_info)(write_info,image);
               if ((thread_support & EncoderThreadSupport) == 0)
