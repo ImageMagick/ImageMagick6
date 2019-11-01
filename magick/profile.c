@@ -457,12 +457,12 @@ static void LCMSExceptionHandler(cmsContext context,cmsUInt32Number severity,
   Image
     *image;
 
-  (void) LogMagickEvent(TransformEvent,GetMagickModule(),"lcms: #%u, %s",
-    severity,message != (char *) NULL ? message : "no message");
   image=(Image *) context;
   if (image != (Image *) NULL)
     (void) ThrowMagickException(&image->exception,GetMagickModule(),
-      ImageWarning,"UnableToTransformColorspace","`%s'",image->filename);
+      ImageWarning,"UnableToTransformColorspace","`%s', %s (#%u)",
+      image->filename,message != (char *) NULL ? message : "no message",
+      severity);
 }
 #endif
 
