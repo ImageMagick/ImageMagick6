@@ -4,27 +4,27 @@
 2019-10-29  6.9.10-71 Cristy  <quetzlzacatenango@image...>
   * JPEG and JPG are aliases in coder security policy.
   * Fixed numerous issues  posted to GitHub (reference
-		https://github.com/ImageMagick/ImageMagick/issues).
+    https://github.com/ImageMagick/ImageMagick/issues).
 
 2019-10-27  6.9.10-70 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-70, GIT revision 14970:4200095:20191027.
 
 2019-10-27  6.9.10-70 Cristy  <quetzlzacatenango@image...>
   * Fixed numerous issues  posted to GitHub (reference
-		https://github.com/ImageMagick/ImageMagick/issues).
+    https://github.com/ImageMagick/ImageMagick/issues).
 2019-10-27  6.9.10-70 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-70, GIT revision 14970:4200095:20191027.
 
 2019-10-27  6.9.10-70 Cristy  <quetzlzacatenango@image...>
   * Fixed numerous issues  posted to GitHub (reference
-		https://github.com/ImageMagick/ImageMagick/issues).
+    https://github.com/ImageMagick/ImageMagick/issues).
 
 2019-10-24  6.9.10-69 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-69, GIT revision 14962:03a9bac:20191024
 
 2019-10-06  6.9.10-69 Cristy  <quetzlzacatenango@image...>
   * Fixed numerous issues  posted to GitHub (reference
-		https://github.com/ImageMagick/ImageMagick/issues).
+    https://github.com/ImageMagick/ImageMagick/issues).
   * Support trim:background-color define for -trim option
 
 2019-10-05  6.9.10-68 Cristy  <quetzlzacatenango@image...>
