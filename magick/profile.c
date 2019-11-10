@@ -765,6 +765,8 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
 #define ProfileImageTag  "Profile/Image"
 #define ThrowProfileException(severity,tag,context) \
 { \
+  if (cms_context != (cmsContext) NULL) \
+    cmsDeleteContext(cms_context); \
   if (source_profile != (cmsHPROFILE) NULL) \
     (void) cmsCloseProfile(source_profile); \
   if (target_profile != (cmsHPROFILE) NULL) \
@@ -1262,6 +1264,7 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               (void) cmsCloseProfile(target_profile);
           }
         (void) cmsCloseProfile(source_profile);
+        cmsDeleteContext(cms_context);
       }
 #endif
     }
