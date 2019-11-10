@@ -1253,7 +1253,7 @@ MagickExport MagickBooleanType WriteImage(const ImageInfo *image_info,
               thread_support=GetMagickThreadSupport(magick_info);
               if ((thread_support & EncoderThreadSupport) == 0)
                 LockSemaphoreInfo(magick_info->semaphore);
-              status=IsCoderAuthorized(read_info->magick,WritePolicyRights,
+              status=IsCoderAuthorized(write_info->magick,WritePolicyRights,
                 exception);
               if (status != MagickFalse)
                 status=GetImageEncoder(magick_info)(write_info,image);
