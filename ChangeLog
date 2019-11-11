@@ -3,6 +3,8 @@
 
 2019-11-10  6.9.10-72 Cristy  <quetzlzacatenango@image...>
   * Santize ';' from SHOW and WIN delegates.
+  * Output exception there is an attempt to perform an operation not allowed by
+    the security policy
 
 2019-10-30  6.9.10-71 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-71, GIT revision 14989:8da75bd:20191030.
