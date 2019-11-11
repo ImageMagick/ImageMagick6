@@ -205,7 +205,6 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   heif_context=heif_context_alloc();
   error=heif_context_read_from_memory_without_copy(heif_context,file_data,
     length,NULL);
-  file_data=RelinquishMagickMemory(file_data);
   if (IsHeifSuccess(&error,image) == MagickFalse)
     {
       heif_context_free(heif_context);
