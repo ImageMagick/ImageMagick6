@@ -1680,6 +1680,12 @@ static void SVGStartElement(void *context,const xmlChar *name,
                       value);
                     break;
                   }
+                else
+                  {
+                    /* empty class name */
+                    (void) FormatLocaleFile(svg_info->file,"class \"\"\n");
+                    break;
+                  }
               }
               break;
             }
