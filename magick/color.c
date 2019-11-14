@@ -63,6 +63,7 @@
 #include "magick/quantum.h"
 #include "magick/semaphore.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/xml-tree.h"
@@ -2373,11 +2374,11 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
               compliance;
 
             compliance=color_info->compliance;
-            if (strcasestr(token,"*SVG*") != (char *) NULL)
+            if (StringLocateSubstring(token,"*SVG*") != (char *) NULL)
               compliance|=SVGCompliance;
-            if (strcasestr(token,"*X11*") != (char *) NULL)
+            if (StringLocateSubstring(token,"*X11*") != (char *) NULL)
               compliance|=X11Compliance;
-            if (strcasestr(token,"*XPM*") != (char *) NULL)
+            if (StringLocateSubstring(token,"*XPM*") != (char *) NULL)
               compliance|=XPMCompliance;
             color_info->compliance=(ComplianceType) compliance;
             break;

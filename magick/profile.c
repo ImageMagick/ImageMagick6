@@ -61,6 +61,7 @@
 #include "magick/resource_.h"
 #include "magick/splay-tree.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
 #include "magick/thread-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
@@ -1714,9 +1715,9 @@ static MagickBooleanType ValidateXMPProfile(const StringInfo *profile)
   char
     *p;
 
-  p=strcasestr((const char *) GetStringInfoDatum(profile),"x:xmpmeta");
+  p=StringLocateSubstring((const char *) GetStringInfoDatum(profile),"x:xmpmeta");
   if (p != (char *) NULL)
-    p=strcasestr((const char *) GetStringInfoDatum(profile),"rdf:RDF");
+    p=StringLocateSubstring((const char *) GetStringInfoDatum(profile),"rdf:RDF");
   return(p == (char *) NULL ? MagickFalse : MagickTrue);
 }
 #endif

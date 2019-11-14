@@ -74,6 +74,7 @@
 #include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
 #include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/transform.h"
@@ -341,9 +342,9 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
     if (CompareMagickByteBuffer(&buffer,DocumentProcessColors,length) != MagickFalse)
       {
         p=GetMagickByteBufferDatum(&buffer);
-        if ((strcasestr(p,"Cyan") != (char *) NULL) ||
-            (strcasestr(p,"Magenta") != (char *) NULL) ||
-            (strcasestr(p,"Yellow") != (char *) NULL))
+        if ((StringLocateSubstring(p,"Cyan") != (char *) NULL) ||
+            (StringLocateSubstring(p,"Magenta") != (char *) NULL) ||
+            (StringLocateSubstring(p,"Yellow") != (char *) NULL))
           ps_info->cmyk=MagickTrue;
       }
     if (CompareMagickByteBuffer(&buffer,CMYKCustomColor,strlen(CMYKCustomColor)) != MagickFalse)

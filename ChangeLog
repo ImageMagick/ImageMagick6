@@ -1,3 +1,9 @@
+2019-11-14  6.9.10-74 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-74, GIT revision 15...
+
+2019-11-14  6.9.10-74 Cristy  <quetzlzacatenango@image...>
+  * HP's ANSI C/C++ compiler does not support strcasestr().
+
 2019-11-13  6.9.10-72 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-72, GIT revision 15011:4cf3857:20191113.
 
