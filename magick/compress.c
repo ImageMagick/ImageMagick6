@@ -91,11 +91,11 @@ typedef struct HuffmanTable
 /*
   Huffman coding declarations.
 */
-#define TWId  23U
-#define MWId  24U
-#define TBId  25U
-#define MBId  26U
-#define EXId  27U
+#define TWId  23L
+#define MWId  24L
+#define TBId  25L
+#define MBId  26L
+#define EXId  27L
 
 static const HuffmanTable
   MBTable[]=
@@ -229,10 +229,9 @@ static const HuffmanTable
 %
 %
 */
-#define MaxLineExtent  36
+#define MaxLineExtent  36L
 
-static char *Ascii85Tuple(char tuple[6],
-  const unsigned char *magick_restrict data)
+static char *Ascii85Tuple(char *tuple,const unsigned char *magick_restrict data)
 {
   register ssize_t
     i,
@@ -273,7 +272,7 @@ MagickExport void Ascii85Initialize(Image *image)
   if (image->ascii85 == (Ascii85Info *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memset(image->ascii85,0,sizeof(*image->ascii85));
-  image->ascii85->line_break=MaxLineExtent << 1;
+  image->ascii85->line_break=(ssize_t) (MaxLineExtent << 1);
   image->ascii85->offset=0;
 }
 
@@ -371,11 +370,11 @@ MagickExport void Ascii85Encode(Image *image,const unsigned char code)
 */
 MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
 {
-#define HashSize  1021U
-#define MBHashA  293U
-#define MBHashB  2695U
-#define MWHashA  3510U
-#define MWHashB  1178U
+#define HashSize  1021L
+#define MBHashA  293L
+#define MBHashB  2695L
+#define MWHashA  3510L
+#define MWHashB  1178L
 
 #define InitializeHashTable(hash,table,a,b) \
 { \
@@ -637,7 +636,8 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
       break;
-    proceed=SetImageProgress(image,LoadImageTag,y,image->rows);
+    proceed=SetImageProgress(image,LoadImageTag,(MagickOffsetType) y,
+      image->rows);
     if (proceed == MagickFalse)
       break;
     y++;
@@ -866,8 +866,8 @@ RestoreMSCWarning \
     q=scanline;
     if (GetPreviousImageInList(huffman_image) == (Image *) NULL)
       {
-        proceed=SetImageProgress(huffman_image,LoadImageTag,y,
-          huffman_image->rows);
+        proceed=SetImageProgress(huffman_image,LoadImageTag,(MagickOffsetType)
+          y,huffman_image->rows);
         if (proceed == MagickFalse)
           break;
       }
@@ -992,7 +992,7 @@ MagickExport MagickBooleanType LZWEncodeImage(Image *image,const size_t length,
   for (index=0; index < 256; index++)
   {
     table[index].prefix=(-1);
-    table[index].suffix=(short) index;
+    table[index].suffix=(ssize_t) index;
     table[index].next=(-1);
   }
   next_index=LZWEod+1;
@@ -1020,7 +1020,7 @@ MagickExport MagickBooleanType LZWEncodeImage(Image *image,const size_t length,
         */
         OutputCode(last_code);
         table[next_index].prefix=(ssize_t) last_code;
-        table[next_index].suffix=(short) pixels[i];
+        table[next_index].suffix=(ssize_t) pixels[i];
         table[next_index].next=table[last_code].next;
         table[last_code].next=(ssize_t) next_index;
         next_index++;
