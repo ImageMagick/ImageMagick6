@@ -41,7 +41,8 @@ extern MagickExport void
     magick_alloc_size(1),
   *AcquireQuantumMemory(const size_t,const size_t)
     magick_attribute((__malloc__)) magick_alloc_sizes(1,2),
-  *CopyMagickMemory(void *,const void *,const size_t)
+  *CopyMagickMemory(void *magick_restrict,const void *magick_restrict,
+    const size_t)
     magick_attribute((__nonnull__)),
   DestroyMagickMemory(void),
   GetMagickMemoryMethods(AcquireMemoryHandler *,ResizeMemoryHandler *,
