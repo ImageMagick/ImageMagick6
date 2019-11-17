@@ -1,5 +1,5 @@
 2019-11-17  6.9.10-75 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-75, GIT revision 15027:cb52354:20191117.
+  * Release ImageMagick version 6.9.10-75, GIT revision 15030:6efa1b6:20191117.
 
 2019-11-16  6.9.10-75 Cristy  <quetzlzacatenango@image...>
   * Ensure Ascii85 compression is thread safe.
