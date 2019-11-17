@@ -251,7 +251,7 @@ static inline void Ascii85Tuple(Ascii85Info *ascii85_info,
     {
       ascii85_info->tuple[0]='z';
       ascii85_info->tuple[1]='\0';
-      return(tuple);
+      return;
     }
   quantum=85UL*85UL*85UL*85UL;
   for (i=0; i < 4; i++)
@@ -263,7 +263,7 @@ static inline void Ascii85Tuple(Ascii85Info *ascii85_info,
   }
   ascii85_info->tuple[4]=(char) ((code % 85L)+(int) '!');
   ascii85_info->tuple[5]='\0';
-  return(tuple);
+  return;
 }
 
 MagickExport void Ascii85Initialize(Image *image)
