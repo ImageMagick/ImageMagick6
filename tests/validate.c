@@ -24,7 +24,7 @@
 %  You may not use this file except in compliance with the License.  You may  %
 %  obtain a copy of the License at                                            %
 %                                                                             %
-%    https://imagemagick.org/script/license.php                           %
+%    https://imagemagick.org/script/license.php                               %
 %                                                                             %
 %  Unless required by applicable law or agreed to in writing, software        %
 %  distributed under the License is distributed on an "AS IS" BASIS,          %
@@ -47,6 +47,7 @@
 #include <math.h>
 #include <locale.h>
 #include "wand/MagickWand.h"
+#include "magick/studio.h"
 #include "magick/colorspace-private.h"
 #include "magick/log.h"
 #include "magick/resource_.h"
