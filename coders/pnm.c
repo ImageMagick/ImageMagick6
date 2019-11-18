@@ -1606,7 +1606,8 @@ static MagickBooleanType WritePNMImage(const ImageInfo *image_info,Image *image)
       case 'f':
       {
         format='F';
-        if (SetImageGray(image,&image->exception) != MagickFalse)
+        if ((image_info->type != TrueColorType) &&
+            (SetImageGray(image,&image->exception) != MagickFalse))
           format='f';
         break;
       }
