@@ -1,3 +1,10 @@
+2019-11-19  6.9.10-76 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-76, GIT revision 15...
+
+2019-11-19  6.9.10-76 Cristy  <quetzlzacatenango@image...>
+  * Increase the maximum number of bezier coordinates (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1784).
+
 2019-11-17  6.9.10-75 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-75, GIT revision 15030:6efa1b6:20191117.
 
