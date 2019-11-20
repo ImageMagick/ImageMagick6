@@ -365,7 +365,6 @@ MagickExport char *GetNextImageProfile(const Image *image)
 */
 
 #if defined(MAGICKCORE_LCMS_DELEGATE)
-
 static LCMSType **DestroyPixelThreadSet(LCMSType **pixels)
 {
   register ssize_t
@@ -449,9 +448,7 @@ static cmsHTRANSFORM *AcquireTransformThreadSet(
   }
   return(transform);
 }
-#endif
 
-#if defined(MAGICKCORE_LCMS_DELEGATE)
 static void LCMSExceptionHandler(cmsContext context,cmsUInt32Number severity,
   const char *message)
 {
