@@ -4,6 +4,7 @@
 2019-11-19  6.9.10-76 Cristy  <quetzlzacatenango@image...>
   * Increase the maximum number of bezier coordinates (reference
     https://github.com/ImageMagick/ImageMagick/issues/1784).
+  * Santize "'" from SHOW and WIN delegates.
 
 2019-11-17  6.9.10-75 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-75, GIT revision 15030:6efa1b6:20191117.
@@ -23,7 +24,6 @@
   * Release ImageMagick version 6.9.10-72, GIT revision 15011:4cf3857:20191113.
 
 2019-11-10  6.9.10-72 Cristy  <quetzlzacatenango@image...>
-  * Santize ';' from SHOW and WIN delegates.
   * Output exception there is an attempt to perform an operation not allowed by
     the security policy
   * Fixed numerous issues  posted to GitHub (reference
