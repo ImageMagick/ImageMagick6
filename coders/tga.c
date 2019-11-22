@@ -314,19 +314,19 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
         }
       comment=DestroyString(comment);
     }
-  if (tga_info.attributes & (1UL << 4))
+  if ((tga_info.attributes & (1UL << 4)) == 0)
     {
-      if (tga_info.attributes & (1UL << 5))
-        image->orientation=TopRightOrientation;
+      if ((tga_info.attributes & (1UL << 5)) == 0)
+        image->orientation=BottomLeftOrientation;
       else
-        image->orientation=BottomRightOrientation;
+        image->orientation=TopLeftOrientation;
     }
   else
     {
-      if (tga_info.attributes & (1UL << 5))
-        image->orientation=TopLeftOrientation;
+      if ((tga_info.attributes & (1UL << 5)) == 0)
+        image->orientation=BottomRightOrientation;
       else
-        image->orientation=BottomLeftOrientation;
+        image->orientation=TopRightOrientation;
     }
   if (image_info->ping != MagickFalse)
     {
@@ -684,6 +684,7 @@ ModuleExport void UnregisterTGAImage(void)
 %    o image:  The image.
 %
 */
+
 static inline void WriteTGAPixel(Image *image,TGAImageType image_type,
   const IndexPacket *indexes,const PixelPacket *p,const QuantumAny range,
   const double midpoint)
@@ -757,7 +758,10 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
     *q;
 
   ssize_t
+    base,
     count,
+    offset,
+    real,
     y;
 
   TGAInfo
@@ -923,9 +927,14 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
   /*
     Convert MIFF to TGA raster pixels.
   */
-  for (y=(ssize_t) (image->rows-1); y >= 0; y--)
+  base=0;
+  offset=0;
+  for (y=0; y < (ssize_t) image->rows; y++)
   {
-    p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
+    real=offset;
+    if (((unsigned char) (tga_info.attributes & 0x20) >> 5) == 0)
+      real=image->rows-real-1;
+    p=GetVirtualPixels(image,0,real,image->columns,1,&image->exception);
     if (p == (const PixelPacket *) NULL)
       break;
     indexes=GetVirtualIndexQueue(image);
@@ -994,10 +1003,17 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
         }
       }
     else
-      {
-        for (x=0; x < (ssize_t) image->columns; x++)
-          WriteTGAPixel(image,tga_info.image_type,indexes+x,p++,range,midpoint);
-      }
+      for (x=0; x < (ssize_t) image->columns; x++)
+        WriteTGAPixel(image,tga_info.image_type,indexes+x,p++,range,midpoint);
+    if (((unsigned char) (tga_info.attributes & 0xc0) >> 6) == 2)
+      offset+=2;
+    else
+      offset++;
+     if (offset >= image->rows)
+       {
+         base++;
+         offset=base;
+       }
     if (image->previous == (Image *) NULL)
       {
         status=SetImageProgress(image,SaveImageTag,(MagickOffsetType) y,
