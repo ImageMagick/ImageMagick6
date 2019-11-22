@@ -170,7 +170,6 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
     base,
     flag,
     offset,
-    real,
     skip;
 
   ssize_t
@@ -417,16 +416,12 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   base=0;
   flag=0;
   skip=MagickFalse;
-  real=0;
   index=(IndexPacket) 0;
   runlength=0;
   offset=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    real=offset;
-    if (((unsigned char) (tga_info.attributes & 0x20) >> 5) == 0)
-      real=image->rows-real-1;
-    q=QueueAuthenticPixels(image,0,(ssize_t) real,image->columns,1,exception);
+    q=QueueAuthenticPixels(image,0,offset,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)
       break;
     indexes=GetAuthenticIndexQueue(image);
@@ -761,7 +756,6 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
     base,
     count,
     offset,
-    real,
     y;
 
   TGAInfo
@@ -931,10 +925,7 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
   offset=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    real=offset;
-    if (((unsigned char) (tga_info.attributes & 0x20) >> 5) == 0)
-      real=image->rows-real-1;
-    p=GetVirtualPixels(image,0,real,image->columns,1,&image->exception);
+    p=GetVirtualPixels(image,0,offset,image->columns,1,&image->exception);
     if (p == (const PixelPacket *) NULL)
       break;
     indexes=GetVirtualIndexQueue(image);
