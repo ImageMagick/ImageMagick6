@@ -9,6 +9,8 @@
     https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=34757).
   * The result for -compose Copy -extent on a CMYK image is CMYK (reference
     https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=37118).
+  * Fix potential buffer overflow when reading a fax image (alert from
+    Justin).
 
 2019-11-17  6.9.10-75 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-75, GIT revision 15030:6efa1b6:20191117.
