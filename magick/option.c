@@ -1203,11 +1203,11 @@ static const OptionInfo
     { "Bicubic", CatromInterpolatePixel, UndefinedOptionFlag, MagickTrue },
     { "Bilinear", BilinearInterpolatePixel, UndefinedOptionFlag, MagickFalse },
     { "Blend", BlendInterpolatePixel, UndefinedOptionFlag, MagickFalse },
-    { "Catrom", CatromInterpolatePixel, UndefinedOptionFlag, MagickTrue },
+    { "Catrom", CatromInterpolatePixel, UndefinedOptionFlag, MagickFalse },
     { "Integer", IntegerInterpolatePixel, UndefinedOptionFlag, MagickFalse },
     { "Mesh", MeshInterpolatePixel, UndefinedOptionFlag, MagickFalse },
     { "Nearest", NearestNeighborInterpolatePixel, UndefinedOptionFlag, MagickFalse },
-    { "NearestNeighbor", NearestNeighborInterpolatePixel, UndefinedOptionFlag, MagickFalse },
+    { "NearestNeighbor", NearestNeighborInterpolatePixel, UndefinedOptionFlag, MagickTrue },
     { "Spline", SplineInterpolatePixel, UndefinedOptionFlag, MagickFalse },
     /* depreciation of slow and useless interpolation method */
     { "Filter", FilterInterpolatePixel, UndefinedOptionFlag, MagickTrue },
