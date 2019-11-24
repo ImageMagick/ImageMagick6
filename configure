@@ -4578,7 +4578,7 @@ MAGICK_PATCHLEVEL_VERSION=75
 
 MAGICK_VERSION=6.9.10-75
 
-MAGICK_GIT_REVISION=15044:203682abb:20191123
+MAGICK_GIT_REVISION=15049:5d57b32ac:20191124
 
 
 # Substitute library versioning
@@ -33875,7 +33875,7 @@ $as_echo_n "checking for WMF support ... " >&6; }
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: " >&5
 $as_echo "" >&6; }
 
-  have_libwmf='no'
+  have_libwmflite='no'
   have_libwmf_ipa_h='no'
 
   ac_fn_c_check_header_compile "$LINENO" "libwmf/ipa.h" "ac_cv_header_libwmf_ipa_h" "$FT2BUILD_H
@@ -33886,13 +33886,13 @@ fi
 
 
   if test "$have_libwmf_ipa_h" = 'yes'; then
-    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for wmf_api_create in -lwmf" >&5
-$as_echo_n "checking for wmf_api_create in -lwmf... " >&6; }
-if ${ac_cv_lib_wmf_wmf_api_create+:} false; then :
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for wmf_lite_create in -lwmflite" >&5
+$as_echo_n "checking for wmf_lite_create in -lwmflite... " >&6; }
+if ${ac_cv_lib_wmflite_wmf_lite_create+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lwmf  $LIBS"
+LIBS="-lwmflite  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -33902,41 +33902,42 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 #ifdef __cplusplus
 extern "C"
 #endif
-char wmf_api_create ();
+char wmf_lite_create ();
 int
 main ()
 {
-return wmf_api_create ();
+return wmf_lite_create ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_wmf_wmf_api_create=yes
+  ac_cv_lib_wmflite_wmf_lite_create=yes
 else
-  ac_cv_lib_wmf_wmf_api_create=no
+  ac_cv_lib_wmflite_wmf_lite_create=no
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_wmf_wmf_api_create" >&5
-$as_echo "$ac_cv_lib_wmf_wmf_api_create" >&6; }
-if test "x$ac_cv_lib_wmf_wmf_api_create" = xyes; then :
-  have_libwmf='yes'
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_wmflite_wmf_lite_create" >&5
+$as_echo "$ac_cv_lib_wmflite_wmf_lite_create" >&6; }
+if test "x$ac_cv_lib_wmflite_wmf_lite_create" = xyes; then :
+  have_libwmflite='yes'
 fi
 
-    if test "$have_libwmf" = 'yes'; then
+    if test "$have_libwmflite" = 'yes'; then
 
 $as_echo "#define WMF_DELEGATE 1" >>confdefs.h
 
-      WMF_LIBS='-lwmf'
+      WMF_LIBS='-lwmflite'
       LIBS="$WMF_LIBS $LIBS"
       have_wmf='yes'
     else
       { $as_echo "$as_me:${as_lineno-$LINENO}: result: no -- some components failed test" >&5
 $as_echo "no -- some components failed test" >&6; }
       have_wmf='no (failed tests)'
+      have_wmflite='no (failed tests)'
       LIBS="$OLIBS"
       WMF_LIBS=''
     fi
