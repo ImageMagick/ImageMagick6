@@ -56,6 +56,7 @@
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/opencl.h"
+#include "magick/option.h"
 #include "magick/pixel-accessor.h"
 #include "magick/profile.h"
 #include "magick/property.h"
@@ -267,6 +268,8 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
         libraw_close(raw_info);
         return(DestroyImageList(image));
       }
+    raw_info->params.use_camera_wb=IsStringTrue(GetImageOption(image_info,
+      "dng:use-camera-wb"));
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && defined(_MSC_VER) && (_MSC_VER > 1310)
     {
       wchar_t
