@@ -7437,10 +7437,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
       next_image=CoalesceImages(image,exception);
       image=DestroyImageList(image);
       if (next_image == (Image *) NULL)
-        {
-          mng_info=MngInfoFreeStruct(mng_info);
-          return((Image *) NULL);
-        }
+        return((Image *) NULL);
 
       image=next_image;
 
