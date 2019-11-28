@@ -53,6 +53,7 @@
 #include "magick/constitute.h"
 #include "magick/delegate.h"
 #include "magick/delegate-private.h"
+#include "magick/distort.h"
 #include "magick/draw.h"
 #include "magick/exception.h"
 #include "magick/exception-private.h"
@@ -66,6 +67,7 @@
 #include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
+#include "magick/montage.h"
 #include "magick/nt-base-private.h"
 #include "magick/option.h"
 #include "magick/pixel-accessor.h"
@@ -118,7 +120,8 @@ typedef struct _PDFInfo
   Forward declarations.
 */
 static MagickBooleanType
-  WritePDFImage(const ImageInfo *,Image *);
+  WritePDFImage(const ImageInfo *,Image *),
+  WritePOCKETMODImage(const ImageInfo *,Image *);
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -789,6 +792,17 @@ ModuleExport size_t RegisterPDFImage(void)
   entry->mime_type=ConstantString("application/pdf");
   entry->magick_module=ConstantString("PDF");
   (void) RegisterMagickInfo(entry);
+  entry=SetMagickInfo("POCKETMOD");
+  entry->decoder=(DecodeImageHandler *) ReadPDFImage;
+  entry->encoder=(EncodeImageHandler *) WritePOCKETMODImage;
+  entry->magick=(IsImageFormatHandler *) IsPDF;
+  entry->format_type=ImplicitFormatType;
+  entry->blob_support=MagickFalse;
+  entry->seekable_stream=MagickTrue;
+  entry->description=ConstantString("Pocketmod Personal Organizer");
+  entry->mime_type=ConstantString("application/pdf");
+  entry->magick_module=ConstantString("PDF");
+  (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
 
@@ -1035,6 +1049,94 @@ static MagickBooleanType Huffman2DEncodeImage(const ImageInfo *image_info,
   if (WriteBlob(image,length,group4) != (ssize_t) length)
     status=MagickFalse;
   group4=(unsigned char *) RelinquishMagickMemory(group4);
+  return(status);
+}
+
+static MagickBooleanType WritePOCKETMODImage(const ImageInfo *image_info,
+  Image *image)
+{
+#define PocketPageOrder  "1,2,3,4,0,7,6,5"
+
+  const Image
+    *next;
+
+  Image
+    *pages,
+    *pocket_mod;
+
+  MagickBooleanType
+    status;
+
+  register ssize_t
+    i;
+
+  assert(image_info != (const ImageInfo *) NULL);
+  assert(image_info->signature == MagickCoreSignature);
+  assert(image != (Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
+  if (image->debug != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  pocket_mod=NewImageList();
+  pages=NewImageList();
+  i=0;
+  for (next=image; next != (Image *) NULL; next=GetNextImageInList(next))
+  {
+    Image
+      *page;
+
+    if ((i == 0) || (i == 5) || (i == 6) || (i == 7))
+      page=RotateImage(next,180.0,&image->exception);
+    else
+      page=CloneImage(next,0,0,MagickTrue,&image->exception);
+    if (page == (Image *) NULL)
+      break;
+    page->matte=MagickFalse;
+    page->scene=i++;
+    AppendImageToList(&pages,page);
+    if ((i == 8) || (GetNextImageInList(next) == (Image *) NULL))
+      {
+        Image
+          *images,
+          *page_layout;
+
+        MontageInfo
+          *montage_info;
+
+        /*
+          Create PocketMod page.
+        */
+        for (i=(ssize_t) GetImageListLength(pages); i < 8; i++)
+        {
+          page=CloneImage(pages,0,0,MagickTrue,&image->exception);
+          (void) QueryColorCompliance("#FFF",AllCompliance,
+            &page->background_color,&image->exception);
+          SetImageBackgroundColor(page);
+          page->scene=i;
+          AppendImageToList(&pages,page);
+        }
+        images=CloneImages(pages,PocketPageOrder,&image->exception);
+        pages=DestroyImageList(pages);
+        if (images == (Image *) NULL)
+          break;
+        montage_info=CloneMontageInfo(image_info,(MontageInfo *) NULL);
+        (void) CloneString(&montage_info->geometry,"877x1240+0+0");
+        (void) CloneString(&montage_info->tile,"4x2");
+        (void) QueryColorCompliance("#000",AllCompliance,
+          &montage_info->border_color,&image->exception);
+        montage_info->border_width=2;
+        page_layout=MontageImages(images,montage_info,&image->exception);
+        montage_info=DestroyMontageInfo(montage_info);
+        images=DestroyImageList(images);
+        if (page_layout == (Image *) NULL)
+          break;
+        AppendImageToList(&pocket_mod,page_layout);
+        i=0;
+      }
+  }
+  if (pocket_mod == (Image *) NULL)
+    return(MagickFalse);
+  status=WritePDFImage(image_info,GetFirstImageInList(pocket_mod));
+  pocket_mod=DestroyImageList(pocket_mod);
   return(status);
 }
 
