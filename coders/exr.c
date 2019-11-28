@@ -61,6 +61,9 @@
 #include "magick/utility.h"
 #if defined(MAGICKCORE_OPENEXR_DELEGATE)
 #include <ImfCRgbaFile.h>
+#if IMF_VERSION_NUMBER > 1
+#include <OpenEXRConfig.h>
+#endif
 
 /*
   Typedef declaractions.
@@ -325,15 +328,24 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
 */
 ModuleExport size_t RegisterEXRImage(void)
 {
+  char
+    version[MagickPathExtent];
+
   MagickInfo
     *entry;
 
+  *version='\0';
   entry=SetMagickInfo("EXR");
 #if defined(MAGICKCORE_OPENEXR_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadEXRImage;
   entry->encoder=(EncodeImageHandler *) WriteEXRImage;
+#if defined( OPENEXR_PACKAGE_STRING)
+  (void) FormatLocaleString(version,MagickPathExtent,OPENEXR_PACKAGE_STRING);
+#endif
 #endif
   entry->magick=(IsImageFormatHandler *) IsEXR;
+  if (*version != '\0')
+    entry->version=ConstantString(version);
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("High Dynamic-range (HDR)");
   entry->blob_support=MagickFalse;
