@@ -7,10 +7,10 @@
   * Update documentation.
 
     https://github.com/ImageMagick/ImageMagick/issues/1784).
-2019-11-26  6.9.10-76 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-76, GIT revision 15062:f23c75e:20191126.
+2019-11-26  6.9.10-75 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-75, GIT revision 15062:f23c75e:20191126.
 
-2019-11-19  6.9.10-76 Cristy  <quetzlzacatenango@image...>
+2019-11-19  6.9.10-75 Cristy  <quetzlzacatenango@image...>
   * Increase the maximum number of bezier coordinates (reference
     https://github.com/ImageMagick/ImageMagick/issues/1784).
   * Santize "'" from SHOW and WIN delegates under Linux, '"\' for Windows
@@ -23,18 +23,18 @@
     Justin).
   * Support dng:use-camera-wb option.
 
-2019-11-17  6.9.10-75 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-75, GIT revision 15030:6efa1b6:20191117.
+2019-11-17  6.9.10-74 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-74, GIT revision 15030:6efa1b6:20191117.
 
-2019-11-16  6.9.10-75 Cristy  <quetzlzacatenango@image...>
+2019-11-16  6.9.10-74 Cristy  <quetzlzacatenango@image...>
   * Ensure Ascii85 compression is thread safe.
   * Fixed numerous issues  posted to GitHub (reference
     https://github.com/ImageMagick/ImageMagick/issues).
 
-2019-11-14  6.9.10-74 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-74, GIT revision 15014:bcb2b51:20191114.
+2019-11-14  6.9.10-73 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-73, GIT revision 15014:bcb2b51:20191114.
 
-2019-11-14  6.9.10-74 Cristy  <quetzlzacatenango@image...>
+2019-11-14  6.9.10-73 Cristy  <quetzlzacatenango@image...>
   * HP's ANSI C/C++ compiler does not support strcasestr().
 
 2019-11-13  6.9.10-72 Cristy  <quetzlzacatenango@image...>
