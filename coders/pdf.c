@@ -45,6 +45,7 @@
 #include "magick/blob.h"
 #include "magick/blob-private.h"
 #include "magick/cache.h"
+#include "magick/channel.h"
 #include "magick/color.h"
 #include "magick/color-private.h"
 #include "magick/colorspace.h"
@@ -554,16 +555,13 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Render Postscript with the Ghostscript delegate.
   */
-  if (IsStringTrue(GetImageOption(image_info,"pdf:use-alpha")) != MagickFalse)
-    delegate_info=GetDelegateInfo("ps:alpha",(char *) NULL,exception);
+  if (image_info->monochrome != MagickFalse)
+    delegate_info=GetDelegateInfo("ps:mono",(char *) NULL,exception);
   else
-    if (image_info->monochrome != MagickFalse)
-      delegate_info=GetDelegateInfo("ps:mono",(char *) NULL,exception);
+    if (info.cmyk != MagickFalse)
+      delegate_info=GetDelegateInfo("ps:cmyk",(char *) NULL,exception);
     else
-       if (info.cmyk != MagickFalse)
-         delegate_info=GetDelegateInfo("ps:cmyk",(char *) NULL,exception);
-       else
-         delegate_info=GetDelegateInfo("ps:color",(char *) NULL,exception);
+      delegate_info=GetDelegateInfo("ps:alpha",(char *) NULL,exception);
   if (delegate_info == (const DelegateInfo *) NULL)
     {
       (void) RelinquishUniqueFileResource(postscript_filename);
@@ -1093,7 +1091,7 @@ static MagickBooleanType WritePOCKETMODImage(const ImageInfo *image_info,
       page=CloneImage(next,0,0,MagickTrue,&image->exception);
     if (page == (Image *) NULL)
       break;
-    page->matte=MagickFalse;
+    (void) SetImageAlphaChannel(page,RemoveAlphaChannel);
     page->scene=i++;
     AppendImageToList(&pages,page);
     if ((i == 8) || (GetNextImageInList(next) == (Image *) NULL))
