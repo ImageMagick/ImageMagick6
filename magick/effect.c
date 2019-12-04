@@ -4620,12 +4620,14 @@ MagickExport Image *UnsharpMaskImageChannel(const Image *image,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
+/* This kernel appears to be broken.
 #if defined(MAGICKCORE_OPENCL_SUPPORT)
   unsharp_image=AccelerateUnsharpMaskImage(image,channel,radius,sigma,gain,
     threshold,exception);
   if (unsharp_image != (Image *) NULL)
     return(unsharp_image);
 #endif
+*/
   unsharp_image=BlurImageChannel(image,(ChannelType) (channel &~ SyncChannels),
     radius,sigma,exception);
   if (unsharp_image == (Image *) NULL)
