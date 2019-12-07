@@ -1485,7 +1485,7 @@ am__magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES_D
 	magick/module.c magick/module.h magick/monitor.c \
 	magick/monitor.h magick/monitor-private.h magick/montage.c \
 	magick/montage.h magick/morphology.c magick/morphology.h \
-	magick/morphology-private.h magick/nt-base.h \
+	magick/morphology-private.h magick/mutex.h magick/nt-base.h \
 	magick/nt-base-private.h magick/nt-feature.h magick/opencl.c \
 	magick/opencl.h magick/opencl-private.h magick/option.c \
 	magick/option.h magick/option-private.h magick/paint.c \
@@ -4808,6 +4808,7 @@ MAGICK_BASE_SRCS = \
 	magick/morphology.c \
 	magick/morphology.h \
 	magick/morphology-private.h \
+	magick/mutex.h \
 	magick/nt-base.h \
 	magick/nt-base-private.h \
 	magick/nt-feature.h \
@@ -5040,6 +5041,7 @@ MAGICK_NOINST_HDRS = \
 	magick/mime-private.h \
 	magick/monitor-private.h \
 	magick/morphology-private.h \
+	magick/mutex.h \
 	magick/nt-base.h \
 	magick/nt-base-private.h \
 	magick/nt-feature.h \

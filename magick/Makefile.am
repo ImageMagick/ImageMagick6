@@ -200,6 +200,7 @@ MAGICK_BASE_SRCS = \
 	magick/morphology.c \
 	magick/morphology.h \
 	magick/morphology-private.h \
+	magick/mutex.h \
 	magick/nt-base.h \
 	magick/nt-base-private.h \
 	magick/nt-feature.h \
@@ -437,6 +438,7 @@ MAGICK_NOINST_HDRS = \
 	magick/mime-private.h \
 	magick/monitor-private.h \
 	magick/morphology-private.h \
+	magick/mutex.h \
 	magick/nt-base.h \
 	magick/nt-base-private.h \
 	magick/nt-feature.h \
