@@ -43,7 +43,7 @@
 %  sizes.  It is based on the paper, "Fast Memory Allocation using Lazy Fits."
 %  written by Yoo C. Chung.
 %
-%  By default, ANSI memory methods are called (e.g. malloc).  Use the
+%  By default, C's standard library is used (e.g. malloc);  use the
 %  custom memory allocator by defining MAGICKCORE_ANONYMOUS_MEMORY_SUPPORT
 %  to allocate memory with private anonymous mapping rather than from the
 %  heap.
@@ -65,7 +65,7 @@
 #include "magick/semaphore.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
-#include "magick/utility.h"
+#include "magick/utility-private.h"
 
 /*
   Define declarations.
@@ -73,12 +73,10 @@
 #define BlockFooter(block,size) \
   ((size_t *) ((char *) (block)+(size)-2*sizeof(size_t)))
 #define BlockHeader(block)  ((size_t *) (block)-1)
-#define BlockSize  4096
 #define BlockThreshold  1024
 #define MaxBlockExponent  16
 #define MaxBlocks ((BlockThreshold/(4*sizeof(size_t)))+MaxBlockExponent+1)
 #define MaxSegments  1024
-#define MemoryGuard  ((0xdeadbeef << 31)+0xdeafdeed)
 #define NextBlock(block)  ((char *) (block)+SizeOfBlock(block))
 #define NextBlockInList(block)  (*(void **) (block))
 #define PreviousBlock(block)  ((char *) (block)-(*((size_t *) (block)-2)))
@@ -126,12 +124,18 @@ typedef struct _MagickMemoryMethods
 
   DestroyMemoryHandler
     destroy_memory_handler;
+
+  AcquireAlignedMemoryHandler
+    acquire_aligned_memory_handler;
+
+  RelinquishAlignedMemoryHandler
+    relinquish_aligned_memory_handler;
 } MagickMemoryMethods;
 
 struct _MemoryInfo
 {
   char
-    filename[MaxTextExtent];
+    filename[MagickPathExtent];
 
   VirtualMemoryType
     type;
@@ -174,10 +178,12 @@ static void* MSCMalloc(size_t size)
 {
   return malloc(size);
 }
+
 static void* MSCRealloc(void* ptr, size_t size)
 {
-  return realloc(ptr, size);
+  return realloc(ptr,size);
 }
+
 static void MSCFree(void* ptr)
 {
   free(ptr);
@@ -190,14 +196,15 @@ static MagickMemoryMethods
 #if defined _MSC_VER
     (AcquireMemoryHandler) MSCMalloc,
     (ResizeMemoryHandler) MSCRealloc,
-    (DestroyMemoryHandler) MSCFree
+    (DestroyMemoryHandler) MSCFree,
 #else
     (AcquireMemoryHandler) malloc,
     (ResizeMemoryHandler) realloc,
-    (DestroyMemoryHandler) free
+    (DestroyMemoryHandler) free,
 #endif
+    (AcquireAlignedMemoryHandler) NULL,
+    (RelinquishAlignedMemoryHandler) NULL
   };
-
 #if defined(MAGICKCORE_ANONYMOUS_MEMORY_SUPPORT)
 static MemoryPool
   memory_pool;
@@ -226,8 +233,8 @@ static MagickBooleanType
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  AcquireAlignedMemory() returns a pointer to a block of memory at least size
-%  bytes whose address is aligned on a cache line or page boundary.
+%  AcquireAlignedMemory() returns a pointer to a block of memory whose size is
+%  at least (count*quantum) bytes, and whose address is aligned on a cache line.
 %
 %  The format of the AcquireAlignedMemory method is:
 %
@@ -235,67 +242,108 @@ static MagickBooleanType
 %
 %  A description of each parameter follows:
 %
-%    o count: the number of quantum elements to allocate.
+%    o count: the number of objects to allocate contiguously.
 %
-%    o quantum: the number of bytes in each quantum.
+%    o quantum: the size (in bytes) of each object.
 %
 */
-MagickExport void *AcquireAlignedMemory(const size_t count,const size_t quantum)
+#if MAGICKCORE_HAVE_STDC_ALIGNED_ALLOC
+#define AcquireAlignedMemory_Actual AcquireAlignedMemory_STDC
+static inline void *AcquireAlignedMemory_STDC(const size_t size)
 {
-#define AlignedExtent(size,alignment) \
-  (((size)+((alignment)-1)) & ~((alignment)-1))
-#define AlignedPowerOf2(x)  ((((x) - 1) & (x)) == 0)
-
   size_t
-    alignment,
-    extent,
-    size;
+    extent = CACHE_ALIGNED(size);
 
+  if (extent < size)
+    {
+      errno=ENOMEM;
+      return(NULL);
+    }
+  return(aligned_alloc(CACHE_LINE_SIZE,extent));
+}
+#elif defined(MAGICKCORE_HAVE_POSIX_MEMALIGN)
+#define AcquireAlignedMemory_Actual AcquireAlignedMemory_POSIX
+static inline void *AcquireAlignedMemory_POSIX(const size_t size)
+{
   void
     *memory;
 
-  if (HeapOverflowSanityCheck(count,quantum) != MagickFalse)
-    return((void *) NULL);
-  memory=NULL;
-  size=count*quantum;
-  alignment=CACHE_LINE_SIZE;
-  extent=AlignedExtent(size,alignment);
-  if ((size == 0) || (extent < size))
-    return((void *) NULL);
-#if defined(MAGICKCORE_HAVE_POSIX_MEMALIGN)
-  if (posix_memalign(&memory,alignment,extent) != 0)
-    memory=NULL;
-#elif defined(MAGICKCORE_HAVE__ALIGNED_MALLOC)
-  memory=_aligned_malloc(extent,alignment);
-#else
-  {
-    void
-      *p;
-
-    if ((alignment == 0) || (alignment % sizeof(void *) != 0) ||
-        (AlignedPowerOf2(alignment/sizeof (void *)) == 0))
-      {
-        errno=EINVAL;
-        return((void *) NULL);
-      }
-    if (size > (SIZE_MAX-alignment-sizeof(void *)-1))
-      {
-        errno=ENOMEM;
-        return((void *) NULL);
-      }
-    extent=(size+alignment-1)+sizeof(void *);
-    if (extent > size)
-      {
-        p=AcquireMagickMemory(extent);
-        if (p != NULL)
-          {
-            memory=(void *) AlignedExtent((size_t) p+sizeof(void *),alignment);
-            *((void **) memory-1)=p;
-          }
-      }
-  }
-#endif
+  if (posix_memalign(&memory,CACHE_LINE_SIZE,size))
+    return(NULL);
   return(memory);
+}
+#elif defined(MAGICKCORE_HAVE__ALIGNED_MALLOC)
+#define AcquireAlignedMemory_Actual AcquireAlignedMemory_WinAPI
+static inline void *AcquireAlignedMemory_WinAPI(const size_t size)
+{
+  return(_aligned_malloc(size,CACHE_LINE_SIZE));
+}
+#else
+#define ALIGNMENT_OVERHEAD \
+  (MAGICKCORE_MAX_ALIGNMENT_PADDING(CACHE_LINE_SIZE) + MAGICKCORE_SIZEOF_VOID_P)
+static inline void *reserve_space_for_actual_base_address(void *const p)
+{
+  return((void **) p+1);
+}
+
+static inline void **pointer_to_space_for_actual_base_address(void *const p)
+{
+  return((void **) p-1);
+}
+
+static inline void *actual_base_address(void *const p)
+{
+  return(*pointer_to_space_for_actual_base_address(p));
+}
+
+static inline void *align_to_cache(void *const p)
+{
+  return((void *) CACHE_ALIGNED((MagickAddressType) p));
+}
+
+static inline void *adjust(void *const p)
+{
+  return(align_to_cache(reserve_space_for_actual_base_address(p)));
+}
+
+#define AcquireAlignedMemory_Actual AcquireAlignedMemory_Generic
+static inline void *AcquireAlignedMemory_Generic(const size_t size)
+{
+  size_t
+    extent;
+
+  void
+    *memory,
+    *p;
+
+  #if SIZE_MAX < ALIGNMENT_OVERHEAD
+    #error "CACHE_LINE_SIZE is way too big."
+  #endif
+  extent=(size + ALIGNMENT_OVERHEAD);
+  if (extent <= size)
+    {
+      errno=ENOMEM;
+      return(NULL);
+    }
+  p=AcquireMagickMemory(extent);
+  if (p == NULL)
+    return(NULL);
+  memory=adjust(p);
+  *pointer_to_space_for_actual_base_address(memory)=p;
+  return(memory);
+}
+#endif
+
+MagickExport void *AcquireAlignedMemory(const size_t count,const size_t quantum)
+{
+  size_t
+    size;
+
+  if (HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse)
+    return(NULL);
+  if (memory_methods.acquire_aligned_memory_handler != (AcquireAlignedMemoryHandler) NULL)
+    return(memory_methods.acquire_aligned_memory_handler(size,CACHE_LINE_SIZE));
+  return(AcquireAlignedMemory_Actual(size));
 }
 
 #if defined(MAGICKCORE_ANONYMOUS_MEMORY_SUPPORT)
@@ -521,6 +569,48 @@ MagickExport void *AcquireMagickMemory(const size_t size)
 %                                                                             %
 %                                                                             %
 %                                                                             %
+%   A c q u i r e C r i t i c a l M e m o r y                                 %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  AcquireCriticalMemory() is just like AcquireMagickMemory(), throws a fatal
+%  exception if the memory cannot be acquired.
+%
+%  That is, AcquireCriticalMemory() returns a pointer to a block of memory that
+%  is at least size bytes, and that is suitably aligned for any use; however,
+%  if this is not possible, it throws an exception and terminates the program
+%  as unceremoniously as possible.
+%
+%  The format of the AcquireCriticalMemory method is:
+%
+%      void *AcquireCriticalMemory(const size_t size)
+%
+%  A description of each parameter follows:
+%
+%    o size: the size (in bytes) of the memory to allocate.
+%
+*/
+MagickExport void *AcquireCriticalMemory(const size_t size)
+{
+  register void
+    *memory;
+
+  /*
+    Fail if memory request cannot be fulfilled.
+  */
+  memory=AcquireMagickMemory(size);
+  if (memory == (void *) NULL)
+    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  return(memory);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 %   A c q u i r e Q u a n t u m M e m o r y                                   %
 %                                                                             %
 %                                                                             %
@@ -536,20 +626,19 @@ MagickExport void *AcquireMagickMemory(const size_t size)
 %
 %  A description of each parameter follows:
 %
-%    o count: the number of quantum elements to allocate.
+%    o count: the number of objects to allocate contiguously.
 %
-%    o quantum: the number of bytes in each quantum.
+%    o quantum: the size (in bytes) of each object.
 %
 */
 MagickExport void *AcquireQuantumMemory(const size_t count,const size_t quantum)
 {
   size_t
-    extent;
+    size;
 
-  if (HeapOverflowSanityCheck(count,quantum) != MagickFalse)
+  if (HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse)
     return((void *) NULL);
-  extent=count*quantum;
-  return(AcquireMagickMemory(extent));
+  return(AcquireMagickMemory(size));
 }
 
 /*
@@ -573,23 +662,11 @@ MagickExport void *AcquireQuantumMemory(const size_t count,const size_t quantum)
 %
 %  A description of each parameter follows:
 %
-%    o count: the number of quantum elements to allocate.
+%    o count: the number of objects to allocate contiguously.
 %
-%    o quantum: the number of bytes in each quantum.
+%    o quantum: the size (in bytes) of each object.
 %
 */
-
-static inline size_t StringToSizeType(const char *string,const double interval)
-{
-  double
-    value;
-
-  value=SiPrefixToDoubleInterval(string,interval);
-  if (value >= (double) MagickULLConstant(~0))
-    return(~0UL);
-  return((size_t) value);
-}
-
 MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
   const size_t quantum)
 {
@@ -600,9 +677,9 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
     *memory_info;
 
   size_t
-    extent;
+    size;
 
-  if (HeapOverflowSanityCheck(count,quantum) != MagickFalse)
+  if (HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse)
     return((MemoryInfo *) NULL);
   if (virtual_anonymous_memory == 0)
     {
@@ -624,13 +701,12 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
   if (memory_info == (MemoryInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memset(memory_info,0,sizeof(*memory_info));
-  extent=count*quantum;
-  memory_info->length=extent;
+  memory_info->length=size;
   memory_info->signature=MagickCoreSignature;
   if ((virtual_anonymous_memory == 1) &&
-      ((count*quantum) <= GetMaxMemoryRequest()))
+      (size <= GetMaxMemoryRequest()))
     {
-      memory_info->blob=AcquireAlignedMemory(1,extent);
+      memory_info->blob=AcquireAlignedMemory(1,size);
       if (memory_info->blob != NULL)
         memory_info->type=AlignedVirtualMemory;
     }
@@ -640,8 +716,8 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
         Acquire anonymous memory map.
       */
       memory_info->blob=NULL;
-      if ((count*quantum) <= GetMaxMemoryRequest())
-        memory_info->blob=MapBlob(-1,IOMode,0,extent);
+      if (size <= GetMaxMemoryRequest())
+        memory_info->blob=MapBlob(-1,IOMode,0,size);
       if (memory_info->blob != NULL)
         memory_info->type=MapVirtualMemory;
       else
@@ -658,16 +734,19 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
               MagickOffsetType
                 offset;
 
-              offset=(MagickOffsetType) lseek(file,extent-1,SEEK_SET);
-              if ((offset == (MagickOffsetType) (extent-1)) &&
+              offset=(MagickOffsetType) lseek(file,size-1,SEEK_SET);
+              if ((offset == (MagickOffsetType) (size-1)) &&
                   (write(file,"",1) == 1))
                 {
+MAGICKCORE_DIAGNOSTIC_PUSH()
+MAGICKCORE_DIAGNOSTIC_IGNORE_MAYBE_UNINITIALIZED()
 #if !defined(MAGICKCORE_HAVE_POSIX_FALLOCATE)
-                  memory_info->blob=MapBlob(file,IOMode,0,extent);
+                  memory_info->blob=MapBlob(file,IOMode,0,size);
 #else
-                  if (posix_fallocate(file,0,extent) == 0)
-                    memory_info->blob=MapBlob(file,IOMode,0,extent);
+                  if (posix_fallocate(file,0,size) == 0)
+                    memory_info->blob=MapBlob(file,IOMode,0,size);
 #endif
+MAGICKCORE_DIAGNOSTIC_POP()
                   if (memory_info->blob != NULL)
                     memory_info->type=MapVirtualMemory;
                   else
@@ -683,7 +762,7 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
     }
   if (memory_info->blob == NULL)
     {
-      memory_info->blob=AcquireQuantumMemory(1,extent);
+      memory_info->blob=AcquireQuantumMemory(1,size);
       if (memory_info->blob != NULL)
         memory_info->type=UnalignedVirtualMemory;
     }
@@ -909,8 +988,7 @@ MagickExport void GetMagickMemoryMethods(
   *resize_memory_handler=memory_methods.resize_memory_handler;
   *destroy_memory_handler=memory_methods.destroy_memory_handler;
 }
-
-
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -946,7 +1024,7 @@ MagickExport size_t GetMaxMemoryRequest(void)
           value=DestroyString(value);
         }
       else
-        max_memory_request=~0UL;
+        max_memory_request=(size_t) MagickULLConstant(~0);
     }
   return(max_memory_request);
 }
@@ -1008,8 +1086,8 @@ MagickExport void *GetVirtualMemoryBlob(const MemoryInfo *memory_info)
 %    o quantum: the size (in bytes) of each object.
 %
 */
-extern MagickExport MagickBooleanType
-  HeapOverflowSanityCheck(const size_t count,const size_t quantum);
+extern MagickExport MagickBooleanType HeapOverflowSanityCheck(
+  const size_t count,const size_t quantum);
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1022,7 +1100,7 @@ extern MagickExport MagickBooleanType
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  HeapOverflowSanityCheckGetExtent() returns MagickFalse if the heap allocation
+%  HeapOverflowSanityCheckGetSize() returns MagickFalse if the heap allocation
 %  request is not zero and fits within the maximum limits of size_t; in this
 %  case, the value (count*quantum) is returned in the size_t object to which
 %  points the parameter named "size".
@@ -1032,9 +1110,9 @@ extern MagickExport MagickBooleanType
 %  to ENOMEM. In this case, the object referenced by "size" is not modified.
 %
 %
-%  The format of the HeapOverflowSanityCheckGetExtent method is:
+%  The format of the HeapOverflowSanityCheckGetSize method is:
 %
-%      MagickBooleanType HeapOverflowSanityCheckGetExtent(const size_t count,
+%      MagickBooleanType HeapOverflowSanityCheckGetSize(const size_t count,
 %        const size_t quantum,size_t *const size)
 %
 %  A description of each parameter follows:
@@ -1046,9 +1124,8 @@ extern MagickExport MagickBooleanType
 %    o size: a pointer to an object to hold (count*quantum) if all goes well.
 %
 */
-extern MagickExport MagickBooleanType
-  HeapOverflowSanityCheckGetExtent(const size_t count,const size_t quantum,
-    size_t *const size);
+extern MagickExport MagickBooleanType HeapOverflowSanityCheckGetSize(
+  const size_t count,const size_t quantum,size_t *const size);
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1077,12 +1154,17 @@ MagickExport void *RelinquishAlignedMemory(void *memory)
 {
   if (memory == (void *) NULL)
     return((void *) NULL);
-#if defined(MAGICKCORE_HAVE_POSIX_MEMALIGN)
+  if (memory_methods.relinquish_aligned_memory_handler != (RelinquishAlignedMemoryHandler) NULL)
+    {
+      memory_methods.relinquish_aligned_memory_handler(memory);
+      return(NULL);
+    }
+#if MAGICKCORE_HAVE_STDC_ALIGNED_ALLOC || defined(MAGICKCORE_HAVE_POSIX_MEMALIGN)
   free(memory);
 #elif defined(MAGICKCORE_HAVE__ALIGNED_MALLOC)
   _aligned_free(memory);
 #else
-  RelinquishMagickMemory(*((void **) memory-1));
+  RelinquishMagickMemory(actual_base_address(memory));
 #endif
   return(NULL);
 }
@@ -1247,6 +1329,52 @@ MagickExport void *ResetMagickMemory(void *memory,int byte,const size_t size)
 %                                                                             %
 %                                                                             %
 %                                                                             %
++   R e s e t M a x M e m o r y R e q u e s t                                 %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ResetMaxMemoryRequest() resets the max_memory_request value.
+%
+%  The format of the ResetMaxMemoryRequest method is:
+%
+%      void ResetMaxMemoryRequest(void)
+%
+*/
+MagickPrivate void ResetMaxMemoryRequest(void)
+{
+  max_memory_request=0;
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
++   R e s e t V i r t u a l A n o n y m o u s M e m o r y                     %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ResetVirtualAnonymousMemory() resets the virtual_anonymous_memory value.
+%
+%  The format of the ResetVirtualAnonymousMemory method is:
+%
+%      void ResetVirtualAnonymousMemory(void)
+%
+*/
+MagickPrivate void ResetVirtualAnonymousMemory(void)
+{
+  virtual_anonymous_memory=0;
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 %   R e s i z e M a g i c k M e m o r y                                       %
 %                                                                             %
 %                                                                             %
@@ -1344,24 +1472,59 @@ MagickExport void *ResizeMagickMemory(void *memory,const size_t size)
 %
 %    o memory: A pointer to a memory allocation.
 %
-%    o count: the number of quantum elements to allocate.
+%    o count: the number of objects to allocate contiguously.
 %
-%    o quantum: the number of bytes in each quantum.
+%    o quantum: the size (in bytes) of each object.
 %
 */
 MagickExport void *ResizeQuantumMemory(void *memory,const size_t count,
   const size_t quantum)
 {
   size_t
-    extent;
+    size;
 
-  if (HeapOverflowSanityCheck(count,quantum) != MagickFalse)
+  if (HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse)
     {
       memory=RelinquishMagickMemory(memory);
       return((void *) NULL);
     }
-  extent=count*quantum;
-  return(ResizeMagickMemory(memory,extent));
+  return(ResizeMagickMemory(memory,size));
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%   S e t M a g i c k A l i g n e d M e m o r y M e t h o d s                 %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  SetMagickAlignedMemoryMethods() sets the methods to acquire and relinquish
+%  aligned memory.
+%
+%  The format of the SetMagickAlignedMemoryMethods() method is:
+%
+%      SetMagickAlignedMemoryMethods(
+%        AcquireAlignedMemoryHandler acquire_aligned_memory_handler,
+%        RelinquishAlignedMemoryHandler relinquish_aligned_memory_handler)
+%
+%  A description of each parameter follows:
+%
+%    o acquire_memory_handler: method to acquire aligned memory.
+%
+%    o relinquish_aligned_memory_handler: method to relinquish aligned memory.
+%
+*/
+MagickExport void SetMagickAlignedMemoryMethods(
+  AcquireAlignedMemoryHandler acquire_aligned_memory_handler,
+  RelinquishAlignedMemoryHandler relinquish_aligned_memory_handler)
+{
+  memory_methods.acquire_aligned_memory_handler=acquire_aligned_memory_handler;
+  memory_methods.relinquish_aligned_memory_handler=
+      relinquish_aligned_memory_handler;
 }
 
 /*

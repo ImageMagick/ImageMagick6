@@ -1325,19 +1325,6 @@ MagickExport MagickBooleanType RelinquishUniqueFileResource(const char *path)
 %      MagickBooleanType ResourceComponentGenesis(void)
 %
 */
-
-static inline MagickSizeType StringToSizeType(const char *string,
-  const double interval)
-{
-  double
-    value;
-
-  value=SiPrefixToDoubleInterval(string,interval);
-  if (value >= (double) MagickULLConstant(~0))
-    return(MagickULLConstant(~0));
-  return((MagickSizeType) value);
-}
-
 MagickExport MagickBooleanType ResourceComponentGenesis(void)
 {
   char
