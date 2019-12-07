@@ -12,9 +12,6 @@
 /* Define as __inline if that's what the C compiler calls it.  */
 #define MAGICKCORE_inline __inline
 
-/* Define as the return type of signal handlers (int or void).  */
-#define MAGICKCORE_RETSIGTYPE void
-
 /* Define if the `S_IS*' macros in <sys/stat.h> do not work properly.  */
 #undef MAGICKCORE_STAT_MACROS_BROKEN
 
@@ -212,6 +209,7 @@
 #define MAGICKCORE_JPEG_DELEGATE 1
 
 /* Define if you have JPEG version 2 Jasper library */
+#define MAGICKCORE_JP2_DELEGATE 1
 /* #define MAGICKCORE_LIBOPENJP2_DELEGATE 1 */
 
 /* Define if you have Ghostscript library */
@@ -284,9 +282,6 @@
 #define round nint
 
 #define MAGICKCORE_CIPHER_SUPPORT 1
-
-/* Number of bits in a pixel Quantum (8 or 16) */
-#define MAGICKCORE_QUANTUM_DEPTH 16
 
 #define MAGICKCORE_HDRI_ENABLE 1
 
