@@ -62,6 +62,7 @@
 #include "magick/mime.h"
 #include "magick/module.h"
 #include "magick/monitor-private.h"
+#include "magick/mutex.h"
 #include "magick/nt-base-private.h"
 #include "magick/nt-feature.h"
 #include "magick/opencl-private.h"

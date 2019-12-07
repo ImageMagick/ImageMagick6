@@ -80,6 +80,7 @@
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/morphology.h"
+#include "magick/mutex.h"
 #include "magick/paint.h"
 #include "magick/pixel.h"
 #include "magick/pixel-accessor.h"
