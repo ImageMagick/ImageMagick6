@@ -18,6 +18,9 @@
 #ifndef MAGICKCORE_MEMORY_H
 #define MAGICKCORE_MEMORY_H
 
+#include <errno.h>
+#include <assert.h>
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
@@ -57,6 +60,38 @@ extern MagickExport void
     magick_attribute((__malloc__)) magick_alloc_sizes(2,3),
   SetMagickMemoryMethods(AcquireMemoryHandler,ResizeMemoryHandler,
     DestroyMemoryHandler);
+
+inline MagickExport MagickBooleanType HeapOverflowSanityCheck(
+  const size_t count,const size_t quantum)
+{
+  if ((count == 0) || (quantum == 0))
+    return(MagickTrue);
+  if (quantum != ((count*quantum)/count))
+    {
+      errno=ENOMEM;
+      return(MagickTrue);
+    }
+  return(MagickFalse);
+}
+
+inline MagickExport MagickBooleanType HeapOverflowSanityCheckGetExtent(
+  const size_t count,const size_t quantum,size_t *const extent)
+{
+  size_t
+    length;
+
+  if ((count == 0) || (quantum == 0))
+    return(MagickTrue);
+  length=count*quantum;
+  if (quantum != (length/count))
+    {
+      errno=ENOMEM;
+      return(MagickTrue);
+    }
+  assert(extent);
+  *extent=length;
+  return(MagickFalse);
+}
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

@@ -1,3 +1,12 @@
+2019-12-07  6.9.10-79 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-79, GIT revision 15...
+
+2019-12-07  6.9.10-79 Cristy  <quetzlzacatenango@image...>
+  * Build file clean-up (reference
+    https://github.com/ImageMagick/ImageMagick/pull/1798).
+  * Introduce HeapOverflowSanityCheckGetExtent() method (reference
+    https://github.com/ImageMagick/ImageMagick/pull/1798).
+
 2019-12-01  6.9.10-78 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-78, GIT revision 15097:0136438:20191207.
 
