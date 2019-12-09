@@ -232,10 +232,14 @@ static int FillBasicWEBPInfo(Image *image,const uint8_t *stream,size_t length,
 }
 
 static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
-  size_t length,WebPDecoderConfig *configure,ExceptionInfo *exception,MagickBooleanType is_first)
+  size_t length,WebPDecoderConfig *configure,ExceptionInfo *exception,
+  MagickBooleanType is_first)
 {
   int
     webp_status;
+
+  register unsigned char
+    *p;
 
   size_t
     canvas_width,
@@ -245,12 +249,7 @@ static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
 
   ssize_t
     x_offset,
-    y_offset;
-
-  register unsigned char
-    *p;
-
-  ssize_t
+    y_offset,
     y;
 
   WebPDecBuffer
@@ -260,32 +259,33 @@ static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
     status;
 
   if (is_first) {
-    canvas_width = image->columns;
-    canvas_height = image->rows;
-    x_offset = image->page.x;
-    y_offset = image->page.y;
-    image->page.x = 0;
-    image->page.y = 0;
+    canvas_width=image->columns;
+    canvas_height=image->rows;
+    x_offset=image->page.x;
+    y_offset=image->page.y;
+    image->page.x=0;
+    image->page.y=0;
   } else {
-    x_offset = 0;
-    y_offset = 0;
+    x_offset=0;
+    y_offset=0;
   }
-  webp_status = FillBasicWEBPInfo(image,stream,length,configure);
-  image_width = image->columns;
-  image_height = image->rows;
-  if (is_first) {
-    image->columns = canvas_width;
-    image->rows = canvas_height;
-  }
+  webp_status=FillBasicWEBPInfo(image,stream,length,configure);
+  image_width=image->columns;
+  image_height=image->rows;
+  if (is_first)
+    {
+      image->columns=canvas_width;
+      image->rows=canvas_height;
+    }
 
-  if(webp_status != VP8_STATUS_OK)
+  if (webp_status != VP8_STATUS_OK)
     return(webp_status);
 
   if (IsWEBPImageLossless(stream,length) != MagickFalse)
     image->quality=100;
 
   webp_status=WebPDecode(stream,length,configure);
-  if(webp_status != VP8_STATUS_OK)
+  if (webp_status != VP8_STATUS_OK)
     return(webp_status);
 
   p=(unsigned char *) webp_image->u.RGBA.rgba;
@@ -412,8 +412,8 @@ static int ReadAnimatedWEBPImage(const ImageInfo *image_info,Image *image,
   webp_status=0;
   original_image=image;
   webp_status=FillBasicWEBPInfo(image,stream,length,configure);
-  canvas_width = image->columns;
-  canvas_height = image->rows;
+  canvas_width=image->columns;
+  canvas_height=image->rows;
   data.bytes=stream;
   data.size=length;
   demux=WebPDemux(&data);
@@ -435,16 +435,15 @@ static int ReadAnimatedWEBPImage(const ImageInfo *image_info,Image *image,
         webp_status=ReadSingleWEBPImage(image,iter.fragment.bytes,
           iter.fragment.size,configure,exception,MagickTrue);
       }
-      if(webp_status != VP8_STATUS_OK)
+      if (webp_status != VP8_STATUS_OK)
         break;
 
-      image->page.width = canvas_width;
-      image->page.height = canvas_height;
+      image->page.width=canvas_width;
+      image->page.height=canvas_height;
       image->ticks_per_second=100;
       image->delay=iter.duration/10;
-      if (iter.dispose_method == WEBP_MUX_DISPOSE_BACKGROUND) {
-        image->dispose = BackgroundDispose;
-      }
+      if (iter.dispose_method == WEBP_MUX_DISPOSE_BACKGROUND)
+        image->dispose=BackgroundDispose;
       image_count++;
     } while (WebPDemuxNextFrame(&iter));
     WebPDemuxReleaseIterator(&iter);
