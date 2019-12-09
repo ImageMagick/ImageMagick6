@@ -85,9 +85,13 @@ static SemaphoreInfo
   Forward declarations.
 */
 static MagickBooleanType
-  IsConfigureCacheInstantiated(ExceptionInfo *),
+  IsConfigureCacheInstantiated(ExceptionInfo *);
+
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
+static MagickBooleanType
   LoadConfigureCache(LinkedListInfo *,const char *,const char *,const size_t,
     ExceptionInfo *);
+#endif
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -145,7 +149,7 @@ static LinkedListInfo *AcquireConfigureCache(const char *filename,
   cache=NewLinkedList(0);
   if (cache == (LinkedListInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-#if !defined(MAGICKCORE_ZERO_CONFIGURATION_SUPPORT)
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
   {
     const StringInfo
       *option;
@@ -1085,12 +1089,13 @@ MagickExport MagickBooleanType ListConfigureInfo(FILE *file,
   return(MagickTrue);
 }
 
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
 %                                                                             %
 %                                                                             %
-+   L o a d C o n f i g u r e L i s t                                         %
++   L o a d C o n f i g u r e C a c h e                                       %
 %                                                                             %
 %                                                                             %
 %                                                                             %
@@ -1290,3 +1295,4 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
   token=(char *) RelinquishMagickMemory(token);
   return(status != 0 ? MagickTrue : MagickFalse);
 }
+#endif

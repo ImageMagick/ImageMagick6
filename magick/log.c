@@ -219,16 +219,22 @@ static SemaphoreInfo
 /*
   Forward declarations.
 */
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
 static LogHandlerType
   ParseLogHandlers(const char *) magick_attribute((__pure__));
+#endif
 
 static LogInfo
   *GetLogInfo(const char *,ExceptionInfo *);
 
 static MagickBooleanType
-  IsLogCacheInstantiated(ExceptionInfo *) magick_attribute((__pure__)),
+  IsLogCacheInstantiated(ExceptionInfo *) magick_attribute((__pure__));
+
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
+static MagickBooleanType
   LoadLogCache(LinkedListInfo *,const char *,const char *,const size_t,
     ExceptionInfo *);
+#endif
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -275,7 +281,7 @@ static LinkedListInfo *AcquireLogCache(const char *filename,
   if (cache == (LinkedListInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   status=MagickTrue;
-#if !defined(MAGICKCORE_ZERO_CONFIGURATION_SUPPORT)
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
   {
     const StringInfo
       *option;
@@ -1429,6 +1435,7 @@ MagickExport MagickBooleanType LogMagickEvent(const LogEventType type,
   return(status);
 }
 
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -1670,7 +1677,9 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
     return(MagickFalse);
   return(status != 0 ? MagickTrue : MagickFalse);
 }
+#endif
 
+#if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -1728,6 +1737,7 @@ static LogHandlerType ParseLogHandlers(const char *handlers)
   }
   return(handler_mask);
 }
+#endif
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
