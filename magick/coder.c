@@ -106,6 +106,7 @@ static const CoderMapInfo
     { "CANVAS", "XC" },
     { "CMYKA", "CMYK" },
     { "CR2", "DNG" },
+    { "CR3", "DNG" },
     { "CRW", "DNG" },
     { "CUR", "ICON" },
     { "DATA", "INLINE" },
