@@ -1798,6 +1798,8 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
   bytes_per_line=image->columns;
   if (storage_class == DirectClass)
     bytes_per_line*=image->matte != MagickFalse ? 4 : 3;
+  if ((bytes_per_line == 0) || (bytes_per_line > 0x7FFF))
+    ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
   buffer=(unsigned char *) AcquireQuantumMemory(PictInfoSize,sizeof(*buffer));
   packed_scanline=(unsigned char *) AcquireQuantumMemory((size_t)
    (row_bytes+2*MaxCount),sizeof(*packed_scanline));
