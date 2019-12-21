@@ -1230,27 +1230,6 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
       }
       image_info=DestroyImageInfo(image_info);
     }
-  (void) GetImageProperty(image,"exif:*");
-  (void) GetImageProperty(image,"icc:*");
-  (void) GetImageProperty(image,"iptc:*");
-  (void) GetImageProperty(image,"xmp:*");
-  ResetImagePropertyIterator(image);
-  property=GetNextImageProperty(image);
-  if (property != (const char *) NULL)
-    {
-      /*
-        Display image properties.
-      */
-      (void) FormatLocaleFile(file,"  Properties:\n");
-      while (property != (const char *) NULL)
-      {
-        (void) FormatLocaleFile(file,"    %s: ",property);
-        value=GetImageProperty(image,property);
-        if (value != (const char *) NULL)
-          (void) FormatLocaleFile(file,"%s\n",value);
-        property=GetNextImageProperty(image);
-      }
-    }
   (void) FormatLocaleString(key,MaxTextExtent,"8BIM:1999,2998:#1");
   value=GetImageProperty(image,key);
   if (value != (const char *) NULL)
@@ -1401,6 +1380,27 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
         if (image->debug != MagickFalse)
           PrintStringInfo(file,name,profile);
         name=GetNextImageProfile(image);
+      }
+    }
+  (void) GetImageProperty(image,"exif:*");
+  (void) GetImageProperty(image,"icc:*");
+  (void) GetImageProperty(image,"iptc:*");
+  (void) GetImageProperty(image,"xmp:*");
+  ResetImagePropertyIterator(image);
+  property=GetNextImageProperty(image);
+  if (property != (const char *) NULL)
+    {
+      /*
+        Display image properties.
+      */
+      (void) FormatLocaleFile(file,"  Properties:\n");
+      while (property != (const char *) NULL)
+      {
+        (void) FormatLocaleFile(file,"    %s: ",property);
+        value=GetImageProperty(image,property);
+        if (value != (const char *) NULL)
+          (void) FormatLocaleFile(file,"%s\n",value);
+        property=GetNextImageProperty(image);
       }
     }
   ResetImageArtifactIterator(image);
