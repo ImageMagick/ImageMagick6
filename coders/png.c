@@ -2072,7 +2072,6 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
     y_resolution;
 
   ssize_t
-    ping_rowbytes,
     y;
 
   register unsigned char
@@ -2090,6 +2089,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
 
   size_t
     length,
+    ping_rowbytes,
     row_offset;
 
   Quantum

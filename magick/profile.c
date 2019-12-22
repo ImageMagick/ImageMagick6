@@ -1756,8 +1756,7 @@ static MagickBooleanType SetImageProfileInternal(Image *image,const char *name,
   const StringInfo *profile,const MagickBooleanType recursive)
 {
   char
-    key[MaxTextExtent],
-    property[MaxTextExtent];
+    key[MaxTextExtent];
 
   MagickBooleanType
     status;
