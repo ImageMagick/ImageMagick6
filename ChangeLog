@@ -1,5 +1,5 @@
-2019-12-18  6.9.10-80 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-80, GIT revision 15...
+2019-12-22  6.9.10-80 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-80, GIT revision 15135:8aa94ec27:20191222
 
 2019-12-18  6.9.10-80 Cristy  <quetzlzacatenango@image...>
   * Some clang releases do not support _aligned_alloc().
