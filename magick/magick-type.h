@@ -144,6 +144,13 @@ typedef unsigned __int64 MagickSizeType;
 #define MagickSizeFormat  "I64u"
 #endif
 
+#if MAGICKCORE_HAVE_UINTPTR_T || defined(uintptr_t)
+typedef uintptr_t MagickAddressType;
+#else
+/* Hope for the best, I guess. */
+typedef size_t MagickAddressType;
+#endif
+
 #if defined(_MSC_VER) && (_MSC_VER == 1200)
 typedef MagickOffsetType QuantumAny;
 #else
