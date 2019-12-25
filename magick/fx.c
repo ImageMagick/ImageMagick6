@@ -3768,10 +3768,6 @@ static inline Quantum PlasmaPixel(RandomInfo *magick_restrict random_info,
     plasma;
 
   plasma=pixel+noise*GetPseudoRandomValue(random_info)-noise/2.0;
-  if (plasma <= 0)
-    return((Quantum) 0);
-  if (plasma >= QuantumRange)
-    return(QuantumRange);
   return(ClampToQuantum(plasma));
 }
 
