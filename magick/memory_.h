@@ -68,7 +68,7 @@ extern MagickExport void
   SetMagickMemoryMethods(AcquireMemoryHandler,ResizeMemoryHandler,
     DestroyMemoryHandler);
 
-inline MagickExport MagickBooleanType HeapOverflowSanityCheck(
+static inline MagickBooleanType HeapOverflowSanityCheck(
   const size_t count,const size_t quantum)
 {
   if ((count == 0) || (quantum == 0))
@@ -81,7 +81,7 @@ inline MagickExport MagickBooleanType HeapOverflowSanityCheck(
   return(MagickFalse);
 }
 
-inline MagickExport MagickBooleanType HeapOverflowSanityCheckGetSize(
+static inline MagickBooleanType HeapOverflowSanityCheckGetSize(
   const size_t count,const size_t quantum,size_t *const extent)
 {
   size_t
