@@ -1382,10 +1382,6 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
         name=GetNextImageProfile(image);
       }
     }
-  (void) GetImageProperty(image,"exif:*");
-  (void) GetImageProperty(image,"icc:*");
-  (void) GetImageProperty(image,"iptc:*");
-  (void) GetImageProperty(image,"xmp:*");
   ResetImagePropertyIterator(image);
   property=GetNextImageProperty(image);
   if (property != (const char *) NULL)

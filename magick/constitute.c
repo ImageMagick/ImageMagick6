@@ -679,6 +679,10 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       next->magick_columns=next->columns;
     if (next->magick_rows == 0)
       next->magick_rows=next->rows;
+  (void) GetImageProperty(next,"exif:*");
+  (void) GetImageProperty(next,"icc:*");
+  (void) GetImageProperty(next,"iptc:*");
+  (void) GetImageProperty(next,"xmp:*");
     value=GetImageProperty(next,"exif:Orientation");
     if (value == (char *) NULL)
       value=GetImageProperty(next,"tiff:Orientation");
