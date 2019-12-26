@@ -6978,6 +6978,7 @@ static MagickBooleanType TraceSquareLinecap(PrimitiveInfo *primitive_info,
 static PrimitiveInfo *TraceStrokePolygon(const Image *image,
   const DrawInfo *draw_info,const PrimitiveInfo *primitive_info)
 {
+#define MaxStrokePad  (6*BezierQuantum+360)
 #define CheckPathExtent(pad) \
   if ((ssize_t) (q+(pad)) >= (ssize_t) max_strokes) \
     { \
@@ -6989,10 +6990,10 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
       else \
         { \
           max_strokes+=(pad); \
-          path_p=(PointInfo *) ResizeQuantumMemory(path_p,max_strokes, \
-            sizeof(*path_p)); \
-          path_q=(PointInfo *) ResizeQuantumMemory(path_q,max_strokes, \
-            sizeof(*path_q)); \
+          path_p=(PointInfo *) ResizeQuantumMemory(path_p,max_strokes+ \
+            MaxStrokePad,sizeof(*path_p)); \
+          path_q=(PointInfo *) ResizeQuantumMemory(path_q,max_strokes+ \
+            MaxStrokePad,sizeof(*path_q)); \
         } \
       if ((path_p == (PointInfo *) NULL) || (path_q == (PointInfo *) NULL)) \
         { \
@@ -7059,7 +7060,7 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
     Allocate paths.
   */
   number_vertices=primitive_info->coordinates;
-  max_strokes=2*number_vertices+6*BezierQuantum+360;
+  max_strokes=2*number_vertices;
   polygon_primitive=(PrimitiveInfo *) AcquireQuantumMemory((size_t)
     number_vertices+2UL,sizeof(*polygon_primitive));
   if (polygon_primitive == (PrimitiveInfo *) NULL)
@@ -7103,7 +7104,7 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
         }
       n=(ssize_t) number_vertices-1L;
     }
-  path_p=(PointInfo *) AcquireQuantumMemory((size_t) max_strokes,
+  path_p=(PointInfo *) AcquireQuantumMemory((size_t) max_strokes+MaxStrokePad,
     sizeof(*path_p));
   if (path_p == (PointInfo *) NULL)
     {
@@ -7111,7 +7112,7 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
         polygon_primitive);
       return((PrimitiveInfo *) NULL);
     }
-  path_q=(PointInfo *) AcquireQuantumMemory((size_t) max_strokes,
+  path_q=(PointInfo *) AcquireQuantumMemory((size_t) max_strokes+MaxStrokePad,
     sizeof(*path_q));
   if (path_q == (PointInfo *) NULL)
     {
