@@ -1,5 +1,5 @@
 2019-12-26  6.9.10-82 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-82, GIT revision 15...
+  * Release ImageMagick version 6.9.10-82, GIT revision 15164:f1f0f0c:20191226.
 
 2019-12-26  6.9.10-82 Cristy  <quetzlzacatenango@image...>
   * Fix Build failure with MinGW-w64 (reference
