@@ -1,11 +1,16 @@
-2019-12-28  6.9.10-82 Cristy  <quetzlzacatenango@image...>
+2019-12-28  6.9.10-83 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-82, GIT revision 15175:be1eeba:20191228.
+
+2019-12-28  6.9.10-83 Cristy  <quetzlzacatenango@image...>
+  * PSD: only set the alpha channel when type is not 0.
+
+2019-12-27  6.9.10-82 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-82, GIT revision 15167:12b7f07:20191226.
 
 2019-12-26  6.9.10-82 Cristy  <quetzlzacatenango@image...>
   * Fix Build failure with MinGW-w64 (reference
     https://github.com/ImageMagick/ImageMagick6/issues/67).
   * Inject image profile properties immediately after the image is read.
-  * PSD: only set the alpha channel when type is not 0.
 
 2019-12-24  6.9.10-81 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-81, GIT revision 15151:1444366:20191224.
