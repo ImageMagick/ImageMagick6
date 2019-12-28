@@ -2180,8 +2180,8 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       {
         if (psd_info.depth != 32)
           {
-            status=AcquireImageColormap(image,(size_t) (psd_info.depth != 16 ?
-              256 : 65536));
+            status=AcquireImageColormap(image,MagickMin((size_t)
+              (psd_info.depth < 16 ? 256 : 65536), MaxColormapSize));
             if (status == MagickFalse)
               ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
             if (image->debug != MagickFalse)
