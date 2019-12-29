@@ -1,5 +1,5 @@
-2019-12-28  6.9.10-83 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-82, GIT revision 15175:be1eeba:20191228.
+2019-12-29  6.9.10-83 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-83, GIT revision 15179:a3f554a:20191229.
 
 2019-12-28  6.9.10-83 Cristy  <quetzlzacatenango@image...>
   * PSD: only set the alpha channel when type is not 0.
