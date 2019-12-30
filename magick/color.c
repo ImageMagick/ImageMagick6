@@ -1167,6 +1167,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
         scale=100.0;
+      if (pixel->colorspace == LabColorspace)
+        color-=QuantumRange/2.0;
       break;
     }
     case BlueChannel:
@@ -1180,6 +1182,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
         scale=100.0;
+      if (pixel->colorspace == LabColorspace)
+        color-=QuantumRange/2.0;
       break;
     }
     case AlphaChannel:
