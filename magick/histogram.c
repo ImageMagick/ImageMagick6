@@ -1221,20 +1221,20 @@ MagickExport size_t GetNumberColors(const Image *image,FILE *file,
   {
     SetMagickPixelPacket(image,&p->pixel,&p->index,&pixel);
     (void) CopyMagickString(tuple,"(",MaxTextExtent);
-    ConcatenateColorComponent(&pixel,RedChannel,X11Compliance,tuple);
+    ConcatenateColorComponent(&pixel,RedChannel,NoCompliance,tuple);
     (void) ConcatenateMagickString(tuple,",",MaxTextExtent);
-    ConcatenateColorComponent(&pixel,GreenChannel,X11Compliance,tuple);
+    ConcatenateColorComponent(&pixel,GreenChannel,NoCompliance,tuple);
     (void) ConcatenateMagickString(tuple,",",MaxTextExtent);
-    ConcatenateColorComponent(&pixel,BlueChannel,X11Compliance,tuple);
+    ConcatenateColorComponent(&pixel,BlueChannel,NoCompliance,tuple);
     if (pixel.colorspace == CMYKColorspace)
       {
         (void) ConcatenateMagickString(tuple,",",MaxTextExtent);
-        ConcatenateColorComponent(&pixel,IndexChannel,X11Compliance,tuple);
+        ConcatenateColorComponent(&pixel,IndexChannel,NoCompliance,tuple);
       }
     if (pixel.matte != MagickFalse)
       {
         (void) ConcatenateMagickString(tuple,",",MaxTextExtent);
-        ConcatenateColorComponent(&pixel,OpacityChannel,X11Compliance,tuple);
+        ConcatenateColorComponent(&pixel,OpacityChannel,NoCompliance,tuple);
       }
     (void) ConcatenateMagickString(tuple,")",MaxTextExtent);
     (void) QueryMagickColorname(image,&pixel,SVGCompliance,color,exception);

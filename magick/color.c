@@ -1185,7 +1185,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     case AlphaChannel:
     {
       color=QuantumRange-pixel->opacity;
-      scale=1.0;
+      if (compliance != NoCompliance)
+        scale=1.0;
       break;
     }
     case IndexChannel:
