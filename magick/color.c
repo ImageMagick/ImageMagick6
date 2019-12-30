@@ -1131,32 +1131,61 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
   const ChannelType channel,const ComplianceType compliance,char *tuple)
 {
   char
-    component[MaxTextExtent];
+    component[MagickPathExtent];
 
   double
-    color;
+    color,
+    scale;
 
   color=0.0;
+  scale=QuantumRange;
+  if (compliance != NoCompliance)
+    scale=255.0;
   switch (channel)
   {
     case RedChannel:
     {
       color=pixel->red;
+      if ((pixel->colorspace == HCLColorspace) ||
+          (pixel->colorspace == HCLpColorspace) ||
+          (pixel->colorspace == HSBColorspace) ||
+          (pixel->colorspace == HSIColorspace) ||
+          (pixel->colorspace == HSLColorspace) ||
+          (pixel->colorspace == HSVColorspace) ||
+          (pixel->colorspace == HWBColorspace))
+        scale=360.0;
       break;
     }
     case GreenChannel:
     {
       color=pixel->green;
+      if ((pixel->colorspace == HCLColorspace) ||
+          (pixel->colorspace == HCLpColorspace) ||
+          (pixel->colorspace == HSBColorspace) ||
+          (pixel->colorspace == HSIColorspace) ||
+          (pixel->colorspace == HSLColorspace) ||
+          (pixel->colorspace == HSVColorspace) ||
+          (pixel->colorspace == HWBColorspace))
+        scale=100.0;
       break;
     }
     case BlueChannel:
     {
       color=pixel->blue;
+      if ((pixel->colorspace == HCLColorspace) ||
+          (pixel->colorspace == HCLpColorspace) ||
+          (pixel->colorspace == HSBColorspace) ||
+          (pixel->colorspace == HSIColorspace) ||
+          (pixel->colorspace == HSLColorspace) ||
+          (pixel->colorspace == HSVColorspace) ||
+          (pixel->colorspace == HWBColorspace))
+        scale=100.0;
       break;
     }
     case AlphaChannel:
     {
       color=QuantumRange-pixel->opacity;
+      scale=1.0;
       break;
     }
     case IndexChannel:
@@ -1167,84 +1196,13 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     default:
       break;
   }
-  if (compliance == NoCompliance)
-    {
-      if (pixel->colorspace == LabColorspace)
-        {
-          (void) FormatLocaleString(component,MaxTextExtent,"%.*g",
-            GetMagickPrecision(),(double) color);
-          (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-          return;
-        }
-      (void) FormatLocaleString(component,MaxTextExtent,"%.*g",
-        GetMagickPrecision(),(double) ClampToQuantum(color));
-      (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-      return;
-    }
-  if (compliance != SVGCompliance)
-    {
-      if (pixel->depth > 16)
-        {
-          (void) FormatLocaleString(component,MaxTextExtent,"%10lu",
-            (unsigned long) ScaleQuantumToLong(ClampToQuantum(color)));
-          (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-          return;
-        }
-      if (pixel->depth > 8)
-        {
-          (void) FormatLocaleString(component,MaxTextExtent,"%5d",
-            ScaleQuantumToShort(ClampToQuantum(color)));
-          (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-          return;
-        }
-      (void) FormatLocaleString(component,MaxTextExtent,"%3d",
-        ScaleQuantumToChar(ClampToQuantum(color)));
-      (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-      return;
-    }
-  if (channel == OpacityChannel)
-    {
-      (void) FormatLocaleString(component,MaxTextExtent,"%.*g",
-        GetMagickPrecision(),(double) QuantumScale*ClampToQuantum(color));
-      (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-      return;
-    }
-  if ((pixel->colorspace == HCLColorspace) ||
-      (pixel->colorspace == HCLpColorspace) ||
-      (pixel->colorspace == HSBColorspace) ||
-      (pixel->colorspace == HSIColorspace) ||
-      (pixel->colorspace == HSLColorspace) ||
-      (pixel->colorspace == HSVColorspace) ||
-      (pixel->colorspace == HWBColorspace))
-    {
-      if (channel == RedChannel)
-        (void) FormatLocaleString(component,MaxTextExtent,"%.*g",
-          GetMagickPrecision(),(double) ClampToQuantum(360.0*QuantumScale*
-            color));
-      else
-        (void) FormatLocaleString(component,MaxTextExtent,"%.*g%%",
-          GetMagickPrecision(),(double) ClampToQuantum(100.0*QuantumScale*
-            color));
-      (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-      return;
-    }
-  if (pixel->colorspace == LabColorspace)
-    {
-      (void) FormatLocaleString(component,MaxTextExtent,"%.*g%%",
-        GetMagickPrecision(),100.0*QuantumScale*color);
-      (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-      return;
-    }
-  if (pixel->depth > 8)
-    {
-      (void) FormatLocaleString(component,MaxTextExtent,"%.*g%%",
-        GetMagickPrecision(),(double) ClampToQuantum(100.0*QuantumScale*color));
-      (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
-      return;
-    }
-  (void) FormatLocaleString(component,MaxTextExtent,"%d",
-    ScaleQuantumToChar(ClampToQuantum(color)));
-  (void) ConcatenateMagickString(tuple,component,MaxTextExtent);
+  if (scale != 100.0)
+    (void) FormatLocaleString(component,MagickPathExtent,"%.*g",
+      GetMagickPrecision(),(double) (scale*QuantumScale*color));
+  else
+    (void) FormatLocaleString(component,MagickPathExtent,"%.*g%%",
+      GetMagickPrecision(),(double) (scale*QuantumScale*color));
+  (void) ConcatenateMagickString(tuple,component,MagickPathExtent);
 }
 
 /*
