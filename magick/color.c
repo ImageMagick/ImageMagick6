@@ -1154,6 +1154,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
         scale=360.0;
+      if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
+        scale=100.0;
       break;
     }
     case GreenChannel:
@@ -1167,7 +1169,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
         scale=100.0;
-      if (pixel->colorspace == LabColorspace)
+      if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
         color-=QuantumRange/2.0;
       break;
     }
@@ -2808,6 +2810,8 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
           (QuantumRange-QuantumRange*geometry_info.chi));
       if (color->colorspace == LabColorspace)
         {
+          color->red=(MagickRealType) ClampToQuantum((MagickRealType)
+            (QuantumRange*geometry_info.rho/100.0));
           if ((flags & SigmaValue) != 0)
             color->green=(MagickRealType) ClampToQuantum((MagickRealType)
               (scale*geometry_info.sigma+(QuantumRange+1)/2.0));
