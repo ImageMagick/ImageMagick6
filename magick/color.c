@@ -1133,14 +1133,14 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
   char
     component[MagickPathExtent];
 
-  double
+  float
     color,
     scale;
 
-  color=0.0;
+  color=0.0f;
   scale=QuantumRange;
   if (compliance != NoCompliance)
-    scale=255.0;
+    scale=255.0f;
   switch (channel)
   {
     case RedChannel:
@@ -1153,9 +1153,9 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSLColorspace) ||
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
-        scale=360.0;
+        scale=360.0f;
       if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
-        scale=100.0;
+        scale=100.0f;
       break;
     }
     case GreenChannel:
@@ -1168,9 +1168,9 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSLColorspace) ||
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
-        scale=100.0;
+        scale=100.0f;
       if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
-        color-=QuantumRange/2.0;
+        color-=QuantumRange/2.0f;
       break;
     }
     case BlueChannel:
@@ -1183,16 +1183,16 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
           (pixel->colorspace == HSLColorspace) ||
           (pixel->colorspace == HSVColorspace) ||
           (pixel->colorspace == HWBColorspace))
-        scale=100.0;
+        scale=100.0f;
       if (pixel->colorspace == LabColorspace)
-        color-=QuantumRange/2.0;
+        color-=QuantumRange/2.0f;
       break;
     }
     case AlphaChannel:
     {
       color=QuantumRange-pixel->opacity;
       if (compliance != NoCompliance)
-        scale=1.0;
+        scale=1.0f;
       break;
     }
     case IndexChannel:
@@ -1203,7 +1203,10 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     default:
       break;
   }
-  if (scale != 100.0)
+  if ((pixel->colorspace == sRGBColorspace) && 
+      (fabs(color-(ssize_t) color) > 0.01f))
+    scale=100.0f;
+  if (scale != 100.0f)
     (void) FormatLocaleString(component,MagickPathExtent,"%.*g",
       GetMagickPrecision(),(double) (scale*QuantumScale*color));
   else
