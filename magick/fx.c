@@ -2699,25 +2699,44 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
 
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+5,
             depth+1,beta,exception);
-          if (fx_info->images->colorspace == CMYKColorspace)
-            switch (channel)
+          switch (fx_info->images->colorspace)
+          {
+            case CMYKColorspace:
             {
-              case CyanChannel: type="cyan"; break;
-              case MagentaChannel: type="magenta"; break;
-              case YellowChannel: type="yellow"; break;
-              case OpacityChannel: type="opacity"; break;
-              case BlackChannel: type="black"; break;
-              default: type="unknown"; break;
+              switch (channel)
+              {
+                case CyanChannel: type="cyan"; break;
+                case MagentaChannel: type="magenta"; break;
+                case YellowChannel: type="yellow"; break;
+                case AlphaChannel: type="alpha"; break;
+                case BlackChannel: type="black"; break;
+                default: type="unknown"; break;
+              }
+              break;
             }
-          else
-            switch (channel)
+            case GRAYColorspace:
             {
-              case RedChannel: type="red"; break;
-              case GreenChannel: type="green"; break;
-              case BlueChannel: type="blue"; break;
-              case OpacityChannel: type="opacity"; break;
-              default: type="unknown"; break;
+              switch (channel)
+              {
+                case RedChannel: type="gray"; break;
+                case AlphaChannel: type="alpha"; break;
+                default: type="unknown"; break;
+              }
+              break;
             }
+            default:
+            {
+              switch (channel)
+              {
+                case RedChannel: type="red"; break;
+                case GreenChannel: type="green"; break;
+                case BlueChannel: type="blue"; break;
+                case AlphaChannel: type="alpha"; break;
+                default: type="unknown"; break;
+              }
+              break;
+            }
+          }
           *subexpression='\0';
           if (strlen(expression) > 6)
             (void) CopyMagickString(subexpression,expression+6,MaxTextExtent);
