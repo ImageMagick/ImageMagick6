@@ -3102,7 +3102,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           /*
             Parse while(condition,expression).
           */
-          (void) CopyMagickString(subexpression,expression+5,MagickPathExtent);
+          (void) CopyMagickString(subexpression,expression+6,MagickPathExtent);
+          subexpression[strlen(subexpression)-1]='\0';
           q=subexpression;
           p=StringToken(",",&q);
           if ((p == (char *) NULL) || (strlen(p) < 1) || (q == (char *) NULL))
@@ -3114,7 +3115,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           for ( ; ; )
           {
             double sans = 0.0;
-            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p+1,depth+1,&sans,
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
               exception);
             if (fabs(alpha) < MagickEpsilon)
               FxReturn(*beta);
