@@ -909,10 +909,10 @@ static inline void SetPSDPixel(Image *image,const size_t channels,
       IndexPacket
         index;
 
+      index=(IndexPacket) pixel;
       if (packet_size == 1)
-        index=(IndexPacket) ScaleQuantumToChar(pixel);
-      else
-        index=ConstrainColormapIndex(image,(ssize_t) pixel);
+        index=(IndexPacket) ScaleQuantumToChar(index);
+      index=ConstrainColormapIndex(image,(ssize_t) index);
 
       if (type == 0)
         SetPixelIndex(indexes+x,index);
