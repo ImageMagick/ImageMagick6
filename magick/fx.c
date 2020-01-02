@@ -103,8 +103,8 @@
 #define SubtractAssignmentOperator  0xf0U
 #define MultiplyAssignmentOperator  0xf1U
 #define DivideAssignmentOperator  0xf2U
-#define IncrementOperator  0xf3U
-#define DecrementOperator  0xf4U
+#define IncrementAssignmentOperator  0xf3U
+#define DecrementAssignmentOperator  0xf4U
 #define LeftShiftOperator  0xf5U
 #define RightShiftOperator  0xf6U
 #define LessThanEqualOperator  0xf7U
@@ -213,9 +213,9 @@ MagickExport FxInfo *AcquireFxInfo(const Image *images,const char *expression)
   (void) SubstituteString(&fx_info->expression,"*=",fx_op);
   *fx_op=(char) DivideAssignmentOperator;
   (void) SubstituteString(&fx_info->expression,"/=",fx_op);
- *fx_op=(char) IncrementOperator;
+ *fx_op=(char) IncrementAssignmentOperator;
   (void) SubstituteString(&fx_info->expression,"++",fx_op);
-  *fx_op=(char) DecrementOperator;
+  *fx_op=(char) DecrementAssignmentOperator;
   (void) SubstituteString(&fx_info->expression,"--",fx_op);
   *fx_op=(char) LeftShiftOperator;
   (void) SubstituteString(&fx_info->expression,"<<",fx_op);
@@ -2067,8 +2067,8 @@ static const char *FxOperatorPrecedence(const char *expression,
         case SubtractAssignmentOperator:
         case MultiplyAssignmentOperator:
         case DivideAssignmentOperator:
-        case IncrementOperator:
-        case DecrementOperator:
+        case IncrementAssignmentOperator:
+        case DecrementAssignmentOperator:
         {
           precedence=AssignmentPrecedence;
           break;
@@ -2283,7 +2283,6 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
           (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha+*beta);
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
             subexpression),ConstantString(value));
           FxReturn(*beta);
@@ -2303,7 +2302,6 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
           (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha-*beta);
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
             subexpression),ConstantString(value));
           FxReturn(*beta);
@@ -2323,7 +2321,6 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
           (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha**beta);
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
             subexpression),ConstantString(value));
           FxReturn(*beta);
@@ -2344,29 +2341,32 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             exception);
           (void) FormatLocaleString(value,MagickPathExtent,"%.20g",
             alpha*PerceptibleReciprocal(*beta));
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
             subexpression),ConstantString(value));
           FxReturn(*beta);
         }
-        case IncrementOperator:
+        case IncrementAssignmentOperator:
         {
-          (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha+1.0);
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           if (*subexpression == '\0')
-            (void) AddValueToSplayTree(fx_info->symbols,ConstantString(++p),
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
+              exception);
+          (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha+1.0);
+          if (*subexpression == '\0')
+            (void) AddValueToSplayTree(fx_info->symbols,ConstantString(p),
               ConstantString(value));
           else
             (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
               subexpression),ConstantString(value));
           FxReturn(*beta);
         }
-        case DecrementOperator:
+        case DecrementAssignmentOperator:
         {
-          (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha-1.0);
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           if (*subexpression == '\0')
-            (void) AddValueToSplayTree(fx_info->symbols,ConstantString(++p),
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
+              exception);
+          (void) FormatLocaleString(value,MagickPathExtent,"%.20g",alpha-1.0);
+          if (*subexpression == '\0')
+            (void) AddValueToSplayTree(fx_info->symbols,ConstantString(p),
               ConstantString(value));
           else
             (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
@@ -2512,7 +2512,6 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
           (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double) *beta);
-          (void) DeleteNodeFromSplayTree(fx_info->symbols,subexpression);
           (void) AddValueToSplayTree(fx_info->symbols,ConstantString(
             subexpression),ConstantString(value));
           FxReturn(*beta);
