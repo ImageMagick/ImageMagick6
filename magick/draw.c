@@ -2876,8 +2876,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            graphic_context[n]->fill_opacity=(QuantumRange-
-              graphic_context[n]->fill_opacity)*(1.0-opacity);
+            if (graphic_context[n]->compliance == SVGCompliance)
+              graphic_context[n]->fill_opacity*=(1.0-opacity);
+            else
+              graphic_context[n]->fill_opacity=(QuantumRange-
+                graphic_context[n]->fill_opacity)*(1.0-opacity);
             if (graphic_context[n]->fill.opacity != TransparentOpacity)
               graphic_context[n]->fill.opacity=(Quantum)
                 graphic_context[n]->fill_opacity;
@@ -3667,8 +3670,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
               StringToDouble(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
-            graphic_context[n]->stroke_opacity=(QuantumRange-
-              graphic_context[n]->stroke_opacity)*(1.0-opacity);
+            if (graphic_context[n]->compliance == SVGCompliance)
+              graphic_context[n]->stroke_opacity*=(1.0-opacity);
+            else
+              graphic_context[n]->stroke_opacity=(QuantumRange-
+                graphic_context[n]->stroke_opacity)*(1.0-opacity);
             if (graphic_context[n]->stroke.opacity != TransparentOpacity)
               graphic_context[n]->stroke.opacity=(Quantum)
                 graphic_context[n]->stroke_opacity;
