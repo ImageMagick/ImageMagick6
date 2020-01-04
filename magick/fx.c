@@ -2487,19 +2487,22 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             gamma;
 
           (void) CopyMagickString(subexpression,++p,MaxTextExtent);
-          q=subexpression;
-          p=StringToken(":",&q);
-          if (q == (char *) NULL)
+          p=subexpression;
+          for (q=(char *) p; (*q != ':') && (*q != '\0'); q++)
+            if (*q == '(')
+              for ( ; (*q != ')') && (*q != '\0'); q++);
+          if (*q == '\0')
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"UnableToParseExpression","`%s'",subexpression);
               FxReturn(0.0);
             }
+          *q='\0';
           if (fabs(alpha) >= MagickEpsilon)
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
               exception);
           else
-            gamma=FxEvaluateSubexpression(fx_info,channel,x,y,q,depth+1,beta,
+            gamma=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
           FxReturn(gamma);
         }
@@ -3132,6 +3135,12 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
             if (*q == '(')
               for ( ; (*q != ')') && (*q != '\0'); q++);
+          if (*q == '\0')
+            {
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                OptionError,"UnableToParseExpression","`%s'",subexpression);
+              FxReturn(0.0);
+            }
           for (*q='\0'; ; )
           {
             double sans = 0.0;
