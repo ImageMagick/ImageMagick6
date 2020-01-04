@@ -3472,7 +3472,7 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
   progress=0;
   fx_view=AcquireAuthenticCacheView(fx_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(progress,status) \
+  #pragma omp parallel for schedule(dynamic) shared(progress,status) \
     magick_number_threads(image,fx_image,fx_image->rows,1)
 #endif
   for (y=0; y < (ssize_t) fx_image->rows; y++)
