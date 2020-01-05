@@ -12578,6 +12578,9 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
   logging=LogMagickEvent(CoderEvent,GetMagickModule(),
     "  Enter WriteOneJNGImage()");
 
+  if ((image->columns > 65500U) || (image->rows > 65500U))
+    ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
+
   blob=(unsigned char *) NULL;
   jpeg_image=(Image *) NULL;
   jpeg_image_info=(ImageInfo *) NULL;
@@ -12735,7 +12738,15 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
           (void) CopyMagickString(jpeg_image->magick,"JPEG",MaxTextExtent);
           jpeg_image_info->interlace=NoInterlace;
           blob=ImageToBlob(jpeg_image_info,jpeg_image,&length,
-           &image->exception);
+            &image->exception);
+          if (blob == (unsigned char *) NULL)
+            {
+              if (jpeg_image != (Image *)NULL)
+                jpeg_image=DestroyImage(jpeg_image);
+              if (jpeg_image_info != (ImageInfo *)NULL)
+                jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+              return(MagickFalse);
+            }
           jng_alpha_sample_depth=8;
 
           if (logging != MagickFalse)
