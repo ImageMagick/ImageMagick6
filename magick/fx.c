@@ -2890,6 +2890,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
           }
+          FxReturn(alpha);
         }
       break;
     }
@@ -2943,6 +2944,49 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
     case 'I':
     case 'i':
     {
+     if (IsFxFunction(expression,"if",2) != MagickFalse)
+        {
+          double
+            sans = 0.0;
+
+          size_t
+            length;
+
+          length=CopyMagickString(subexpression,expression+3,MagickPathExtent);
+          subexpression[length-1]='\0';
+          p=subexpression;
+          for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
+            if (*q == '(')
+              for ( ; (*q != ')') && (*q != '\0'); q++);
+          if (*q == '\0')
+            {
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                OptionError,"UnableToParseExpression","`%s'",subexpression);
+              FxReturn(0.0);
+            }
+          *q='\0';
+          alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
+            exception);
+          (void) CopyMagickString(subexpression,q+1,MagickPathExtent);
+          p=subexpression;
+          for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
+            if (*q == '(')
+              for ( ; (*q != ')') && (*q != '\0'); q++);
+          if (*q == '\0')
+            {
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                OptionError,"UnableToParseExpression","`%s'",subexpression);
+              FxReturn(0.0);
+            }
+          *q='\0';
+          if (fabs(alpha) >= MagickEpsilon)
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
+              exception);
+          else
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
+              exception);
+          FxReturn(alpha);
+        }
       if (LocaleCompare(expression,"intensity") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
       if (IsFxFunction(expression,"int",3) != MagickFalse)
@@ -3248,6 +3292,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
           }
+          FxReturn(alpha);
         }
       if (LocaleCompare(expression,"w") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
