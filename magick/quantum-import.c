@@ -1600,7 +1600,6 @@ static void ImportCMYKQuantum(const Image *image,QuantumInfo *quantum_info,
             SetPixelBlue(q,ClampToQuantum(pixel));
             p=PushDoublePixel(quantum_info,p,&pixel);
             SetPixelIndex(indexes+x,ClampToQuantum(pixel));
-            p=PushDoublePixel(quantum_info,p,&pixel);
             p+=quantum_info->pad;
             q++;
           }
@@ -1780,7 +1779,6 @@ static void ImportCMYKAQuantum(const Image *image,QuantumInfo *quantum_info,
             SetPixelIndex(indexes+x,ClampToQuantum(pixel));
             p=PushDoublePixel(quantum_info,p,&pixel);
             SetPixelAlpha(q,ClampToQuantum(pixel));
-            p=PushDoublePixel(quantum_info,p,&pixel);
             p+=quantum_info->pad;
             q++;
           }
@@ -1962,7 +1960,6 @@ static void ImportCMYKOQuantum(const Image *image,QuantumInfo *quantum_info,
             SetPixelIndex(indexes+x,ClampToQuantum(pixel));
             p=PushDoublePixel(quantum_info,p,&pixel);
             SetPixelOpacity(q,ClampToQuantum(pixel));
-            p=PushDoublePixel(quantum_info,p,&pixel);
             p+=quantum_info->pad;
             q++;
           }
