@@ -1,5 +1,5 @@
 2020-01-04  6.9.10-84 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-84, GIT revision 15210:7631324:20200104.
+  * Release ImageMagick version 6.9.10-84, GIT revision 15212:a45335c:20200104.
 
 2020-01-01  6.9.10-84 Cristy  <quetzlzacatenango@image...>
   * Support extended Fx assignment operators (e.g. *=, /=, ++, --, etc.)
