@@ -19,7 +19,7 @@
   <meta name="author" content="ImageMagick Studio LLC" />
   <meta name="revisit-after" content="2 DAYS" />
   <meta name="resource-type" content="document" />
-  <meta name="copyright" content="Copyright (c) 1999-2020 ImageMagick Studio LLC" />
+  <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta property='og:url' content='https://imagemagick.org/' />
@@ -112,14 +112,14 @@ radial-gradient:color1-color2
 <pre class="highlight"><code>convert -size 256x256 gradient: linear_gradient.png
 convert -size 256x256 gradient:white-black linear_gradient.png
 </code></pre>
-<p><img src="https://legacy.imagemagick.org/images/gradients/linear_gradient.png" width="256" height="256" /></p>
+<p><img src="../images/gradients/linear_gradient.png" width="256" height="256" /></p>
 
 <p>If you want a radial gradient, try:</p>
 
 <pre class="highlight"><code>convert -size 256x256 radial-gradient: radial_gradient.png
 convert -size 256x256 radial-gradient:white-black radial_gradient.png
 </code></pre>
-<p><img src="https://legacy.imagemagick.org/images/gradients/radial_gradient.png" width="256" height="256" /></p>
+<p><img src="../images/gradients/radial_gradient.png" width="256" height="256" /></p>
 
 <p>If you want non-linear grayscale gradients, then add -colorspace RGB -colorspace gray 
 before saving the output. For example:<p>
@@ -208,7 +208,7 @@ convert -size 256x256 radial-gradient:white-black -colorspace RGB -colorspace gr
 <pre class="highlight"><code>convert -size 256x128 -define gradient:direction=north gradient:black-white linear_gradient_default.png
 convert -size 256x128 -define gradient:angle=0 gradient:black-white linear_gradient_default.png
 </code></pre>
-<p><img src="https://legacy.imagemagick.org/images/gradients/linear_gradient_default.png" width="256" height="128" /></p>
+<p><img src="../images/gradients/linear_gradient_default.png" width="256" height="128" /></p>
 
 <p>The equivalent of </p>
 
@@ -220,7 +220,7 @@ convert -size 256x128 -define gradient:angle=0 gradient:black-white linear_gradi
 <pre class="highlight"><code>convert -size 256x128 -define gradient:direction=east gradient:black-white linear_gradient_east.png
 convert -size 256x128 -define gradient:angle=90 gradient:black-white linear_gradient_east.png
 </code></pre>
-<p><img src="https://legacy.imagemagick.org/images/gradients/linear_gradient_east.png" width="256" height="128" /></p>
+<p><img src="../images/gradients/linear_gradient_east.png" width="256" height="128" /></p>
 
 
 <p>Examples of radial gradients going from black in the center to white at the boundary for the cases of "maximum/circle/default", "minimum", "diagonal", "ellipse" and 45 degree rotated ellipse, respectively, follow below.</p>
@@ -229,12 +229,12 @@ convert -size 256x128 -define gradient:angle=90 gradient:black-white linear_grad
 <pre class="highlight"><code>convert -size 256x128 radial-gradient:black-white radial_gradient_maximum.png
 convert -size 256x128 -define gradient:radii=128,128 radial-gradient:black-white radial_gradient_maximum.png
 </code></pre>
-<p><img src="https://legacy.imagemagick.org/images/gradients/radial_gradient_maximum.png" width="256" height="128" /></p>
+<p><img src="../images/gradients/radial_gradient_maximum.png" width="256" height="128" /></p>
 
 <pre class="highlight"><code>convert -size 256x128 -define gradient:extent=minimum radial-gradient:black-white radial_gradient_minimum.png
 convert -size 256x128 -define gradient:radii=64,64 radial-gradient:black-white radial_gradient_minimum.png
 </code></pre>
-<p><img src="https://legacy.imagemagick.org/images/gradients/radial_gradient_minimum.png" width="256" height="128" /></p>
+<p><img src="../images/gradients/radial_gradient_minimum.png" width="256" height="128" /></p>
 
 <pre class="highlight"><code>convert -size 256x128 -define gradient:extent=diagonal radial-gradient:black-white radial_gradient_diagonal.png
 </code></pre>
@@ -272,7 +272,6 @@ convert -size 256x128 -define gradient:radii=128,64 radial-gradient:black-white 
 
   <!-- Javascript assets -->
   <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.4.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
-<!-- Magick Cache 30th October 2019 09:08 -->

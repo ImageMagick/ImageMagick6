@@ -19,7 +19,7 @@
   <meta name="author" content="ImageMagick Studio LLC" />
   <meta name="revisit-after" content="2 DAYS" />
   <meta name="resource-type" content="document" />
-  <meta name="copyright" content="Copyright (c) 1999-2020 ImageMagick Studio LLC" />
+  <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta property='og:url' content='https://imagemagick.org/' />
@@ -390,6 +390,8 @@ handling or its replacement, which will allow you to ignore reported errors
 and continue processing (as appropriate due to error) in co-processes or
 interactive usage. </p>
 
+<p>With the IMv7 parser, activated by the `magick` utility, settings are applied to each image in memory in turn (if any). While an option: only need to be applied once globally. Using the other utilities directly, or as an argument to the `magick` CLI (e.g. `magick convert`) utilizes the legacy parser.</p>
+
 <p>The parenthesis options used to 'push' the current image list, and image
 settings (EG: '<code>(</code>' and '<code>)</code>' ) on to a stack now has
 a completely separate image settings stack. That is parenthesis 'push/pull'
@@ -678,6 +680,7 @@ example "+annotate", "+resize", "+clut", and "+draw" .</p>
 
   <!-- Javascript assets -->
   <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.4.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
+<!-- Magick Cache 5th January 2020 11:54 -->

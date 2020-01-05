@@ -19,7 +19,7 @@
   <meta name="author" content="ImageMagick Studio LLC" />
   <meta name="revisit-after" content="2 DAYS" />
   <meta name="resource-type" content="document" />
-  <meta name="copyright" content="Copyright (c) 1999-2020 ImageMagick Studio LLC" />
+  <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta property='og:url' content='https://imagemagick.org/' />
@@ -107,16 +107,16 @@
   </tr>
 
   <tr>
-      <td>ImageMagick-6.9.10-70.x86_64.rpm</td>
-      <td><a href= "https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-6.9.10-70.x86_64.rpm">download</a></td>
-    <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/linux/CentOS/x86_64/ImageMagick-6.9.10-70.x86_64.rpm">download</a></td>
+      <td>ImageMagick-6.9.10-84.x86_64.rpm</td>
+      <td><a href= "https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-6.9.10-84.x86_64.rpm">download</a></td>
+    <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/linux/CentOS/x86_64/ImageMagick-6.9.10-84.x86_64.rpm">download</a></td>
     <td>Redhat / CentOS 7.1 x86_64 RPM</td>
   </tr>
 
   <tr>
-      <td>ImageMagick-libs-6.9.10-70.x86_64.rpm</td>
-      <td><a href= "https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-libs-6.9.10-70.x86_64.rpm">download</a></td>
-    <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/linux/CentOS/x86_64/ImageMagick-libs-6.9.10-70.x86_64.rpm">download</a></td>
+      <td>ImageMagick-libs-6.9.10-84.x86_64.rpm</td>
+      <td><a href= "https://imagemagick.org/download/linux/CentOS/x86_64/ImageMagick-libs-6.9.10-84.x86_64.rpm">download</a></td>
+    <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/linux/CentOS/x86_64/ImageMagick-libs-6.9.10-84.x86_64.rpm">download</a></td>
     <td>Redhat / CentOS 7.1 x86_64 RPM</td>
   </tr>
 
@@ -153,10 +153,12 @@
 
 <p>ImageMagick RPM's are self-installing.  Simply type the following command and you're ready to start using ImageMagick:</p>
 
-<pre class="highlight"><span class="crtprompt">$ </span><span class='crtin'>rpm -Uvh ImageMagick-6.9.10-70.x86_64.rpm</span></pre>
+<pre class="highlight"><span class="crtprompt">$ </span><span class='crtin'>rpm -Uvh ImageMagick-6.9.10-84.x86_64.rpm</span></pre>
 <p>You'll need to install the requisite libraries:<?p>
 
-<pre class="highlight"><span class="crtprompt">$ </span><span class='crtin'>rpm -Uvh ImageMagick-libs-6.9.10-70.x86_64.rpm</span></pre>
+<pre class="highlight"><span class="crtprompt">$ </span><span class='crtin'>rpm -Uvh ImageMagick-libs-6.9.10-84.x86_64.rpm</span></pre>
+<p>Note, if there are missing dependencies, install them from the <a href="https://fedoraproject.org/wiki/EPEL">EPEL</a> repo.</p>
+
 <p>For other systems, create (or choose) a directory to install the package into and change to that directory, for example:</p>
 
 <pre class="highlight"><code>cd $HOME</code></pre>
@@ -192,6 +194,10 @@ display logo.gif</code></pre>
 
 <pre class="highlight"><code>brew install imagemagick</code></pre>
 
+<p>ImageMagick depends on Ghostscript fonts.  To install them, type:</p>
+
+<pre class="highlight"><code>brew install ghostscript</code></pre>
+
 <p>The <code>brew</code> command downloads ImageMagick and many of its delegate libraries (e.g. JPEG, PNG, Freetype, etc.) and configures, builds, and installs ImageMagick automagically.  Alternatively, you can download the ImageMagick Mac OS X distribution we provide:</p>
 
 <div class="table-responsive" style="font-size:87.5% !important;">
@@ -205,9 +211,9 @@ display logo.gif</code></pre>
   </tr>
 
   <tr>
-    <td>ImageMagick-x86_64-apple-darwin18.7.0.tar.gz</td>
-    <td><a href="https://imagemagick.org/download/binaries/ImageMagick-x86_64-apple-darwin18.7.0.tar.gz">download</a></td>
-    <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-x86_64-apple-darwin18.7.0.tar.gz">download</a></td>
+    <td>ImageMagick-x86_64-apple-darwin19.2.0.tar.gz</td>
+    <td><a href="https://imagemagick.org/download/binaries/ImageMagick-x86_64-apple-darwin19.2.0.tar.gz">download</a></td>
+    <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-x86_64-apple-darwin19.2.0.tar.gz">download</a></td>
     <td>MacOS High Sierra</td>
   </tr>
 </table></div>
@@ -267,7 +273,7 @@ display logo.gif</code></pre>
 
 <p>To run the script:</p>
 <pre class="highlight"><code>./imagemagick_compile.sh <var>VERSION</var></code></pre>
-<p>where <var>VERSION</var> is the version of ImageMagick you want to compile (i.e.: 6.9.10-70, svn, ...)</p>
+<p>where <var>VERSION</var> is the version of ImageMagick you want to compile (i.e.: 6.9.10-84, svn, ...)</p>
 
 <p>This script compiles ImageMagick as a static library to be included in iOS projects and adds support for</p>
 <ul>
@@ -316,9 +322,9 @@ display logo.gif</code></pre>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-x64-dll.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-x64-dll.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-x64-dll.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-x64-dll.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-x64-dll.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-x64-dll.exe">download</a></td>
     <td>Win64 dynamic at 16 bits-per-pixel component</td>
   </tr>
 </table></div>
@@ -336,93 +342,93 @@ display logo.gif</code></pre>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-x64-static.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-x64-static.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-x64-static.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-x64-static.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-x64-static.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-x64-static.exe">download</a></td>
    <td>Win64 static at 16 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q8-x64-dll.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q8-x64-dll.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q8-x64-dll.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q8-x64-dll.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q8-x64-dll.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q8-x64-dll.exe">download</a></td>
    <td>Win64 dynamic at 8 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q8-x64-static.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q8-x64-static.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q8-x64-static.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q8-x64-static.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q8-x64-static.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q8-x64-static.exe">download</a></td>
     <td>Win64 static at 8 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-HDRI-x64-dll.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x64-dll.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x64-dll.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-HDRI-x64-dll.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x64-dll.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x64-dll.exe">download</a></td>
     <td>Win64 dynamic at 16 bits-per-pixel component with <a href="high-dynamic-range.html">high dynamic-range imaging</a> enabled</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-HDRI-x64-static.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x64-static.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x64-static.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-HDRI-x64-static.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x64-static.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x64-static.exe">download</a></td>
     <td>Win64 static at 16 bits-per-pixel component with <a href="high-dynamic-range.html">high dynamic-range imaging</a> enabled</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-x86-dll.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-x86-dll.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-x86-dll.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-x86-dll.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-x86-dll.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-x86-dll.exe">download</a></td>
     <td>Win32 dynamic at 16 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-x86-static.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-x86-static.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-x86-static.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-x86-static.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-x86-static.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-x86-static.exe">download</a></td>
     <td>Win32 static at 16 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q8-x86-dll.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q8-x86-dll.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q8-x86-dll.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q8-x86-dll.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q8-x86-dll.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q8-x86-dll.exe">download</a></td>
     <td>Win32 dynamic at 8 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q8-x86-static.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q8-x86-static.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q8-x86-static.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q8-x86-static.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q8-x86-static.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q8-x86-static.exe">download</a></td>
     <td>Win32 static at 8 bits-per-pixel component</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-HDRI-x86-dll.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x86-dll.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x86-dll.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-HDRI-x86-dll.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x86-dll.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x86-dll.exe">download</a></td>
     <td>Win32 dynamic at 16 bits-per-pixel component with <a href="high-dynamic-range.html">high dynamic-range imaging</a> enabled</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-Q16-HDRI-x86-static.exe</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x86-static.exe">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-Q16-HDRI-x86-static.exe">download</a></td>
+        <td>ImageMagick-6.9.10-84-Q16-HDRI-x86-static.exe</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x86-static.exe">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-Q16-HDRI-x86-static.exe">download</a></td>
     <td>Win32 static at 16 bits-per-pixel component with <a href="high-dynamic-range.html">high dynamic-range imaging</a> enabled</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-portable-Q16-x86.zip</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-portable-Q16-x86.zip">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-portable-Q16-x86.zip">download</a></td>
+        <td>ImageMagick-6.9.10-84-portable-Q16-x86.zip</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-portable-Q16-x86.zip">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-portable-Q16-x86.zip">download</a></td>
     <td>Portable Win32 static at 16 bits-per-pixel component.  Just copy to your host and run (no installer, no Windows registry entries).</td>
   </tr>
 
   <tr>
-        <td>ImageMagick-6.9.10-70-portable-Q16-x64.zip</td>
-        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-70-portable-Q16-x64.zip">download</a></td>
-      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-70-portable-Q16-x64.zip">download</a></td>
+        <td>ImageMagick-6.9.10-84-portable-Q16-x64.zip</td>
+        <td><a href= "https://imagemagick.org/download/binaries/ImageMagick-6.9.10-84-portable-Q16-x64.zip">download</a></td>
+      <td><a href="ftp://ftp.imagemagick.org/pub/ImageMagick/binaries/ImageMagick-6.9.10-84-portable-Q16-x64.zip">download</a></td>
     <td>Portable Win64 static at 16 bits-per-pixel component.  Just copy to your host and run (no installer, no Windows registry entries).</td>
   </tr>
 </table></div>
@@ -468,7 +474,6 @@ objShell.Exec("convert ""e:/myimages/image.png"" ""e:/myimages/image.jpg""")</co
 
   <!-- Javascript assets -->
   <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.4.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
-<!-- Magick Cache 30th October 2019 09:22 -->

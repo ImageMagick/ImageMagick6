@@ -19,7 +19,7 @@
   <meta name="author" content="ImageMagick Studio LLC" />
   <meta name="revisit-after" content="2 DAYS" />
   <meta name="resource-type" content="document" />
-  <meta name="copyright" content="Copyright (c) 1999-2020 ImageMagick Studio LLC" />
+  <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta property='og:url' content='https://imagemagick.org/' />
@@ -85,14 +85,86 @@
 
   <main class="container">
     <div class="magick-template">
-<div class="magick-header"><dl><dt>2019-10-27  6.9.10-70 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+<div class="magick-header"><dl><dt>2020-01-04  6.9.10-84 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-84, GIT revision 15212:a45335c:20200104.</li>
+<dt>2020-01-01  6.9.10-84 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Support extended Fx assignment operators (e.g. *=, /=, ++, --, etc.)</li>
+  <li> Support Fx for() iterator.<dt>	* Optimize Fx performance.</dt>
+  <li>	* Ensure circle.rb renders the same for IMv6 and IMv7 (reference    https://github.com/rmagick/rmagick/issues/905).</li>
+<dt>2019-12-30  6.9.10-83 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-83, GIT revision 15184:9f64323:20191230.</li>
+<dt>2019-12-28  6.9.10-83 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> PSD: only set the alpha channel when type is not 0.</li>
+  <li> Fix Lab to custom profile (CMYK or RGB) conversion bug (reference    https://imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=37318).</li>
+<dt>2019-12-27  6.9.10-82 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-82, GIT revision 15167:12b7f07:20191226.</li>
+<dt>2019-12-26  6.9.10-82 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fix Build failure with MinGW-w64 (reference    https://github.com/ImageMagick/ImageMagick6/issues/67).</li>
+  <li> Inject image profile properties immediately after the image is read.</li>
+<dt>2019-12-24  6.9.10-81 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-81, GIT revision 15151:1444366:20191224.</li>
+<dt>2019-12-18  6.9.10-81 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Replace pseudo-random number generator with a Xoshiro generator.</li>
+  <li> Define MagickAddressType (reference    https://imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=3729).</li>
+<dt>2019-12-22  6.9.10-80 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-80, GIT revision 15135:8aa94ec27:20191222</li>
+<dt>2019-12-18  6.9.10-80 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Some clang releases do not support _aligned_alloc().</li>
+<dt>2019-12-07  6.9.10-79 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-79, GIT revision 15127:fa10678:20191215.</li>
+<dt>2019-12-07  6.9.10-79 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Build file clean-up (reference    https://github.com/ImageMagick/ImageMagick/pull/1798).</li>
+  <li> Improve semaphore handling @    https://github.com/ImageMagick/ImageMagick/pull/1798).</li>
+  <li> Introduce HeapOverflowSanityCheckGetExtent() method (reference    https://github.com/ImageMagick/ImageMagick/pull/1798).</li>
+<dt>2019-12-01  6.9.10-78 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-78, GIT revision 15097:0136438:20191207.</li>
+<dt>2019-12-01  6.9.10-78 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> -type bilevel behavior restored, it creates a black and white image.</li>
+<dt>2019-11-29  6.9.10-77 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-77, GIT revision 15087:5e6be1a:20191129.</li>
+<dt>2019-11-26  6.9.10-77 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Support Pocketmod image format, e.g.    convert -density 300 pages?.pdf pocketmod:organize.pdf</li>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).</li>
+  <li> Update documentation.</li>
+    https://github.com/ImageMagick/ImageMagick/issues/1784).<dt>2019-11-26  6.9.10-75 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-75, GIT revision 15062:f23c75e:20191126.</li>
+<dt>2019-11-19  6.9.10-75 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Increase the maximum number of bezier coordinates (reference    https://github.com/ImageMagick/ImageMagick/issues/1784).</li>
+  <li> Santize "'" from SHOW and WIN delegates under Linux, '"\' for Windows    (thanks to Enzo Puig).</li>
+  <li> Correct for TGA orientation (reference    https://imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=34757).</li>
+  <li> The result for -compose Copy -extent on a CMYK image is CMYK (reference    https://imagemagick.org/discourse-server/viewtopic.html?f=3&amp;t=37118).</li>
+  <li> Fix potential buffer overflow when reading a fax image (alert from    Justin).</li>
+  <li> Support dng:use-camera-wb option.</li>
+<dt>2019-11-17  6.9.10-74 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-74, GIT revision 15030:6efa1b6:20191117.</li>
+<dt>2019-11-16  6.9.10-74 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Ensure Ascii85 compression is thread safe.</li>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).</li>
+<dt>2019-11-14  6.9.10-73 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-73, GIT revision 15014:bcb2b51:20191114.</li>
+<dt>2019-11-14  6.9.10-73 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> HP's ANSI C/C++ compiler does not support strcasestr().</li>
+<dt>2019-11-13  6.9.10-72 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-72, GIT revision 15011:4cf3857:20191113.</li>
+<dt>2019-11-10  6.9.10-72 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Output exception there is an attempt to perform an operation not allowed by    the security policy</li>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).</li>
+<dt>2019-10-30  6.9.10-71 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-71, GIT revision 14989:8da75bd:20191030.</li>
+<dt>2019-10-29  6.9.10-71 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> JPEG and JPG are aliases in coder security policy.</li>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).</li>
+<dt>2019-10-27  6.9.10-70 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.10-70, GIT revision 14970:4200095:20191027.</li>
 <dt>2019-10-27  6.9.10-70 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Fixed numerous issues  posted to GitHub (reference<dt>		https://github.com/ImageMagick/ImageMagick/issues).</dt>
-  <li><dt>2019-10-24  6.9.10-69 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).<dt>2019-10-27  6.9.10-70 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-70, GIT revision 14970:4200095:20191027.</li>
+<dt>2019-10-27  6.9.10-70 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).</li>
+<dt>2019-10-24  6.9.10-69 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.10-69, GIT revision 14962:03a9bac:20191024</li>
 <dt>2019-10-06  6.9.10-69 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Fixed numerous issues  posted to GitHub (reference<dt>		https://github.com/ImageMagick/ImageMagick/issues).</dt>
+  <li> Fixed numerous issues  posted to GitHub (reference    https://github.com/ImageMagick/ImageMagick/issues).</li>
   <li> Support trim:background-color define for -trim option</li>
 <dt>2019-10-05  6.9.10-68 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.10-68, GIT revision 14874:eb58b7e:20191005.</li>
@@ -4727,7 +4799,7 @@
 
   <!-- Javascript assets -->
   <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.4.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
-<!-- Magick Cache 30th October 2019 09:09 -->
+<!-- Magick Cache 5th January 2020 09:42 -->
