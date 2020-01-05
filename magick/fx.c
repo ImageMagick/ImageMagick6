@@ -2119,6 +2119,38 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
               (double) alpha);
           FxReturn(0.0);
         }
+      if (IsFxFunction(expression,"do",2) != MagickFalse)
+        {
+          size_t
+            length;
+
+          /*
+            Parse do(expression,condition test).
+          */
+          length=CopyMagickString(subexpression,expression+6,MagickPathExtent);
+          subexpression[length-1]='\0';
+          p=subexpression;
+          for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
+            if (*q == '(')
+              for ( ; (*q != ')') && (*q != '\0'); q++);
+          if (*q == '\0')
+            {
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                OptionError,"UnableToParseExpression","`%s'",subexpression);
+              FxReturn(0.0);
+            }
+          for (*q='\0'; ; )
+          {
+            double sans = 0.0;
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
+              exception);
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
+              exception);
+            if (fabs(alpha) < MagickEpsilon)
+              FxReturn(*beta);
+          }
+          FxReturn(*beta);
+        }
       if (IsFxFunction(expression,"drc",3) != MagickFalse)
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
@@ -2476,7 +2508,9 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+5,
             depth+1,beta,exception);
-          FxReturn(floor(alpha+0.5));
+          if ((alpha-floor(alpha)) < (ceil(alpha)-alpha))
+            FxReturn(floor(alpha));
+          FxReturn(ceil(alpha));
         }
       if (LocaleCompare(expression,"r") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
@@ -2606,7 +2640,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
           }
-          FxReturn(alpha);
+          FxReturn(*beta);
         }
       if (LocaleCompare(expression,"w") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
