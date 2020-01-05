@@ -53,6 +53,7 @@
 #include "magick/list.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/pixel-accessor.h"
@@ -62,7 +63,7 @@
 #include "magick/signature-private.h"
 #include "magick/static.h"
 #include "magick/string_.h"
-#include "magick/module.h"
+#include "magick/visual-effects.h"
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -52,7 +52,6 @@
 #include "magick/enhance.h"
 #include "magick/exception.h"
 #include "magick/exception-private.h"
-#include "magick/fx.h"
 #include "magick/gem.h"
 #include "magick/geometry.h"
 #include "magick/image.h"
@@ -70,6 +69,7 @@
 #include "magick/string_.h"
 #include "magick/utility.h"
 #include "magick/version.h"
+#include "magick/visual-effects.h"
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -91,6 +91,7 @@
 #include "magick/utility.h"
 #include "magick/utility-private.h"
 #include "magick/version.h"
+#include "magick/visual-effects.h"
 #include "magick/widget.h"
 #include "magick/xwindow-private.h"
 

@@ -19,6 +19,7 @@
 #define MAGICKCORE_GEM_PRIVATE_H
 
 #include "magick/pixel-accessor.h"
+#include "magick/visual-effects.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {

@@ -291,6 +291,8 @@ MAGICK_BASE_SRCS = \
 	magick/version-private.h \
 	magick/vision.c \
 	magick/vision.h \
+	magick/visual-effects.c \
+	magick/visual-effects.h \
 	magick/vms.h \
 	magick/widget.c \
 	magick/widget.h \
@@ -411,6 +413,7 @@ MAGICK_INCLUDE_HDRS = \
 	magick/utility.h \
 	magick/version.h \
 	magick/vision.h \
+	magick/visual-effects.h \
 	magick/widget.h \
 	magick/xml-tree.h \
 	magick/xwindow.h

@@ -18,8 +18,8 @@
 #ifndef MAGICKCORE_GEM_H
 #define MAGICKCORE_GEM_H
 
-#include "magick/fx.h"
 #include "magick/random_.h"
+#include "magick/visual-effects.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
