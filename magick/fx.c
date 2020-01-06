@@ -1421,12 +1421,14 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
   double
     alpha,
     gamma,
+    sans,
     value;
 
   register const char
     *p;
 
   *beta=0.0;
+  sans=0.0;
   subexpression=AcquireString(expression);
   *subexpression='\0';
   if (depth > FxMaxSubexpressionDepth)
@@ -2141,13 +2143,12 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             }
           for (*q='\0'; ; )
           {
-            double sans = 0.0;
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
-            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
+            gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
               exception);
-            if (fabs(alpha) < MagickEpsilon)
-              FxReturn(*beta);
+            if (fabs(gamma) < MagickEpsilon)
+              break;
           }
           FxReturn(alpha);
         }
@@ -2229,10 +2230,10 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             }
           for (*q='\0'; ; )
           {
-            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
+            gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
               exception);
-            if (fabs(alpha) < MagickEpsilon)
-              FxReturn(*beta);
+            if (fabs(gamma) < MagickEpsilon)
+              break;
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
           }
@@ -2628,11 +2629,10 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             }
           for (*q='\0'; ; )
           {
-            double sans = 0.0;
-            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
+            gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
               exception);
-            if (fabs(alpha) < MagickEpsilon)
-              FxReturn(*beta);
+            if (fabs(gamma) < MagickEpsilon)
+              break;
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
           }
