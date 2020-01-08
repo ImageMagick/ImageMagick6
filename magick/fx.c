@@ -1911,7 +1911,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
           "ParenthesisNestedTooDeeply","`%s'",expression);
       length=CopyMagickString(subexpression,expression+1,MaxTextExtent);
-      if (length > 1)
+      if (length != 0)
         subexpression[length-1]='\0';
       gamma=FxEvaluateSubexpression(fx_info,channel,x,y,subexpression,depth+1,
         beta,exception);
@@ -2112,7 +2112,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           length=1;
           if (strlen(expression) > 6)
             length=CopyMagickString(subexpression,expression+6,MaxTextExtent);
-          if (length > 1)
+          if (length != 0)
             subexpression[length-1]='\0';
           if (fx_info->file != (FILE *) NULL)
             (void) FormatLocaleFile(fx_info->file,
@@ -2130,7 +2130,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             Parse do(expression,condition test).
           */
           length=CopyMagickString(subexpression,expression+6,MagickPathExtent);
-          subexpression[length-1]='\0';
+          if (length != 0)
+            subexpression[length-1]='\0';
           p=subexpression;
           for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
             if (*q == '(')
@@ -2204,7 +2205,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             Parse for(initialization, condition test, expression).
           */
           length=CopyMagickString(subexpression,expression+4,MagickPathExtent);
-          subexpression[length-1]='\0';
+          if (length != 0)
+            subexpression[length-1]='\0';
           p=subexpression;
           for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
             if (*q == '(')
@@ -2299,7 +2301,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             length;
 
           length=CopyMagickString(subexpression,expression+3,MagickPathExtent);
-          subexpression[length-1]='\0';
+          if (length != 0)
+            subexpression[length-1]='\0';
           p=subexpression;
           for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
             if (*q == '(')
@@ -2616,7 +2619,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             Parse while(condition,expression).
           */
           length=CopyMagickString(subexpression,expression+6,MagickPathExtent);
-          subexpression[length-1]='\0';
+          if (length != 0)
+            subexpression[length-1]='\0';
           p=subexpression;
           for (q=(char *) p; (*q != ',') && (*q != '\0'); q++)
             if (*q == '(')
