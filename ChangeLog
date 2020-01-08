@@ -1,3 +1,11 @@
+2020-01-07  6.9.10-85 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-85, GIT revision 15...
+
+2020-01-07  6.9.10-85 Cristy  <quetzlzacatenango@image...>
+  * Support Fx do() iterator.
+  * `magick -size 100x100 xc:black black.pnm` no longer creates a white image
+    (reference https://github.com/ImageMagick/ImageMagick/issues/1817).
+
 2020-01-04  6.9.10-84 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-84, GIT revision 15212:a45335c:20200104.
 
