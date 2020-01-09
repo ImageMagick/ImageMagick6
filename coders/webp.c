@@ -1039,7 +1039,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   WriteSingleWEBPImage(image_info,image,&picture,&memory,&image->exception);
 
 #if defined(MAGICKCORE_WEBPMUX_DELEGATE)
-  if ((image_info->adjoin != MagickFalse) &&
+  if ((GetImageListLength(image) > 1) &&
       (GetPreviousImageInList(image) == (Image *) NULL) &&
       (GetNextImageInList(image) != (Image *) NULL) &&
       (image->iterations != 1))
