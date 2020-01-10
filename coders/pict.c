@@ -808,9 +808,11 @@ static MagickBooleanType ReadRectangle(Image *image,PICTRectangle *rectangle)
   rectangle->left=(short) ReadBlobMSBShort(image);
   rectangle->bottom=(short) ReadBlobMSBShort(image);
   rectangle->right=(short) ReadBlobMSBShort(image);
-  if ((EOFBlob(image) != MagickFalse) ||
-      ((rectangle->bottom-rectangle->top) <= 0) ||
-      ((rectangle->right-rectangle->left) <= 0))
+  if (((EOFBlob(image) != MagickFalse) ||
+      (((rectangle->bottom | rectangle->top |
+         rectangle->right | rectangle->left ) & 0x8000) != 0) ||
+      (rectangle->bottom <= rectangle->top) ||
+      (rectangle->right <= rectangle->left)))
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -1287,7 +1289,7 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               {
                 if (tile_image->storage_class == PseudoClass)
                   {
-                    index=ConstrainColormapIndex(tile_image,*p);
+                    index=ConstrainColormapIndex(tile_image,(ssize_t) *p);
                     SetPixelIndex(indexes+x,index);
                     SetPixelRed(q,
                       tile_image->colormap[(ssize_t) index].red);
