@@ -645,7 +645,9 @@ ModuleExport size_t RegisterWEBPImage(void)
   entry->description=ConstantString("WebP Image Format");
   entry->mime_type=ConstantString("image/webp");
   entry->seekable_stream=MagickTrue;
+#if !defined(MAGICKCORE_WEBPMUX_DELEGATE)
   entry->adjoin=MagickFalse;
+#endif
   entry->magick_module=ConstantString("WEBP");
   entry->magick=(IsImageFormatHandler *) IsWEBP;
   if (*version != '\0')
