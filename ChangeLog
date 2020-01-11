@@ -1,5 +1,5 @@
 2020-01-11  6.9.10-85 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-85, GIT revision 15245:619a715:20200111.
+  * Release ImageMagick version 6.9.10-85, GIT revision 15247:fd64471:20200111.
 
 2020-01-11  6.9.10-85 Dirk Lemstra <dirk@lem.....org>
   * Also support svg:xml-parse-huge when using librsvg.
