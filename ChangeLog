@@ -7,6 +7,8 @@
     (reference https://github.com/ImageMagick/ImageMagick/issues/1817).
   * setjmp/longjmp in jpeg.c no longer trigger undefind behavior (reference
 		https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=37379).
+  * Permit compositing in the CMYK colorspace (reference
+    https://imagemagick.org/discourse-server/viewtopic.php?f=3&t=37368).
 
 2020-01-04  6.9.10-84 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-84, GIT revision 15212:a45335c:20200104.
