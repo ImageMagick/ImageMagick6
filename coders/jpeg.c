@@ -1074,7 +1074,7 @@ static void JPEGSetImageSamplingFactor(struct jpeg_decompress_struct *jpeg_info,
     sampling_factor);
 }
 
-static Image *_ReadJPEGImage(const ImageInfo *image_info,
+static Image *ReadJPEGImage_(const ImageInfo *image_info,
   struct jpeg_decompress_struct *jpeg_info,ExceptionInfo *exception)
 {
   char
@@ -1595,7 +1595,7 @@ static Image *ReadJPEGImage(const ImageInfo *image_info,
   struct jpeg_decompress_struct
     jpeg_info;
 
-  return(_ReadJPEGImage(image_info,&jpeg_info,exception));
+  return(ReadJPEGImage_(image_info,&jpeg_info,exception));
 }
 #endif
 
@@ -2240,7 +2240,7 @@ static char **SamplingFactorToList(const char *text)
   return(textlist);
 }
 
-static MagickBooleanType _WriteJPEGImage(const ImageInfo *image_info,
+static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
   Image *image,struct jpeg_compress_struct *jpeg_info)
 {
   const char
@@ -3057,6 +3057,6 @@ static MagickBooleanType WriteJPEGImage(const ImageInfo *image_info,
   struct jpeg_compress_struct
     jpeg_info;
 
-  return(_WriteJPEGImage(image_info,image,&jpeg_info));
+  return(WriteJPEGImage_(image_info,image,&jpeg_info));
 }
 #endif
