@@ -629,7 +629,8 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
       /*
         Monochrome image.
       */
-      intensity=0.0;
+      intensity=GetPixelLuma(image,image->colormap+0) < QuantumRange/2.0 ? 0.0 :
+        QuantumRange;
       if ((image->colors > 1) &&
           (GetPixelLuma(image,image->colormap+0) > 
            GetPixelLuma(image,image->colormap+1)))
