@@ -5146,9 +5146,6 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
         }
         case ReplaceMethod:
         {
-          MagickBooleanType
-            sync;
-
           PixelPacket
             target;
 
@@ -5172,8 +5169,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
               (void) GetFillColor(draw_info,x,y,q);
               q++;
             }
-            sync=SyncCacheViewAuthenticPixels(image_view,exception);
-            if (sync == MagickFalse)
+            status&=SyncCacheViewAuthenticPixels(image_view,exception);
+            if (status == MagickFalse)
               break;
           }
           break;
@@ -5184,7 +5181,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           MagickPixelPacket
             target;
 
-          (void) GetOneVirtualMagickPixel(image,x,y,&target,exception);
+          status&=GetOneVirtualMagickPixel(image,x,y,&target,exception);
           if (primitive_info->method == FillToBorderMethod)
             {
               target.red=(MagickRealType) draw_info->border_color.red;
@@ -5198,9 +5195,6 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
         }
         case ResetMethod:
         {
-          MagickBooleanType
-            sync;
-
           for (y=0; y < (ssize_t) image->rows; y++)
           {
             register PixelPacket
@@ -5218,8 +5212,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
               (void) GetFillColor(draw_info,x,y,q);
               q++;
             }
-            sync=SyncCacheViewAuthenticPixels(image_view,exception);
-            if (sync == MagickFalse)
+            status&=SyncCacheViewAuthenticPixels(image_view,exception);
+            if (status == MagickFalse)
               break;
           }
           break;
@@ -5230,7 +5224,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
     case MattePrimitive:
     {
       if (image->matte == MagickFalse)
-        (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
+        status&=SetImageAlphaChannel(image,OpaqueAlphaChannel);
       switch (primitive_info->method)
       {
         case PointMethod:
@@ -5252,9 +5246,6 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
         }
         case ReplaceMethod:
         {
-          MagickBooleanType
-            sync;
-
           PixelPacket
             pixel,
             target;
@@ -5283,8 +5274,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
               SetPixelOpacity(q,pixel.opacity);
               q++;
             }
-            sync=SyncCacheViewAuthenticPixels(image_view,exception);
-            if (sync == MagickFalse)
+            status&=SyncCacheViewAuthenticPixels(image_view,exception);
+            if (status == MagickFalse)
               break;
           }
           break;
@@ -5295,7 +5286,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           MagickPixelPacket
             target;
 
-          (void) GetOneVirtualMagickPixel(image,x,y,&target,exception);
+          status&=GetOneVirtualMagickPixel(image,x,y,&target,exception);
           if (primitive_info->method == FillToBorderMethod)
             {
               target.red=(MagickRealType) draw_info->border_color.red;
@@ -5309,9 +5300,6 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
         }
         case ResetMethod:
         {
-          MagickBooleanType
-            sync;
-
           PixelPacket
             pixel;
 
@@ -5333,8 +5321,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
               SetPixelOpacity(q,pixel.opacity);
               q++;
             }
-            sync=SyncCacheViewAuthenticPixels(image_view,exception);
-            if (sync == MagickFalse)
+            status&=SyncCacheViewAuthenticPixels(image_view,exception);
+            if (status == MagickFalse)
               break;
           }
           break;
@@ -5402,12 +5390,12 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           (void) FormatLocaleString(geometry,MaxTextExtent,"%gx%g!",
             primitive_info[1].point.x,primitive_info[1].point.y);
           composite_image->filter=image->filter;
-          (void) TransformImage(&composite_image,(char *) NULL,geometry);
+          status&=TransformImage(&composite_image,(char *) NULL,geometry);
         }
       if (composite_image->matte == MagickFalse)
-        (void) SetImageAlphaChannel(composite_image,OpaqueAlphaChannel);
+        status&=SetImageAlphaChannel(composite_image,OpaqueAlphaChannel);
       if (draw_info->opacity != OpaqueOpacity)
-        (void) SetImageOpacity(composite_image,draw_info->opacity);
+        status&=SetImageOpacity(composite_image,draw_info->opacity);
       SetGeometry(image,&geometry);
       image->gravity=draw_info->gravity;
       geometry.x=x;
@@ -5423,9 +5411,9 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       composite_image->interpolate=image->interpolate;
       if ((draw_info->compose == OverCompositeOp) ||
           (draw_info->compose == SrcOverCompositeOp))
-        (void) DrawAffineImage(image,composite_image,&affine);
+        status&=DrawAffineImage(image,composite_image,&affine);
       else
-        (void) CompositeImage(image,draw_info->compose,composite_image,
+        status&=CompositeImage(image,draw_info->compose,composite_image,
           geometry.x,geometry.y);
       composite_image=DestroyImage(composite_image);
       break;
@@ -5495,7 +5483,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           clone_info->stroke.opacity=(Quantum) TransparentOpacity;
           status&=DrawPolygonPrimitive(image,clone_info,primitive_info);
           clone_info=DestroyDrawInfo(clone_info);
-          (void) DrawDashPolygon(draw_info,primitive_info,image);
+          if (status != MagickFalse)
+            status&=DrawDashPolygon(draw_info,primitive_info,image);
           break;
         }
       mid=ExpandAffine(&draw_info->affine)*SaneStrokeWidth(image,draw_info)/2.0;
@@ -5524,7 +5513,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
                (draw_info->linejoin == RoundJoin)) ||
                (primitive_info[i].primitive != UndefinedPrimitive))
             {
-              (void) DrawPolygonPrimitive(image,draw_info,primitive_info);
+              status&=DrawPolygonPrimitive(image,draw_info,primitive_info);
               break;
             }
           clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
@@ -5532,7 +5521,8 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
           clone_info->stroke.opacity=(Quantum) TransparentOpacity;
           status&=DrawPolygonPrimitive(image,clone_info,primitive_info);
           clone_info=DestroyDrawInfo(clone_info);
-          status&=DrawStrokePolygon(image,draw_info,primitive_info);
+          if (status != MagickFalse)
+            status&=DrawStrokePolygon(image,draw_info,primitive_info);
           break;
         }
       status&=DrawPolygonPrimitive(image,draw_info,primitive_info);
