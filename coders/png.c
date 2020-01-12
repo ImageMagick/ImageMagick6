@@ -8788,7 +8788,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
          (void) LogMagickEvent(CoderEvent,GetMagickModule(),
              "        i    (red,green,blue,opacity)");
 
-         for (i=0; i < MagickMin(image->colors,256); i++)
+         for (i=0; i < (ssize_t) MagickMin(image->colors,256); i++)
          {
                (void) LogMagickEvent(CoderEvent,GetMagickModule(),
                    "        %d    (%d,%d,%d,%d)",

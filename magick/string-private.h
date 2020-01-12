@@ -40,7 +40,7 @@ static inline double SiPrefixToDoubleInterval(const char *string,
   return(value);
 }
 
-static inline char *StringLocateSubstring(const char *haystack,
+static inline const char *StringLocateSubstring(const char *haystack,
   const char *needle)
 {
 #if defined(MAGICKCORE_HAVE_STRCASESTR)

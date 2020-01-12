@@ -1406,7 +1406,7 @@ MagickExport MagickBooleanType PlasmaImageProxy(Image *image,
   double
     plasma;
 
-  MagickBooleanType
+  MagickStatusType
     status;
 
   PixelPacket
@@ -1454,7 +1454,7 @@ MagickExport MagickBooleanType PlasmaImageProxy(Image *image,
       local_info.y1=(double) y_mid;
       status&=PlasmaImageProxy(image,image_view,u_view,v_view,random_info,
         &local_info,attenuate,depth);
-      return(status);
+      return(status == 0 ? MagickFalse : MagickTrue);
     }
   x_mid=(ssize_t) ceil((segment->x1+segment->x2)/2-0.5);
   y_mid=(ssize_t) ceil((segment->y1+segment->y2)/2-0.5);
@@ -1596,7 +1596,7 @@ MagickExport MagickBooleanType PlasmaImageProxy(Image *image,
     }
   if ((fabs(segment->x2-segment->x1) < 3.0) &&
       (fabs(segment->y2-segment->y1) < 3.0))
-    return(status);
+    return(status == 0 ? MagickFalse : MagickTrue);
   return(MagickFalse);
 }
 

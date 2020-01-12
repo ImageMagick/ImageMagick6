@@ -1000,11 +1000,11 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
       offset+=2;
     else
       offset++;
-     if (offset >= image->rows)
-       {
-         base++;
-         offset=base;
-       }
+    if (offset >= (ssize_t) image->rows)
+      {
+        base++;
+        offset=base;
+      }
     if (image->previous == (Image *) NULL)
       {
         status=SetImageProgress(image,SaveImageTag,(MagickOffsetType) y,
