@@ -2277,6 +2277,37 @@ MagickExport char *StringToken(const char *delimiters,char **string)
 */
 MagickExport char **StringToList(const char *text)
 {
+  return(StringToStrings(text,(size_t *) NULL));
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%  S t r i n g T o S t r i n g s                                              %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  StringToStrings() converts a text string into a list by segmenting the text
+%  string at each carriage return discovered.  The list is converted to HEX
+%  characters if any control characters are discovered within the text string.
+%
+%  The format of the StringToList method is:
+%
+%      char **StringToList(const char *text,size_t *lines)
+%
+%  A description of each parameter follows:
+%
+%    o text:  Specifies the string to segment into a list.
+%
+%    o count: Return value for the number of items in the list.
+%
+*/
+MagickExport char **StringToStrings(const char *text,size_t *count)
+{
   char
     **textlist;
 
@@ -2290,7 +2321,11 @@ MagickExport char **StringToList(const char *text)
     lines;
 
   if (text == (char *) NULL)
-    return((char **) NULL);
+    {
+      if (count != (size_t *) NULL)
+        *count=0;
+      return((char **) NULL);
+    }
   for (p=text; *p != '\0'; p++)
     if (((int) ((unsigned char) *p) < 32) &&
         (isspace((int) ((unsigned char) *p)) == 0))
@@ -2331,7 +2366,7 @@ MagickExport char **StringToList(const char *text)
   else
     {
       char
-        hex_string[MaxTextExtent];
+        hex_string[MagickPathExtent];
 
       register char
         *q;
@@ -2350,21 +2385,21 @@ MagickExport char **StringToList(const char *text)
       p=text;
       for (i=0; i < (ssize_t) lines; i++)
       {
-        ssize_t
+        size_t
           length;
 
-        textlist[i]=(char *) AcquireQuantumMemory(2UL*MaxTextExtent,
+        textlist[i]=(char *) AcquireQuantumMemory(2UL*MagickPathExtent,
           sizeof(**textlist));
         if (textlist[i] == (char *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"UnableToConvertText");
-        (void) FormatLocaleString(textlist[i],MaxTextExtent,"0x%08lx: ",
+        (void) FormatLocaleString(textlist[i],MagickPathExtent,"0x%08lx: ",
           (long) (CharsPerLine*i));
         q=textlist[i]+strlen(textlist[i]);
         length=strlen(p);
         for (j=1; j <= (ssize_t) MagickMin(length,CharsPerLine); j++)
         {
-          (void) FormatLocaleString(hex_string,MaxTextExtent,"%02x",*(p+j));
-          (void) CopyMagickString(q,hex_string,MaxTextExtent);
+          (void) FormatLocaleString(hex_string,MagickPathExtent,"%02x",*(p+j));
+          (void) CopyMagickString(q,hex_string,MagickPathExtent);
           q+=2;
           if ((j % 0x04) == 0)
             *q++=' ';
@@ -2392,6 +2427,8 @@ MagickExport char **StringToList(const char *text)
           ThrowFatalException(ResourceLimitFatalError,"UnableToConvertText");
       }
     }
+  if (count != (size_t *) NULL)
+    *count=lines;
   textlist[i]=(char *) NULL;
   return(textlist);
 }
