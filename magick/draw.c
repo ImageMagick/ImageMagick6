@@ -7316,7 +7316,7 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
             theta.q+=2.0*MagickPI;
           arc_segments=(size_t) ceil((double) ((theta.q-theta.p)/
             (2.0*sqrt((double) (1.0/mid)))));
-          CheckPathExtent(arc_segments+6*BezierQuantum+360);
+          CheckPathExtent(arc_segments);
           path_q[q].x=box_q[1].x;
           path_q[q].y=box_q[1].y;
           q++;
