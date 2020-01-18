@@ -762,13 +762,16 @@ static MagickBooleanType ClassifyImageColors(CubeInfo *cube_info,
     Classify the first cube_info->maximum_colors colors to a tree depth of 8.
   */
   SetAssociatedAlpha(image,cube_info);
-  if ((cube_info->quantize_info->colorspace != UndefinedColorspace) &&
-      (cube_info->quantize_info->colorspace != CMYKColorspace))
-    (void) TransformImageColorspace((Image *) image,
-      cube_info->quantize_info->colorspace);
-  else
-    if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
-      (void) TransformImageColorspace((Image *) image,sRGBColorspace);
+  if (cube_info->quantize_info->colorspace != image->colorspace)
+    {
+      if ((cube_info->quantize_info->colorspace != UndefinedColorspace) &&
+          (cube_info->quantize_info->colorspace != CMYKColorspace))
+        (void) TransformImageColorspace((Image *) image,
+          cube_info->quantize_info->colorspace);
+      else
+        if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+          (void) TransformImageColorspace((Image *) image,sRGBColorspace);
+    }
   midpoint.red=(MagickRealType) QuantumRange/2.0;
   midpoint.green=(MagickRealType) QuantumRange/2.0;
   midpoint.blue=(MagickRealType) QuantumRange/2.0;
@@ -974,9 +977,10 @@ static MagickBooleanType ClassifyImageColors(CubeInfo *cube_info,
       break;
   }
   image_view=DestroyCacheView(image_view);
-  if ((cube_info->quantize_info->colorspace != UndefinedColorspace) &&
-      (cube_info->quantize_info->colorspace != CMYKColorspace))
-    (void) TransformImageColorspace((Image *) image,sRGBColorspace);
+  if (cube_info->quantize_info->colorspace != image->colorspace)
+    if ((cube_info->quantize_info->colorspace != UndefinedColorspace) &&
+        (cube_info->quantize_info->colorspace != CMYKColorspace))
+      (void) TransformImageColorspace((Image *) image,sRGBColorspace);
   return(y < (ssize_t) image->rows ? MagickFalse : MagickTrue);
 }
 
