@@ -1,5 +1,5 @@
 2020-01-18  6.9.10-87 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-87, GIT revision 15283:84724a1:20200118
+  * Release ImageMagick version 6.9.10-87, GIT revision 15285:f6ba467:20200118
 
 2020-01-12  6.9.10-87 Cristy  <quetzlzacatenango@image...>
   * Conditional compile for huge xml pages for RSVG delegate library.
