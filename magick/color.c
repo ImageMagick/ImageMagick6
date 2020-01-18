@@ -1146,13 +1146,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     case RedChannel:
     {
       color=pixel->red;
-      if ((pixel->colorspace == HCLColorspace) ||
-          (pixel->colorspace == HCLpColorspace) ||
-          (pixel->colorspace == HSBColorspace) ||
-          (pixel->colorspace == HSIColorspace) ||
-          (pixel->colorspace == HSLColorspace) ||
-          (pixel->colorspace == HSVColorspace) ||
-          (pixel->colorspace == HWBColorspace))
+      if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=360.0f;
       if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
         scale=100.0f;
@@ -1161,13 +1155,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     case GreenChannel:
     {
       color=pixel->green;
-      if ((pixel->colorspace == HCLColorspace) ||
-          (pixel->colorspace == HCLpColorspace) ||
-          (pixel->colorspace == HSBColorspace) ||
-          (pixel->colorspace == HSIColorspace) ||
-          (pixel->colorspace == HSLColorspace) ||
-          (pixel->colorspace == HSVColorspace) ||
-          (pixel->colorspace == HWBColorspace))
+      if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=100.0f;
       if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
         color-=QuantumRange/2.0f;
@@ -1176,13 +1164,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     case BlueChannel:
     {
       color=pixel->blue;
-      if ((pixel->colorspace == HCLColorspace) ||
-          (pixel->colorspace == HCLpColorspace) ||
-          (pixel->colorspace == HSBColorspace) ||
-          (pixel->colorspace == HSIColorspace) ||
-          (pixel->colorspace == HSLColorspace) ||
-          (pixel->colorspace == HSVColorspace) ||
-          (pixel->colorspace == HWBColorspace))
+      if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=100.0f;
       if (pixel->colorspace == LabColorspace)
         color-=QuantumRange/2.0f;
@@ -1693,10 +1675,7 @@ MagickExport MagickBooleanType IsColorSimilar(const Image *image,
   distance*=3.0;  /* rescale appropriately */
   fuzz*=3.0;
   pixel=(MagickRealType) GetPixelRed(p)-GetPixelRed(q);
-  if ((image->colorspace == HCLColorspace) ||
-      (image->colorspace == HSBColorspace) ||
-      (image->colorspace == HSLColorspace) ||
-      (image->colorspace == HWBColorspace))
+  if (IsHueCompatibleColorspace(image->colorspace) != MagickFalse)
     {
       /*
         This calculates a arc distance for hue.  Really it should be a vector
@@ -2004,8 +1983,7 @@ MagickExport MagickBooleanType IsMagickColorSimilar(const MagickPixelPacket *p,
   distance*=3.0;  /* rescale appropriately */
   fuzz*=3.0;
   pixel=p->red-q->red;
-  if ((p->colorspace == HCLColorspace) || (p->colorspace == HSBColorspace) ||
-      (p->colorspace == HSLColorspace) || (p->colorspace == HWBColorspace))
+  if (IsHueCompatibleColorspace(p->colorspace) != MagickFalse)
     {
       /*
         This calculates a arc distance for hue.  Really if should be a vector
