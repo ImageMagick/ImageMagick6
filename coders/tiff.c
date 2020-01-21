@@ -124,6 +124,7 @@ typedef enum
   ReadTileMethod,
   ReadContigTileMethod,
   ReadPlanarTileMethod,
+  ReadRGBATileMethod,
   ReadGenericMethod
 } TIFFMethodType;
 
@@ -1715,6 +1716,8 @@ RestoreMSCWarning
             if (interlace == PLANARCONFIG_SEPARATE)
               method=ReadPlanarTileMethod;
           }
+        if (image->compression == JPEGCompression)
+          method=ReadRGBATileMethod;
       }
     quantum_info->endian=LSBEndian;
     quantum_type=RGBQuantum;
@@ -2308,6 +2311,113 @@ RestoreMSCWarning
           }
         }
         tile_pixels=(unsigned char *) RelinquishMagickMemory(tile_pixels);
+        break;
+      }
+      case ReadRGBATileMethod:
+      {
+        register uint32
+          *p;
+
+        uint32
+          *tile_pixels,
+          columns,
+          rows;
+
+        /*
+          Convert tiled TIFF image to DirectClass MIFF image.
+        */
+        if ((TIFFGetField(tiff,TIFFTAG_TILEWIDTH,&columns) != 1) ||
+            (TIFFGetField(tiff,TIFFTAG_TILELENGTH,&rows) != 1))
+          ThrowTIFFException(CoderError,"ImageIsNotTiled");
+        if ((AcquireMagickResource(WidthResource,columns) == MagickFalse) ||
+            (AcquireMagickResource(HeightResource,rows) == MagickFalse))
+          ThrowTIFFException(ImageError,"WidthOrHeightExceedsLimit");
+        (void) SetImageStorageClass(image,DirectClass);
+        if (HeapOverflowSanityCheck(rows,sizeof(*tile_pixels)) != MagickFalse)
+          ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
+        tile_pixels=(uint32 *) AcquireQuantumMemory(columns,rows*
+           sizeof(*tile_pixels));
+        if (tile_pixels == (uint32 *) NULL)
+          ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
+        for (y=0; y < (ssize_t) image->rows; y+=rows)
+        {
+          PixelPacket
+            *tile;
+
+          register ssize_t
+            x;
+
+          register PixelPacket
+            *magick_restrict q;
+
+          size_t
+            columns_remaining,
+            rows_remaining;
+
+          rows_remaining=image->rows-y;
+          if ((ssize_t) (y+rows) < (ssize_t) image->rows)
+            rows_remaining=rows;
+          tile=QueueAuthenticPixels(image,0,y,image->columns,rows_remaining,
+            exception);
+          if (tile == (PixelPacket *) NULL)
+            break;
+          for (x=0; x < (ssize_t) image->columns; x+=columns)
+          {
+            size_t
+              column,
+              row;
+
+            if (TIFFReadRGBATile(tiff,(uint32) x,(uint32) y,tile_pixels) == 0)
+              break;
+            columns_remaining=image->columns-x;
+            if ((ssize_t) (x+columns) < (ssize_t) image->columns)
+              columns_remaining=columns;
+            p=tile_pixels+(rows-rows_remaining)*columns;
+            q=tile+(image->columns*(rows_remaining-1)+x);
+            for (row=rows_remaining; row > 0; row--)
+            {
+              if (image->matte != MagickFalse)
+                for (column=columns_remaining; column > 0; column--)
+                {
+                  SetPixelRed(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetR(*p)));
+                  SetPixelGreen(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetG(*p)));
+                  SetPixelBlue(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetB(*p)));
+                  SetPixelAlpha(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetA(*p)));
+                  q++;
+                  p++;
+                }
+              else
+                for (column=columns_remaining; column > 0; column--)
+                {
+                  SetPixelRed(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetR(*p)));
+                  SetPixelGreen(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetG(*p)));
+                  SetPixelBlue(q,ScaleCharToQuantum((unsigned char)
+                    TIFFGetB(*p)));
+                  SetPixelOpacity(q,OpaqueOpacity);
+                  q++;
+                  p++;
+                }
+              p+=columns-columns_remaining;
+              q-=(image->columns+columns_remaining);
+            }
+          }
+          if (SyncAuthenticPixels(image,exception) == MagickFalse)
+            break;
+          if (image->previous == (Image *) NULL)
+            {
+              status=SetImageProgress(image,LoadImageTag,(MagickOffsetType) y,
+                image->rows);
+              if (status == MagickFalse)
+                break;
+            }
+        }
+        tile_pixels=(uint32 *) RelinquishMagickMemory(tile_pixels);
         break;
       }
       case ReadGenericMethod:
