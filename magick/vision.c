@@ -157,7 +157,8 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     *artifact;
 
   double
-    area_threshold;
+    max_threshold,
+    min_threshold;
 
   Image
     *component_image;
@@ -437,31 +438,32 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       component_image=DestroyImage(component_image);
       ThrowImageException(ResourceLimitError,"TooManyObjects");
     }
+  min_threshold=0.0;
+  max_threshold=0.0;
   component_image->colors=(size_t) n;
   for (i=0; i < (ssize_t) component_image->colors; i++)
   {
     object[i].bounding_box.width-=(object[i].bounding_box.x-1);
     object[i].bounding_box.height-=(object[i].bounding_box.y-1);
-    object[i].color.red=QuantumRange*(object[i].color.red/object[i].area);
-    object[i].color.green=QuantumRange*(object[i].color.green/object[i].area);
-    object[i].color.blue=QuantumRange*(object[i].color.blue/object[i].area);
+    object[i].color.red/=(object[i].area/QuantumRange);
+    object[i].color.green/=(object[i].area/QuantumRange);
+    object[i].color.blue/=(object[i].area/QuantumRange);
     if (image->matte != MagickFalse)
-      object[i].color.opacity=QuantumRange*(object[i].color.opacity/
-        object[i].area);
+      object[i].color.opacity/=(object[i].area/QuantumRange);
     if (image->colorspace == CMYKColorspace)
-      object[i].color.index=QuantumRange*(object[i].color.index/object[i].area);
-    object[i].centroid.x=object[i].centroid.x/object[i].area;
-    object[i].centroid.y=object[i].centroid.y/object[i].area;
+      object[i].color.index/=(object[i].area/QuantumRange);
+    object[i].centroid.x/=object[i].area;
+    object[i].centroid.y/=object[i].area;
+    max_threshold+=object[i].area;
   }
+  max_threshold+=MagickEpsilon;
   artifact=GetImageArtifact(image,"connected-components:area-threshold");
-  area_threshold=0.0;
   if (artifact != (const char *) NULL)
-    area_threshold=StringToDouble(artifact,(char **) NULL);
-  if (area_threshold > 0.0)
     {
       /*
-        Merge objects below area threshold.
+        Merge any object not within the min and max area threshold.
       */
+      (void) sscanf(artifact,"%lf%*[ -]%lf",&min_threshold,&max_threshold);
       component_view=AcquireAuthenticCacheView(component_image,exception);
       for (i=0; i < (ssize_t) component_image->colors; i++)
       {
@@ -479,7 +481,8 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
 
         if (status == MagickFalse)
           continue;
-        if ((double) object[i].area >= area_threshold)
+        if (((double) object[i].area >= min_threshold) &&
+            ((double) object[i].area < max_threshold))
           continue;
         for (j=0; j < (ssize_t) component_image->colors; j++)
           object[j].census=0;
@@ -570,11 +573,13 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
           object[i].color.opacity);
       }
     }
-  artifact=GetImageArtifact(image,"connected-components:keep");
+  artifact=GetImageArtifact(image,"connected-components:keep-ids");
+  if (artifact == (const char *) NULL)
+    artifact=GetImageArtifact(image,"connected-components:keep");
   if (artifact != (const char *) NULL)
     {
       /*
-        Keep these objects (make others transparent).
+        Keep selected objects based on ID (make others transparent).
       */
       for (i=0; i < (ssize_t) component_image->colors; i++)
         object[i].census=0;
@@ -602,15 +607,37 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       {
         if (object[i].census != 0)
           continue;
+        object[i].color.matte=MagickTrue;
         component_image->matte=MagickTrue;
         component_image->colormap[i].opacity=TransparentOpacity;
       }
     }
-  artifact=GetImageArtifact(image,"connected-components:remove");
+  artifact=GetImageArtifact(image,"connected-components:keep-top");
+  if (artifact != (const char *) NULL)
+    {
+      double
+        top_ids;
+
+      /*
+        Keep top objects with most area (make others transparent).
+      */
+      top_ids=StringToDouble(artifact,(char **) NULL);
+      qsort((void *) object,component_image->colors,sizeof(*object),
+        CCObjectInfoCompare);
+      for (i=(ssize_t) top_ids; i < (ssize_t) component_image->colors; i++)
+      {
+        object[object[i].id].color.matte=MagickTrue;
+        component_image->matte=MagickTrue;
+        component_image->colormap[object[i].id].opacity=TransparentOpacity;
+      }
+    }
+  artifact=GetImageArtifact(image,"connected-components:remove-ids");
+  if (artifact == (const char *) NULL)
+    artifact=GetImageArtifact(image,"connected-components:remove");
   if (artifact != (const char *) NULL)
     {
       /*
-        Remove these objects (make them transparent).
+        Remove select objects based on ID (make them transparent).
       */
       for (c=(char *) artifact; *c != '\0';)
       {
@@ -680,7 +707,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
           size_t
             id;
 
-          id=indexes[x];
+          id=(size_t) indexes[x];
           if (x < object[id].bounding_box.x)
             object[id].bounding_box.x=x;
           if (x > (ssize_t) object[id].bounding_box.width)
@@ -704,8 +731,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       component_view=DestroyCacheView(component_view);
       qsort((void *) object,component_image->colors,sizeof(*object),
         CCObjectInfoCompare);
-      (void) fprintf(stdout,
-        "Objects (id: bounding-box centroid area mean-color):\n");
+      artifact=GetImageArtifact(image,"connected-components:exclude-header");
+      if (IsStringTrue(artifact) == MagickFalse)
+        (void) fprintf(stdout,
+          "Objects (id: bounding-box centroid area mean-color):\n");
       for (i=0; i < (ssize_t) component_image->colors; i++)
       {
         char
@@ -713,7 +742,8 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
 
         if (status == MagickFalse)
           break;
-        if (object[i].area <= area_threshold)
+        if (((double) object[i].area < min_threshold) ||
+            ((double) object[i].area >= max_threshold))
           continue;
         GetColorTuple(&object[i].color,MagickFalse,mean_color);
         (void) fprintf(stdout,
