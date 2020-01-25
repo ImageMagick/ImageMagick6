@@ -3,6 +3,8 @@
 
 2020-01-20  6.9.10-88 Cristy  <quetzlzacatenango@image...>
   * Support 32-bit tiles TIFF images.
+  * New -connected-component options (reference
+    https://legacy.imagemagick.org/script/connected-components.php).
 
 2020-01-18  6.9.10-87 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-87, GIT revision 15285:f6ba467:20200118
