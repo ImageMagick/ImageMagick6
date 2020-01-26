@@ -667,6 +667,12 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
     ssize_t
       option_type;
 
+    static const char
+      *source_date_epoch = (const char *) NULL;
+
+    static MagickBooleanType
+      epoch_initalized = MagickFalse;
+
     next->taint=MagickFalse;
     GetPathComponent(magick_filename,MagickPath,magick_path);
     if (*magick_path == '\0' && *next->magick == '\0')
@@ -679,10 +685,10 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       next->magick_columns=next->columns;
     if (next->magick_rows == 0)
       next->magick_rows=next->rows;
-  (void) GetImageProperty(next,"exif:*");
-  (void) GetImageProperty(next,"icc:*");
-  (void) GetImageProperty(next,"iptc:*");
-  (void) GetImageProperty(next,"xmp:*");
+    (void) GetImageProperty(next,"exif:*");
+    (void) GetImageProperty(next,"icc:*");
+    (void) GetImageProperty(next,"iptc:*");
+    (void) GetImageProperty(next,"xmp:*");
     value=GetImageProperty(next,"exif:Orientation");
     if (value == (char *) NULL)
       value=GetImageProperty(next,"tiff:Orientation");
@@ -806,7 +812,12 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
         next->iptc_profile.length=GetStringInfoLength(profile);
         next->iptc_profile.info=GetStringInfoDatum(profile);
       }
-    if (getenv("SOURCE_DATE_EPOCH") == (const char *) NULL)
+    if (epoch_initalized == MagickFalse)
+      {
+        source_date_epoch=getenv("SOURCE_DATE_EPOCH");
+        epoch_initalized=MagickTrue;
+      }
+    if (source_date_epoch == (const char *) NULL)
       {
         (void) FormatMagickTime((time_t) GetBlobProperties(next)->st_mtime,
           MaxTextExtent,timestamp);
