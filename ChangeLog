@@ -1,7 +1,7 @@
 2020-01-26  6.9.10-89 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-89, GIT revision 15...
+  * Release ImageMagick version 6.9.10-89, GIT revision 15318:2b12203:20200126
 
-2020-01-20  6.9.10-89 Cristy  <quetzlzacatenango@image...>
+2020-01-26  6.9.10-89 Cristy  <quetzlzacatenango@image...>
   * Make png creation reproducible (reference
     https://github.com/ImageMagick/ImageMagick/pull/1270).
   * Refactor uninitialize variable for -fx "while(,)" expression.
