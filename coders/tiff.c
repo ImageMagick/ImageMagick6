@@ -1837,6 +1837,7 @@ RestoreMSCWarning
             }
             case 4: quantum_type=AlphaQuantum; break;
           }
+          p=strip_pixels;
           rows_remaining=0;
           for (y=0; y < (ssize_t) image->rows; y++)
           {
