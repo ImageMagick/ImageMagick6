@@ -557,22 +557,6 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       component_view=DestroyCacheView(component_view);
       (void) SyncImage(component_image);
     }
-  artifact=GetImageArtifact(image,"connected-components:mean-color");
-  if (IsMagickTrue(artifact) != MagickFalse)
-    {
-      /*
-        Replace object with mean color.
-      */
-      for (i=0; i < (ssize_t) component_image->colors; i++)
-      {
-        component_image->colormap[i].red=ClampToQuantum(object[i].color.red);
-        component_image->colormap[i].green=ClampToQuantum(
-          object[i].color.green);
-        component_image->colormap[i].blue=ClampToQuantum(object[i].color.blue);
-        component_image->colormap[i].opacity=ClampToQuantum(
-          object[i].color.opacity);
-      }
-    }
   artifact=GetImageArtifact(image,"connected-components:keep-ids");
   if (artifact == (const char *) NULL)
     artifact=GetImageArtifact(image,"connected-components:keep");
@@ -661,6 +645,22 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
           component_image->matte=MagickTrue;
           component_image->colormap[first].opacity=TransparentOpacity;
         }
+      }
+    }
+  artifact=GetImageArtifact(image,"connected-components:mean-color");
+  if (IsMagickTrue(artifact) != MagickFalse)
+    {
+      /*
+        Replace object with mean color.
+      */
+      for (i=0; i < (ssize_t) component_image->colors; i++)
+      {
+        component_image->colormap[i].red=ClampToQuantum(object[i].color.red);
+        component_image->colormap[i].green=ClampToQuantum(
+          object[i].color.green);
+        component_image->colormap[i].blue=ClampToQuantum(object[i].color.blue);
+        component_image->colormap[i].opacity=ClampToQuantum(
+          object[i].color.opacity);
       }
     }
   (void) SyncImage(component_image);
