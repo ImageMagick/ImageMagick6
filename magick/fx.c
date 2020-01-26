@@ -1415,7 +1415,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
   subexpression=DestroyString(subexpression); \
   return(value); \
 }
-#define FxParseSubscription(subexpression,sentinal,p,q) \
+#define FxParseConditional(subexpression,sentinal,p,q) \
 { \
   p=subexpression; \
   for (q=(char *) p; (*q != (sentinal)) && (*q != '\0'); q++) \
@@ -1431,6 +1431,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         OptionError,"UnableToParseExpression","`%s'",subexpression); \
       FxReturn(0.0); \
     } \
+  if (strlen(q) == 1) \
+    *(q+1)='\0'; \
   *q='\0'; \
 }
 
@@ -1863,8 +1865,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           double
             gamma;
 
-          (void) CopyMagickString(subexpression,++p,MaxTextExtent);
-          FxParseSubscription(subexpression,':',p,q);
+          (void) CopyMagickString(subexpression,++p,MaxTextExtent-1);
+          FxParseConditional(subexpression,':',p,q);
           if (fabs(alpha) >= MagickEpsilon)
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
               exception);
@@ -2139,15 +2141,15 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           /*
             Parse do(expression,condition test).
           */
-          length=CopyMagickString(subexpression,expression+6,MagickPathExtent);
+          length=CopyMagickString(subexpression,expression+6,
+            MagickPathExtent-1);
           if (length != 0)
             subexpression[length-1]='\0';
-          FxParseSubscription(subexpression,',',p,q);
+          FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
-            if (*q != '\0')
-              alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,
-                beta,exception);
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
+              exception);
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
               exception);
             if (fabs(gamma) < MagickEpsilon)
@@ -2206,23 +2208,23 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           /*
             Parse for(initialization, condition test, expression).
           */
-          length=CopyMagickString(subexpression,expression+4,MagickPathExtent);
+          length=CopyMagickString(subexpression,expression+4,
+            MagickPathExtent-1);
           if (length != 0)
             subexpression[length-1]='\0';
-          FxParseSubscription(subexpression,',',p,q);
+          FxParseConditional(subexpression,',',p,q);
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
             exception);
-          (void) CopyMagickString(subexpression,q+1,MagickPathExtent);
-          FxParseSubscription(subexpression,',',p,q);
+          (void) CopyMagickString(subexpression,q+1,MagickPathExtent-1);
+          FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
               exception);
             if (fabs(gamma) < MagickEpsilon)
               break;
-            if (*q != '\0')
-              alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,
-                beta,exception);
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
+              exception);
           }
           FxReturn(alpha);
         }
@@ -2285,14 +2287,15 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           size_t
             length;
 
-          length=CopyMagickString(subexpression,expression+3,MagickPathExtent);
+          length=CopyMagickString(subexpression,expression+3,
+            MagickPathExtent-1);
           if (length != 0)
             subexpression[length-1]='\0';
-          FxParseSubscription(subexpression,',',p,q);
+          FxParseConditional(subexpression,',',p,q);
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
             exception);
-          (void) CopyMagickString(subexpression,q+1,MagickPathExtent);
-          FxParseSubscription(subexpression,',',p,q);
+          (void) CopyMagickString(subexpression,q+1,MagickPathExtent-1);
+          FxParseConditional(subexpression,',',p,q);
           if (fabs(alpha) >= MagickEpsilon)
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
               exception);
@@ -2583,19 +2586,19 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           /*
             Parse while(condition,expression).
           */
-          length=CopyMagickString(subexpression,expression+6,MagickPathExtent);
+          length=CopyMagickString(subexpression,expression+6,
+            MagickPathExtent-1);
           if (length != 0)
             subexpression[length-1]='\0';
-          FxParseSubscription(subexpression,',',p,q);
+          FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
               exception);
             if (fabs(gamma) < MagickEpsilon)
               break;
-            if (*q != '\0')
-              alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,
-                beta,exception);
+            alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
+              exception);
           }
           FxReturn(alpha);
         }
