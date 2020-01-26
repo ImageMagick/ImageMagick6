@@ -12143,8 +12143,7 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
   mng_info->ping_exclude_bKGD=MagickFalse;
   mng_info->ping_exclude_caNv=MagickFalse;
   mng_info->ping_exclude_cHRM=MagickFalse;
-  mng_info->ping_exclude_date=
-    getenv("SOURCE_DATE_EPOCH") != (char *) NULL ? MagickTrue : MagickFalse;
+  mng_info->ping_exclude_date=MagickFalse;
   mng_info->ping_exclude_eXIf=MagickFalse;
   mng_info->ping_exclude_EXIF=MagickFalse; /* hex-encoded EXIF in zTXt */
   mng_info->ping_exclude_gAMA=MagickFalse;
@@ -12154,8 +12153,7 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
   mng_info->ping_exclude_pHYs=MagickFalse;
   mng_info->ping_exclude_sRGB=MagickFalse;
   mng_info->ping_exclude_tEXt=MagickFalse;
-  mng_info->ping_exclude_tIME=
-    getenv("SOURCE_DATE_EPOCH") != (char *) NULL ? MagickTrue : MagickFalse;
+  mng_info->ping_exclude_tIME=MagickFalse;
   mng_info->ping_exclude_tRNS=MagickFalse;
   mng_info->ping_exclude_zCCP=MagickFalse; /* hex-encoded iCCP in zTXt */
   mng_info->ping_exclude_zTXt=MagickFalse;

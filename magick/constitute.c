@@ -806,12 +806,15 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
         next->iptc_profile.length=GetStringInfoLength(profile);
         next->iptc_profile.info=GetStringInfoDatum(profile);
       }
-    (void) FormatMagickTime((time_t) GetBlobProperties(next)->st_mtime,
-      MaxTextExtent,timestamp);
-    (void) SetImageProperty(next,"date:modify",timestamp);
-    (void) FormatMagickTime((time_t) GetBlobProperties(next)->st_ctime,
-      MaxTextExtent,timestamp);
-    (void) SetImageProperty(next,"date:create",timestamp);
+    if (getenv("SOURCE_DATE_EPOCH") == (const char *) NULL)
+      {
+        (void) FormatMagickTime((time_t) GetBlobProperties(next)->st_mtime,
+          MaxTextExtent,timestamp);
+        (void) SetImageProperty(next,"date:modify",timestamp);
+        (void) FormatMagickTime((time_t) GetBlobProperties(next)->st_ctime,
+          MaxTextExtent,timestamp);
+        (void) SetImageProperty(next,"date:create",timestamp);
+      }
     option=GetImageOption(image_info,"delay");
     if (option != (const char *) NULL)
       {
