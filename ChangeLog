@@ -2,7 +2,7 @@
   * Release ImageMagick version 6.9.10-90, GIT revision 15...
 
 2020-01-27  6.9.10-90 Cristy  <quetzlzacatenango@image...>
-  * 
+  * Support additional connected component defines.
 
 2020-01-26  6.9.10-89 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-89, GIT revision 15318:2b12203:20200126
