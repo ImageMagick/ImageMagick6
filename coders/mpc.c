@@ -1146,11 +1146,11 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
     /*
       Write persistent cache meta-information.
     */
-    (void) GetAuthenticPixels(image,0,0,1,1,&image->exception);
+    (void) SetImageStorageClass(image,image->storage_class);
     depth=GetImageQuantumDepth(image,MagickTrue);
     if ((image->storage_class == PseudoClass) &&
         (image->colors > (one << depth)))
-      image->storage_class=DirectClass;
+      (void) SetImageStorageClass(image,DirectClass);
     (void) WriteBlobString(image,"id=MagickPixelCache\n");
     (void) FormatLocaleString(buffer,MaxTextExtent,"magick-signature=%u\n",
       GetMagickCoreSignature((const StringInfo *) NULL));
