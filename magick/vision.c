@@ -398,7 +398,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         object[id].bounding_box.width=(size_t) x;
       if (y < object[id].bounding_box.y)
         object[id].bounding_box.y=y;
-      if (y >=(ssize_t) object[id].bounding_box.height)
+      if (y >= (ssize_t) object[id].bounding_box.height)
         object[id].bounding_box.height=(size_t) y;
       object[id].color.red+=QuantumScale*p->red;
       object[id].color.green+=QuantumScale*p->green;
@@ -441,7 +441,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     }
   min_threshold=0.0;
   max_threshold=0.0;
-  background_id=(-1);
+  background_id=0;
   component_image->colors=(size_t) n;
   for (i=0; i < (ssize_t) component_image->colors; i++)
   {
