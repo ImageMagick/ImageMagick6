@@ -252,8 +252,8 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
 
     if (status == MagickFalse)
       continue;
-    dy=connectivity > 4 ? connect8[n][0] : connect4[n][0];
     dx=connectivity > 4 ? connect8[n][1] : connect4[n][1];
+    dy=connectivity > 4 ? connect8[n][0] : connect4[n][0];
     for (y=0; y < (ssize_t) image->rows; y++)
     {
       register const PixelPacket
@@ -339,12 +339,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       }
     }
   }
-  image_view=DestroyCacheView(image_view);
   /*
     Label connected components.
   */
   n=0;
-  image_view=AcquireVirtualCacheView(image,exception);
   component_view=AcquireAuthenticCacheView(component_image,exception);
   for (y=0; y < (ssize_t) component_image->rows; y++)
   {
@@ -566,7 +564,6 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         }
       }
       component_view=DestroyCacheView(component_view);
-      (void) SyncImage(component_image);
     }
   artifact=GetImageArtifact(image,"connected-components:keep-ids");
   if (artifact == (const char *) NULL)
@@ -679,7 +676,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   if (IsMagickTrue(artifact) != MagickFalse)
     {
       /*
-        Report statistics on unique objects.
+        Report statistics on each unique objects.
       */
       for (i=0; i < (ssize_t) component_image->colors; i++)
       {
