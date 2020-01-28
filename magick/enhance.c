@@ -4276,7 +4276,7 @@ MagickExport MagickBooleanType NormalizeImageChannel(Image *image,
   constant" set to a.
 
   The first version, based on the hyperbolic tangent tanh, when combined with
-  the scaling step, is an exact arithmetic clone of the the sigmoid function
+  the scaling step, is an exact arithmetic clone of the sigmoid function
   based on the logistic curve. The equivalence is based on the identity
 
     1/(1+exp(-t)) = (1+tanh(t/2))/2

@@ -869,7 +869,7 @@ WandExport ssize_t GetPixelViewY(const PixelView *pixel_view)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  IsPixelView() returns MagickTrue if the the parameter is verified as a pixel
+%  IsPixelView() returns MagickTrue if the parameter is verified as a pixel
 %  view container.
 %
 %  The format of the IsPixelView method is:
