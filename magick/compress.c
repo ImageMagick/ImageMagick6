@@ -36,8 +36,7 @@
 %
 %
 */
-
-
+
 /*
   Include declarations.
 */
@@ -63,8 +62,7 @@
 #if defined(MAGICKCORE_ZLIB_DELEGATE)
 #include "zlib.h"
 #endif
-
-
+
 /*
   Typedef declarations.
 */
@@ -89,8 +87,7 @@ typedef struct HuffmanTable
     length,
     count;
 } HuffmanTable;
-
-
+
 /*
   Huffman coding declarations.
 */
@@ -203,8 +200,7 @@ static const HuffmanTable
     { TWId, 0x4b, 8, 60 }, { TWId, 0x32, 8, 61 }, { TWId, 0x33, 8, 62 },
     { TWId, 0x34, 8, 63 }, { TWId, 0x00, 0, 0 }
   };
-
-
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -232,11 +228,11 @@ static const HuffmanTable
 %
 %
 */
-#define MaxLineExtent  36L
-
 static inline void Ascii85Tuple(Ascii85Info *ascii85_info,
   const unsigned char *magick_restrict data)
 {
+#define MaxLineExtent  36L
+
   register ssize_t
     i,
     x;
@@ -630,6 +626,7 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
       index=(IndexPacket) (*p++);
       SetPixelIndex(indexes+x,index);
       SetPixelRGBO(q,image->colormap+(ssize_t) index);
+      q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
       break;
@@ -650,8 +647,7 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
   scanline=(unsigned char *) RelinquishMagickMemory(scanline);
   return(MagickTrue);
 }
-
-
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -894,8 +890,7 @@ RestoreMSCWarning \
   scanline=(unsigned char *) RelinquishMagickMemory(scanline);
   return(MagickTrue);
 }
-
-
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -1057,8 +1052,7 @@ MagickExport MagickBooleanType LZWEncodeImage(Image *image,const size_t length,
   table=(TableType *) RelinquishMagickMemory(table);
   return(MagickTrue);
 }
-
-
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -1193,8 +1187,7 @@ MagickExport MagickBooleanType PackbitsEncodeImage(Image *image,
   packbits=(unsigned char *) RelinquishMagickMemory(packbits);
   return(MagickTrue);
 }
-
-
+
 #if defined(MAGICKCORE_ZLIB_DELEGATE)
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
