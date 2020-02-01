@@ -1,7 +1,7 @@
-2020-02-01  6.9.10-90 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-90, GIT revision 15346:4691fe1:20200201.
+2020-02-01  6.9.10-91 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-91, GIT revision 15346:4691fe1:20200201.
 
-2020-01-27  6.9.10-90 Cristy  <quetzlzacatenango@image...>
+2020-01-27  6.9.10-91 Cristy  <quetzlzacatenango@image...>
   * Support additional connected component defines.
   * Refresh cache morphology when writing MPC images.
 
