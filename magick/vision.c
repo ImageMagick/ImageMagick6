@@ -180,6 +180,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
 
   ssize_t
     background_id,
+    connect4[2][2] = { { -1,  0 }, {  0, -1 } },
+    connect8[4][2] = { { -1, -1 }, { -1,  0 }, { -1,  1 }, {  0, -1 } },
+    dx,
+    dy,
     first,
     last,
     n,
@@ -244,12 +248,6 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   for (n=0; n < (ssize_t) (connectivity > 4 ? 4 : 2); n++)
   {
-    ssize_t
-      connect4[2][2] = { { -1,  0 }, {  0, -1 } },
-      connect8[4][2] = { { -1, -1 }, { -1,  0 }, { -1,  1 }, {  0, -1 } },
-      dx,
-      dy;
-
     if (status == MagickFalse)
       continue;
     dx=connectivity > 4 ? connect8[n][1] : connect4[n][1];
@@ -437,9 +435,9 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       component_image=DestroyImage(component_image);
       ThrowImageException(ResourceLimitError,"TooManyObjects");
     }
+  background_id=0;
   min_threshold=0.0;
   max_threshold=0.0;
-  background_id=0;
   component_image->colors=(size_t) n;
   for (i=0; i < (ssize_t) component_image->colors; i++)
   {
@@ -469,6 +467,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         Merge any object not within the min and max area threshold.
       */
       (void) sscanf(artifact,"%lf%*[ -]%lf",&min_threshold,&max_threshold);
+      image_view=AcquireVirtualCacheView(component_image,exception);
       component_view=AcquireAuthenticCacheView(component_image,exception);
       for (i=0; i < (ssize_t) component_image->colors; i++)
       {
@@ -492,7 +491,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         for (j=0; j < (ssize_t) component_image->colors; j++)
           object[j].census=0;
         bounding_box=object[i].bounding_box;
-        for (y=0; y < (ssize_t) bounding_box.height+2; y++)
+        for (y=0; y < (ssize_t) bounding_box.height; y++)
         {
           register const IndexPacket
             *magick_restrict indexes;
@@ -505,21 +504,52 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
 
           if (status == MagickFalse)
             continue;
-          p=GetCacheViewVirtualPixels(component_view,bounding_box.x-1,
-            bounding_box.y+y-1,bounding_box.width+2,1,exception);
+          p=GetCacheViewVirtualPixels(component_view,bounding_box.x,
+            bounding_box.y+y,bounding_box.width,1,exception);
           if (p == (const PixelPacket *) NULL)
             {
               status=MagickFalse;
               continue;
             }
           indexes=GetCacheViewVirtualIndexQueue(component_view);
-          for (x=0; x < (ssize_t) bounding_box.width+2; x++)
+          for (x=0; x < (ssize_t) bounding_box.width; x++)
           {
+            if (status == MagickFalse)
+              continue;
             j=(ssize_t) indexes[x];
-            if (j != i)
-              object[j].census++;
+            if (j == i)
+              for (n=0; n < (ssize_t) (connectivity > 4 ? 4 : 2); n++)
+              {
+                register const IndexPacket
+                  *magick_restrict indexes;
+
+                register const PixelPacket
+                  *p;
+
+                /*
+                  Compute area of adjacent objects.
+                */
+                if (status == MagickFalse)
+                  continue;
+                dx=connectivity > 4 ? connect8[n][1] : connect4[n][1];
+                dy=connectivity > 4 ? connect8[n][0] : connect4[n][0];
+                p=GetCacheViewVirtualPixels(image_view,bounding_box.x+x+dx,
+                  bounding_box.y+y+dy,1,1,exception);
+                if (p == (const PixelPacket *) NULL)
+                  {
+                    status=MagickFalse;
+                    break;
+                  }
+                indexes=GetCacheViewVirtualIndexQueue(image_view);
+                j=(ssize_t) indexes[x];
+                if (j != i)
+                  object[j].census++;
+              }
           }
         }
+        /*
+          Merge with object of greatest adjacent area.
+        */
         id=0;
         for (j=1; j < (ssize_t) component_image->colors; j++)
           if (object[j].census > object[id].census)
@@ -557,6 +587,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         }
       }
       component_view=DestroyCacheView(component_view);
+      image_view=DestroyCacheView(image_view);
     }
   artifact=GetImageArtifact(image,"connected-components:keep-ids");
   if (artifact == (const char *) NULL)
