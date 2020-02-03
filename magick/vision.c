@@ -540,6 +540,40 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         object[top_objects[i].id].merge=MagickTrue;
       top_objects=(CCObjectInfo *) RelinquishMagickMemory(top_objects);
     }
+  artifact=GetImageArtifact(image,"connected-components:remove-colors");
+  if (artifact != (const char *) NULL)
+    {
+      register const char
+        *p;
+
+      /*
+        Remove selected objects based on color, keep others.
+      */
+      for (p=artifact;  ; )
+      {
+        char
+          color[MagickPathExtent];
+
+        MagickPixelPacket
+          pixel;
+
+        register const char
+          *q;
+
+        for (q=p; *q != '\0'; q++)
+          if (*q == ';')
+            break;
+        (void) CopyMagickString(color,p,(size_t) MagickMin(q-p+1,
+          MagickPathExtent));
+        (void) QueryMagickColor(color,&pixel,exception);
+        for (i=0; i < (ssize_t) component_image->colors; i++)
+          if (IsMagickColorSimilar(&object[i].color,&pixel) != MagickFalse)
+            object[i].merge=MagickTrue;
+        if (*q == '\0')
+          break;
+        p=q+1;
+      }
+    }
   /*
     Merge any object not within the min and max area threshold.
   */
