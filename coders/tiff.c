@@ -1938,7 +1938,7 @@ RestoreMSCWarning
 
                 pixels=p;
                 q=photoshop_pixels;
-                for (i=0; i < (ssize_t) stride; i++)
+                for (i=0; i < (ssize_t) stride; i+=3)
                 {
                   PushPhotoshopPixel(image,pixels,q);
                   pixels+=3;
