@@ -1,5 +1,5 @@
-2020-02-03  6.9.10-92 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-92, GIT revision 15...
+2020-02-07  6.9.10-92 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-92, GIT revision 15374:d468797:20200207
 
 2020-02-03  6.9.10-92 Cristy  <quetzlzacatenango@image...>
   * More work on connect components, e.g. keep-colors, remove-colors,
