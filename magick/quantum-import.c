@@ -2013,12 +2013,12 @@ static void ImportGrayQuantum(const Image *image,QuantumInfo *quantum_info,
         black,
         white;
 
-      black=0;
+      black=(Quantum) 0;
       white=QuantumRange;
       if (quantum_info->min_is_white != MagickFalse)
         {
           black=QuantumRange;
-          white=0;
+          white=(Quantum) 0;
         }
       for (x=0; x < ((ssize_t) number_pixels-7); x+=8)
       {
@@ -2261,6 +2261,20 @@ static void ImportGrayQuantum(const Image *image,QuantumInfo *quantum_info,
             p=PushShortPixel(quantum_info->endian,p,&pixel);
             SetPixelRed(q,ClampToQuantum((MagickRealType) QuantumRange*
               HalfToSinglePrecision(pixel)));
+            SetPixelGreen(q,GetPixelRed(q));
+            SetPixelBlue(q,GetPixelRed(q));
+            p+=quantum_info->pad;
+            q++;
+          }
+          break;
+        }
+      if (quantum_info->format == SignedQuantumFormat)
+        {
+          for (x=0; x < (ssize_t) number_pixels; x++)
+          {
+            p=PushShortPixel(quantum_info->endian,p,&pixel);
+            pixel=(unsigned short) (((unsigned int) pixel+32768) % 65536);
+            SetPixelRed(q,ScaleShortToQuantum(pixel));
             SetPixelGreen(q,GetPixelRed(q));
             SetPixelBlue(q,GetPixelRed(q));
             p+=quantum_info->pad;
@@ -2813,9 +2827,9 @@ static void ImportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushShortPixel(quantum_info->endian,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,ClampToQuantum(
-              (MagickRealType) QuantumRange*HalfToSinglePrecision(pixel)),
-              &range_exception));
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
+              ClampToQuantum((MagickRealType) QuantumRange*
+              HalfToSinglePrecision(pixel)),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p+=quantum_info->pad;
             q++;
@@ -2846,7 +2860,7 @@ static void ImportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushQuantumFloatPixel(quantum_info,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum(pixel),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p+=quantum_info->pad;
@@ -2875,7 +2889,7 @@ static void ImportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushDoublePixel(quantum_info,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum(pixel),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p+=quantum_info->pad;
@@ -3018,7 +3032,7 @@ static void ImportIndexAlphaQuantum(const Image *image,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushShortPixel(quantum_info->endian,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum((MagickRealType) QuantumRange*
               HalfToSinglePrecision(pixel)),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
@@ -3056,7 +3070,7 @@ static void ImportIndexAlphaQuantum(const Image *image,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushQuantumFloatPixel(quantum_info,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum(pixel),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p=PushQuantumFloatPixel(quantum_info,p,&pixel);
@@ -3089,7 +3103,7 @@ static void ImportIndexAlphaQuantum(const Image *image,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushDoublePixel(quantum_info,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum(pixel),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p=PushDoublePixel(quantum_info,p,&pixel);
