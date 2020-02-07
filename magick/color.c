@@ -1139,7 +1139,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
 
   color=0.0f;
   scale=QuantumRange;
-  if (compliance != NoCompliance)
+  if ((compliance != NoCompliance) || (pixel->depth <= 8))
     scale=255.0f;
   switch (channel)
   {
