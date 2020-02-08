@@ -158,16 +158,21 @@ static inline const unsigned char *PushDoublePixel(
   return(pixels);
 }
 
-static inline void UpdateFloatPixel(const QuantumInfo *quantum_info,
-  float *pixel)
+static inline float ScaleFloatPixel(const QuantumInfo *quantum_info,
+  const unsigned char *quantum)
 {
-  *pixel-=quantum_info->minimum;
-  *pixel*=(float) quantum_info->scale;
-  if (*pixel < FLT_MIN)
-    *pixel=FLT_MIN;
+  float
+    pixel;
+
+  pixel=(*((float *) quantum));
+  pixel-=quantum_info->minimum;
+  pixel*=(float) quantum_info->scale;
+  if (pixel < FLT_MIN)
+    pixel=FLT_MIN;
   else
-    if (*pixel > FLT_MAX)
-      *pixel=FLT_MAX;
+    if (pixel > FLT_MAX)
+      pixel=FLT_MAX;
+  return(pixel);
 }
 
 static inline const unsigned char *PushQuantumFloatPixel(
@@ -191,8 +196,7 @@ static inline const unsigned char *PushQuantumFloatPixel(
       quantum[1]=(*pixels++);
       quantum[0]=(*pixels++);
     }
-  *pixel=*((float *) quantum);
-  UpdateFloatPixel(quantum_info,pixel);
+  *pixel=ScaleFloatPixel(quantum_info,quantum);
   return(pixels);
 }
 
@@ -232,8 +236,7 @@ static inline const unsigned char *PushQuantumFloat24Pixel(
       quantum[1]=((quantum[1] & 0x01) << 7) | ((quantum[0] & 0xFE) >> 1);
       quantum[0]=(quantum[0] & 0x01) << 7;
     }
-  *pixel=*((float *) quantum);
-  UpdateFloatPixel(quantum_info,pixel);
+  *pixel=ScaleFloatPixel(quantum_info,quantum);
   return(pixels);
 }
 
@@ -3112,7 +3115,7 @@ static void ImportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushQuantumFloat24Pixel(quantum_info,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum(pixel),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p+=quantum_info->pad;
@@ -3338,7 +3341,7 @@ static void ImportIndexAlphaQuantum(const Image *image,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushQuantumFloat24Pixel(quantum_info,p,&pixel);
-            SetPixelIndex(indexes+x,PushColormapIndex(image,
+            SetPixelIndex(indexes+x,PushColormapIndex(image,(size_t)
               ClampToQuantum(pixel),&range_exception));
             SetPixelRGBO(q,image->colormap+(ssize_t) GetPixelIndex(indexes+x));
             p=PushQuantumFloat24Pixel(quantum_info,p,&pixel);
