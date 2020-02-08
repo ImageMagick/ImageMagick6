@@ -1141,6 +1141,9 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
   scale=QuantumRange;
   if ((compliance != NoCompliance) || (pixel->depth <= 8))
     scale=255.0f;
+  if ((compliance != NoCompliance) &&
+      (IssRGBCompatibleColorspace(pixel->colorspace) != MagickFalse))
+    scale=100.0f;
   switch (channel)
   {
     case RedChannel:
@@ -1185,9 +1188,6 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     default:
       break;
   }
-  if ((pixel->colorspace == sRGBColorspace) && 
-      (fabs((double) color-(ssize_t) color) > 0.01f))
-    scale=100.0f;
   if (scale != 100.0f)
     (void) FormatLocaleString(component,MagickPathExtent,"%.*g",
       GetMagickPrecision(),(double) (scale*QuantumScale*color));

@@ -142,31 +142,22 @@ MagickExport void ConformMagickPixelPacket(Image *image,
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   assert(destination != (const MagickPixelPacket *) NULL);
-
   (void) exception;
-
   *destination=(*source);
   if (image->colorspace == CMYKColorspace)
     {
-      if (IssRGBCompatibleColorspace(destination->colorspace))
+      if (IssRGBCompatibleColorspace(destination->colorspace) != MagickFalse)
         ConvertRGBToCMYK(destination);
     }
   else
     if (destination->colorspace == CMYKColorspace)
       {
-        if (IssRGBCompatibleColorspace(image->colorspace))
+        if (IssRGBCompatibleColorspace(image->colorspace) != MagickFalse)
           ConvertCMYKToRGB(destination);
       }
-#if 0
-  if ((IsGrayColorspace(image->colorspace) != MagickFalse) &&
-      (IsMagickGray(destination) == MagickFalse))
-    /* TODO: Add this method. */
-    SetMagickPixelPacketGray(destination);
-#else
   if ((IsGrayColorspace(image->colorspace) != MagickFalse) &&
       (IsMagickGray(destination) == MagickFalse))
     (void) TransformImageColorspace(image,sRGBColorspace);
-#endif
   if ((destination->matte != MagickFalse) && (image->matte == MagickFalse))
     (void) SetImageOpacity(image,OpaqueOpacity);
 }

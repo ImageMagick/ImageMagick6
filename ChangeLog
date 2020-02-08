@@ -1,3 +1,9 @@
+2020-02-08  6.9.10-93 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-93, GIT revision 15...
+
+2020-02-08  6.9.10-93 Cristy  <quetzlzacatenango@image...>
+  * Report gray(127.5) as gray(50%).
+
 2020-02-07  6.9.10-92 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-92, GIT revision 15374:d468797:20200207
 
