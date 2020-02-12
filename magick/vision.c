@@ -705,7 +705,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
                 status=MagickFalse;
                 break;
               }
-            indexes=GetCacheViewVirtualIndexQueue(image_view);
+            indexes=GetCacheViewVirtualIndexQueue(object_view);
             j=(ssize_t) indexes[x];
             if (j != i)
               object[j].census++;
