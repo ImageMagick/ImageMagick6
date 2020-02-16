@@ -1,5 +1,8 @@
 2020-02-16  6.9.10-94 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-94, GIT revision 15391:dfedb1d1a:20200216
+  * Release ImageMagick version 6.9.10-94, GIT revision 15393:feaa4539a:20200216
+
+2020-02-16  6.9.10-93 Cristy  <quetzlzacatenango@image...>
+  * Corrected ellipse orientation when computing image moments.
 
 2020-02-14  6.9.10-93 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-93, GIT revision 15386:2d96228:20200214
