@@ -439,7 +439,7 @@ static struct
       {"sigma", RealReference}, {"x", IntegerReference},
       {"y", IntegerReference} } },
     { "Identify", { {"file", FileReference}, {"features", StringReference},
-      {"moments", StringReference}, {"unique", StringReference} } },
+      {"moments", MagickBooleanOptions}, {"unique", MagickBooleanOptions} } },
     { "SepiaTone", { {"threshold", RealReference} } },
     { "SigmoidalContrast", { {"geometry", StringReference},
       {"contrast", RealReference}, {"mid-point", RealReference},
@@ -9904,15 +9904,6 @@ Mogrify(ref,...)
         {
           if (attribute_flag[0] == 0)
             argument_list[0].file_reference=(FILE *) NULL;
-          if (attribute_flag[1] != 0)
-            (void) SetImageArtifact(image,"identify:features",
-              argument_list[1].string_reference);
-          if (attribute_flag[2] != 0)
-            (void) SetImageArtifact(image,"identify:moments",
-              argument_list[2].string_reference);
-          if (attribute_flag[3] != 0)
-            (void) SetImageArtifact(image,"identify:unique-colors",
-              argument_list[3].string_reference);
           (void) IdentifyImage(image,argument_list[0].file_reference,
             MagickTrue);
           break;
@@ -10049,8 +10040,8 @@ Mogrify(ref,...)
           if (attribute_flag[4] != 0)
             geometry_info.psi=argument_list[4].integer_reference;
           image=ShadowImage(image,geometry_info.rho,geometry_info.sigma,
-            (ssize_t) ceil(geometry_info.xi-0.5),(ssize_t) ceil(geometry_info.psi-
-            0.5),exception);
+            (ssize_t) ceil(geometry_info.xi-0.5),(ssize_t)
+            ceil(geometry_info.psi-0.5),exception);
           break;
         }
         case 90:  /* Identify */
@@ -10062,6 +10053,9 @@ Mogrify(ref,...)
               argument_list[1].string_reference);
           if ((attribute_flag[2] != 0) &&
               (argument_list[2].integer_reference != 0))
+            (void) SetImageArtifact(image,"identify:moments","true");
+          if ((attribute_flag[3] != 0) &&
+              (argument_list[3].integer_reference != 0))
             (void) SetImageArtifact(image,"identify:unique","true");
           (void) IdentifyImage(image,argument_list[0].file_reference,
             MagickTrue);
