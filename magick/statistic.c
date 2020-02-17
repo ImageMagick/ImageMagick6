@@ -1988,7 +1988,7 @@ MagickExport ChannelMoments *GetImageChannelMoments(const Image *image,
     else
       if (M11[channel] < 0.0)
         {
-          if (fabs(M20[channel]-M02[channel]) >= MagvickEpsilon)
+          if (fabs(M20[channel]-M02[channel]) >= MagickEpsilon)
             {
               if ((M20[channel]-M02[channel]) < 0.0)
                 channel_moments[channel].ellipse_angle+=90.0;
