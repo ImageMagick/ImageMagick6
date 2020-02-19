@@ -2781,7 +2781,8 @@ static void SVGEndElement(void *context,const xmlChar *name)
       if (LocaleCompare((const char *) name,"stop") == 0)
         {
           (void) FormatLocaleFile(svg_info->file,"stop-color \"%s\" %s\n",
-            svg_info->stop_color,svg_info->offset);
+            svg_info->stop_color,svg_info->offset == (char *) NULL ? "100%" : 
+            svg_info->offset);
           break;
         }
       if (LocaleCompare((char *) name,"style") == 0)
