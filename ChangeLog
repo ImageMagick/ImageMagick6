@@ -1,5 +1,5 @@
-2020-02-18  6.9.10-95 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.10-95, GIT revision 15...
+2020-02-21  6.9.10-95 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.10-95, GIT revision 15415:152354c:20200221
 
 2020-02-18  6.9.10-95 Cristy  <quetzlzacatenango@image...>
   * Adapt to a change in command-line options in the SVG inkscape delegate.
