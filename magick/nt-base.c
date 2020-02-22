@@ -2539,36 +2539,6 @@ MagickPrivate ssize_t NTSystemConfiguration(int name)
 %                                                                             %
 %                                                                             %
 %                                                                             %
-%   N T T e l l D i r e c t o r y                                             %
-%                                                                             %
-%                                                                             %
-%                                                                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  NTTellDirectory() returns the current location associated with the named
-%  directory stream.
-%
-%  The format of the NTTellDirectory method is:
-%
-%      ssize_t NTTellDirectory(DIR *entry)
-%
-%  A description of each parameter follows:
-%
-%    o entry: Specifies a pointer to a DIR structure.
-%
-*/
-MagickPrivate ssize_t NTTellDirectory(DIR *entry)
-{
-  assert(entry != (DIR *) NULL);
-  (void) entry;
-  return(0);
-}
-
-/*
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                             %
-%                                                                             %
-%                                                                             %
 %   N T T r u n c a t e F i l e                                               %
 %                                                                             %
 %                                                                             %
