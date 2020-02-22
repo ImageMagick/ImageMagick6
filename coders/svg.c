@@ -3938,7 +3938,7 @@ static MagickBooleanType TraceSVGImage(Image *image,ExceptionInfo *exception)
 {
 #if defined(MAGICKCORE_AUTOTRACE_DELEGATE)
   {
-    at_bitmap_type
+    at_bitmap
       *trace;
 
     at_fitting_opts_type
