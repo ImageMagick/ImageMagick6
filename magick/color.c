@@ -1127,12 +1127,33 @@ MagickExport const ColorInfo *GetColorInfo(const char *name,
 %    o tuple:  The color tuple.
 %
 */
+
+static inline MagickBooleanType IsSVGCompliant(const MagickPixelPacket *pixel)
+{
+#define SVGCompliant(component) ((double) \
+   ScaleCharToQuantum(ScaleQuantumToChar(ClampToQuantum(component))))
+
+  /*
+    SVG requires color depths > 8 expressed as percentages.
+  */
+  if (fabs(SVGCompliant(pixel->red)-pixel->red) >= MagickEpsilon)
+    return(MagickFalse);
+  if (fabs(SVGCompliant(pixel->green)-pixel->green) >= MagickEpsilon)
+    return(MagickFalse);
+  if (fabs(SVGCompliant(pixel->blue)-pixel->blue) >= MagickEpsilon)
+    return(MagickFalse);
+  if ((pixel->colorspace == CMYKColorspace) &&
+      (fabs(SVGCompliant(pixel->index)-pixel->index) >= MagickEpsilon))
+    return(MagickFalse);
+  if ((pixel->matte != MagickFalse) &&
+      (fabs(SVGCompliant(pixel->opacity)-pixel->opacity) >= MagickEpsilon))
+    return(MagickFalse);
+  return(MagickTrue);
+}
+
 MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
   const ChannelType channel,const ComplianceType compliance,char *tuple)
 {
-#define IsColorComponentFactional(color) \
-  ((color)-ScaleCharToQuantum(ScaleQuantumToChar(color)))
-
   char
     component[MagickPathExtent];
 
@@ -1146,9 +1167,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     scale=255.0f;
   if ((compliance != NoCompliance) &&
       (IssRGBCompatibleColorspace(pixel->colorspace) != MagickFalse) &&
-      ((IsColorComponentFactional(pixel->red) >= MagickEpsilon) ||
-       (IsColorComponentFactional(pixel->green) >= MagickEpsilon) ||
-       (IsColorComponentFactional(pixel->blue) >= MagickEpsilon)))
+      (IsSVGCompliant(pixel) == MagickFalse))
     scale=100.0f;
   switch (channel)
   {
@@ -1523,9 +1542,6 @@ MagickExport void GetColorTuple(const MagickPixelPacket *pixel,
   color=(*pixel);
   if (color.depth > 8)
     {
-#define SVGCompliant(component) ((MagickRealType) \
-   ScaleCharToQuantum(ScaleQuantumToChar(ClampToQuantum(component))));
-
       MagickStatusType
         status;
 

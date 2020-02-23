@@ -1542,7 +1542,7 @@ MagickExport MagickInfo *SetMagickInfo(const char *name)
 */
 MagickExport int SetMagickPrecision(const int precision)
 {
-#define MagickPrecision  6
+#define MagickPrecision  (4+MAGICKCORE_QUANTUM_DEPTH/8)
 
   static int
     magick_precision = 0;
