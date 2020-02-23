@@ -1145,9 +1145,6 @@ static inline MagickBooleanType IsSVGCompliant(const MagickPixelPacket *pixel)
   if ((pixel->colorspace == CMYKColorspace) &&
       (fabs(SVGCompliant(pixel->index)-pixel->index) >= MagickEpsilon))
     return(MagickFalse);
-  if ((pixel->matte != MagickFalse) &&
-      (fabs(SVGCompliant(pixel->opacity)-pixel->opacity) >= MagickEpsilon))
-    return(MagickFalse);
   return(MagickTrue);
 }
 
