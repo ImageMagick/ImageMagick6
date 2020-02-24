@@ -3,6 +3,7 @@
 
 2020-02-24  6.9.10-97 Cristy  <quetzlzacatenango@image...>
   * Make sure we can grok this Fx expression: 1- -2.
+  * Do not advance when substituting a NULL string.
 
 2020-02-23  6.9.10-96 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-96, GIT revision 15438:2ef65d48e:20200223
