@@ -209,7 +209,6 @@ MagickExport FxInfo *AcquireFxInfo(const Image *images,const char *expression)
   fx_info->random_info=AcquireRandomInfo();
   fx_info->expression=ConstantString(expression);
   fx_info->file=stderr;
-  (void) SubstituteString(&fx_info->expression," ","");  /* compact string */
   /*
     Convert compound to simple operators.
   */
@@ -263,6 +262,7 @@ MagickExport FxInfo *AcquireFxInfo(const Image *images,const char *expression)
   (void) SubstituteString(&fx_info->expression,"^-1.0*","^-");
   (void) SubstituteString(&fx_info->expression,"E-1.0*","E-");
   (void) SubstituteString(&fx_info->expression,"e-1.0*","e-");
+  (void) SubstituteString(&fx_info->expression," ","");  /* compact string */
   return(fx_info);
 }
 
