@@ -894,7 +894,7 @@ static LinkedListInfo *AcquireColorCache(const char *filename,
       GetPixelGreen(p));
     color_info->color.blue=(MagickRealType) ScaleCharToQuantum(
       GetPixelBlue(p));
-    color_info->color.opacity=(MagickRealType) (QuantumRange-QuantumRange*
+    color_info->color.opacity=(QuantumRange-(MagickRealType) QuantumRange*
       p->alpha);
     color_info->compliance=(ComplianceType) p->compliance;
     color_info->exempt=MagickTrue;
