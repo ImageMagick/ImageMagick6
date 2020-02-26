@@ -3747,7 +3747,7 @@ RestoreMSCWarning
     */
     if (GetTIFFInfo(image_info,tiff,&tiff_info) == MagickFalse)
       ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
-    if (compression == COMPRESSION_CCITTFAX4)
+    if (compress_tag == COMPRESSION_CCITTFAX4)
       (void) TIFFSetField(tiff,TIFFTAG_ROWSPERSTRIP,(uint32) image->rows);
     quantum_info->endian=LSBEndian;
     pixels=GetQuantumPixels(quantum_info);
