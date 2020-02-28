@@ -2831,6 +2831,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
       if ((LocaleCompare(colorspace,"HCL") == 0) ||
           (LocaleCompare(colorspace,"HSB") == 0) ||
           (LocaleCompare(colorspace,"HSL") == 0) ||
+          (LocaleCompare(colorspace,"HSV") == 0) ||
           (LocaleCompare(colorspace,"HWB") == 0))
         {
           PixelPacket
@@ -2841,24 +2842,46 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
             scale=1.0/100.0;
           geometry_info.sigma*=scale;
           geometry_info.xi*=scale;
-          if (LocaleCompare(colorspace,"HCL") == 0)
-            ConvertHCLToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,360.0)/
-              360.0,geometry_info.sigma,geometry_info.xi,&pixel.red,
-              &pixel.green,&pixel.blue);
-          else
-            if (LocaleCompare(colorspace,"HSB") == 0)
+          switch (color->colorspace)
+          {
+            case HCLColorspace:
+            {
+              ConvertHCLToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,360.0)/
+                360.0,geometry_info.sigma,geometry_info.xi,&pixel.red,
+                &pixel.green,&pixel.blue);
+              break;
+            }
+            case HSBColorspace:
+            {
               ConvertHSBToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,
                 360.0)/360.0,geometry_info.sigma,geometry_info.xi,
                 &pixel.red,&pixel.green,&pixel.blue);
-            else
-              if (LocaleCompare(colorspace,"HSL") == 0)
-                ConvertHSLToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,
-                  360.0)/360.0,geometry_info.sigma,geometry_info.xi,
-                  &pixel.red,&pixel.green,&pixel.blue);
-              else
-                ConvertHWBToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,
-                  360.0)/360.0,geometry_info.sigma,geometry_info.xi,
-                  &pixel.red,&pixel.green,&pixel.blue);
+              break;
+            }
+            case HSLColorspace:
+            {
+              ConvertHSLToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,
+                360.0)/360.0,geometry_info.sigma,geometry_info.xi,
+                &pixel.red,&pixel.green,&pixel.blue);
+              break;
+            }
+            case HSVColorspace:
+            {
+              ConvertHSVToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,
+                360.0)/360.0,geometry_info.sigma,geometry_info.xi,
+                &pixel.red,&pixel.green,&pixel.blue);
+              break;
+            }
+            case HWBColorspace:
+            {
+              ConvertHWBToRGB(fmod(fmod(geometry_info.rho,360.0)+360.0,
+                360.0)/360.0,geometry_info.sigma,geometry_info.xi,
+                &pixel.red,&pixel.green,&pixel.blue);
+              break;
+            }
+            default:
+              break;
+          }
           color->colorspace=sRGBColorspace;
           color->red=(MagickRealType) pixel.red;
           color->green=(MagickRealType) pixel.green;
