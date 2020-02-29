@@ -1673,15 +1673,12 @@ RestoreMSCWarning
         (void) FormatLocaleString(value,MaxTextExtent,"%u",(unsigned int)
           rows_per_strip);
         (void) SetImageProperty(image,"tiff:rows-per-strip",value);
+        method=ReadStripMethod;
+        if (rows_per_strip > (uint32) image->rows)
+          rows_per_strip=(uint32) image->rows;
       }
-    if (rows_per_strip > (uint32) image->rows)
-      rows_per_strip=(uint32) image->rows;
-    method=ReadGenericMethod;
     if (TIFFIsTiled(tiff) != MagickFalse)
       method=ReadTileMethod;
-    else
-      if (TIFFGetField(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
-        method=ReadStripMethod;
     if (photometric == PHOTOMETRIC_LOGLUV)
       method=ReadGenericMethod;
     if (image->compression == JPEGCompression)
