@@ -4,6 +4,8 @@
 2020-03-01  6.9.11-0 Cristy  <quetzlzacatenango@image...>
   * Label text no longer gets cut-off (reference
     https://imagemagick.org/discourse-server/viewtopic.php?f=1&t=37621).
+  * Prevent heap overflow (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1857).
 
 2020-02-29  6.9.10-97 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.10-97, GIT revision 15453:0537c847b:20200229
