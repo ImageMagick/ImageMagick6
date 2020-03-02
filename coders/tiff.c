@@ -1701,7 +1701,8 @@ RestoreMSCWarning
       }
     if (TIFFIsTiled(tiff) != MagickFalse)
       method=ReadTileMethod;
-    if (photometric == PHOTOMETRIC_LOGLUV)
+    if ((photometric == PHOTOMETRIC_LOGLUV) ||
+        (photometric == PHOTOMETRIC_YCBCR))
       method=ReadGenericMethod;
     if (image->compression == JPEGCompression)
       method=GetJPEGMethod(image,tiff,photometric,bits_per_sample,
@@ -1834,8 +1835,6 @@ RestoreMSCWarning
           Convert stripped TIFF image.
         */
         extent=TIFFStripSize(tiff)+sizeof(uint32);
-        if (photometric == PHOTOMETRIC_YCBCR)
-          extent<<=1;
         strip_pixels=(unsigned char *) AcquireQuantumMemory(extent,
           sizeof(*strip_pixels));
         if (strip_pixels == (unsigned char *) NULL)
