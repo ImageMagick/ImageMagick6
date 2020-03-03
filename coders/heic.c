@@ -340,7 +340,9 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   else
     (void) SetImageProperty(image,"exif:Orientation","1");
   error=heif_decode_image(image_handle,&heif_image,heif_colorspace_YCbCr,
-    heif_chroma_420,NULL);
+    heif_chroma_420,decode_options);
+  if (decode_options != (struct heif_decoding_options *) NULL)
+    heif_decoding_options_free(decode_options);
   if (IsHeifSuccess(&error,image) == MagickFalse)
     {
       heif_image_handle_release(image_handle);
@@ -348,23 +350,19 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
       file_data=RelinquishMagickMemory(file_data);
       return(DestroyImageList(image));
     }
-  if (decode_options != (struct heif_decoding_options *) NULL)
+  /*
+    Correct the width and height of the image.
+  */
+  image->columns=(size_t) heif_image_get_width(heif_image,heif_channel_Y);
+  image->rows=(size_t) heif_image_get_height(heif_image,heif_channel_Y);
+  status=SetImageExtent(image,image->columns,image->rows);
+  if (status == MagickFalse)
     {
-      /*
-        Correct the width and height of the image.
-      */
-      image->columns=(size_t) heif_image_get_width(heif_image,heif_channel_Y);
-      image->rows=(size_t) heif_image_get_height(heif_image,heif_channel_Y);
-      status=SetImageExtent(image,image->columns,image->rows);
-      heif_decoding_options_free(decode_options);
-      if (status == MagickFalse)
-        {
-          heif_image_release(heif_image);
-          heif_image_handle_release(image_handle);
-          heif_context_free(heif_context);
-          file_data=RelinquishMagickMemory(file_data);
-          return(DestroyImageList(image));
-        }
+      heif_image_release(heif_image);
+      heif_image_handle_release(image_handle);
+      heif_context_free(heif_context);
+      file_data=RelinquishMagickMemory(file_data);
+      return(DestroyImageList(image));
     }
   p_y=heif_image_get_plane_readonly(heif_image,heif_channel_Y,&stride_y);
   p_cb=heif_image_get_plane_readonly(heif_image,heif_channel_Cb,&stride_cb);
