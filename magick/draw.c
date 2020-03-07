@@ -209,7 +209,7 @@ static MagickBooleanType
 static PrimitiveInfo
   *TraceStrokePolygon(const Image *,const DrawInfo *,const PrimitiveInfo *);
 
-static size_t
+static ssize_t
   TracePath(Image *,MVGInfo *,const char *);
 
 /*
@@ -4205,7 +4205,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
       case PathPrimitive:
       {
         coordinates=(double) TracePath(image,&mvg_info,token);
-        if (coordinates == 0)
+        if (coordinates < 0.0)
           {
             status=MagickFalse;
             break;
@@ -6298,7 +6298,7 @@ static MagickBooleanType TraceLine(PrimitiveInfo *primitive_info,
   return(MagickTrue);
 }
 
-static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
+static ssize_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
 {
   char
     *next_token,
@@ -6465,7 +6465,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           for (i=0; i < 4; i++)
             (q+i)->point=points[i];
           if (TraceBezier(mvg_info,4) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6490,10 +6490,10 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
             ThrowPointExpectedException(image,token);
           point.x=(double) (attribute == (int) 'H' ? x: point.x+x);
           if (CheckPrimitiveExtent(mvg_info,PrimitiveExtentPad) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           if (TracePoint(q,point) == MagickFalse)
-            return(0);
+            return(-1);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
           while (isspace((int) ((unsigned char) *p)) != 0)
@@ -6526,10 +6526,10 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           point.x=(double) (attribute == (int) 'L' ? x : point.x+x);
           point.y=(double) (attribute == (int) 'L' ? y : point.y+y);
           if (CheckPrimitiveExtent(mvg_info,PrimitiveExtentPad) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           if (TracePoint(q,point) == MagickFalse)
-            return(0);
+            return(-1);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
           while (isspace((int) ((unsigned char) *p)) != 0)
@@ -6574,10 +6574,10 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
             start=point;
           i++;
           if (CheckPrimitiveExtent(mvg_info,PrimitiveExtentPad) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           if (TracePoint(q,point) == MagickFalse)
-            return(0);
+            return(-1);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
           while (isspace((int) ((unsigned char) *p)) != 0)
@@ -6619,7 +6619,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           for (i=0; i < 3; i++)
             (q+i)->point=points[i];
           if (TraceBezier(mvg_info,3) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6670,7 +6670,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           for (i=0; i < 4; i++)
             (q+i)->point=points[i];
           if (TraceBezier(mvg_info,4) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6722,7 +6722,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
           for (i=0; i < 3; i++)
             (q+i)->point=points[i];
           if (TraceBezier(mvg_info,3) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
@@ -6751,10 +6751,10 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
             ThrowPointExpectedException(image,token);
           point.y=(double) (attribute == (int) 'V' ? y : point.y+y);
           if (CheckPrimitiveExtent(mvg_info,PrimitiveExtentPad) == MagickFalse)
-            return(0);
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
           if (TracePoint(q,point) == MagickFalse)
-            return(0);
+            return(-1);
           mvg_info->offset+=q->coordinates;
           q+=q->coordinates;
           while (isspace((int) ((unsigned char) *p)) != 0)
@@ -6772,10 +6772,10 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
         */
         point=start;
         if (CheckPrimitiveExtent(mvg_info,PrimitiveExtentPad) == MagickFalse)
-          return(0);
+          return(-1);
         q=(*mvg_info->primitive_info)+mvg_info->offset;
         if (TracePoint(q,point) == MagickFalse)
-          return(0);
+          return(-1);
         mvg_info->offset+=q->coordinates;
         q+=q->coordinates;
         primitive_info=(*mvg_info->primitive_info)+subpath_offset;
@@ -6795,7 +6795,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
     }
   }
   if (status == MagickFalse)
-    return(0);
+    return(-1);
   primitive_info=(*mvg_info->primitive_info)+subpath_offset;
   primitive_info->coordinates=(size_t) (q-primitive_info);
   number_coordinates+=primitive_info->coordinates;
@@ -6807,7 +6807,7 @@ static size_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
       q->method=FillToBorderMethod;
   }
   q=primitive_info;
-  return(number_coordinates);
+  return((ssize_t) number_coordinates);
 }
 
 static MagickBooleanType TraceRectangle(PrimitiveInfo *primitive_info,
