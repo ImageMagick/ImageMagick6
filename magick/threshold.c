@@ -41,7 +41,7 @@
   Include declarations.
 */
 #include "magick/studio.h"
-#include "magick/property.h"
+#include "magick/artifact.h"
 #include "magick/blob.h"
 #include "magick/cache-view.h"
 #include "magick/color.h"
@@ -69,6 +69,7 @@
 #include "magick/montage.h"
 #include "magick/option.h"
 #include "magick/pixel-private.h"
+#include "magick/property.h"
 #include "magick/quantize.h"
 #include "magick/quantum.h"
 #include "magick/random_.h"
@@ -672,6 +673,9 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   char
     property[MagickPathExtent];
 
+  const char
+    *artifact;
+
   double
     gamma,
     *histogram,
@@ -762,6 +766,10 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   */
   (void) FormatLocaleString(property,MagickPathExtent,"%g%%",threshold);
   (void) SetImageProperty(image,"auto-threshold:threshold",property);
+  artifact=GetImageArtifact(image,"threshold:verbose");
+  if (IsStringTrue(artifact) != MagickFalse)
+    (void) FormatLocaleFile(stdout,"%.*g\n",GetMagickPrecision(),
+      (double) QuantumRange*threshold/100.0);
   return(BilevelImage(image,QuantumRange*threshold/100.0));
 }
 
