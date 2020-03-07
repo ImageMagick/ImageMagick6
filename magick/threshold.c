@@ -768,8 +768,7 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   (void) SetImageProperty(image,"auto-threshold:threshold",property);
   artifact=GetImageArtifact(image,"threshold:verbose");
   if (IsStringTrue(artifact) != MagickFalse)
-    (void) FormatLocaleFile(stdout,"%.*g\n",GetMagickPrecision(),
-      (double) QuantumRange*threshold/100.0);
+    (void) FormatLocaleFile(stdout,"%.*g\n",GetMagickPrecision(),threshold);
   return(BilevelImage(image,QuantumRange*threshold/100.0));
 }
 
