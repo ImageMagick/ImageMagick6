@@ -2842,6 +2842,9 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
             scale=1.0/100.0;
           geometry_info.sigma*=scale;
           geometry_info.xi*=scale;
+          pixel.red=0.0;
+          pixel.green=0.0;
+          pixel.blue=0.0;
           switch (color->colorspace)
           {
             case HCLColorspace:
