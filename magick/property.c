@@ -3014,7 +3014,19 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
       if (LocaleCompare("bit-depth",property) == 0)
         {
           (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-            GetImageDepth(image, &image->exception));
+            GetImageDepth(image,&image->exception));
+          break;
+        }
+      if (LocaleCompare("bounding-box",property) == 0)
+        {
+          RectangleInfo
+            geometry;
+
+          geometry=GetImageBoundingBox(image,&image->exception);
+          (void) FormatLocaleString(value,MagickPathExtent,"%g,%g %g,%g\n",
+            (double) geometry.x,(double) geometry.y,
+            (double) geometry.x+geometry.width,
+            (double) geometry.y+geometry.height);
           break;
         }
       break;

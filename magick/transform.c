@@ -2483,9 +2483,6 @@ MagickExport Image *TransverseImage(const Image *image,ExceptionInfo *exception)
 */
 MagickExport Image *TrimImage(const Image *image,ExceptionInfo *exception)
 {
-  char
-    bounding_box[MagickPathExtent];
-
   RectangleInfo
     geometry;
 
@@ -2511,6 +2508,5 @@ MagickExport Image *TrimImage(const Image *image,ExceptionInfo *exception)
     }
   geometry.x+=image->page.x;
   geometry.y+=image->page.y;
-  (void) SetImageProperty((Image *) image,"trim:bounding-box",bounding_box);
   return(CropImage(image,&geometry,exception));
 }
