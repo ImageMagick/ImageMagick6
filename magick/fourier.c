@@ -312,25 +312,26 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
           double
             gamma;
 
-          gamma=PerceptibleReciprocal(Br->red*Br->red+Bi->red*Bi->red+snr);
+          gamma=QuantumRange*PerceptibleReciprocal(Br->red*Br->red+
+            Bi->red*Bi->red+snr);
           Cr->red=gamma*((double) Ar->red*Br->red+(double) Ai->red*Bi->red);
           Ci->red=gamma*((double) Ai->red*Br->red-(double) Ar->red*Bi->red);
-          gamma=PerceptibleReciprocal((double) Br->green*Br->green+(double)
-            Bi->green*Bi->green+snr);
+          gamma=QuantumRange*PerceptibleReciprocal((double) Br->green*Br->green+
+            (double) Bi->green*Bi->green+snr);
           Cr->green=gamma*((double) Ar->green*Br->green+(double)
             Ai->green*Bi->green);
           Ci->green=gamma*((double) Ai->green*Br->green-(double)
             Ar->green*Bi->green);
-          gamma=PerceptibleReciprocal((double) Br->blue*Br->blue+(double)
-            Bi->blue*Bi->blue+snr);
+          gamma=QuantumRange*PerceptibleReciprocal((double) Br->blue*Br->blue+
+            (double) Bi->blue*Bi->blue+snr);
           Cr->blue=gamma*((double) Ar->blue*Br->blue+(double)
             Ai->blue*Bi->blue);
           Ci->blue=gamma*((double) Ai->blue*Br->blue-(double)
              Ar->blue*Bi->blue);
           if (images->matte != MagickFalse)
             {
-              gamma=PerceptibleReciprocal((double) Br->opacity*Br->opacity+
-                (double) Bi->opacity*Bi->opacity+snr);
+              gamma=QuantumRange*PerceptibleReciprocal((double) Br->opacity*
+                Br->opacity+(double) Bi->opacity*Bi->opacity+snr);
               Cr->opacity=gamma*((double) Ar->opacity*Br->opacity+(double)
                 Ai->opacity*Bi->opacity);
               Ci->opacity=gamma*((double) Ai->opacity*Br->opacity-(double)
