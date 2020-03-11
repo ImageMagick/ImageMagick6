@@ -341,18 +341,20 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
         }
         case MagnitudePhaseComplexOperator:
         {
-          Cr->red=sqrt((double) Ar->red*Ar->red+(double) Ai->red*Ai->red);
+          Cr->red=sqrt(QuantumScale*Ar->red*Ar->red+QuantumScale*
+            Ai->red*Ai->red);
           Ci->red=atan2((double) Ai->red,(double) Ar->red)/(2.0*MagickPI)+0.5;
-          Cr->green=sqrt((double) Ar->green*Ar->green+(double)
+          Cr->green=sqrt(QuantumScale*Ar->green*Ar->green+QuantumScale*
             Ai->green*Ai->green);
           Ci->green=atan2((double) Ai->green,(double) Ar->green)/
             (2.0*MagickPI)+0.5;
-          Cr->blue=sqrt((double) Ar->blue*Ar->blue+(double) Ai->blue*Ai->blue);
+          Cr->blue=sqrt(QuantumScale*Ar->blue*Ar->blue+QuantumScale*
+            Ai->blue*Ai->blue);
           Ci->blue=atan2(Ai->blue,Ar->blue)/(2.0*MagickPI)+0.5;
           if (images->matte != MagickFalse)
             {
-              Cr->opacity=sqrt((double) Ar->opacity*Ar->opacity+(double)
-                Ai->opacity*Ai->opacity);
+              Cr->opacity=sqrt(QuantumScale*Ar->opacity*Ar->opacity+
+                QuantumScale*Ai->opacity*Ai->opacity);
               Ci->opacity=atan2((double) Ai->opacity,(double) Ar->opacity)/
                 (2.0*MagickPI)+0.5;
             }
@@ -360,24 +362,24 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
         }
         case MultiplyComplexOperator:
         {
-          Cr->red=QuantumScale*((double) Ar->red*Br->red-(double)
+          Cr->red=(QuantumScale*Ar->red*Br->red-(double)
             Ai->red*Bi->red);
-          Ci->red=QuantumScale*((double) Ai->red*Br->red+(double)
+          Ci->red=(QuantumScale*Ai->red*Br->red+(double)
             Ar->red*Bi->red);
-          Cr->green=QuantumScale*((double) Ar->green*Br->green-(double)
+          Cr->green=(QuantumScale*Ar->green*Br->green-(double)
             Ai->green*Bi->green);
-          Ci->green=QuantumScale*((double) Ai->green*Br->green+(double)
+          Ci->green=(QuantumScale*Ai->green*Br->green+(double)
             Ar->green*Bi->green);
-          Cr->blue=QuantumScale*((double) Ar->blue*Br->blue-(double)
+          Cr->blue=(QuantumScale*Ar->blue*Br->blue-(double)
             Ai->blue*Bi->blue);
-          Ci->blue=QuantumScale*((double) Ai->blue*Br->blue+(double)
+          Ci->blue=(QuantumScale*Ai->blue*Br->blue+(double)
             Ar->blue*Bi->blue);
           if (images->matte != MagickFalse)
             {
-              Cr->opacity=QuantumScale*((double) Ar->opacity*Br->opacity-
-                (double) Ai->opacity*Bi->opacity);
-              Ci->opacity=QuantumScale*((double) Ai->opacity*Br->opacity+
-                (double) Ar->opacity*Bi->opacity);
+              Cr->opacity=(QuantumScale*Ar->opacity*Br->opacity-
+                QuantumScale*Ai->opacity*Bi->opacity);
+              Ci->opacity=(QuantumScale*Ai->opacity*Br->opacity+
+                QuantumScale*Ar->opacity*Bi->opacity);
             }
           break;
         }
