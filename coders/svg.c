@@ -4342,6 +4342,11 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             primitive_type=ColorPrimitive;
             break;
           }
+        if (LocaleCompare("compliance",keyword) == 0)
+          {
+            (void) GetNextToken(q,&q,extent,token);
+            break;
+          }
         status=MagickFalse;
         break;
       }
@@ -4603,7 +4608,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
           }
         if (LocaleCompare("push",keyword) == 0)
           {
+            *name='\0';
             (void) GetNextToken(q,&q,extent,token);
+            if (*q == '"')
+              (void) GetNextToken(q,&q,extent,name);
             if (LocaleCompare("clip-path",token) == 0)
               {
                 (void) GetNextToken(q,&q,extent,token);
