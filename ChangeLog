@@ -1,5 +1,5 @@
-2020-03-07  6.9.11-1 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-1, GIT revision 15...
+2020-03-15  6.9.11-1 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-1, GIT revision 15487:ffac3c4:20200315.
 
 2020-03-07  6.9.11-1 Cristy  <quetzlzacatenango@image...>
   * Do not throw exception on empty draw path (reference
