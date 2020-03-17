@@ -132,6 +132,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
   width=(size_t) floor(draw_info->pointsize*strlen(label)+0.5);
   draw_info->text=ConstantString(label);
+  (void) ConcatenateString(&draw_info->text,":");
   if (AcquireMagickResource(WidthResource,width) == MagickFalse)
     {
       draw_info=DestroyDrawInfo(draw_info);
@@ -159,7 +160,6 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
         /*
           Auto fit text into bounding box.
         */
-        (void) ConcatenateString(&draw_info->text,":");
         for (n=0; n < 32; n++, draw_info->pointsize*=2.0)
         {
           (void) FormatLocaleString(geometry,MaxTextExtent,"%+g%+g",
@@ -214,7 +214,6 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
             else
               high=draw_info->pointsize-0.5;
         }
-        draw_info->text[strlen(draw_info->text)-1]='\0';
         if (status != MagickFalse)
           {
             draw_info->pointsize=floor((low+high)/2.0-0.5);
@@ -256,6 +255,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   /*
     Draw label.
   */
+  draw_info->text[strlen(draw_info->text)-1]='\0';
   (void) FormatLocaleString(geometry,MagickPathExtent,"%+g%+g",
     (draw_info->direction == RightToLeftDirection ? (double) image->columns-
     metrics.bounds.x2 : 0.0),(draw_info->gravity == UndefinedGravity ?
