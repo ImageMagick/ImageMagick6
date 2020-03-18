@@ -1196,7 +1196,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
           {
             (void) SyncImageSettings(mogrify_info,*image);
             mogrify_image=ConnectedComponentsImage(*image,
-              StringToInteger(argv[i+1]),exception);
+              (size_t) StringToInteger(argv[i+1]),exception);
             break;
           }
         if (LocaleCompare("contrast",option+1) == 0)
@@ -2181,7 +2181,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             if ((flags & PercentValue) != 0)
               geometry_info.xi=(double) QuantumRange*geometry_info.xi/100.0;
             mogrify_image=MeanShiftImage(*image,(size_t) geometry_info.rho,
-              (size_t) geometry_info.sigma,(size_t) geometry_info.xi,exception);
+              (size_t) geometry_info.sigma,geometry_info.xi,exception);
             break;
           }
         if (LocaleCompare("median",option+1) == 0)
@@ -3333,7 +3333,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             weight=ParseCommandOption(MagickWeightOptions,MagickFalse,
               argv[i+1]);
             if (weight == -1)
-              weight=StringToUnsignedLong(argv[i+1]);
+              weight=(ssize_t) StringToUnsignedLong(argv[i+1]);
             draw_info->weight=(size_t) weight;
             break;
           }
@@ -3883,7 +3883,8 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
       {
         char
           backup_filename[MaxTextExtent],
-          *filename;
+          *filename,
+          magic[MagickPathExtent];
 
         Image
           *images;
@@ -3929,6 +3930,17 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
             quantize_info=DestroyQuantizeInfo(quantize_info);
           }
         *backup_filename='\0';
+        *magic='\0';
+        GetPathComponent(filename,MagickPath,magic);
+        if (*magic != '\0')
+          {
+            char
+              filename[MagickPathExtent];
+
+            (void) FormatLocaleString(filename,MagickPathExtent,"%s:%s",magic,
+              image->filename);
+            (void) CopyMagickString(image->filename,filename,MagickPathExtent);
+          }
         if ((LocaleCompare(image->filename,"-") != 0) &&
             (IsPathWritable(image->filename) != MagickFalse))
           {
