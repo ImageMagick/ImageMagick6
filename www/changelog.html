@@ -12,14 +12,14 @@
   <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert bitmap images. Resize an image, crop it, change its shades and colors, add captions, and more." />
   <meta name="application-url" content="https://imagemagick.org" />
   <meta name="generator" content="PHP" />
-  <meta name="keywords" content="changelog, ImageMagick, PerlMagick, image processing, image, photo, software, Magick++, OpenMP, convert" />
+  <meta name="keywords" content="changelog, image converter, image resizer, image editor, photo editor, jpg converter, png converter, tiff converter, vector images, online, free, swiss army" />
   <meta name="rating" content="GENERAL" />
   <meta name="robots" content="INDEX, FOLLOW" />
   <meta name="generator" content="ImageMagick Studio LLC" />
   <meta name="author" content="ImageMagick Studio LLC" />
   <meta name="revisit-after" content="2 DAYS" />
   <meta name="resource-type" content="document" />
-  <meta name="copyright" content="Copyright (c) 1999-2019 ImageMagick Studio LLC" />
+  <meta name="copyright" content="Copyright (c) 1999-2020 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
   <meta property='og:url' content='https://imagemagick.org/' />
@@ -27,7 +27,7 @@
   <meta property='og:image' content='https://imagemagick.org/images/logo.png' />
   <meta property='og:type' content='website' />
   <meta property='og:site_name' content='ImageMagick' />
-  <meta property='og:description' content="Convert, Edit, or Compose Bitmap Images" />
+  <meta property='og:description' content="Create, Edit, Compose, or Convert Bitmap Images" />
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4" />
   <link href="https://imagemagick.org/www/changelog.html" rel="canonical" />
   <link href="../images/wand.png" rel="icon" />
@@ -85,11 +85,31 @@
 
   <main class="container">
     <div class="magick-template">
-<div class="magick-header"><dl><dt>2020-02-21  6.9.10-95 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Release ImageMagick version 6.9.10-95, GIT revision 15415:152354c:20200221</li>
+<div class="magick-header"><dl><dt>2020-03-15  6.9.11-1 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.11-1, GIT revision 15487:ffac3c4:20200315.</li>
+<dt>2020-03-07  6.9.11-1 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Do not throw exception on empty draw path (reference    https://github.com/ImageMagick/ImageMagick/issues/974).</li>
+  <li> Fix possible buffer overflow in ComplexImages().</li>
+<dt>2020-03-06  6.9.11-0 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.11-0, GIT revision 15465:f7c926d:20200306.</li>
+<dt>2020-03-01  6.9.11-0 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Label text no longer gets cut-off (reference    https://imagemagick.org/discourse-server/viewtopic.html?f=1&amp;t=37621).</li>
+  <li> Prevent heap overflow (reference    https://github.com/ImageMagick/ImageMagick/issues/1857).</li>
+<dt>2020-02-29  6.9.10-97 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-97, GIT revision 15453:0537c847b:20200229</li>
+<dt>2020-02-24  6.9.10-97 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Make sure we can grok this Fx expression: 1- -2.</li>
+  <li> Do not advance when substituting a NULL string.</li>
+  <li> Correct alpha for named colors in the Q32 non-HDRI build.</li>
+  <li> Write Group4 compressed image as a single strip.</li>
+<dt>2020-02-23  6.9.10-96 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.10-96, GIT revision 15438:2ef65d48e:20200223</li>
+<dt>2020-02-22  6.9.10-96 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Adapt to a change in command-line options in the SVG inkscape delegate.</li>
+<dt>2020-02-21  6.9.10-95 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> No percent sign in lab() color.</li>
 <dt>2020-02-18  6.9.10-95 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Adapt to a change in command-line options in the SVG inkscape delegate.</li>
-  <li> No percent sign in lab() color.</li>
 <dt>2020-02-16  6.9.10-94 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.10-94, GIT revision 15405:56d9955fc:20200217</li>
 <dt>2020-02-16  6.9.10-94 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -4855,6 +4875,7 @@
 
   <!-- Javascript assets -->
   <script src="../assets/magick-js.html" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.3.1/jquery.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.4.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
+<!-- Magick Cache 19th March 2020 16:22 -->
