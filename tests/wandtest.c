@@ -5495,5 +5495,6 @@ int main(int argc,char **argv)
   profile=(unsigned char *) MagickRelinquishMemory(profile);
   magick_wand=DestroyMagickWand(magick_wand);
   (void) FormatLocaleFile(stdout,"Wand tests pass.\n");
+  MagickWandTerminus();
   return(0);
 }
