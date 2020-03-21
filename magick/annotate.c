@@ -1327,6 +1327,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
 
   ssize_t
     code,
+    last_character,
     y;
 
   static FT_Outline_Funcs
@@ -1550,6 +1551,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   length=ComplexTextLayout(image,draw_info,p,strlen(p),face,flags,&grapheme);
   missing_glyph_id=FT_Get_Char_Index(face,' ');
   code=0;
+  last_character=(ssize_t) length-1;
   for (i=0; i < (ssize_t) length; i++)
   {
     FT_Outline
@@ -1753,7 +1755,12 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         (IsUTFSpace(code) == MagickFalse))
       origin.x+=(FT_Pos) (64.0*draw_info->interword_spacing);
     else
-      origin.x+=(FT_Pos) grapheme[i].x_advance;
+      {
+        if (i == last_character)
+          origin.x+=(FT_Pos) bounds.xMax;
+        else
+          origin.x+=(FT_Pos) grapheme[i].x_advance;
+      }
     metrics->origin.x=(double) origin.x;
     metrics->origin.y=(double) origin.y;
     if (metrics->origin.x > metrics->width)
