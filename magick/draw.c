@@ -4625,7 +4625,7 @@ static double GetOpacityPixel(PolygonInfo *polygon_info,const double mid,
           else
             {
               alpha=PerceptibleReciprocal(alpha);
-              beta=delta.x*(y-q->y)-delta.y*(x-q->x);
+              beta=delta.x*(y-q->y)-delta.y*(x-q->x)+MagickEpsilon;
               distance=alpha*beta*beta;
             }
         }
