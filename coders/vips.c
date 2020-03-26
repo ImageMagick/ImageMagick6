@@ -488,6 +488,7 @@ static Image *ReadVIPSImage(const ImageInfo *image_info,
     case VIPSTypeYXY:
       ThrowReaderException(CoderError,"Unsupported colorspace");
   }
+  (void) SetImageBackgroundColor(image);
   image->units=PixelsPerCentimeterResolution;
   image->x_resolution=ReadBlobFloat(image)*10;
   image->y_resolution=ReadBlobFloat(image)*10;
