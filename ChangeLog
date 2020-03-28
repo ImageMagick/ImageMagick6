@@ -1,5 +1,5 @@
-2020-03-22  6.9.11-3 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-3, GIT revision 15...
+2020-03-27  6.9.11-3 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-3, GIT revision 15511:23bb003:20200327.
 
 2020-03-22  6.9.11-3 Cristy  <quetzlzacatenango@image...>
   * Fix numerical instability issue when drawing lines.
