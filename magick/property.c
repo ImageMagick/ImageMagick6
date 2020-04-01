@@ -2526,6 +2526,13 @@ MagickExport const char *GetImageProperty(const Image *image,
 static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
   Image *image,const char letter)
 {
+#define WarnNoImageInfoReturn(format,arg) \
+  if (image_info == (ImageInfo *) NULL ) { \
+    (void) ThrowMagickException(&image->exception,GetMagickModule(), \
+      OptionWarning,"NoImageInfoForProperty",format,arg); \
+    return((const char *) NULL); \
+  }
+
   char
     value[MaxTextExtent];
 
@@ -2658,6 +2665,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       /*
         Output Filename - for delegate use only
       */
+      WarnNoImageInfoReturn("\"%%%c\"",letter);
       string=image_info->filename;
       break;
     }
@@ -2702,6 +2710,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       /*
         Image scene number.
       */
+      WarnNoImageInfoReturn("\"%%%c\"",letter);
       if (image_info->number_scenes != 0)
         (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
           image_info->scene);
@@ -2723,6 +2732,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       /*
         Unique filename.
       */
+      WarnNoImageInfoReturn("\"%%%c\"",letter);
       string=image_info->unique;
       break;
     }
@@ -2883,6 +2893,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       /*
         Image scenes.
       */
+      WarnNoImageInfoReturn("\"%%%c\"",letter);
       if (image_info->number_scenes == 0)
         string="2147483647";
       else
@@ -2941,6 +2952,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       /*
         Zero filename.
       */
+      WarnNoImageInfoReturn("\"%%%c\"",letter);
       string=image_info->zero;
       break;
     }

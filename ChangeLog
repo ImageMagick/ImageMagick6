@@ -4,6 +4,8 @@
 2020-03-27  6.9.11-4 Cristy  <quetzlzacatenango@image...>
   * The X max attribute for certain fonts is zero (reference
     https://imagemagick.org/discourse-server/viewtopic.php?f=1&t=37723).
+  * Fix possible null pointer dereference in magick/property.c (reference
+    https://github.com/ImageMagick/ImageMagick/issues/1225).
 
 2020-03-27  6.9.11-3 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-3, GIT revision 15511:23bb003:20200327.
