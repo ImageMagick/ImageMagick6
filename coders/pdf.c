@@ -2252,8 +2252,12 @@ RestoreMSCWarning
     SetGeometry(image,&geometry);
     (void) ParseMetaGeometry("106x106+0+0>",&geometry.x,&geometry.y,
       &geometry.width,&geometry.height);
-    tile_image=ThumbnailImage(image,geometry.width,geometry.height,
-      &image->exception);
+    if (IsMonochromeImage(image,&image->exception) != MagickFalse)
+      tile_image=SampleImage(image,geometry.width,geometry.height,
+        &image->exception);
+    else
+      tile_image=ThumbnailImage(image,geometry.width,geometry.height,
+        &image->exception);
     if (tile_image == (Image *) NULL)
       ThrowPDFException(ResourceLimitError,image->exception.reason);
     xref[object++]=TellBlob(image);
