@@ -262,6 +262,17 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (void) CopyMagickString(read_info->magick,"TIFF",MagickPathExtent);
       image=BlobToImage(read_info,tiff_data,ept_info.tiff_length,exception);
     }
+  else
+    {
+      Image
+        *tiff_image;
+
+      (void) CopyMagickString(read_info->magick,"TIFF",MagickPathExtent);
+      tiff_image=BlobToImage(read_info,tiff_data,ept_info.tiff_length,
+        exception);
+      if (tiff_image != (Image *) NULL)
+        AppendImageToList(&image,tiff_image);
+    }
   read_info=DestroyImageInfo(read_info);
   if (image != (Image *) NULL)
     {
