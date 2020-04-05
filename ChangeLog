@@ -1,3 +1,11 @@
+2020-04-06  6.9.11-5 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-5, GIT revision 15...
+
+2020-04-05  6.9.11-5 Cristy  <quetzlzacatenango@image...>
+  * Default inkscape delegate to version 0.92 (reference
+    https://github.com/ImageMagick/ImageMagick/discussions/1880).
+  * Set monochrome image depth to 1 for Group4 compression.
+
 2020-04-05  6.9.11-4 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-4, GIT revision 15531:5fc7a9f:20200405.
 
