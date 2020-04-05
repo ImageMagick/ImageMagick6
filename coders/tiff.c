@@ -2500,13 +2500,9 @@ static MagickBooleanType WriteGROUP4Image(const ImageInfo *image_info,
     (void) SetImageType(huffman_image,BilevelType);
   write_info=CloneImageInfo((ImageInfo *) NULL);
   SetImageInfoFile(write_info,file);
-  if (IsMonochromeImage(image,&image->exception) != MagickFalse)
-    (void) SetImageDepth(image,1);
-  else
-    {
+  if (IsMonochromeImage(image,&image->exception) == MagickFalse)
       (void) SetImageType(image,BilevelType);
-      (void) SetImageDepth(image,1);
-    }
+  (void) SetImageDepth(image,1);
   write_info->compression=Group4Compression;
   write_info->type=BilevelType;
   status=WriteTIFFImage(write_info,huffman_image);
@@ -3249,12 +3245,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
       case FaxCompression:
       case Group4Compression:
       {
-        if (IsMonochromeImage(image,&image->exception) != MagickFalse)
-          {
-            (void) SetImageDepth(image,1);
-            break;
-          }
-        (void) SetImageType(image,BilevelType);
+        if (IsMonochromeImage(image,&image->exception) == MagickFalse)
+          (void) SetImageType(image,BilevelType);
         (void) SetImageDepth(image,1);
         break;
       }
