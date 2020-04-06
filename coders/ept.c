@@ -165,8 +165,7 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     ept_info;
 
   Image
-    *image,
-    *tiff_image;
+    *image;
 
   ImageInfo
     *read_info;
@@ -255,27 +254,21 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) CloseBlob(image);
   image=DestroyImage(image);
   read_info=CloneImageInfo(image_info);
-  read_info->number_scenes=1;
-  read_info->scene=0;
   (void) CopyMagickString(read_info->magick,"EPS",MagickPathExtent);
   image=BlobToImage(read_info,postscript_data,ept_info.postscript_length,
     exception);
+  if (image == (Image *) NULL)
+    {
+      (void) CopyMagickString(read_info->magick,"TIFF",MagickPathExtent);
+      image=BlobToImage(read_info,tiff_data,ept_info.tiff_length,exception);
+    }
+  read_info=DestroyImageInfo(read_info);
   if (image != (Image *) NULL)
     {
       (void) CopyMagickString(image->filename,image_info->filename,
         MagickPathExtent);
       (void) CopyMagickString(image->magick,"EPT",MagickPathExtent);
     }
-  (void) CopyMagickString(read_info->magick,"TIFF",MagickPathExtent);
-  tiff_image=BlobToImage(read_info,tiff_data,ept_info.tiff_length,exception);
-  if (tiff_image != (Image *) NULL)
-    {
-      if (image == (Image *) NULL)
-        image=tiff_image;
-      else
-        AppendImageToList(&image,tiff_image);
-    }
-  read_info=DestroyImageInfo(read_info);
   ept_info.tiff=(unsigned char *) RelinquishMagickMemory(ept_info.tiff);
   ept_info.postscript=(unsigned char *) RelinquishMagickMemory(
     ept_info.postscript);

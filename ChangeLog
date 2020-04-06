@@ -1,3 +1,10 @@
+2020-04-06  6.9.11-6 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-6, GIT revision 15...
+
+2020-04-06  6.9.11-6 Cristy  <quetzlzacatenango@image...>
+  * Fix incomplete patch for EPT coder (reference
+    https://github.com/ImageMagick/ImageMagick6/issues/80).
+
 2020-04-05  6.9.11-5 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-5, GIT revision 15536:3689bed3a:20200405
 
