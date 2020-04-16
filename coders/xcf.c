@@ -961,7 +961,10 @@ static MagickBooleanType ReadOneLayer(const ImageInfo *image_info,Image* image,
   outLayer->image->background_color.opacity=
     ScaleCharToQuantum((unsigned char) (255-outLayer->alpha));
   if (outLayer->alpha != 255U)
-    outLayer->image->matte=MagickTrue;
+    {
+      outLayer->image->matte=MagickTrue;
+      (void) SetImageBackgroundColor(outLayer->image);
+    }
 
   InitXCFImage(outLayer);
 
