@@ -199,6 +199,9 @@ static double GetEdgeBackgroundFactor(const Image *image,
   }
   GetMagickPixelPacket(image,&background);
   SetMagickPixelPacket(image,p,(IndexPacket *) NULL,&background);
+  artifact=GetImageArtifact(image,"background");
+  if (artifact != (const char *) NULL)
+    (void) QueryMagickColor(artifact,&background,exception);
   artifact=GetImageArtifact(image,"trim:background-color");
   if (artifact != (const char *) NULL)
     (void) QueryMagickColor(artifact,&background,exception);
