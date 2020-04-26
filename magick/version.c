@@ -558,7 +558,7 @@ MagickExport unsigned int GetMagickCoreSignature(const StringInfo *nonce)
   signature=MagickLibInterface;
   (void) memcpy(p,&signature,sizeof(signature));
   p+=sizeof(signature);
-  signature=1;  /* endianess */
+  signature=1;  /* endinaness */
   (void) memcpy(p,&signature,sizeof(signature));
   p+=sizeof(signature);
   SetStringInfoLength(version,p-GetStringInfoDatum(version));
