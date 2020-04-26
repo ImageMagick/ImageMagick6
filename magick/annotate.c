@@ -1757,7 +1757,8 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     else
       if (i == last_character)
         {
-          if ((bounds.xMax == 0) || (draw_info->render == MagickFalse))
+          if ((bounds.xMax == 0) || 
+              (annotate_info->gravity == CenterGravity))
             origin.x+=(FT_Pos) grapheme[i].x_advance;
           else
             origin.x+=(FT_Pos) bounds.xMax;
