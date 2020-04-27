@@ -311,7 +311,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   preserve_orientation=IsStringTrue(GetImageOption(image_info,
     "heic:preserve-orientation"));
   if (preserve_orientation == MagickFalse)
-    (void) SetImageProperty(image,"exif:Orientation","1",exception);
+    (void) SetImageProperty(image,"exif:Orientation","1");
   if (image_info->ping != MagickFalse)
     {
       image->colorspace=YCbCrColorspace;
