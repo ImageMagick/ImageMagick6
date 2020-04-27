@@ -328,11 +328,9 @@ static MagickBooleanType
   DitherImage(Image *,CubeInfo *),
   SetGrayscaleImage(Image *);
 
-static size_t
-  DefineImageColormap(Image *,CubeInfo *,NodeInfo *);
-
 static void
   ClosestColor(const Image *,CubeInfo *,const NodeInfo *),
+  DefineImageColormap(Image *,CubeInfo *,NodeInfo *),
   DestroyCubeInfo(CubeInfo *),
   PruneLevel(CubeInfo *,const NodeInfo *),
   PruneToCubeDepth(CubeInfo *,const NodeInfo *),
@@ -502,7 +500,7 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
   image->colors=0;
   cube_info->transparent_pixels=0;
   cube_info->transparent_index=(-1);
-  (void) DefineImageColormap(image,cube_info,cube_info->root);
+  DefineImageColormap(image,cube_info,cube_info->root);
   /*
     Create a reduced color image.
   */
@@ -1188,12 +1186,11 @@ MagickExport MagickBooleanType CompressImageColormap(Image *image)
 %
 %  DefineImageColormap() traverses the color cube tree and notes each colormap
 %  entry.  A colormap entry is any node in the color cube tree where the
-%  of unique colors is not zero.  DefineImageColormap() returns the number of
-%  colors in the image colormap.
+%  of unique colors is not zero.
 %
 %  The format of the DefineImageColormap method is:
 %
-%      size_t DefineImageColormap(Image *image,CubeInfo *cube_info,
+%      void DefineImageColormap(Image *image,CubeInfo *cube_info,
 %        NodeInfo *node_info)
 %
 %  A description of each parameter follows.
@@ -1206,7 +1203,7 @@ MagickExport MagickBooleanType CompressImageColormap(Image *image)
 %      node in the color cube tree that is to be pruned.
 %
 */
-static size_t DefineImageColormap(Image *image,CubeInfo *cube_info,
+static void DefineImageColormap(Image *image,CubeInfo *cube_info,
   NodeInfo *node_info)
 {
   register ssize_t
@@ -1221,7 +1218,7 @@ static size_t DefineImageColormap(Image *image,CubeInfo *cube_info,
   number_children=cube_info->associate_alpha == MagickFalse ? 8UL : 16UL;
   for (i=0; i < (ssize_t) number_children; i++)
     if (node_info->child[i] != (NodeInfo *) NULL)
-      (void) DefineImageColormap(image,cube_info,node_info->child[i]);
+      DefineImageColormap(image,cube_info,node_info->child[i]);
   if (node_info->number_unique != 0)
     {
       register MagickRealType
@@ -1285,7 +1282,6 @@ static size_t DefineImageColormap(Image *image,CubeInfo *cube_info,
         }
       node_info->color_number=image->colors++;
     }
-  return(image->colors);
 }
 
 /*
