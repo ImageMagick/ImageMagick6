@@ -7,13 +7,14 @@ identify \- describes the format and characteristics of one or more image files.
 .SH OVERVIEW
 The \fBidentify\fP program is a member of the ImageMagick(1) suite of tools.  It describes the format and characteristics of one or more image files. It also reports if an image is incomplete or corrupt. The information returned includes the image number, the file name, the width and height of the image, whether the image is colormapped or not, the number of colors in the image (by default off use \fI-define unique=true\fP option), the number of bytes in the image, the format of the image (JPEG, PNM, etc.), and finally the number of seconds it took to read and process the image. Many more attributes are available with the verbose option.
 
-For more information about the identify command, point your browser to file:///usr/local/share/doc/ImageMagick-7/www/identify.html or http://imagemagick.org/script/identify.php.
+For more information about the identify command, point your browser to file:///usr/local/share/doc/ImageMagick-6/www/identify.html or http://imagemagick.org/script/identify.php.
 .SH DESCRIPTION
 Image Settings:
   \-alpha option        on, activate, off, deactivate, set, opaque, copy
                        transparent, extract, background, or shape
   \-antialias           remove pixel-aliasing
   \-authenticate value  decrypt image with this password
+  \-channel type        apply option to select image channels
   \-clip                clip along the first path from the 8BIM profile
   \-clip-mask filename  associate a clip mask with the image
   \-clip-path id        clip along a named path from the 8BIM profile
@@ -35,13 +36,13 @@ Image Settings:
   \-limit type value    pixel cache resource limit
   \-list type           Color, Configure, Delegate, Format, Magic, Module,
                        Resource, or Type
+  \-mask filename       associate a mask with the image
   \-matte               store matte channel if the image has one
   \-moments             report image moments
   \-monitor             monitor progress
   \-ping                efficiently determine image attributes
   \-precision value     maximum number of significant digits to print
   \-quiet               suppress all warning messages
-  \-read-mask filename  associate a read mask with the image
   \-regard-warnings     pay attention to warning messages
   \-respect-parentheses settings remain in effect until parenthesis boundary
   \-sampling-factor geometry
@@ -57,7 +58,6 @@ Image Settings:
                        virtual pixel access method
 
 Image Operators:
-  \-channel mask        set the image channel mask
   \-grayscale method    convert image to grayscale
   \-negate              replace each pixel with its complementary color 
 
@@ -71,9 +71,10 @@ Miscellaneous Options:
 By default, the image format of `file' is determined by its magic number.  To specify a particular image format, precede the filename with an image format name and a colon (i.e. ps:image) or specify the image type as the filename suffix (i.e. image.ps).  Specify 'file' as '-' for standard input or output.
 .SH NOTE
 Although some options appear to modify the file to be identified, the identify command is strictly \fBread only\fP. For instance, the crop option crops the in-memory image and then describes the result.
+
 .SH SEE ALSO
 ImageMagick(1)
 
 .SH COPYRIGHT
 
-\fBCopyright (C) 1999-2020 ImageMagick Studio LLC. Additional copyrights and licenses apply to this software, see file:///usr/local/share/doc/ImageMagick-7/www/license.html or http://imagemagick.org/script/license.php\fP
+\fBCopyright (C) 1999-2020 ImageMagick Studio LLC. Additional copyrights and licenses apply to this software, see file:///usr/local/share/doc/ImageMagick-6/www/license.html or http://imagemagick.org/script/license.php\fP
