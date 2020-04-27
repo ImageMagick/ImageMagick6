@@ -4,6 +4,7 @@
 2020-04-27  6.9.11-10 Cristy  <quetzlzacatenango@image...>
   * Correction to allocate a colormap of the maximum colors when color
     reducing an image sequence.
+  * Write to stdout for mp4:-.
 
 2020-04-26  6.9.11-9 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-9, GIT revision 15563:7e4286f:20200426.
