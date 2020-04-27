@@ -486,13 +486,17 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
   ssize_t
     y;
 
+  size_t
+    number_colors;
+
   /*
     Allocate image colormap.
   */
   colorspace=image->colorspace;
   if (cube_info->quantize_info->colorspace != UndefinedColorspace)
     (void) TransformImageColorspace(image,cube_info->quantize_info->colorspace);
-  if (AcquireImageColormap(image,cube_info->maximum_colors) == MagickFalse)
+  number_colors=MagickMax(cube_info->colors,cube_info->maximum_colors);
+  if (AcquireImageColormap(image,number_colors) == MagickFalse)
     ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
   image->colors=0;
