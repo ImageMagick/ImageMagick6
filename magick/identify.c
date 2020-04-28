@@ -687,7 +687,7 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
   ping=pixels == (const PixelPacket *) NULL ? MagickTrue : MagickFalse;
   exception=(&image->exception);
   (void) SignatureImage(image);
-  (void) FormatLocaleFile(file,"Image:\nFilename: %s\n",image->filename);
+  (void) FormatLocaleFile(file,"Image:\n  Filename: %s\n",image->filename);
   if (*image->magick_filename != '\0')
     if (LocaleCompare(image->magick_filename,image->filename) != 0)
       {
