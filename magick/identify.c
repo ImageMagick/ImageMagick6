@@ -687,7 +687,7 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
   ping=pixels == (const PixelPacket *) NULL ? MagickTrue : MagickFalse;
   exception=(&image->exception);
   (void) SignatureImage(image);
-  (void) FormatLocaleFile(file,"Image: %s\n",image->filename);
+  (void) FormatLocaleFile(file,"Image:\nFilename: %s\n",image->filename);
   if (*image->magick_filename != '\0')
     if (LocaleCompare(image->magick_filename,image->filename) != 0)
       {
@@ -1045,6 +1045,7 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
         {
           char
             color[MaxTextExtent],
+            index[MaxTextExtent],
             hex[MaxTextExtent],
             tuple[MaxTextExtent];
 
@@ -1081,8 +1082,9 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
             (void) QueryMagickColorname(image,&pixel,SVGCompliance,color,
               exception);
             GetColorTuple(&pixel,MagickTrue,hex);
-            (void) FormatLocaleFile(file,"  %8ld: %s %s %s\n",(long) i,tuple,
-              hex,color);
+            (void) sprintf(index,"%g:",(double) i);
+            (void) FormatLocaleFile(file,"    %s %s %s %s\n",index,tuple,hex,
+              color);
             p++;
           }
         }
