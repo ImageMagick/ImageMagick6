@@ -448,6 +448,8 @@ MagickPrivate Image *AccelerateAddNoiseImage(const Image *image,
   const ChannelType channel,const NoiseType noise_type,
   ExceptionInfo *exception) 
 {
+  /* Temporary disabled because of repetition.
+
   Image
     *filteredImage;
 
@@ -461,6 +463,12 @@ MagickPrivate Image *AccelerateAddNoiseImage(const Image *image,
   filteredImage = ComputeAddNoiseImage(image,channel,noise_type,exception);
   
   return(filteredImage);
+  */
+  magick_unreferenced(image);
+  magick_unreferenced(channel);
+  magick_unreferenced(noise_type);
+  magick_unreferenced(exception);
+  return((Image *)NULL);
 }
 
 /*
