@@ -4,6 +4,7 @@
 2020-04-28  6.9.11-11 Cristy  <quetzlzacatenango@image...>
   * Disable "random" OpenCL kernel.  Previously the work load was distributed
     but each started with the same random seed.
+  * Enable threaded PNG coder.
 
 2020-04-27  6.9.11-10 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-10, GIT revision 15574:867252a:20200427
