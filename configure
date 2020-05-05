@@ -4563,7 +4563,7 @@ MAGICK_PATCHLEVEL_VERSION=11
 
 MAGICK_VERSION=6.9.11-11
 
-MAGICK_GIT_REVISION=15585:9d9b8b7fc:20200503
+MAGICK_GIT_REVISION=15588:1bb249234:20200505
 
 
 # Substitute library versioning
@@ -11834,6 +11834,16 @@ fi
     fi
 fi
 
+
+#
+# Set SETJMP_IS_THREAD_SAFE define.
+#
+case "${host_os}" in
+  solaris2* ) ;;
+  *)
+$as_echo "#define SETJMP_IS_THREAD_SAFE 1" >>confdefs.h
+ ;;
+esac
 
 # Configure libtool
 : ${AR_FLAGS=cr}
