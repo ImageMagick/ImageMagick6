@@ -4923,8 +4923,8 @@ RestoreMSCWarning
         draw_info->fill_rule,x,y,&stroke_opacity);
       if (draw_info->stroke_antialias == MagickFalse)
         {
-          fill_opacity=fill_opacity > 0.25 ? 1.0 : 0.0;
-          stroke_opacity=stroke_opacity > 0.25 ? 1.0 : 0.0;
+          fill_opacity=fill_opacity > 0.5 ? 1.0 : 0.0;
+          stroke_opacity=stroke_opacity > 0.5 ? 1.0 : 0.0;
         }
       (void) GetFillColor(draw_info,x-start_x,y-start_y,&fill_color);
       fill_opacity=(double) (QuantumRange-fill_opacity*(QuantumRange-
