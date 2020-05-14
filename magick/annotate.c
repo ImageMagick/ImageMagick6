@@ -1690,12 +1690,16 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
                 continue;
               }
             fill_opacity=1.0;
-            if (bitmap->bitmap.pixel_mode == ft_pixel_mode_grays)
-              fill_opacity=(MagickRealType) (p[n])/(bitmap->bitmap.num_grays-1);
-            else
-              if (bitmap->bitmap.pixel_mode == ft_pixel_mode_mono)
-                fill_opacity=((p[(x >> 3)+y*bitmap->bitmap.pitch] &
-                  (1 << (~x & 0x07)))) == 0 ? 0.0 : 1.0;
+            if (bitmap->bitmap.buffer != (unsigned char *) NULL)
+              {
+                if (bitmap->bitmap.pixel_mode == ft_pixel_mode_grays)
+                  fill_opacity=(MagickRealType) (p[n])/(
+                    bitmap->bitmap.num_grays-1);
+                else
+                  if (bitmap->bitmap.pixel_mode == ft_pixel_mode_mono)
+                    fill_opacity=((p[(x >> 3)+y*bitmap->bitmap.pitch] &
+                      (1 << (~x & 0x07)))) == 0 ? 0.0 : 1.0;
+              }
             if (draw_info->text_antialias == MagickFalse)
               fill_opacity=fill_opacity >= 0.5 ? 1.0 : 0.0;
             if (active == MagickFalse)
