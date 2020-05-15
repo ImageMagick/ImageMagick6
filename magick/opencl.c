@@ -1213,18 +1213,11 @@ static MagickBooleanType InitOpenCLPlatformDevice(MagickCLEnv clEnv, ExceptionIn
   if (MAGICK_OCL_DEVICE != NULL)
   {
     if (strcmp(MAGICK_OCL_DEVICE, "CPU") == 0)
-    {
       clEnv->deviceType = CL_DEVICE_TYPE_CPU;
-    }
     else if (strcmp(MAGICK_OCL_DEVICE, "GPU") == 0)
-    {
       clEnv->deviceType = CL_DEVICE_TYPE_GPU;
-    }
-    else if (strcmp(MAGICK_OCL_DEVICE, "OFF") == 0)
-    {
-      /* OpenCL disabled */
+    else if (IsStringNotFalse(MAGICK_OCL_DEVICE) == MagickFalse)
       goto cleanup;
-    }
   }
   else if (clEnv->deviceType == 0) {
     clEnv->deviceType = CL_DEVICE_TYPE_ALL;
