@@ -1678,11 +1678,10 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
                 bitmap->bitmap.width,1,exception);
               active=q != (PixelPacket *) NULL ? MagickTrue : MagickFalse;
             }
-          n=y*bitmap->bitmap.pitch-1;
-          for (x=0; x < (ssize_t) bitmap->bitmap.width; x++)
+          n=y*bitmap->bitmap.pitch;
+          for (x=0; x < (ssize_t) bitmap->bitmap.width; x++, n++)
           {
-            n++;
-            x_offset++;
+            x_offset=(ssize_t) ceil(point.x+x-0.5);
             if ((x_offset < 0) || (x_offset >= (ssize_t) image->columns))
               {
                 if (q != (PixelPacket *) NULL)
