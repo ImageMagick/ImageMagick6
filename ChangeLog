@@ -1,3 +1,9 @@
+2020-05-17  6.9.11-13 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-13, GIT revision 15610:9445760:20200517.
+
+2020-05-17  6.9.11-13 Cristy  <quetzlzacatenango@image...>
+  * Remove errant debugging statement in SVG coder.
+
 2020-05-15  6.9.11-12 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-12, GIT revision 15602:96db62d:20200515.
 
