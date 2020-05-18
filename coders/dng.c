@@ -173,7 +173,7 @@ static void SetDNGProperties(Image *image,const libraw_data_t *raw_info)
     (void) SetImageProperty(image,"dng:serial.number",
       raw_info->shootinginfo.BodySerial);
   (void) FormatLocaleString(property,MagickPathExtent,"1/%0.1f",
-    1.0/raw_info->other.shutter);
+    PerceptibleReciprocal(raw_info->other.shutter));
   (void) SetImageProperty(image,"dng:exposure.time",property);
   (void) FormatLocaleString(property,MagickPathExtent,"%0.1f",
     raw_info->other.aperture);
