@@ -4,6 +4,7 @@
 2020-05-23  6.9.11-14 Cristy  <quetzlzacatenango@image...>
   * Errant warning when reading a profile file (reference
     https://github.com/ImageMagick/ImageMagick/issues/2030).
+  * Fix one off error on PDF object for images with ICC profile.
 
 2020-05-17  6.9.11-13 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-13, GIT revision 15610:9445760:20200517.

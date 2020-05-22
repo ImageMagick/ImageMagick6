@@ -1319,9 +1319,16 @@ RestoreMSCWarning
       version=(size_t) MagickMax(version,4);
   if (LocaleCompare(image_info->magick,"PDFA") == 0)
     version=(size_t) MagickMax(version,6);
-  profile=GetImageProfile(image,"icc");
-  if (profile != (StringInfo *) NULL)
-    version=(size_t) MagickMax(version,7);
+  for (next=image; next != (Image *) NULL; next=GetNextImageInList(next))
+  {
+    profile=GetImageProfile(next,"icc");
+    if (profile != (StringInfo *) NULL)
+      {
+        if (image_info->adjoin != MagickFalse)
+          (void) SetImageType(next,TrueColorType);
+        version=(size_t) MagickMax(version,7);
+      }
+  }
   (void) FormatLocaleString(buffer,MaxTextExtent,"%%PDF-1.%.20g \n",(double)
     version);
   (void) WriteBlobString(image,buffer);
@@ -1458,7 +1465,7 @@ RestoreMSCWarning
       has_icc_profile;
 
     profile=GetImageProfile(image,"icc");
-    has_icc_profile=(profile != (StringInfo *) NULL) ? MagickTrue : MagickFalse;
+    has_icc_profile=profile != (StringInfo *) NULL ? MagickTrue : MagickFalse;
     compression=image->compression;
     if (image_info->compression != UndefinedCompression)
       compression=image_info->compression;
