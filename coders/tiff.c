@@ -3255,7 +3255,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
       case FaxCompression:
       case Group4Compression:
       {
-        if (IsMonochromeImage(image,&image->exception) == MagickFalse)
+        if (IsGrayImage(image,&image->exception) == MagickFalse)
           (void) SetImageType(image,BilevelType);
         (void) SetImageDepth(image,1);
         break;
