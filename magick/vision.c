@@ -286,10 +286,14 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         /*
           Is neighbor an authentic pixel and a different color than the pixel?
         */
-        neighbor_offset=dy*image->columns+dx;
         if (((x+dx) < 0) || ((x+dx) >= (ssize_t) image->columns) ||
-            ((y+dy) < 0) || ((y+dy) >= (ssize_t) image->rows) ||
-            (IsColorSimilar(image,p,p+neighbor_offset) == MagickFalse))
+            ((y+dy) < 0) || ((y+dy) >= (ssize_t) image->rows))
+          {
+            p++;
+            continue;
+          }
+        neighbor_offset=dy*image->columns+dx;
+        if (IsColorSimilar(image,p,p+neighbor_offset) == MagickFalse)
           {
             p++;
             continue;
@@ -447,13 +451,13 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   {
     object[i].bounding_box.width-=(object[i].bounding_box.x-1);
     object[i].bounding_box.height-=(object[i].bounding_box.y-1);
-    object[i].color.red/=(object[i].area/QuantumRange);
-    object[i].color.green/=(object[i].area/QuantumRange);
-    object[i].color.blue/=(object[i].area/QuantumRange);
+    object[i].color.red/=(QuantumScale*object[i].area);
+    object[i].color.green/=(QuantumScale*object[i].area);
+    object[i].color.blue/=(QuantumScale*object[i].area);
     if (image->matte != MagickFalse)
-      object[i].color.opacity/=(object[i].area/QuantumRange);
+      object[i].color.opacity/=(QuantumScale*object[i].area);
     if (image->colorspace == CMYKColorspace)
-      object[i].color.index/=(object[i].area/QuantumRange);
+      object[i].color.index/=(QuantumScale*object[i].area);
     object[i].centroid.x/=object[i].area;
     object[i].centroid.y/=object[i].area;
     max_threshold+=object[i].area;
@@ -516,7 +520,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   if (artifact == (const char *) NULL)
     artifact=GetImageArtifact(image,"connected-components:keep");
   if (artifact != (const char *) NULL)
-    for (c=(char *) artifact; *c != '\0';)
+    for (c=(char *) artifact; *c != '\0'; )
     {
       /*
         Keep selected objects based on id, merge others.
@@ -607,7 +611,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   if (artifact == (const char *) NULL)
     artifact=GetImageArtifact(image,"connected-components:remove");
   if (artifact != (const char *) NULL)
-    for (c=(char *) artifact; *c != '\0';)
+    for (c=(char *) artifact; *c != '\0'; )
     {
       /*
         Remove selected objects based on color, keep others.
@@ -706,7 +710,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
                 break;
               }
             indexes=GetCacheViewVirtualIndexQueue(object_view);
-            j=(ssize_t) indexes[x];
+            j=(ssize_t) *indexes;
             if (j != i)
               object[j].census++;
           }
