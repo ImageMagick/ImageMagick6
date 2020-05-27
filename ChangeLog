@@ -1,5 +1,8 @@
-2020-05-24  6.9.11-15 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-15, GIT revision 15620:1f502e9:20200524.
+2020-05-26  6.9.11-15 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-15, GIT revision 15...
+
+2020-05-26  6.9.11-15 Cristy  <quetzlzacatenango@image...>
+  * CCL area threshold not working correctly.
 
 2020-05-22  6.9.11-14 Cristy  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-14, GIT revision 15618:471a07315:20200522
