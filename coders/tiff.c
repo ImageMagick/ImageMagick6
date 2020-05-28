@@ -1621,7 +1621,7 @@ RestoreMSCWarning
         return(DestroyImageList(image));
       }
     status=SetImageColorspace(image,image->colorspace);
-    status!=ResetImagePixels(image,exception);
+    status|=ResetImagePixels(image,exception);
     if (status == MagickFalse)
       {
         TIFFClose(tiff);
