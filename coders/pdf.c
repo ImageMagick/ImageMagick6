@@ -2202,7 +2202,7 @@ RestoreMSCWarning
             channels=3;
           }
     profile=GetImageProfile(image,"icc");
-    if ((profile == (StringInfo *) NULL) || (channels == 0))
+    if ((profile == (StringInfo *) NULL) || (channels <= 1))
       {
         if (channels != 0)
           (void) FormatLocaleString(buffer,MaxTextExtent,"/%s\n",device);
