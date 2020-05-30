@@ -1323,11 +1323,7 @@ RestoreMSCWarning
   {
     profile=GetImageProfile(next,"icc");
     if (profile != (StringInfo *) NULL)
-      {
-        if (image_info->adjoin != MagickFalse)
-          (void) SetImageType(next,TrueColorType);
-        version=(size_t) MagickMax(version,7);
-      }
+      version=(size_t) MagickMax(version,7);
   }
   (void) FormatLocaleString(buffer,MaxTextExtent,"%%PDF-1.%.20g \n",(double)
     version);
