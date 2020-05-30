@@ -2197,15 +2197,14 @@ RestoreMSCWarning
             device="DeviceRGB";
             channels=3;
           }
-    profile=GetImageProfile(image,"icc");
-    if ((profile == (StringInfo *) NULL) || (channels <= 1))
+    if ((has_icc_profile == MagickFalse) || (channels == 0))
       {
         if (channels != 0)
           (void) FormatLocaleString(buffer,MaxTextExtent,"/%s\n",device);
         else
           (void) FormatLocaleString(buffer,MaxTextExtent,
             "[ /Indexed /%s %.20g %.20g 0 R ]\n",device,(double) image->colors-
-            1,(double) object+3);
+            1,(double) object+(has_icc_profile ? 4 : 3));
         (void) WriteBlobString(image,buffer);
       }
     else
