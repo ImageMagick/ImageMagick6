@@ -1,5 +1,5 @@
 2020-05-31  6.9.11-16 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-16, GIT revision 15637:6d3caf8:20200531
+  * Release ImageMagick version 6.9.11-16, GIT revision 15639:38d3390:20200531
 
 2020-05-31  6.9.11-16 Cristy  <quetzlzacatenango@image...>
   * Don't check for incompatible ICC profiles when writing PDF images, instead
