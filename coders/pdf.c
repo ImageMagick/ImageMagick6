@@ -1323,7 +1323,10 @@ RestoreMSCWarning
   {
     profile=GetImageProfile(next,"icc");
     if (profile != (StringInfo *) NULL)
-      version=(size_t) MagickMax(version,7);
+      {
+        (void) SetImageStorageClass(next,DirectClass);
+        version=(size_t) MagickMax(version,7);
+      }
   }
   (void) FormatLocaleString(buffer,MaxTextExtent,"%%PDF-1.%.20g \n",(double)
     version);
@@ -2197,7 +2200,7 @@ RestoreMSCWarning
             device="DeviceRGB";
             channels=3;
           }
-    if ((has_icc_profile == MagickFalse) || (channels == 0))
+    if (has_icc_profile == MagickFalse)
       {
         if (channels != 0)
           (void) FormatLocaleString(buffer,MaxTextExtent,"/%s\n",device);
