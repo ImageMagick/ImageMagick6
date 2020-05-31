@@ -1327,6 +1327,9 @@ RestoreMSCWarning
         (void) SetImageStorageClass(next,DirectClass);
         version=(size_t) MagickMax(version,7);
       }
+    if ((next->colorspace != CMYKColorspace) &&
+        (IssRGBCompatibleColorspace(next->colorspace) == MagickFalse))
+      (void) TransformImageColorspace(next,sRGBColorspace);
   }
   (void) FormatLocaleString(buffer,MaxTextExtent,"%%PDF-1.%.20g \n",(double)
     version);
