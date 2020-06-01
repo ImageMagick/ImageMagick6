@@ -584,8 +584,8 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   CacheInfo
     *magick_restrict cache_info;
 
-  MagickSizeType
-    number_pixels;
+  MagickOffsetType
+    n;
 
   NexusInfo
     **magick_restrict clip_nexus;
@@ -601,8 +601,8 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
     *magick_restrict p,
     *magick_restrict q;
 
-  register ssize_t
-    i;
+  ssize_t
+    y;
 
   /*
     Apply clip mask.
@@ -627,37 +627,44 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   r=GetVirtualPixelCacheNexus(image->clip_mask,MaskVirtualPixelMethod,
     nexus_info->region.x,nexus_info->region.y,nexus_info->region.width,
     nexus_info->region.height,clip_nexus[0],exception);
-  number_pixels=(MagickSizeType) nexus_info->region.width*
-    nexus_info->region.height;
-  for (i=0; i < (ssize_t) number_pixels; i++)
+  if ((p == (PixelPacket *) NULL) || (q == (PixelPacket *) NULL) || 
+      (r == (const PixelPacket *) NULL))
+    return(MagickFalse);
+  n=0;
+  for (y=0; y < (ssize_t) nexus_info->region.height; y++)
   {
-    double
-      mask_alpha;
+    register ssize_t
+      x;
 
-    if ((p == (PixelPacket *) NULL) || (r == (const PixelPacket *) NULL))
-      break;
-    mask_alpha=QuantumScale*GetPixelIntensity(image,r);
-    if (fabs(mask_alpha) >= MagickEpsilon)
-      {
-        SetPixelRed(q,mask_alpha*MagickOver_((MagickRealType) p->red,
-          (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->red,
-          (MagickRealType) GetPixelOpacity(q)));
-        SetPixelGreen(q,mask_alpha*MagickOver_((MagickRealType) p->green,
-          (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->green,
-          (MagickRealType) GetPixelOpacity(q)));
-        SetPixelBlue(q,mask_alpha*MagickOver_((MagickRealType) p->blue,
-          (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->blue,
-          (MagickRealType) GetPixelOpacity(q)));
-        SetPixelOpacity(q,GetPixelOpacity(p));
-        if (cache_info->active_index_channel != MagickFalse)
-          SetPixelIndex(nexus_indexes+i,GetPixelIndex(indexes+i));
-      }
-    p++;
-    q++;
-    r++;
+    for (x=0; x < (ssize_t) nexus_info->region.width; x++)
+    {
+      double
+        mask_alpha;
+
+      mask_alpha=QuantumScale*GetPixelIntensity(image,r);
+      if (fabs(mask_alpha) >= MagickEpsilon)
+        {
+          SetPixelRed(q,mask_alpha*MagickOver_((MagickRealType) p->red,
+            (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->red,
+            (MagickRealType) GetPixelOpacity(q)));
+          SetPixelGreen(q,mask_alpha*MagickOver_((MagickRealType) p->green,
+            (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->green,
+            (MagickRealType) GetPixelOpacity(q)));
+          SetPixelBlue(q,mask_alpha*MagickOver_((MagickRealType) p->blue,
+            (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->blue,
+            (MagickRealType) GetPixelOpacity(q)));
+          SetPixelOpacity(q,GetPixelOpacity(p));
+          if (cache_info->active_index_channel != MagickFalse)
+            SetPixelIndex(nexus_indexes+n,GetPixelIndex(indexes+n));
+        }
+      p++;
+      q++;
+      r++;
+      n++;
+    }
   }
   clip_nexus=DestroyPixelCacheNexus(clip_nexus,1);
-  return(i < (ssize_t) number_pixels ? MagickFalse : MagickTrue);
+  return(MagickTrue);
 }
 
 /*
@@ -3590,12 +3597,12 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   CacheInfo
     *magick_restrict cache_info;
 
+  MagickOffsetType
+    n;
+
   MagickPixelPacket
     alpha,
     beta;
-
-  MagickSizeType
-    number_pixels;
 
   NexusInfo
     **magick_restrict mask_nexus;
@@ -3611,11 +3618,11 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
     *magick_restrict p,
     *magick_restrict q;
 
-  register ssize_t
-    i;
+  ssize_t
+    y;
 
   /*
-    Apply clip mask.
+    Apply composite mask.
   */
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
@@ -3635,31 +3642,36 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   r=GetVirtualPixelCacheNexus(image->mask,MaskVirtualPixelMethod,
     nexus_info->region.x,nexus_info->region.y,nexus_info->region.width,
     nexus_info->region.height,mask_nexus[0],&image->exception);
+  if ((p == (PixelPacket *) NULL) || (q == (PixelPacket *) NULL) || 
+      (r == (const PixelPacket *) NULL))
+    return(MagickFalse);
+  n=0;
   GetMagickPixelPacket(image,&alpha);
   GetMagickPixelPacket(image,&beta);
-  number_pixels=(MagickSizeType) nexus_info->region.width*
-    nexus_info->region.height;
-  for (i=0; i < (ssize_t) number_pixels; i++)
+  for (y=0; y < (ssize_t) nexus_info->region.height; y++)
   {
-    if ((p == (PixelPacket *) NULL) || (r == (const PixelPacket *) NULL))
-      break;
-    SetMagickPixelPacket(image,p,indexes+i,&alpha);
-    SetMagickPixelPacket(image,q,nexus_indexes+i,&beta);
-    ApplyPixelCompositeMask(&beta,GetPixelIntensity(image,r),&alpha,
-      alpha.opacity,&beta);
-    SetPixelRed(q,ClampToQuantum(beta.red));
-    SetPixelGreen(q,ClampToQuantum(beta.green));
-    SetPixelBlue(q,ClampToQuantum(beta.blue));
-    SetPixelOpacity(q,ClampToQuantum(beta.opacity));
-    if (cache_info->active_index_channel != MagickFalse)
-      SetPixelIndex(nexus_indexes+i,GetPixelIndex(indexes+i));
-    p++;
-    q++;
-    r++;
+    register ssize_t
+      x;
+
+    for (x=0; x < (ssize_t) nexus_info->region.width; x++)
+    {
+      SetMagickPixelPacket(image,p,indexes+n,&alpha);
+      SetMagickPixelPacket(image,q,nexus_indexes+n,&beta);
+      ApplyPixelCompositeMask(&beta,GetPixelIntensity(image,r),&alpha,
+        alpha.opacity,&beta);
+      SetPixelRed(q,ClampToQuantum(beta.red));
+      SetPixelGreen(q,ClampToQuantum(beta.green));
+      SetPixelBlue(q,ClampToQuantum(beta.blue));
+      SetPixelOpacity(q,ClampToQuantum(beta.opacity));
+      if (cache_info->active_index_channel != MagickFalse)
+        SetPixelIndex(nexus_indexes+n,GetPixelIndex(indexes+n));
+      p++;
+      q++;
+      r++;
+      n++;
+    }
   }
   mask_nexus=DestroyPixelCacheNexus(mask_nexus,1);
-  if (i < (ssize_t) number_pixels)
-    return(MagickFalse);
   return(MagickTrue);
 }
 
