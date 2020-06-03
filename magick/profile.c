@@ -789,6 +789,8 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
   ClampToQuantum(target_info.scale*QuantumRange*(pixel)+target_info.translate)
 #define ThrowProfileException(severity,tag,context) \
 { \
+  if (profile != (StringInfo *) NULL) \
+     profile=DestroyStringInfo(profile); \
   if (cms_context != (cmsContext) NULL) \
     cmsDeleteContext(cms_context); \
   if (source_info.profile != (cmsHPROFILE) NULL) \
@@ -1085,6 +1087,7 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
                 target_info.pixels=DestroyPixelThreadSet(target_info.pixels);
                 source_info.pixels=DestroyPixelThreadSet(source_info.pixels);
                 transform=DestroyTransformThreadSet(transform);
+                profile=DestroyStringInfo(profile);
                 if (source_info.profile != (cmsHPROFILE) NULL)
                   (void) cmsCloseProfile(source_info.profile);
                 if (target_info.profile != (cmsHPROFILE) NULL)
