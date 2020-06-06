@@ -2345,11 +2345,8 @@ MagickExport const char *GetImageProperty(const Image *image,
           if (status != MagickFalse)
             {
               char
-                hex[MaxTextExtent],
-                name[MaxTextExtent];
+                hex[MaxTextExtent];
 
-              (void) QueryMagickColorname(image,&pixel,SVGCompliance,name,
-                exception);
               GetColorTuple(&pixel,MagickTrue,hex);
               (void) SetImageProperty((Image *) image,property,hex+1);
             }
@@ -2407,8 +2404,7 @@ MagickExport const char *GetImageProperty(const Image *image,
               char
                 name[MaxTextExtent];
 
-              (void) QueryMagickColorname(image,&pixel,SVGCompliance,name,
-                exception);
+              GetColorTuple(&pixel,MagickFalse,name);
               (void) SetImageProperty((Image *) image,property,name);
             }
           break;
