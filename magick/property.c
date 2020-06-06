@@ -2404,7 +2404,18 @@ MagickExport const char *GetImageProperty(const Image *image,
               char
                 name[MaxTextExtent];
 
+              const char
+                *value;
+
               GetColorTuple(&pixel,MagickFalse,name);
+              value=GetImageArtifact(image,"pixel:compliance");
+              if (value != (char *) NULL)
+                {
+                  ComplianceType compliance=(ComplianceType) ParseCommandOption(
+                    MagickComplianceOptions,MagickFalse,value);
+                  (void) QueryMagickColorname(image,&pixel,compliance,name,
+                    exception);
+                }
               (void) SetImageProperty((Image *) image,property,name);
             }
           break;
