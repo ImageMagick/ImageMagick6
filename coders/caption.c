@@ -307,7 +307,7 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
         draw_info->pointsize);
       (void) SetImageProperty(image,"caption:pointsize",pointsize);
     }
-  (void) FormatLocaleString(lines,MaxTextExtent,"%.20g",(double) i);
+  (void) FormatLocaleString(lines,MaxTextExtent,"%.20g",(double) (i+1));
   (void) SetImageProperty(image,"caption:lines",lines);
   draw_info=DestroyDrawInfo(draw_info);
   if (status == MagickFalse)
