@@ -1,5 +1,5 @@
-2020-06-03  6.9.11-17 Cristy  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-17, GIT revision 15...
+2020-06-07  6.9.11-17 Cristy  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-17, GIT revision 15651:ff95d16:20200607
 
 2020-06-03  6.9.11-17 Cristy  <quetzlzacatenango@image...>
   * Free up memory after a ICC profile is removed.
