@@ -2407,7 +2407,8 @@ MagickExport const char *GetImageProperty(const Image *image,
               const char
                 *value;
 
-              GetColorTuple(&pixel,MagickFalse,name);
+              (void) QueryMagickColorname(image,&pixel,SVGCompliance,name,
+                exception);
               value=GetImageArtifact(image,"pixel:compliance");
               if (value != (char *) NULL)
                 {
