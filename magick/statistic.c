@@ -375,7 +375,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case RootMeanSquareEvaluateOperator:
     {
-      result=(MagickRealType) (pixel*pixel+value);
+      result=((MagickRealType) pixel*pixel+value);
       break;
     }
     case SetEvaluateOperator:
