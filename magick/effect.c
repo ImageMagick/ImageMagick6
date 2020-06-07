@@ -2515,7 +2515,7 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
 
   float
     *interImage,
-    *scanLinePixels,
+    *scanline,
     totalWeight;
 
   Image
@@ -2525,8 +2525,8 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
     status;
 
   MemoryInfo
-    *scanLinePixels_info,
-    *interImage_info;
+    *interImage_info,
+    *scanline_info;
 
   ssize_t
     scanLineSize,
@@ -2560,16 +2560,16 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
   scanLineSize=(ssize_t) MagickMax(image->columns,image->rows);
   width=(ssize_t) scanLineSize*0.002f*fabs(radius);
   scanLineSize+=(2*width);
-  scanLinePixels_info=AcquireVirtualMemory(GetOpenMPMaximumThreads()*
-    scanLineSize,sizeof(*scanLinePixels));
-  if (scanLinePixels_info == (MemoryInfo *) NULL)
+  scanline_info=AcquireVirtualMemory(GetOpenMPMaximumThreads()*
+    scanLineSize,sizeof(*scanline));
+  if (scanline_info == (MemoryInfo *) NULL)
     {
       contrast_view=DestroyCacheView(contrast_view);
       image_view=DestroyCacheView(image_view);
       contrast_image=DestroyImage(contrast_image);
       ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
     }
-  scanLinePixels=(float *) GetVirtualMemoryBlob(scanLinePixels_info);
+  scanline=(float *) GetVirtualMemoryBlob(scanline_info);
   /*
     Create intermediate buffer.
   */
@@ -2577,7 +2577,7 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
     sizeof(*interImage));
   if (interImage_info == (MemoryInfo *) NULL)
     {
-      scanLinePixels_info=RelinquishVirtualMemory(scanLinePixels_info);
+      scanline_info=RelinquishVirtualMemory(scanline_info);
       contrast_view=DestroyCacheView(contrast_view);
       image_view=DestroyCacheView(image_view);
       contrast_image=DestroyImage(contrast_image);
@@ -2618,7 +2618,7 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
 
       if (status == MagickFalse)
         continue;
-      pixels=scanLinePixels;
+      pixels=scanline;
       pixels+=id*scanLineSize;
       pix=pixels;
       p=GetCacheViewVirtualPixels(image_view,x,-width,1,image->rows+(2*width),
@@ -2699,7 +2699,7 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
 
       if (status == MagickFalse)
         continue;
-      pixels=scanLinePixels;
+      pixels=scanline;
       pixels+=id*scanLineSize;
       p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,
         exception);
@@ -2737,9 +2737,9 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
         srcVal=(float) GetPixelLuma(image,p);
         mult=(srcVal-(sum/totalWeight))*(strength/100.0f);
         mult=(srcVal+mult)/srcVal;
-        SetPixelRed(q,ClampToQuantum(GetPixelRed(p)*mult));
-        SetPixelGreen(q,ClampToQuantum(GetPixelGreen(p)*mult));
-        SetPixelBlue(q,ClampToQuantum(GetPixelBlue(p)*mult));
+        SetPixelRed(q,ClampToQuantum((MagickRealType) GetPixelRed(p)*mult));
+        SetPixelGreen(q,ClampToQuantum((MagickRealType) GetPixelGreen(p)*mult));
+        SetPixelBlue(q,ClampToQuantum((MagickRealType) GetPixelBlue(p)*mult));
         p++;
         q++;
       }
@@ -2747,7 +2747,7 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
         status=MagickFalse;
     }
   }
-  scanLinePixels_info=RelinquishVirtualMemory(scanLinePixels_info);
+  scanline_info=RelinquishVirtualMemory(scanline_info);
   interImage_info=RelinquishVirtualMemory(interImage_info);
   contrast_view=DestroyCacheView(contrast_view);
   image_view=DestroyCacheView(image_view);
