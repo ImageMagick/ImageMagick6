@@ -1321,6 +1321,7 @@ RestoreMSCWarning
     version=(size_t) MagickMax(version,6);
   for (next=image; next != (Image *) NULL; next=GetNextImageInList(next))
   {
+    (void) SetImageGray(image,&image->exception);
     profile=GetImageProfile(next,"icc");
     if (profile != (StringInfo *) NULL)
       {

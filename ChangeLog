@@ -2,7 +2,7 @@
   * Release ImageMagick version 6.9.11-18, GIT revision 15665:cade79e:20200608
 
 2020-06-08  6.9.11-18 Cristy  <quetzlzacatenango@image...>
-  * Cut-n-paste problem fixed (reference
+  * Colorspace change will remove ICC profile (reference
     https://github.com/ImageMagick/ImageMagick6/issues/82).
 
 2020-06-07  6.9.11-17 Cristy  <quetzlzacatenango@image...>
