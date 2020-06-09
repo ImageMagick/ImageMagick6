@@ -689,7 +689,6 @@ static MagickBooleanType WriteIPLImage(const ImageInfo *image_info,Image *image)
         }
     }
   }
-  quantum_info=DestroyQuantumInfo(quantum_info);
   if (GetNextImageInList(image) == (Image *) NULL)
     break;
       image=SyncNextImageInList(image);
@@ -698,6 +697,7 @@ static MagickBooleanType WriteIPLImage(const ImageInfo *image_info,Image *image)
         break;
     }while (image_info->adjoin != MagickFalse);
 
+  quantum_info=DestroyQuantumInfo(quantum_info);
   (void) WriteBlob(image, 4, (const unsigned char *) "fini");
   (void) WriteBlobLong(image, 0);
 
