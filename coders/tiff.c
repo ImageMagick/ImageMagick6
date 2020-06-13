@@ -638,9 +638,16 @@ static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
   if ((TIFFGetField(tiff,TIFFTAG_RICHTIFFIPTC,&length,&profile) == 1) &&
       (profile != (unsigned char *) NULL))
     {
+      const TIFFField
+        *field;
+
       if (TIFFIsByteSwapped(tiff) != 0)
         TIFFSwabArrayOfLong((uint32 *) profile,(size_t) length);
-      status=ReadProfile(image,"iptc",profile,4L*length);
+      field=TIFFFieldWithTag(tiff,TIFFTAG_RICHTIFFIPTC);
+      if (TIFFFieldDataType(field) == TIFF_LONG)
+        status=ReadProfile(image,"iptc",profile,4L*length);
+      else
+        status=ReadProfile(image,"iptc",profile,length);
     }
 #endif
 #if defined(TIFFTAG_XMLPACKET)
