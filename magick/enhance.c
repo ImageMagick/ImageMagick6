@@ -2952,8 +2952,8 @@ static inline double LevelPixel(const double black_point,
     scale;
 
   scale=PerceptibleReciprocal(white_point-black_point);
-  level_pixel=QuantumRange*gamma_pow(scale*((double) pixel-black_point),1.0/
-    gamma);
+  level_pixel=QuantumRange*gamma_pow(scale*((double) pixel-black_point),
+    PerceptibleReciprocal(gamma));
   return(level_pixel);
 }
 
