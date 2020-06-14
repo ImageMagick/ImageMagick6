@@ -381,11 +381,11 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case TimeResource:
     {
       limit=resource_info.time_limit;
-      if ((resource_info.time+request) > (MagickOffsetType) resource_info.time)
+      if ((resource_info.time+request) > (MagickSizeType) resource_info.time)
         {
           resource_info.time+=request;
           if ((limit == MagickResourceInfinity) ||
-              (resource_info.time < (MagickOffsetType) limit))
+              (resource_info.time < (MagickSizeType) limit))
             status=MagickTrue;
           else
             resource_info.time-=request;
