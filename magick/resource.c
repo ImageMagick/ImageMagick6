@@ -69,7 +69,7 @@
 /*
   Define declarations.
 */
-#define MagickPathTemplate "XXXXXXXXXXXX"
+#define MagickPathTemplate "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 #define NumberOfResourceTypes  \
   (sizeof(resource_semaphore)/sizeof(*resource_semaphore))
 
@@ -524,8 +524,7 @@ MagickExport MagickBooleanType GetPathTemplate(char *path)
   struct stat
     attributes;
 
-  (void) FormatLocaleString(path,MaxTextExtent,"magick-%.20g"
-    MagickPathTemplate,(double) getpid());
+  (void) FormatLocaleString(path,MaxTextExtent,"magick-" MagickPathTemplate);
   exception=AcquireExceptionInfo();
   directory=(char *) GetImageRegistry(StringRegistryType,"temporary-path",
     exception);
@@ -570,12 +569,11 @@ MagickExport MagickBooleanType GetPathTemplate(char *path)
       return(MagickFalse);
     }
   if (directory[strlen(directory)-1] == *DirectorySeparator)
-    (void) FormatLocaleString(path,MaxTextExtent,"%smagick-%.20g"
-      MagickPathTemplate,directory,(double) getpid());
+    (void) FormatLocaleString(path,MaxTextExtent,"%smagick-" MagickPathTemplate,
+      directory);
   else
-    (void) FormatLocaleString(path,MaxTextExtent,
-      "%s%smagick-%.20g" MagickPathTemplate,directory,DirectorySeparator,
-      (double) getpid());
+    (void) FormatLocaleString(path,MaxTextExtent,"%s%smagick-"
+      MagickPathTemplate,directory,DirectorySeparator);
   directory=DestroyString(directory);
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
   {
@@ -644,7 +642,7 @@ MagickExport int AcquireUniqueFileResource(char *path)
       Get temporary pathname.
     */
     (void) GetPathTemplate(path);
-    key=GetRandomKey(random_info,6);
+    key=GetRandomKey(random_info,strlen(MagickPathTemplate));
     p=path+strlen(path)-strlen(MagickPathTemplate);
     datum=GetStringInfoDatum(key);
     for (j=0; j < (ssize_t) GetStringInfoLength(key); j++)
