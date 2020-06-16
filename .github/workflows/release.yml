@@ -208,7 +208,7 @@ jobs:
         Copy-Item "ImageMagick6-Windows\VisualMagick\bin\thresholds.xml" "portable"
         Copy-Item "ImageMagick6-Windows\VisualMagick\bin\type-ghostscript.xml" "portable"
         Copy-Item "ImageMagick6-Windows\VisualMagick\bin\type.xml" "portable"
-6
+
         Copy-Item "ImageMagick6-Windows\ImageMagick\ChangeLog" "portable"
         Copy-Item "ImageMagick6-Windows\ImageMagick\LICENSE" "portable\LICENSE.txt"
         Copy-Item "ImageMagick6-Windows\VisualMagick\NOTICE.txt" "portable"
