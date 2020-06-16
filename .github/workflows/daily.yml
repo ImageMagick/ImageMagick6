@@ -1,0 +1,120 @@
+on:
+  schedule:
+  - cron: 0 6 * * *
+
+name: daily
+jobs:
+  build_linux:
+    name: 'Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})'
+    container:
+      image: ubuntu:bionic
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        quantum: [ 8, 16, 32, 64 ]
+        hdri: [ yes, no ]
+        modules: [ 'with-modules', 'without-modules' ]
+        exclude:
+          - quantum: 8
+            hdri: yes
+          - quantum: 32
+            hdri: no
+          - quantum: 64
+            hdri: no
+
+    steps:
+    - name: Install dependencies
+      run: |
+        set -e
+        apt update
+        apt-get install -y autoconf pkg-config gcc libfontconfig1-dev libfreetype6-dev libltdl-dev
+
+    - name: Clone msttcorefonts
+      uses: actions/checkout@v2
+      with:
+        repository: ImageMagick/msttcorefonts
+        ref: refs/heads/master
+        fetch-depth: 1
+
+    - name: Install msttcorefonts
+      run: |
+        set -e
+        ./install.sh
+
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 1
+
+    - name: Configure ImageMagick
+      run: |
+        export CFLAGS="-Wno-deprecated-declarations"
+        ./configure --with-quantum-depth=${{matrix.quantum}} --enable-hdri=${{matrix.hdri}} --${{matrix.modules}}
+
+    - name: Build ImageMagick
+      run: |
+        make
+
+    - name: Test ImageMagick
+      run: |
+        make check || exit_code=$?
+        if [ "$exit_code" != "0" ] ; then cat ./test-suite.log ; fi
+        exit $exit_code
+
+  build_windows:
+    name: 'Windows Q${{matrix.quantum}}-${{matrix.platform}} hdri=${{matrix.hdri}} (${{matrix.buildType}})'
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        quantum: [ 8, 16, 32, 64 ]
+        hdri: [ yes, no ]
+        buildType: [ dmt, smtd ]
+        platform: [ x64, Win32 ]
+        exclude:
+          - quantum: 8
+            hdri: yes
+          - quantum: 32
+            hdri: no
+          - quantum: 64
+            hdri: no
+
+    steps:
+    - name: Clone ImageMagick-Windows6
+      uses: actions/checkout@v2
+      with:
+        repository: ImageMagick/ImageMagick-Windows6
+        path: ImageMagick-Windows6
+        ref: refs/heads/master
+        fetch-depth: 1
+
+    - name: Clone repositories
+      shell: cmd
+      run: |
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
+        CloneRepositories.cmd https://github.com/ImageMagick shallow
+
+    - name: Build configure
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
+        devenv /upgrade configure.vcxproj
+        msbuild configure.sln /m /t:Rebuild /p:Configuration=Release,Platform=Win32
+
+    - name: Configure ImageMagick
+      shell: cmd
+      run: |
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
+        configure.exe /noWizard /VS2019 /${{matrix.platform}} /${{matrix.buildType}}
+
+    - name: Build ImageMagick
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick
+        dir /B *.sln > solution
+        set /p solution=<solution
+        msbuild %solution% /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.platform}}
