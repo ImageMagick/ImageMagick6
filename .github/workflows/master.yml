@@ -49,8 +49,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Clone ImageMagick-Windows6
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
       with:
         fetch-depth: 1
 
