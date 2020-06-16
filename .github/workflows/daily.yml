@@ -13,16 +13,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        quantum: [ 8, 16, 32, 64 ]
+        quantum: [ 8, 16 ]
         hdri: [ yes, no ]
         modules: [ 'with-modules', 'without-modules' ]
         exclude:
           - quantum: 8
             hdri: yes
-          - quantum: 32
-            hdri: no
-          - quantum: 64
-            hdri: no
 
     steps:
     - name: Install dependencies
