@@ -941,8 +941,9 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
   if ((type_info == (const TypeInfo *) NULL) &&
       (draw_info->family != (const char *) NULL))
     {
-      type_info=GetTypeInfoByFamily(draw_info->family,draw_info->style,
-        draw_info->stretch,draw_info->weight,&image->exception);
+      if (strchr(draw_info->family,',') == (char *) NULL)
+        type_info=GetTypeInfoByFamily(draw_info->family,draw_info->style,
+          draw_info->stretch,draw_info->weight,&image->exception);
       if (type_info == (const TypeInfo *) NULL)
         {
           char
@@ -962,7 +963,8 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
           {
             type_info=GetTypeInfoByFamily(family[i],draw_info->style,
               draw_info->stretch,draw_info->weight,&image->exception);
-            if (type_info != (const TypeInfo *) NULL)
+            if ((type_info != (const TypeInfo *) NULL) &&
+                (LocaleCompare(family[i],type_info->family) == 0))
               break;
           }
           for (i=0; i < (ssize_t) number_families; i++)
