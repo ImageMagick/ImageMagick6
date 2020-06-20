@@ -430,7 +430,13 @@ static MagickBooleanType IsHEIC(const unsigned char *magick,const size_t length)
 {
   if (length < 12)
     return(MagickFalse);
+  if (LocaleNCompare((const char *) magick+4,"ftyp",4) != 0)
+    return(MagickFalse);
   if (LocaleNCompare((const char *) magick+8,"heic",4) == 0)
+    return(MagickTrue);
+  if (LocaleNCompare((const char *) magick+8,"heix",4) == 0)
+    return(MagickTrue);
+  if (LocaleNCompare((const char *) magick+8,"mif1",4) == 0)
     return(MagickTrue);
   return(MagickFalse);
 }
@@ -479,6 +485,24 @@ ModuleExport size_t RegisterHEICImage(void)
   entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
+#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+  entry=SetMagickInfo("HEIC");
+#if defined(MAGICKCORE_HEIC_DELEGATE)
+  entry->decoder=(DecodeImageHandler *) ReadHEICImage;
+#if !defined(MAGICKCORE_WINDOWS_SUPPORT)
+  entry->encoder=(EncodeImageHandler *) WriteHEICImage;
+#endif
+#endif
+  entry->magick=(IsImageFormatHandler *) IsHEIC;
+  entry->description=ConstantString("AV1 Image File Format");
+  entry->mime_type=ConstantString("image/x-heic");
+#if defined(LIBHEIF_VERSION)
+  entry->version=ConstantString(LIBHEIF_VERSION);
+#endif
+  entry->magick_module=ConstantString("AVIF");
+  entry->seekable_stream=MagickTrue;
+  (void) RegisterMagickInfo(entry);
+#endif
   return(MagickImageCoderSignature);
 }
 
