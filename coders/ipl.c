@@ -430,7 +430,7 @@ static Image *ReadIPLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
-
+
 /*
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  %                                                                             %
