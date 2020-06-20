@@ -1,5 +1,5 @@
 2020-06-20  6.9.11-20  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-20 GIT revision 15709:77849ee5a:20200620
+  * Release ImageMagick version 6.9.11-20 GIT revision 15709:77849ee5a:20200620 
 
 2020-06-14  6.9.11-20  <quetzlzacatenango@image...>
   * Fix out-of-bounds vulnerability when reading sixel images (reference
