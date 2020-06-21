@@ -1337,6 +1337,7 @@ MagickPrivate int NTGhostscriptEXE(char *path,int length)
 
   static BOOL
     is_64_bit_version = FALSE;
+
   if (*program == '\0')
     {
       if (ghost_semaphore == (SemaphoreInfo *) NULL)
