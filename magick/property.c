@@ -2871,7 +2871,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
     case 'N': /* Number of images in the list.  */
     {
       if ((image != (Image *) NULL) && (image->next == (Image *) NULL))
-        (void) FormatLocaleString(value,MagickPathExtent,"%.20g",(double)
+        (void) FormatLocaleString(value,MagickPathExtent,"%.20g\n",(double)
           GetImageListLength(image));
       else
         string="";
