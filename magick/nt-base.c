@@ -1337,12 +1337,6 @@ MagickPrivate int NTGhostscriptEXE(char *path,int length)
 
   static BOOL
     is_64_bit_version = FALSE;
-
-#if defined(_WIN64)
-  (void) CopyMagickString(path,"gswin64c.exe",length);
-#else
-  (void) CopyMagickString(path,"gswin32c.exe",length);
-#endif
   if (*program == '\0')
     {
       if (ghost_semaphore == (SemaphoreInfo *) NULL)
@@ -1354,6 +1348,11 @@ MagickPrivate int NTGhostscriptEXE(char *path,int length)
               sizeof(program)) == FALSE)
             {
               UnlockSemaphoreInfo(ghost_semaphore);
+#if defined(_WIN64)
+              (void) CopyMagickString(path,"gswin64c.exe",length);
+#else
+              (void) CopyMagickString(path,"gswin32c.exe",length);
+#endif
               return(FALSE);
             }
           p=strrchr(program,'\\');
