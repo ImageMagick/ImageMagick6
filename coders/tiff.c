@@ -1460,7 +1460,7 @@ RestoreMSCWarning
         image->x_resolution=x_resolution;
         image->y_resolution=y_resolution;
       }
-    if (TIFFGetFieldDefaulted(tiff,TIFFTAG_RESOLUTIONUNIT,&units,sans) == 1)
+    if (TIFFGetFieldDefaulted(tiff,TIFFTAG_RESOLUTIONUNIT,&units,sans,sans) == 1)
       {
         if (units == RESUNIT_INCH)
           image->units=PixelsPerInchResolution;
