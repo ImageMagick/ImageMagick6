@@ -216,7 +216,7 @@ jobs:
         Copy-Item "ImageMagick6-Windows\VisualMagick\NOTICE.txt" "portable"
         Copy-Item "ImageMagick6-Windows\ImageMagick\README.txt" "portable"
 
-        $version = (cat "ImageMagick-Windows\VisualMagick\installer\inc\version.isx" | Select-String "MagickPackageVersion") | Out-String
+        $version = (cat "ImageMagick6-Windows\VisualMagick\installer\inc\version.isx" | Select-String "MagickPackageVersion") | Out-String
         $version = ($version | Select-String '".*"' -AllMatches |  Select -Expand Matches | Select -Expand Value | Out-String)
         $version = $version -Replace "`n|`r|""",""
         Write-Host "::set-output name=version::$version"
