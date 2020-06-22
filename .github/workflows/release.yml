@@ -192,6 +192,7 @@ jobs:
         folder: 'ImageMagick6-Windows\VisualMagick\bin'
 
     - name: Copy Files
+      id: package
       shell: powershell
       run: |
         [void](New-Item -Name "portable" -ItemType directory)
