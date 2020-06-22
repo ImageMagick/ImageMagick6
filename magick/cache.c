@@ -1915,13 +1915,6 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
       */
       if (image->type != UndefinedType)
         image->type=UndefinedType;
-      cache_info=(CacheInfo *) image->cache;
-      if (image->colorspace != cache_info->colorspace)
-        {
-          StringInfo *profile=RemoveImageProfile(image,"icc");
-          if (profile != (StringInfo *) NULL)
-            profile=DestroyStringInfo(profile);
-        }
       if (ValidatePixelCacheMorphology(image) == MagickFalse)
         {
           status=OpenPixelCache(image,IOMode,exception);
