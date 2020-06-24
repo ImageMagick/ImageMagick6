@@ -5781,6 +5781,7 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
   draw_info->pointsize=12.0;
   if (fabs(clone_info->pointsize) >= MagickEpsilon)
     draw_info->pointsize=clone_info->pointsize;
+  draw_info->interline_spacing=draw_info->pointsize;
   draw_info->undercolor.opacity=(Quantum) TransparentOpacity;
   draw_info->border_color=clone_info->border_color;
   draw_info->compose=OverCompositeOp;
