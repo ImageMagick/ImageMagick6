@@ -1,3 +1,10 @@
+2020-06-24  6.9.11-22  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-22 GIT revision 15...
+
+2020-06-24  6.9.11-22  <quetzlzacatenango@image...>
+  * fix wrapping of caption (reference
+    https://github.com/ImageMagick/ImageMagick/issues/2178).
+
 2020-06-22  6.9.11-21  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-21 GIT revision 15731:0eff8c6b7:20200622
 
