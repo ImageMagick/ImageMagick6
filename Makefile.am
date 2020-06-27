@@ -285,7 +285,7 @@ magick-version: magick/version.h
 	fi ; \
 	touch magick-version
 
-${srcdir}/configure: ${srcdir}/version.sh
+magick/version.h:	$(top_srcdir)/ChangeLog $(top_srcdir)/version.sh
 
 # Automagically reconfigure libtool
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
