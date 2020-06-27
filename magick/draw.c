@@ -4308,14 +4308,22 @@ static MagickBooleanType RenderMVGContent(Image *image,
       }
     }
     mvg_info.offset=i;
-    if (primitive_info == (PrimitiveInfo *) NULL)
+    if (status == 0)
       break;
+    primitive_info[i].primitive=UndefinedPrimitive;
     if ((image->debug != MagickFalse) && (q > p))
       (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int) (q-p-1),
         p);
-    if (status == MagickFalse)
+    /*
+      Sanity check.
+    */
+    status&=CheckPrimitiveExtent(&mvg_info,
+      ExpandAffine(&graphic_context[n]->affine));
+    if (status == 0)
       break;
-    primitive_info[i].primitive=UndefinedPrimitive;
+    status&=CheckPrimitiveExtent(&mvg_info,graphic_context[n]->stroke_width);
+    if (status == 0)
+      break;
     if (i == 0)
       continue;
     /*
@@ -4360,12 +4368,6 @@ static MagickBooleanType RenderMVGContent(Image *image,
             status&=DrawClipPath(image,graphic_context[n],
               graphic_context[n]->clip_mask);
           }
-        /*
-          One last sanity check before we draw.
-        */
-        status&=CheckPrimitiveExtent(&mvg_info,
-          ExpandAffine(&graphic_context[n]->affine));
-        status&=CheckPrimitiveExtent(&mvg_info,draw_info->stroke_width);
         status&=DrawPrimitive(image,graphic_context[n],primitive_info);
       }
     proceed=SetImageProgress(image,RenderImageTag,q-primitive,(MagickSizeType)
@@ -7151,15 +7153,15 @@ static PrimitiveInfo *TraceStrokePolygon(const Image *image,
     sizeof(*stroke_p));
   stroke_q=(PointInfo *) AcquireQuantumMemory((size_t) extent_q+MaxStrokePad,
     sizeof(*stroke_q));
-  if ((stroke_p == (PointInfo *) NULL) || (stroke_q == (PointInfo *) NULL)) 
-    { 
-      if (stroke_p != (PointInfo *) NULL) 
-        stroke_p=(PointInfo *) RelinquishMagickMemory(stroke_p); 
-      if (stroke_q != (PointInfo *) NULL) 
-        stroke_q=(PointInfo *) RelinquishMagickMemory(stroke_q); 
-      polygon_primitive=(PrimitiveInfo *) 
-        RelinquishMagickMemory(polygon_primitive); 
-      return((PrimitiveInfo *) NULL); 
+  if ((stroke_p == (PointInfo *) NULL) || (stroke_q == (PointInfo *) NULL))
+    {
+      if (stroke_p != (PointInfo *) NULL)
+        stroke_p=(PointInfo *) RelinquishMagickMemory(stroke_p);
+      if (stroke_q != (PointInfo *) NULL)
+        stroke_q=(PointInfo *) RelinquishMagickMemory(stroke_q);
+      polygon_primitive=(PrimitiveInfo *)
+        RelinquishMagickMemory(polygon_primitive);
+      return((PrimitiveInfo *) NULL);
     }
   slope.p=0.0;
   inverse_slope.p=0.0;
