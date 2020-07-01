@@ -4,6 +4,8 @@
 2020-06-28  6.9.11-23  <quetzlzacatenango@image...>
   * Ensure that float is valid in ClampToQuantum() (reference
     https://github.com/ImageMagick/ImageMagick/pull/2219).
+  * new psedo-image format, ashlar, e.g.
+    convert *.jpg -resize 320x320 ashlar:canvas.png).
 
 2020-06-26  6.9.11-22  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-22 GIT revision 15744:b14dc552e:20200626
