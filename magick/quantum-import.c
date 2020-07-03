@@ -2483,7 +2483,7 @@ static void ImportGrayQuantum(const Image *image,QuantumInfo *quantum_info,
           for (x=0; x < (ssize_t) number_pixels; x++)
           {
             p=PushShortPixel(quantum_info->endian,p,&pixel);
-            pixel=(unsigned short) (((unsigned int) pixel+32768) % 65536);
+            /* pixel=(unsigned short) (((unsigned int) pixel+32768) % 65536); */
             SetPixelRed(q,ScaleShortToQuantum(pixel));
             SetPixelGreen(q,GetPixelRed(q));
             SetPixelBlue(q,GetPixelRed(q));
