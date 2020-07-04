@@ -1,4 +1,7 @@
-# ImageMagick [![Build Status](https://travis-ci.org/ImageMagick/ImageMagick6.svg?branch=master)](https://travis-ci.org/ImageMagick/ImageMagick6) [![Build status](https://ci.appveyor.com/api/projects/status/m21j5bmj9m8a2bre/branch/master?svg=true)](https://ci.appveyor.com/project/dlemstra/imagemagick6-windows/branch/master)
+# ImageMagick
+
+[![Build Status](https://travis-ci.org/ImageMagick/ImageMagick6.svg?branch=master)](https://travis-ci.org/ImageMagick/ImageMagick6)
+![master](https://github.com/ImageMagick/ImageMagick6/workflows/master/badge.svg)
 
 <p align="center">
 <img align="center" src="https://imagemagick.org/image/wizard.png" alt="ImageMagick logo" width="265"/>
