@@ -1633,7 +1633,8 @@ MagickExport char **ListFiles(const char *directory,const char *pattern,
   while ((MagickReadDirectory(current_directory,buffer,&entry) == 0) &&
          (entry != (struct dirent *) NULL))
   {
-    if (*entry->d_name == '.')
+    if ((LocaleCompare(entry->d_name,".") == 0) ||
+        (LocaleCompare(entry->d_name,"..") == 0))
       continue;
     if ((IsPathDirectory(entry->d_name) > 0) ||
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
