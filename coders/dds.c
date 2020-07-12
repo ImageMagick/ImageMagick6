@@ -1812,7 +1812,10 @@ static Image *ReadDDSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if ((decoder)(image, &dds_info, exception) != MagickTrue)
       {
         (void) CloseBlob(image);
-        return(GetFirstImageInList(image));
+        if (n == 0)
+          return(DestroyImageList(image));
+        else
+          return(GetFirstImageInList(image));
       }
   }
 
