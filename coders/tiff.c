@@ -1305,10 +1305,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
   more_frames=MagickTrue;
   do
   {
-DisableMSCWarning(4127)
-    if (0 && (image_info->verbose != MagickFalse))
-      TIFFPrintDirectory(tiff,stdout,MagickFalse);
-RestoreMSCWarning
+    /* TIFFPrintDirectory(tiff,stdout,MagickFalse); */
     photometric=PHOTOMETRIC_RGB;
     if ((TIFFGetField(tiff,TIFFTAG_IMAGEWIDTH,&width) != 1) ||
         (TIFFGetField(tiff,TIFFTAG_IMAGELENGTH,&height) != 1) ||
@@ -4043,10 +4040,7 @@ RestoreMSCWarning
     if (image->colorspace == LabColorspace)
       DecodeLabImage(image,&image->exception);
     DestroyTIFFInfo(&tiff_info);
-DisableMSCWarning(4127)
-    if (0 && (image_info->verbose != MagickFalse))
-RestoreMSCWarning
-      TIFFPrintDirectory(tiff,stdout,MagickFalse);
+    /* TIFFPrintDirectory(tiff,stdout,MagickFalse); */
     if (TIFFWriteDirectory(tiff) == 0)
       {
         status=MagickFalse;
