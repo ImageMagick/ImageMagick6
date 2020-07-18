@@ -1205,13 +1205,6 @@ static MagickBooleanType WriteCINImage(const ImageInfo *image_info,Image *image)
   quantum_type=RGBQuantum;
   pixels=GetQuantumPixels(quantum_info);
   length=GetBytesPerRow(image->columns,3,image->depth,MagickTrue);
-DisableMSCWarning(4127)
-  if (0)
-RestoreMSCWarning
-    {
-      quantum_type=GrayQuantum;
-      length=GetBytesPerRow(image->columns,1UL,image->depth,MagickTrue);
-    }
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
