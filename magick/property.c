@@ -3612,7 +3612,6 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
   Image *image,const char *embed_text)
 {
 #define ExtendInterpretText(string_length) \
-DisableMSCWarning(4127) \
 { \
   size_t length=(string_length); \
   if ((size_t) (q-interpret_text+length+1) >= extent) \
@@ -3628,11 +3627,9 @@ DisableMSCWarning(4127) \
         } \
       q=interpret_text+strlen(interpret_text); \
    } \
-} \
-RestoreMSCWarning
+}
 
 #define AppendKeyValue2Text(key,value)\
-DisableMSCWarning(4127) \
 { \
   size_t length=strlen(key)+strlen(value)+2; \
   if ((size_t) (q-interpret_text+length+1) >= extent) \
@@ -3649,11 +3646,9 @@ DisableMSCWarning(4127) \
       q=interpret_text+strlen(interpret_text); \
      } \
    q+=FormatLocaleString(q,extent,"%s=%s\n",(key),(value)); \
-} \
-RestoreMSCWarning
+}
 
 #define AppendString2Text(string) \
-DisableMSCWarning(4127) \
 { \
   size_t length=strlen((string)); \
   if ((size_t) (q-interpret_text+length+1) >= extent) \
@@ -3671,8 +3666,7 @@ DisableMSCWarning(4127) \
     } \
   (void) CopyMagickString(q,(string),extent); \
   q+=length; \
-} \
-RestoreMSCWarning
+}
 
   char
     *interpret_text;
