@@ -1158,6 +1158,7 @@ static void TIFFReadPhotoshopLayers(const ImageInfo *image_info,Image *image,
 static Image *ReadTIFFImage(const ImageInfo *image_info,
   ExceptionInfo *exception)
 {
+#define MaxPixelChannels  32
 #define ThrowTIFFException(severity,message) \
 { \
   if (pixel_info != (MemoryInfo *) NULL) \
@@ -1662,6 +1663,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       default:
         break;
     }
+    extra_samples=0;
     tiff_status=TIFFGetFieldDefaulted(tiff,TIFFTAG_EXTRASAMPLES,&extra_samples,
       &sample_info,sans);
     if (tiff_status == 1)
@@ -1691,6 +1693,11 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
     if (image->matte != MagickFalse)
       (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
+    if ((samples_per_pixel+extra_samples) > MaxPixelChannels)
+      {
+        TIFFClose(tiff);
+        ThrowReaderException(CorruptImageError,"MaximumChannelsExceeded");
+      }
     method=ReadGenericMethod;
     rows_per_strip=(uint32) image->rows;
     if (TIFFGetField(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
