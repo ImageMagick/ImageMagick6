@@ -627,7 +627,7 @@ static int UnpackWPG2Raster(Image *image,int bpp)
           RunCount=ReadBlobByte(image);   /* BLK */
           if (RunCount < 0)
             break;
-          for(i=0; i < SampleSize*(RunCount+1); i++)
+          for(i=0; i < ((ssize_t) SampleSize*(RunCount+1)); i++)
             {
               InsertByte6(0);
             }
