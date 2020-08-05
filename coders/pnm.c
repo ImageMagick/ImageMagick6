@@ -1419,7 +1419,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
   entry->encoder=(EncodeImageHandler *) WritePNMImage;
   entry->description=ConstantString("Common 2-dimensional bitmap format");
-  entry->mime_type=ConstantString("image/x-portable-pixmap");
+  entry->mime_type=ConstantString("image/x-portable-anymap");
   entry->magick_module=ConstantString("PNM");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
@@ -1443,7 +1443,7 @@ ModuleExport size_t RegisterPNMImage(void)
   entry->decoder=(DecodeImageHandler *) ReadPNMImage;
   entry->encoder=(EncodeImageHandler *) WritePNMImage;
   entry->description=ConstantString("Portable graymap format (gray scale)");
-  entry->mime_type=ConstantString("image/x-portable-greymap");
+  entry->mime_type=ConstantString("image/x-portable-graymap");
   entry->magick_module=ConstantString("PNM");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
