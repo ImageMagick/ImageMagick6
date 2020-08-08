@@ -1,7 +1,7 @@
-2020-08-02  6.9.11-26  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-26 GIT revision 15...
+2020-08-08  6.9.11-26  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-26 GIT revision 15819:515bf4e08:20200808
 
-2020-07-02  6.9.11-26  <quetzlzacatenango@image...>
+2020-08-02  6.9.11-26  <quetzlzacatenango@image...>
   * Paths in Photoshop EPS files are no longer corrupted (reference
     https://github.com/ImageMagick/ImageMagick/issues/2380).
 
