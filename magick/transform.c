@@ -1203,6 +1203,7 @@ MagickExport Image *ExtentImage(const Image *image,
     exception);
   if (extent_image == (Image *) NULL)
     return((Image *) NULL);
+  (void) DeleteImageProfile(extent_image,"8bim");  /* delete clipping path */
   status=SetImageBackgroundColor(extent_image);
   if (status == MagickFalse)
     {
