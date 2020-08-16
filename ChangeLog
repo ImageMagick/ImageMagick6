@@ -4,6 +4,8 @@
 2020-08-16  6.9.11-28  <quetzlzacatenango@image...>
   * Distorted clip path after -extent (reference
     https://github.com/ImageMagick/ImageMagick/issues/2414).
+  * Paths in Photoshop EPS files are corrupted on conversion (reference
+    https://github.com/ImageMagick/ImageMagick/issues/2413).
 
 2020-08-09  6.9.11-27  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-27 GIT revision 15822:fc273882d:20200809
