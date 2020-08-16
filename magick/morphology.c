@@ -3235,7 +3235,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
 
         case IterativeDistanceMorphology:
             /* Work out an iterative distance from black edge of a white image
-            ** shape.  Essentually white values are decreased to the smallest
+            ** shape.  Essentially white values are decreased to the smallest
             ** 'distance from edge' it can find.
             **
             ** It works by adding kernel values to the neighbourhood, and
