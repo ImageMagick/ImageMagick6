@@ -127,7 +127,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
         (void) CopyMagickString(p,p+1,MaxTextExtent);
         continue;
       }
-    c=(int)*p;
+    c=(int) *p;
     switch (c)
     {
       case '%':
