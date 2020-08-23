@@ -93,6 +93,7 @@ static const CoderMapInfo
     { "APP1", "META" },
     { "ARW", "DNG" },
     { "AVI", "MPEG" },
+    { "AVIF", "HEIC" },
     { "BIE", "JBIG" },
     { "BMP2", "BMP" },
     { "BMP3", "BMP" },
