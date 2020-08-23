@@ -81,10 +81,8 @@
 #endif
 
 #if defined(MAGICKCORE_HEIC_DELEGATE)
-#if !defined(MAGICKCORE_WINDOWS_SUPPORT)
 static MagickBooleanType
   WriteHEICImage(const ImageInfo *,Image *,ExceptionInfo *);
-#endif
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -473,9 +471,7 @@ ModuleExport size_t RegisterHEICImage(void)
   entry=SetMagickInfo("HEIC");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadHEICImage;
-#if !defined(MAGICKCORE_WINDOWS_SUPPORT)
   entry->encoder=(EncodeImageHandler *) WriteHEICImage;
-#endif
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
   entry->description=ConstantString("Apple High efficiency Image Format");
@@ -491,9 +487,7 @@ ModuleExport size_t RegisterHEICImage(void)
   entry=SetMagickInfo("AVIF");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadHEICImage;
-#if !defined(MAGICKCORE_WINDOWS_SUPPORT)
   entry->encoder=(EncodeImageHandler *) WriteHEICImage;
-#endif
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
   entry->description=ConstantString("AV1 Image File Format");
@@ -560,7 +554,7 @@ ModuleExport void UnregisterHEICImage(void)
 %    o exception:  return any errors or warnings in this structure.
 %
 */
-#if defined(MAGICKCORE_HEIC_DELEGATE) && !defined(MAGICKCORE_WINDOWS_SUPPORT)
+#if defined(MAGICKCORE_HEIC_DELEGATE)
 static struct heif_error heif_write_func(struct heif_context *context,
   const void* data,size_t size,void* userdata)
 {
@@ -642,6 +636,20 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
       *p_cb,
       *p_cr;
 
+    /*
+      Get encoder for the specified format.
+    */
+#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+    if (LocaleCompare(image_info->magick,"AVIF") == 0)
+      error=heif_context_get_encoder_for_format(heif_context,
+        heif_compression_AV1,&heif_encoder);
+    else
+#endif
+      error=heif_context_get_encoder_for_format(heif_context,
+        heif_compression_HEVC,&heif_encoder);
+    status=IsHeifSuccess(&error,image);
+    if (status == MagickFalse)
+      break;
     /*
       Transform colorspace to YCbCr.
     */
@@ -727,11 +735,6 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     /*
       Code and actually write the HEIC image
     */
-    error=heif_context_get_encoder_for_format(heif_context,
-      heif_compression_HEVC,&heif_encoder);
-    status=IsHeifSuccess(&error,image);
-    if (status == MagickFalse)
-      break;
     if (image_info->quality != UndefinedCompressionQuality)
       {
         error=heif_encoder_set_lossy_quality(heif_encoder,
