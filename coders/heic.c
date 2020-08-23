@@ -488,7 +488,7 @@ ModuleExport size_t RegisterHEICImage(void)
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
 #if LIBHEIF_NUMERIC_VERSION > 0x01060200
-  entry=SetMagickInfo("HEIC");
+  entry=SetMagickInfo("AVIF");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadHEICImage;
 #if !defined(MAGICKCORE_WINDOWS_SUPPORT)
@@ -501,7 +501,7 @@ ModuleExport size_t RegisterHEICImage(void)
 #if defined(LIBHEIF_VERSION)
   entry->version=ConstantString(LIBHEIF_VERSION);
 #endif
-  entry->magick_module=ConstantString("AVIF");
+  entry->magick_module=ConstantString("HEIC");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
 #endif
