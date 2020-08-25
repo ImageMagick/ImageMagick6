@@ -515,7 +515,7 @@ if test "$enable_openmp" != no; then
 fi
 
 # Enable support for OpenCL
-CL_ENABLED=false
+no_cl='yes'
 AX_HAVE_OPENCL([C])
 if test "$no_cl" != 'yes'; then
   MAGICK_FEATURES="OpenCL $MAGICK_FEATURES"
