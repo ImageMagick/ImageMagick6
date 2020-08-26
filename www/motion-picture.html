@@ -105,8 +105,8 @@
 <p>The color values for each pixel are often stored logarithmically (particularly if the sequence is destined to be transferred back on to film) which more naturally reflects the density of how color information is stored in the emulsion on the original film. When viewed without alteration logarithmic files appear to have very low contrast (leftmost image), and so require a 'look up table' to translate the logarithmic image to something that resembles what you might see if the image was transferred back to film and projected in a cinema (rightmost image). Apart from making the image linear (like most typical computer images) and adjusting the gamma level this table sets where the black and white point lies.</p>
 
 <ul>
-  <a href="https://legacy.imagemagick.org/images/bluebells_log.jpg"><img src="https://legacy.imagemagick.org/images/bluebells_log.jpg" width="384" height="288" class="image-slices" alt="bluebells-log" /></a>
-  <a href="https://legacy.imagemagick.org/images/bluebells_lin.jpg"><img src="https://legacy.imagemagick.org/images/bluebells_lin.jpg" width="384" height="288" class="image-slices" alt="bluebells-linear" /></a>
+  <a href="../images/bluebells_log.jpg"><img src="../images/bluebells_log.jpg" width="384" height="288" class="image-slices" alt="bluebells-log" /></a>
+  <a href="../images/bluebells_lin.jpg"><img src="../images/bluebells_lin.jpg" width="384" height="288" class="image-slices" alt="bluebells-linear" /></a>
 </ul>
 
 <p>For a 10 bit logarithmic image where each color component value ranges from 0 to 1023 the black and white points are normally set at 95 for black and 685 for white. What this means is that the logarithmic file stores color values that are lighter than what the linear version will display as pure white and darker than what it will display as pure black. This extra information therefore remains available for an effects artists who might wish to alter the brightness of the image after it has been stored as a DPX file.</p>
@@ -114,8 +114,8 @@
 <p>As an example, had this information been lost, reducing the brightness of a linear image uniformly would result in highlights becoming darker (leftmost image), whereas with this extra information the highlights instead reduce in size and start showing details that were previously too bright to be seen (rightmost image). The latter is far closer to what happens in the real world.</p>
 
 <ul>
-  <a href="https://legacy.imagemagick.org/images/bluebells_clipped.jpg"><img src="https://legacy.imagemagick.org/images/bluebells_clipped.jpg" width="384" height="288" class="image-slices" alt="bluebells-clipped" /></a>
-  <a href="https://legacy.imagemagick.org/images/bluebells_darker.jpg"><img src="https://legacy.imagemagick.org/images/bluebells_darker.jpg" width="384" height="288" class="image-slices" alt="bluebells-darker" /></a>
+  <a href="../images/bluebells_clipped.jpg"><img src="../images/bluebells_clipped.jpg" width="384" height="288" class="image-slices" alt="bluebells-clipped" /></a>
+  <a href="../images/bluebells_darker.jpg"><img src="../images/bluebells_darker.jpg" width="384" height="288" class="image-slices" alt="bluebells-darker" /></a>
 </ul>
 
 <h2><a class="anchor" id="properties"></a>DPX Properties</h2>
@@ -204,18 +204,18 @@ dpx:user.data
   </main><!-- /.container -->
   <footer class="magick-footer">
     <div class="container">
-    <p><a href="https://legacy.imagemagick.org/www/security-policy.html">Security</a> •
-    <a href="https://legacy.imagemagick.org/www/resources.html">Resources</a>
+    <p><a href="security-policy.html">Security</a> •
+    <a href="resources.html">Resources</a>
      
     <a href="motion-picture.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
      
-    <a href="https://legacy.imagemagick.org/www/links.html">Related</a> •
-     <a href="https://legacy.imagemagick.org/www/sitemap.html">Sitemap</a>
+    <a href="links.html">Related</a> •
+     <a href="sitemap.html">Sitemap</a>
     <br/>
        
-    <a href="https://legacy.imagemagick.org/www/support.html">Sponsor</a> •
+    <a href="support.html">Sponsor</a> •
     <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
-    <a href="https://legacy.imagemagick.org/www/https://imagemagick.org/script/contact.php">Contact Us</a> 
+    <a href="https://imagemagick.org/script/contact.php">Contact Us</a> 
     <br/>
     <a href="https://github.com/imagemagick/imagemagick6" target="_blank" rel="noopener" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg" viewBox="0 0 512 499.36" width="2%" height="2%" role="img" focusable="false"><title>GitHub</title><path fill="currentColor" fill-rule="evenodd" d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z"/></svg></a> •
         <a href="https://twitter.com/imagemagick" target="_blank" rel="noopener" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg" viewBox="0 0 512 416.32" width="2%" height="2%" role="img" focusable="false"><title>Twitter</title><path fill="currentColor" d="M160.83 416.32c193.2 0 298.92-160.22 298.92-298.92 0-4.51 0-9-.2-13.52A214 214 0 0 0 512 49.38a212.93 212.93 0 0 1-60.44 16.6 105.7 105.7 0 0 0 46.3-58.19 209 209 0 0 1-66.79 25.37 105.09 105.09 0 0 0-181.73 71.91 116.12 116.12 0 0 0 2.66 24c-87.28-4.3-164.73-46.3-216.56-109.82A105.48 105.48 0 0 0 68 159.6a106.27 106.27 0 0 1-47.53-13.11v1.43a105.28 105.28 0 0 0 84.21 103.06 105.67 105.67 0 0 1-47.33 1.84 105.06 105.06 0 0 0 98.14 72.94A210.72 210.72 0 0 1 25 370.84a202.17 202.17 0 0 1-25-1.43 298.85 298.85 0 0 0 160.83 46.92"/></svg></a>
@@ -225,8 +225,8 @@ dpx:user.data
   </footer>
 
   <!-- Javascript assets -->
-  <script src="https://legacy.imagemagick.org/assets/magick.js" crossorigin="anonymous"></script>
+  <script src="assets/magick.js" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="https://localhost/ajax/libs/jquery/3.4.1/jquery.min.js"><\/script>')</script>
 </body>
 </html>
-<!-- Magick Cache 31st July 2020 19:28 -->
+<!-- Magick Cache 25th August 2020 18:04 -->
