@@ -476,13 +476,13 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
   if (sans_exception->severity == PolicyError)
     magick_info=GetMagickInfo(read_info->magick,exception);
   sans_exception=DestroyExceptionInfo(sans_exception);
-  if (magick_info != (const MagickInfo *) NULL)
+  if ((magick_info != (const MagickInfo *) NULL) &&
+      (GetMagickRawSupport(magick_info) != MagickFalse))
     {
       if (GetMagickEndianSupport(magick_info) == MagickFalse)
         read_info->endian=UndefinedEndian;
       else
-        if ((image_info->endian == UndefinedEndian) &&
-            (GetMagickRawSupport(magick_info) != MagickFalse))
+        if (image_info->endian == UndefinedEndian)
           {
             unsigned long
               lsb_first;
