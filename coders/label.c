@@ -124,7 +124,12 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   image=AcquireImage(image_info);
   (void) ResetImagePage(image,"0x0+0+0");
   if ((image->columns != 0) && (image->rows != 0))
-    (void) SetImageBackgroundColor(image);
+    {
+      status=SetImageExtent(image,image->columns,image->rows);
+      if (status == MagickFalse)
+        return(DestroyImageList(image));
+      (void) SetImageBackgroundColor(image);
+    }
   label=InterpretImageProperties(image_info,image,image_info->filename);
   if (label == (char *) NULL)
     return(DestroyImageList(image));
