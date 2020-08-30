@@ -1950,18 +1950,8 @@ static char *TracePSClippath(const unsigned char *blob,size_t length,
         */
         for (i=0; i < 3; i++)
         {
-          size_t
-            xx,
-            yy;
-
-          yy=(size_t) ReadPropertyMSBLong(&blob,&length);
-          xx=(size_t) ReadPropertyMSBLong(&blob,&length);
-          x=(ssize_t) xx;
-          if (xx > 2147483647)
-            x=(ssize_t) xx-4294967295U-1;
-          y=(ssize_t) yy;
-          if (yy > 2147483647)
-            y=(ssize_t) yy-4294967295U-1;
+          y=(size_t) ReadPropertyMSBLong(&blob,&length);
+          x=(size_t) ReadPropertyMSBLong(&blob,&length);
           point[i].x=(double) x/4096/4096;
           point[i].y=1.0-(double) y/4096/4096;
         }
@@ -2158,18 +2148,8 @@ static char *TraceSVGClippath(const unsigned char *blob,size_t length,
         */
         for (i=0; i < 3; i++)
         {
-          unsigned int
-            xx,
-            yy;
-
-          yy=(unsigned int) ReadPropertyMSBLong(&blob,&length);
-          xx=(unsigned int) ReadPropertyMSBLong(&blob,&length);
-          x=(ssize_t) xx;
-          if (xx > 2147483647)
-            x=(ssize_t) xx-4294967295U-1;
-          y=(ssize_t) yy;
-          if (yy > 2147483647)
-            y=(ssize_t) yy-4294967295U-1;
+          y=(ssize_t) ReadPropertyMSBLong(&blob,&length);
+          x=(ssize_t) ReadPropertyMSBLong(&blob,&length);
           point[i].x=(double) x*columns/4096/4096;
           point[i].y=(double) y*rows/4096/4096;
         }
