@@ -2794,6 +2794,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
               MagickComplianceOptions,MagickFalse,token);
             break;
           }
+        if (LocaleCompare("currentColor",keyword) == 0)
+          {
+            (void) GetNextToken(q,&q,extent,token);
+            break;
+          }
         status=MagickFalse;
         break;
       }
