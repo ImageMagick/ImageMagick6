@@ -1,3 +1,12 @@
+2020-09-05  6.9.11-29  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-29 GIT revision 15...
+
+2020-08-16  6.9.11-29  <quetzlzacatenango@image...>
+  * Eliminate infinite loop for certain SVG styles (reference
+    https://github.com/ImageMagick/ImageMagick6/issues/96).
+  * Add version element to JSON file format (reference
+    https://github.com/ImageMagick/ImageMagick6/issues/91).
+
 2020-08-16  6.9.11-28  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-28 GIT revision 15828:1a0a93a49:20200816
 
