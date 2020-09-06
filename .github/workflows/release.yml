@@ -59,7 +59,7 @@ jobs:
       shell: cmd
       run: |
         powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/ImageMagick-Windows/releases/download/20200615/hp2xx.exe -OutFile hp2xx.exe
-        copy /Y hp2xx.exe %GITHUB_WORKSPACE%\ImageMagick-Windows\VisualMagick\bin
+        copy /Y hp2xx.exe %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\bin
 
     - name: Install Strawberry Perl
       if: ${{matrix.type == 'dll'}}
