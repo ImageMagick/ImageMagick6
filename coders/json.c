@@ -132,6 +132,7 @@ ModuleExport size_t RegisterJSONImage(void)
   entry->description=ConstantString("The image format and characteristics");
   entry->mime_type=ConstantString("application/json");
   entry->magick_module=ConstantString("JSON");
+  entry->endian_support=MagickTrue;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
