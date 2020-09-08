@@ -627,7 +627,7 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   r=GetVirtualPixelCacheNexus(image->clip_mask,MaskVirtualPixelMethod,
     nexus_info->region.x,nexus_info->region.y,nexus_info->region.width,
     nexus_info->region.height,clip_nexus[0],exception);
-  if ((p == (PixelPacket *) NULL) || (q == (PixelPacket *) NULL) || 
+  if ((p == (PixelPacket *) NULL) || (q == (PixelPacket *) NULL) ||
       (r == (const PixelPacket *) NULL))
     return(MagickFalse);
   n=0;
@@ -3639,7 +3639,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   r=GetVirtualPixelCacheNexus(image->mask,MaskVirtualPixelMethod,
     nexus_info->region.x,nexus_info->region.y,nexus_info->region.width,
     nexus_info->region.height,mask_nexus[0],&image->exception);
-  if ((p == (PixelPacket *) NULL) || (q == (PixelPacket *) NULL) || 
+  if ((p == (PixelPacket *) NULL) || (q == (PixelPacket *) NULL) ||
       (r == (const PixelPacket *) NULL))
     return(MagickFalse);
   n=0;
@@ -4113,7 +4113,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
       if (status != MagickFalse)
         {
           cache_info->pixels=(PixelPacket *) MapBlob(cache_info->file,mode,
-                                                     cache_info->offset,(size_t) cache_info->length);
+            cache_info->offset,(size_t) cache_info->length);
           if (cache_info->pixels == (PixelPacket *) NULL)
             {
               cache_info->mapped=source_info.mapped;
@@ -4129,30 +4129,28 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
               cache_info->type=MapCache;
               cache_info->mapped=MagickTrue;
               cache_info->indexes=(IndexPacket *) NULL;
-              if (cache_info->active_index_channel != MagickFalse) {
+              if (cache_info->active_index_channel != MagickFalse)
                 cache_info->indexes=(IndexPacket *) (cache_info->pixels+
-                                                     number_pixels);
-              }
+                  number_pixels);
               if ((source_info.storage_class != UndefinedClass) &&
                   (mode != ReadMode))
                 {
                   status=ClonePixelCacheRepository(cache_info,&source_info,
-                                                   exception);
+                    exception);
                   RelinquishPixelCachePixels(&source_info);
                 }
               if (image->debug != MagickFalse)
                 {
-                  (void) FormatMagickSize(cache_info->length,MagickTrue,
-                                          format);
+                  (void) FormatMagickSize(cache_info->length,MagickTrue,format);
                   type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
-                                               cache_info->type);
+                    cache_info->type);
                   (void) FormatLocaleString(message,MaxTextExtent,
-                                            "open %s (%s[%d], %s, %.20gx%.20g %s)",
-                                            cache_info->filename,cache_info->cache_filename,
-                                            cache_info->file,type,(double) cache_info->columns,
-                                            (double) cache_info->rows,format);
+                     "open %s (%s[%d], %s, %.20gx%.20g %s)",
+                     cache_info->filename,cache_info->cache_filename,
+                     cache_info->file,type,(double) cache_info->columns,
+                     (double) cache_info->rows,format);
                   (void) LogMagickEvent(CacheEvent,GetMagickModule(),"%s",
-                                        message);
+                     message);
                 }
               if (status == 0)
                 {
