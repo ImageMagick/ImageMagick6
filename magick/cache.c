@@ -4105,72 +4105,63 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
     }
   cache_info->storage_class=image->storage_class;
   cache_info->colorspace=image->colorspace;
+  cache_info->type=DiskCache;
   length=number_pixels*(sizeof(PixelPacket)+sizeof(IndexPacket));
-  if (length != (MagickSizeType) ((size_t) length))
-    cache_info->type=DiskCache;
-  else
+  if (length == (MagickSizeType) ((size_t) length))
     {
       status=AcquireMagickResource(MapResource,cache_info->length);
-      if (status == MagickFalse)
-        cache_info->type=DiskCache;
-      else
-        if ((cache_info->type != MapCache) && (cache_info->type != MemoryCache))
-          {
-            cache_info->type=DiskCache;
-            RelinquishMagickResource(MapResource,cache_info->length);
-          }
-        else
-          {
-            cache_info->pixels=(PixelPacket *) MapBlob(cache_info->file,mode,
-              cache_info->offset,(size_t) cache_info->length);
-            if (cache_info->pixels == (PixelPacket *) NULL)
-              {
-                cache_info->type=DiskCache;
-                cache_info->mapped=source_info.mapped;
-                cache_info->pixels=source_info.pixels;
-                RelinquishMagickResource(MapResource,cache_info->length);
+      if (status != MagickFalse)
+        {
+          cache_info->pixels=(PixelPacket *) MapBlob(cache_info->file,mode,
+                                                     cache_info->offset,(size_t) cache_info->length);
+          if (cache_info->pixels == (PixelPacket *) NULL)
+            {
+              cache_info->mapped=source_info.mapped;
+              cache_info->pixels=source_info.pixels;
+              RelinquishMagickResource(MapResource,cache_info->length);
+            }
+          else
+            {
+              /*
+                Create file-backed memory-mapped pixel cache.
+              */
+              (void) ClosePixelCacheOnDisk(cache_info);
+              cache_info->type=MapCache;
+              cache_info->mapped=MagickTrue;
+              cache_info->indexes=(IndexPacket *) NULL;
+              if (cache_info->active_index_channel != MagickFalse) {
+                cache_info->indexes=(IndexPacket *) (cache_info->pixels+
+                                                     number_pixels);
               }
-            else
-              {
-                /*
-                  Create file-backed memory-mapped pixel cache.
-                */
-                (void) ClosePixelCacheOnDisk(cache_info);
-                cache_info->type=MapCache;
-                cache_info->mapped=MagickTrue;
-                cache_info->indexes=(IndexPacket *) NULL;
-                if (cache_info->active_index_channel != MagickFalse)
-                  cache_info->indexes=(IndexPacket *) (cache_info->pixels+
-                    number_pixels);
-                if ((source_info.storage_class != UndefinedClass) &&
-                    (mode != ReadMode))
-                  {
-                    status=ClonePixelCacheRepository(cache_info,&source_info,
-                      exception);
-                    RelinquishPixelCachePixels(&source_info);
-                  }
-                if (image->debug != MagickFalse)
-                  {
-                    (void) FormatMagickSize(cache_info->length,MagickTrue,
-                      format);
-                    type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
-                      cache_info->type);
-                    (void) FormatLocaleString(message,MaxTextExtent,
-                      "open %s (%s[%d], %s, %.20gx%.20g %s)",
-                      cache_info->filename,cache_info->cache_filename,
-                      cache_info->file,type,(double) cache_info->columns,
-                      (double) cache_info->rows,format);
-                    (void) LogMagickEvent(CacheEvent,GetMagickModule(),"%s",
-                      message);
-                  }
-                if (status == 0)
-                  {
-                    cache_info->type=UndefinedCache;
-                    return(MagickFalse);
-                  }
-                return(MagickTrue);
-              }
-          }
+              if ((source_info.storage_class != UndefinedClass) &&
+                  (mode != ReadMode))
+                {
+                  status=ClonePixelCacheRepository(cache_info,&source_info,
+                                                   exception);
+                  RelinquishPixelCachePixels(&source_info);
+                }
+              if (image->debug != MagickFalse)
+                {
+                  (void) FormatMagickSize(cache_info->length,MagickTrue,
+                                          format);
+                  type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
+                                               cache_info->type);
+                  (void) FormatLocaleString(message,MaxTextExtent,
+                                            "open %s (%s[%d], %s, %.20gx%.20g %s)",
+                                            cache_info->filename,cache_info->cache_filename,
+                                            cache_info->file,type,(double) cache_info->columns,
+                                            (double) cache_info->rows,format);
+                  (void) LogMagickEvent(CacheEvent,GetMagickModule(),"%s",
+                                        message);
+                }
+              if (status == 0)
+                {
+                  cache_info->type=UndefinedCache;
+                  return(MagickFalse);
+                }
+              return(MagickTrue);
+            }
+        }
     }
   status=MagickTrue;
   if ((source_info.storage_class != UndefinedClass) && (mode != ReadMode))
