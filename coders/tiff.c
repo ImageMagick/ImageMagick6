@@ -3703,6 +3703,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
       default:
         break;
     }
+    if (quantum_info->format == FloatingPointQuantumFormat)
+      predictor=PREDICTOR_FLOATINGPOINT;
     option=GetImageOption(image_info,"tiff:predictor");
     if (option != (const char * ) NULL)
       predictor=(size_t) strtol(option,(char **) NULL,10);
