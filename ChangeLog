@@ -1,10 +1,12 @@
 2020-09-12  6.9.11-30  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-30 GIT revision 15877:5020aec05:20200912
+  * Release ImageMagick version 6.9.11-30 GIT revision 15880:da9caeeb5:20200913
 
 2020-09-07  6.9.11-30  <quetzlzacatenango@image...>
   * Add endian support to JSON coder.
   * Regression: MapCache type cache allocation skipped (reference
     https://github.com/ImageMagick/ImageMagick6/issues/97).
+  * Some DCM images include a thumbnail (reference
+    https://github.com/ImageMagick/ImageMagick/pull/2558).
 
 2020-09-05  6.9.11-29  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-29 GIT revision 15857:15b663aee:20200905.
