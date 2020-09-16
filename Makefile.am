@@ -105,7 +105,6 @@ TOP_EXTRA_DIST = \
   magick.sh.in \
   Magickshr.opt \
   NEWS.txt \
-  Platforms.txt \
   README.txt \
   index.html \
   version.sh \
