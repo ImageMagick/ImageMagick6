@@ -69,7 +69,7 @@
 /*
   Define declarations.
 */
-#define MagickPathTemplate "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+#define MagickPathTemplate "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  /* min 6 X's */
 #define NumberOfResourceTypes  \
   (sizeof(resource_semaphore)/sizeof(*resource_semaphore))
 
@@ -647,7 +647,7 @@ MagickExport int AcquireUniqueFileResource(char *path)
       Get temporary pathname.
     */
     (void) GetPathTemplate(path);
-    key=GetRandomKey(random_info,strlen(MagickPathTemplate));
+    key=GetRandomKey(random_info,strlen(MagickPathTemplate)-6);
     p=path+strlen(path)-strlen(MagickPathTemplate);
     datum=GetStringInfoDatum(key);
     for (j=0; j < (ssize_t) GetStringInfoLength(key); j++)
