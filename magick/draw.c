@@ -3999,7 +3999,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
       }
       case BezierPrimitive:
       {
-        coordinates=(double) (BezierQuantum*primitive_info[j].coordinates);
+        coordinates=(BezierQuantum*(double) primitive_info[j].coordinates);
         if (primitive_info[j].coordinates > (108.0*BezierQuantum))
           {
             (void) ThrowMagickException(&image->exception,GetMagickModule(),
