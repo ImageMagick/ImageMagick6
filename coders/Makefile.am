@@ -146,7 +146,6 @@ MAGICK_CODER_SRCS = \
 	coders/miff.c \
 	coders/mono.c \
 	coders/mpc.c \
-	coders/mpeg.c \
 	coders/mpr.c \
 	coders/msl.c \
 	coders/mtv.c \
@@ -199,6 +198,7 @@ MAGICK_CODER_SRCS = \
 	coders/uyvy.c \
 	coders/vicar.c \
 	coders/vid.c \
+	coders/video.c \
 	coders/viff.c \
 	coders/vips.c \
 	coders/wbmp.c \
@@ -280,7 +280,6 @@ coders_LTLIBRARIES = \
 	coders/miff.la \
 	coders/mono.la \
 	coders/mpc.la \
-	coders/mpeg.la \
 	coders/mpr.la \
 	coders/msl.la \
 	coders/mtv.la \
@@ -331,6 +330,7 @@ coders_LTLIBRARIES = \
 	coders/uyvy.la \
 	coders/vicar.la \
 	coders/vid.la \
+	coders/video.la \
 	coders/viff.la \
 	coders/vips.la \
 	coders/wbmp.la \
@@ -716,12 +716,6 @@ coders_mpc_la_CPPFLAGS     = $(MAGICK_CODER_CPPFLAGS)
 coders_mpc_la_LDFLAGS      = $(MODULECOMMONFLAGS)
 coders_mpc_la_LIBADD       = $(MAGICKCORE_LIBS)
 
-# MPEG coder module
-coders_mpeg_la_SOURCES     = coders/mpeg.c
-coders_mpeg_la_CPPFLAGS    = $(MAGICK_CODER_CPPFLAGS)
-coders_mpeg_la_LDFLAGS     = $(MODULECOMMONFLAGS)
-coders_mpeg_la_LIBADD      = $(MAGICKCORE_LIBS)
-
 # MPR coder module
 coders_mpr_la_SOURCES      = coders/mpr.c
 coders_mpr_la_CPPFLAGS     = $(MAGICK_CODER_CPPFLAGS)
@@ -1033,6 +1027,12 @@ coders_vid_la_SOURCES      = coders/vid.c
 coders_vid_la_CPPFLAGS     = $(MAGICK_CODER_CPPFLAGS)
 coders_vid_la_LDFLAGS      = $(MODULECOMMONFLAGS)
 coders_vid_la_LIBADD       = $(MAGICKCORE_LIBS)
+
+# VIDEO coder module
+coders_video_la_SOURCES     = coders/video.c
+coders_video_la_CPPFLAGS    = $(MAGICK_CODER_CPPFLAGS)
+coders_video_la_LDFLAGS     = $(MODULECOMMONFLAGS)
+coders_video_la_LIBADD      = $(MAGICKCORE_LIBS)
 
 # VIFF coder module
 coders_viff_la_SOURCES     = coders/viff.c
