@@ -804,6 +804,15 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
         image->page.height);
       break;
     }
+    case 'I':
+    {
+      /*
+        Image iterations for animations.
+      */
+      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+        image->iterations);
+      break;
+    }
     case 'M':
     {
       /*
