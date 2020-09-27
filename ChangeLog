@@ -1,3 +1,9 @@
+2020-09-27  6.9.11-32  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-32 GIT revision 15
+
+2020-09-27  6.9.11-32  <quetzlzacatenango@image...>
+  * enable WMF for module build.
+
 2020-09-26  6.9.11-31  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-31 GIT revision 15914:f6814fe52:20200926
 

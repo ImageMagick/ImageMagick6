@@ -4561,7 +4561,7 @@ MAGICK_PATCHLEVEL_VERSION=32
 
 MAGICK_VERSION=6.9.11-32
 
-MAGICK_GIT_REVISION=15920:30103b6e2:20200927
+MAGICK_GIT_REVISION=15921:7847ad540:20200927
 
 
 # Substitute library versioning
@@ -32470,7 +32470,7 @@ fi
 if test "${with_wmf+set}" = set; then :
   withval=$with_wmf; with_wmf=$withval
 else
-  with_wmf='yes'
+  with_wmf=$build_modules
 fi
 
 
