@@ -306,6 +306,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   image->depth=8;
   image->columns=(size_t) heif_image_handle_get_width(image_handle);
   image->rows=(size_t) heif_image_handle_get_height(image_handle);
+  image->depth=(size_t) heif_image_handle_get_luma_bits_per_pixel(image_handle);
   preserve_orientation=IsStringTrue(GetImageOption(image_info,
     "heic:preserve-orientation"));
   if (preserve_orientation == MagickFalse)
