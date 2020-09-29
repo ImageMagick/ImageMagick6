@@ -152,7 +152,7 @@ jobs:
   
     - uses: actions/upload-artifact@v2
       with:
-        name: windows-source
+        name: ImageMagick6-Windows.7z
         path: 'ImageMagick6-Windows\ImageMagick6-Windows.7z'
 
   release_windows_portable:
