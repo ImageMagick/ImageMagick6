@@ -4561,7 +4561,7 @@ MAGICK_PATCHLEVEL_VERSION=33
 
 MAGICK_VERSION=6.9.11-33
 
-MAGICK_GIT_REVISION=15941:10828a9a2:20201004
+MAGICK_GIT_REVISION=15942:218eedfd9:20201004
 
 
 # Substitute library versioning
@@ -9770,7 +9770,7 @@ fi
 
 
 
- if test "${GDI32_LIBS}x" != 'x' ; then
+ if  test "${GDI32_LIBS}x" != 'x' ; then
   WINGDI32_DELEGATE_TRUE=
   WINGDI32_DELEGATE_FALSE='#'
 else
@@ -9778,7 +9778,7 @@ else
   WINGDI32_DELEGATE_FALSE=
 fi
 
- if test "${native_win32_build}" = 'yes' ; then
+ if  test "${native_win32_build}" = 'yes' ; then
   WIN32_NATIVE_BUILD_TRUE=
   WIN32_NATIVE_BUILD_FALSE='#'
 else
@@ -9786,7 +9786,7 @@ else
   WIN32_NATIVE_BUILD_FALSE=
 fi
 
- if test "${cygwin_build}" = 'yes' ; then
+ if  test "${cygwin_build}" = 'yes' ; then
   CYGWIN_BUILD_TRUE=
   CYGWIN_BUILD_FALSE='#'
 else
@@ -9794,7 +9794,7 @@ else
   CYGWIN_BUILD_FALSE=
 fi
 
- if test "x${CC}" = 'xcl.exe' ; then
+ if  test "x${CC}" = 'xcl.exe' ; then
   USING_CL_TRUE=
   USING_CL_FALSE='#'
 else
@@ -22140,7 +22140,7 @@ if test "$enable_static" = 'yes'; then
     libtool_build_static_libs='yes'
 fi
 
- if test "${libtool_build_shared_libs}" = 'yes'; then
+ if  test "${libtool_build_shared_libs}" = 'yes'; then
   WITH_SHARED_LIBS_TRUE=
   WITH_SHARED_LIBS_FALSE='#'
 else
@@ -22177,7 +22177,7 @@ $as_echo "#define BUILD_MODULES 1" >>confdefs.h
 
     MAGICK_FEATURES="$MAGICK_FEATURES Modules"
 fi
- if test "$build_modules" != 'no'; then
+ if  test "$build_modules" != 'no'; then
   WITH_MODULES_TRUE=
   WITH_MODULES_FALSE='#'
 else
@@ -22427,7 +22427,7 @@ fi
 if test "$with_method_prefix" != 'no'; then
 
 cat >>confdefs.h <<_ACEOF
-#define NAMESPACE_PREFIX $with_method_prefix
+#define NAMESPACE_PREFIX "$with_method_prefix"
 _ACEOF
 
 
@@ -22446,7 +22446,7 @@ else
   with_legacy_support='no'
 fi
 
- if test "$with_legacy_support" != 'no'; then
+ if  test "$with_legacy_support" != 'no'; then
   LEGACY_SUPPORT_TRUE=
   LEGACY_SUPPORT_FALSE='#'
 else
@@ -22479,7 +22479,7 @@ esac
 QUANTUM_DEPTH="$with_quantum_depth"
 
 cat >>confdefs.h <<_ACEOF
-#define QUANTUM_DEPTH_OBSOLETE_IN_H $QUANTUM_DEPTH
+#define QUANTUM_DEPTH_OBSOLETE_IN_H "$QUANTUM_DEPTH"
 _ACEOF
 
 MAGICK_PCFLAGS="$MAGICK_PCFLAGS -DMAGICKCORE_QUANTUM_DEPTH=$QUANTUM_DEPTH"
@@ -22506,7 +22506,7 @@ fi
 if test "$with_cache" != ''; then
 
 cat >>confdefs.h <<_ACEOF
-#define PixelCacheThreshold $with_cache
+#define PixelCacheThreshold "$with_cache"
 _ACEOF
 
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-cache=$with_cache "
@@ -26430,7 +26430,7 @@ $as_echo_n "checking whether C++ compiler is sufficient for Magick++... " >&6; }
 $as_echo "$have_magick_plus_plus" >&6; }
     LIBS="$OLIBS"
 fi
- if test "$have_magick_plus_plus" = 'yes'; then
+ if  test "$have_magick_plus_plus" = 'yes'; then
   WITH_MAGICK_PLUS_PLUS_TRUE=
   WITH_MAGICK_PLUS_PLUS_FALSE='#'
 else
@@ -26831,8 +26831,8 @@ fi
 have_jemalloc='no'
 JEMALLOC_LIBS=''
 if test "$with_jemalloc" != 'no'; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JEMALLOC support " >&5
-$as_echo_n "checking for JEMALLOC support ... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for JEMALLOC support" >&5
+$as_echo_n "checking for JEMALLOC support... " >&6; }
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: " >&5
 $as_echo "" >&6; }
   failed=0
@@ -26909,7 +26909,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
   fi
 fi
- if test "$have_jemalloc" = 'yes'; then
+ if  test "$have_jemalloc" = 'yes'; then
   HasJEMALLOC_TRUE=
   HasJEMALLOC_FALSE='#'
 else
@@ -27010,8 +27010,8 @@ fi
 have_umem='no'
 UMEM_LIBS=''
 if test "$with_umem" != 'no'; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for UMEM support " >&5
-$as_echo_n "checking for UMEM support ... " >&6; }
+  { $as_echo "$as_me:${as_lineno-$LINENO}: checking for UMEM support" >&5
+$as_echo_n "checking for UMEM support... " >&6; }
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: " >&5
 $as_echo "" >&6; }
   failed=0
@@ -27130,7 +27130,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
   fi
 fi
- if test "$have_umem" = 'yes'; then
+ if  test "$have_umem" = 'yes'; then
   HAVE_UMEM_TRUE=
   HAVE_UMEM_FALSE='#'
 else
@@ -27197,7 +27197,7 @@ if ${ac_cv_lib_ccmalloc_ccmalloc_malloc+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-lccmalloc -ldl $LIBS"
+LIBS="-lccmalloc  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -27229,6 +27229,8 @@ fi
 $as_echo "$ac_cv_lib_ccmalloc_ccmalloc_malloc" >&6; }
 if test "x$ac_cv_lib_ccmalloc_ccmalloc_malloc" = xyes; then :
   CCMALLOC_LIBS="$CCMALLOC_PREFIX/lib/ccmalloc-gcc.o -lccmalloc -ldl"
+else
+  ,-ldl
 fi
 
         if test -n "$CCMALLOC_LIBS"; then
@@ -27247,7 +27249,7 @@ fi
 if test "x$enable_hugepages" != "xno"; then :
 
 
-$as_echo "#define HAVE_HUGEPAGES 1" >>confdefs.h
+$as_echo "#define HAVE_HUGEPAGES  1" >>confdefs.h
 
 
 fi
@@ -27407,7 +27409,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
     fi
 fi
- if test "$have_bzlib" = 'yes'; then
+ if  test "$have_bzlib" = 'yes'; then
   BZLIB_DELEGATE_TRUE=
   BZLIB_DELEGATE_FALSE='#'
 else
@@ -28297,7 +28299,7 @@ if test "$no_x" != 'yes'; then
 else
   have_x='no'
 fi
- if test "$have_x" = 'yes'; then
+ if  test "$have_x" = 'yes'; then
   X11_DELEGATE_TRUE=
   X11_DELEGATE_FALSE='#'
 else
@@ -28415,7 +28417,7 @@ $as_echo "#define ZLIB_DELEGATE 1" >>confdefs.h
   LIBS="$ZLIB_LIBS $LIBS"
 fi
 
- if test "$have_zlib" = 'yes'; then
+ if  test "$have_zlib" = 'yes'; then
   ZLIB_DELEGATE_TRUE=
   ZLIB_DELEGATE_FALSE='#'
 else
@@ -28533,7 +28535,7 @@ $as_echo "#define ZSTD_DELEGATE 1" >>confdefs.h
   LIBS="$ZSTD_LIBS $LIBS"
 fi
 
- if test "$have_zstd" = 'yes'; then
+ if  test "$have_zstd" = 'yes'; then
   ZSTD_DELEGATE_TRUE=
   ZSTD_DELEGATE_FALSE='#'
 else
@@ -28645,7 +28647,7 @@ as_fn_error 1 "libltdl is required for modules and OpenCL builds
 See \`config.log' for more details" "$LINENO" 5; }
   fi
 fi
- if test "$have_ltdl" != 'no'; then
+ if  test "$have_ltdl" != 'no'; then
   WITH_LTDL_TRUE=
   WITH_LTDL_FALSE='#'
 else
@@ -28921,7 +28923,7 @@ $as_echo "$ac_cv_lib_dps_DPSInitialize" >&6; }
 if test "x$ac_cv_lib_dps_DPSInitialize" = xyes; then :
   have_libdps='yes'
 else
-  have_libdps='no'
+  have_libdps='no',
 fi
 
     if test "$have_libdps" != 'yes'; then
@@ -28933,7 +28935,7 @@ if ${ac_cv_lib_dps_DPSInitialize+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-ldps -lXt $LIBS"
+LIBS="-ldps  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -28966,7 +28968,7 @@ $as_echo "$ac_cv_lib_dps_DPSInitialize" >&6; }
 if test "x$ac_cv_lib_dps_DPSInitialize" = xyes; then :
   have_libdps='yes'
 else
-  have_libdps='no'
+  have_libdps='no',-lXt
 fi
 
         if test "$have_libdps" = 'yes'; then
@@ -28984,7 +28986,7 @@ if ${ac_cv_lib_dpstk_XDPSPixelsPerPoint+:} false; then :
   $as_echo_n "(cached) " >&6
 else
   ac_check_lib_save_LIBS=$LIBS
-LIBS="-ldpstk -ldps $LIBDPS_XT $LIBS"
+LIBS="-ldpstk  $LIBS"
 cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* end confdefs.h.  */
 
@@ -29017,7 +29019,7 @@ $as_echo "$ac_cv_lib_dpstk_XDPSPixelsPerPoint" >&6; }
 if test "x$ac_cv_lib_dpstk_XDPSPixelsPerPoint" = xyes; then :
   passed=`expr $passed + 1`
 else
-  failed=`expr $failed + 1`
+  failed=`expr $failed + 1`,-ldps $LIBDPS_XT
 fi
 
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking if DPS package is complete" >&5
@@ -29044,7 +29046,7 @@ $as_echo "no" >&6; }
         CPPFLAGS=$PERSIST_CPPFLAGS
     fi
 fi
- if test "$have_dps" = 'yes'; then
+ if  test "$have_dps" = 'yes'; then
   DPS_DELEGATE_TRUE=
   DPS_DELEGATE_FALSE='#'
 else
@@ -29179,7 +29181,7 @@ $as_echo "#define FFTW_DELEGATE 1" >>confdefs.h
   CFLAGS="$fftw3_CFLAGS $CFLAGS"
 fi
 
- if test "$have_fftw" = 'yes'; then
+ if  test "$have_fftw" = 'yes'; then
   FFTW_DELEGATE_TRUE=
   FFTW_DELEGATE_FALSE='#'
 else
@@ -29413,7 +29415,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
     fi
 fi
- if test "$have_fpx" = 'yes'; then
+ if  test "$have_fpx" = 'yes'; then
   FPX_DELEGATE_TRUE=
   FPX_DELEGATE_FALSE='#'
 else
@@ -29531,7 +29533,7 @@ $as_echo "#define DJVU_DELEGATE 1" >>confdefs.h
   CFLAGS="$ddjvuapi_CFLAGS $CFLAGS"
 fi
 
- if test "$have_djvu" = 'yes'; then
+ if  test "$have_djvu" = 'yes'; then
   DJVU_DELEGATE_TRUE=
   DJVU_DELEGATE_FALSE='#'
 else
@@ -29878,7 +29880,7 @@ $as_echo "#define RAQM_DELEGATE 1" >>confdefs.h
   CFLAGS="$RAQM_CFLAGS $CFLAGS"
 fi
 
- if test "$have_raqm" = 'yes'; then
+ if  test "$have_raqm" = 'yes'; then
   RAQM_DELEGATE_TRUE=
   RAQM_DELEGATE_FALSE='#'
 else
@@ -30049,7 +30051,7 @@ $as_echo "#define GS_DELEGATE 1" >>confdefs.h
 $as_echo "no" >&6; }
     fi
 fi
- if test "$have_gslib" = 'yes'; then
+ if  test "$have_gslib" = 'yes'; then
   GS_DELEGATE_TRUE=
   GS_DELEGATE_FALSE='#'
 else
@@ -30199,7 +30201,7 @@ $as_echo "#define GVC_DELEGATE 1" >>confdefs.h
   CFLAGS="$GVC_CFLAGS $CFLAGS"
 fi
 
- if test "$have_gvc" = 'yes'; then
+ if  test "$have_gvc" = 'yes'; then
   GVC_DELEGATE_TRUE=
   GVC_DELEGATE_FALSE='#'
 else
@@ -30316,7 +30318,7 @@ $as_echo "#define HEIC_DELEGATE 1" >>confdefs.h
   CFLAGS="$HEIF_CFLAGS $CFLAGS"
 fi
 
- if test "$have_heic" = 'yes'; then
+ if  test "$have_heic" = 'yes'; then
   HEIC_DELEGATE_TRUE=
   HEIC_DELEGATE_FALSE='#'
 else
@@ -30425,7 +30427,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
     fi
 fi
- if test "$have_jbig" = 'yes'; then
+ if  test "$have_jbig" = 'yes'; then
   JBIG_DELEGATE_TRUE=
   JBIG_DELEGATE_FALSE='#'
 else
@@ -30559,7 +30561,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
     fi
 fi
- if test "$have_jpeg" = 'yes'; then
+ if  test "$have_jpeg" = 'yes'; then
   JPEG_DELEGATE_TRUE=
   JPEG_DELEGATE_FALSE='#'
 else
@@ -30721,7 +30723,7 @@ $as_echo "yes" >&6; }
 $as_echo "no" >&6; }
   fi
 fi
- if test "$have_jxl" = 'yes'; then
+ if  test "$have_jxl" = 'yes'; then
   JXL_DELEGATE_TRUE=
   JXL_DELEGATE_FALSE='#'
 else
@@ -30853,7 +30855,7 @@ $as_echo "#define HAVE_LCMS2_H 1" >>confdefs.h
   fi
 fi
 
- if test "$have_lcms" = 'yes'; then
+ if  test "$have_lcms" = 'yes'; then
   LCMS_DELEGATE_TRUE=
   LCMS_DELEGATE_FALSE='#'
 else
@@ -30970,7 +30972,7 @@ $as_echo "#define LIBOPENJP2_DELEGATE 1" >>confdefs.h
   CFLAGS="$LIBOPENJP2_CFLAGS $CFLAGS"
 fi
 
- if test "$have_openjp2" = 'yes'; then
+ if  test "$have_openjp2" = 'yes'; then
   LIBOPENJP2_DELEGATE_TRUE=
   LIBOPENJP2_DELEGATE_FALSE='#'
 else
@@ -31088,7 +31090,7 @@ $as_echo "#define LQR_DELEGATE 1" >>confdefs.h
   CFLAGS="$LQR_CFLAGS $CFLAGS"
 fi
 
- if test "$have_lqr" = 'yes'; then
+ if  test "$have_lqr" = 'yes'; then
   LQR_DELEGATE_TRUE=
   LQR_DELEGATE_FALSE='#'
 else
@@ -31201,7 +31203,7 @@ $as_echo "#define LZMA_DELEGATE 1" >>confdefs.h
   CFLAGS="$LZMA_CFLAGS $CFLAGS"
 fi
 
- if test "$have_lzma" = 'yes'; then
+ if  test "$have_lzma" = 'yes'; then
   LZMA_DELEGATE_TRUE=
   LZMA_DELEGATE_FALSE='#'
 else
@@ -31318,7 +31320,7 @@ $as_echo "#define OPENEXR_DELEGATE 1" >>confdefs.h
   CFLAGS="$OPENEXR_CFLAGS $CFLAGS"
 fi
 
- if test "$have_openexr" = 'yes'; then
+ if  test "$have_openexr" = 'yes'; then
   OPENEXR_DELEGATE_TRUE=
   OPENEXR_DELEGATE_FALSE='#'
 else
@@ -31516,7 +31518,7 @@ $as_echo "#define PANGOCAIRO_DELEGATE 1" >>confdefs.h
   CFLAGS="$PANGOCAIRO_CFLAGS $CFLAGS"
 fi
 
- if test "$have_pango" = 'yes'; then
+ if  test "$have_pango" = 'yes'; then
   PANGO_DELEGATE_TRUE=
   PANGO_DELEGATE_FALSE='#'
 else
@@ -31524,7 +31526,7 @@ else
   PANGO_DELEGATE_FALSE=
 fi
 
- if test "$have_pangocairo" = 'yes'; then
+ if  test "$have_pangocairo" = 'yes'; then
   PANGOCAIRO_DELEGATE_TRUE=
   PANGOCAIRO_DELEGATE_FALSE='#'
 else
@@ -31641,7 +31643,7 @@ $as_echo "#define PNG_DELEGATE 1" >>confdefs.h
   CFLAGS="$PNG_CFLAGS $CFLAGS"
 fi
 
- if test "$have_png" = 'yes'; then
+ if  test "$have_png" = 'yes'; then
   PNG_DELEGATE_TRUE=
   PNG_DELEGATE_FALSE='#'
 else
@@ -31758,7 +31760,7 @@ $as_echo "#define RAW_R_DELEGATE 1" >>confdefs.h
   CFLAGS="$RAW_R_CFLAGS $CFLAGS"
 fi
 
- if test "$have_raw" = 'yes'; then
+ if  test "$have_raw" = 'yes'; then
   RAW_R_DELEGATE_TRUE=
   RAW_R_DELEGATE_FALSE='#'
 else
@@ -31956,7 +31958,7 @@ $as_echo "#define CAIRO_DELEGATE 1" >>confdefs.h
   CFLAGS="$CAIRO_SVG_CFLAGS $CFLAGS"
 fi
 
- if test "$have_rsvg" = 'yes'; then
+ if  test "$have_rsvg" = 'yes'; then
   RSVG_DELEGATE_TRUE=
   RSVG_DELEGATE_FALSE='#'
 else
@@ -31964,7 +31966,7 @@ else
   RSVG_DELEGATE_FALSE=
 fi
 
- if test "$have_cairo" = 'yes'; then
+ if  test "$have_cairo" = 'yes'; then
   CAIRO_DELEGATE_TRUE=
   CAIRO_DELEGATE_FALSE='#'
 else
@@ -32278,7 +32280,7 @@ done
 $as_echo "no" >&6; }
     fi
 fi
- if test "$have_tiff" = 'yes'; then
+ if  test "$have_tiff" = 'yes'; then
   TIFF_DELEGATE_TRUE=
   TIFF_DELEGATE_FALSE='#'
 else
@@ -32493,7 +32495,7 @@ $as_echo "#define WEBPMUX_DELEGATE 1" >>confdefs.h
   CFLAGS="$WEBPMUX_CFLAGS $CFLAGS"
 fi
 
- if test "$have_webp" = 'yes'; then
+ if  test "$have_webp" = 'yes'; then
   WEBP_DELEGATE_TRUE=
   WEBP_DELEGATE_FALSE='#'
 else
@@ -32501,7 +32503,7 @@ else
   WEBP_DELEGATE_FALSE=
 fi
 
- if test "$have_webpmux" = 'yes'; then
+ if  test "$have_webpmux" = 'yes'; then
   WEBPMUX_DELEGATE_TRUE=
   WEBPMUX_DELEGATE_FALSE='#'
 else
@@ -32752,7 +32754,7 @@ $as_echo "#define XML_DELEGATE 1" >>confdefs.h
   CFLAGS="$XML_CFLAGS $CFLAGS"
 fi
 
- if test "$have_xml" = 'yes'; then
+ if  test "$have_xml" = 'yes'; then
   XML_DELEGATE_TRUE=
   XML_DELEGATE_FALSE='#'
 else
@@ -33102,8 +33104,8 @@ WWWDecodeDelegateDefault='curl'
 XPSDelegateDefault='gxps'
 
 # Search for delegates
-# Extract the first word of ""$BPGDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$BPGDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$BPGDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$BPGDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_BPGDecodeDelegate+:} false; then :
@@ -33129,7 +33131,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_BPGDecodeDelegate" && ac_cv_path_BPGDecodeDelegate=""$BPGDecodeDelegateDefault""
+  test -z "$ac_cv_path_BPGDecodeDelegate" && ac_cv_path_BPGDecodeDelegate=" "$BPGDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33143,8 +33145,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$BPGEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$BPGEncodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$BPGEncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$BPGEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_BPGEncodeDelegate+:} false; then :
@@ -33170,7 +33172,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_BPGEncodeDelegate" && ac_cv_path_BPGEncodeDelegate=""$BPGEncodeDelegateDefault""
+  test -z "$ac_cv_path_BPGEncodeDelegate" && ac_cv_path_BPGEncodeDelegate=" "$BPGEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -33184,8 +33186,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$BlenderDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$BlenderDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$BlenderDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$BlenderDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_BlenderDecodeDelegate+:} false; then :
@@ -33211,7 +33213,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_BlenderDecodeDelegate" && ac_cv_path_BlenderDecodeDelegate=""$BlenderDecodeDelegateDefault""
+  test -z "$ac_cv_path_BlenderDecodeDelegate" && ac_cv_path_BlenderDecodeDelegate=" "$BlenderDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33271,8 +33273,8 @@ fi
 done
 test -n "$BrowseDelegate" || BrowseDelegate=""$BrowseDelegateDefault""
 
-# Extract the first word of ""$DNGDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$DNGDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$DNGDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$DNGDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_DNGDecodeDelegate+:} false; then :
@@ -33298,7 +33300,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_DNGDecodeDelegate" && ac_cv_path_DNGDecodeDelegate=""$DNGDecodeDelegateDefault""
+  test -z "$ac_cv_path_DNGDecodeDelegate" && ac_cv_path_DNGDecodeDelegate=" "$DNGDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33312,8 +33314,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$DOCDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$DOCDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$DOCDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$DOCDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_DOCDecodeDelegate+:} false; then :
@@ -33339,7 +33341,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_DOCDecodeDelegate" && ac_cv_path_DOCDecodeDelegate=""$DOCDecodeDelegateDefault""
+  test -z "$ac_cv_path_DOCDecodeDelegate" && ac_cv_path_DOCDecodeDelegate=" "$DOCDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33353,8 +33355,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$DVIDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$DVIDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$DVIDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$DVIDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_DVIDecodeDelegate+:} false; then :
@@ -33380,7 +33382,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_DVIDecodeDelegate" && ac_cv_path_DVIDecodeDelegate=""$DVIDecodeDelegateDefault""
+  test -z "$ac_cv_path_DVIDecodeDelegate" && ac_cv_path_DVIDecodeDelegate=" "$DVIDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33394,8 +33396,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$ConvertDelegateDefault"", so it can be a program name with args.
-set dummy "$ConvertDelegateDefault"; ac_word=$2
+# Extract the first word of " "$ConvertDelegateDefault"", so it can be a program name with args.
+set dummy  "$ConvertDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_ConvertDelegate+:} false; then :
@@ -33421,7 +33423,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_ConvertDelegate" && ac_cv_path_ConvertDelegate=""$ConvertDelegateDefault""
+  test -z "$ac_cv_path_ConvertDelegate" && ac_cv_path_ConvertDelegate=" "$ConvertDelegateDefault""
   ;;
 esac
 fi
@@ -33435,8 +33437,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$DisplayDelegateDefault"", so it can be a program name with args.
-set dummy "$DisplayDelegateDefault"; ac_word=$2
+# Extract the first word of " "$DisplayDelegateDefault"", so it can be a program name with args.
+set dummy  "$DisplayDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_DisplayDelegate+:} false; then :
@@ -33462,7 +33464,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_DisplayDelegate" && ac_cv_path_DisplayDelegate=""$DisplayDelegateDefault""
+  test -z "$ac_cv_path_DisplayDelegate" && ac_cv_path_DisplayDelegate=" "$DisplayDelegateDefault""
   ;;
 esac
 fi
@@ -33476,8 +33478,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$EditorDelegateDefault"", so it can be a program name with args.
-set dummy "$EditorDelegateDefault"; ac_word=$2
+# Extract the first word of " "$EditorDelegateDefault"", so it can be a program name with args.
+set dummy  "$EditorDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_EditorDelegate+:} false; then :
@@ -33503,7 +33505,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_EditorDelegate" && ac_cv_path_EditorDelegate=""$EditorDelegateDefault""
+  test -z "$ac_cv_path_EditorDelegate" && ac_cv_path_EditorDelegate=" "$EditorDelegateDefault""
   ;;
 esac
 fi
@@ -33517,8 +33519,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$GVCDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$GVCDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$GVCDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$GVCDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_GVCDecodeDelegate+:} false; then :
@@ -33544,7 +33546,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_GVCDecodeDelegate" && ac_cv_path_GVCDecodeDelegate=""$GVCDecodeDelegateDefault""
+  test -z "$ac_cv_path_GVCDecodeDelegate" && ac_cv_path_GVCDecodeDelegate=" "$GVCDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33558,8 +33560,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$HPGLDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$HPGLDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$HPGLDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$HPGLDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_HPGLDecodeDelegate+:} false; then :
@@ -33585,7 +33587,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_HPGLDecodeDelegate" && ac_cv_path_HPGLDecodeDelegate=""$HPGLDecodeDelegateDefault""
+  test -z "$ac_cv_path_HPGLDecodeDelegate" && ac_cv_path_HPGLDecodeDelegate=" "$HPGLDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33599,8 +33601,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$HTMLDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$HTMLDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$HTMLDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$HTMLDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_HTMLDecodeDelegate+:} false; then :
@@ -33626,7 +33628,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_HTMLDecodeDelegate" && ac_cv_path_HTMLDecodeDelegate=""$HTMLDecodeDelegateDefault""
+  test -z "$ac_cv_path_HTMLDecodeDelegate" && ac_cv_path_HTMLDecodeDelegate=" "$HTMLDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33640,8 +33642,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$ILBMDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$ILBMDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$ILBMDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$ILBMDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_ILBMDecodeDelegate+:} false; then :
@@ -33667,7 +33669,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_ILBMDecodeDelegate" && ac_cv_path_ILBMDecodeDelegate=""$ILBMDecodeDelegateDefault""
+  test -z "$ac_cv_path_ILBMDecodeDelegate" && ac_cv_path_ILBMDecodeDelegate=" "$ILBMDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33681,8 +33683,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$ILBMEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$ILBMEncodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$ILBMEncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$ILBMEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_ILBMEncodeDelegate+:} false; then :
@@ -33708,7 +33710,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_ILBMEncodeDelegate" && ac_cv_path_ILBMEncodeDelegate=""$ILBMEncodeDelegateDefault""
+  test -z "$ac_cv_path_ILBMEncodeDelegate" && ac_cv_path_ILBMEncodeDelegate=" "$ILBMEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -33722,8 +33724,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$JXRDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$JXRDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$JXRDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$JXRDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_JXRDecodeDelegate+:} false; then :
@@ -33749,7 +33751,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_JXRDecodeDelegate" && ac_cv_path_JXRDecodeDelegate=""$JXRDecodeDelegateDefault""
+  test -z "$ac_cv_path_JXRDecodeDelegate" && ac_cv_path_JXRDecodeDelegate=" "$JXRDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -33763,8 +33765,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$JXREncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$JXREncodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$JXREncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$JXREncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_JXREncodeDelegate+:} false; then :
@@ -33790,7 +33792,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_JXREncodeDelegate" && ac_cv_path_JXREncodeDelegate=""$JXREncodeDelegateDefault""
+  test -z "$ac_cv_path_JXREncodeDelegate" && ac_cv_path_JXREncodeDelegate=" "$JXREncodeDelegateDefault""
   ;;
 esac
 fi
@@ -33804,8 +33806,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$LEPDelegateDefault"", so it can be a program name with args.
-set dummy "$LEPDelegateDefault"; ac_word=$2
+# Extract the first word of " "$LEPDelegateDefault"", so it can be a program name with args.
+set dummy  "$LEPDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_LEPDelegate+:} false; then :
@@ -33831,7 +33833,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_LEPDelegate" && ac_cv_path_LEPDelegate=""$LEPDelegateDefault""
+  test -z "$ac_cv_path_LEPDelegate" && ac_cv_path_LEPDelegate=" "$LEPDelegateDefault""
   ;;
 esac
 fi
@@ -33845,8 +33847,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$LPDelegateDefault"", so it can be a program name with args.
-set dummy "$LPDelegateDefault"; ac_word=$2
+# Extract the first word of " "$LPDelegateDefault"", so it can be a program name with args.
+set dummy  "$LPDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_LPDelegate+:} false; then :
@@ -33872,7 +33874,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_LPDelegate" && ac_cv_path_LPDelegate="no"
+  test -z "$ac_cv_path_LPDelegate" && ac_cv_path_LPDelegate=" no"
   ;;
 esac
 fi
@@ -33886,8 +33888,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$LPRDelegateDefault"", so it can be a program name with args.
-set dummy "$LPRDelegateDefault"; ac_word=$2
+# Extract the first word of " "$LPRDelegateDefault"", so it can be a program name with args.
+set dummy  "$LPRDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_LPRDelegate+:} false; then :
@@ -33913,7 +33915,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_LPRDelegate" && ac_cv_path_LPRDelegate=""$LPRDelegateDefault""
+  test -z "$ac_cv_path_LPRDelegate" && ac_cv_path_LPRDelegate=" "$LPRDelegateDefault""
   ;;
 esac
 fi
@@ -33927,8 +33929,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$LaunchDelegateDefault"", so it can be a program name with args.
-set dummy "$LaunchDelegateDefault"; ac_word=$2
+# Extract the first word of " "$LaunchDelegateDefault"", so it can be a program name with args.
+set dummy  "$LaunchDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_LaunchDelegate+:} false; then :
@@ -33954,7 +33956,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_LaunchDelegate" && ac_cv_path_LaunchDelegate=""$LaunchDelegateDefault""
+  test -z "$ac_cv_path_LaunchDelegate" && ac_cv_path_LaunchDelegate=" "$LaunchDelegateDefault""
   ;;
 esac
 fi
@@ -33968,8 +33970,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$MogrifyDelegateDefault"", so it can be a program name with args.
-set dummy "$MogrifyDelegateDefault"; ac_word=$2
+# Extract the first word of " "$MogrifyDelegateDefault"", so it can be a program name with args.
+set dummy  "$MogrifyDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MogrifyDelegate+:} false; then :
@@ -33995,7 +33997,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MogrifyDelegate" && ac_cv_path_MogrifyDelegate=""$MogrifyDelegateDefault""
+  test -z "$ac_cv_path_MogrifyDelegate" && ac_cv_path_MogrifyDelegate=" "$MogrifyDelegateDefault""
   ;;
 esac
 fi
@@ -34009,8 +34011,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$MPEGDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$MPEGDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$MPEGDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$MPEGDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MPEGDecodeDelegate+:} false; then :
@@ -34036,7 +34038,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MPEGDecodeDelegate" && ac_cv_path_MPEGDecodeDelegate=""$MPEGDecodeDelegateDefault""
+  test -z "$ac_cv_path_MPEGDecodeDelegate" && ac_cv_path_MPEGDecodeDelegate=" "$MPEGDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -34052,8 +34054,8 @@ fi
 
 if test "$MPEGDecodeDelegate" = "$MPEGDecodeDelegateDefault" ; then
   MPEGDecodeDelegateDefault='ffmpeg'
-  # Extract the first word of ""$MPEGDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$MPEGDecodeDelegateDefault"; ac_word=$2
+  # Extract the first word of " "$MPEGDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$MPEGDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MPEGDecodeDelegate+:} false; then :
@@ -34079,7 +34081,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MPEGDecodeDelegate" && ac_cv_path_MPEGDecodeDelegate=""$MPEGDecodeDelegateDefault""
+  test -z "$ac_cv_path_MPEGDecodeDelegate" && ac_cv_path_MPEGDecodeDelegate=" "$MPEGDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -34094,8 +34096,8 @@ fi
 
 
 fi;
-# Extract the first word of ""$MPEGEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$MPEGEncodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$MPEGEncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$MPEGEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MPEGEncodeDelegate+:} false; then :
@@ -34121,7 +34123,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MPEGEncodeDelegate" && ac_cv_path_MPEGEncodeDelegate=""$MPEGEncodeDelegateDefault""
+  test -z "$ac_cv_path_MPEGEncodeDelegate" && ac_cv_path_MPEGEncodeDelegate=" "$MPEGEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -34137,8 +34139,8 @@ fi
 
 if test "$MPEGEncodeDelegate" = "$MPEGEncodeDelegateDefault" ; then
   MPEGEncodeDelegateDefault='ffmpeg'
-  # Extract the first word of ""$MPEGEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$MPEGEncodeDelegateDefault"; ac_word=$2
+  # Extract the first word of " "$MPEGEncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$MPEGEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MPEGEncodeDelegate+:} false; then :
@@ -34164,7 +34166,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MPEGEncodeDelegate" && ac_cv_path_MPEGEncodeDelegate=""$MPEGEncodeDelegateDefault""
+  test -z "$ac_cv_path_MPEGEncodeDelegate" && ac_cv_path_MPEGEncodeDelegate=" "$MPEGEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -34179,8 +34181,8 @@ fi
 
 
 fi;
-# Extract the first word of ""$MrSIDDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$MrSIDDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$MrSIDDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$MrSIDDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MrSIDDecodeDelegate+:} false; then :
@@ -34206,7 +34208,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MrSIDDecodeDelegate" && ac_cv_path_MrSIDDecodeDelegate=""$MrSIDDecodeDelegateDefault""
+  test -z "$ac_cv_path_MrSIDDecodeDelegate" && ac_cv_path_MrSIDDecodeDelegate=" "$MrSIDDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -34220,8 +34222,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$MVDelegateDefault"", so it can be a program name with args.
-set dummy "$MVDelegateDefault"; ac_word=$2
+# Extract the first word of " "$MVDelegateDefault"", so it can be a program name with args.
+set dummy  "$MVDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_MVDelegate+:} false; then :
@@ -34247,7 +34249,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_MVDelegate" && ac_cv_path_MVDelegate=""$MVDelegateDefault""
+  test -z "$ac_cv_path_MVDelegate" && ac_cv_path_MVDelegate=" "$MVDelegateDefault""
   ;;
 esac
 fi
@@ -34261,8 +34263,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$PCLDelegateDefault"", so it can be a program name with args.
-set dummy "$PCLDelegateDefault"; ac_word=$2
+# Extract the first word of " "$PCLDelegateDefault"", so it can be a program name with args.
+set dummy  "$PCLDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_PCLDelegate+:} false; then :
@@ -34288,7 +34290,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_PCLDelegate" && ac_cv_path_PCLDelegate=""$PCLDelegateDefault""
+  test -z "$ac_cv_path_PCLDelegate" && ac_cv_path_PCLDelegate=" "$PCLDelegateDefault""
   ;;
 esac
 fi
@@ -34348,8 +34350,8 @@ fi
 done
 test -n "$PSDelegate" || PSDelegate=""$PSDelegateDefault""
 
-# Extract the first word of ""$RMDelegateDefault"", so it can be a program name with args.
-set dummy "$RMDelegateDefault"; ac_word=$2
+# Extract the first word of " "$RMDelegateDefault"", so it can be a program name with args.
+set dummy  "$RMDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_RMDelegate+:} false; then :
@@ -34375,7 +34377,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_RMDelegate" && ac_cv_path_RMDelegate=""$RMDelegateDefault""
+  test -z "$ac_cv_path_RMDelegate" && ac_cv_path_RMDelegate=" "$RMDelegateDefault""
   ;;
 esac
 fi
@@ -34389,8 +34391,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$RSVGDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$RSVGDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$RSVGDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$RSVGDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_RSVGDecodeDelegate+:} false; then :
@@ -34416,7 +34418,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_RSVGDecodeDelegate" && ac_cv_path_RSVGDecodeDelegate=""$RSVGDecodeDelegateDefault""
+  test -z "$ac_cv_path_RSVGDecodeDelegate" && ac_cv_path_RSVGDecodeDelegate=" "$RSVGDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -34430,8 +34432,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$SVGDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$SVGDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$SVGDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$SVGDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_SVGDecodeDelegate+:} false; then :
@@ -34457,7 +34459,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_SVGDecodeDelegate" && ac_cv_path_SVGDecodeDelegate=""$SVGDecodeDelegateDefault""
+  test -z "$ac_cv_path_SVGDecodeDelegate" && ac_cv_path_SVGDecodeDelegate=" "$SVGDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -34471,8 +34473,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$TraceEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$TraceEncodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$TraceEncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$TraceEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_TraceEncodeDelegate+:} false; then :
@@ -34498,7 +34500,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_TraceEncodeDelegate" && ac_cv_path_TraceEncodeDelegate=""$TraceEncodeDelegateDefault""
+  test -z "$ac_cv_path_TraceEncodeDelegate" && ac_cv_path_TraceEncodeDelegate=" "$TraceEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -34512,8 +34514,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$UniconvertorDelegateDefault"", so it can be a program name with args.
-set dummy "$UniconvertorDelegateDefault"; ac_word=$2
+# Extract the first word of " "$UniconvertorDelegateDefault"", so it can be a program name with args.
+set dummy  "$UniconvertorDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_UniconvertorDelegate+:} false; then :
@@ -34539,7 +34541,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_UniconvertorDelegate" && ac_cv_path_UniconvertorDelegate=""$UniconvertorDelegateDefault""
+  test -z "$ac_cv_path_UniconvertorDelegate" && ac_cv_path_UniconvertorDelegate=" "$UniconvertorDelegateDefault""
   ;;
 esac
 fi
@@ -34553,8 +34555,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$WebPDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$WebPDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$WebPDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$WebPDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_WebPDecodeDelegate+:} false; then :
@@ -34580,7 +34582,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_WebPDecodeDelegate" && ac_cv_path_WebPDecodeDelegate=""$WebPDecodeDelegateDefault""
+  test -z "$ac_cv_path_WebPDecodeDelegate" && ac_cv_path_WebPDecodeDelegate=" "$WebPDecodeDelegateDefault""
   ;;
 esac
 fi
@@ -34594,8 +34596,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$WebPEncodeDelegateDefault"", so it can be a program name with args.
-set dummy "$WebPEncodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$WebPEncodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$WebPEncodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_WebPEncodeDelegate+:} false; then :
@@ -34621,7 +34623,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_WebPEncodeDelegate" && ac_cv_path_WebPEncodeDelegate=""$WebPEncodeDelegateDefault""
+  test -z "$ac_cv_path_WebPEncodeDelegate" && ac_cv_path_WebPEncodeDelegate=" "$WebPEncodeDelegateDefault""
   ;;
 esac
 fi
@@ -34635,8 +34637,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$WWWDecodeDelegateDefault"", so it can be a program name with args.
-set dummy "$WWWDecodeDelegateDefault"; ac_word=$2
+# Extract the first word of " "$WWWDecodeDelegateDefault"", so it can be a program name with args.
+set dummy  "$WWWDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_WWWDecodeDelegate+:} false; then :
@@ -34662,7 +34664,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_WWWDecodeDelegate" && ac_cv_path_WWWDecodeDelegate=""$WWWDecodeDelegateDelegateDefault""
+  test -z "$ac_cv_path_WWWDecodeDelegate" && ac_cv_path_WWWDecodeDelegate=" "$WWWDecodeDelegateDelegateDefault""
   ;;
 esac
 fi
@@ -34676,8 +34678,8 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$XPSDelegateDefault"", so it can be a program name with args.
-set dummy "$XPSDelegateDefault"; ac_word=$2
+# Extract the first word of " "$XPSDelegateDefault"", so it can be a program name with args.
+set dummy  "$XPSDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
 if ${ac_cv_path_XPSDelegate+:} false; then :
@@ -34703,7 +34705,7 @@ done
   done
 IFS=$as_save_IFS
 
-  test -z "$ac_cv_path_XPSDelegate" && ac_cv_path_XPSDelegate=""$XPSDelegateDefault""
+  test -z "$ac_cv_path_XPSDelegate" && ac_cv_path_XPSDelegate=" "$XPSDelegateDefault""
   ;;
 esac
 fi
@@ -35109,7 +35111,7 @@ AUTOMAKE=${AUTOMAKE-"${am_missing_run}automake"}
 AUTOHEADER=${AUTOHEADER-"${am_missing_run}autoheader"}
 
 
- if test "x$RPM" != "x" ; then
+ if  test "x$RPM" != "x" ; then
   RPM_DELEGATE_TRUE=
   RPM_DELEGATE_FALSE='#'
 else
@@ -35165,7 +35167,7 @@ fi
 done
 
 
- if test "x$P7ZIP" != "x" ; then
+ if  test "x$P7ZIP" != "x" ; then
   P7ZIP_DELEGATE_TRUE=
   P7ZIP_DELEGATE_FALSE='#'
 else
@@ -35221,7 +35223,7 @@ fi
 done
 
 
- if test "x$ZIP" != "x" ; then
+ if  test "x$ZIP" != "x" ; then
   ZIP_DELEGATE_TRUE=
   ZIP_DELEGATE_FALSE='#'
 else
@@ -35623,7 +35625,7 @@ $as_echo "$as_me: WARNING: could not find the perl interpreter" >&2;}
 fi
 
 fi
- if test "$have_perl" != 'no'; then
+ if  test "$have_perl" != 'no'; then
   WITH_PERL_TRUE=
   WITH_PERL_FALSE='#'
 else
@@ -35631,7 +35633,7 @@ else
   WITH_PERL_FALSE=
 fi
 
- if test $with_perl_static = 'yes'; then
+ if  test $with_perl_static = 'yes'; then
   WITH_PERL_STATIC_TRUE=
   WITH_PERL_STATIC_FALSE='#'
 else
@@ -35639,7 +35641,7 @@ else
   WITH_PERL_STATIC_FALSE=
 fi
 
- if test $with_perl_dynamic = 'yes'; then
+ if  test $with_perl_dynamic = 'yes'; then
   WITH_PERL_DYNAMIC_TRUE=
   WITH_PERL_DYNAMIC_FALSE='#'
 else
@@ -35924,12 +35926,12 @@ MAGICK_EXTRA_DEP_LIBS="$GOMP_LIBS"
 # Pass only user-provided LIBS as "global" libraries
 LIBS=$USER_LIBS
 
-#AC_SUBST(CPPFLAGS)
+#AC_SUBST([CPPFLAGS])
 
-#AC_SUBST(LDFLAGS)
-#AC_SUBST(X_PRE_LIBS)
-#AC_SUBST(X_LIBS)
-#AC_SUBST(X_EXTRA_LIBS)
+#AC_SUBST([LDFLAGS])
+#AC_SUBST([X_PRE_LIBS])
+#AC_SUBST([X_LIBS])
+#AC_SUBST([X_EXTRA_LIBS])
 
 MAGICK_CFLAGS=$CFLAGS
 MAGICK_CXXFLAGS="$CXXFLAGS"
