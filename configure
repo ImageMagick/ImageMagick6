@@ -4561,7 +4561,7 @@ MAGICK_PATCHLEVEL_VERSION=34
 
 MAGICK_VERSION=6.9.11-34
 
-MAGICK_GIT_REVISION=15945:501ac6173:20201005
+MAGICK_GIT_REVISION=15947:3b9a51644:20201005
 
 
 # Substitute library versioning
@@ -11243,6 +11243,55 @@ fi
     fi
 fi
 
+
+#
+# Check for sendfile support
+#
+########
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking Linux compatible sendfile()" >&5
+$as_echo_n "checking Linux compatible sendfile()... " >&6; }
+if ${ac_cv_have_linux_sendfile+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+    #undef _FILE_OFFSET_BITS
+    #include <sys/types.h>
+    #include <sys/socket.h>
+    #include <sys/sendfile.h>
+
+int
+main ()
+{
+
+    sendfile(0, 0, (void *) 0, 0);
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+
+    ac_cv_have_linux_sendfile=yes
+
+else
+
+    ac_cv_have_linux_sendfile=no
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_linux_sendfile" >&5
+$as_echo "$ac_cv_have_linux_sendfile" >&6; }
+if test $ac_cv_have_linux_sendfile = yes; then
+
+$as_echo "#define HAVE_LINUX_SENDFILE 1" >>confdefs.h
+
+fi
 
 #
 # Set SETJMP_IS_THREAD_SAFE define.
