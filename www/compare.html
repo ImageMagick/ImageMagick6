@@ -124,7 +124,13 @@ Image: rose.jpg
 19.63
 </code></pre>
 
-<p>Or, if you just want the overall image distortion, use this command:</p>
+<p>If your image contains an alpha channel (transparency) you need to explicitly include it in the comparison:</p>
+  
+<pre class="highlight"><code>-> compare -channel rgba -metric PSNR rose.jpg reconstruct.jpg difference.png
+19.63
+</code></pre>
+  
+<p>If you just want the overall image distortion, use this command:</p>
 
 <pre class="highlight"><code>-> compare -metric PSNR rose.jpg reconstruct.jpg difference.png
 28.31
