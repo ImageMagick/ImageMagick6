@@ -1,5 +1,5 @@
-2020-10-05  6.9.11-34  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-34 GIT revision 15...
+2020-10-08  6.9.11-34  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-34 GIT revision 15954:c4594f039:20201008
 
 2020-10-05  6.9.11-34  <quetzlzacatenango@image...>
   * check for linux-compatible sendfile().
