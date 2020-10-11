@@ -253,11 +253,11 @@ static MagickBooleanType Classify(Image *image,short **extrema,
     next_cluster=cluster->next; \
     cluster=(Cluster *) RelinquishMagickMemory(cluster); \
   } \
-  if (squares != (double *) NULL) \
+  if (squares != (MagickRealType *) NULL) \
     { \
       squares-=255; \
       free_squares=squares; \
-      free_squares=(double *) RelinquishMagickMemory(free_squares); \
+      free_squares=(MagickRealType *) RelinquishMagickMemory(free_squares); \
     } \
   ThrowBinaryException(severity,tag,label); \
 }
@@ -306,7 +306,7 @@ static MagickBooleanType Classify(Image *image,short **extrema,
   */
   cluster=(Cluster *) NULL;
   head=(Cluster *) NULL;
-  squares=(double *) NULL;
+  squares=(MagickRealType *) NULL;
   (void) memset(&red,0,sizeof(red));
   (void) memset(&green,0,sizeof(green));
   (void) memset(&blue,0,sizeof(blue));
