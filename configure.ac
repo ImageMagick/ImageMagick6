@@ -3126,8 +3126,6 @@ LEPDelegateDefault='lepton'
 LPDelegateDefault='lp'
 LPRDelegateDefault='lpr'
 LaunchDelegateDefault='gimp'
-MPEGDecodeDelegateDefault='avconv'
-MPEGEncodeDelegateDefault='avconv'
 MrSIDDecodeDelegateDefault='mrsidgeodecode'
 MVDelegateDefault='mv'
 PCLDelegateDefault='pcl6'
@@ -3143,6 +3141,8 @@ RSVGDecodeDelegateDefault='rsvg-convert'
 SVGDecodeDelegateDefault='inkscape'
 TraceEncodeDelegateDefault='potrace'
 UniconvertorDelegateDefault='uniconvertor'
+VIDEODecodeDelegateDefault='ffmpeg'
+VIDEOEncodeDelegateDefault='ffmpeg'
 WebPDecodeDelegateDefault='dwebp'
 WebPEncodeDelegateDefault='cwebp'
 WWWDecodeDelegateDefault='curl'
@@ -3171,16 +3171,8 @@ AC_PATH_PROG([LPDelegate],[ "$LPDelegateDefault"],[ no])
 AC_PATH_PROG([LPRDelegate],[ "$LPRDelegateDefault"],[ "$LPRDelegateDefault"])
 AC_PATH_PROG([LaunchDelegate],[ "$LaunchDelegateDefault"],[ "$LaunchDelegateDefault"])
 AC_PATH_PROG([MogrifyDelegate],[ "$MogrifyDelegateDefault"],[ "$MogrifyDelegateDefault"])
-AC_PATH_PROG([MPEGDecodeDelegate],[ "$MPEGDecodeDelegateDefault"],[ "$MPEGDecodeDelegateDefault"])
-if test "$MPEGDecodeDelegate" = "$MPEGDecodeDelegateDefault" ; then
-  MPEGDecodeDelegateDefault='ffmpeg'
-  AC_PATH_PROG([MPEGDecodeDelegate],[ "$MPEGDecodeDelegateDefault"],[ "$MPEGDecodeDelegateDefault"])
-fi;
-AC_PATH_PROG([MPEGEncodeDelegate],[ "$MPEGEncodeDelegateDefault"],[ "$MPEGEncodeDelegateDefault"])
-if test "$MPEGEncodeDelegate" = "$MPEGEncodeDelegateDefault" ; then
-  MPEGEncodeDelegateDefault='ffmpeg'
-  AC_PATH_PROG([MPEGEncodeDelegate],[ "$MPEGEncodeDelegateDefault"],[ "$MPEGEncodeDelegateDefault"])
-fi;
+AC_PATH_PROG([VIDEODecodeDelegate],[ "$VIDEODecodeDelegateDefault"],[ "$VIDEODecodeDelegateDefault"])
+AC_PATH_PROG([VIDEOEncodeDelegate],[ "$VIDEOEncodeDelegateDefault"],[ "$VIDEOEncodeDelegateDefault"])
 AC_PATH_PROG([MrSIDDecodeDelegate],[ "$MrSIDDecodeDelegateDefault"],[ "$MrSIDDecodeDelegateDefault"])
 AC_PATH_PROG([MVDelegate],[ "$MVDelegateDefault"],[ "$MVDelegateDefault"])
 AC_PATH_PROG([PCLDelegate],[ "$PCLDelegateDefault"],[ "$PCLDelegateDefault"])
@@ -3209,13 +3201,13 @@ DisplayDelegate="${BIN_DIR}/${DisplayDelegateDefault}"
 MogrifyDelegate="${BIN_DIR}/${MogrifyDelegateDefault}"
 
 # Set delegate booleans
-have_avconv='no'; if test "$MPEGDecodeDelegate" != "$MPEGDecodeDelegateDefault" ; then have_avconv='yes'; fi
 have_gs='no'         ; if test "$PSDelegate" != "$PSDelegateDefault"; then have_gs='yes'; fi
 have_hp2xx='no'      ; if test "$HPGLDecodeDelegate" !=  "$HPGLDecodeDelegateDefault" ; then have_hp2xx='yes'; fi
 have_ilbmtoppm='no'  ; if test "$ILBMDecodeDelegate" != "$ILBMDecodeDelegateDefault" ; then have_ilbmtoppm='yes'; fi
 have_mrsid='no'; if test "$MrSIDDecodeDelegate" != "$MrSIDDecodeDelegateDefault" ; then have_mrsid='yes'; fi
 have_pcl='no'        ; if test "$PCLDelegate" != "$PCLDelegateDefault"; then have_pcl='yes'; fi
 have_ppmtoilbm='no'  ; if test "$ILBMEncodeDelegate" != "$ILBMEncodeDelegateDefault" ; then have_ppmtoilbm='yes'; fi
+have_video='no'; if test "$VIDEODecodeDelegate" != "$VIDEODecodeDelegateDefault" ; then have_video='yes'; fi
 have_xps='no'        ; if test "$XPSDelegate" != "$XPSDelegateDefault"; then have_xps='yes'; fi
 
 #
@@ -3379,8 +3371,8 @@ if test "$with_frozenpaths" != 'yes'; then
   LEPDelegate="$LEPDelegateDefault"
   LPDelegate="$LPDelegateDefault"
   LaunchDelegate="$LaunchDelegateDefault"
-  MPEGDecodeDelegate="$MPEGDecodeDelegateDefault"
-  MPEGEncodeDelegate="$MPEGEncodeDelegateDefault"
+  VIDEODecodeDelegate="$VIDEODecodeDelegateDefault"
+  VIDEOEncodeDelegate="$VIDEOEncodeDelegateDefault"
   MogrifyDelegate="$MogrifyDelegateDefault"
   MrSIDDecodeDelegate="$MrSIDDecodeDelegateDefault"
   PCLDelegate="$PCLDelegateDefault"
@@ -3414,8 +3406,8 @@ AC_SUBST([JXREncodeDelegate])
 AC_SUBST([LaunchDelegate])
 AC_SUBST([LEPDelegate])
 AC_SUBST([LPDelegate])
-AC_SUBST([MPEGDecodeDelegate])
-AC_SUBST([MPEGEncodeDelegate])
+AC_SUBST([VIDEODecodeDelegate])
+AC_SUBST([VIDEOEncodeDelegate])
 AC_SUBST([MogrifyDelegate])
 AC_SUBST([MrSIDDecodeDelegate])
 AC_SUBST([PCLDelegate])
@@ -3718,9 +3710,6 @@ fi
 if test "$have_djvu"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES djvu"
 fi
-if test "$have_avconv"   = 'yes' ; then
-   MAGICK_DELEGATES="$MAGICK_DELEGATES mpeg"
-fi
 if test "$have_fftw"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES fftw"
 fi
@@ -3801,6 +3790,9 @@ if test "$have_tiff"   = 'yes' ; then
 fi
 if test "$have_ttf"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES ttf"
+fi
+if test "$have_video"   = 'yes' ; then
+   MAGICK_DELEGATES="$MAGICK_DELEGATES video"
 fi
 if test "$have_webp"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES webp"
