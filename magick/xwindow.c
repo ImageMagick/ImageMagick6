@@ -5091,7 +5091,7 @@ MagickExport XWindows *XInitializeWindows(Display *display,
   windows->im_exit=XInternAtom(display,"IM_EXIT",MagickFalse);
   windows->dnd_protocols=XInternAtom(display,"DndProtocol",MagickFalse);
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
-  (void) XSynchronize(display,IsWindows95());
+  (void) XSynchronize(display,MagickFalse);
 #endif
   if (IsEventLogging())
     {
