@@ -382,10 +382,8 @@ Magick::Geometry::operator MagickCore::RectangleInfo() const
   RectangleInfo rectangle;
   rectangle.width=_width;
   rectangle.height=_height;
-  _xNegative ? rectangle.x=static_cast<ssize_t>(0-_xOff) :
-    rectangle.x=static_cast<ssize_t>(_xOff);
-  _yNegative ? rectangle.y=static_cast<ssize_t>(0-_yOff) :
-    rectangle.y=static_cast<ssize_t>(_yOff);
+  rectangle.x=_xOff;
+  rectangle.y=_yOff;
   return(rectangle);
 }
 
