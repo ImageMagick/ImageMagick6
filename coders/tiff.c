@@ -1693,7 +1693,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
     if (image->matte != MagickFalse)
       (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
-    if ((samples_per_pixel+extra_samples) > MaxPixelChannels)
+    if (samples_per_pixel > MaxPixelChannels)
       {
         TIFFClose(tiff);
         ThrowReaderException(CorruptImageError,"MaximumChannelsExceeded");
