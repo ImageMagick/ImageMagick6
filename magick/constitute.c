@@ -153,6 +153,15 @@ MagickExport Image *ConstituteImage(const size_t columns,
   image=AcquireImage((ImageInfo *) NULL);
   if (image == (Image *) NULL)
     return((Image *) NULL);
+  switch (storage)
+  {
+    case CharPixel: image->depth=8*sizeof(unsigned char); break;
+    case DoublePixel: image->depth=8*sizeof(double); break;
+    case FloatPixel: image->depth=8*sizeof(float); break;
+    case LongPixel: image->depth=8*sizeof(unsigned long); break;
+    case ShortPixel: image->depth=8*sizeof(unsigned short); break;
+    default: break;
+  }
   length=strlen(map);
   for (i=0; i < (ssize_t) length; i++)
   {
