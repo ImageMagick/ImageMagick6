@@ -1026,24 +1026,29 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
   exception=DestroyExceptionInfo(exception);
   exception=(&image->exception);
   (void) SignatureImage(image);
-  (void) FormatLocaleFile(file,"\n{\n");
+  (void) FormatLocaleFile(file,"{\n");
   version=1.0;
   artifact=GetImageArtifact(image,"json:version");
   if (artifact != (const char *) NULL)
     version=StringToDouble(artifact,(char **) NULL);
   if (version >= 1.0)
     (void) FormatLocaleFile(file,"  \"version\": \"%.1f\",\n",version);
-  JSONFormatLocaleFile(file,"  \"image\": {\n    \"name\": %s,\n",
-    image->filename);
-  if (*image->magick_filename != '\0')
-    if (LocaleCompare(image->magick_filename,image->filename) != 0)
-      {
-        char
-          filename[MaxTextExtent];
-
-        GetPathComponent(image->magick_filename,TailPath,filename);
-        JSONFormatLocaleFile(file,"    \"baseName\": %s,\n",filename);
-      }
+  if (*image->magick_filename == '\0')
+    JSONFormatLocaleFile(file,"  \"image\": {\n    \"name\": %s,\n",
+      image->filename);
+  else
+    {
+      JSONFormatLocaleFile(file,"  \"image\": {\n    \"name\": %s,\n",
+        image->magick_filename);
+      if (LocaleCompare(image->magick_filename,image->filename) != 0)
+        {
+          char
+            filename[MaxTextExtent];
+  
+          GetPathComponent(image->magick_filename,TailPath,filename);
+          JSONFormatLocaleFile(file,"    \"baseName\": %s,\n",filename);
+        }
+    }
   magick_info=GetMagickInfo(image->magick,exception);
   JSONFormatLocaleFile(file,"    \"format\": %s,\n",image->magick);
   if ((magick_info != (const MagickInfo *) NULL) &&
@@ -1734,8 +1739,8 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
     (unsigned long) (elapsed_time/60.0),(unsigned long) ceil(fmod(
     elapsed_time,60.0)),(unsigned long) (1000.0*(elapsed_time-floor(
     elapsed_time))));
-  JSONFormatLocaleFile(file,"    \"version\": %s\n",
-    GetMagickVersion((size_t *) NULL));
+  JSONFormatLocaleFile(file,"    \"version\": %s\n",GetMagickVersion(
+    (size_t *) NULL));
   (void) FormatLocaleFile(file,"  }\n}\n");
   (void) fflush(file);
   return(ferror(file) != 0 ? MagickFalse : MagickTrue);
@@ -1781,7 +1786,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
         (void) WriteBlobString(image,"]");
         break;
       }
-    (void) WriteBlobString(image,",\n");
+    (void) WriteBlobString(image,",");
     image=SyncNextImageInList(image);
     status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
