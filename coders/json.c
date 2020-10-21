@@ -1724,7 +1724,7 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
     }
   (void) FormatLocaleFile(file,"    \"tainted\": %s,\n",
     image->taint != MagickFalse ? "true" : "false");
-  (void) FormatMagickSize(GetBlobSize(image),MagickFalse,format);
+  (void) FormatMagickSize(image->extent,MagickFalse,format);
   JSONFormatLocaleFile(file,"    \"filesize\": %s,\n",format);
   (void) FormatMagickSize((MagickSizeType) image->columns*image->rows,
      MagickFalse,format);
@@ -1775,7 +1775,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
   do
   {
     if (scene == 0)
-      (void) WriteBlobString(image,"[\n");
+      (void) WriteBlobString(image,"[");
     (void) CopyMagickString(image->filename,image->magick_filename,
       MaxTextExtent);
     image->magick_columns=image->columns;
@@ -1786,7 +1786,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
         (void) WriteBlobString(image,"]");
         break;
       }
-    (void) WriteBlobString(image,",");
+    (void) WriteBlobString(image,",\n");
     image=SyncNextImageInList(image);
     status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
     if (status == MagickFalse)
