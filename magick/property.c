@@ -3260,7 +3260,7 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
             image->page.width,(double) image->page.height);
           break;
         }
-      if (LocaleNCompare("papersize.",property,10) == 0)
+      if (LocaleNCompare("papersize:",property,10) == 0)
         {
           const char
             *papersize;
