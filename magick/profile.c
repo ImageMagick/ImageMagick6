@@ -1659,7 +1659,8 @@ static void GetProfilesFromResourceBlock(Image *image,
 }
 
 #if defined(MAGICKCORE_XML_DELEGATE)
-static MagickBooleanType ValidateXMPProfile(const StringInfo *profile)
+static MagickBooleanType ValidateXMPProfile(Image *image,
+  const StringInfo *profile)
 {
   xmlDocPtr
     document;
@@ -1671,20 +1672,22 @@ static MagickBooleanType ValidateXMPProfile(const StringInfo *profile)
     GetStringInfoLength(profile),"xmp.xml",NULL,XML_PARSE_NOERROR |
     XML_PARSE_NOWARNING);
   if (document == (xmlDocPtr) NULL)
-    return(MagickFalse);
+    {
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),
+        ImageWarning,"CorruptImageProfile","`%s' (XMP)",image->filename);
+      return(MagickFalse);
+    }
   xmlFreeDoc(document);
   return(MagickTrue);
 }
 #else
-static MagickBooleanType ValidateXMPProfile(const StringInfo *profile)
+static MagickBooleanType ValidateXMPProfile(Image *image,
+  const StringInfo *profile)
 {
-  const char
-    *xmp;
-
-  xmp=(const char *) GetStringInfoDatum(profile);
-  if (StringLocateSubstring(xmp,"rdf:RDF") == (const char *) NULL)
-    return(MagickFalse);
-  return(MagickTrue);
+  (void) ThrowMagickException(&image->exception,GetMagickModule(),
+    MissingDelegateError,"DelegateLibrarySupportNotBuiltIn","'%s' (XML)",
+    image->filename);
+  return(MagickFalse);
 }
 #endif
 
@@ -1702,12 +1705,8 @@ static MagickBooleanType SetImageProfileInternal(Image *image,const char *name,
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((LocaleCompare(name,"xmp") == 0) &&
-      (ValidateXMPProfile(profile) == MagickFalse))
-    {
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        ImageWarning,"CorruptImageProfile","`%s'",name);
-      return(MagickTrue);
-    }
+      (ValidateXMPProfile(image,profile) == MagickFalse))
+    return(MagickTrue);
   if (image->profiles == (SplayTreeInfo *) NULL)
     image->profiles=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
       DestroyProfile);
