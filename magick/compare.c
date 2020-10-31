@@ -246,9 +246,7 @@ MagickExport Image *CompareImageChannels(Image *image,
     Generate difference image.
   */
   status=MagickTrue;
-  fuzz=(double) MagickMin(GetNumberChannels(image,channel),
-    GetNumberChannels(reconstruct_image,channel))*
-    GetFuzzyColorDistance(image,reconstruct_image);
+  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   GetMagickPixelPacket(image,&zero);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -461,9 +459,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     Compute the absolute difference in pixels between two images.
   */
   status=MagickTrue;
-  fuzz=(double) MagickMin(GetNumberChannels(image,channel),
-    GetNumberChannels(reconstruct_image,channel))*
-    GetFuzzyColorDistance(image,reconstruct_image);
+  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   rows=MagickMax(image->rows,reconstruct_image->rows);
   columns=MagickMax(image->columns,reconstruct_image->columns);
   image_view=AcquireVirtualCacheView(image,exception);
