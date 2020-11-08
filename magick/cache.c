@@ -3910,10 +3910,13 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
       ((MagickSizeType) image->rows > cache_info->height_limit))
     ThrowBinaryException(ImageError,"WidthOrHeightExceedsLimit",
       image->filename);
-  length=GetImageListLength(image);
-  if (AcquireMagickResource(ListLengthResource,length) == MagickFalse)
-    ThrowBinaryException(ResourceLimitError,"ListLengthExceedsLimit",
-      image->filename);
+  if (GetMagickResourceLimit(ListLengthResource) != MagickResourceInfinity)
+    {
+      length=GetImageListLength(image);
+      if (AcquireMagickResource(ListLengthResource,length) == MagickFalse)
+        ThrowBinaryException(ResourceLimitError,"ListLengthExceedsLimit",
+          image->filename);
+    }
   source_info=(*cache_info);
   source_info.file=(-1);
   (void) FormatLocaleString(cache_info->filename,MaxTextExtent,"%s[%.20g]",
