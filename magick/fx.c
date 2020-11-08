@@ -542,6 +542,7 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
     symbol[MaxTextExtent];
 
   const char
+    *artifact,
     *p;
 
   const double
@@ -1125,6 +1126,9 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
   value=GetFxSymbolValue(fx_info,symbol);
   if (value != (const double *) NULL)
     return(*value);
+  artifact=GetImageArtifact(image,symbol);
+  if (artifact != (const char *) NULL)
+    return(StringToDouble(artifact,(char **) NULL));
   (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
     "UndefinedVariable","`%s'",symbol);
   (void) SetFxSymbolValue(fx_info,symbol,0.0);
