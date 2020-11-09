@@ -58,6 +58,7 @@
 #include "magick/blob-private.h"
 #include "magick/exception.h"
 #include "magick/exception-private.h"
+#include "magick/image-private.h"
 #include "magick/memory_.h"
 #include "magick/memory-private.h"
 #include "magick/policy.h"
@@ -1007,6 +1008,8 @@ MagickExport void GetMagickMemoryMethods(
 */
 MagickExport size_t GetMaxMemoryRequest(void)
 {
+#define MinMemoryRequest "16MiB"
+
   if (max_memory_request == 0)
     {
       char
@@ -1019,7 +1022,8 @@ MagickExport size_t GetMaxMemoryRequest(void)
           /*
             The security policy sets a max memory request limit.
           */
-          max_memory_request=StringToSizeType(value,100.0);
+          max_memory_request=MagickMax(StringToSizeType(value,100.0),
+            StringToSizeType(MinMemoryRequest,100.0));
           value=DestroyString(value);
         }
     }
