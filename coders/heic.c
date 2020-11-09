@@ -475,7 +475,12 @@ ModuleExport size_t RegisterHEICImage(void)
   entry=SetMagickInfo("HEIC");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadHEICImage;
+#if LIBHEIF_NUMERIC_VERSION >= 0x01030000
+  if (heif_have_encoder_for_format(heif_compression_HEVC))
+    entry->encoder=(EncodeImageHandler *) WriteHEICImage;
+#else
   entry->encoder=(EncodeImageHandler *) WriteHEICImage;
+#endif
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
   entry->description=ConstantString("Apple High efficiency Image Format");
@@ -484,14 +489,15 @@ ModuleExport size_t RegisterHEICImage(void)
   entry->version=ConstantString(LIBHEIF_VERSION);
 #endif
   entry->magick_module=ConstantString("HEIC");
-  entry->adjoin=MagickFalse;
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
 #if LIBHEIF_NUMERIC_VERSION > 0x01060200
   entry=SetMagickInfo("AVIF");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
-  entry->decoder=(DecodeImageHandler *) ReadHEICImage;
-  entry->encoder=(EncodeImageHandler *) WriteHEICImage;
+  if (heif_have_decoder_for_format(heif_compression_AV1))
+    entry->decoder=(DecodeImageHandler *) ReadHEICImage;
+  if (heif_have_encoder_for_format(heif_compression_AV1))
+    entry->encoder=(EncodeImageHandler *) WriteHEICImage;
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
   entry->description=ConstantString("AV1 Image File Format");
