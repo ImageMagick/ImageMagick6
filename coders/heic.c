@@ -596,8 +596,14 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
   struct heif_encoder
     *heif_encoder;
 
+  struct heif_error
+    error;
+
   struct heif_image
     *heif_image;
+
+  struct heif_writer
+    writer;
 
   /*
     Open output image file.
@@ -629,12 +635,6 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
       stride_y,
       stride_cb,
       stride_cr;
-
-    struct heif_error
-      error;
-
-    struct heif_writer
-      writer;
 
     uint8_t
       *p_y,
@@ -754,12 +754,6 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     status=IsHeifSuccess(&error,image);
     if (status == MagickFalse)
       break;
-    writer.writer_api_version=1;
-    writer.write=heif_write_func;
-    error=heif_context_write(heif_context,&writer,image);
-    status=IsHeifSuccess(&error,image);
-    if (status == MagickFalse)
-      break;
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
@@ -773,6 +767,10 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     heif_image=(struct heif_image*) NULL;
     scene++;
   } while (image_info->adjoin != MagickFalse);
+  writer.writer_api_version=1;
+  writer.write=heif_write_func;
+  error=heif_context_write(heif_context,&writer,image);
+  status=IsHeifSuccess(&error,image);
   if (heif_encoder != (struct heif_encoder*) NULL)
     heif_encoder_release(heif_encoder);
   if (heif_image != (struct heif_image*) NULL)
