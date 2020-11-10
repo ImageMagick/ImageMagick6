@@ -1434,6 +1434,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       image->colorspace=CMYKColorspace;
     if (photometric == PHOTOMETRIC_CIELAB)
       image->colorspace=LabColorspace;
+    if (photometric == PHOTOMETRIC_YCBCR)
+      image->colorspace=YCbCrColorspace;
     status=TIFFGetProfiles(tiff,image);
     if (status == MagickFalse)
       {
@@ -1714,8 +1716,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
     if (TIFFIsTiled(tiff) != MagickFalse)
       method=ReadTileMethod;
-    if ((photometric == PHOTOMETRIC_LOGLUV) ||
-        (photometric == PHOTOMETRIC_YCBCR))
+    if (photometric == PHOTOMETRIC_LOGLUV)
       method=ReadGenericMethod;
     if (image->compression == JPEGCompression)
       method=GetJPEGMethod(image,tiff,photometric,bits_per_sample,
