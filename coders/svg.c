@@ -3509,6 +3509,8 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
             }
           }
 #if defined(MAGICKCORE_CAIRO_DELEGATE)
+        else
+          g_object_unref(svg_handle);
         if (pixel_info != (MemoryInfo *) NULL)
           pixel_info=RelinquishVirtualMemory(pixel_info);
 #else
