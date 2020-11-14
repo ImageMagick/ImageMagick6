@@ -315,7 +315,7 @@ static Image *RenderSVGImage(const ImageInfo *image_info,Image *image,
     100.0*QuantumScale*image->background_color.green,
     100.0*QuantumScale*image->background_color.blue);
   (void) FormatLocaleString(opacity,MagickPathExtent,"%.20g",QuantumScale*
-    (QuantumRange-image->background_color.opacity));
+    (QuantumRange-image->background_color.opacity)-MagickEpsilon);
   (void) FormatLocaleString(command,MagickPathExtent,
     GetDelegateCommands(delegate_info),input_filename,output_filename,density,
     background,opacity,unique);

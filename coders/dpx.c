@@ -1226,6 +1226,7 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     {
       case CbYCrY422ComponentType:
       case CbYACrYA4224ComponentType:
+        ThrowReaderException(CoderError,"DataEncodingSchemeIsNotSupported");
       case CbYCr444ComponentType:
       {
         (void) SetImageColorspace(image,Rec709YCbCrColorspace);
@@ -1551,6 +1552,8 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
           (horizontal_factor != 4) && (vertical_factor != 1) &&
           (vertical_factor != 2) && (vertical_factor != 4))
         ThrowWriterException(CorruptImageError,"UnexpectedSamplingFactor");
+      if ((horizontal_factor == 2) || (vertical_factor == 2))
+        ThrowWriterException(CoderError,"DataEncodingSchemeIsNotSupported");
     }
   if ((IsYCbCrCompatibleColorspace(image->colorspace) != MagickFalse) &&
       ((horizontal_factor == 2) || (vertical_factor == 2)))
