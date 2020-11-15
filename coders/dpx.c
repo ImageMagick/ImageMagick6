@@ -1118,7 +1118,7 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
           StringInfo
             *profile;
 
-           if (dpx.file.user_size > GetBlobSize(image))
+           if ((MagickSizeType) dpx.file.user_size > GetBlobSize(image))
              ThrowReaderException(CorruptImageError,
                "InsufficientImageDataInFile");
            profile=BlobToStringInfo((const void *) NULL,
@@ -1226,7 +1226,6 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     {
       case CbYCrY422ComponentType:
       case CbYACrYA4224ComponentType:
-        ThrowReaderException(CoderError,"DataEncodingSchemeIsNotSupported");
       case CbYCr444ComponentType:
       {
         (void) SetImageColorspace(image,Rec709YCbCrColorspace);
@@ -1516,12 +1515,14 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
 
   size_t
     channels,
-    extent;
+    extent,
+    samples_per_pixel;
 
   time_t
     seconds;
 
   unsigned char
+    component_type,
     *pixels;
 
   /*
@@ -1552,8 +1553,6 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
           (horizontal_factor != 4) && (vertical_factor != 1) &&
           (vertical_factor != 2) && (vertical_factor != 4))
         ThrowWriterException(CorruptImageError,"UnexpectedSamplingFactor");
-      if ((horizontal_factor == 2) || (vertical_factor == 2))
-        ThrowWriterException(CoderError,"DataEncodingSchemeIsNotSupported");
     }
   if ((IsYCbCrCompatibleColorspace(image->colorspace) != MagickFalse) &&
       ((horizontal_factor == 2) || (vertical_factor == 2)))
@@ -2019,16 +2018,42 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
       if ((horizontal_factor == 2) || (vertical_factor == 2))
         quantum_type=CbYCrYQuantum;
     }
-  extent=GetBytesPerRow(image->columns,image->matte != MagickFalse ? 4UL : 3UL,
-    image->depth,dpx.image.image_element[0].packing == 0 ? MagickFalse :
-    MagickTrue);
-  if ((image_info->type != TrueColorType) && (image->matte == MagickFalse) &&
-      (SetImageGray(image,&image->exception) != MagickFalse))
+  samples_per_pixel=1;
+  quantum_type=GrayQuantum;
+  component_type=dpx.image.image_element[0].descriptor;
+  switch (component_type)
+  {
+    case CbYCrY422ComponentType:
     {
-      quantum_type=GrayQuantum;
-      extent=GetBytesPerRow(image->columns,1UL,image->depth,
-        dpx.image.image_element[0].packing == 0 ? MagickFalse : MagickTrue);
+      samples_per_pixel=2;
+      quantum_type=CbYCrYQuantum;
+      break;
     }
+    case CbYACrYA4224ComponentType:
+    case CbYCr444ComponentType:
+    {
+      samples_per_pixel=3;
+      quantum_type=CbYCrQuantum;
+      break;
+    }
+    case RGBComponentType:
+    {
+      samples_per_pixel=3;
+      quantum_type=RGBQuantum;
+      break;
+    }
+    case ABGRComponentType:
+    case RGBAComponentType:
+    {
+      samples_per_pixel=4;
+      quantum_type=RGBAQuantum;
+      break;
+    }
+   default:
+      break;
+  }
+  extent=GetBytesPerRow(image->columns,samples_per_pixel,image->depth,
+    dpx.image.image_element[0].packing == 0 ? MagickFalse : MagickTrue);
   pixels=GetQuantumPixels(quantum_info);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
