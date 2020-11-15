@@ -317,7 +317,7 @@ static LinkedListInfo *AcquireMagicCache(const char *filename,
       *p;
 
     p=MagicMap+i;
-    magic_info=(MagicInfo *) AcquireMagickMemory(sizeof(*magic_info));
+    magic_info=(MagicInfo *) AcquireQuantumMemory(1,sizeof(*magic_info));
     if (magic_info == (MagicInfo *) NULL)
       {
         (void) ThrowMagickException(exception,GetMagickModule(),
@@ -884,7 +884,7 @@ static MagickBooleanType LoadMagicCache(LinkedListInfo *cache,const char *xml,
         /*
           Magic element.
         */
-        magic_info=(MagicInfo *) AcquireMagickMemory(sizeof(*magic_info));
+        magic_info=(MagicInfo *) AcquireQuantumMemory(1,sizeof(*magic_info));
         if (magic_info == (MagicInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
         (void) memset(magic_info,0,sizeof(*magic_info));

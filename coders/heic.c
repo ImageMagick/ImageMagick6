@@ -232,7 +232,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
           file_data=RelinquishMagickMemory(file_data);
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         }
-      color_buffer=(unsigned char *) AcquireMagickMemory(length);
+      color_buffer=(unsigned char *) AcquireQuantumMemory(1,length);
       if (color_buffer != (unsigned char *) NULL)
         {
           error=heif_image_handle_get_raw_color_profile(image_handle,
@@ -274,7 +274,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
           file_data=RelinquishMagickMemory(file_data);
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         }
-      exif_buffer=(unsigned char*) AcquireMagickMemory(exif_size);
+      exif_buffer=(unsigned char*) AcquireQuantumMemory(1,exif_size);
       if (exif_buffer != (unsigned char*) NULL)
         {
           error=heif_image_handle_get_metadata(image_handle,

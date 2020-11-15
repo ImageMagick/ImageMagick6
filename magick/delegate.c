@@ -2209,7 +2209,7 @@ static MagickBooleanType LoadDelegateCache(LinkedListInfo *cache,
         /*
           Delegate element.
         */
-        delegate_info=(DelegateInfo *) AcquireMagickMemory(
+        delegate_info=(DelegateInfo *) AcquireQuantumMemory(1,
           sizeof(*delegate_info));
         if (delegate_info == (DelegateInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");

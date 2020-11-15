@@ -157,7 +157,7 @@ MagickExport MagickBooleanType AppendValueToLinkedList(
   assert(list_info->signature == MagickCoreSignature);
   if (list_info->elements == list_info->capacity)
     return(MagickFalse);
-  next=(ElementInfo *) AcquireMagickMemory(sizeof(*next));
+  next=(ElementInfo *) AcquireQuantumMemory(1,sizeof(*next));
   if (next == (ElementInfo *) NULL)
     return(MagickFalse);
   next->value=(void *) value;
@@ -1003,7 +1003,7 @@ MagickExport MagickBooleanType InsertValueInLinkedList(
   if ((index > list_info->elements) ||
       (list_info->elements == list_info->capacity))
     return(MagickFalse);
-  next=(ElementInfo *) AcquireMagickMemory(sizeof(*next));
+  next=(ElementInfo *) AcquireQuantumMemory(1,sizeof(*next));
   if (next == (ElementInfo *) NULL)
     return(MagickFalse);
   next->value=(void *) value;
@@ -1108,7 +1108,7 @@ MagickExport MagickBooleanType InsertValueInSortedLinkedList(
     return(MagickFalse);
   if (list_info->elements == list_info->capacity)
     return(MagickFalse);
-  next=(ElementInfo *) AcquireMagickMemory(sizeof(*next));
+  next=(ElementInfo *) AcquireQuantumMemory(1,sizeof(*next));
   if (next == (ElementInfo *) NULL)
     return(MagickFalse);
   next->value=(void *) value;
@@ -1310,7 +1310,7 @@ MagickExport HashmapInfo *NewHashmap(const size_t capacity,
   HashmapInfo
     *hashmap_info;
 
-  hashmap_info=(HashmapInfo *) AcquireMagickMemory(sizeof(*hashmap_info));
+  hashmap_info=(HashmapInfo *) AcquireQuantumMemory(1,sizeof(*hashmap_info));
   if (hashmap_info == (HashmapInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memset(hashmap_info,0,sizeof(*hashmap_info));
@@ -1365,7 +1365,7 @@ MagickExport LinkedListInfo *NewLinkedList(const size_t capacity)
   LinkedListInfo
     *list_info;
 
-  list_info=(LinkedListInfo *) AcquireMagickMemory(sizeof(*list_info));
+  list_info=(LinkedListInfo *) AcquireQuantumMemory(1,sizeof(*list_info));
   if (list_info == (LinkedListInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memset(list_info,0,sizeof(*list_info));
@@ -1509,7 +1509,7 @@ MagickExport MagickBooleanType PutEntryInHashmap(HashmapInfo *hashmap_info,
   assert(hashmap_info->signature == MagickCoreSignature);
   if ((key == (void *) NULL) || (value == (void *) NULL))
     return(MagickFalse);
-  next=(EntryInfo *) AcquireMagickMemory(sizeof(*next));
+  next=(EntryInfo *) AcquireQuantumMemory(1,sizeof(*next));
   if (next == (EntryInfo *) NULL)
     return(MagickFalse);
   LockSemaphoreInfo(hashmap_info->semaphore);

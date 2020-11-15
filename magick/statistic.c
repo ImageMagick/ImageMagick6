@@ -3037,7 +3037,7 @@ static PixelList *AcquirePixelList(const size_t width,const size_t height)
   register ssize_t
     i;
 
-  pixel_list=(PixelList *) AcquireMagickMemory(sizeof(*pixel_list));
+  pixel_list=(PixelList *) AcquireQuantumMemory(1,sizeof(*pixel_list));
   if (pixel_list == (PixelList *) NULL)
     return(pixel_list);
   (void) memset((void *) pixel_list,0,sizeof(*pixel_list));

@@ -125,7 +125,7 @@ static inline void AddConfigureKey(LinkedListInfo *cache,const char *path,
   ConfigureInfo
     *configure_info;
 
-  configure_info=(ConfigureInfo *) AcquireMagickMemory(sizeof(*configure_info));
+  configure_info=(ConfigureInfo *) AcquireQuantumMemory(1,sizeof(*configure_info));
   if (configure_info == (ConfigureInfo *) NULL)
     return;
   (void) memset(configure_info,0,sizeof(*configure_info));
@@ -1225,7 +1225,7 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
         /*
           Configure element.
         */
-        configure_info=(ConfigureInfo *) AcquireMagickMemory(
+        configure_info=(ConfigureInfo *) AcquireQuantumMemory(1,
           sizeof(*configure_info));
         if (configure_info == (ConfigureInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");

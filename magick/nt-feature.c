@@ -218,7 +218,7 @@ MagickExport MagickBooleanType NTAcquireTypeCache(SplayTreeInfo *type_cache,
         if ((pos=strstr(value_name," (TrueType)")) == (char*) NULL)
           continue;
         *pos='\0';  /* Remove (TrueType) from string */
-        type_info=(TypeInfo *) AcquireMagickMemory(sizeof(*type_info));
+        type_info=(TypeInfo *) AcquireQuantumMemory(1,sizeof(*type_info));
         if (type_info == (TypeInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
         (void) memset(type_info,0,sizeof(TypeInfo));

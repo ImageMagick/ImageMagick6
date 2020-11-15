@@ -152,7 +152,7 @@ static MagickWand *CloneMagickWandFromImages(const MagickWand *wand,
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  clone_wand=(MagickWand *) AcquireMagickMemory(sizeof(*clone_wand));
+  clone_wand=(MagickWand *) AcquireQuantumMemory(1,sizeof(*clone_wand));
   if (clone_wand == (MagickWand *) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       images->filename);
@@ -224,7 +224,7 @@ WandExport PixelView *ClonePixelView(const PixelView *pixel_view)
   assert(pixel_view->signature == WandSignature);
   if (pixel_view->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",pixel_view->name);
-  clone_view=(PixelView *) AcquireMagickMemory(sizeof(*clone_view));
+  clone_view=(PixelView *) AcquireQuantumMemory(1,sizeof(*clone_view));
   if (clone_view == (PixelView *) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       pixel_view->name);
@@ -2566,7 +2566,7 @@ WandExport PixelView *NewPixelView(MagickWand *wand)
 
   assert(wand != (MagickWand *) NULL);
   assert(wand->signature == MagickCoreSignature);
-  pixel_view=(PixelView *) AcquireMagickMemory(sizeof(*pixel_view));
+  pixel_view=(PixelView *) AcquireQuantumMemory(1,sizeof(*pixel_view));
   if (pixel_view == (PixelView *) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       GetExceptionMessage(errno));
@@ -2626,7 +2626,7 @@ WandExport PixelView *NewPixelViewRegion(MagickWand *wand,const ssize_t x,
 
   assert(wand != (MagickWand *) NULL);
   assert(wand->signature == MagickCoreSignature);
-  pixel_view=(PixelView *) AcquireMagickMemory(sizeof(*pixel_view));
+  pixel_view=(PixelView *) AcquireQuantumMemory(1,sizeof(*pixel_view));
   if (pixel_view == (PixelView *) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       GetExceptionMessage(errno));

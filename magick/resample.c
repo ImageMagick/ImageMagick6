@@ -216,7 +216,7 @@ MagickExport ResampleFilter *AcquireResampleFilter(const Image *image,
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
 
-  resample_filter=(ResampleFilter *) AcquireMagickMemory(
+  resample_filter=(ResampleFilter *) AcquireQuantumMemory(1,
     sizeof(*resample_filter));
   if (resample_filter == (ResampleFilter *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");

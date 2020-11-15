@@ -323,7 +323,7 @@ void *OsLibraryGetFunctionAddress(void *library, const char *functionName)
 MagickPrivate MagickCLEnv AcquireMagickOpenCLEnv()
 {
   MagickCLEnv clEnv;
-  clEnv = (MagickCLEnv) AcquireMagickMemory(sizeof(struct _MagickCLEnv));
+  clEnv = (MagickCLEnv) AcquireQuantumMemory(1,sizeof(struct _MagickCLEnv));
   if (clEnv != NULL)
   {
     memset(clEnv, 0, sizeof(struct _MagickCLEnv));
@@ -884,7 +884,7 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
   if (status != CL_SUCCESS)
     return;
   size=num_devices*sizeof(*program_sizes);
-  program_sizes=(size_t*) AcquireMagickMemory(size);
+  program_sizes=(size_t*) AcquireQuantumMemory(1,size);
   if (program_sizes == (size_t*) NULL)
     return;
   status=clEnv->library->clGetProgramInfo(clEnv->programs[prog],
@@ -898,7 +898,7 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
         **binary_program;
 
       binary_program_size=num_devices*sizeof(*binary_program);
-      binary_program=(unsigned char **) AcquireMagickMemory(
+      binary_program=(unsigned char **) AcquireQuantumMemory(1,
         binary_program_size);
       if (binary_program == (unsigned char **) NULL)
         {
@@ -1099,7 +1099,7 @@ static MagickBooleanType CompileOpenCLKernels(MagickCLEnv clEnv, ExceptionInfo* 
   optionsSignature = stringSignature(options);
 
   /* get all the OpenCL program strings here */
-  accelerateKernelsBuffer = (char*) AcquireMagickMemory(strlen(accelerateKernels)+strlen(accelerateKernels2)+1);
+  accelerateKernelsBuffer = (char*) AcquireQuantumMemory(1,strlen(accelerateKernels)+strlen(accelerateKernels2)+1);
   sprintf(accelerateKernelsBuffer,"%s%s",accelerateKernels,accelerateKernels2);
   MagickOpenCLProgramStrings[MAGICK_OPENCL_ACCELERATE] = accelerateKernelsBuffer;
 
@@ -1235,7 +1235,7 @@ static MagickBooleanType InitOpenCLPlatformDevice(MagickCLEnv clEnv, ExceptionIn
   else if (clEnv->platform != NULL)
   {
     numPlatforms = 1;
-    platforms = (cl_platform_id *) AcquireMagickMemory(numPlatforms * sizeof(cl_platform_id));
+    platforms = (cl_platform_id *) AcquireQuantumMemory(1,numPlatforms * sizeof(cl_platform_id));
     if (platforms == (cl_platform_id *) NULL)
     {
       (void) ThrowMagickException(exception, GetMagickModule(), ResourceLimitError,
@@ -1262,7 +1262,7 @@ static MagickBooleanType InitOpenCLPlatformDevice(MagickCLEnv clEnv, ExceptionIn
       goto cleanup;
     }
 
-    platforms = (cl_platform_id *) AcquireMagickMemory(numPlatforms * sizeof(cl_platform_id));
+    platforms = (cl_platform_id *) AcquireQuantumMemory(1,numPlatforms * sizeof(cl_platform_id));
     if (platforms == (cl_platform_id *) NULL)
     {
       (void) ThrowMagickException(exception, GetMagickModule(), ResourceLimitError,
@@ -1804,7 +1804,7 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
   if (p == NULL)
     return DS_INVALID_PROFILE;
 
-  profile = (ds_profile*) AcquireMagickMemory(sizeof(ds_profile));
+  profile = (ds_profile*) AcquireQuantumMemory(1,sizeof(ds_profile));
   if (profile == NULL)
     return DS_MEMORY_ERROR;
 
@@ -2088,7 +2088,7 @@ static ds_status readProFile(const char* fileName, char** content, size_t* conte
   fseek(input, 0L, SEEK_END);
   size = ftell(input);
   rewind(input);
-  binary = (char*) AcquireMagickMemory(size);
+  binary = (char*) AcquireQuantumMemory(1,size);
   if(binary == NULL) {
     status = DS_FILE_ERROR;
     goto cleanup;
@@ -2538,7 +2538,7 @@ ds_status AccelerateScoreSerializer(ds_device* device, void** serializedScore, u
 ds_status AccelerateScoreDeserializer(ds_device* device, const unsigned char* serializedScore, unsigned int serializedScoreSize) {
   if (device) {
     /* convert the string back to an int */
-    char* s = (char*) AcquireMagickMemory(serializedScoreSize+1);
+    char* s = (char*) AcquireQuantumMemory(1,serializedScoreSize+1);
     memcpy(s, serializedScore, serializedScoreSize);
     s[serializedScoreSize] = (char)'\0';
     device->score = AcquireMagickMemory(sizeof(AccelerateScoreType));

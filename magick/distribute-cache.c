@@ -344,7 +344,7 @@ MagickPrivate DistributeCacheInfo *AcquireDistributeCacheInfo(
   /*
     Connect to the distributed pixel cache server.
   */
-  server_info=(DistributeCacheInfo *) AcquireMagickMemory(sizeof(*server_info));
+  server_info=(DistributeCacheInfo *) AcquireQuantumMemory(1,sizeof(*server_info));
   if (server_info == (DistributeCacheInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memset(server_info,0,sizeof(*server_info));

@@ -174,7 +174,7 @@ static StringInfo *AcquireStringInfoContainer()
   StringInfo
     *string_info;
 
-  string_info=(StringInfo *) AcquireMagickMemory(sizeof(*string_info));
+  string_info=(StringInfo *) AcquireQuantumMemory(1,sizeof(*string_info));
   if (string_info == (StringInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memset(string_info,0,sizeof(*string_info));

@@ -234,7 +234,7 @@ static KernelInfo *ParseKernelArray(const char *kernel_string)
   GeometryInfo
     args;
 
-  kernel=(KernelInfo *) AcquireMagickMemory(sizeof(*kernel));
+  kernel=(KernelInfo *) AcquireQuantumMemory(1,sizeof(*kernel));
   if (kernel == (KernelInfo *) NULL)
     return(kernel);
   (void) memset(kernel,0,sizeof(*kernel));
@@ -1013,7 +1013,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
     default:
 #endif
       /* Generate the base Kernel Structure */
-      kernel=(KernelInfo *) AcquireMagickMemory(sizeof(*kernel));
+      kernel=(KernelInfo *) AcquireQuantumMemory(1,sizeof(*kernel));
       if (kernel == (KernelInfo *) NULL)
         return(kernel);
       (void) memset(kernel,0,sizeof(*kernel));
@@ -2202,7 +2202,7 @@ MagickExport KernelInfo *CloneKernelInfo(const KernelInfo *kernel)
     *new_kernel;
 
   assert(kernel != (KernelInfo *) NULL);
-  new_kernel=(KernelInfo *) AcquireMagickMemory(sizeof(*kernel));
+  new_kernel=(KernelInfo *) AcquireQuantumMemory(1,sizeof(*kernel));
   if (new_kernel == (KernelInfo *) NULL)
     return(new_kernel);
   *new_kernel=(*kernel); /* copy values in structure */

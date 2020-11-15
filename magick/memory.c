@@ -320,7 +320,7 @@ static inline void *AcquireAlignedMemory_Generic(const size_t size)
   #if SIZE_MAX < ALIGNMENT_OVERHEAD
     #error "CACHE_LINE_SIZE is way too big."
   #endif
-  extent=(size + ALIGNMENT_OVERHEAD);
+  extent=(size+ALIGNMENT_OVERHEAD);
   if (extent <= size)
     {
       errno=ENOMEM;
@@ -341,7 +341,10 @@ MagickExport void *AcquireAlignedMemory(const size_t count,const size_t quantum)
     size;
 
   if (HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse)
-    return(NULL);
+    {
+      errno=ENOMEM;
+      return(NULL);
+    }
   if (memory_methods.acquire_aligned_memory_handler != (AcquireAlignedMemoryHandler) NULL)
     return(memory_methods.acquire_aligned_memory_handler(size,CACHE_LINE_SIZE));
   return(AcquireAlignedMemory_Actual(size));
@@ -639,7 +642,10 @@ MagickExport void *AcquireQuantumMemory(const size_t count,const size_t quantum)
 
   if ((HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse) ||
       (size > GetMaxMemoryRequest()))
-    return(NULL);
+    {
+      errno=ENOMEM;
+      return(NULL);
+    }
   return(AcquireMagickMemory(size));
 }
 
@@ -682,7 +688,11 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
     size;
 
   if (HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse)
-    return((MemoryInfo *) NULL);
+    {
+      errno=ENOMEM;
+      return((MemoryInfo *) NULL);
+    }
+  return(AcquireMagickMemory(size));
   if (virtual_anonymous_memory == 0)
     {
       virtual_anonymous_memory=1;
@@ -742,7 +752,7 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
 #if !defined(MAGICKCORE_HAVE_POSIX_FALLOCATE)
                   memory_info->blob=MapBlob(file,IOMode,0,size);
 #else
-                  if (posix_fallocate(file,0,size) == 0)
+                  if (posix_fallocate(file,0,(off_t) size) == 0)
                     memory_info->blob=MapBlob(file,IOMode,0,size);
 #endif
                   if (memory_info->blob != NULL)
@@ -1417,6 +1427,7 @@ MagickExport void *ResizeQuantumMemory(void *memory,const size_t count,
   if ((HeapOverflowSanityCheckGetSize(count,quantum,&size) != MagickFalse) ||
       (size > GetMaxMemoryRequest()))
     {
+      errno=ENOMEM;
       memory=RelinquishMagickMemory(memory);
       return(NULL);
     }
