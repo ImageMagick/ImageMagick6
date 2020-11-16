@@ -3,6 +3,8 @@
 
 2020-11-07  6.9.11-39  <quetzlzacatenango@image...>
   * support DPX 4:2:2 sampling.
+  * fix shell injection vulnerability via the -authenticate option (reference
+    alex@cure...).
 
 2020-11-14  6.9.11-38  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-38 GIT revision 16032:cb7355b0a:20201114
