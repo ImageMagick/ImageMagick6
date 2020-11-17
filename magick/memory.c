@@ -692,7 +692,6 @@ MagickExport MemoryInfo *AcquireVirtualMemory(const size_t count,
       errno=ENOMEM;
       return((MemoryInfo *) NULL);
     }
-  return(AcquireMagickMemory(size));
   if (virtual_anonymous_memory == 0)
     {
       virtual_anonymous_memory=1;
