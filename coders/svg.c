@@ -3771,7 +3771,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry=SetMagickInfo("SVG");
   entry->decoder=(DecodeImageHandler *) ReadSVGImage;
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
-  entry->blob_support=MagickFalse;
   entry->seekable_stream=MagickFalse;
 #if defined(MAGICKCORE_RSVG_DELEGATE)
   entry->thread_support=MagickFalse;
@@ -3788,7 +3787,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->decoder=(DecodeImageHandler *) ReadSVGImage;
 #endif
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
-  entry->blob_support=MagickFalse;
   entry->seekable_stream=MagickFalse;
 #if defined(MAGICKCORE_RSVG_DELEGATE)
   entry->thread_support=MagickFalse;
@@ -3805,7 +3803,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->decoder=(DecodeImageHandler *) ReadSVGImage;
 #endif
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
-  entry->blob_support=MagickFalse;
   entry->seekable_stream=MagickFalse;
 #if defined(MAGICKCORE_RSVG_DELEGATE)
   entry->thread_support=MagickFalse;
