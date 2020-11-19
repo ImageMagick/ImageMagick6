@@ -1,3 +1,9 @@
+2020-11-19  6.9.11-40  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-40 GIT revision 16...
+
+2020-11-19  6.9.11-40  <quetzlzacatenango@image...>
+  * remove Linux shell artifact from Windows delegate configuration file.
+
 2020-11-17  6.9.11-39  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-39 GIT revision 16053:6095d7b94:20201117
 
