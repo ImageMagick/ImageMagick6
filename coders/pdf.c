@@ -585,7 +585,8 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (stop_on_error != MagickFalse)
     (void) ConcatenateMagickString(options,"-dPDFSTOPONERROR ",MaxTextExtent);
   option=GetImageOption(image_info,"authenticate");
-  if ((option != (char *) NULL) && (strpbrk(option,"&;<>|\"") == (char *) NULL))
+  if ((option != (char *) NULL) &&
+      (strpbrk(option,"&;<>|\"'") == (char *) NULL))
     {
       char
         passphrase[MagickPathExtent];
