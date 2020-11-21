@@ -614,14 +614,13 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) ConcatenateMagickString(options,"-dUseTrimBox ",MaxTextExtent);
   if (stop_on_error != MagickFalse)
     (void) ConcatenateMagickString(options,"-dPDFSTOPONERROR ",MaxTextExtent);
-  option=GetImageOption(image_info,"authenticate");
-  if (option != (char *) NULL)
+  if (image_info->authenticate != (char *) NULL)
     {
       char
         passphrase[MagickPathExtent],
         *sanitize_passphrase;
 
-      sanitize_passphrase=SanitizeDelegateString(option);
+      sanitize_passphrase=SanitizeDelegateString(image_info->authenticate);
       (void) FormatLocaleString(passphrase,MagickPathExtent,
         "'-sPDFPassword=%s' ",sanitize_passphrase);
       sanitize_passphrase=DestroyString(sanitize_passphrase);
