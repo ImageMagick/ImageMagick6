@@ -2808,7 +2808,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
         *p;
 
       static char
-        whitelist[] =
+        allowlist[] =
           "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
           "$-_.+!*'(),{}|\\^~[]`\"><#%;/?:@&=";
 
@@ -2818,7 +2818,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       (void) CopyMagickString(value,image->magick_filename,MaxTextExtent);
       p=value;
       q=value+strlen(value);
-      for (p+=strspn(p,whitelist); p != q; p+=strspn(p,whitelist))
+      for (p+=strspn(p,allowlist); p != q; p+=strspn(p,allowlist))
         *p='_';
       break;
     }
