@@ -1,7 +1,7 @@
-2020-11-21  6.9.11-41  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-41 GIT revision 16076:83ec5b5b8:20201121
+2020-11-22  6.9.11-42  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-42 GIT revision 16086:6008f89c1:20201122
 
-2020-11-21  6.9.11-41  <quetzlzacatenango@image...>
+2020-11-21  6.9.11-42  <quetzlzacatenango@image...>
   * restore passphrase support when rendering PDF's.
   * revert memory patch to avert possible thread lock.
 
