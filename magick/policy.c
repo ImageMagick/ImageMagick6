@@ -812,7 +812,7 @@ static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
   status=MagickTrue;
   policy_info=(PolicyInfo *) NULL;
   token=AcquirePolicyString(xml);
-  extent=strlen(token)+MaxTextExtent;
+  extent=strlen(token)+1;
   for (q=(const char *) xml; *q != '\0'; )
   {
     /*
