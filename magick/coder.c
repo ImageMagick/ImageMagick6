@@ -377,7 +377,7 @@ static SplayTreeInfo *AcquireCoderCache(const char *filename,
       *p;
 
     p=CoderMap+i;
-    coder_info=(CoderInfo *) AcquireQuantumMemory(1,sizeof(*coder_info));
+    coder_info=(CoderInfo *) AcquireMagickMemory(sizeof(*coder_info));
     if (coder_info == (CoderInfo *) NULL)
       {
         (void) ThrowMagickException(exception,GetMagickModule(),
@@ -908,7 +908,7 @@ static MagickBooleanType LoadCoderCache(SplayTreeInfo *cache,const char *xml,
         /*
           Coder element.
         */
-        coder_info=(CoderInfo *) AcquireQuantumMemory(1,sizeof(*coder_info));
+        coder_info=(CoderInfo *) AcquireMagickMemory(sizeof(*coder_info));
         if (coder_info == (CoderInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
         (void) memset(coder_info,0,sizeof(*coder_info));

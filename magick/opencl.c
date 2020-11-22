@@ -323,7 +323,7 @@ void *OsLibraryGetFunctionAddress(void *library, const char *functionName)
 MagickPrivate MagickCLEnv AcquireMagickOpenCLEnv()
 {
   MagickCLEnv clEnv;
-  clEnv = (MagickCLEnv) AcquireQuantumMemory(1,sizeof(struct _MagickCLEnv));
+  clEnv = (MagickCLEnv) AcquireMagickMemory(sizeof(struct _MagickCLEnv));
   if (clEnv != NULL)
   {
     memset(clEnv, 0, sizeof(struct _MagickCLEnv));
@@ -1804,7 +1804,7 @@ static ds_status initDSProfile(ds_profile** p, const char* version) {
   if (p == NULL)
     return DS_INVALID_PROFILE;
 
-  profile = (ds_profile*) AcquireQuantumMemory(1,sizeof(ds_profile));
+  profile = (ds_profile*) AcquireMagickMemory(sizeof(ds_profile));
   if (profile == NULL)
     return DS_MEMORY_ERROR;
 

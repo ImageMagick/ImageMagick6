@@ -877,7 +877,7 @@ static LinkedListInfo *AcquireColorCache(const char *filename,
       *p;
 
     p=Colormap+i;
-    color_info=(ColorInfo *) AcquireQuantumMemory(1,sizeof(*color_info));
+    color_info=(ColorInfo *) AcquireMagickMemory(sizeof(*color_info));
     if (color_info == (ColorInfo *) NULL)
       {
         (void) ThrowMagickException(exception,GetMagickModule(),
@@ -2302,7 +2302,7 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
         /*
           Color element.
         */
-        color_info=(ColorInfo *) AcquireQuantumMemory(1,sizeof(*color_info));
+        color_info=(ColorInfo *) AcquireMagickMemory(sizeof(*color_info));
         if (color_info == (ColorInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
         (void) memset(color_info,0,sizeof(*color_info));

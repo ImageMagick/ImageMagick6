@@ -455,7 +455,7 @@ MagickExport BlobInfo *CloneBlobInfo(const BlobInfo *blob_info)
   SemaphoreInfo
     *semaphore;
 
-  clone_info=(BlobInfo *) AcquireQuantumMemory(1,sizeof(*clone_info));
+  clone_info=(BlobInfo *) AcquireMagickMemory(sizeof(*clone_info));
   GetBlobInfo(clone_info);
   if (blob_info == (BlobInfo *) NULL)
     return(clone_info);

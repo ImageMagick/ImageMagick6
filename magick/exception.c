@@ -115,7 +115,7 @@ MagickExport ExceptionInfo *AcquireExceptionInfo(void)
   ExceptionInfo
     *exception;
 
-  exception=(ExceptionInfo *) AcquireQuantumMemory(1,sizeof(*exception));
+  exception=(ExceptionInfo *) AcquireMagickMemory(sizeof(*exception));
   if (exception == (ExceptionInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   InitializeExceptionInfo(exception);
@@ -260,7 +260,7 @@ MagickExport ExceptionInfo *CloneExceptionInfo(ExceptionInfo *exception)
   ExceptionInfo
     *clone_exception;
 
-  clone_exception=(ExceptionInfo *) AcquireQuantumMemory(1,sizeof(*exception));
+  clone_exception=(ExceptionInfo *) AcquireMagickMemory(sizeof(*exception));
   if (clone_exception == (ExceptionInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   InitializeExceptionInfo(clone_exception);
@@ -1029,7 +1029,7 @@ MagickExport MagickBooleanType ThrowException(ExceptionInfo *exception,
       UnlockSemaphoreInfo(exception->semaphore);
       return(MagickTrue);
     }
-  p=(ExceptionInfo *) AcquireQuantumMemory(1,sizeof(*p));
+  p=(ExceptionInfo *) AcquireMagickMemory(sizeof(*p));
   if (p == (ExceptionInfo *) NULL)
     {
       UnlockSemaphoreInfo(exception->semaphore);

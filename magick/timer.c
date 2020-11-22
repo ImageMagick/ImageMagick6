@@ -91,7 +91,7 @@ MagickExport TimerInfo *AcquireTimerInfo(void)
   TimerInfo
     *timer_info;
 
-  timer_info=(TimerInfo *) AcquireQuantumMemory(1,sizeof(*timer_info));
+  timer_info=(TimerInfo *) AcquireMagickMemory(sizeof(*timer_info));
   if (timer_info == (TimerInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToAcquireString");
   (void) memset(timer_info,0,sizeof(*timer_info));

@@ -869,7 +869,7 @@ static MagickBooleanType LoadMimeCache(LinkedListInfo *cache,const char *xml,
     /*
       Process mime element.
     */
-    mime_info=(MimeInfo *) AcquireQuantumMemory(1,sizeof(*mime_info));
+    mime_info=(MimeInfo *) AcquireMagickMemory(sizeof(*mime_info));
     if (mime_info == (MimeInfo *) NULL)
       ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
     (void) memset(mime_info,0,sizeof(*mime_info));

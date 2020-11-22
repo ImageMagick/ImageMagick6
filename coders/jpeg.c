@@ -1902,7 +1902,7 @@ static QuantizationTable *GetQuantizationTable(const char *filename,
       xml=DestroyString(xml);
       return(table);
     }
-  table=(QuantizationTable *) AcquireQuantumMemory(1,sizeof(*table));
+  table=(QuantizationTable *) AcquireMagickMemory(sizeof(*table));
   if (table == (QuantizationTable *) NULL)
     ThrowFatalException(ResourceLimitFatalError,
       "UnableToAcquireQuantizationTable");

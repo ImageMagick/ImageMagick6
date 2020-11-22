@@ -1349,7 +1349,7 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
           q--;
         (void) CopyMagickString(message,p,MagickMin((size_t) (q-p+2),
           MaxTextExtent));
-        locale_info=(LocaleInfo *) AcquireQuantumMemory(1,sizeof(*locale_info));
+        locale_info=(LocaleInfo *) AcquireMagickMemory(sizeof(*locale_info));
         if (locale_info == (LocaleInfo *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
         (void) memset(locale_info,0,sizeof(*locale_info));
