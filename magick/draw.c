@@ -978,43 +978,6 @@ MagickExport DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
 %                                                                             %
 %                                                                             %
 %                                                                             %
-+   D e s t r o y E d g e                                                     %
-%                                                                             %
-%                                                                             %
-%                                                                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  DestroyEdge() destroys the specified polygon edge.
-%
-%  The format of the DestroyEdge method is:
-%
-%      ssize_t DestroyEdge(PolygonInfo *polygon_info,const int edge)
-%
-%  A description of each parameter follows:
-%
-%    o polygon_info: Specifies a pointer to an PolygonInfo structure.
-%
-%    o edge: the polygon edge number to destroy.
-%
-*/
-static size_t DestroyEdge(PolygonInfo *polygon_info,
-  const size_t edge)
-{
-  assert(edge < polygon_info->number_edges);
-  polygon_info->edges[edge].points=(PointInfo *) RelinquishMagickMemory(
-    polygon_info->edges[edge].points);
-  polygon_info->number_edges--;
-  if (edge < polygon_info->number_edges)
-    (void) memmove(polygon_info->edges+edge,polygon_info->edges+edge+1,
-      (size_t) (polygon_info->number_edges-edge)*sizeof(*polygon_info->edges));
-  return(polygon_info->number_edges);
-}
-
-/*
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                             %
-%                                                                             %
-%                                                                             %
 +   D e s t r o y P o l y g o n I n f o                                       %
 %                                                                             %
 %                                                                             %
@@ -4635,7 +4598,7 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
         return(DestroyPolygonThreadSet(polygon_info));
       }
     (void) memcpy(polygon_info[i]->edges,edge_info,
-      polygon_info[0]->number_edges*sizeof(*edge_info)); 
+      polygon_info[0]->number_edges*sizeof(*edge_info));
     for (j=0; j < (ssize_t) polygon_info[i]->number_edges; j++)
       polygon_info[i]->edges[j].points=(PointInfo *) NULL;
     polygon_info[i]->number_edges=polygon_info[0]->number_edges;
@@ -4651,11 +4614,23 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
           return(DestroyPolygonThreadSet(polygon_info));
         }
       (void) memcpy(polygon_info[i]->edges[j].points,edge_info->points,
-        edge_info->number_points*sizeof(*edge_info->points)); 
+        edge_info->number_points*sizeof(*edge_info->points));
     }
   }
   path_info=(PathInfo *) RelinquishMagickMemory(path_info);
   return(polygon_info);
+}
+
+static size_t DestroyEdge(PolygonInfo *polygon_info,const size_t edge)
+{
+  assert(edge < polygon_info->number_edges);
+  polygon_info->edges[edge].points=(PointInfo *) RelinquishMagickMemory(
+    polygon_info->edges[edge].points);
+  polygon_info->number_edges--;
+  if (edge < polygon_info->number_edges)
+    (void) memmove(polygon_info->edges+edge,polygon_info->edges+edge+1,
+      (size_t) (polygon_info->number_edges-edge)*sizeof(*polygon_info->edges));
+  return(polygon_info->number_edges);
 }
 
 static double GetOpacityPixel(PolygonInfo *polygon_info,const double mid,
