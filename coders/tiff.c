@@ -1716,7 +1716,19 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           rows_per_strip=(uint32) image->rows;
       }
     if (TIFFIsTiled(tiff) != MagickFalse)
-      method=ReadTileMethod;
+      {
+        uint32
+          columns,
+          rows;
+
+        if ((TIFFGetField(tiff,TIFFTAG_TILEWIDTH,&columns) != 1) ||
+            (TIFFGetField(tiff,TIFFTAG_TILELENGTH,&rows) != 1))
+          ThrowTIFFException(CoderError,"ImageIsNotTiled");
+        if ((AcquireMagickResource(WidthResource,columns) == MagickFalse) ||
+            (AcquireMagickResource(HeightResource,rows) == MagickFalse))
+          ThrowTIFFException(ImageError,"WidthOrHeightExceedsLimit");
+        method=ReadTileMethod;
+      }
     if (photometric == PHOTOMETRIC_LOGLUV)
       method=ReadGenericMethod;
     if (image->compression == JPEGCompression)
@@ -1944,9 +1956,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         if ((TIFFGetField(tiff,TIFFTAG_TILEWIDTH,&columns) != 1) ||
             (TIFFGetField(tiff,TIFFTAG_TILELENGTH,&rows) != 1))
           ThrowTIFFException(CoderError,"ImageIsNotTiled");
-        if ((AcquireMagickResource(WidthResource,columns) == MagickFalse) ||
-            (AcquireMagickResource(HeightResource,rows) == MagickFalse))
-          ThrowTIFFException(ImageError,"WidthOrHeightExceedsLimit");
         number_pixels=(MagickSizeType) columns*rows;
         if (HeapOverflowSanityCheck(rows,sizeof(*tile_pixels)) != MagickFalse)
           ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
