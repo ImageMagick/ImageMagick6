@@ -241,6 +241,7 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Convert SCT raster image to pixel packets.
   */
+  (void) SetImageBackgroundColor(image);
   c=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
