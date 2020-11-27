@@ -1,5 +1,5 @@
 2020-11-27  6.9.11-44  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-44 GIT revision 16111:5885647ab:20201127
+  * Release ImageMagick version 6.9.11-44 GIT revision 16114:2fdb8e8f7:20201127
 
 2020-11-26  6.9.11-44 Dirk Lemstra <dirk@lem.....org>
   * correct reading of first row in TIFF decoder.
