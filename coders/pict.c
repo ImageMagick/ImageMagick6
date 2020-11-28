@@ -1016,6 +1016,8 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
               break;
             image->columns=(size_t) (frame.right-frame.left);
             image->rows=(size_t) (frame.bottom-frame.top);
+            if (image_info->ping != MagickFalse)
+              break;
             status=SetImageExtent(image,image->columns,image->rows);
             if (status != MagickFalse)
               status=ResetImagePixels(image,&image->exception);
