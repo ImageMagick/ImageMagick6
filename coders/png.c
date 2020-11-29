@@ -4241,12 +4241,12 @@ DestroyJNG(unsigned char *chunk,Image **color_image,
   }
   if (color_image && *color_image)
   {
-    DestroyImage(*color_image);
+    DestroyImageList(*color_image);
     *color_image = (Image *)NULL;
   }
   if (alpha_image && *alpha_image)
   {
-    DestroyImage(*alpha_image);
+    DestroyImageList(*alpha_image);
     *alpha_image = (Image *)NULL;
   }
 }
@@ -4541,6 +4541,13 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
 
         if ((image_info->ping == MagickFalse) && (jng_color_type >= 12))
           {
+            if ((jng_alpha_compression_method != 0) &&
+                (jng_alpha_compression_method != 8))
+              {
+                DestroyJNG(chunk,&color_image,&color_image_info,&alpha_image,
+                  &alpha_image_info);
+                ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+              }
             alpha_image_info=(ImageInfo *)
               AcquireMagickMemory(sizeof(ImageInfo));
 
@@ -4574,9 +4581,9 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
 
             if (status == MagickFalse)
               {
-                alpha_image=DestroyImage(alpha_image);
+                alpha_image=DestroyImageList(alpha_image);
                 alpha_image_info=DestroyImageInfo(alpha_image_info);
-                color_image=DestroyImage(color_image);
+                color_image=DestroyImageList(color_image);
                 return(DestroyImageList(image));
               }
 
@@ -4830,7 +4837,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
       assert(color_image == (Image *) NULL);
       assert(alpha_image == (Image *) NULL);
       if (color_image != (Image *) NULL)
-        color_image=DestroyImage(color_image);
+        color_image=DestroyImageList(color_image);
       return(DestroyImageList(image));
     }
 
@@ -4855,7 +4862,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
 
   (void) RelinquishUniqueFileResource(color_image->filename);
   unique_filenames--;
-  color_image=DestroyImage(color_image);
+  color_image=DestroyImageList(color_image);
   color_image_info=DestroyImageInfo(color_image_info);
 
   if (jng_image == (Image *) NULL)
@@ -4952,7 +4959,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
         }
       (void) RelinquishUniqueFileResource(alpha_image->filename);
       unique_filenames--;
-      alpha_image=DestroyImage(alpha_image);
+      alpha_image=DestroyImageList(alpha_image);
       alpha_image_info=DestroyImageInfo(alpha_image_info);
       if (jng_image != (Image *) NULL)
         jng_image=DestroyImage(jng_image);
