@@ -521,7 +521,7 @@ static Image *ReadSGIImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     offset=(ssize_t) SeekBlob(image,(MagickOffsetType) offset,
                       SEEK_SET);
                   }
-                (void) ReadBlob(image,(size_t) runlength[y+z*iris_info.rows],
+                count=ReadBlob(image,(size_t) runlength[y+z*iris_info.rows],
                   packets);
                 if (count != (ssize_t) runlength[y+z*iris_info.rows])
                   break;
