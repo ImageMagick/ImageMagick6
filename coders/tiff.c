@@ -1868,7 +1868,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         extent+=image->columns*sizeof(uint32);
 #endif
         strip_pixels=(unsigned char *) AcquireQuantumMemory(extent,
-          sizeof(*strip_pixels));
+          2*sizeof(*strip_pixels));
         if (strip_pixels == (unsigned char *) NULL)
           ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
         (void) memset(strip_pixels,0,extent*sizeof(*strip_pixels));
