@@ -3459,7 +3459,10 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
               photometric=PHOTOMETRIC_YCBCR;
               (void) TIFFSetField(tiff,TIFFTAG_YCBCRSUBSAMPLING,1,1);
               (void) SetImageStorageClass(image,DirectClass);
-              (void) SetImageDepth(image,8);
+              status=SetQuantumDepth(image,quantum_info,8);
+              if (status == MagickFalse)
+                ThrowWriterException(ResourceLimitError,
+                  "MemoryAllocationFailed");
             }
           else
             photometric=PHOTOMETRIC_RGB;
