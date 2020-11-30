@@ -1052,7 +1052,10 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
       {
         if ((LocaleCompare("help",option+1) == 0) ||
             (LocaleCompare("-help",option+1) == 0))
-          return(MontageUsage());
+          {
+            DestroyMontage();
+            return(MontageUsage());
+          }
         ThrowMontageException(OptionError,"UnrecognizedOption",option)
       }
       case 'i':
