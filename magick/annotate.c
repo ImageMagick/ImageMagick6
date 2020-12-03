@@ -66,6 +66,7 @@
 #include "magick/quantum.h"
 #include "magick/quantum-private.h"
 #include "magick/pixel-accessor.h"
+#include "magick/policy.h"
 #include "magick/property.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
@@ -909,6 +910,9 @@ MagickExport MagickBooleanType GetTypeMetrics(Image *image,
 static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
   const PointInfo *offset,TypeMetric *metrics)
 {
+  const char
+    *font;
+
   const TypeInfo
     *type_info;
 
@@ -978,6 +982,19 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
             (void) ThrowMagickException(&image->exception,GetMagickModule(),
               TypeWarning,"UnableToReadFont","`%s'",draw_info->family);
         }
+    }
+  font=GetPolicyValue("system:font");
+  if ((font != (const char *) NULL) && (IsPathAccessible(font) != MagickFalse))
+    {
+      /*
+        Render with default system font.
+      */
+      annotate_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
+      annotate_info->font=ConstantString(font);
+      status=RenderFreetype(image,annotate_info,annotate_info->encoding,offset,
+        metrics);
+      annotate_info=DestroyDrawInfo(annotate_info);
+      return(status);
     }
   if (type_info == (const TypeInfo *) NULL)
     type_info=GetTypeInfoByFamily("Arial",draw_info->style,
