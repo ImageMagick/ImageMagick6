@@ -18,6 +18,7 @@
 #ifndef MAGICKCORE_RESAMPLE_PRIVATE_H
 #define MAGICKCORE_RESAMPLE_PRIVATE_H
 
+#include <string.h>
 #include "magick/thread-private.h"
 
 #if defined(__cplusplus) || defined(c_plusplus)
