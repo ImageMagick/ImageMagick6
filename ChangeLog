@@ -1,8 +1,9 @@
-2020-11-30  6.9.11-46  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-46 GIT revision 16...
+2020-12-05  6.9.11-46  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-46 GIT revision 16139:f0234de70:20201205
 
 2020-11-30  6.9.11-46  <quetzlzacatenango@image...>
   * possible TIFF related-heap buffer overflow (alert & POC by Hardik Shah).
+  * set default system fault in policy.xml configuration file.
 
 2020-11-30  6.9.11-45  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-45 GIT revision 16125:85c3464d7:20201130
