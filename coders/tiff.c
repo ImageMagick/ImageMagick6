@@ -1187,7 +1187,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     tiff_status;
 
   MagickBooleanType
-    more_frames,
+    more_frames;
+
+  MagickStatusType
     status;
 
   MemoryInfo
@@ -1909,7 +1911,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                 if (strip_size == -1)
                   break;
                 rows_remaining=rows_per_strip;
-                if ((y+rows_per_strip) > image->rows)
+                if ((y+rows_per_strip) > (ssize_t) image->rows)
                   rows_remaining=(rows_per_strip-(y+rows_per_strip-
                     image->rows));
                 p=strip_pixels;
