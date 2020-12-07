@@ -1756,7 +1756,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
     scene;
 
   size_t
-    imageListLength;
+    number_scenes;
 
   /*
     Open output image file.
@@ -1771,7 +1771,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
   if (status == MagickFalse)
     return(status);
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     if (scene == 0)
@@ -1788,7 +1788,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
       }
     (void) WriteBlobString(image,",\n");
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
