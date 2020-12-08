@@ -1731,7 +1731,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           ThrowTIFFException(ImageError,"WidthOrHeightExceedsLimit");
         method=ReadTileMethod;
       }
-    if (photometric == PHOTOMETRIC_LOGLUV)
+    if ((image->compression != UndefinedCompression) ||
+        (photometric == PHOTOMETRIC_LOGLUV))
       method=ReadGenericMethod;
     if (image->compression == JPEGCompression)
       method=GetJPEGMethod(image,tiff,photometric,bits_per_sample,
