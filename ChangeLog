@@ -1,5 +1,5 @@
-2020-12-06  6.9.11-47  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-47 GIT revision 16...
+2020-12-09  6.9.11-47  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-47 GIT revision 16151:77fc4f32d:20201209
 
 2020-12-06  6.9.11-47  <quetzlzacatenango@image...>
   * use generic TIFF read method for LZW-compressed strips (reference
