@@ -2400,6 +2400,12 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       image->background_color.opacity=TransparentOpacity;
       (void) SetImageBackgroundColor(image);
       merged=MergeImageLayers(image,FlattenLayer,exception);
+      if (merged == (Image *) NULL) 
+        {
+          (void) CloseBlob(image);
+          image=DestroyImageList(image);
+          return((Image *) NULL);
+        }
       ReplaceImageInList(&image,merged);
     }
   if (profile != (StringInfo *) NULL)
