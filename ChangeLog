@@ -1,9 +1,10 @@
-2020-12-09  6.9.11-48  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-48 GIT revision 16153:f36f5cada:20201210
+2020-12-10  6.9.11-48  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-48 GIT revision 16156:573d57764:20201210
 
 2020-12-09  6.9.11-48  <quetzlzacatenango@image...>
   * Repair unit test failures (reference
     https://github.com/ImageMagick/ImageMagick/issues/2959).
+  * assert failure when loading a PSD file, patch from Hanisch.
 
 2020-12-09  6.9.11-47  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-47 GIT revision 16151:77fc4f32d:20201209
