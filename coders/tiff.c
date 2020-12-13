@@ -1205,8 +1205,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     i;
 
   size_t
-    number_pixels,
-    pad;
+    number_pixels;
 
   ssize_t
     y;
@@ -1737,7 +1736,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       method=GetJPEGMethod(image,tiff,photometric,bits_per_sample,
         samples_per_pixel);
     quantum_info->endian=LSBEndian;
-    quantum_type=RGBQuantum;
     if (TIFFScanlineSize(tiff) <= 0)
       ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
     if (((MagickSizeType) TIFFScanlineSize(tiff)) > (2.53*GetBlobSize(image)))
@@ -1750,35 +1748,41 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
     pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
     (void) ResetMagickMemory(pixels,0,number_pixels*sizeof(uint32));
-    quantum_type=IndexQuantum;
-    pad=(size_t) MagickMax((ssize_t) samples_per_pixel-1,0);
-    if (image->matte != MagickFalse)
+    quantum_type=GrayQuantum;
+    if (interlace != PLANARCONFIG_SEPARATE)
       {
+        size_t
+          pad;
+
+        pad=(size_t) MagickMax((ssize_t) samples_per_pixel-1,0);
         if (image->storage_class == PseudoClass)
-          quantum_type=IndexAlphaQuantum;
-        else
-          quantum_type=samples_per_pixel == 1 ? AlphaQuantum : GrayAlphaQuantum;
-      }
-    else
-      if (image->storage_class != PseudoClass)
-        quantum_type=GrayQuantum;
-    if ((samples_per_pixel > 2) && (interlace != PLANARCONFIG_SEPARATE))
-      {
-        pad=(size_t) MagickMax((size_t) samples_per_pixel-3,0);
-        quantum_type=RGBQuantum;
+          quantum_type=IndexQuantum;
         if (image->matte != MagickFalse)
           {
-            quantum_type=RGBAQuantum;
-            pad=(size_t) MagickMax((size_t) samples_per_pixel-4,0);
+            quantum_type=AlphaQuantum;
+            if (image->storage_class == PseudoClass)
+              quantum_type=IndexAlphaQuantum;
+            if (samples_per_pixel > 1)
+              quantum_type=GrayAlphaQuantum;
           }
-        if (image->colorspace == CMYKColorspace)
+        if (samples_per_pixel > 2)
           {
-            pad=(size_t) MagickMax((size_t) samples_per_pixel-4,0);
-            quantum_type=CMYKQuantum;
+            quantum_type=RGBQuantum;
+            pad=(size_t) MagickMax((size_t) samples_per_pixel-3,0);
             if (image->matte != MagickFalse)
               {
-                quantum_type=CMYKAQuantum;
-                pad=(size_t) MagickMax((size_t) samples_per_pixel-5,0);
+                quantum_type=RGBAQuantum;
+                pad=(size_t) MagickMax((size_t) samples_per_pixel-4,0);
+              }
+            if (image->colorspace == CMYKColorspace)
+              {
+                quantum_type=CMYKQuantum;
+                pad=(size_t) MagickMax((size_t) samples_per_pixel-4,0);
+                if (image->matte != MagickFalse)
+                  {
+                    quantum_type=CMYKAQuantum;
+                    pad=(size_t) MagickMax((size_t) samples_per_pixel-5,0);
+                  }
               }
           }
         status=SetQuantumPad(image,quantum_info,pad*((bits_per_sample+7) >> 3));
@@ -1884,7 +1888,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
 
           switch (i)
           {
-            case 0: quantum_type=RedQuantum; break;
+            case 0: break;
             case 1: quantum_type=GreenQuantum; break;
             case 2: quantum_type=BlueQuantum; break;
             case 3:
@@ -1978,7 +1982,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         {
           switch (i)
           {
-            case 0: quantum_type=RedQuantum; break;
+            case 0: break;
             case 1: quantum_type=GreenQuantum; break;
             case 2: quantum_type=BlueQuantum; break;
             case 3:
