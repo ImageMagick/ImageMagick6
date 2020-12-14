@@ -1576,7 +1576,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
             }
             case AlphaQuantum:
             {
-              *q=ScaleQuantumToChar((Quantum) (GetPixelAlpha(p)));
+              *q=ScaleQuantumToChar(GetPixelAlpha(p));
               break;
             }
             case OpacityQuantum:
@@ -2020,8 +2020,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
             *q++=(unsigned int) ScaleQuantumToLong(GetPixelBlue(p));
             *q++=(unsigned int) ScaleQuantumToLong(GetPixelGreen(p));
             *q++=(unsigned int) ScaleQuantumToLong(GetPixelRed(p));
-            *q++=(unsigned int) ScaleQuantumToLong((Quantum) (QuantumRange-
-              GetPixelOpacity(p)));
+            *q++=(unsigned int) ScaleQuantumToLong(GetPixelAlpha(p));
             p++;
           }
           break;
@@ -2130,8 +2129,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
             }
             case AlphaQuantum:
             {
-              *q=(unsigned int) ScaleQuantumToLong((Quantum) (QuantumRange-
-                GetPixelOpacity(p)));
+              *q=(unsigned int) ScaleQuantumToLong(GetPixelAlpha(p));
               break;
             }
             case OpacityQuantum:
@@ -2298,7 +2296,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
             }
             case AlphaQuantum:
             {
-              *q=ScaleQuantumToLong((Quantum) (GetPixelAlpha(p)));
+              *q=ScaleQuantumToLong(GetPixelAlpha(p));
               break;
             }
             case OpacityQuantum:
@@ -2463,7 +2461,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
             }
             case AlphaQuantum:
             {
-              *q=(Quantum) (GetPixelAlpha(p));
+              *q=GetPixelAlpha(p);
               break;
             }
             case OpacityQuantum:
@@ -2629,7 +2627,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
             }
             case AlphaQuantum:
             {
-              *q=ScaleQuantumToShort((Quantum) (GetPixelAlpha(p)));
+              *q=ScaleQuantumToShort(GetPixelAlpha(p));
               break;
             }
             case OpacityQuantum:
