@@ -4910,7 +4910,8 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
 
   jng_image=DestroyImage(jng_image);
 
-  if ((image_info->ping == MagickFalse) && (jng_color_type >= 12))
+  if ((image_info->ping == MagickFalse) && (alpha_image != (Image *) NULL) &&
+      (jng_color_type >= 12))
     {
       if (jng_alpha_compression_method == 0)
         {
@@ -4923,7 +4924,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
           (void) WriteBlobMSBULong(alpha_image,crc32(0,data,4));
         }
 
-      (void) SeekBlob(alpha_image,0,SEEK_SET);
+      (void) CloseBlob(alpha_image);
 
       if (logging != MagickFalse)
         (void) LogMagickEvent(CoderEvent,GetMagickModule(),
