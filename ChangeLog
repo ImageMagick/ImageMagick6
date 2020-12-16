@@ -1,5 +1,5 @@
-2020-12-15  6.9.11-50  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-50 GIT revision 16...
+2020-12-16  6.9.11-50  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-50 GIT revision 16174:7cd364a33:20201216
 
 2020-12-15  6.9.11-50  <quetzlzacatenango@image...>
   * revert patch to ready gray alpha TIFF image.
