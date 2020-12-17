@@ -485,8 +485,8 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   delta.y=DefaultResolution;
   if (image_info->ping != MagickFalse)
     {
-      image->resolution.x=2.0;
-      image->resolution.y=2.0;
+      image->x_resolution=2.0;
+      image->y_resolution=2.0;
     }
   if ((image->x_resolution == 0.0) || (image->y_resolution == 0.0))
     {
@@ -749,6 +749,13 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) CopyMagickString(pdf_image->filename,filename,MaxTextExtent);
     (void) CopyMagickString(pdf_image->magick,image->magick,MaxTextExtent);
     pdf_image->page=page;
+    if (image_info->ping != MagickFalse)
+      {
+        pdf_image->magick_columns*=DefaultResolution/2.0;
+        pdf_image->magick_rows*=DefaultResolution/2.0;
+        pdf_image->columns*=DefaultResolution/2.0;
+        pdf_image->rows*=DefaultResolution/2.0;
+      }
     (void) CloneImageProfiles(pdf_image,image);
     (void) CloneImageProperties(pdf_image,image);
     next=SyncNextImageInList(pdf_image);

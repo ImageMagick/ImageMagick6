@@ -617,8 +617,8 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   delta.y=DefaultResolution;
   if (image_info->ping != MagickFalse)
     {
-      image->resolution.x=2.0;
-      image->resolution.y=2.0;
+      image->x_resolution=2.0;
+      image->y_resolution=2.0;
     }
   if ((image->x_resolution == 0.0) || (image->y_resolution == 0.0))
     {
@@ -877,6 +877,13 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (info.rows != 0)
       postscript_image->magick_rows=info.rows;
     postscript_image->page=page;
+    if (image_info->ping != MagickFalse)
+      {
+        postscript_image->magick_columns*=DefaultResolution/2.0;
+        postscript_image->magick_rows*=DefaultResolution/2.0;
+        postscript_image->columns*=DefaultResolution/2.0;
+        postscript_image->rows*=DefaultResolution/2.0;
+      }
     (void) CloneImageProfiles(postscript_image,image);
     (void) CloneImageProperties(postscript_image,image);
     next=SyncNextImageInList(postscript_image);
