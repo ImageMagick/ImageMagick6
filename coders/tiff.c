@@ -1748,7 +1748,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
     pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
     (void) ResetMagickMemory(pixels,0,number_pixels*sizeof(uint32));
-    quantum_type=GrayQuantum;
+    quantum_type=IndexQuantum;
     if (interlace != PLANARCONFIG_SEPARATE)
       {
         size_t
