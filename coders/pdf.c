@@ -483,11 +483,6 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   */
   delta.x=DefaultResolution;
   delta.y=DefaultResolution;
-  if (image_info->ping != MagickFalse)
-    {
-      image->x_resolution=2.0;
-      image->y_resolution=2.0;
-    }
   if ((image->x_resolution == 0.0) || (image->y_resolution == 0.0))
     {
       flags=ParseGeometry(PSDensityGeometry,&geometry_info);
@@ -608,6 +603,8 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   options=AcquireString("");
   (void) FormatLocaleString(density,MaxTextExtent,"%gx%g",image->x_resolution,
     image->y_resolution);
+  if (image_info->ping != MagickFalse)
+    (void) FormatLocaleString(density,MagickPathExtent,"2.0x2.0");
   if ((image_info->page != (char *) NULL) || (fitPage != MagickFalse))
     (void) FormatLocaleString(options,MaxTextExtent,"-g%.20gx%.20g ",(double)
       page.width,(double) page.height);
@@ -751,10 +748,10 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     pdf_image->page=page;
     if (image_info->ping != MagickFalse)
       {
-        pdf_image->magick_columns*=DefaultResolution/2.0;
-        pdf_image->magick_rows*=DefaultResolution/2.0;
-        pdf_image->columns*=DefaultResolution/2.0;
-        pdf_image->rows*=DefaultResolution/2.0;
+        pdf_image->magick_columns*=image->x_resolution/2.0;
+        pdf_image->magick_rows*=image->y_resolution/2.0;
+        pdf_image->columns*=image->x_resolution/2.0;
+        pdf_image->rows*=image->y_resolution/2.0;
       }
     (void) CloneImageProfiles(pdf_image,image);
     (void) CloneImageProperties(pdf_image,image);
