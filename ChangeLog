@@ -1,5 +1,5 @@
 2020-12-19  6.9.11-52  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-52 GIT revision 16...
+  * Release ImageMagick version 6.9.11-52 GIT revision 16183:7f97ad16d:20201219
 
 2020-12-19  6.9.11-52  <quetzlzacatenango@image...>
   * return alpha bytes with stream utility (reference
