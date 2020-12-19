@@ -849,6 +849,27 @@ MagickExport MagickBooleanType OpenStream(const ImageInfo *image_info,
 %      pixels.
 %
 */
+
+static inline MagickBooleanType ValidatePixelCacheMorphology(
+  const Image *magick_restrict image)
+{
+  CacheInfo
+    *magick_restrict cache_info;
+
+  /*
+    Does the image match the pixel cache morphology?
+  */
+  cache_info=(CacheInfo *) image->cache;
+  if ((image->storage_class != cache_info->storage_class) ||
+      (image->colorspace != cache_info->colorspace) ||
+      (image->channels != cache_info->channels) ||
+      (image->columns != cache_info->columns) ||
+      (image->rows != cache_info->rows) ||
+      (cache_info->nexus_info == (NexusInfo **) NULL))
+    return(MagickFalse);
+  return(MagickTrue);
+}
+
 static PixelPacket *QueueAuthenticPixelsStream(Image *image,const ssize_t x,
   const ssize_t y,const size_t columns,const size_t rows,
   ExceptionInfo *exception)
@@ -890,14 +911,14 @@ static PixelPacket *QueueAuthenticPixelsStream(Image *image,const ssize_t x,
     }
   cache_info=(CacheInfo *) image->cache;
   assert(cache_info->signature == MagickCoreSignature);
-  if ((image->storage_class != GetPixelCacheStorageClass(image->cache)) ||
-      (image->colorspace != GetPixelCacheColorspace(image->cache)))
+  if (ValidatePixelCacheMorphology(image) == MagickFalse)
     {
-      if (GetPixelCacheStorageClass(image->cache) == UndefinedClass)
+      if (cache_info->storage_class == UndefinedClass)
         (void) stream_handler(image,(const void *) NULL,(size_t)
           cache_info->columns);
       cache_info->storage_class=image->storage_class;
       cache_info->colorspace=image->colorspace;
+      cache_info->channels=image->channels;
       cache_info->columns=image->columns;
       cache_info->rows=image->rows;
       image->cache=cache_info;

@@ -3921,12 +3921,14 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
   source_info.file=(-1);
   (void) FormatLocaleString(cache_info->filename,MaxTextExtent,"%s[%.20g]",
     image->filename,(double) image->scene);
-  cache_info->mode=mode;
+  cache_info->storage_class=image->storage_class;
+  cache_info->colorspace=image->colorspace;
   cache_info->rows=image->rows;
   cache_info->columns=image->columns;
   cache_info->channels=image->channels;
   cache_info->active_index_channel=((image->storage_class == PseudoClass) ||
     (image->colorspace == CMYKColorspace)) ? MagickTrue : MagickFalse;
+  cache_info->mode=mode;
   number_pixels=(MagickSizeType) cache_info->columns*cache_info->rows;
   packet_size=sizeof(PixelPacket);
   if (cache_info->active_index_channel != MagickFalse)
@@ -3940,8 +3942,6 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
   cache_info->length=length;
   if (image->ping != MagickFalse)
     {
-      cache_info->storage_class=image->storage_class;
-      cache_info->colorspace=image->colorspace;
       cache_info->type=PingCache;
       return(MagickTrue);
     }
