@@ -2795,7 +2795,8 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
       if (LocaleNCompare(colorspace,"device-",7) == 0)
         {
           (void) CopyMagickString(colorspace,colorspace+7,MaxTextExtent);
-          scale=(double) QuantumRange;
+          if (strchr(name,'%') == (char *) NULL)
+            scale=(double) QuantumRange;
           icc_color=MagickTrue;
         }
       if (LocaleCompare(colorspace,"icc-color") == 0)
