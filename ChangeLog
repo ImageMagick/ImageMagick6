@@ -3,6 +3,8 @@
 
 2020-12-20  6.9.11-53  <quetzlzacatenango@image...>
   * CSS colors no longer require commas.
+  * eliminate possible arthimetic overflow (reference
+    https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=28849);
 
 2020-12-19  6.9.11-52  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-52 GIT revision 16185:710d7811d:20201219
