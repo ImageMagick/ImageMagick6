@@ -1007,7 +1007,7 @@ MagickExport void GetMagickMemoryMethods(
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  GetMaxMemoryRequest() returns the max_memory_request value.
+%  GetMaxMemoryRequest() returns the max memory request value.
 %
 %  The format of the GetMaxMemoryRequest method is:
 %
@@ -1035,7 +1035,7 @@ MagickExport size_t GetMaxMemoryRequest(void)
           value=DestroyString(value);
         }
     }
-  return(max_memory_request);
+  return(MagickMin(max_memory_request,SSIZE_MAX));
 }
 
 /*
