@@ -4483,8 +4483,8 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
   assert(image->signature == MagickCoreSignature);
   assert(image_view != (CacheView *) NULL);
   status=MagickTrue;
-  x_offset=(ssize_t) floor(ConstrainPixelOffset(x));
-  y_offset=(ssize_t) floor(ConstrainPixelOffset(y));
+  x_offset=MagickDoubleToLong(floor(ConstrainPixelOffset(x)));
+  y_offset=MagickDoubleToLong(floor(ConstrainPixelOffset(y)));
   interpolate = method;
   if (interpolate == UndefinedInterpolatePixel)
     interpolate=image->interpolate;
@@ -4502,8 +4502,8 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
       if (interpolate == Average9InterpolatePixel)
         {
           count=3;
-          x_offset=(ssize_t) (floor(ConstrainPixelOffset(x)+0.5)-1);
-          y_offset=(ssize_t) (floor(ConstrainPixelOffset(y)+0.5)-1);
+          x_offset=MagickDoubleToLong(floor(ConstrainPixelOffset(x)+0.5)-1.0);
+          y_offset=MagickDoubleToLong(floor(ConstrainPixelOffset(y)+0.5)-1.0);
         }
       else
         if (interpolate == Average16InterpolatePixel)
@@ -4885,8 +4885,8 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
     }
     case NearestNeighborInterpolatePixel:
     {
-      p=GetCacheViewVirtualPixels(image_view,(ssize_t) floor(x+0.5),
-        (ssize_t) floor(y+0.5),1,1,exception);
+      p=GetCacheViewVirtualPixels(image_view,MagickDoubleToLong(floor(x+0.5)),
+        MagickDoubleToLong(floor(y+0.5)),1,1,exception);
       if (p == (const PixelPacket *) NULL)
         {
           status=MagickFalse;

@@ -301,7 +301,8 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       break;
     if ((channel & RedChannel) != 0)
       {
-        y=(ssize_t) ceil(histogram_image->rows-scale*histogram[x].red-0.5);
+        y=MagickDoubleToLong(ceil(histogram_image->rows-scale*
+          histogram[x].red-0.5));
         r=q+y;
         for ( ; y < (ssize_t) histogram_image->rows; y++)
         {
@@ -311,7 +312,8 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       }
     if ((channel & GreenChannel) != 0)
       {
-        y=(ssize_t) ceil(histogram_image->rows-scale*histogram[x].green-0.5);
+        y=MagickDoubleToLong(ceil(histogram_image->rows-scale*
+          histogram[x].green-0.5));
         r=q+y;
         for ( ; y < (ssize_t) histogram_image->rows; y++)
         {
@@ -321,7 +323,8 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       }
     if ((channel & BlueChannel) != 0)
       {
-        y=(ssize_t) ceil(histogram_image->rows-scale*histogram[x].blue-0.5);
+        y=MagickDoubleToLong(ceil(histogram_image->rows-scale*
+          histogram[x].blue-0.5));
         r=q+y;
         for ( ; y < (ssize_t) histogram_image->rows; y++)
         {

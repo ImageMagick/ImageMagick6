@@ -164,8 +164,8 @@ static MagickBooleanType CropToFitImage(Image **image,
     if (max.y < extent[i].y)
       max.y=extent[i].y;
   }
-  geometry.x=(ssize_t) ceil(min.x-0.5);
-  geometry.y=(ssize_t) ceil(min.y-0.5);
+  geometry.x=MagickDoubleToLong(ceil(min.x-0.5));
+  geometry.y=MagickDoubleToLong(ceil(min.y-0.5));
   geometry.width=(size_t) floor(max.x-min.x+0.5);
   geometry.height=(size_t) floor(max.y-min.y+0.5);
   page=(*image)->page;
@@ -1238,7 +1238,7 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
         displacement*=(-1.0);
         direction=LEFT;
       }
-    step=(ssize_t) floor((double) displacement);
+    step=MagickDoubleToLong(floor((double) displacement));
     area=(MagickRealType) (displacement-step);
     step++;
     pixel=background;
@@ -1460,7 +1460,7 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
         displacement*=(-1.0);
         direction=UP;
       }
-    step=(ssize_t) floor((double) displacement);
+    step=MagickDoubleToLong(floor((double) displacement));
     area=(MagickRealType) (displacement-step);
     step++;
     pixel=background;
@@ -1637,11 +1637,12 @@ MagickExport Image *ShearImage(const Image *image,const double x_shear,
   /*
     Compute image size.
   */
-  bounds.width=image->columns+(ssize_t) floor(fabs(shear.x)*image->rows+0.5);
-  bounds.x=(ssize_t) ceil((double) image->columns+((fabs(shear.x)*image->rows)-
-    image->columns)/2.0-0.5);
-  bounds.y=(ssize_t) ceil((double) image->rows+((fabs(shear.y)*bounds.width)-
-    image->rows)/2.0-0.5);
+  bounds.width=image->columns+MagickDoubleToLong(floor(fabs(shear.x)*
+    image->rows+0.5));
+  bounds.x=MagickDoubleToLong(ceil((double) image->columns+((fabs(shear.x)*
+    image->rows)-image->columns)/2.0-0.5));
+  bounds.y=MagickDoubleToLong(ceil((double) image->rows+((fabs(shear.y)*
+    bounds.width)-image->rows)/2.0-0.5));
   /*
     Surround image with border.
   */
@@ -1790,9 +1791,9 @@ MagickExport Image *ShearRotateImage(const Image *image,const double degrees,
   bounds.height=(size_t) floor(fabs((double) bounds.width*shear.y)+height+0.5);
   shear_width=(size_t) floor(fabs((double) bounds.height*shear.x)+
     bounds.width+0.5);
-  bounds.x=(ssize_t) floor((double) ((shear_width > bounds.width) ? width :
-    bounds.width-shear_width+2)/2.0+0.5);
-  bounds.y=(ssize_t) floor(((double) bounds.height-height+2)/2.0+0.5);
+  bounds.x=MagickDoubleToLong(floor((double) ((shear_width > bounds.width) ?
+    width : bounds.width-shear_width+2)/2.0+0.5));
+  bounds.y=MagickDoubleToLong(floor(((double) bounds.height-height+2)/2.0+0.5));
   /*
     Surround image with a border.
   */
