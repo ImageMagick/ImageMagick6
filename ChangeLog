@@ -1,3 +1,9 @@
+2020-12-25  6.9.11-54  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-54 GIT revision 16...
+
+2020-12-25  6.9.11-54  <quetzlzacatenango@image...>
+    * enable reading of a certain grayscale TIFF image.
+
 2020-12-24  6.9.11-53  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-53 GIT revision 16203:1449d6ede:20201224
 
