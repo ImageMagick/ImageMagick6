@@ -339,11 +339,10 @@ static MagickBooleanType Classify(Image *image,short **extrema,
         /*
           Initialize a new class.
         */
-        cluster->count=0;
+        (void) memset(cluster,0,sizeof(*cluster));
         cluster->red=red;
         cluster->green=green;
         cluster->blue=blue;
-        cluster->next=(Cluster *) NULL;
       }
     }
   }
@@ -359,11 +358,10 @@ static MagickBooleanType Classify(Image *image,short **extrema,
       /*
         Initialize a new class.
       */
-      cluster->count=0;
+      (void) memset(cluster,0,sizeof(*cluster));
       cluster->red=red;
       cluster->green=green;
       cluster->blue=blue;
-      cluster->next=(Cluster *) NULL;
       head=cluster;
     }
   /*
@@ -1844,12 +1842,12 @@ MagickExport MagickBooleanType SegmentImage(Image *image,
   previous_colorspace=image->colorspace;
   (void) TransformImageColorspace(image,colorspace);
   InitializeHistogram(image,histogram,&image->exception);
-  (void) OptimalTau(histogram[Red],Tau,0.2,DeltaTau,
-    smooth_threshold == 0.0 ? 1.0 : smooth_threshold,extrema[Red]);
-  (void) OptimalTau(histogram[Green],Tau,0.2,DeltaTau,
-    smooth_threshold == 0.0 ? 1.0 : smooth_threshold,extrema[Green]);
-  (void) OptimalTau(histogram[Blue],Tau,0.2,DeltaTau,
-    smooth_threshold == 0.0 ? 1.0 : smooth_threshold,extrema[Blue]);
+  (void) OptimalTau(histogram[Red],Tau,0.2,DeltaTau,smooth_threshold == 0.0 ?
+    1.0 : smooth_threshold,extrema[Red]);
+  (void) OptimalTau(histogram[Green],Tau,0.2,DeltaTau,smooth_threshold == 0.0 ?
+    1.0 : smooth_threshold,extrema[Green]);
+  (void) OptimalTau(histogram[Blue],Tau,0.2,DeltaTau,smooth_threshold == 0.0 ?
+    1.0 : smooth_threshold,extrema[Blue]);
   /*
     Classify using the fuzzy c-Means technique.
   */

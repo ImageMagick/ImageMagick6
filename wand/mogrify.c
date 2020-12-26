@@ -497,8 +497,8 @@ static Image *SparseColorOption(const Image *image,const ChannelType channel,
   while( *p != '\0' )
   {
     (void) GetNextToken(p,&p,MaxTextExtent,token);
-    if ( token[0] == ',' ) continue;
-    if ( isalpha((int) token[0]) || token[0] == '#' ) {
+    if ( *token == ',' ) continue;
+    if ( isalpha((int) ((unsigned char) *token)) || *token == '#' ) {
       if ( color_from_image ) {
         (void) ThrowMagickException(exception,GetMagickModule(),
             OptionError, "InvalidArgument", "`%s': %s", "sparse-color",
@@ -543,11 +543,11 @@ static Image *SparseColorOption(const Image *image,const ChannelType channel,
   x=0;
   while( *p != '\0' && x < number_arguments ) {
     /* X coordinate */
-    token[0]=',';
-    while ( token[0] == ',' )
+    *token=',';
+    while ( *token == ',' )
       (void) GetNextToken(p,&p,MaxTextExtent,token);
-    if ( token[0] == '\0' ) break;
-    if ( isalpha((int) token[0]) || token[0] == '#' ) {
+    if ( *token == '\0' ) break;
+    if ( isalpha((int) ((unsigned char) *token)) || *token == '#' ) {
       (void) ThrowMagickException(exception,GetMagickModule(),
             OptionError, "InvalidArgument", "`%s': %s", "sparse-color",
             "Color found, instead of X-coord");
@@ -556,9 +556,9 @@ static Image *SparseColorOption(const Image *image,const ChannelType channel,
     }
     sparse_arguments[x++]=StringToDouble(token,(char **) NULL);
     /* Y coordinate */
-    token[0]=','; while ( token[0] == ',' ) GetNextToken(p,&p,MaxTextExtent,token);
-    if ( token[0] == '\0' ) break;
-    if ( isalpha((int) token[0]) || token[0] == '#' ) {
+    *token=','; while ( *token == ',' ) GetNextToken(p,&p,MaxTextExtent,token);
+    if ( *token == '\0' ) break;
+    if ( isalpha((int) ((unsigned char) *token)) || *token == '#' ) {
       (void) ThrowMagickException(exception,GetMagickModule(),
             OptionError, "InvalidArgument", "`%s': %s", "sparse-color",
             "Color found, instead of Y-coord");
@@ -576,11 +576,11 @@ static Image *SparseColorOption(const Image *image,const ChannelType channel,
 #endif
     {
       /* color name or function given in string argument */
-      token[0]=',';
-      while ( token[0] == ',' )
+      *token=',';
+      while ( *token == ',' )
         (void) GetNextToken(p,&p,MaxTextExtent,token);
-      if ( token[0] == '\0' ) break;
-      if ( isalpha((int) token[0]) || token[0] == '#' ) {
+      if ( *token == '\0' ) break;
+      if ( isalpha((int) ((unsigned char) *token)) || *token == '#' ) {
         /* Color string given */
         (void) QueryMagickColor(token,&color,exception);
         if ( channels & RedChannel )
@@ -598,44 +598,44 @@ static Image *SparseColorOption(const Image *image,const ChannelType channel,
         /* Colors given as a set of floating point values - experimental */
         /* NB: token contains the first floating point value to use! */
         if ( channels & RedChannel ) {
-          while ( token[0] == ',' )
+          while ( *token == ',' )
             (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if ( token[0] == '\0' || isalpha((int)token[0]) || token[0] == '#' )
+          if ( *token == '\0' || isalpha((int) ((unsigned char) *token)) || *token == '#' )
             break;
           sparse_arguments[x++]=StringToDouble(token,(char **) NULL);
-          token[0] = ','; /* used this token - get another */
+          *token = ','; /* used this token - get another */
         }
         if ( channels & GreenChannel ) {
-          while ( token[0] == ',' )
+          while ( *token == ',' )
             (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if ( token[0] == '\0' || isalpha((int)token[0]) || token[0] == '#' )
+          if ( *token == '\0' || isalpha((int) ((unsigned char) *token)) || *token == '#' )
             break;
           sparse_arguments[x++]=StringToDouble(token,(char **) NULL);
-          token[0] = ','; /* used this token - get another */
+          *token = ','; /* used this token - get another */
         }
         if ( channels & BlueChannel ) {
-          while ( token[0] == ',' )
+          while ( *token == ',' )
             (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if ( token[0] == '\0' || isalpha((int)token[0]) || token[0] == '#' )
+          if ( *token == '\0' || isalpha((int) ((unsigned char) *token)) || *token == '#' )
             break;
           sparse_arguments[x++]=StringToDouble(token,(char **) NULL);
-          token[0] = ','; /* used this token - get another */
+          *token = ','; /* used this token - get another */
         }
         if ( channels & IndexChannel ) {
-          while ( token[0] == ',' )
+          while ( *token == ',' )
             (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if ( token[0] == '\0' || isalpha((int)token[0]) || token[0] == '#' )
+          if ( *token == '\0' || isalpha((int) ((unsigned char) *token)) || *token == '#' )
             break;
           sparse_arguments[x++]=StringToDouble(token,(char **) NULL);
-          token[0] = ','; /* used this token - get another */
+          *token = ','; /* used this token - get another */
         }
         if ( channels & OpacityChannel ) {
-          while ( token[0] == ',' )
+          while ( *token == ',' )
             (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if ( token[0] == '\0' || isalpha((int)token[0]) || token[0] == '#' )
+          if ( *token == '\0' || isalpha((int) ((unsigned char) *token)) || *token == '#' )
             break;
           sparse_arguments[x++]=StringToDouble(token,(char **) NULL);
-          token[0] = ','; /* used this token - get another */
+          *token = ','; /* used this token - get another */
         }
       }
     }
@@ -2014,19 +2014,19 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
 
             p=(const char *) argv[i+1];
             (void) GetNextToken(p,&p,MaxTextExtent,token);  /* get black point color */
-            if ((isalpha((int) *token) != 0) || ((*token == '#') != 0))
+            if ((isalpha((int) ((unsigned char) *token)) != 0) || ((*token == '#') != 0))
               (void) QueryMagickColor(token,&black_point,exception);
             else
               (void) QueryMagickColor("#000000",&black_point,exception);
-            if (isalpha((int) token[0]) || (token[0] == '#'))
+            if (isalpha((int) ((unsigned char) *token)) || (*token == '#'))
               (void) GetNextToken(p,&p,MaxTextExtent,token);
             if (*token == '\0')
               white_point=black_point; /* set everything to that color */
             else
               {
-                if ((isalpha((int) *token) == 0) && ((*token == '#') == 0))
+                if ((isalpha((int) ((unsigned char) *token)) == 0) && ((*token == '#') == 0))
                   (void) GetNextToken(p,&p,MaxTextExtent,token); /* Get white point color. */
-                if ((isalpha((int) *token) != 0) || ((*token == '#') != 0))
+                if ((isalpha((int) ((unsigned char) *token)) != 0) || ((*token == '#') != 0))
                   (void) QueryMagickColor(token,&white_point,exception);
                 else
                   (void) QueryMagickColor("#ffffff",&white_point,exception);

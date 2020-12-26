@@ -557,7 +557,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     colors=0;
     image->depth=8UL;
     image->compression=NoCompression;
-    while ((isgraph(c) != MagickFalse) && (c != (int) ':'))
+    while ((isgraph((int) ((unsigned char) c)) != 0) && (c != (int) ':'))
     {
       register char
         *p;
@@ -603,7 +603,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
           c=ReadBlobByte(image);
         }
       else
-        if (isalnum(c) != MagickFalse)
+        if (isalnum((int) ((unsigned char) c)) != MagickFalse)
           {
             /*
               Get the keyword.
@@ -1707,7 +1707,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     do
     {
       c=ReadBlobByte(image);
-    } while ((isgraph(c) == MagickFalse) && (c != EOF));
+    } while ((isgraph((int) ((unsigned char) c)) == 0) && (c != EOF));
     if (c != EOF)
       {
         /*
