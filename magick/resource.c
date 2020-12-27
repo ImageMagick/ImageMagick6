@@ -125,8 +125,8 @@ static ResourceInfo
     MagickULLConstant(0),              /* initial thread */
     MagickULLConstant(0),              /* initial throttle */
     MagickULLConstant(0),              /* initial time */
-    SSIZE_MAX/sizeof(PixelPacket),     /* width limit */
-    SSIZE_MAX/sizeof(PixelPacket),     /* height limit */
+    SSIZE_MAX/sizeof(PixelPacket)/10,  /* width limit */
+    SSIZE_MAX/sizeof(PixelPacket)/10,  /* height limit */
     MagickResourceInfinity,            /* list length limit */
     MagickULLConstant(3072)*1024*1024, /* area limit */
     MagickULLConstant(1536)*1024*1024, /* memory limit */
@@ -1350,7 +1350,8 @@ MagickExport MagickBooleanType ResourceComponentGenesis(void)
   for (i=0; i < (ssize_t) NumberOfResourceTypes; i++)
     if (resource_semaphore[i] == (SemaphoreInfo *) NULL)
       ActivateSemaphoreInfo(&resource_semaphore[i]);
-  (void) SetMagickResourceLimit(WidthResource,resource_info.width_limit);
+  (void) SetMagickResourceLimit(WidthResource,(MagickSizeType)
+    sqrt(resource_info.width_limit));
   limit=GetEnvironmentValue("MAGICK_WIDTH_LIMIT");
   if (limit != (char *) NULL)
     {
@@ -1358,7 +1359,8 @@ MagickExport MagickBooleanType ResourceComponentGenesis(void)
         100.0));
       limit=DestroyString(limit);
     }
-  (void) SetMagickResourceLimit(HeightResource,resource_info.height_limit);
+  (void) SetMagickResourceLimit(HeightResource,(MagickSizeType)
+    sqrt(resource_info.height_limit));
   limit=GetEnvironmentValue("MAGICK_HEIGHT_LIMIT");
   if (limit != (char *) NULL)
     {
