@@ -255,7 +255,7 @@ MagickExport MagickBooleanType BlobToFile(char *filename,const void *blob,
   int
     file;
 
-  register size_t
+  size_t
     i;
 
   ssize_t
@@ -839,7 +839,7 @@ MagickPrivate void DisassociateBlob(Image *image)
 MagickExport MagickBooleanType DiscardBlobBytes(Image *image,
   const MagickSizeType length)
 {
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
   size_t
@@ -1102,7 +1102,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
   MagickOffsetType
     offset;
 
-  register size_t
+  size_t
     i;
 
   ssize_t
@@ -1286,7 +1286,7 @@ static inline ssize_t WriteBlobStream(Image *image,const size_t length,
   MagickSizeType
     extent;
 
-  register unsigned char
+  unsigned char
     *magick_restrict q;
 
   assert(image->blob != (BlobInfo *) NULL);
@@ -1843,10 +1843,10 @@ MagickExport MagickBooleanType ImageToFile(Image *image,char *filename,
   int
     file;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register size_t
+  size_t
     i;
 
   size_t
@@ -2123,7 +2123,7 @@ MagickExport MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2483,7 +2483,7 @@ MagickExport void MSBOrderLong(unsigned char *buffer,const size_t length)
   int
     c;
 
-  register unsigned char
+  unsigned char
     *p,
     *q;
 
@@ -2533,7 +2533,7 @@ MagickExport void MSBOrderShort(unsigned char *p,const size_t length)
   int
     c;
 
-  register unsigned char
+  unsigned char
     *q;
 
   assert(p != (unsigned char *) NULL);
@@ -3119,7 +3119,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
   int
     c;
 
-  register unsigned char
+  unsigned char
     *q;
 
   ssize_t
@@ -3200,7 +3200,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
       {
         default:
         {
-          register ssize_t
+          ssize_t
             i;
 
           for (i=0; i < (ssize_t) length; i+=count)
@@ -3268,7 +3268,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
       int
         status;
 
-     register ssize_t
+     ssize_t
         i;
 
       for (i=0; i < (ssize_t) length; i+=count)
@@ -3294,7 +3294,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
       break;
     case BlobStream:
     {
-      register const unsigned char
+      const unsigned char
         *p;
 
       if (blob_info->offset >= (MagickOffsetType) blob_info->length)
@@ -3342,7 +3342,7 @@ MagickExport int ReadBlobByte(Image *image)
   BlobInfo
     *magick_restrict blob_info;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
   unsigned char
@@ -3486,7 +3486,7 @@ MagickExport float ReadBlobFloat(Image *image)
 */
 MagickExport unsigned int ReadBlobLong(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
   ssize_t
@@ -3547,7 +3547,7 @@ MagickExport MagickSizeType ReadBlobLongLong(Image *image)
   MagickSizeType
     value;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
   ssize_t
@@ -3610,10 +3610,10 @@ MagickExport MagickSizeType ReadBlobLongLong(Image *image)
 */
 MagickExport unsigned short ReadBlobShort(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register unsigned short
+  unsigned short
     value;
 
   ssize_t
@@ -3664,10 +3664,10 @@ MagickExport unsigned short ReadBlobShort(Image *image)
 */
 MagickExport unsigned int ReadBlobLSBLong(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register unsigned int
+  unsigned int
     value;
 
   ssize_t
@@ -3752,10 +3752,10 @@ MagickExport signed int ReadBlobLSBSignedLong(Image *image)
 */
 MagickExport unsigned short ReadBlobLSBShort(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register unsigned short
+  unsigned short
     value;
 
   ssize_t
@@ -3838,10 +3838,10 @@ MagickExport signed short ReadBlobLSBSignedShort(Image *image)
 */
 MagickExport unsigned int ReadBlobMSBLong(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register unsigned int
+  unsigned int
     value;
 
   ssize_t
@@ -3888,10 +3888,10 @@ MagickExport unsigned int ReadBlobMSBLong(Image *image)
 */
 MagickExport MagickSizeType ReadBlobMSBLongLong(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register MagickSizeType
+  MagickSizeType
     value;
 
   ssize_t
@@ -3942,10 +3942,10 @@ MagickExport MagickSizeType ReadBlobMSBLongLong(Image *image)
 */
 MagickExport unsigned short ReadBlobMSBShort(Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register unsigned short
+  unsigned short
     value;
 
   ssize_t
@@ -4215,7 +4215,7 @@ MagickExport char *ReadBlobString(Image *image,char *string)
   int
     c;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(image != (Image *) NULL);
@@ -4802,10 +4802,10 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
   int
     c;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register unsigned char
+  unsigned char
     *q;
 
   ssize_t
@@ -4884,7 +4884,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
       {
         default:
         {
-          register ssize_t
+          ssize_t
             i;
 
           for (i=0; i < (ssize_t) length; i+=count)
@@ -4945,7 +4945,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
       int
         status;
 
-      register ssize_t
+      ssize_t
         i;
 
       for (i=0; i < (ssize_t) length; i+=count)

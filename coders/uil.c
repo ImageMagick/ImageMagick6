@@ -181,13 +181,13 @@ static MagickBooleanType WriteUILImage(const ImageInfo *image_info,Image *image)
   MagickSizeType
     number_pixels;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 

@@ -528,7 +528,7 @@ static MagickBooleanType WriteIPLImage(const ImageInfo *image_info,Image *image)
   MagickOffsetType
     scene;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   QuantumInfo

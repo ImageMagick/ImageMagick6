@@ -346,7 +346,7 @@ static MagickRealType Lagrange(const MagickRealType x,
   MagickRealType
     value;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -732,7 +732,7 @@ MagickExport ResizeFilter *AcquireResizeFilter(const Image *image,
     C,
     value;
 
-  register ResizeFilter
+  ResizeFilter
     *resize_filter;
 
   /*
@@ -1296,7 +1296,7 @@ static MagickRealType I0(MagickRealType x)
     t,
     y;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1320,7 +1320,7 @@ static MagickRealType J1(MagickRealType x)
     p,
     q;
 
-  register ssize_t
+  ssize_t
     i;
 
   static const double
@@ -1366,7 +1366,7 @@ static MagickRealType P1(MagickRealType x)
     p,
     q;
 
-  register ssize_t
+  ssize_t
     i;
 
   static const double
@@ -1406,7 +1406,7 @@ static MagickRealType Q1(MagickRealType x)
     p,
     q;
 
-  register ssize_t
+  ssize_t
     i;
 
   static const double
@@ -1728,7 +1728,7 @@ MagickExport Image *InterpolativeResizeImage(const Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2045,7 +2045,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2063,16 +2063,16 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
       MagickRealType
         intensity[9];
 
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict indexes;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
       register PixelPacket
         *magick_restrict r;
 
-      register ssize_t
+      ssize_t
         i;
 
       /*
@@ -2367,7 +2367,7 @@ typedef struct _ContributionInfo
 static ContributionInfo **DestroyContributionThreadSet(
   ContributionInfo **contribution)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(contribution != (ContributionInfo **) NULL);
@@ -2381,7 +2381,7 @@ static ContributionInfo **DestroyContributionThreadSet(
 
 static ContributionInfo **AcquireContributionThreadSet(const size_t count)
 {
-  register ssize_t
+  ssize_t
     i;
 
   ContributionInfo
@@ -2482,13 +2482,13 @@ static MagickBooleanType HorizontalFilter(
       bisect,
       density;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ContributionInfo
+    ContributionInfo
       *magick_restrict contribution;
 
     register IndexPacket
@@ -2497,7 +2497,7 @@ static MagickBooleanType HorizontalFilter(
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       y;
 
     ssize_t
@@ -2523,7 +2523,7 @@ static MagickBooleanType HorizontalFilter(
       continue;
     if ((density != 0.0) && (density != 1.0))
       {
-        register ssize_t
+        ssize_t
           i;
 
         /*
@@ -2552,7 +2552,7 @@ static MagickBooleanType HorizontalFilter(
       MagickRealType
         alpha;
 
-      register ssize_t
+      ssize_t
         i;
 
       ssize_t
@@ -2730,13 +2730,13 @@ static MagickBooleanType VerticalFilter(
       bisect,
       density;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ContributionInfo
+    ContributionInfo
       *magick_restrict contribution;
 
     register IndexPacket
@@ -2745,7 +2745,7 @@ static MagickBooleanType VerticalFilter(
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     ssize_t
@@ -2771,7 +2771,7 @@ static MagickBooleanType VerticalFilter(
       continue;
     if ((density != 0.0) && (density != 1.0))
       {
-        register ssize_t
+        ssize_t
           i;
 
         /*
@@ -2801,7 +2801,7 @@ static MagickBooleanType VerticalFilter(
       MagickRealType
         alpha;
 
-      register ssize_t
+      ssize_t
         i;
 
       ssize_t
@@ -3072,7 +3072,7 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
   MagickOffsetType
     progress;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -3148,10 +3148,10 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
 #endif
   for (y=0; y < (ssize_t) sample_image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
@@ -3160,7 +3160,7 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     ssize_t
@@ -3277,7 +3277,7 @@ MagickExport Image *ScaleImage(const Image *image,const size_t columns,
     scale,
     span;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -3354,10 +3354,10 @@ MagickExport Image *ScaleImage(const Image *image,const size_t columns,
   scale_view=AcquireAuthenticCacheView(scale_image,exception);
   for (y=0; y < (ssize_t) scale_image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
@@ -3370,7 +3370,7 @@ MagickExport Image *ScaleImage(const Image *image,const size_t columns,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)

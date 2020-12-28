@@ -655,7 +655,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
   RectangleInfo
     geometry;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1934,7 +1934,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                         opacity,
                         y;
 
-                      register ssize_t
+                      ssize_t
                         x;
 
                       register PixelPacket
@@ -3402,7 +3402,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                       msl_info->image[n]=next_image;
                     else
                       {
-                        register Image
+                        Image
                           *p;
 
                         /*
@@ -4409,7 +4409,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                     name[MaxTextExtent],
                     filename[MaxTextExtent];
 
-                  register char
+                  char
                     *p;
 
                   StringInfo
@@ -4421,7 +4421,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                     if ((*p == ':') && (IsPathDirectory(keyword) < 0) &&
                         (IsPathAccessible(keyword) == MagickFalse))
                       {
-                        register char
+                        char
                           *q;
 
                         /*
@@ -7473,10 +7473,10 @@ static void MSLCharacters(void *context,const xmlChar *c,int length)
   MSLInfo
     *msl_info;
 
-  register char
+  char
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*

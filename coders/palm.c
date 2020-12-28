@@ -191,7 +191,7 @@ static MagickBooleanType
 */
 static ssize_t FindColor(PixelPacket *pixel)
 {
-  register ssize_t
+  ssize_t
     i;
 
   for (i=0; i < 256; i++)
@@ -251,7 +251,7 @@ static Image *ReadPALMImage(const ImageInfo *image_info,
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -720,7 +720,7 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket

@@ -944,7 +944,7 @@ static size_t ValidateCompareCommand(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1035,7 +1035,7 @@ static size_t ValidateCompositeCommand(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1127,7 +1127,7 @@ static size_t ValidateConvertCommand(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1220,7 +1220,7 @@ static size_t ValidateIdentifyCommand(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1332,7 +1332,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1630,7 +1630,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1845,7 +1845,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -2034,7 +2034,7 @@ static size_t ValidateMontageCommand(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -2126,7 +2126,7 @@ static size_t ValidateStreamCommand(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -2261,7 +2261,7 @@ int main(int argc,char **argv)
     memory_resource,
     map_resource;
 
-  register ssize_t
+  ssize_t
     i;
 
   TimerInfo

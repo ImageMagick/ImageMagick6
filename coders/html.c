@@ -230,7 +230,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
   RectangleInfo
     geometry;
 
-  register char
+  char
     *p;
 
   /*

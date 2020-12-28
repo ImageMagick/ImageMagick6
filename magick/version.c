@@ -495,7 +495,7 @@ MagickExport const char *GetMagickReleaseDate(void)
 
 static unsigned int CRC32(const unsigned char *message,const size_t length)
 {
-  register ssize_t
+  ssize_t
     i;
 
   static MagickBooleanType
@@ -512,7 +512,7 @@ static unsigned int CRC32(const unsigned char *message,const size_t length)
   */
   if (crc_initial == MagickFalse)
     {
-      register unsigned int
+      unsigned int
         i;
 
       unsigned int
@@ -520,7 +520,7 @@ static unsigned int CRC32(const unsigned char *message,const size_t length)
 
       for (i=0; i < 256; i++)
       {
-        register ssize_t
+        ssize_t
           j;
 
         alpha=i;
@@ -538,7 +538,7 @@ static unsigned int CRC32(const unsigned char *message,const size_t length)
 
 MagickExport unsigned int GetMagickCoreSignature(const StringInfo *nonce)
 {
-  register unsigned char
+  unsigned char
     *p;
 
   StringInfo

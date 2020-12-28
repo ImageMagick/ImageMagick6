@@ -165,7 +165,7 @@ Image *AutoResizeImage(const Image *image,const char *option,
     *resized,
     *images;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -260,14 +260,14 @@ static Image *ReadICONImage(const ImageInfo *image_info,
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
   register PixelPacket
     *q;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -443,7 +443,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
         }
       if (image->storage_class == PseudoClass)
         {
-          register ssize_t
+          ssize_t
             i;
 
           unsigned char
@@ -884,17 +884,17 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
     offset,
     scene;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t

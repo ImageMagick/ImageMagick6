@@ -130,7 +130,7 @@ static inline MagickOffsetType WriteMatrixElements(
   const MatrixInfo *magick_restrict matrix_info,const MagickOffsetType offset,
   const MagickSizeType length,const unsigned char *magick_restrict buffer)
 {
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
   ssize_t
@@ -317,7 +317,7 @@ MagickExport double **AcquireMagickMatrix(const size_t number_rows,
   double
     **matrix;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -491,7 +491,7 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
     max,
     scale;
 
-  register ssize_t
+  ssize_t
     i,
     j,
     k;
@@ -662,7 +662,7 @@ static inline MagickOffsetType ReadMatrixElements(
   const MatrixInfo *magick_restrict matrix_info,const MagickOffsetType offset,
   const MagickSizeType length,unsigned char *magick_restrict buffer)
 {
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
   ssize_t
@@ -827,7 +827,7 @@ MagickExport void LeastSquaresAddTerms(double **matrix,double **vectors,
   const double *terms,const double *results,const size_t rank,
   const size_t number_vectors)
 {
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -901,7 +901,7 @@ MagickExport Image *MatrixToImage(const MatrixInfo *matrix_info,
   max_value=value;
   for (y=0; y < (ssize_t) matrix_info->rows; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     for (x=0; x < (ssize_t) matrix_info->columns; x++)
@@ -946,7 +946,7 @@ MagickExport Image *MatrixToImage(const MatrixInfo *matrix_info,
     register PixelPacket
       *q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -1000,7 +1000,7 @@ MagickExport Image *MatrixToImage(const MatrixInfo *matrix_info,
 */
 MagickExport MagickBooleanType NullMatrix(MatrixInfo *matrix_info)
 {
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -1064,7 +1064,7 @@ MagickExport MagickBooleanType NullMatrix(MatrixInfo *matrix_info)
 MagickExport double **RelinquishMagickMatrix(double **matrix,
   const size_t number_rows)
 {
-  register ssize_t
+  ssize_t
     i;
 
   if (matrix == (double **) NULL )

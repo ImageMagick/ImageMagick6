@@ -147,7 +147,7 @@
 static inline MagickOffsetType dpc_read(int file,const MagickSizeType length,
   unsigned char *magick_restrict message)
 {
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
   ssize_t
@@ -284,7 +284,7 @@ static char *GetHostname(int *port,ExceptionInfo *exception)
   int
     argc;
 
-  register ssize_t
+  ssize_t
     i;
 
   static size_t
@@ -443,7 +443,7 @@ static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
   MagickOffsetType
     count;
 
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
 #if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
@@ -484,7 +484,7 @@ static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
   MagickSizeType
     length;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -539,10 +539,10 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register unsigned char
+  unsigned char
     *q;
 
   unsigned char
@@ -596,10 +596,10 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register unsigned char
+  unsigned char
     *q;
 
   unsigned char
@@ -660,7 +660,7 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
-  register unsigned char
+  unsigned char
     *p;
 
   register PixelPacket
@@ -720,7 +720,7 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
   register PixelPacket
     *q;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -775,7 +775,7 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
   RandomInfo
     *random_info;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -901,7 +901,7 @@ MagickExport void DistributePixelCacheServer(const int port,
   Not implemented!
 #endif
 
-  register struct addrinfo
+  struct addrinfo
     *p;
 
   SOCKET_TYPE
@@ -1127,7 +1127,7 @@ MagickPrivate MagickBooleanType OpenDistributePixelCache(
   MagickOffsetType
     count;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -1207,7 +1207,7 @@ MagickPrivate MagickOffsetType ReadDistributePixelCacheIndexes(
   MagickOffsetType
     count;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -1282,7 +1282,7 @@ MagickPrivate MagickOffsetType ReadDistributePixelCachePixels(
   MagickOffsetType
     count;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -1354,7 +1354,7 @@ MagickPrivate MagickBooleanType RelinquishDistributePixelCache(
   MagickOffsetType
     count;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -1418,7 +1418,7 @@ MagickPrivate MagickOffsetType WriteDistributePixelCacheIndexes(
   MagickOffsetType
     count;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char
@@ -1494,7 +1494,7 @@ MagickPrivate MagickOffsetType WriteDistributePixelCachePixels(
   MagickOffsetType
     count;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned char

@@ -106,10 +106,10 @@ static Image *ReadAVSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -340,13 +340,13 @@ static MagickBooleanType WriteAVSImage(const ImageInfo *image_info,Image *image)
   MemoryInfo
     *pixel_info;
 
-  register const PixelPacket
+  const PixelPacket
     *magick_restrict p;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register unsigned char
+  unsigned char
     *magick_restrict q;
 
   size_t

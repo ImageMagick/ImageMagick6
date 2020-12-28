@@ -150,7 +150,7 @@ struct _HashmapInfo
 MagickExport MagickBooleanType AppendValueToLinkedList(
   LinkedListInfo *list_info,const void *value)
 {
-  register ElementInfo
+  ElementInfo
     *next;
 
   assert(list_info != (LinkedListInfo *) NULL);
@@ -207,7 +207,7 @@ MagickExport void ClearLinkedList(LinkedListInfo *list_info,
   ElementInfo
     *element;
 
-  register ElementInfo
+  ElementInfo
     *next;
 
   assert(list_info != (LinkedListInfo *) NULL);
@@ -335,7 +335,7 @@ MagickExport HashmapInfo *DestroyHashmap(HashmapInfo *hashmap_info)
   register EntryInfo
     *entry;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(hashmap_info != (HashmapInfo *) NULL);
@@ -401,7 +401,7 @@ MagickExport LinkedListInfo *DestroyLinkedList(LinkedListInfo *list_info,
   ElementInfo
     *entry;
 
-  register ElementInfo
+  ElementInfo
     *next;
 
   assert(list_info != (LinkedListInfo *) NULL);
@@ -788,10 +788,10 @@ MagickExport void *GetValueFromHashmap(HashmapInfo *hashmap_info,
 MagickExport void *GetValueFromLinkedList(LinkedListInfo *list_info,
   const size_t index)
 {
-  register ElementInfo
+  ElementInfo
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   void
@@ -886,7 +886,7 @@ MagickExport size_t HashStringType(const void *string)
   const unsigned char
     *digest;
 
-  register ssize_t
+  ssize_t
     i;
 
   SignatureInfo
@@ -939,7 +939,7 @@ MagickExport size_t HashStringInfoType(const void *string_info)
   const unsigned char
     *digest;
 
-  register ssize_t
+  ssize_t
     i;
 
   SignatureInfo
@@ -990,10 +990,10 @@ MagickExport size_t HashStringInfoType(const void *string_info)
 MagickExport MagickBooleanType InsertValueInLinkedList(
   LinkedListInfo *list_info,const size_t index,const void *value)
 {
-  register ElementInfo
+  ElementInfo
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(list_info != (LinkedListInfo *) NULL);
@@ -1095,10 +1095,10 @@ MagickExport MagickBooleanType InsertValueInSortedLinkedList(
   ElementInfo
     *element;
 
-  register ElementInfo
+  ElementInfo
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(list_info != (LinkedListInfo *) NULL);
@@ -1238,10 +1238,10 @@ MagickExport MagickBooleanType IsLinkedListEmpty(
 MagickExport MagickBooleanType LinkedListToArray(LinkedListInfo *list_info,
   void **array)
 {
-  register ElementInfo
+  ElementInfo
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(list_info != (LinkedListInfo *) NULL);
@@ -1429,10 +1429,10 @@ static MagickBooleanType IncreaseHashmapCapacity(HashmapInfo *hashmap_info)
     *map_info,
     **map;
 
-  register ElementInfo
+  ElementInfo
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1502,7 +1502,7 @@ MagickExport MagickBooleanType PutEntryInHashmap(HashmapInfo *hashmap_info,
   LinkedListInfo
     *list_info;
 
-  register size_t
+  size_t
     i;
 
   assert(hashmap_info != (HashmapInfo *) NULL);
@@ -1672,7 +1672,7 @@ MagickExport void *RemoveElementFromLinkedList(LinkedListInfo *list_info,
   ElementInfo
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   void
@@ -1747,7 +1747,7 @@ MagickExport void *RemoveEntryFromHashmap(HashmapInfo *hashmap_info,
   LinkedListInfo
     *list_info;
 
-  register size_t
+  size_t
     i;
 
   size_t

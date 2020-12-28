@@ -167,10 +167,10 @@ static MagickBooleanType WriteCIPImage(const ImageInfo *image_info,Image *image)
   MagickBooleanType
     status;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 

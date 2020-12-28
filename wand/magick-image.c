@@ -5450,7 +5450,7 @@ WandExport PixelWand **MagickGetImageHistogram(MagickWand *wand,
   PixelWand
     **pixel_wands;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(wand != (MagickWand *) NULL);
@@ -5779,7 +5779,7 @@ WandExport MagickBooleanType MagickGetImagePixelColor(MagickWand *wand,
   IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   CacheView

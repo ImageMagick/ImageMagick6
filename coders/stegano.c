@@ -117,7 +117,7 @@ static Image *ReadSTEGANOImage(const ImageInfo *image_info,
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

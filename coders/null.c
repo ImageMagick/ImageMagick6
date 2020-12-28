@@ -108,7 +108,7 @@ static Image *ReadNULLImage(const ImageInfo *image_info,
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket

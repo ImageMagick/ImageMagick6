@@ -130,7 +130,7 @@ WandExport MagickBooleanType MagickCommandGenesis(ImageInfo *image_info,
     regard_warnings,
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -393,7 +393,7 @@ static MagickBooleanType MonitorProgress(const char *text,
   const char
     *locale_message;
 
-  register char
+  char
     *p;
 
   wand_unreferenced(client_data);
@@ -449,7 +449,7 @@ static Image *SparseColorOption(const Image *image,const ChannelType channel,
   MagickPixelPacket
     color;
 
-  register size_t
+  size_t
     x;
 
   size_t
@@ -694,7 +694,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
     geometry,
     region_geometry;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1074,7 +1074,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             register PixelPacket
               *magick_restrict q;
 
-            register ssize_t
+            ssize_t
               x;
 
             ssize_t
@@ -1244,7 +1244,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             KernelInfo
               *kernel_info;
 
-            register ssize_t
+            ssize_t
               j;
 
             size_t
@@ -1384,7 +1384,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             double
               *arguments;
 
-            register ssize_t
+            ssize_t
               x;
 
             size_t
@@ -1704,7 +1704,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             MagickFunction
               function;
 
-            register ssize_t
+            ssize_t
               x;
 
             size_t
@@ -3817,7 +3817,7 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -3949,7 +3949,7 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
         if ((LocaleCompare(image->filename,"-") != 0) &&
             (IsPathWritable(image->filename) != MagickFalse))
           {
-            register ssize_t
+            ssize_t
               i;
 
             /*
@@ -6565,7 +6565,7 @@ WandExport MagickBooleanType MogrifyImageInfo(ImageInfo *image_info,
   ssize_t
     count;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -7745,7 +7745,7 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
   QuantizeInfo
     *quantize_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -8585,7 +8585,7 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
             Image
               *polynomial_image;
 
-            register ssize_t
+            ssize_t
               x;
 
             size_t
@@ -8897,7 +8897,7 @@ WandExport MagickBooleanType MogrifyImages(ImageInfo *image_info,
   size_t
     n;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(image_info != (ImageInfo *) NULL);

@@ -227,16 +227,16 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -956,19 +956,19 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
   MemoryInfo
     *pixel_info;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -1199,7 +1199,7 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
               x,
               y;
 
-            register unsigned char
+            unsigned char
               bit,
               byte;
 

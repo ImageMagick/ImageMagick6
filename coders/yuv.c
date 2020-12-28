@@ -109,16 +109,16 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register const PixelPacket
+  const PixelPacket
     *chroma_pixels;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
     *q;
 
-  register unsigned char
+  unsigned char
     *p;
 
   ssize_t
@@ -613,11 +613,11 @@ static MagickBooleanType WriteYUVImage(const ImageInfo *image_info,Image *image)
   MagickOffsetType
     scene;
 
-  register const PixelPacket
+  const PixelPacket
     *p,
     *s;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

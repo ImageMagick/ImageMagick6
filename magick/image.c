@@ -430,7 +430,7 @@ MagickExport Image *AppendImages(const Image *images,
   RectangleInfo
     geometry;
 
-  register const Image
+  const Image
     *next;
 
   size_t
@@ -527,10 +527,10 @@ MagickExport Image *AppendImages(const Image *images,
       MagickBooleanType
         sync;
 
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict indexes;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
       register IndexPacket
@@ -539,7 +539,7 @@ MagickExport Image *AppendImages(const Image *images,
       register PixelPacket
         *magick_restrict q;
 
-      register ssize_t
+      ssize_t
         x;
 
       if (status == MagickFalse)
@@ -1091,10 +1091,10 @@ MagickExport MagickBooleanType CopyImagePixels(Image *image,
 #endif
   for (y=0; y < (ssize_t) geometry->height; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict source_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
@@ -1103,7 +1103,7 @@ MagickExport MagickBooleanType CopyImagePixels(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -1381,7 +1381,7 @@ MagickExport Image *GetImageClipMask(const Image *image,
 */
 MagickExport void GetImageException(Image *image,ExceptionInfo *exception)
 {
-  register Image
+  Image
     *next;
 
   assert(image != (Image *) NULL);
@@ -1667,7 +1667,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   MagickBooleanType
     canonical;
 
-  register const char
+  const char
     *p;
 
   ssize_t
@@ -1716,10 +1716,10 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         const char
           *value;
 
-        register char
+        char
           *r;
 
-        register ssize_t
+        ssize_t
           i;
 
         ssize_t
@@ -1846,13 +1846,13 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
     MagickPixelPacket
       pixel;
 
-    register const IndexPacket
+    const IndexPacket
       *indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -1924,7 +1924,7 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
 */
 MagickExport MagickBooleanType IsImageObject(const Image *image)
 {
-  register const Image
+  const Image
     *p;
 
   assert(image != (Image *) NULL);
@@ -1965,7 +1965,7 @@ MagickExport MagickBooleanType IsTaintImage(const Image *image)
     magick[MaxTextExtent],
     filename[MaxTextExtent];
 
-  register const Image
+  const Image
     *p;
 
   assert(image != (Image *) NULL);
@@ -2108,7 +2108,7 @@ MagickExport Image *NewMagickImage(const ImageInfo *image_info,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2312,7 +2312,7 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2417,7 +2417,7 @@ MagickExport MagickBooleanType SetImageBackgroundColor(Image *image)
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2542,7 +2542,7 @@ MagickExport MagickBooleanType SetImageColor(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2763,7 +2763,7 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const char
+  const char
     *p;
 
   ssize_t
@@ -2862,7 +2862,7 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
       MagickFormatType
         format_type;
 
-      register ssize_t
+      ssize_t
         i;
 
       static const char
@@ -3234,7 +3234,7 @@ MagickExport MagickBooleanType SetImageOpacity(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -3344,10 +3344,10 @@ static ssize_t SmushXGap(const Image *smush_image,const Image *images,
     left_geometry,
     right_geometry;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     y;
 
@@ -3415,10 +3415,10 @@ static ssize_t SmushYGap(const Image *smush_image,const Image *images,
     bottom_geometry,
     top_geometry;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -3496,7 +3496,7 @@ MagickExport Image *SmushImages(const Image *images,
   RectangleInfo
     geometry;
 
-  register const Image
+  const Image
     *next;
 
   size_t
@@ -3718,7 +3718,7 @@ MagickExport MagickBooleanType SyncImage(Image *image)
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)

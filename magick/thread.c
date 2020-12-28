@@ -200,7 +200,7 @@ MagickExport MagickBooleanType DeleteMagickThreadKey(MagickThreadKey key)
     MagickThreadValue
       *keys;
 
-    register ssize_t
+    ssize_t
       i;
 
     keys=(MagickThreadValue *) key;

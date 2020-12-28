@@ -234,7 +234,7 @@ static Window
 */
 MagickExport void DestroyXResources(void)
 {
-  register int
+  int
     i;
 
   unsigned int
@@ -557,7 +557,7 @@ MagickExport MagickBooleanType XAnnotateImage(Display *display,
   annotate_view=AcquireAuthenticCacheView(annotate_image,exception);
   for (y=0; y < (int) annotate_image->rows; y++)
   {
-    register int
+    int
       x;
 
     register PixelPacket
@@ -728,11 +728,11 @@ static char **FontToList(char *font)
   char
     **fontlist;
 
-  register char
+  char
     *p,
     *q;
 
-  register int
+  int
     i;
 
   unsigned int
@@ -797,7 +797,7 @@ MagickExport XFontStruct *XBestFont(Display *display,
   char
     *font_name;
 
-  register const char
+  const char
     **p;
 
   XFontStruct
@@ -812,7 +812,7 @@ MagickExport XFontStruct *XBestFont(Display *display,
       char
         **fontlist;
 
-      register int
+      int
         i;
 
       /*
@@ -1014,10 +1014,10 @@ MagickExport void XBestPixel(Display *display,const Colormap colormap,
   MagickRealType
     min_distance;
 
-  register MagickRealType
+  MagickRealType
     distance;
 
-  register int
+  int
     i,
     j;
 
@@ -1136,7 +1136,7 @@ MagickExport XVisualInfo *XBestVisualInfo(Display *display,
   int
     visual_mask;
 
-  register int
+  int
     i;
 
   size_t
@@ -1915,7 +1915,7 @@ MagickExport void XDisplayImageInfo(Display *display,
   int
     unique_file;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2090,13 +2090,13 @@ static void XDitherImage(Image *image,XImage *ximage)
   PixelPacket
     color;
 
-  register char
+  char
     *q;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register int
+  int
     i,
     j,
     x;
@@ -2104,7 +2104,7 @@ static void XDitherImage(Image *image,XImage *ximage)
   unsigned int
     scanline_pad;
 
-  register size_t
+  size_t
     pixel;
 
   unsigned char
@@ -2419,7 +2419,7 @@ MagickExport MagickBooleanType XDrawImage(Display *display,
   draw_view=AcquireAuthenticCacheView(draw_image,exception);
   for (y=0; y < (int) draw_image->rows; y++)
   {
-    register int
+    int
       x;
 
     register PixelPacket
@@ -2541,7 +2541,7 @@ MagickExport MagickBooleanType XDrawImage(Display *display,
   draw_view=AcquireAuthenticCacheView(draw_image,exception);
   for (y=0; y < (int) draw_image->rows; y++)
   {
-    register int
+    int
       x;
 
     register PixelPacket
@@ -2980,7 +2980,7 @@ MagickExport void XGetPixelPacket(Display *display,
   Colormap
     colormap;
 
-  register ssize_t
+  ssize_t
     i;
 
   Status
@@ -3305,7 +3305,7 @@ MagickExport XrmDatabase XGetResourceDatabase(Display *display,
   int
     c;
 
-  register const char
+  const char
     *p;
 
   XrmDatabase
@@ -3947,7 +3947,7 @@ static Image *XGetWindowImage(Display *display,const Window window,
   register IndexPacket
     *indexes;
 
-  register int
+  int
     i;
 
   static ColormapInfo
@@ -4105,14 +4105,14 @@ static Image *XGetWindowImage(Display *display,const Window window,
       MagickBooleanType
         import;
 
-      register int
+      int
         j,
         x;
 
       register PixelPacket
         *magick_restrict q;
 
-      register size_t
+      size_t
         pixel;
 
       unsigned int
@@ -4274,7 +4274,7 @@ static Image *XGetWindowImage(Display *display,const Window window,
           case DirectClass:
           default:
           {
-            register size_t
+            size_t
               color,
               index;
 
@@ -5781,16 +5781,16 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
   int
     y;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register int
+  int
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   unsigned char
@@ -5852,7 +5852,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
   canvas_view=AcquireVirtualCacheView(canvas,&canvas->exception);
   if (ximage->format == XYBitmap)
     {
-      register unsigned short
+      unsigned short
         polarity;
 
       unsigned char
@@ -5908,7 +5908,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
       {
         case 2:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -5960,7 +5960,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         }
         case 4:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6028,10 +6028,10 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         }
         default:
         {
-          register int
+          int
             k;
 
-          register unsigned int
+          unsigned int
             bytes_per_pixel;
 
           /*
@@ -6064,7 +6064,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
       {
         case 2:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6117,7 +6117,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         }
         case 4:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6269,10 +6269,10 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
               }
             else
               {
-                register int
+                int
                   k;
 
-                register unsigned int
+                unsigned int
                   bytes_per_pixel;
 
                 /*
@@ -6389,16 +6389,16 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
   int
     y;
 
-  register int
+  int
     x;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register unsigned char
+  unsigned char
     *q;
 
   unsigned char
@@ -6460,7 +6460,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
   canvas_view=AcquireVirtualCacheView(canvas,&canvas->exception);
   if (ximage->format == XYBitmap)
     {
-      register unsigned short
+      unsigned short
         polarity;
 
       unsigned char
@@ -6516,7 +6516,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
       {
         case 2:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6568,7 +6568,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         }
         case 4:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6636,10 +6636,10 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         }
         default:
         {
-          register int
+          int
             k;
 
-          register unsigned int
+          unsigned int
             bytes_per_pixel;
 
           unsigned char
@@ -6677,7 +6677,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
       {
         case 2:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6730,7 +6730,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         }
         case 4:
         {
-          register unsigned int
+          unsigned int
             nibble;
 
           /*
@@ -6882,10 +6882,10 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
               }
             else
               {
-                register int
+                int
                   k;
 
-                register unsigned int
+                unsigned int
                   bytes_per_pixel;
 
                 /*
@@ -6990,13 +6990,13 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
   MagickPixelPacket
     pixel;
 
-  register int
+  int
     x;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *p,
     *q;
 
@@ -7091,14 +7091,14 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
     ((width*windows->magnify.ximage->bits_per_pixel) >> 3));
   if (ximage->bits_per_pixel < 8)
     {
-      register unsigned char
+      unsigned char
         background,
         byte,
         foreground,
         p_bit,
         q_bit;
 
-      register unsigned int
+      unsigned int
         plane;
 
       XPixelInfo
@@ -7287,7 +7287,7 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
       }
       default:
       {
-        register unsigned int
+        unsigned int
           bytes_per_pixel,
           m;
 
@@ -7615,7 +7615,7 @@ MagickExport void XMakeStandardColormap(Display *display,
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i;
 
   Status
@@ -7840,7 +7840,7 @@ MagickExport void XMakeStandardColormap(Display *display,
           int
             y;
 
-          register int
+          int
             x;
 
           unsigned short
@@ -7868,10 +7868,10 @@ MagickExport void XMakeStandardColormap(Display *display,
           image_view=AcquireAuthenticCacheView(image,exception);
           for (y=0; y < (int) image->rows; y++)
           {
-            register int
+            int
               x;
 
-            register const PixelPacket
+            const PixelPacket
               *magick_restrict p;
 
             p=GetCacheViewAuthenticPixels(image_view,0,(ssize_t) y,
@@ -8290,7 +8290,7 @@ MagickExport void XMakeWindow(Display *display,Window parent,char **argv,
       int
         flags;
 
-      register char
+      char
         *p;
 
       /*
@@ -8480,7 +8480,7 @@ static const char *GetLocaleMonitorMessage(const char *text)
   const char
     *locale_message;
 
-  register char
+  char
     *p;
 
   (void) CopyMagickString(tag,text,MaxTextExtent);
@@ -9576,7 +9576,7 @@ MagickExport Window XWindowByID(Display *display,const Window root_window,
   RectangleInfo
     rectangle_info;
 
-  register int
+  int
     i;
 
   Status
@@ -9651,7 +9651,7 @@ MagickExport Window XWindowByID(Display *display,const Window root_window,
 MagickExport Window XWindowByName(Display *display,const Window root_window,
   const char *name)
 {
-  register int
+  int
     i;
 
   Status

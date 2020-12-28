@@ -536,7 +536,7 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
         register PixelPacket
           *magick_restrict q;
 
-        register ssize_t
+        ssize_t
           x;
 
         ssize_t
@@ -558,10 +558,10 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
           DoublePixelPacket
             pixel;
 
-          register const NodeInfo
+          const NodeInfo
             *node_info;
 
-          register ssize_t
+          ssize_t
             i;
 
           size_t
@@ -783,10 +783,10 @@ static MagickBooleanType ClassifyImageColors(CubeInfo *cube_info,
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
@@ -884,10 +884,10 @@ static MagickBooleanType ClassifyImageColors(CubeInfo *cube_info,
   }
   for (y++; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
@@ -1064,7 +1064,7 @@ MagickExport QuantizeInfo *CloneQuantizeInfo(const QuantizeInfo *quantize_info)
 static void ClosestColor(const Image *image,CubeInfo *cube_info,
   const NodeInfo *node_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1082,10 +1082,10 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
       MagickRealType
         pixel;
 
-      register DoublePixelPacket
+      DoublePixelPacket
         *magick_restrict q;
 
-      register MagickRealType
+      MagickRealType
         alpha,
         beta,
         distance;
@@ -1206,7 +1206,7 @@ MagickExport MagickBooleanType CompressImageColormap(Image *image)
 static void DefineImageColormap(Image *image,CubeInfo *cube_info,
   NodeInfo *node_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1221,7 +1221,7 @@ static void DefineImageColormap(Image *image,CubeInfo *cube_info,
       DefineImageColormap(image,cube_info,node_info->child[i]);
   if (node_info->number_unique != 0)
     {
-      register MagickRealType
+      MagickRealType
         alpha;
 
       register PixelPacket
@@ -1308,7 +1308,7 @@ static void DefineImageColormap(Image *image,CubeInfo *cube_info,
 */
 static void DestroyCubeInfo(CubeInfo *cube_info)
 {
-  register Nodes
+  Nodes
     *nodes;
 
   /*
@@ -1392,7 +1392,7 @@ MagickExport QuantizeInfo *DestroyQuantizeInfo(QuantizeInfo *quantize_info)
 
 static DoublePixelPacket **DestroyPixelThreadSet(DoublePixelPacket **pixels)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(pixels != (DoublePixelPacket **) NULL);
@@ -1408,7 +1408,7 @@ static DoublePixelPacket **AcquirePixelThreadSet(const size_t count)
   DoublePixelPacket
     **pixels;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1505,7 +1505,7 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     size_t
@@ -1533,7 +1533,7 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
         color,
         pixel;
 
-      register ssize_t
+      ssize_t
         i;
 
       ssize_t
@@ -1581,10 +1581,10 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
       i=CacheOffset(&cube,&pixel);
       if (cube.cache[i] < 0)
         {
-          register NodeInfo
+          NodeInfo
             *node_info;
 
-          register size_t
+          size_t
             id;
 
           /*
@@ -1751,7 +1751,7 @@ static MagickBooleanType RiemersmaDither(Image *image,CacheView *image_view,
   MagickBooleanType
     proceed;
 
-  register CubeInfo
+  CubeInfo
     *p;
 
   size_t
@@ -1770,7 +1770,7 @@ static MagickBooleanType RiemersmaDither(Image *image,CacheView *image_view,
       register PixelPacket
         *magick_restrict q;
 
-      register ssize_t
+      ssize_t
         i;
 
       /*
@@ -1798,10 +1798,10 @@ static MagickBooleanType RiemersmaDither(Image *image,CacheView *image_view,
       i=CacheOffset(cube_info,&pixel);
       if (p->cache[i] < 0)
         {
-          register NodeInfo
+          NodeInfo
             *node_info;
 
-          register size_t
+          size_t
             id;
 
           /*
@@ -1872,7 +1872,7 @@ static MagickBooleanType DitherImage(Image *image,CubeInfo *cube_info)
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1945,7 +1945,7 @@ static CubeInfo *GetCubeInfo(const QuantizeInfo *quantize_info,
     sum,
     weight;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2157,10 +2157,10 @@ MagickExport MagickBooleanType GetImageQuantizeError(Image *image)
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
@@ -2316,7 +2316,7 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
   QuantizeInfo
     *quantize_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -2364,7 +2364,7 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2449,7 +2449,7 @@ static void PruneChild(CubeInfo *cube_info,const NodeInfo *node_info)
   NodeInfo
     *parent;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2502,7 +2502,7 @@ static void PruneChild(CubeInfo *cube_info,const NodeInfo *node_info)
 */
 static void PruneLevel(CubeInfo *cube_info,const NodeInfo *node_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2547,7 +2547,7 @@ static void PruneLevel(CubeInfo *cube_info,const NodeInfo *node_info)
 */
 static void PruneToCubeDepth(CubeInfo *cube_info,const NodeInfo *node_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2705,7 +2705,7 @@ MagickExport MagickBooleanType QuantizeImages(const QuantizeInfo *quantize_info,
   MagickProgressMonitor
     progress_monitor;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2838,7 +2838,7 @@ static size_t QuantizeErrorFlatten(const CubeInfo *cube_info,
   const NodeInfo *node_info,const ssize_t offset,
   MagickRealType *quantize_error)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2884,7 +2884,7 @@ static size_t QuantizeErrorFlatten(const CubeInfo *cube_info,
 */
 static void Reduce(CubeInfo *cube_info,const NodeInfo *node_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -3240,7 +3240,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
   PixelPacket
     *colormap;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -3286,7 +3286,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
         register PixelPacket
           *magick_restrict q;
 
-        register ssize_t
+        ssize_t
           x;
 
         if (status == MagickFalse)
@@ -3301,7 +3301,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
         indexes=GetCacheViewAuthenticIndexQueue(image_view);
         for (x=0; x < (ssize_t) image->columns; x++)
         {
-          register size_t
+          size_t
             intensity;
 
           intensity=ScaleQuantumToMap(GetPixelRed(q));
@@ -3365,10 +3365,10 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
     register IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)

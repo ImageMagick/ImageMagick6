@@ -427,7 +427,7 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   MagickBooleanType
     status;
 
-  register size_t
+  size_t
     i;
 
   size_t
@@ -520,10 +520,10 @@ static MagickBooleanType WriteVIDEOImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register Image
+  Image
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

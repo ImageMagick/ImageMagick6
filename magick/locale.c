@@ -198,7 +198,7 @@ static locale_t AcquireCLocale(void)
 
 static void *DestroyLocaleNode(void *locale_info)
 {
-  register LocaleInfo
+  LocaleInfo
     *p;
 
   p=(LocaleInfo *) locale_info;
@@ -614,10 +614,10 @@ MagickExport const LocaleInfo **GetLocaleInfoList(const char *pattern,
   const LocaleInfo
     **messages;
 
-  register const LocaleInfo
+  const LocaleInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -690,7 +690,7 @@ extern "C" {
 
 static int LocaleTagCompare(const void *x,const void *y)
 {
-  register char
+  char
     **p,
     **q;
 
@@ -709,10 +709,10 @@ MagickExport char **GetLocaleList(const char *pattern,
   char
     **messages;
 
-  register const LocaleInfo
+  const LocaleInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -943,7 +943,7 @@ static MagickBooleanType IsLocaleTreeInstantiated(ExceptionInfo *exception)
           char
             *locale;
 
-          register const char
+          const char
             *p;
 
           locale=(char *) NULL;
@@ -1061,7 +1061,7 @@ MagickExport MagickBooleanType ListLocaleInfo(FILE *file,
   const LocaleInfo
     **locale_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1133,7 +1133,7 @@ MagickExport MagickBooleanType ListLocaleInfo(FILE *file,
 
 static void ChopLocaleComponents(char *path,const size_t components)
 {
-  register char
+  char
     *p;
 
   ssize_t
@@ -1192,7 +1192,7 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
   MagickStatusType
     status;
 
-  register char
+  char
     *p;
 
   size_t
@@ -1446,7 +1446,7 @@ MagickExport int LocaleCompare(const char *p,const char *q)
   return(strcasecmp(p,q));
 #else
   {
-    register int
+    int
       c,
       d;
 
@@ -1489,7 +1489,7 @@ MagickExport int LocaleCompare(const char *p,const char *q)
 */
 MagickExport void LocaleLower(char *string)
 {
-  register char
+  char
     *q;
 
   assert(string != (char *) NULL);
@@ -1581,11 +1581,11 @@ MagickExport int LocaleNCompare(const char *p,const char *q,const size_t length)
   return(strncasecmp(p,q,length));
 #else
   {
-    register int
+    int
       c,
       d;
 
-    register size_t
+    size_t
       i;
 
     for (i=length; i != 0; i--)
@@ -1629,7 +1629,7 @@ MagickExport int LocaleNCompare(const char *p,const char *q,const size_t length)
 */
 MagickExport void LocaleUpper(char *string)
 {
-  register char
+  char
     *q;
 
   assert(string != (char *) NULL);

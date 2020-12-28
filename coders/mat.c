@@ -633,7 +633,7 @@ static Image *ReadMATImageV4(const ImageInfo *image_info,Image *image,
   QuantumFormatType
     format_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t

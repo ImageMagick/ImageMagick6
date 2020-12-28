@@ -156,7 +156,7 @@ MagickExport MagickBooleanType AddValueToSplayTree(SplayTreeInfo *splay_tree,
   int
     compare;
 
-  register NodeInfo
+  NodeInfo
     *node;
 
   LockSemaphoreInfo(splay_tree->semaphore);
@@ -246,7 +246,7 @@ MagickExport MagickBooleanType AddValueToSplayTree(SplayTreeInfo *splay_tree,
 static NodeInfo *LinkSplayTreeNodes(NodeInfo **nodes,const size_t low,
   const size_t high)
 {
-  register NodeInfo
+  NodeInfo
     *node;
 
   size_t
@@ -267,7 +267,7 @@ static NodeInfo *LinkSplayTreeNodes(NodeInfo **nodes,const size_t low,
 
 static inline int SplayTreeToNodeArray(NodeInfo *node,const void *nodes)
 {
-  register const NodeInfo
+  const NodeInfo
     ***p;
 
   p=(const NodeInfo ***) nodes;
@@ -331,7 +331,7 @@ static void BalanceSplayTree(SplayTreeInfo *splay_tree)
 
 static inline void *GetFirstSplayTreeNode(SplayTreeInfo *splay_tree)
 {
-  register NodeInfo
+  NodeInfo
     *node;
 
   node=splay_tree->root;
@@ -345,7 +345,7 @@ static inline void *GetFirstSplayTreeNode(SplayTreeInfo *splay_tree)
 MagickExport SplayTreeInfo *CloneSplayTree(SplayTreeInfo *splay_tree,
   void *(*clone_key)(void *),void *(*clone_value)(void *))
 {
-  register NodeInfo
+  NodeInfo
     *next,
     *node;
 
@@ -485,7 +485,7 @@ MagickExport int CompareSplayTreeStringInfo(const void *target,
 MagickExport MagickBooleanType DeleteNodeByValueFromSplayTree(
   SplayTreeInfo *splay_tree,const void *value)
 {
-  register NodeInfo
+  NodeInfo
     *next,
     *node;
 
@@ -516,7 +516,7 @@ MagickExport MagickBooleanType DeleteNodeByValueFromSplayTree(
         int
           compare;
 
-        register NodeInfo
+        NodeInfo
           *left,
           *right;
 
@@ -605,7 +605,7 @@ MagickExport MagickBooleanType DeleteNodeFromSplayTree(
   int
     compare;
 
-  register NodeInfo
+  NodeInfo
     *left,
     *right;
 
@@ -683,7 +683,7 @@ MagickExport SplayTreeInfo *DestroySplayTree(SplayTreeInfo *splay_tree)
   NodeInfo
     *node;
 
-  register NodeInfo
+  NodeInfo
     *active,
     *pend;
 
@@ -767,7 +767,7 @@ MagickExport SplayTreeInfo *DestroySplayTree(SplayTreeInfo *splay_tree)
 */
 MagickExport const void *GetNextKeyInSplayTree(SplayTreeInfo *splay_tree)
 {
-  register NodeInfo
+  NodeInfo
     *node;
 
   void
@@ -821,7 +821,7 @@ MagickExport const void *GetNextKeyInSplayTree(SplayTreeInfo *splay_tree)
 */
 MagickExport const void *GetNextValueInSplayTree(SplayTreeInfo *splay_tree)
 {
-  register NodeInfo
+  NodeInfo
     *node;
 
   void
@@ -1029,10 +1029,10 @@ static int IterateOverSplayTree(SplayTreeInfo *splay_tree,
   NodeInfo
     **nodes;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register NodeInfo
+  NodeInfo
     *node;
 
   TransitionType
@@ -1191,7 +1191,7 @@ MagickExport SplayTreeInfo *NewSplayTree(
 MagickExport void *RemoveNodeByValueFromSplayTree(SplayTreeInfo *splay_tree,
   const void *value)
 {
-  register NodeInfo
+  NodeInfo
     *next,
     *node;
 
@@ -1223,7 +1223,7 @@ MagickExport void *RemoveNodeByValueFromSplayTree(SplayTreeInfo *splay_tree,
         int
           compare;
 
-        register NodeInfo
+        NodeInfo
           *left,
           *right;
 
@@ -1303,7 +1303,7 @@ MagickExport void *RemoveNodeFromSplayTree(SplayTreeInfo *splay_tree,
   int
     compare;
 
-  register NodeInfo
+  NodeInfo
     *left,
     *right;
 
@@ -1383,7 +1383,7 @@ MagickExport void ResetSplayTree(SplayTreeInfo *splay_tree)
   NodeInfo
     *node;
 
-  register NodeInfo
+  NodeInfo
     *active,
     *pend;
 
@@ -1522,7 +1522,7 @@ static NodeInfo *Splay(SplayTreeInfo *splay_tree,const size_t depth,
   NodeInfo
     **next;
 
-  register NodeInfo
+  NodeInfo
     *n,
     *p;
 

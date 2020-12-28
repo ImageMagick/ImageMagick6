@@ -119,7 +119,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   QuantumType
     quantum_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -229,13 +229,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -313,13 +313,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         {
           for (i=0; i < (ssize_t) (image->matte != MagickFalse ? 4 : 3); i++)
           {
-            register const PixelPacket
+            const PixelPacket
               *magick_restrict p;
 
             register PixelPacket
               *magick_restrict q;
 
-            register ssize_t
+            ssize_t
               x;
 
             if (count != (ssize_t) length)
@@ -414,13 +414,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -467,13 +467,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -520,13 +520,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -581,13 +581,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           {
             for (y=0; y < (ssize_t) image->extract_info.height; y++)
             {
-              register const PixelPacket
+              const PixelPacket
                 *magick_restrict p;
 
               register PixelPacket
                 *magick_restrict q;
 
-              register ssize_t
+              ssize_t
                 x;
 
               if (count != (ssize_t) length)
@@ -674,13 +674,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         stream=ReadBlobStream(image,length,pixels,&count);
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -746,13 +746,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         stream=ReadBlobStream(image,length,pixels,&count);
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -818,13 +818,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         stream=ReadBlobStream(image,length,pixels,&count);
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           register PixelPacket
             *magick_restrict q;
 
-          register ssize_t
+          ssize_t
             x;
 
           if (count != (ssize_t) length)
@@ -892,13 +892,13 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
             stream=ReadBlobStream(image,length,pixels,&count);
             for (y=0; y < (ssize_t) image->extract_info.height; y++)
             {
-              register const PixelPacket
+              const PixelPacket
                 *magick_restrict p;
 
               register PixelPacket
                 *magick_restrict q;
 
-              register ssize_t
+              ssize_t
                 x;
 
               if (count != (ssize_t) length)
@@ -1171,7 +1171,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
         */
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1199,7 +1199,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
         */
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1253,7 +1253,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
         */
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1273,7 +1273,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
           }
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1293,7 +1293,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
           }
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1315,7 +1315,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
           {
             for (y=0; y < (ssize_t) image->rows; y++)
             {
-              register const PixelPacket
+              const PixelPacket
                 *magick_restrict p;
 
               p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1357,7 +1357,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
           return(status);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1383,7 +1383,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
           return(status);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1409,7 +1409,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
           return(status);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          register const PixelPacket
+          const PixelPacket
             *magick_restrict p;
 
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
@@ -1437,7 +1437,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
               return(status);
             for (y=0; y < (ssize_t) image->rows; y++)
             {
-              register const PixelPacket
+              const PixelPacket
                 *magick_restrict p;
 
               p=GetVirtualPixels(image,0,y,image->columns,1,

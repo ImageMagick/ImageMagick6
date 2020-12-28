@@ -378,7 +378,7 @@ static double *GenerateCoefficients(const Image *image,
   double
     *coeff;
 
-  register size_t
+  size_t
     i;
 
   size_t
@@ -1041,7 +1041,7 @@ static double *GenerateCoefficients(const Image *image,
       size_t
         nterms;   /* number of polynomial terms per number_values */
 
-      register ssize_t
+      ssize_t
         j;
 
       MagickBooleanType
@@ -1968,7 +1968,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
 
   /* Verbose output */
   if ( GetImageArtifact(image,"verbose") != (const char *) NULL ) {
-    register ssize_t
+    ssize_t
        i;
     char image_gen[MaxTextExtent];
     const char *lookup;
@@ -2401,7 +2401,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
       register IndexPacket
         *magick_restrict indexes;
 
-      register ssize_t
+      ssize_t
         i;
 
       register PixelPacket
@@ -2549,7 +2549,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
           case PolynomialDistortion:
           {
             /* multi-ordered polynomial */
-            register ssize_t
+            ssize_t
               k;
 
             ssize_t
@@ -3016,7 +3016,7 @@ MagickExport Image *SparseColorImage(const Image *image,
     switch (sparse_method) {
       case BarycentricColorInterpolate:
       {
-        register ssize_t x=0;
+        ssize_t x=0;
         (void) FormatLocaleFile(stderr, "Barycentric Sparse Color:\n");
         if ( channel & RedChannel )
           (void) FormatLocaleFile(stderr, "  -channel R -fx '%+lf*i %+lf*j %+lf' \\\n",
@@ -3037,7 +3037,7 @@ MagickExport Image *SparseColorImage(const Image *image,
       }
       case BilinearColorInterpolate:
       {
-        register ssize_t x=0;
+        ssize_t x=0;
         (void) FormatLocaleFile(stderr, "Bilinear Sparse Color\n");
         if ( channel & RedChannel )
           (void) FormatLocaleFile(stderr, "   -channel R -fx '%+lf*i %+lf*j %+lf*i*j %+lf;\n",
@@ -3113,7 +3113,7 @@ MagickExport Image *SparseColorImage(const Image *image,
       register IndexPacket
         *magick_restrict indexes;
 
-      register ssize_t
+      ssize_t
         i;
 
       register PixelPacket
@@ -3135,7 +3135,7 @@ MagickExport Image *SparseColorImage(const Image *image,
         {
           case BarycentricColorInterpolate:
           {
-            register ssize_t x=0;
+            ssize_t x=0;
             if ( channel & RedChannel )
               pixel.red     = coeff[x]*i +coeff[x+1]*j
                               +coeff[x+2], x+=3;
@@ -3155,7 +3155,7 @@ MagickExport Image *SparseColorImage(const Image *image,
           }
           case BilinearColorInterpolate:
           {
-            register ssize_t x=0;
+            ssize_t x=0;
             if ( channel & RedChannel )
               pixel.red     = coeff[x]*i     + coeff[x+1]*j +
                               coeff[x+2]*i*j + coeff[x+3], x+=4;
@@ -3188,7 +3188,7 @@ MagickExport Image *SparseColorImage(const Image *image,
             if ( channel & OpacityChannel ) pixel.opacity = 0.0;
             denominator = 0.0;
             for(k=0; k<number_arguments; k+=2+number_colors) {
-              register ssize_t x=(ssize_t) k+2;
+              ssize_t x=(ssize_t) k+2;
               double weight =
                   ((double)i-arguments[ k ])*((double)i-arguments[ k ])
                 + ((double)j-arguments[k+1])*((double)j-arguments[k+1]);
@@ -3229,7 +3229,7 @@ MagickExport Image *SparseColorImage(const Image *image,
                   fabs((double)i-arguments[ k ])
                 + fabs((double)j-arguments[k+1]);
               if ( distance < minimum ) {
-                register ssize_t x=(ssize_t) k+2;
+                ssize_t x=(ssize_t) k+2;
                 if ( channel & RedChannel     ) pixel.red     = arguments[x++];
                 if ( channel & GreenChannel   ) pixel.green   = arguments[x++];
                 if ( channel & BlueChannel    ) pixel.blue    = arguments[x++];
@@ -3257,7 +3257,7 @@ MagickExport Image *SparseColorImage(const Image *image,
                   ((double)i-arguments[ k ])*((double)i-arguments[ k ])
                 + ((double)j-arguments[k+1])*((double)j-arguments[k+1]);
               if ( distance < minimum ) {
-                register ssize_t x=(ssize_t) k+2;
+                ssize_t x=(ssize_t) k+2;
                 if ( channel & RedChannel     ) pixel.red     = arguments[x++];
                 if ( channel & GreenChannel   ) pixel.green   = arguments[x++];
                 if ( channel & BlueChannel    ) pixel.blue    = arguments[x++];

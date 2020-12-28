@@ -170,7 +170,7 @@ static Image *ReadRLAImage(const ImageInfo *image_info,ExceptionInfo *exception)
     offset,
     *scanlines;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 

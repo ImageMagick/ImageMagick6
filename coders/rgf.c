@@ -110,11 +110,11 @@ static Image *ReadRGFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -324,10 +324,10 @@ static MagickBooleanType WriteRGFImage(const ImageInfo *image_info,Image *image)
   int
     bit;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t

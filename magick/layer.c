@@ -109,7 +109,7 @@ static void ClearBounds(Image *image,RectangleInfo *bounds)
   exception=(&image->exception);
   for (y=0; y < (ssize_t) bounds->height; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -165,11 +165,11 @@ static void ClearBounds(Image *image,RectangleInfo *bounds)
 static MagickBooleanType IsBoundsCleared(const Image *image1,
   const Image *image2,RectangleInfo *bounds,ExceptionInfo *exception)
 {
-  register const PixelPacket
+  const PixelPacket
     *p,
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -235,7 +235,7 @@ MagickExport Image *CoalesceImages(const Image *image,ExceptionInfo *exception)
     *dispose_image,
     *previous;
 
-  register Image
+  Image
     *next;
 
   RectangleInfo
@@ -387,7 +387,7 @@ MagickExport Image *DisposeImages(const Image *images,ExceptionInfo *exception)
   RectangleInfo
     bounds;
 
-  register Image
+  Image
     *image,
     *next;
 
@@ -602,15 +602,15 @@ static RectangleInfo CompareImageBounds(const Image *image1,const Image *image2,
     pixel1,
     pixel2;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes1,
     *indexes2;
 
-  register const PixelPacket
+  const PixelPacket
     *p,
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -774,10 +774,10 @@ MagickExport Image *CompareImageLayers(const Image *image,
   RectangleInfo
     *bounds;
 
-  register const Image
+  const Image
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(image != (const Image *) NULL);
@@ -993,10 +993,10 @@ static Image *OptimizeLayerFrames(const Image *image,
   DisposeType
     *disposals;
 
-  register const Image
+  const Image
     *curr;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(image != (const Image *) NULL);
@@ -1521,7 +1521,7 @@ MagickExport void OptimizeImageTransparency(const Image *image,
   Image
     *dispose_image;
 
-  register Image
+  Image
     *next;
 
   /*
@@ -1646,7 +1646,7 @@ MagickExport void RemoveDuplicateLayers(Image **images,ExceptionInfo *exception)
   RectangleInfo
     bounds;
 
-  register Image
+  Image
     *image,
     *next;
 
@@ -1961,7 +1961,7 @@ MagickExport Image *MergeImageLayers(Image *image,
   RectangleInfo
     page;
 
-  register const Image
+  const Image
     *next;
 
   size_t

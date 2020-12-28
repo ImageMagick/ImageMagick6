@@ -237,16 +237,16 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *p,
     *r;
 
@@ -571,7 +571,7 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
           {
             case 1:
             {
-              register ssize_t
+              ssize_t
                 bit;
 
               for (x=0; x < ((ssize_t) image->columns-7); x+=8)
@@ -806,10 +806,10 @@ ModuleExport void UnregisterPCXImage(void)
 static MagickBooleanType PCXWritePixels(PCXInfo *pcx_info,
   const unsigned char *pixels,Image *image)
 {
-  register const unsigned char
+  const unsigned char
     *q;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -876,17 +876,17 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
   PCXInfo
     pcx_info;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -1128,7 +1128,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
           }
         else
           {
-            register unsigned char
+            unsigned char
               bit,
               byte;
 

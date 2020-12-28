@@ -127,7 +127,7 @@ static Image *ReadVIDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   RectangleInfo
     geometry;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -322,7 +322,7 @@ static MagickBooleanType WriteVIDImage(const ImageInfo *image_info,Image *image)
   MontageInfo
     *montage_info;
 
-  register Image
+  Image
     *p;
 
   /*

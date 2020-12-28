@@ -410,7 +410,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   QuantumAny
     range;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -754,13 +754,13 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
   MagickPixelPacket
     pixel;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

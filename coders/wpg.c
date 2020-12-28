@@ -571,7 +571,7 @@ static int UnpackWPG2Raster(Image *image,int bpp)
   int
     RunCount;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

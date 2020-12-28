@@ -250,7 +250,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
     libraw_processed_image_t
       *raw_image;
 
-    register ssize_t
+    ssize_t
       y;
 
     StringInfo
@@ -356,7 +356,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       register PixelPacket
         *q;
 
-      register ssize_t
+      ssize_t
         x;
 
       q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);

@@ -120,13 +120,13 @@ MagickExport double GetImageTotalInkDensity(Image *image)
     double
       density;
 
-    register const IndexPacket
+    const IndexPacket
       *indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);

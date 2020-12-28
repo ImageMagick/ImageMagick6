@@ -162,7 +162,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -737,19 +737,19 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
   QuantumAny
     range;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *q;
 
   ssize_t

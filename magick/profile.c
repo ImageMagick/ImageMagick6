@@ -389,7 +389,7 @@ static void cmsDeleteContext(cmsContext magick_unused(ContextID))
 
 static double **DestroyPixelThreadSet(double **pixels)
 {
-  register ssize_t
+  ssize_t
     i;
 
   if (pixels == (double **) NULL)
@@ -407,7 +407,7 @@ static double **AcquirePixelThreadSet(const size_t columns,
   double
     **pixels;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -430,7 +430,7 @@ static double **AcquirePixelThreadSet(const size_t columns,
 
 static cmsHTRANSFORM *DestroyTransformThreadSet(cmsHTRANSFORM *transform)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(transform != (cmsHTRANSFORM *) NULL);
@@ -448,7 +448,7 @@ static cmsHTRANSFORM *AcquireTransformThreadSet(const LCMSInfo *source_info,
   cmsHTRANSFORM
     *transform;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1113,13 +1113,13 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               register IndexPacket
                 *magick_restrict indexes;
 
-              register double
+              double
                 *p;
 
               register PixelPacket
                 *magick_restrict q;
 
-              register ssize_t
+              ssize_t
                 x;
 
               if (status == MagickFalse)
@@ -1411,7 +1411,7 @@ static void WriteTo8BimProfile(Image *image,const char *name,
     *datum,
     *q;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
   size_t
@@ -1519,7 +1519,7 @@ static void GetProfilesFromResourceBlock(Image *image,
   const unsigned char
     *datum;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
   size_t
@@ -2101,7 +2101,7 @@ static MagickBooleanType SyncExifProfile(Image *image, StringInfo *profile)
       int
         components;
 
-      register unsigned char
+      unsigned char
         *p,
         *q;
 

@@ -161,7 +161,7 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
   RectangleInfo
     page;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -436,7 +436,7 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
     register PixelPacket
       *q;
 
-    register ssize_t
+    ssize_t
       x;
 
     q=GetAuthenticPixels(image,0,y,image->columns,1,exception);

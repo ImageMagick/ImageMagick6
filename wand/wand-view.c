@@ -120,7 +120,7 @@ WandExport WandView *CloneWandView(const WandView *wand_view)
   WandView
     *clone_view;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(wand_view != (WandView *) NULL);
@@ -177,7 +177,7 @@ WandExport WandView *CloneWandView(const WandView *wand_view)
 static PixelWand ***DestroyPixelsThreadSet(PixelWand ***pixel_wands,
   const size_t number_wands,const size_t number_threads)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(pixel_wands != (PixelWand ***) NULL);
@@ -304,18 +304,18 @@ WandExport MagickBooleanType DuplexTransferWandViewIterator(WandView *source,
     MagickBooleanType
       sync;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict duplex_indexes,
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict duplex_pixels,
       *magick_restrict pixels;
 
     register IndexPacket
       *magick_restrict destination_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -580,13 +580,13 @@ WandExport MagickBooleanType GetWandViewIterator(WandView *source,
     const int
       id = GetOpenMPThreadId();
 
-    register const IndexPacket
+    const IndexPacket
       *indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *pixels;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -758,7 +758,7 @@ static PixelWand ***AcquirePixelsThreadSet(const size_t number_wands,
   PixelWand
     ***pixel_wands;
 
-  register ssize_t
+  ssize_t
     i;
 
   pixel_wands=(PixelWand ***) AcquireQuantumMemory(number_threads,
@@ -996,7 +996,7 @@ WandExport MagickBooleanType SetWandViewIterator(WandView *destination,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1178,16 +1178,16 @@ WandExport MagickBooleanType TransferWandViewIterator(WandView *source,
     MagickBooleanType
       sync;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict pixels;
 
     register IndexPacket
       *magick_restrict destination_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1354,7 +1354,7 @@ WandExport MagickBooleanType UpdateWandViewIterator(WandView *source,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

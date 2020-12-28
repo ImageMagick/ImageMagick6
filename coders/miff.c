@@ -488,7 +488,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
   QuantumType
     quantum_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -559,7 +559,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     image->compression=NoCompression;
     while ((isgraph((int) ((unsigned char) c)) != 0) && (c != (int) ':'))
     {
-      register char
+      char
         *p;
 
       if (c == (int) '{')
@@ -1127,7 +1127,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
       }
     if (image->montage != (char *) NULL)
       {
-        register char
+        char
           *p;
 
         /*
@@ -1436,7 +1436,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
       register IndexPacket
         *magick_restrict indexes;
 
-      register ssize_t
+      ssize_t
         x;
 
       register PixelPacket
@@ -2037,7 +2037,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
   QuantumType
     quantum_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2440,7 +2440,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
             case 32:
             default:
             {
-              register unsigned int
+              unsigned int
                 pixel;
 
               pixel=ScaleQuantumToLong(image->colormap[i].red);
@@ -2453,7 +2453,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
             }
             case 16:
             {
-              register unsigned short
+              unsigned short
                 pixel;
 
               pixel=ScaleQuantumToShort(image->colormap[i].red);
@@ -2466,7 +2466,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
             }
             case 8:
             {
-              register unsigned char
+              unsigned char
                 pixel;
 
               pixel=(unsigned char) ScaleQuantumToChar(image->colormap[i].red);
@@ -2547,13 +2547,13 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
     pixels=GetQuantumPixels(quantum_info);
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict indexes;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
-      register ssize_t
+      ssize_t
         x;
 
       if (status == MagickFalse)

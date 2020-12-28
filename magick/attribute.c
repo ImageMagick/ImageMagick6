@@ -157,7 +157,7 @@ static double GetEdgeBackgroundFactor(const Image *image,
   RectangleInfo
     edge_geometry;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   ssize_t
@@ -218,7 +218,7 @@ static double GetEdgeBackgroundFactor(const Image *image,
   edge_view=AcquireVirtualCacheView(edge_image,exception);
   for (y=0; y < (ssize_t) edge_image->rows; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(edge_view,0,y,edge_image->columns,1,exception);
@@ -407,7 +407,7 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
   RectangleInfo
     bounds;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   ssize_t
@@ -460,13 +460,13 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
     RectangleInfo
       bounding_box;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -568,7 +568,7 @@ MagickExport size_t GetImageChannelDepth(const Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -681,13 +681,13 @@ RestoreMSCWarning
         const int
           id = GetOpenMPThreadId();
 
-        register const IndexPacket
+        const IndexPacket
           *magick_restrict indexes;
 
-        register const PixelPacket
+        const PixelPacket
           *magick_restrict p;
 
-        register ssize_t
+        ssize_t
           x;
 
         if (status == MagickFalse)
@@ -757,13 +757,13 @@ RestoreMSCWarning
     const int
       id = GetOpenMPThreadId();
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -965,10 +965,10 @@ MagickExport ImageType IdentifyImageGray(const Image *image,
   ImageType
     type;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -1046,10 +1046,10 @@ MagickExport MagickBooleanType IdentifyImageMonochrome(const Image *image,
   ImageType
     type;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   ssize_t
@@ -1258,10 +1258,10 @@ MagickExport MagickBooleanType IsOpaqueImage(const Image *image,
   CacheView
     *image_view;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -1360,7 +1360,7 @@ MagickExport MagickBooleanType SetImageChannelDepth(Image *image,
   range=GetQuantumRange(depth);
   if (image->storage_class == PseudoClass)
     {
-      register ssize_t
+      ssize_t
         i;
 
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -1395,7 +1395,7 @@ RestoreMSCWarning
       Quantum
         *depth_map;
 
-      register ssize_t
+      ssize_t
         i;
 
       /*
@@ -1413,7 +1413,7 @@ RestoreMSCWarning
 #endif
       for (y=0; y < (ssize_t) image->rows; y++)
       {
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -1463,7 +1463,7 @@ RestoreMSCWarning
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

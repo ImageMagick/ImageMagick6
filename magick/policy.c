@@ -169,7 +169,7 @@ static LinkedListInfo *AcquirePolicyCache(const char *filename,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -209,7 +209,7 @@ static LinkedListInfo *AcquirePolicyCache(const char *filename,
     PolicyInfo
       *policy_info;
 
-    register const PolicyMapInfo
+    const PolicyMapInfo
       *p;
 
     p=PolicyMap+i;
@@ -271,10 +271,10 @@ static PolicyInfo *GetPolicyInfo(const char *name,ExceptionInfo *exception)
   PolicyDomain
     domain;
 
-  register PolicyInfo
+  PolicyInfo
     *p;
 
-  register char
+  char
     *q;
 
   assert(exception != (ExceptionInfo *) NULL);
@@ -365,10 +365,10 @@ MagickExport const PolicyInfo **GetPolicyInfoList(const char *pattern,
   const PolicyInfo
     **policies;
 
-  register const PolicyInfo
+  const PolicyInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -460,10 +460,10 @@ MagickExport char **GetPolicyList(const char *pattern,size_t *number_policies,
   char
     **policies;
 
-  register const PolicyInfo
+  const PolicyInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -622,7 +622,7 @@ MagickExport MagickBooleanType IsRightsAuthorized(const PolicyDomain domain,
   MagickBooleanType
     authorized;
 
-  register PolicyInfo
+  PolicyInfo
     *p;
 
   (void) LogMagickEvent(PolicyEvent,GetMagickModule(),
@@ -693,7 +693,7 @@ MagickExport MagickBooleanType ListPolicyInfo(FILE *file,
   const PolicyInfo
     **policy_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1032,7 +1032,7 @@ MagickExport MagickBooleanType PolicyComponentGenesis(void)
 
 static void *DestroyPolicyElement(void *policy_info)
 {
-  register PolicyInfo
+  PolicyInfo
     *p;
 
   p=(PolicyInfo *) policy_info;

@@ -216,7 +216,7 @@ static Image *ReadVICARImage(const ImageInfo *image_info,
       }
     else
       {
-        register char
+        char
           *p;
 
         /*
@@ -444,7 +444,7 @@ static MagickBooleanType WriteVICARImage(const ImageInfo *image_info,
   QuantumInfo
     *quantum_info;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   size_t

@@ -255,7 +255,7 @@ WandExport MagickBooleanType ImportImageCommand(ImageInfo *image_info,
   QuantizeInfo
     *quantize_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t

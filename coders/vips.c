@@ -315,7 +315,7 @@ static MagickBooleanType ReadVIPSPixelsNONE(Image *image,
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -634,13 +634,13 @@ static MagickBooleanType WriteVIPSImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t

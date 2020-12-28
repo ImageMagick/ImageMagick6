@@ -102,7 +102,7 @@ static Image *ReadUYVYImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
@@ -304,10 +304,10 @@ static MagickBooleanType WriteUYVYImage(const ImageInfo *image_info,
     full,
     status;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t

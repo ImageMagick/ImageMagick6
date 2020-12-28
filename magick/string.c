@@ -425,13 +425,13 @@ MagickExport int CompareStringInfo(const StringInfo *target,
 MagickExport size_t ConcatenateMagickString(char *magick_restrict destination,
   const char *magick_restrict source,const size_t length)
 {
-  register char
+  char
     *magick_restrict q;
 
-  register const char
+  const char
     *magick_restrict p;
 
-  register size_t
+  size_t
     i;
 
   size_t
@@ -635,7 +635,7 @@ MagickExport StringInfo *ConfigureFileToStringInfo(const char *filename)
     }
   else
     {
-      register size_t
+      size_t
         i;
 
       ssize_t
@@ -751,13 +751,13 @@ MagickExport char *ConstantString(const char *source)
 MagickExport size_t CopyMagickString(char *magick_restrict destination,
   const char *magick_restrict source,const size_t length)
 {
-  register char
+  char
     *magick_restrict q;
 
-  register const char
+  const char
     *magick_restrict p;
 
-  register size_t
+  size_t
     n;
 
   p=source;
@@ -870,7 +870,7 @@ MagickExport StringInfo *DestroyStringInfo(StringInfo *string_info)
 */
 MagickExport char **DestroyStringList(char **list)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(list != (char **) NULL);
@@ -914,10 +914,10 @@ MagickExport char *EscapeString(const char *source,const char escape)
   char
     *destination;
 
-  register char
+  char
     *q;
 
-  register const char
+  const char
     *p;
 
   size_t
@@ -1081,7 +1081,7 @@ MagickExport ssize_t FormatMagickSize(const MagickSizeType size,
     bytes,
     length;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -1477,10 +1477,10 @@ MagickExport MagickBooleanType IsStringNotFalse(const char *value)
 MagickExport void PrintStringInfo(FILE *file,const char *id,
   const StringInfo *string_info)
 {
-  register const char
+  const char
     *p;
 
-  register size_t
+  size_t
     i,
     j;
 
@@ -1598,7 +1598,7 @@ MagickExport char *SanitizeString(const char *source)
   const char
     *q;
 
-  register char
+  char
     *p;
 
   static char
@@ -1903,13 +1903,13 @@ MagickExport char *StringInfoToHexString(const StringInfo *string_info)
   char
     *string;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -1991,11 +1991,11 @@ MagickExport char **StringToArgv(const char *text,int *argc)
   char
     **argv;
 
-  register const char
+  const char
     *p,
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
   *argc=0;
@@ -2113,7 +2113,7 @@ MagickExport double *StringToArrayOfDoubles(const char *string,ssize_t *count,
   double
     *array;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -2205,13 +2205,13 @@ MagickExport char *StringToken(const char *delimiters,char **string)
   char
     *q;
 
-  register char
+  char
     *p;
 
-  register const char
+  const char
     *r;
 
-  register int
+  int
     c,
     d;
 
@@ -2299,10 +2299,10 @@ MagickExport char **StringToStrings(const char *text,size_t *count)
   char
     **textlist;
 
-  register const char
+  const char
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2320,7 +2320,7 @@ MagickExport char **StringToStrings(const char *text,size_t *count)
       break;
   if (*p == '\0')
     {
-      register const char
+      const char
         *q;
 
       /*
@@ -2356,10 +2356,10 @@ MagickExport char **StringToStrings(const char *text,size_t *count)
       char
         hex_string[MagickPathExtent];
 
-      register char
+      char
         *q;
 
-      register ssize_t
+      ssize_t
         j;
 
       /*
@@ -2479,7 +2479,7 @@ MagickExport StringInfo *StringToStringInfo(const char *string)
 */
 MagickExport void StripString(char *message)
 {
-  register char
+  char
     *p,
     *q;
 
@@ -2545,7 +2545,7 @@ MagickExport MagickBooleanType SubstituteString(char **string,
   MagickBooleanType
     status;
 
-  register char
+  char
     *p;
 
   size_t

@@ -226,16 +226,16 @@ MagickExport Image *AddNoiseImageChannel(const Image *image,
     MagickBooleanType
       sync;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
       *magick_restrict noise_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -397,10 +397,10 @@ MagickExport Image *BlueShiftImage(const Image *image,const double factor,
     Quantum
       quantum;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -650,10 +650,10 @@ MagickExport Image *ColorizeImage(const Image *image,const char *opacity,
     MagickBooleanType
       sync;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -771,7 +771,7 @@ MagickExport Image *ColorMatrixImage(const Image *image,
   MagickOffsetType
     progress;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -848,13 +848,13 @@ MagickExport Image *ColorMatrixImage(const Image *image,
     MagickRealType
       pixel;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     register IndexPacket
@@ -877,7 +877,7 @@ MagickExport Image *ColorMatrixImage(const Image *image,
     color_indexes=GetCacheViewAuthenticIndexQueue(color_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      register ssize_t
+      ssize_t
         v;
 
       size_t
@@ -1066,7 +1066,7 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
     register IndexPacket
       *magick_restrict implode_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1185,10 +1185,10 @@ MagickExport Image *MorphImages(const Image *image,
   MagickOffsetType
     scene;
 
-  register const Image
+  const Image
     *next;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -1285,10 +1285,10 @@ MagickExport Image *MorphImages(const Image *image,
         MagickBooleanType
           sync;
 
-        register const PixelPacket
+        const PixelPacket
           *magick_restrict p;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -1911,10 +1911,10 @@ MagickExport Image *SepiaToneImage(const Image *image,const double threshold,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -2078,7 +2078,7 @@ MagickExport Image *ShadowImage(const Image *image,const double opacity,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2228,7 +2228,7 @@ magick_number_threads(random_image,random_image,random_image->rows,key == ~0UL)
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -2373,7 +2373,7 @@ MagickExport MagickBooleanType SolarizeImageChannel(Image *image,
     (void) SetImageColorspace(image,sRGBColorspace);
   if (image->storage_class == PseudoClass)
     {
-      register ssize_t
+      ssize_t
         i;
 
       /*
@@ -2404,7 +2404,7 @@ MagickExport MagickBooleanType SolarizeImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -2508,7 +2508,7 @@ MagickExport Image *SteganoImage(const Image *image,const Image *watermark,
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t
@@ -2717,11 +2717,11 @@ MagickExport Image *StereoAnaglyphImage(const Image *left_image,
   status=MagickTrue;
   for (y=0; y < (ssize_t) stereo_image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -2882,7 +2882,7 @@ MagickExport Image *SwirlImage(const Image *image,double degrees,
     register IndexPacket
       *magick_restrict swirl_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -3071,13 +3071,13 @@ MagickExport Image *TintImage(const Image *image,const char *opacity,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -3289,7 +3289,7 @@ MagickExport Image *WaveImage(const Image *image,const double amplitude,
   MagickPixelPacket
     zero;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -3354,7 +3354,7 @@ MagickExport Image *WaveImage(const Image *image,const double amplitude,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -3445,7 +3445,7 @@ static inline void HatTransform(const float *magick_restrict pixels,
     *magick_restrict q,
     *magick_restrict r;
 
-  register ssize_t
+  ssize_t
     i;
 
   p=pixels;
@@ -3552,7 +3552,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
   noise_view=AcquireAuthenticCacheView(noise_image,exception);
   for (channel=0; channel < (ssize_t) max_channels; channel++)
   {
-    register ssize_t
+    ssize_t
       i;
 
     size_t
@@ -3571,10 +3571,10 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
     i=0;
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict indexes;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
       ssize_t
@@ -3626,11 +3626,11 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
         const int
           id = GetOpenMPThreadId();
 
-        register float
+        float
           *magick_restrict p,
           *magick_restrict q;
 
-        register ssize_t
+        ssize_t
           x;
 
         p=kernel+id*image->columns;
@@ -3649,11 +3649,11 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
         const int
           id = GetOpenMPThreadId();
 
-        register float
+        float
           *magick_restrict p,
           *magick_restrict q;
 
-        register ssize_t
+        ssize_t
           y;
 
         p=kernel+id*image->rows;
@@ -3700,7 +3700,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
       register PixelPacket
         *magick_restrict q;
 
-      register ssize_t
+      ssize_t
         x;
 
       q=GetCacheViewAuthenticPixels(noise_view,0,y,noise_image->columns,1,

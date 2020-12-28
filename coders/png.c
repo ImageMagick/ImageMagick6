@@ -900,7 +900,7 @@ LosslessReduceDepthOK(Image *image)
             ssize_t
               y;
 
-            register ssize_t
+            ssize_t
               x;
 
             for (y=0; y < (ssize_t) image->rows; y++)
@@ -1383,7 +1383,7 @@ static void mng_get_data(png_structp png_ptr,png_bytep data,png_size_t length)
   png_size_t
     check;
 
-  register ssize_t
+  ssize_t
     i;
 
   i=0;
@@ -1534,7 +1534,7 @@ static void MngInfoDiscardObject(MngInfo *mng_info,int i)
 
 static MngInfo *MngInfoFreeStruct(MngInfo *mng_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   if (mng_info == (MngInfo *) NULL)
@@ -1703,13 +1703,13 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
   png_charp
     ep;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *dp;
 
-  register png_charp
+  png_charp
     sp;
 
   size_t
@@ -2078,13 +2078,13 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
   ssize_t
     y;
 
-  register unsigned char
+  unsigned char
     *p;
 
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -3433,7 +3433,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
 
     for (pass=0; pass < num_passes; pass++)
     {
-      register Quantum
+      Quantum
         *r;
 
       /*
@@ -4289,17 +4289,17 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
     jng_alpha_filter_method,
     jng_alpha_interlace_method;
 
-  register const PixelPacket
+  const PixelPacket
     *s;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
   register PixelPacket
     *q;
 
-  register unsigned char
+  unsigned char
     *p;
 
   unsigned int
@@ -5164,10 +5164,10 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
     mng_background_color;
 #endif
 
-  register unsigned char
+  unsigned char
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -5990,7 +5990,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
 
             else
               {
-                register ssize_t
+                ssize_t
                   j;
 
                 for (j=1; j < (ssize_t) length; j+=2)
@@ -6729,7 +6729,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                   m,
                   y;
 
-                register ssize_t
+                ssize_t
                   x;
 
                 register PixelPacket
@@ -7953,7 +7953,7 @@ Magick_png_write_raw_profile(const ImageInfo *image_info,png_struct *ping,
    png_textp
      text;
 
-   register ssize_t
+   ssize_t
      i;
 
    unsigned char
@@ -8262,7 +8262,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
   QuantumInfo
     *quantum_info;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -8783,7 +8783,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
    register IndexPacket
      *indexes;
 
-   register const PixelPacket
+   const PixelPacket
      *s,
      *q;
 
@@ -9587,7 +9587,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
            ExceptionInfo
              *exception;
 
-           register const PixelPacket
+           const PixelPacket
              *q;
 
            exception=(&image->exception);
@@ -11228,7 +11228,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       QuantumType
         quantum_type;
 
-      register const PixelPacket
+      const PixelPacket
         *p;
 
       quantum_type=RedQuantum;
@@ -11285,7 +11285,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
           (ping_bit_depth >= MAGICKCORE_QUANTUM_DEPTH)) &&
           (mng_info->IsPalette) && ping_have_color == MagickFalse)
         {
-          register const PixelPacket
+          const PixelPacket
             *p;
 
           for (pass=0; pass < num_passes; pass++)
@@ -11340,7 +11340,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
       else
         {
-          register const PixelPacket
+          const PixelPacket
             *p;
 
           for (pass=0; pass < num_passes; pass++)
@@ -13001,7 +13001,7 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
     {
       if (jng_alpha_compression_method==0)
         {
-          register ssize_t
+          ssize_t
             i;
 
           size_t
@@ -13257,7 +13257,7 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
     need_defi,
     use_global_plte;
 
-  register ssize_t
+  ssize_t
     i;
 
   unsigned char

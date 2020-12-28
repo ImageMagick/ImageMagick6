@@ -187,7 +187,7 @@ static Image *ReadTTFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PixelPacket
     background_color;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 

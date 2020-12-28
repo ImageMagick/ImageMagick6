@@ -1352,7 +1352,7 @@ MagickExport Image *ReadPICTImage(const ImageInfo *image_info,
     register IndexPacket
       *restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

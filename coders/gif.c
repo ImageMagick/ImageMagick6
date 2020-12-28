@@ -200,7 +200,7 @@ static LZWInfo *AcquireLZWInfo(Image *image,const size_t data_size)
   LZWInfo
     *lzw_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -265,7 +265,7 @@ static inline int GetNextLZWCode(LZWInfo *lzw_info,const size_t bits)
   int
     code;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -436,7 +436,7 @@ static MagickBooleanType DecodeImage(Image *image,const ssize_t opacity)
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -662,13 +662,13 @@ static MagickBooleanType EncodeImage(const ImageInfo *image_info,Image *image,
   waiting_code=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetVirtualPixels(image,0,offset,image->columns,1,&image->exception);
@@ -995,10 +995,10 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -1544,10 +1544,10 @@ static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
   RectangleInfo
     page;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -1749,7 +1749,7 @@ static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
         value=GetImageProperty(image,"comment");
         if (value != (const char *) NULL)
           {
-            register const char
+            const char
               *p;
 
             size_t

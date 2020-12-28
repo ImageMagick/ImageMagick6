@@ -208,13 +208,13 @@ MagickExport SignatureInfo *DestroySignatureInfo(SignatureInfo *signature_info)
 */
 MagickExport void FinalizeSignature(SignatureInfo *signature_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *q;
 
-  register unsigned int
+  unsigned int
     *p;
 
   size_t
@@ -481,7 +481,7 @@ MagickExport MagickBooleanType SignatureImage(Image *image)
   QuantumType
     quantum_type;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   SignatureInfo
@@ -583,10 +583,10 @@ static void TransformSignature(SignatureInfo *signature_info)
 #define Suma1(x)  (RotateRight(x,6) ^ RotateRight(x,11) ^ RotateRight(x,25))
 #define Trunc32(x)  ((unsigned int) ((x) & 0xffffffffU))
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *p;
 
   ssize_t
@@ -750,10 +750,10 @@ RestoreMSCWarning
 MagickExport void UpdateSignature(SignatureInfo *signature_info,
   const StringInfo *message)
 {
-  register size_t
+  size_t
     i;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t

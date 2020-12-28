@@ -271,7 +271,7 @@ static LinkedListInfo *AcquireMagicCache(const char *filename,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   cache=NewLinkedList(0);
@@ -313,7 +313,7 @@ static LinkedListInfo *AcquireMagicCache(const char *filename,
     MagicInfo
       *magic_info;
 
-    register const MagicMapInfo
+    const MagicMapInfo
       *p;
 
     p=MagicMap+i;
@@ -374,7 +374,7 @@ static LinkedListInfo *AcquireMagicCache(const char *filename,
 MagickExport const MagicInfo *GetMagicInfo(const unsigned char *magic,
   const size_t length,ExceptionInfo *exception)
 {
-  register const MagicInfo
+  const MagicInfo
     *p;
 
   assert(exception != (ExceptionInfo *) NULL);
@@ -462,10 +462,10 @@ MagickExport const MagicInfo **GetMagicInfoList(const char *pattern,
   const MagicInfo
     **aliases;
 
-  register const MagicInfo
+  const MagicInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -538,7 +538,7 @@ extern "C" {
 
 static int MagicCompare(const void *x,const void *y)
 {
-  register const char
+  const char
     *p,
     *q;
 
@@ -557,10 +557,10 @@ MagickExport char **GetMagicList(const char *pattern,size_t *number_aliases,
   char
     **aliases;
 
-  register const MagicInfo
+  const MagicInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -694,7 +694,7 @@ MagickExport MagickBooleanType ListMagicInfo(FILE *file,
   const MagicInfo
     **magic_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -731,7 +731,7 @@ MagickExport MagickBooleanType ListMagicInfo(FILE *file,
     (void) FormatLocaleFile(file,"%6ld ",(long) magic_info[i]->offset);
     if (magic_info[i]->target != (char *) NULL)
       {
-        register ssize_t
+        ssize_t
           j;
 
         for (j=0; magic_info[i]->target[j] != '\0'; j++)
@@ -951,7 +951,7 @@ static MagickBooleanType LoadMagicCache(LinkedListInfo *cache,const char *xml,
             char
               *p;
 
-            register unsigned char
+            unsigned char
               *q;
 
             size_t
@@ -1058,7 +1058,7 @@ MagickExport MagickBooleanType MagicComponentGenesis(void)
 
 static void *DestroyMagicElement(void *magic_info)
 {
-  register MagicInfo
+  MagicInfo
     *p;
 
   p=(MagicInfo *) magic_info;

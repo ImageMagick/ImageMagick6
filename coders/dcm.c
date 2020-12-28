@@ -2843,7 +2843,7 @@ static MagickBooleanType ReadDCMPixels(Image *image,DCMInfo *info,
   LongPixelPacket
     pixel;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -3065,10 +3065,10 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickOffsetType
     offset;
 
-  register unsigned char
+  unsigned char
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -4183,7 +4183,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         }
       if ((info.samples_per_pixel > 1) && (image->interlace == PlaneInterlace))
         {
-          register ssize_t
+          ssize_t
             x;
 
           register PixelPacket

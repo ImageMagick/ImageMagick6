@@ -181,13 +181,13 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
   MagickPixelPacket
     pixel;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

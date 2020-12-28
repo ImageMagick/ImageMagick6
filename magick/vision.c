@@ -176,7 +176,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   MatrixInfo
     *equivalences;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -258,10 +258,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     dy=connectivity > 4 ? connect8[n][0] : connect4[n][0];
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
-      register ssize_t
+      ssize_t
         x;
 
       if (status == MagickFalse)
@@ -352,10 +352,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   component_view=AcquireAuthenticCacheView(component_image,exception);
   for (y=0; y < (ssize_t) component_image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
@@ -364,7 +364,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -483,7 +483,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   artifact=GetImageArtifact(image,"connected-components:keep-colors");
   if (artifact != (const char *) NULL)
     {
-      register const char
+      const char
         *p;
 
       /*
@@ -499,7 +499,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         MagickPixelPacket
           pixel;
 
-        register const char
+        const char
           *q;
 
         for (q=p; *q != '\0'; q++)
@@ -576,7 +576,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   artifact=GetImageArtifact(image,"connected-components:remove-colors");
   if (artifact != (const char *) NULL)
     {
-      register const char
+      const char
         *p;
 
       /*
@@ -590,7 +590,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         MagickPixelPacket
           pixel;
 
-        register const char
+        const char
           *q;
 
         for (q=p; *q != '\0'; q++)
@@ -644,7 +644,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     RectangleInfo
       bounding_box;
 
-    register ssize_t
+    ssize_t
       j;
 
     size_t
@@ -662,13 +662,13 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     bounding_box=object[i].bounding_box;
     for (y=0; y < (ssize_t) bounding_box.height; y++)
     {
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict indexes;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
-      register ssize_t
+      ssize_t
         x;
 
       if (status == MagickFalse)
@@ -689,10 +689,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         if (j == i)
           for (n=0; n < (ssize_t) (connectivity > 4 ? 4 : 2); n++)
           {
-            register const IndexPacket
+            const IndexPacket
               *magick_restrict indexes;
 
-            register const PixelPacket
+            const PixelPacket
               *p;
 
             /*
@@ -732,7 +732,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       register PixelPacket
         *magick_restrict q;
 
-      register ssize_t
+      ssize_t
         x;
 
       if (status == MagickFalse)
@@ -793,13 +793,13 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       component_view=AcquireVirtualCacheView(component_image,exception);
       for (y=0; y < (ssize_t) component_image->rows; y++)
       {
-        register const IndexPacket
+        const IndexPacket
           *indexes;
 
-        register const PixelPacket
+        const PixelPacket
           *magick_restrict p;
 
-        register ssize_t
+        ssize_t
           x;
 
         if (status == MagickFalse)

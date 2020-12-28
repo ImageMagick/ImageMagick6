@@ -160,7 +160,7 @@ static int CompareXPMColor(const void *target,const void *source)
 
 static ssize_t CopyXPMColor(char *destination,const char *source,size_t length)
 {
-  register const char
+  const char
     *p;
 
   p=source;
@@ -187,14 +187,14 @@ static char *ParseXPMColor(char *color,MagickBooleanType search_start)
 {
 #define NumberTargets  6
 
-  register char
+  char
     *p,
     *r;
 
-  register const char
+  const char
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
   static const char
@@ -260,7 +260,7 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     active,
     status;
 
-  register char
+  char
     *next,
     *p,
     *q;
@@ -271,7 +271,7 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register PixelPacket
     *r;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t
@@ -704,13 +704,13 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
   RectangleInfo
     geometry;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -979,13 +979,13 @@ static MagickBooleanType WriteXPMImage(const ImageInfo *image_info,Image *image)
   MagickPixelPacket
     pixel;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 

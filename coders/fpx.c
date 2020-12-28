@@ -149,14 +149,14 @@ static Image *ReadFPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
   register PixelPacket
     *q;
 
-  register unsigned char
+  unsigned char
     *a,
     *b,
     *g,
@@ -797,10 +797,10 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
   QuantumType
     quantum_type;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

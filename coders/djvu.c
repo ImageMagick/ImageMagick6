@@ -765,7 +765,7 @@ static Image *ReadDJVUImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*

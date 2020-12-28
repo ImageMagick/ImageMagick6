@@ -1276,7 +1276,7 @@ MagickPrivate const GhostInfo *NTGhostscriptDLLVectors(void)
 */
 MagickPrivate int NTGhostscriptEXE(char *path,int length)
 {
-  register char
+  char
     *p;
 
   static char
@@ -1351,7 +1351,7 @@ MagickPrivate int NTGhostscriptFonts(char *path,int length)
     *directory,
     filename[MaxTextExtent];
 
-  register char
+  char
     *p,
     *q;
 
@@ -1860,7 +1860,7 @@ MagickPrivate void *NTOpenLibrary(const char *filename)
   char
     path[MaxTextExtent];
 
-  register const char
+  const char
     *p,
     *q;
 

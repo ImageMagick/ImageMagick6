@@ -836,7 +836,7 @@ static LinkedListInfo *AcquireColorCache(const char *filename,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -873,7 +873,7 @@ static LinkedListInfo *AcquireColorCache(const char *filename,
     ColorInfo
       *color_info;
 
-    register const ColormapInfo
+    const ColormapInfo
       *p;
 
     p=Colormap+i;
@@ -953,7 +953,7 @@ MagickExport MagickBooleanType ColorComponentGenesis(void)
 
 static void *DestroyColorElement(void *color_info)
 {
-  register ColorInfo
+  ColorInfo
     *p;
 
   p=(ColorInfo *) color_info;
@@ -1013,10 +1013,10 @@ MagickExport const ColorInfo *GetColorCompliance(const char *name,
   char
     colorname[MaxTextExtent];
 
-  register const ColorInfo
+  const ColorInfo
     *p;
 
-  register char
+  char
     *q;
 
   assert(exception != (ExceptionInfo *) NULL);
@@ -1279,10 +1279,10 @@ MagickExport const ColorInfo **GetColorInfoList(const char *pattern,
   const ColorInfo
     **colors;
 
-  register const ColorInfo
+  const ColorInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1353,7 +1353,7 @@ extern "C" {
 
 static int ColorCompare(const void *x,const void *y)
 {
-  register const char
+  const char
     **p,
     **q;
 
@@ -1372,10 +1372,10 @@ MagickExport char **GetColorList(const char *pattern,
   char
     **colors;
 
-  register const ColorInfo
+  const ColorInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1661,7 +1661,7 @@ MagickExport MagickBooleanType IsColorSimilar(const Image *image,
     fuzz,
     pixel;
 
-  register MagickRealType
+  MagickRealType
     distance,
     scale;
 
@@ -1772,15 +1772,15 @@ MagickExport MagickBooleanType IsImageSimilar(const Image *image,
     target,
     pixel;
 
-  register const PixelPacket
+  const PixelPacket
     *p,
     *q;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes,
     *target_indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -1887,7 +1887,7 @@ MagickPrivate MagickBooleanType IsIntensitySimilar(const Image *image,
     fuzz,
     pixel;
 
-  register MagickRealType
+  MagickRealType
     distance;
 
   if (GetPixelIntensity(image,p) == GetPixelIntensity(image,q))
@@ -1953,7 +1953,7 @@ MagickExport MagickBooleanType IsMagickColorSimilar(const MagickPixelPacket *p,
     fuzz,
     pixel;
 
-  register MagickRealType
+  MagickRealType
     scale,
     distance;
 
@@ -2065,7 +2065,7 @@ MagickExport MagickBooleanType IsOpacitySimilar(const Image *image,
     fuzz,
     pixel;
 
-  register MagickRealType
+  MagickRealType
     distance;
 
   if (image->matte == MagickFalse)
@@ -2119,7 +2119,7 @@ MagickExport MagickBooleanType ListColorInfo(FILE *file,
   const ColorInfo
     **color_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2566,7 +2566,7 @@ static MagickStatusType ParseCSSColor(const char *magick_restrict color,
   char
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
   MagickStatusType
@@ -2657,10 +2657,10 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
   MagickStatusType
     flags;
 
-  register const ColorInfo
+  const ColorInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -2801,7 +2801,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
         }
       if (LocaleCompare(colorspace,"icc-color") == 0)
         {
-          register ssize_t
+          ssize_t
             j;
 
           (void) CopyMagickString(colorspace,name+i+2,MaxTextExtent);
@@ -3076,7 +3076,7 @@ MagickExport MagickBooleanType QueryMagickColorname(const Image *image,
   MagickRealType
     opacity;
 
-  register const ColorInfo
+  const ColorInfo
     *p;
 
   *name='\0';

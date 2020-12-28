@@ -125,13 +125,13 @@ static Image *ReadPlasmaImage(const ImageInfo *image_info,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
     *q;
 
-  register size_t
+  size_t
     i;
 
   SegmentInfo

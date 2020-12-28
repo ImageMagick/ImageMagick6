@@ -233,10 +233,10 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
       channel_bias,
       channel_sum;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict r;
 
@@ -246,7 +246,7 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     ssize_t
@@ -408,7 +408,7 @@ static double KapurThreshold(const Image *image,const double *histogram,
     maximum_entropy,
     *white_entropy;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -505,7 +505,7 @@ static double OTSUThreshold(const Image *image,const double *histogram,
     *sigma,
     threshold;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -589,7 +589,7 @@ static double TriangleThreshold(const Image *image,const double *histogram)
     y1,
     y2;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -685,7 +685,7 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -708,10 +708,10 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
@@ -868,7 +868,7 @@ MagickExport MagickBooleanType BilevelImageChannel(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1060,7 +1060,7 @@ MagickExport MagickBooleanType BlackThresholdImageChannel(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1179,7 +1179,7 @@ MagickExport MagickBooleanType ClampImageChannel(Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->storage_class == PseudoClass)
     {
-      register ssize_t
+      ssize_t
         i;
 
       register PixelPacket
@@ -1212,7 +1212,7 @@ MagickExport MagickBooleanType ClampImageChannel(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1477,7 +1477,7 @@ MagickExport ThresholdMap *GetThresholdMapFile(const char *xml,
     char
       *p;
 
-    register ssize_t
+    ssize_t
       i;
 
     /*
@@ -1867,7 +1867,7 @@ MagickExport MagickBooleanType OrderedPosterizeImageChannel(Image *image,
     char
       token[MaxTextExtent];
 
-    register const char
+    const char
       *p;
 
     p=(char *)threshold_map;
@@ -1975,7 +1975,7 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
       register IndexPacket
         *magick_restrict indexes;
 
-      register ssize_t
+      ssize_t
         x;
 
       register PixelPacket
@@ -1992,7 +1992,7 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
       indexes=GetCacheViewAuthenticIndexQueue(image_view);
       for (x=0; x < (ssize_t) image->columns; x++)
       {
-        register ssize_t
+        ssize_t
           threshold,
           t,
           l;
@@ -2152,7 +2152,7 @@ MagickExport MagickBooleanType PerceptibleImageChannel(Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->storage_class == PseudoClass)
     {
-      register ssize_t
+      ssize_t
         i;
 
       register PixelPacket
@@ -2185,7 +2185,7 @@ MagickExport MagickBooleanType PerceptibleImageChannel(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -2382,7 +2382,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
         register IndexPacket
           *magick_restrict indexes;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2464,7 +2464,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2692,7 +2692,7 @@ MagickExport MagickBooleanType WhiteThresholdImageChannel(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

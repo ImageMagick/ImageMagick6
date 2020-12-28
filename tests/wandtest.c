@@ -5189,7 +5189,7 @@ int main(int argc,char **argv)
     *fill,
     **pixels;
 
-  register ssize_t
+  ssize_t
     i;
 
   unsigned char

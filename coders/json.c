@@ -193,10 +193,10 @@ static void JSONFormatLocaleFile(FILE *file,const char *format,
   char
     *escaped_json;
 
-  register char
+  char
     *q;
 
-  register const char
+  const char
     *p;
 
   size_t
@@ -334,7 +334,7 @@ static ChannelStatistics *GetLocationStatistics(const Image *image,
   ChannelStatistics
     *channel_statistics;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -373,13 +373,13 @@ static ChannelStatistics *GetLocationStatistics(const Image *image,
   }
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetVirtualPixels(image,0,y,image->columns,1,exception);
@@ -610,7 +610,7 @@ static ssize_t PrintChannelLocations(FILE *file,const Image *image,
   n=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *p;
 
     ssize_t
@@ -680,7 +680,7 @@ static ssize_t PrintChannelMoments(FILE *file,const ChannelType channel,
   const char *name,const MagickBooleanType separator,
   const ChannelMoments *channel_moments)
 {
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -719,7 +719,7 @@ static ssize_t PrintChannelPerceptualHash(FILE *file,const ChannelType channel,
   const char *name,const MagickBooleanType separator,
   const ChannelPerceptualHash *channel_phash)
 {
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -801,7 +801,7 @@ static void EncodeIptcProfile(FILE *file,const StringInfo *profile)
     record,
     sentinel;
 
-  register ssize_t
+  ssize_t
     i,
     j,
     k;
@@ -999,7 +999,7 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
   ImageType
     type;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -1408,10 +1408,10 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
   x=0;
   if (image->matte != MagickFalse)
     {
-      register const IndexPacket
+      const IndexPacket
         *indexes;
 
-      register const PixelPacket
+      const PixelPacket
         *p;
 
       p=(PixelPacket *) NULL;
@@ -1558,7 +1558,7 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
       ImageInfo
         *image_info;
 
-      register char
+      char
         *p,
         *q;
 

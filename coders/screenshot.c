@@ -140,7 +140,7 @@ static Image *ReadSCREENSHOTImage(const ImageInfo *image_info,
     register PixelPacket
       *q;
 
-    register ssize_t
+    ssize_t
       x;
 
     RGBQUAD

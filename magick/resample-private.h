@@ -28,7 +28,7 @@ extern "C" {
 static inline ResampleFilter **DestroyResampleFilterThreadSet(
   ResampleFilter **filter)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(filter != (ResampleFilter **) NULL);
@@ -43,7 +43,7 @@ static inline ResampleFilter **AcquireResampleFilterThreadSet(
   const Image *image,const VirtualPixelMethod method,
   const MagickBooleanType interpolate,ExceptionInfo *exception)
 {
-  register ssize_t
+  ssize_t
     i;
 
   ResampleFilter

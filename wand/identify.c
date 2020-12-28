@@ -215,7 +215,7 @@ WandExport MagickBooleanType IdentifyImageCommand(ImageInfo *image_info,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

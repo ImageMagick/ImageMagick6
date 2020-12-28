@@ -257,7 +257,7 @@ MagickExport MagickBooleanType DelegateComponentGenesis(void)
 
 static void *DestroyDelegate(void *delegate_info)
 {
-  register DelegateInfo
+  DelegateInfo
     *p;
 
   p=(DelegateInfo *) delegate_info;
@@ -340,7 +340,7 @@ MagickExport int ExternalDelegateCommand(const MagickBooleanType asynchronous,
   PolicyRights
     rights;
 
-  register ssize_t
+  ssize_t
     i;
 
   status=(-1);
@@ -425,7 +425,7 @@ MagickExport int ExternalDelegateCommand(const MagickBooleanType asynchronous,
 #endif
 #elif defined(MAGICKCORE_WINDOWS_SUPPORT)
   {
-    register char
+    char
       *p;
 
     /*
@@ -515,7 +515,7 @@ static char *SanitizeDelegateString(const char *source)
   const char
     *q;
 
-  register char
+  char
     *p;
 
   static char
@@ -1012,10 +1012,10 @@ static char *InterpretDelegateProperties(const ImageInfo *image_info,
     *interpret_text,
     *property;
 
-  register char
+  char
     *q;  /* current position in interpret_text */
 
-  register const char
+  const char
     *p;  /* position in embed_text string being expanded */
 
   size_t
@@ -1164,7 +1164,7 @@ MagickExport char *GetDelegateCommand(const ImageInfo *image_info,Image *image,
   const DelegateInfo
     *delegate_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(image_info != (ImageInfo *) NULL);
@@ -1263,7 +1263,7 @@ MagickExport const char *GetDelegateCommands(const DelegateInfo *delegate_info)
 MagickExport const DelegateInfo *GetDelegateInfo(const char *decode,
   const char *encode,ExceptionInfo *exception)
 {
-  register const DelegateInfo
+  const DelegateInfo
     *p;
 
   assert(exception != (ExceptionInfo *) NULL);
@@ -1382,10 +1382,10 @@ MagickExport const DelegateInfo **GetDelegateInfoList(const char *pattern,
   const DelegateInfo
     **delegates;
 
-  register const DelegateInfo
+  const DelegateInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1459,7 +1459,7 @@ extern "C" {
 
 static int DelegateCompare(const void *x,const void *y)
 {
-  register const char
+  const char
     **p,
     **q;
 
@@ -1478,10 +1478,10 @@ MagickExport char **GetDelegateList(const char *pattern,
   char
     **delegates;
 
-  register const DelegateInfo
+  const DelegateInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1658,7 +1658,7 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   MagickBooleanType
     status;
 
-  register size_t
+  size_t
     i;
 
   size_t
@@ -1740,7 +1740,7 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
   PolicyRights
     rights;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1807,7 +1807,7 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
       ImageInfo
         *clone_info;
 
-      register Image
+      Image
         *p;
 
       /*
@@ -2014,7 +2014,7 @@ MagickExport MagickBooleanType ListDelegateInfo(FILE *file,
   const char
     *path;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

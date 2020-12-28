@@ -209,13 +209,13 @@ static MagickBooleanType WriteBRAILLEImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

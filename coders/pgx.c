@@ -340,7 +340,7 @@ static MagickBooleanType WritePGXImage(const ImageInfo *image_info,Image *image)
   QuantumInfo
     *quantum_info;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   size_t

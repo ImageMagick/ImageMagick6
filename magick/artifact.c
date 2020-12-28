@@ -151,7 +151,7 @@ MagickExport MagickBooleanType DefineImageArtifact(Image *image,
     key[MaxTextExtent],
     value[MaxTextExtent];
 
-  register char
+  char
     *p;
 
   assert(image != (Image *) NULL);
@@ -266,7 +266,7 @@ MagickExport void DestroyImageArtifacts(Image *image)
 MagickExport const char *GetImageArtifact(const Image *image,
   const char *artifact)
 {
-  register const char
+  const char
     *p;
 
   assert(image != (Image *) NULL);

@@ -372,7 +372,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     PixelPacket
       *q;
 
-    register ssize_t
+    ssize_t
       x;
 
     q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -704,7 +704,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     */
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register ssize_t
+      ssize_t
         x;
 
       p=GetVirtualPixels(image,0,y,image->columns,1,exception);

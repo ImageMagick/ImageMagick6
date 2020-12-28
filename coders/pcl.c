@@ -182,7 +182,7 @@ static Image *ReadPCLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     bounding_box,
     page;
 
-  register char
+  char
     *p;
 
   SegmentInfo
@@ -502,11 +502,11 @@ static size_t PCLDeltaCompressImage(const size_t length,
     j,
     replacement;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   q=compress_pixels;
@@ -570,10 +570,10 @@ static size_t PCLPackbitsCompressImage(const size_t length,
   int
     count;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   ssize_t
@@ -682,17 +682,17 @@ static MagickBooleanType WritePCLImage(const ImageInfo *image_info,Image *image)
   MagickOffsetType
     scene;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -880,7 +880,7 @@ static MagickBooleanType WritePCLImage(const ImageInfo *image_info,Image *image)
       {
         case 1:
         {
-          register unsigned char
+          unsigned char
             bit,
             byte;
 

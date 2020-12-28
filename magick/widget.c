@@ -510,7 +510,7 @@ static void XDrawMatteText(Display *display,const XWindowInfo *window_info,
     x,
     y;
 
-  register int
+  int
     i;
 
   unsigned int
@@ -1136,11 +1136,11 @@ static void XEditText(Display *display,XWidgetInfo *text_info,
     }
     default:
     {
-      register char
+      char
         *p,
         *q;
 
-      register int
+      int
         i;
 
       if (state & ControlState)
@@ -1618,7 +1618,7 @@ MagickExport void XColorBrowserWidget(Display *display,XWindows *windows,
     x,
     y;
 
-  register int
+  int
     i;
 
   static char
@@ -2887,7 +2887,7 @@ MagickExport int XCommandWidget(Display *display,XWindows *windows,
     id,
     y;
 
-  register int
+  int
     i;
 
   static unsigned int
@@ -3632,7 +3632,7 @@ MagickExport int XDialogWidget(Display *display,XWindows *windows,
   int
     x;
 
-  register int
+  int
     i;
 
   static MagickBooleanType
@@ -4219,7 +4219,7 @@ MagickExport void XFileBrowserWidget(Display *display,XWindows *windows,
     x,
     y;
 
-  register ssize_t
+  ssize_t
     i;
 
   static char
@@ -4399,7 +4399,7 @@ MagickExport void XFileBrowserWidget(Display *display,XWindows *windows,
         special_info.y=action_info.y;
         if (anomaly == MagickFalse)
           {
-            register char
+            char
               *p;
 
             special_info.text=(char *) FormatButtonText;
@@ -4776,7 +4776,7 @@ MagickExport void XFileBrowserWidget(Display *display,XWindows *windows,
             XDrawMatteText(display,&windows->widget,&reply_info);
             if (id == list_info.id)
               {
-                register char
+                char
                   *p;
 
                 p=reply_info.text+strlen(reply_info.text)-1;
@@ -5439,7 +5439,7 @@ extern "C" {
 
 static int FontCompare(const void *x,const void *y)
 {
-  register char
+  char
     *p,
     *q;
 
@@ -5479,7 +5479,7 @@ MagickExport void XFontBrowserWidget(Display *display,XWindows *windows,
     x,
     y;
 
-  register int
+  int
     i;
 
   static char
@@ -6748,7 +6748,7 @@ MagickExport void XListBrowserWidget(Display *display,XWindows *windows,
   int
     x;
 
-  register int
+  int
     i;
 
   static MagickStatusType
@@ -8435,7 +8435,7 @@ MagickExport MagickBooleanType XPreferencesWidget(Display *display,
     x,
     y;
 
-  register int
+  int
     i;
 
   Status
@@ -8953,7 +8953,7 @@ MagickExport void XTextViewWidget(Display *display,
   char
     primary_selection[MaxTextExtent];
 
-  register int
+  int
     i;
 
   static MagickStatusType

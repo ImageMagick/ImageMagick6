@@ -635,7 +635,7 @@ static void TimeCodeToString(const size_t timestamp,char *code)
   unsigned int
     shift;
 
-  register ssize_t
+  ssize_t
     i;
 
   *code='\0';
@@ -676,7 +676,7 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
   QuantumType
     quantum_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1435,7 +1435,7 @@ static unsigned int StringToTimeCode(const char *key)
   char
     buffer[2];
 
-  register ssize_t
+  ssize_t
     i;
 
   unsigned int
@@ -1501,10 +1501,10 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
   QuantumType
     quantum_type;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t

@@ -222,7 +222,7 @@ static KernelInfo *ParseKernelArray(const char *kernel_string)
     *p,
     *end;
 
-  register ssize_t
+  ssize_t
     i;
 
   double
@@ -953,10 +953,10 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
   KernelInfo
     *kernel;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register ssize_t
+  ssize_t
     u,
     v;
 
@@ -2195,7 +2195,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
 */
 MagickExport KernelInfo *CloneKernelInfo(const KernelInfo *kernel)
 {
-  register ssize_t
+  ssize_t
     i;
 
   KernelInfo
@@ -2295,9 +2295,9 @@ static void FlopKernelInfo(KernelInfo *kernel)
     { /* Do a Flop by reversing each row. */
       size_t
         y;
-      register ssize_t
+      ssize_t
         x,r;
-      register double
+      double
         *k,t;
 
       for ( y=0, k=kernel->values; y < kernel->height; y++, k+=kernel->width)
@@ -2377,7 +2377,7 @@ static void ExpandMirrorKernelInfo(KernelInfo *kernel)
 static MagickBooleanType SameKernelInfo(const KernelInfo *kernel1,
   const KernelInfo *kernel2)
 {
-  register size_t
+  size_t
     i;
 
   /* check size and origin location */
@@ -2466,7 +2466,7 @@ RestoreMSCWarning
 */
 static void CalcKernelMetaData(KernelInfo *kernel)
 {
-  register size_t
+  size_t
     i;
 
   kernel->minimum = kernel->maximum = 0.0;
@@ -2566,7 +2566,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
     *p_view,
     *q_view;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2649,7 +2649,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
     **
     ** Anthony Thyssen, 14 June 2010
     */
-    register ssize_t
+    ssize_t
       x;
 
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -2661,10 +2661,10 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
       const int
         id = GetOpenMPThreadId();
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict p_indexes;
 
       register PixelPacket
@@ -2673,7 +2673,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
       register IndexPacket
         *magick_restrict q_indexes;
 
-      register ssize_t
+      ssize_t
         y;
 
       ssize_t
@@ -2700,16 +2700,16 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
         DoublePixelPacket
           result;
 
-        register ssize_t
+        ssize_t
           v;
 
-        register const double
+        const double
           *magick_restrict k;
 
-        register const PixelPacket
+        const PixelPacket
           *magick_restrict k_pixels;
 
-        register const IndexPacket
+        const IndexPacket
           *magick_restrict k_indexes;
 
         /* Copy input image to the output image for unused channels
@@ -2859,10 +2859,10 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
     const int
       id = GetOpenMPThreadId();
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict p_indexes;
 
     register PixelPacket
@@ -2871,7 +2871,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
     register IndexPacket
       *magick_restrict q_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     size_t
@@ -2899,16 +2899,16 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
        ssize_t
         v;
 
-      register ssize_t
+      ssize_t
         u;
 
-      register const double
+      const double
         *magick_restrict k;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict k_pixels;
 
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict k_indexes;
 
       DoublePixelPacket
@@ -3446,10 +3446,10 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
 
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict p_indexes;
 
     register PixelPacket
@@ -3458,7 +3458,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
     register IndexPacket
       *magick_restrict q_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     ssize_t
@@ -3492,16 +3492,16 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
       ssize_t
         v;
 
-      register ssize_t
+      ssize_t
         u;
 
-      register const double
+      const double
         *magick_restrict k;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict k_pixels;
 
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict k_indexes;
 
       MagickPixelPacket
@@ -3640,10 +3640,10 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
   /* Do the reversed pass through the image */
   for (y=(ssize_t)image->rows-1; y >= 0; y--)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict p_indexes;
 
     register PixelPacket
@@ -3652,7 +3652,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
     register IndexPacket
       *magick_restrict q_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     ssize_t
@@ -3690,16 +3690,16 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
       ssize_t
         v;
 
-      register ssize_t
+      ssize_t
         u;
 
-      register const double
+      const double
         *magick_restrict k;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict k_pixels;
 
-      register const IndexPacket
+      const IndexPacket
         *magick_restrict k_indexes;
 
       MagickPixelPacket
@@ -4577,9 +4577,9 @@ static void RotateKernelInfo(KernelInfo *kernel, double angle)
         }
       else if ( kernel->width == kernel->height )
         { /* Rotate a square array of values by 90 degrees */
-          { register size_t
+          { size_t
               i,j,x,y;
-            register double
+            double
               *k,t;
             k=kernel->values;
             for( i=0, x=kernel->width-1;  i<=x;   i++, x--)
@@ -4592,7 +4592,7 @@ static void RotateKernelInfo(KernelInfo *kernel, double angle)
                 }
           }
           /* rotate the origin - relative to center of array */
-          { register ssize_t x,y;
+          { ssize_t x,y;
             x = (ssize_t) (kernel->x*2-kernel->width+1);
             y = (ssize_t) (kernel->y*2-kernel->height+1);
             kernel->x = (ssize_t) ( -y +(ssize_t) kernel->width-1)/2;
@@ -4614,7 +4614,7 @@ static void RotateKernelInfo(KernelInfo *kernel, double angle)
       double
         t;
 
-      register double
+      double
         *k;
 
       size_t
@@ -4781,10 +4781,10 @@ MagickExport void ScaleGeometryKernelInfo (KernelInfo *kernel,
 MagickExport void ScaleKernelInfo(KernelInfo *kernel,
   const double scaling_factor,const GeometryFlags normalize_flags)
 {
-  register ssize_t
+  ssize_t
     i;
 
-  register double
+  double
     pos_scale,
     neg_scale;
 
@@ -4987,7 +4987,7 @@ MagickExport void UnityAddKernelInfo(KernelInfo *kernel,
 */
 MagickExport void ZeroKernelNans(KernelInfo *kernel)
 {
-  register size_t
+  size_t
     i;
 
   /* do the other kernels in a multi-kernel list first */

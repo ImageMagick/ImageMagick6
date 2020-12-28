@@ -111,7 +111,7 @@ static Image *ReadMONOImage(const ImageInfo *image_info,
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t
@@ -294,10 +294,10 @@ static MagickBooleanType WriteMONOImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

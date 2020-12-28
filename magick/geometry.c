@@ -470,7 +470,7 @@ MagickExport char *GetPageGeometry(const char *page_geometry)
   char
     page[MaxTextExtent];
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(page_geometry != (char *) NULL);
@@ -766,7 +766,7 @@ MagickExport MagickStatusType ParseAffineGeometry(const char *geometry,
   MagickStatusType
     flags;
 
-  register ssize_t
+  ssize_t
     i;
 
   GetAffineMatrix(affine_matrix);

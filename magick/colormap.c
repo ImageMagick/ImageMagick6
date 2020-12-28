@@ -102,7 +102,7 @@
 MagickExport MagickBooleanType AcquireImageColormap(Image *image,
   const size_t colors)
 {
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -206,7 +206,7 @@ MagickExport MagickBooleanType CycleColormapImage(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -299,7 +299,7 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -345,7 +345,7 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     IndexPacket
       index;
 
-    register ssize_t
+    ssize_t
       x;
 
     register IndexPacket

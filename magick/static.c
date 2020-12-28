@@ -381,7 +381,7 @@ MagickExport MagickBooleanType RegisterStaticModule(const char *module,
   PolicyRights
     rights;
 
-  register const CoderInfo
+  const CoderInfo
     *p;
 
   size_t

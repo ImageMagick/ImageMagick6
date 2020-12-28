@@ -403,7 +403,7 @@ static Image *ReadCINImage(const ImageInfo *image_info,ExceptionInfo *exception)
   QuantumType
     quantum_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   register PixelPacket
@@ -919,10 +919,10 @@ static MagickBooleanType WriteCINImage(const ImageInfo *image_info,Image *image)
   QuantumType
     quantum_type;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

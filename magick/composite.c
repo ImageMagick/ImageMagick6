@@ -1702,10 +1702,10 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         MagickBooleanType
           sync;
 
-        register const IndexPacket
+        const IndexPacket
           *source_indexes;
 
-        register const PixelPacket
+        const PixelPacket
           *p;
 
         register IndexPacket
@@ -1869,7 +1869,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         MagickBooleanType
           sync;
 
-        register const PixelPacket
+        const PixelPacket
           *magick_restrict p;
 
         register PixelPacket
@@ -1878,7 +1878,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         register IndexPacket
           *magick_restrict canvas_indexes;
 
-        register ssize_t
+        ssize_t
           x;
 
         if (((y+y_offset) < 0) || ((y+y_offset) >= (ssize_t) image->rows))
@@ -2059,10 +2059,10 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         MagickBooleanType
           sync;
 
-        register const PixelPacket
+        const PixelPacket
           *magick_restrict p;
 
-        register ssize_t
+        ssize_t
           x;
 
         if (((y+y_offset) < 0) || ((y+y_offset) >= (ssize_t) image->rows))
@@ -2263,16 +2263,16 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
       canvas,
       source;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict source_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -2935,7 +2935,7 @@ MagickExport MagickBooleanType TextureImage(Image *image,const Image *texture)
       */
       for (y=0; y < (ssize_t) image->rows; y+=(ssize_t) texture_image->rows)
       {
-        register ssize_t
+        ssize_t
           x;
 
         if (status == MagickFalse)
@@ -2984,16 +2984,16 @@ MagickExport MagickBooleanType TextureImage(Image *image,const Image *texture)
     MagickBooleanType
       sync;
 
-    register const IndexPacket
+    const IndexPacket
       *texture_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *p;
 
     register IndexPacket
       *indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

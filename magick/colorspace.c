@@ -285,7 +285,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
   PrimaryInfo
     primary_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -342,7 +342,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         register IndexPacket
           *magick_restrict indexes;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -402,7 +402,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -459,7 +459,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -536,7 +536,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -756,7 +756,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -822,7 +822,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -1119,13 +1119,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickPixelPacket
           pixel;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
           *magick_restrict q;
 
-        register size_t
+        size_t
           blue,
           green,
           red;
@@ -1181,7 +1181,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
     }
     case PseudoClass:
     {
-      register size_t
+      size_t
         blue,
         green,
         red;
@@ -1337,10 +1337,10 @@ MagickExport MagickBooleanType SetImageGray(Image *image,
   ImageType
     type;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   ssize_t
@@ -1431,10 +1431,10 @@ MagickExport MagickBooleanType SetImageMonochrome(Image *image,
   ImageType
     type;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
   ssize_t
@@ -1950,7 +1950,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
   MagickOffsetType
     progress;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -2002,7 +2002,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         register IndexPacket
           *magick_restrict indexes;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2060,7 +2060,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2122,7 +2122,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2200,7 +2200,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2423,7 +2423,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2489,7 +2489,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickBooleanType
           sync;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2723,7 +2723,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickPixelPacket
           pixel;
 
-        register ssize_t
+        ssize_t
           x;
 
         register PixelPacket
@@ -2740,7 +2740,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
           }
         for (x=0; x < (ssize_t) image->columns; x++)
         {
-          register size_t
+          size_t
             blue,
             green,
             red;
@@ -2806,7 +2806,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickPixelPacket
           pixel;
 
-        register size_t
+        size_t
           blue,
           green,
           red;

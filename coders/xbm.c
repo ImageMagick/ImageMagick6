@@ -186,14 +186,14 @@ static Image *ReadXBMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
   register PixelPacket
     *q;
 
-  register unsigned char
+  unsigned char
     *p;
 
   long
@@ -515,10 +515,10 @@ static MagickBooleanType WriteXBMImage(const ImageInfo *image_info,Image *image)
   MagickBooleanType
     status;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t

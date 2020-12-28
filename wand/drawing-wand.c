@@ -489,7 +489,7 @@ WandExport DrawingWand *CloneDrawingWand(const DrawingWand *wand)
   DrawingWand
     *clone_wand;
 
-  register ssize_t
+  ssize_t
     i;
 
   assert(wand != (DrawingWand *) NULL);
@@ -890,10 +890,10 @@ WandExport MagickBooleanType DrawComposite(DrawingWand *wand,
     *clone_image,
     *image;
 
-  register char
+  char
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1855,13 +1855,13 @@ WandExport double *DrawGetStrokeDashArray(const DrawingWand *wand,
   double
     *dasharray;
 
-  register const double
+  const double
     *p;
 
-  register double
+  double
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2402,7 +2402,7 @@ WandExport char *DrawGetVectorGraphics(DrawingWand *wand)
   MagickPixelPacket
     pixel;
 
-  register ssize_t
+  ssize_t
     i;
 
   XMLTreeInfo
@@ -5462,13 +5462,13 @@ WandExport MagickBooleanType DrawSetStrokeDashArray(DrawingWand *wand,
   MagickBooleanType
     update;
 
-  register const double
+  const double
     *p;
 
-  register double
+  double
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -6365,7 +6365,7 @@ WandExport MagickBooleanType DrawSetVectorGraphics(DrawingWand *wand,
       const char
         *q;
 
-      register ssize_t
+      ssize_t
         x;
 
       ssize_t

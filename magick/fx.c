@@ -181,7 +181,7 @@ MagickExport FxInfo *AcquireFxInfo(const Image *images,const char *expression)
   FxInfo
     *fx_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   unsigned char
@@ -290,7 +290,7 @@ MagickExport FxInfo *AcquireFxInfo(const Image *images,const char *expression)
 */
 MagickExport FxInfo *DestroyFxInfo(FxInfo *fx_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   fx_info->exception=DestroyExceptionInfo(fx_info->exception);
@@ -384,7 +384,7 @@ static double FxChannelStatistics(FxInfo *fx_info,const Image *image,
   double
     statistic;
 
-  register const char
+  const char
     *p;
 
   for (p=symbol; (*p != '.') && (*p != '\0'); p++) ;
@@ -486,7 +486,7 @@ static inline MagickBooleanType IsFxFunction(const char *expression,
   int
     c;
 
-  register size_t
+  size_t
     i;
 
   for (i=0; i <= length; i++)
@@ -514,7 +514,7 @@ static inline const char *FxSubexpression(const char *expression,
   const char
     *subexpression;
 
-  register ssize_t
+  ssize_t
     level;
 
   level=0;
@@ -566,7 +566,7 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
   PointInfo
     point;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1166,10 +1166,10 @@ static const char *FxOperatorPrecedence(const char *expression,
     precedence,
     target;
 
-  register const char
+  const char
     *subexpression;
 
-  register int
+  int
     c;
 
   size_t
@@ -1452,7 +1452,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
     sans,
     value;
 
-  register const char
+  const char
     *p;
 
   *beta=0.0;
@@ -2708,7 +2708,7 @@ MagickExport MagickBooleanType FxEvaluateChannelExpression(FxInfo *fx_info,
 
 static FxInfo **DestroyFxThreadSet(FxInfo **fx_info)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(fx_info != (FxInfo **) NULL);
@@ -2731,7 +2731,7 @@ static FxInfo **AcquireFxThreadSet(const Image *image,const char *expression,
   FxInfo
     **fx_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2844,7 +2844,7 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
     register IndexPacket
       *magick_restrict fx_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

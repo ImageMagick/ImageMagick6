@@ -110,7 +110,7 @@ static Image *ReadXCImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PixelPacket
     pixel;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket

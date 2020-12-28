@@ -327,7 +327,7 @@ static MagickBooleanType CorrectPSDAlphaBlend(const ImageInfo *image_info,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -400,7 +400,7 @@ static MagickBooleanType ApplyPSDLayerOpacity(Image *image,Quantum opacity,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -472,7 +472,7 @@ static MagickBooleanType ApplyPSDOpacityMask(Image *image,const Image *mask,
     register PixelPacket
       *p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -553,7 +553,7 @@ static ssize_t DecodePSDPixels(const size_t number_compact_pixels,
   int
     pixel;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -987,7 +987,7 @@ static MagickBooleanType ReadPSDChannelPixels(Image *image,
   Quantum
     pixel;
 
-  register const unsigned char
+  const unsigned char
     *p;
 
   register IndexPacket
@@ -996,7 +996,7 @@ static MagickBooleanType ReadPSDChannelPixels(Image *image,
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     x;
 
   size_t
@@ -1208,7 +1208,7 @@ static MagickBooleanType ReadPSDChannelZip(Image *image,const size_t channels,
   MagickBooleanType
     status;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -1541,7 +1541,7 @@ static MagickBooleanType CheckPSDChannels(const PSDInfo *psd_info,
   int
     channel_type;
 
-  register ssize_t
+  ssize_t
     i;
 
   if (layer_info->channels < psd_info->min_channels)
@@ -1649,7 +1649,7 @@ static MagickBooleanType ReadPSDLayersInternal(Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   ssize_t
@@ -2038,7 +2038,7 @@ static MagickBooleanType ReadPSDMergedImage(const ImageInfo *image_info,
   PSDCompressionType
     compression;
 
-  register ssize_t
+  ssize_t
     i;
 
   compression=(PSDCompressionType) ReadBlobMSBShort(image);
@@ -2116,7 +2116,7 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PSDInfo
     psd_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -2582,11 +2582,11 @@ static size_t PSDPackbitsEncodeImage(Image *image,const size_t length,
   int
     count;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
-  register unsigned char
+  unsigned char
     *q;
 
   unsigned char
@@ -2721,10 +2721,10 @@ static size_t WritePSDChannel(const PSDInfo *psd_info,
   QuantumInfo
     *quantum_info;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -3021,7 +3021,7 @@ static size_t WritePascalString(Image *image,const char *value,size_t padding)
     count,
     length;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -3090,7 +3090,7 @@ static inline size_t WriteChannelSize(const PSDInfo *psd_info,Image *image,
 
 static void RemoveICCProfileFromResourceBlock(StringInfo *bim_profile)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
   size_t
@@ -3113,7 +3113,7 @@ static void RemoveICCProfileFromResourceBlock(StringInfo *bim_profile)
   datum=GetStringInfoDatum(bim_profile);
   for (p=datum; (p >= datum) && (p < (datum+length-16)); )
   {
-    register unsigned char
+    unsigned char
       *q;
 
     q=(unsigned char *) p;
@@ -3145,7 +3145,7 @@ static void RemoveICCProfileFromResourceBlock(StringInfo *bim_profile)
 
 static void RemoveResolutionFromResourceBlock(StringInfo *bim_profile)
 {
-  register const unsigned char
+  const unsigned char
     *p;
 
   size_t
@@ -3168,7 +3168,7 @@ static void RemoveResolutionFromResourceBlock(StringInfo *bim_profile)
   datum=GetStringInfoDatum(bim_profile);
   for (p=datum; (p >= datum) && (p < (datum+length-16)); )
   {
-    register unsigned char
+    unsigned char
       *q;
 
     ssize_t
@@ -3222,7 +3222,7 @@ static const StringInfo *GetAdditionalInformation(const ImageInfo *image_info,
   MagickBooleanType
     found;
 
-  register size_t
+  size_t
     i;
 
   size_t
@@ -3324,7 +3324,7 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
   PSDInfo
     psd_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

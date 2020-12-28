@@ -264,11 +264,11 @@ MagickExport Image *CompareImageChannels(Image *image,
       pixel,
       reconstruct_pixel;
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
@@ -278,7 +278,7 @@ MagickExport Image *CompareImageChannels(Image *image,
     register PixelPacket
       *magick_restrict r;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -470,15 +470,15 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     double
       channel_distortion[CompositeChannels+1];
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       i,
       x;
 
@@ -589,7 +589,7 @@ static MagickBooleanType GetFuzzDistortion(const Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -613,15 +613,15 @@ static MagickBooleanType GetFuzzDistortion(const Image *image,
     double
       channel_distortion[CompositeChannels+1];
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       i,
       x;
 
@@ -714,7 +714,7 @@ static MagickBooleanType GetMeanAbsoluteDistortion(const Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -738,15 +738,15 @@ static MagickBooleanType GetMeanAbsoluteDistortion(const Image *image,
     double
       channel_distortion[CompositeChannels+1];
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       i,
       x;
 
@@ -858,15 +858,15 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
   for (y=0; y < (ssize_t) rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,columns,1,exception);
@@ -968,7 +968,7 @@ static MagickBooleanType GetMeanSquaredDistortion(const Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -992,15 +992,15 @@ static MagickBooleanType GetMeanSquaredDistortion(const Image *image,
     double
       channel_distortion[CompositeChannels+1];
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       i,
       x;
 
@@ -1102,7 +1102,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   MagickRealType
     area;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1139,15 +1139,15 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
   for (y=0; y < (ssize_t) rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -1286,15 +1286,15 @@ static MagickBooleanType GetPeakAbsoluteDistortion(const Image *image,
     double
       channel_distortion[CompositeChannels+1];
 
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       i,
       x;
 
@@ -1458,7 +1458,7 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
   double
     difference;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -1938,15 +1938,15 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
   for (y=0; y < (ssize_t) rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes,
       *magick_restrict reconstruct_indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     p=GetCacheViewVirtualPixels(image_view,0,y,columns,1,exception);
@@ -2157,7 +2157,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
     double
       similarity;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket

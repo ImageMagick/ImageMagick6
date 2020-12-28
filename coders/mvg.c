@@ -160,7 +160,7 @@ static Image *ReadMVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       char
         primitive[MaxTextExtent];
 
-      register char
+      char
         *p;
 
       SegmentInfo

@@ -634,7 +634,7 @@ static Image *ReadCUTImage(const ImageInfo *image_info,ExceptionInfo *exception)
             {
               for (i=0; i < (ssize_t)image->colors; i++)
                 {
-                  register Quantum
+                  Quantum
                     sample;
                   sample=ScaleCharToQuantum((unsigned char) i);
                   if(image->colormap[i].red!=sample) goto Finish;

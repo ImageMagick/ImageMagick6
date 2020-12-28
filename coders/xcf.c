@@ -304,7 +304,7 @@ static char *ReadBlobStringWithLongSize(Image *image,char *string,size_t max,
   MagickOffsetType
     offset;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -338,7 +338,7 @@ static MagickBooleanType load_tile(Image *image,Image *tile_image,
   ssize_t
     y;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
@@ -618,7 +618,7 @@ static MagickBooleanType load_level(Image *image,XCFDocInfo *inDocInfo,
     offset,
     offset2;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1067,7 +1067,7 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickOffsetType
     offset;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

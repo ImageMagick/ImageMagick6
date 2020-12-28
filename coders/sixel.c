@@ -983,13 +983,13 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
   MagickBooleanType
     status;
 
-  register char
+  char
     *p;
 
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket
@@ -1229,10 +1229,10 @@ static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,Image *imag
   MagickBooleanType
     status;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -1341,7 +1341,7 @@ static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,Image *imag
     }
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *p;
 
     p=GetVirtualPixels(image,0,y,image->columns,1,exception);

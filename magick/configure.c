@@ -233,7 +233,7 @@ MagickExport MagickBooleanType ConfigureComponentGenesis(void)
 
 static void *DestroyConfigureElement(void *configure_info)
 {
-  register ConfigureInfo
+  ConfigureInfo
     *p;
 
   p=(ConfigureInfo *) configure_info;
@@ -329,7 +329,7 @@ MagickExport LinkedListInfo *DestroyConfigureOptions(LinkedListInfo *options)
 MagickExport const ConfigureInfo *GetConfigureInfo(const char *name,
   ExceptionInfo *exception)
 {
-  register const ConfigureInfo
+  const ConfigureInfo
     *p;
 
   assert(exception != (ExceptionInfo *) NULL);
@@ -416,10 +416,10 @@ MagickExport const ConfigureInfo **GetConfigureInfoList(const char *pattern,
   const ConfigureInfo
     **options;
 
-  register const ConfigureInfo
+  const ConfigureInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -491,7 +491,7 @@ extern "C" {
 
 static int ConfigureCompare(const void *x,const void *y)
 {
-  register char
+  char
     **p,
     **q;
 
@@ -510,10 +510,10 @@ MagickExport char **GetConfigureList(const char *pattern,
   char
     **options;
 
-  register const ConfigureInfo
+  const ConfigureInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -739,7 +739,7 @@ MagickExport LinkedListInfo *GetConfigurePaths(const char *filename,
     configure_path=GetEnvironmentValue("MAGICK_CONFIGURE_PATH");
     if (configure_path != (char *) NULL)
       {
-        register char
+        char
           *p,
           *q;
 
@@ -1039,7 +1039,7 @@ MagickExport MagickBooleanType ListConfigureInfo(FILE *file,
   const ConfigureInfo
     **configure_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

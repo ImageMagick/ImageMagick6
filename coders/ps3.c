@@ -245,16 +245,16 @@ static MagickBooleanType SerializeImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   ssize_t
@@ -314,13 +314,13 @@ static MagickBooleanType SerializeImageChannel(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -391,16 +391,16 @@ static MagickBooleanType SerializeImageIndexes(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     x;
 
-  register unsigned char
+  unsigned char
     *q;
 
   ssize_t
@@ -457,7 +457,7 @@ static MagickBooleanType WritePS3MaskImage(const ImageInfo *image_info,
   MemoryInfo
     *pixel_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -858,7 +858,7 @@ static MagickBooleanType WritePS3Image(const ImageInfo *image_info,Image *image)
     media_info,
     page_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   SegmentInfo

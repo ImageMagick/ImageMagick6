@@ -233,7 +233,7 @@ static inline void Ascii85Tuple(Ascii85Info *ascii85_info,
 {
 #define MaxLineExtent  36L
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -300,10 +300,10 @@ MagickExport void Ascii85Flush(Image *image)
 
 MagickExport void Ascii85Encode(Image *image,const unsigned char code)
 {
-  register char
+  char
     *q;
 
-  register unsigned char
+  unsigned char
     *p;
 
   ssize_t
@@ -419,10 +419,10 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
   register IndexPacket
     *indexes;
 
-  register ssize_t
+  ssize_t
     i;
 
-  register unsigned char
+  unsigned char
     *p;
 
   size_t
@@ -504,7 +504,7 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     /*
@@ -722,14 +722,14 @@ RestoreMSCWarning \
   MagickBooleanType
     proceed;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register unsigned char
+  unsigned char
     *q;
 
   size_t
@@ -945,7 +945,7 @@ MagickExport MagickBooleanType LZWEncodeImage(Image *image,const size_t length,
       next;
   } TableType;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -1089,7 +1089,7 @@ MagickExport MagickBooleanType PackbitsEncodeImage(Image *image,
   int
     count;
 
-  register ssize_t
+  ssize_t
     i,
     j;
 
@@ -1239,7 +1239,7 @@ MagickExport MagickBooleanType ZLIBEncodeImage(Image *image,const size_t length,
   int
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

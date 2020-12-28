@@ -310,7 +310,7 @@ static MagickBooleanType
 
 static void *DestroyCoderNode(void *coder_info)
 {
-  register CoderInfo
+  CoderInfo
     *p;
 
   p=(CoderInfo *) coder_info;
@@ -332,7 +332,7 @@ static SplayTreeInfo *AcquireCoderCache(const char *filename,
   MagickStatusType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   SplayTreeInfo
@@ -373,7 +373,7 @@ static SplayTreeInfo *AcquireCoderCache(const char *filename,
     CoderInfo
       *coder_info;
 
-    register const CoderMapInfo
+    const CoderMapInfo
       *p;
 
     p=CoderMap+i;
@@ -535,10 +535,10 @@ MagickExport const CoderInfo **GetCoderInfoList(const char *pattern,
   const CoderInfo
     **coder_map;
 
-  register const CoderInfo
+  const CoderInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -605,7 +605,7 @@ MagickExport const CoderInfo **GetCoderInfoList(const char *pattern,
 
 static int CoderCompare(const void *x,const void *y)
 {
-  register const char
+  const char
     **p,
     **q;
 
@@ -620,10 +620,10 @@ MagickExport char **GetCoderList(const char *pattern,
   char
     **coder_map;
 
-  register const CoderInfo
+  const CoderInfo
     *p;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -730,7 +730,7 @@ MagickExport MagickBooleanType ListCoderInfo(FILE *file,
   const CoderInfo
     **coder_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

@@ -169,7 +169,7 @@ static MagickBooleanType TraceEdges(Image *edge_image,CacheView *edge_view,
   register PixelPacket
     *q;
 
-  register ssize_t
+  ssize_t
     i;
 
   q=GetCacheViewAuthenticPixels(edge_view,x,y,1,1,exception);
@@ -321,10 +321,10 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
 #endif
   for (y=0; y < (ssize_t) edge_image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -345,7 +345,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
         dx,
         dy;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict kernel_pixels;
 
       ssize_t
@@ -436,7 +436,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -543,7 +543,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
   edge_view=AcquireAuthenticCacheView(edge_image,exception);
   for (y=0; y < (ssize_t) edge_image->rows; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -553,7 +553,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
       CannyInfo
         pixel;
 
-      register const PixelPacket
+      const PixelPacket
         *magick_restrict p;
 
       /*
@@ -666,7 +666,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -719,13 +719,13 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -894,13 +894,13 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     ssize_t
@@ -1033,7 +1033,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
     double
       normalize;
 
-    register ssize_t
+    ssize_t
       y;
 
     switch (i)
@@ -1075,7 +1075,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
     normalize=PerceptibleReciprocal(normalize);
     for (y=0; y < (ssize_t) number_grays; y++)
     {
-      register ssize_t
+      ssize_t
         x;
 
       for (x=0; x < (ssize_t) number_grays; x++)
@@ -1099,12 +1099,12 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
 #endif
   for (i=0; i < 4; i++)
   {
-    register ssize_t
+    ssize_t
       y;
 
     for (y=0; y < (ssize_t) number_grays; y++)
     {
-      register ssize_t
+      ssize_t
         x;
 
       for (x=0; x < (ssize_t) number_grays; x++)
@@ -1284,7 +1284,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
 #endif
   for (i=0; i < 4; i++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     for (x=2; x < (ssize_t) (2*number_grays); x++)
@@ -1360,12 +1360,12 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
 #endif
   for (i=0; i < 4; i++)
   {
-    register ssize_t
+    ssize_t
       y;
 
     for (y=0; y < (ssize_t) number_grays; y++)
     {
-      register ssize_t
+      ssize_t
         x;
 
       for (x=0; x < (ssize_t) number_grays; x++)
@@ -1479,7 +1479,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
 #endif
   for (i=0; i < 4; i++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     for (x=0; x < (ssize_t) number_grays; x++)
@@ -1631,12 +1631,12 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
 #endif
   for (i=0; i < 4; i++)
   {
-    register ssize_t
+    ssize_t
       z;
 
     for (z=0; z < (ssize_t) number_grays; z++)
     {
-      register ssize_t
+      ssize_t
         y;
 
       ChannelStatistics
@@ -1645,7 +1645,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       (void) memset(&pixel,0,sizeof(pixel));
       for (y=0; y < (ssize_t) number_grays; y++)
       {
-        register ssize_t
+        ssize_t
           x;
 
         for (x=0; x < (ssize_t) number_grays; x++)
@@ -1893,7 +1893,7 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
   PointInfo
     center;
 
-  register ssize_t
+  ssize_t
     y;
 
   size_t
@@ -1933,10 +1933,10 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
   image_view=AcquireVirtualCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -1951,7 +1951,7 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
     {
       if (GetPixelIntensity(image,p) > (QuantumRange/2.0))
         {
-          register ssize_t
+          ssize_t
             i;
 
           for (i=0; i < 180; i++)
@@ -2018,7 +2018,7 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
     line_count=threshold;
   for (y=0; y < (ssize_t) accumulator_height; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     for (x=0; x < (ssize_t) accumulator_width; x++)
@@ -2230,16 +2230,16 @@ MagickExport Image *MeanShiftImage(const Image *image,const size_t width,
 #endif
   for (y=0; y < (ssize_t) mean_image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -2263,7 +2263,7 @@ MagickExport Image *MeanShiftImage(const Image *image,const size_t width,
         mean_location,
         previous_location;
 
-      register ssize_t
+      ssize_t
         i;
 
       GetMagickPixelPacket(image,&mean_pixel);

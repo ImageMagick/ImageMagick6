@@ -453,7 +453,7 @@ static Image *ReadPESImage(const ImageInfo *image_info,ExceptionInfo *exception)
   SegmentInfo
     bounds;
 
-  register ssize_t
+  ssize_t
     i;
 
   size_t

@@ -245,7 +245,7 @@ static cl_event *CopyOpenCLEvents(OpenCLCacheInfo *opencl_info,
   cl_event
     *events;
 
-  register size_t
+  size_t
     i;
 
   assert(opencl_info != (OpenCLCacheInfo *) NULL);
@@ -427,7 +427,7 @@ MagickExport NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
   NexusInfo
     **magick_restrict nexus_info;
 
-  register ssize_t
+  ssize_t
     i;
 
   nexus_info=(NexusInfo **) MagickAssumeAligned(AcquireAlignedMemory(2*
@@ -590,7 +590,7 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   NexusInfo
     **magick_restrict clip_nexus;
 
-  register const PixelPacket
+  const PixelPacket
     *magick_restrict r;
 
   register IndexPacket
@@ -633,7 +633,7 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   n=0;
   for (y=0; y < (ssize_t) nexus_info->region.height; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     for (x=0; x < (ssize_t) nexus_info->region.width; x++)
@@ -1249,7 +1249,7 @@ static inline void RelinquishCacheNexusPixels(NexusInfo *nexus_info)
 MagickExport NexusInfo **DestroyPixelCacheNexus(NexusInfo **nexus_info,
   const size_t number_threads)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(nexus_info != (NexusInfo **) NULL);
@@ -2139,10 +2139,10 @@ MagickExport MagickBooleanType GetOneVirtualMagickPixel(const Image *image,
   const int
     id = GetOpenMPThreadId();
 
-  register const IndexPacket
+  const IndexPacket
     *magick_restrict indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *magick_restrict pixels;
 
   assert(image != (const Image *) NULL);
@@ -2979,10 +2979,10 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
     *magick_restrict pixels,
     virtual_pixel;
 
-  register const IndexPacket
+  const IndexPacket
     *magick_restrict virtual_indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *magick_restrict p;
 
   register IndexPacket
@@ -2991,7 +2991,7 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
   register PixelPacket
     *magick_restrict q;
 
-  register ssize_t
+  ssize_t
     u,
     v;
 
@@ -3618,7 +3618,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   NexusInfo
     **magick_restrict mask_nexus;
 
-  register const PixelPacket
+  const PixelPacket
     *magick_restrict r;
 
   register IndexPacket
@@ -3661,7 +3661,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   GetMagickPixelPacket(image,&beta);
   for (y=0; y < (ssize_t) nexus_info->region.height; y++)
   {
-    register ssize_t
+    ssize_t
       x;
 
     for (x=0; x < (ssize_t) nexus_info->region.width; x++)
@@ -3770,7 +3770,7 @@ static inline MagickOffsetType WritePixelCacheRegion(
   const CacheInfo *magick_restrict cache_info,const MagickOffsetType offset,
   const MagickSizeType length,const unsigned char *magick_restrict buffer)
 {
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
   ssize_t
@@ -4576,7 +4576,7 @@ static inline MagickOffsetType ReadPixelCacheRegion(
   const CacheInfo *magick_restrict cache_info,const MagickOffsetType offset,
   const MagickSizeType length,unsigned char *magick_restrict buffer)
 {
-  register MagickOffsetType
+  MagickOffsetType
     i;
 
   ssize_t
@@ -4621,7 +4621,7 @@ static MagickBooleanType ReadPixelCacheIndexes(
   register IndexPacket
     *magick_restrict q;
 
-  register ssize_t
+  ssize_t
     y;
 
   size_t
@@ -4789,7 +4789,7 @@ static MagickBooleanType ReadPixelCachePixels(
   register PixelPacket
     *magick_restrict q;
 
-  register ssize_t
+  ssize_t
     y;
 
   size_t
@@ -5329,7 +5329,7 @@ static MagickBooleanType SetCacheAlphaChannel(Image *image,
     register PixelPacket
       *magick_restrict q;
 
-    register ssize_t
+    ssize_t
       x;
 
     if (status == MagickFalse)
@@ -5735,10 +5735,10 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
     extent,
     length;
 
-  register const IndexPacket
+  const IndexPacket
     *magick_restrict p;
 
-  register ssize_t
+  ssize_t
     y;
 
   size_t
@@ -5903,10 +5903,10 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
     extent,
     length;
 
-  register const PixelPacket
+  const PixelPacket
     *magick_restrict p;
 
-  register ssize_t
+  ssize_t
     y;
 
   size_t

@@ -488,13 +488,13 @@ WandExport PixelIterator *NewPixelRegionIterator(MagickWand *wand,
 WandExport PixelWand **PixelGetCurrentIteratorRow(PixelIterator *iterator,
   size_t *number_wands)
 {
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *pixels;
 
-  register ssize_t
+  ssize_t
     x;
 
   assert(iterator != (PixelIterator *) NULL);
@@ -679,13 +679,13 @@ WandExport ssize_t PixelGetIteratorRow(PixelIterator *iterator)
 WandExport PixelWand **PixelGetNextIteratorRow(PixelIterator *iterator,
   size_t *number_wands)
 {
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *pixels;
 
-  register ssize_t
+  ssize_t
     x;
 
   assert(iterator != (PixelIterator *) NULL);
@@ -759,13 +759,13 @@ WandExport PixelWand **PixelGetPreviousRow(PixelIterator *iterator)
 WandExport PixelWand **PixelGetPreviousIteratorRow(PixelIterator *iterator,
   size_t *number_wands)
 {
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *pixels;
 
-  register ssize_t
+  ssize_t
     x;
 
   assert(iterator != (PixelIterator *) NULL);
@@ -966,7 +966,7 @@ WandExport MagickBooleanType PixelSyncIterator(PixelIterator *iterator)
   register IndexPacket
     *magick_restrict indexes;
 
-  register ssize_t
+  ssize_t
     x;
 
   register PixelPacket

@@ -113,7 +113,7 @@ int wmain(int argc,wchar_t *argv[])
   int
     status;
 
-  register int
+  int
     i;
 
   utf8=NTArgvToUTF8(argc,argv);

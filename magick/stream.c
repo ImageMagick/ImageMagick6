@@ -1330,13 +1330,13 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
   QuantumType
     *quantum_map;
 
-  register const IndexPacket
+  const IndexPacket
     *indexes;
 
-  register const PixelPacket
+  const PixelPacket
     *p;
 
-  register ssize_t
+  ssize_t
     i,
     x;
 
@@ -1462,7 +1462,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
   {
     case CharPixel:
     {
-      register unsigned char
+      unsigned char
         *q;
 
       q=(unsigned char *) stream_info->pixels;
@@ -1627,7 +1627,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
     }
     case DoublePixel:
     {
-      register double
+      double
         *q;
 
       q=(double *) stream_info->pixels;
@@ -1820,7 +1820,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
     }
     case FloatPixel:
     {
-      register float
+      float
         *q;
 
       q=(float *) stream_info->pixels;
@@ -2013,7 +2013,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
     }
     case IntegerPixel:
     {
-      register unsigned int
+      unsigned int
         *q;
 
       q=(unsigned int *) stream_info->pixels;
@@ -2182,7 +2182,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
     }
     case LongPixel:
     {
-      register size_t
+      size_t
         *q;
 
       q=(size_t *) stream_info->pixels;
@@ -2347,7 +2347,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
     }
     case QuantumPixel:
     {
-      register Quantum
+      Quantum
         *q;
 
       q=(Quantum *) stream_info->pixels;
@@ -2512,7 +2512,7 @@ static MagickBooleanType StreamImagePixels(const StreamInfo *stream_info,
     }
     case ShortPixel:
     {
-      register unsigned short
+      unsigned short
         *q;
 
       q=(unsigned short *) stream_info->pixels;

@@ -153,7 +153,7 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   PixelPacket
     fill_color;
 
-  register SegmentInfo
+  SegmentInfo
     *s;
 
   SegmentInfo
@@ -218,13 +218,13 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   floodplane_view=AcquireAuthenticCacheView(floodplane_image,exception);
   while (s > segment_stack)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -329,13 +329,13 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   }
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -439,7 +439,7 @@ MagickExport MagickBooleanType GradientImage(Image *image,
   MagickBooleanType
     status;
 
-  register ssize_t
+  ssize_t
     i;
 
   /*
@@ -679,7 +679,7 @@ MagickExport MagickBooleanType GradientImage(Image *image,
 
 static size_t **DestroyHistogramThreadSet(size_t **histogram)
 {
-  register ssize_t
+  ssize_t
     i;
 
   assert(histogram != (size_t **) NULL);
@@ -692,7 +692,7 @@ static size_t **DestroyHistogramThreadSet(size_t **histogram)
 
 static size_t **AcquireHistogramThreadSet(const size_t count)
 {
-  register ssize_t
+  ssize_t
     i;
 
   size_t
@@ -789,22 +789,22 @@ MagickExport Image *OilPaintImage(const Image *image,const double radius,
 #endif
   for (y=0; y < (ssize_t) linear_image->rows; y++)
   {
-    register const IndexPacket
+    const IndexPacket
       *magick_restrict indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *magick_restrict p;
 
     register IndexPacket
       *magick_restrict paint_indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
       *magick_restrict q;
 
-    register size_t
+    size_t
       *histogram;
 
     if (status == MagickFalse)
@@ -823,7 +823,7 @@ MagickExport Image *OilPaintImage(const Image *image,const double radius,
     histogram=histograms[GetOpenMPThreadId()];
     for (x=0; x < (ssize_t) linear_image->columns; x++)
     {
-      register ssize_t
+      ssize_t
         i,
         u;
 
@@ -994,7 +994,7 @@ MagickExport MagickBooleanType OpaquePaintImageChannel(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1140,7 +1140,7 @@ MagickExport MagickBooleanType TransparentPaintImage(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
@@ -1277,7 +1277,7 @@ MagickExport MagickBooleanType TransparentPaintImageChroma(Image *image,
     register IndexPacket
       *magick_restrict indexes;
 
-    register ssize_t
+    ssize_t
       x;
 
     register PixelPacket
