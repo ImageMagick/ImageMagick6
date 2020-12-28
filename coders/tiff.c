@@ -1753,6 +1753,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     quantum_type=GrayQuantum;
     if (image->storage_class == PseudoClass)
       quantum_type=IndexQuantum;
+    if (interlace != PLANARCONFIG_SEPARATE)
       {
         size_t
           pad;
