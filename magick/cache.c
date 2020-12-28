@@ -813,7 +813,7 @@ static MagickBooleanType ClonePixelCacheOnDisk(
       if (cache_info->length < 0x7ffff000)
         {
           count=sendfile(clone_info->file,cache_info->file,(off_t *) NULL,
-            (ssize_t) cache_info->length);
+            (size_t) cache_info->length);
           if (count == (ssize_t) cache_info->length)
             return(MagickTrue);
           if ((lseek(cache_info->file,0,SEEK_SET) < 0) ||
@@ -5155,6 +5155,19 @@ static inline void PrefetchPixelCacheNexusPixels(const NexusInfo *nexus_info,
   MagickCachePrefetch((unsigned char *) nexus_info->pixels+CACHE_LINE_SIZE,1,1);
 }
 
+static inline MagickBooleanType ValidatePixelOffset(const ssize_t u,
+  const ssize_t v)
+{
+  ssize_t
+    offset;
+
+  offset=u+v;
+  if (((u > 0) && (v > 0) && (offset < 0)) ||
+      ((u < 0) && (v < 0) && (offset > 0)))
+    return(MagickFalse);
+  return(MagickTrue);
+}
+
 static PixelPacket *SetPixelCacheNexusPixels(
   const CacheInfo *magick_restrict cache_info,const MapMode mode,
   const ssize_t x,const ssize_t y,const size_t width,const size_t height,
@@ -5174,7 +5187,10 @@ static PixelPacket *SetPixelCacheNexusPixels(
     return((PixelPacket *) NULL);
   assert(nexus_info->signature == MagickCoreSignature);
   (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
-  if ((width == 0) || (height == 0))
+  if ((width == 0) || (width > (size_t) SSIZE_MAX) || 
+      (height == 0) || (height > (size_t) SSIZE_MAX) ||
+      (ValidatePixelOffset(x,width) == MagickFalse) ||
+      (ValidatePixelOffset(y,height) == MagickFalse))
     {
       (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
         "NoPixelsDefinedInCache","`%s'",cache_info->filename);
