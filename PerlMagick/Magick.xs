@@ -887,7 +887,7 @@ static Image *GetList(pTHX_ SV *reference,SV ***reference_vector,
         *head,
         *previous;
 
-      register ssize_t
+      ssize_t
         i;
 
       ssize_t
@@ -1624,7 +1624,7 @@ static void SetAttribute(pTHX_ struct PackageInfo *info,Image *image,
           long
             index;
 
-          register PixelPacket
+          PixelPacket
             *p;
 
           CacheView
@@ -1866,10 +1866,10 @@ static void SetAttribute(pTHX_ struct PackageInfo *info,Image *image,
           MagickPixelPacket
             pixel;
 
-          register IndexPacket
+          IndexPacket
             *indexes;
 
-          register PixelPacket
+          PixelPacket
             *q;
 
           CacheView
@@ -2438,7 +2438,7 @@ static ssize_t strEQcase(const char *p,const char *q)
   char
     c;
 
-  register ssize_t
+  ssize_t
     i;
 
   for (i=0 ; (c=(*q)) != 0; i++)
@@ -2517,7 +2517,7 @@ Animate(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -2606,7 +2606,7 @@ Append(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -2843,10 +2843,10 @@ BlobToImage(ref,...)
     Image
       *image;
 
-    register char
+    char
       **p;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -3078,7 +3078,7 @@ CLONE(ref,...)
     PERL_UNUSED_VAR(ref);
     if (magick_registry != (SplayTreeInfo *) NULL)
       {
-        register Image
+        Image
           *p;
 
         ResetSplayTreeIterator(magick_registry);
@@ -3228,7 +3228,7 @@ Compare(ref,...)
     MetricType
       metric;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -3419,7 +3419,7 @@ CompareLayers(ref)
     ImageLayerMethod
       method;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -3555,7 +3555,7 @@ ComplexImages(ref)
     ComplexOperator
       op;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -3785,7 +3785,7 @@ Display(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -3877,7 +3877,7 @@ EvaluateImages(ref)
     MagickEvaluateOperator
       op;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -4081,7 +4081,7 @@ Features(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -4210,7 +4210,7 @@ Flatten(ref)
     PixelPacket
       background_color;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -4347,7 +4347,7 @@ Fx(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -4505,7 +4505,7 @@ Get(ref,...)
     long
       j;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -5110,10 +5110,10 @@ Get(ref,...)
                 x,
                 y;
 
-              register const IndexPacket
+              const IndexPacket
                 *indexes;
 
-              register const PixelPacket
+              const PixelPacket
                 *p;
 
               CacheView
@@ -5378,10 +5378,10 @@ Get(ref,...)
                 x,
                 y;
 
-              register const PixelPacket
+              const PixelPacket
                 *p;
 
-              register const IndexPacket
+              const IndexPacket
                 *indexes;
 
               if (image == (Image *) NULL)
@@ -6280,7 +6280,7 @@ Histogram(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -6399,13 +6399,13 @@ GetPixel(ref,...)
     RectangleInfo
       region;
 
-    register const IndexPacket
+    const IndexPacket
       *indexes;
 
-    register const PixelPacket
+    const PixelPacket
       *p;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -6605,7 +6605,7 @@ GetPixels(ref,...)
     RectangleInfo
       region;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -6843,7 +6843,7 @@ ImageToBlob(ref,...)
       *image,
       *next;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -6962,7 +6962,7 @@ Layers(ref,...)
     ImageLayerMethod
       method;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -7614,7 +7614,7 @@ Mogrify(ref,...)
       geometry,
       region_info;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -8580,10 +8580,10 @@ Mogrify(ref,...)
                   MagickBooleanType
                     sync;
 
-                  register ssize_t
+                  ssize_t
                     x;
 
-                  register PixelPacket
+                  PixelPacket
                     *q;
 
                   ssize_t
@@ -11265,7 +11265,7 @@ Montage(ref,...)
     MontageInfo
       *montage_info;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -11668,7 +11668,7 @@ Morph(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -11893,10 +11893,10 @@ Ping(ref,...)
     MagickBooleanType
       status;
 
-    register char
+    char
       **p;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -12189,7 +12189,7 @@ QueryColor(ref,...)
     MagickPixelPacket
       color;
 
-    register ssize_t
+    ssize_t
       i;
 
     SV
@@ -12275,7 +12275,7 @@ QueryColorname(ref,...)
     PixelPacket
       target_color;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -12341,7 +12341,7 @@ QueryFont(ref,...)
     ExceptionInfo
       *exception;
 
-    register ssize_t
+    ssize_t
       i;
 
     SV
@@ -12486,7 +12486,7 @@ QueryFontMetrics(ref,...)
     MagickStatusType
       flags;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -12897,7 +12897,7 @@ QueryMultilineFontMetrics(ref,...)
     MagickStatusType
       flags;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -13244,7 +13244,7 @@ QueryFormat(ref,...)
     ExceptionInfo
       *exception;
 
-    register ssize_t
+    ssize_t
       i;
 
     SV
@@ -13336,7 +13336,7 @@ QueryOption(ref,...)
     ExceptionInfo
       *exception;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -13414,10 +13414,10 @@ Read(ref,...)
     MagickBooleanType
       status;
 
-    register char
+    char
       **p;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -13619,7 +13619,7 @@ Remote(ref,...)
     ExceptionInfo
       *exception;
 
-    register ssize_t
+    ssize_t
       i;
 
     SV
@@ -13674,7 +13674,7 @@ Set(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -13752,13 +13752,13 @@ SetPixel(ref,...)
     RectangleInfo
       region;
 
-    register IndexPacket
+    IndexPacket
       *indexes;
 
-    register ssize_t
+    ssize_t
       i;
 
-    register PixelPacket
+    PixelPacket
       *q;
 
     ssize_t
@@ -13913,7 +13913,7 @@ SetPixel(ref,...)
         double
           scale;
 
-        register ssize_t
+        ssize_t
           i;
 
         i=0;
@@ -13997,7 +13997,7 @@ Smush(ref,...)
     Image
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
@@ -14345,7 +14345,7 @@ Transform(ref,...)
       *clone,
       *image;
 
-    register ssize_t
+    ssize_t
       i;
 
     struct PackageInfo
@@ -14485,7 +14485,7 @@ Write(ref,...)
       *image,
       *next;
 
-    register ssize_t
+    ssize_t
       i;
 
     ssize_t
