@@ -5187,13 +5187,20 @@ static PixelPacket *SetPixelCacheNexusPixels(
     return((PixelPacket *) NULL);
   assert(nexus_info->signature == MagickCoreSignature);
   (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
-  if ((width == 0) || (width > (size_t) SSIZE_MAX) || 
-      (height == 0) || (height > (size_t) SSIZE_MAX) ||
-      (ValidatePixelRange(x,(ssize_t) width) == MagickFalse) ||
-      (ValidatePixelRange(y,(ssize_t) height) == MagickFalse))
+  if ((width == 0) || (height == 0))
     {
       (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
         "NoPixelsDefinedInCache","`%s'",cache_info->filename);
+      return((PixelPacket *) NULL);
+    }
+  if ((width > (size_t) SSIZE_MAX) || (height > (size_t) SSIZE_MAX) ||
+      ((MagickSizeType) width > cache_info->width_limit) ||
+      ((MagickSizeType) height > cache_info->height_limit) ||
+      (ValidatePixelRange(x,(ssize_t) width) == MagickFalse) ||
+      (ValidatePixelRange(y,(ssize_t) height) == MagickFalse))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
+        "WidthOrHeightExceedsLimit","`%s'",cache_info->filename);
       return((PixelPacket *) NULL);
     }
   if (((cache_info->type == MemoryCache) || (cache_info->type == MapCache)) &&
@@ -5227,13 +5234,6 @@ static PixelPacket *SetPixelCacheNexusPixels(
   /*
     Pixels are stored in a staging region until they are synced to the cache.
   */
-  if (((MagickSizeType) width > cache_info->width_limit) ||
-      ((MagickSizeType) height > cache_info->height_limit))
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
-        "WidthOrHeightExceedsLimit","`%s'",cache_info->filename);
-      return((PixelPacket *) NULL);
-    }
   number_pixels=(MagickSizeType) width*height;
   length=MagickMax(number_pixels,MagickMax(cache_info->columns,
     cache_info->rows))*sizeof(PixelPacket);
