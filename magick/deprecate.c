@@ -40,12 +40,16 @@
 /*
   Include declarations.
 */
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
-#define WIN32_LEAN_AND_MEAN
-#define VC_EXTRALEAN
-#include <windows.h>
-#endif
 #include "magick/studio.h"
+#if defined(MAGICKCORE_WINGDI32_DELEGATE)
+#  if defined(__CYGWIN__)
+#    include <windows.h>
+#  else
+     /* All MinGW needs ... */
+#    include "MagickCore/nt-base-private.h"
+#    include <wingdi.h>
+#  endif
+#endif
 #include "magick/blob.h"
 #include "magick/blob-private.h"
 #include "magick/cache.h"
@@ -81,6 +85,7 @@
 #include "magick/monitor-private.h"
 #include "magick/morphology.h"
 #include "magick/mutex.h"
+#include "magick/nt-feature.h"
 #include "magick/paint.h"
 #include "magick/pixel.h"
 #include "magick/pixel-accessor.h"
