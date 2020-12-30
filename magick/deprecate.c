@@ -1470,7 +1470,7 @@ MagickExport void ConstituteComponentTerminus(void)
 {
 }
 
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+#if defined(MAGICKCORE_WINGDI32_DELEGATE)
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -3689,7 +3689,7 @@ MagickExport void IdentityAffine(AffineMatrix *affine)
   affine->sy=1.0;
 }
 
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+#if defined(MAGICKCORE_WINGDI32_DELEGATE)
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
