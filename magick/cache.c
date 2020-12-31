@@ -5160,12 +5160,12 @@ static inline void PrefetchPixelCacheNexusPixels(const NexusInfo *nexus_info,
 static inline MagickBooleanType ValidatePixelInterval(const ssize_t x,
   const ssize_t a)
 {
-  double
+  MagickOffsetType
     interval;
 
-  interval=(double) x+a;
-  if (((x > 0) && (a > 0) && (interval < 0.0)) ||
-      ((x < 0) && (a < 0) && (interval > 0.0)))
+  interval=(MagickOffsetType) x+a;
+  if (((x > 0) && (a > 0) && (interval < 0)) ||
+      ((x < 0) && (a < 0) && (interval > 0)))
     return(MagickFalse);
   return(MagickTrue);
 }
