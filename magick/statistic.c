@@ -294,6 +294,12 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
         ImpulseNoise,value);
       break;
     }
+    case InverseLogEvaluateOperator:
+    {
+      result=(QuantumRange*pow((value+1.0),QuantumScale*pixel)-1.0)*
+        PerceptibleReciprocal(value);
+      break;
+    }
     case LaplacianNoiseEvaluateOperator:
     {
       result=(MagickRealType) GenerateDifferentialNoise(random_info,pixel,

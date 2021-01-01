@@ -146,6 +146,7 @@ static const char
     "-evaluate Cosine 2",
     "-evaluate Divide 0.7",
     "-evaluate Exponential 1.0",
+    "-evaluate InverseLog 2",
     "-evaluate Xor 233",
     "-extent 1200x1200-100-100",
     "-fill blue -fuzz 35% -opaque red",
