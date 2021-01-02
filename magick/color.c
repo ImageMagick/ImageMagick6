@@ -2887,9 +2887,15 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
               (scale*geometry_info.psi));
           else
             if (color->matte != MagickFalse)
-              color->opacity=(MagickRealType) ClampToQuantum(
-                (MagickRealType) (scale*(QuantumRange-QuantumRange*
-                geometry_info.psi)));
+              {
+                if ((flags & AlphaValue) != 0)
+                  color->opacity=(MagickRealType) ClampToQuantum(
+                    (MagickRealType) (scale*geometry_info.psi));
+                else
+                  color->opacity=(MagickRealType) ClampToQuantum(
+                    (MagickRealType) (scale*(QuantumRange-QuantumRange*
+                    geometry_info.psi)));
+              }
         }
       if (((flags & ChiValue) != 0) && (color->matte != MagickFalse))
         color->opacity=(MagickRealType) ClampToQuantum((MagickRealType)
