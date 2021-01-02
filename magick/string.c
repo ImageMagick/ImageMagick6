@@ -1576,7 +1576,7 @@ MagickExport void ResetStringInfo(StringInfo *string_info)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  SanitizeString() returns a new string removes all characters except
+%  SanitizeString() returns a new string with all characters removed except
 %  letters, digits and !#$%&'*+-=?^_`{|}~@.[].
 %
 %  Free the sanitized string with DestroyString().
