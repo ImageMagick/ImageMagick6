@@ -276,7 +276,7 @@ MagickExport MagickBooleanType BlobToFile(char *filename,const void *blob,
   for (i=0; i < length; i+=count)
   {
     count=write(file,(const char *) blob+i,MagickMin(length-i,(size_t)
-      SSIZE_MAX));
+      LONG_MAX));
     if (count <= 0)
       {
         count=0;
@@ -1202,7 +1202,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
       return(blob);
     }
   *length=(size_t) MagickMin(offset,(MagickOffsetType)
-    MagickMin(extent,SSIZE_MAX));
+    MagickMin(extent,LONG_MAX));
   blob=(unsigned char *) NULL;
   if (~(*length) >= (MaxTextExtent-1))
     blob=(unsigned char *) AcquireQuantumMemory(*length+MaxTextExtent,
@@ -1225,7 +1225,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
       (void) lseek(file,0,SEEK_SET);
       for (i=0; i < *length; i+=count)
       {
-        count=read(file,blob+i,MagickMin(*length-i,(size_t) SSIZE_MAX));
+        count=read(file,blob+i,MagickMin(*length-i,(size_t) LONG_MAX));
         if (count <= 0)
           {
             count=0;
@@ -3092,7 +3092,7 @@ MagickExport Image *PingBlob(const ImageInfo *image_info,const void *blob,
 %
 %  ReadBlob() reads data from the blob or image file and returns it.  It
 %  returns the number of bytes read. If length is zero, ReadBlob() returns
-%  zero and has no other results. If length is greater than SSIZE_MAX, the
+%  zero and has no other results. If length is greater than LONG_MAX, the
 %  result is unspecified.
 %
 %  The format of the ReadBlob method is:
@@ -4132,7 +4132,7 @@ MagickExport signed short ReadBlobSignedShort(Image *image)
 %  returns a pointer to the data buffer you supply or to the image memory
 %  buffer if its supported (zero-copy). If length is zero, ReadBlobStream()
 %  returns a count of zero and has no other results. If length is greater than
-%  SSIZE_MAX, the result is unspecified.
+%  LONG_MAX, the result is unspecified.
 %
 %  The format of the ReadBlobStream method is:
 %
@@ -4365,8 +4365,8 @@ MagickExport MagickOffsetType SeekBlob(Image *image,
         }
         case SEEK_CUR:
         {
-          if (((offset > 0) && (blob_info->offset > (SSIZE_MAX-offset))) ||
-              ((offset < 0) && (blob_info->offset < (-SSIZE_MAX-offset))))
+          if (((offset > 0) && (blob_info->offset > (LONG_MAX-offset))) ||
+              ((offset < 0) && (blob_info->offset < (LONG_MIN-offset))))
             {
               errno=EOVERFLOW;
               return(-1);

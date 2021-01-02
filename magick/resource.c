@@ -125,8 +125,8 @@ static ResourceInfo
     MagickULLConstant(0),              /* initial thread */
     MagickULLConstant(0),              /* initial throttle */
     MagickULLConstant(0),              /* initial time */
-    SSIZE_MAX/sizeof(PixelPacket)/10,  /* width limit */
-    SSIZE_MAX/sizeof(PixelPacket)/10,  /* height limit */
+    LONG_MAX/sizeof(PixelPacket)/10,  /* width limit */
+    LONG_MAX/sizeof(PixelPacket)/10,  /* height limit */
     MagickResourceInfinity,            /* list length limit */
     MagickULLConstant(3072)*1024*1024, /* area limit */
     MagickULLConstant(1536)*1024*1024, /* memory limit */
@@ -1587,7 +1587,7 @@ MagickExport MagickBooleanType SetMagickResourceLimit(const ResourceType type,
         resource_info.height_limit=MagickMin(limit,StringToSizeType(value,
           100.0));
       resource_info.height_limit=MagickMin(resource_info.height_limit,
-        (MagickSizeType) SSIZE_MAX);
+        (MagickSizeType) LONG_MAX);
       break;
     }
     case ListLengthResource:
@@ -1663,7 +1663,7 @@ MagickExport MagickBooleanType SetMagickResourceLimit(const ResourceType type,
         resource_info.width_limit=MagickMin(limit,StringToSizeType(value,
           100.0));
       resource_info.width_limit=MagickMin(resource_info.width_limit,
-        (MagickSizeType) SSIZE_MAX);
+        (MagickSizeType) LONG_MAX);
       break;
     }
     default:

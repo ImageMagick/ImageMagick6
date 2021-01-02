@@ -391,9 +391,9 @@ MagickExport Cache AcquirePixelCache(const size_t number_threads)
       value=DestroyString(value);
     }
   cache_info->width_limit=MagickMin(GetMagickResourceLimit(WidthResource),
-    (MagickSizeType) SSIZE_MAX);
+    (MagickSizeType) LONG_MAX);
   cache_info->height_limit=MagickMin(GetMagickResourceLimit(HeightResource),
-    (MagickSizeType) SSIZE_MAX);
+    (MagickSizeType) LONG_MAX);
   cache_info->semaphore=AllocateSemaphoreInfo();
   cache_info->reference_count=1;
   cache_info->file_semaphore=AllocateSemaphoreInfo();
@@ -3787,10 +3787,10 @@ static inline MagickOffsetType WritePixelCacheRegion(
   {
 #if !defined(MAGICKCORE_HAVE_PWRITE)
     count=write(cache_info->file,buffer+i,(size_t) MagickMin(length-i,(size_t)
-      SSIZE_MAX));
+      LONG_MAX));
 #else
     count=pwrite(cache_info->file,buffer+i,(size_t) MagickMin(length-i,(size_t)
-      SSIZE_MAX),offset+i);
+      LONG_MAX),offset+i);
 #endif
     if (count <= 0)
       {
@@ -4593,10 +4593,10 @@ static inline MagickOffsetType ReadPixelCacheRegion(
   {
 #if !defined(MAGICKCORE_HAVE_PREAD)
     count=read(cache_info->file,buffer+i,(size_t) MagickMin(length-i,(size_t)
-      SSIZE_MAX));
+      LONG_MAX));
 #else
     count=pread(cache_info->file,buffer+i,(size_t) MagickMin(length-i,(size_t)
-      SSIZE_MAX),offset+i);
+      LONG_MAX),offset+i);
 #endif
     if (count <= 0)
       {
@@ -5160,9 +5160,9 @@ static inline void PrefetchPixelCacheNexusPixels(const NexusInfo *nexus_info,
 static inline MagickBooleanType ValidatePixelOffset(const ssize_t x,
   const ssize_t a)
 {
-  if ((x >= 0) && (a > ((ssize_t) SSIZE_MAX-x)))
+  if ((x >= 0) && (a > (ssize_t) (LONG_MAX-x)))
     return(MagickFalse);
-  if (a < -((ssize_t) SSIZE_MAX-x))
+  if (a < (ssize_t) (LONG_MIN-x))
     return(MagickFalse);
   return(MagickTrue);
 }
