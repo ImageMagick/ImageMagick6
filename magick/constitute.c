@@ -1023,9 +1023,8 @@ MagickExport Image *ReadInlineImage(const ImageInfo *image_info,
   for (p=content; (*p != ',') && (*p != '\0'); p++) ;
   if (*p == '\0')
     ThrowReaderException(CorruptImageError,"CorruptImage");
-  p++;
   length=0;
-  blob=Base64Decode(p,&length);
+  blob=Base64Decode(++p,&length);
   if (length == 0)
     {
       blob=(unsigned char *) RelinquishMagickMemory(blob);
@@ -1046,10 +1045,9 @@ MagickExport Image *ReadInlineImage(const ImageInfo *image_info,
         i;
 
       /*
-        Extract Mime type.
+        Extract media type.
       */
-      p++;
-      if (LocaleNCompare(p,"x-",2) == 0)
+      if (LocaleNCompare(++p,"x-",2) == 0)
         p+=2;
       (void) strcpy(read_info->filename,"data.");
       q=read_info->filename+5;
