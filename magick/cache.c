@@ -5162,7 +5162,7 @@ static inline MagickBooleanType ValidatePixelOffset(const ssize_t x,
 {
   if ((x >= 0) && (a > ((ssize_t) LONG_MAX-x)))
     return(MagickFalse);
-  if (a < ((ssize_t) LONG_MIN-x))
+  if (a < ((ssize_t) LONG_MIN+x))
     return(MagickFalse);
   return(MagickTrue);
 }
