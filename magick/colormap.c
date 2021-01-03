@@ -49,6 +49,7 @@
 #include "magick/color.h"
 #include "magick/color-private.h"
 #include "magick/colormap.h"
+#include "magick/colormap-private.h"
 #include "magick/client.h"
 #include "magick/configure.h"
 #include "magick/exception.h"
@@ -363,7 +364,8 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      index=(IndexPacket) pixels[(ssize_t) GetPixelIndex(indexes+x)];
+      i=ConstrainColormapIndex(image,GetPixelIndex(indexes+x));
+      index=(IndexPacket) pixels[i];
       SetPixelIndex(indexes+x,index);
       SetPixelRGBO(q,image->colormap+(ssize_t) index);
       q++;
