@@ -4409,15 +4409,6 @@ static inline void CatromWeights(const MagickRealType x,
   (*weights)[2]=x-(*weights)[3]-gamma;
 }
 
-static inline double ConstrainPixelOffset(double x)
-{
-  if (x < (double) -(LONG_MAX-512))
-    return((double) -(LONG_MAX-512));
-  if (x > (double) (LONG_MAX-512))
-    return((double) (LONG_MAX-512));
-  return(x);
-}
-
 static inline void SplineWeights(const MagickRealType x,
   MagickRealType (*weights)[4])
 {
@@ -4483,8 +4474,8 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
   assert(image->signature == MagickCoreSignature);
   assert(image_view != (CacheView *) NULL);
   status=MagickTrue;
-  x_offset=CastDoubleToLong(floor(ConstrainPixelOffset(x)));
-  y_offset=CastDoubleToLong(floor(ConstrainPixelOffset(y)));
+  x_offset=CastDoubleToLong(floor(x));
+  y_offset=CastDoubleToLong(floor(y));
   interpolate = method;
   if (interpolate == UndefinedInterpolatePixel)
     interpolate=image->interpolate;
@@ -4502,8 +4493,8 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
       if (interpolate == Average9InterpolatePixel)
         {
           count=3;
-          x_offset=CastDoubleToLong(floor(ConstrainPixelOffset(x)+0.5)-1.0);
-          y_offset=CastDoubleToLong(floor(ConstrainPixelOffset(y)+0.5)-1.0);
+          x_offset=CastDoubleToLong(floor(x+0.5)-1.0);
+          y_offset=CastDoubleToLong(floor(y+0.5)-1.0);
         }
       else
         if (interpolate == Average16InterpolatePixel)
