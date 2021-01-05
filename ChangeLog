@@ -1,5 +1,5 @@
 2021-01-05  6.9.11-56  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-56 GIT revision 16266:c3350670f:20210103
+  * Release ImageMagick version 6.9.11-56 GIT revision 16269:33952f6f4:20210105
 
 2021-01-05  6.9.11-56  <quetzlzacatenango@image...>
   * Fix rounding error for CSS colors (reference
