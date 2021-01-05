@@ -1182,8 +1182,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
       if (error_manager.profile != (StringInfo *) NULL)
         error_manager.profile=DestroyStringInfo(error_manager.profile);
       (void) CloseBlob(image);
-      number_pixels=(MagickSizeType) image->columns*image->rows;
-      if (number_pixels != 0)
+      if (exception->severity < ErrorException)
         return(GetFirstImageInList(image));
       InheritException(exception,&image->exception);
       return(DestroyImage(image));
