@@ -913,7 +913,7 @@ static MagickBooleanType WritePCLImage(const ImageInfo *image_info,Image *image)
             Colormapped image.
           */
           for (x=0; x < (ssize_t) image->columns; x++)
-            *q++=(unsigned char) GetPixelIndex(indexes+x);
+            *q++=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
           break;
         }
         case 24:

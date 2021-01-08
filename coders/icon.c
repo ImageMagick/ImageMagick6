@@ -1217,7 +1217,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
               indexes=GetVirtualIndexQueue(next);
               q=pixels+(next->rows-y-1)*bytes_per_line;
               for (x=0; x < (ssize_t) next->columns; x++)
-                *q++=(unsigned char) GetPixelIndex(indexes+x);
+                *q++=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
               if (next->previous == (Image *) NULL)
                 {
                   status=SetImageProgress(next,SaveImageTag,y,next->rows);

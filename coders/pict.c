@@ -2046,7 +2046,7 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
         break;
       indexes=GetVirtualIndexQueue(image);
       for (x=0; x < (ssize_t) image->columns; x++)
-        scanline[x]=(unsigned char) GetPixelIndex(indexes+x);
+        scanline[x]=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
       count+=EncodeImage(image,scanline,(size_t) (row_bytes & 0x7FFF),
         packed_scanline);
       if (image->previous == (Image *) NULL)

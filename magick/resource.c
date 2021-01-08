@@ -114,28 +114,28 @@ static RandomInfo
 static ResourceInfo
   resource_info =
   {
-    MagickULLConstant(0),              /* initial width */
-    MagickULLConstant(0),              /* initial height */
-    MagickULLConstant(0),              /* initial list length */
-    MagickULLConstant(0),              /* initial area */
-    MagickULLConstant(0),              /* initial memory */
-    MagickULLConstant(0),              /* initial map */
-    MagickULLConstant(0),              /* initial disk */
-    MagickULLConstant(0),              /* initial file */
-    MagickULLConstant(0),              /* initial thread */
-    MagickULLConstant(0),              /* initial throttle */
-    MagickULLConstant(0),              /* initial time */
-    LONG_MAX/sizeof(PixelPacket),      /* width limit */
-    LONG_MAX/sizeof(PixelPacket),      /* height limit */
-    MagickResourceInfinity,            /* list length limit */
-    MagickULLConstant(3072)*1024*1024, /* area limit */
-    MagickULLConstant(1536)*1024*1024, /* memory limit */
-    MagickULLConstant(3072)*1024*1024, /* map limit */
-    MagickResourceInfinity,            /* disk limit */
-    MagickULLConstant(768),            /* file limit */
-    MagickULLConstant(1),              /* thread limit */
-    MagickULLConstant(0),              /* throttle limit */
-    MagickResourceInfinity             /* time limit */
+    MagickULLConstant(0),                 /* initial width */
+    MagickULLConstant(0),                 /* initial height */
+    MagickULLConstant(0),                 /* initial list length */
+    MagickULLConstant(0),                 /* initial area */
+    MagickULLConstant(0),                 /* initial memory */
+    MagickULLConstant(0),                 /* initial map */
+    MagickULLConstant(0),                 /* initial disk */
+    MagickULLConstant(0),                 /* initial file */
+    MagickULLConstant(0),                 /* initial thread */
+    MagickULLConstant(0),                 /* initial throttle */
+    MagickULLConstant(0),                 /* initial time */
+    MAGICK_SSIZE_MAX/sizeof(PixelPacket), /* width limit */
+    MAGICK_SSIZE_MAX/sizeof(PixelPacket), /* height limit */
+    MagickResourceInfinity,               /* list length limit */
+    MagickULLConstant(3072)*1024*1024,    /* area limit */
+    MagickULLConstant(1536)*1024*1024,    /* memory limit */
+    MagickULLConstant(3072)*1024*1024,    /* map limit */
+    MagickResourceInfinity,               /* disk limit */
+    MagickULLConstant(768),               /* file limit */
+    MagickULLConstant(1),                 /* thread limit */
+    MagickULLConstant(0),                 /* throttle limit */
+    MagickResourceInfinity                /* time limit */
   };
 
 static SemaphoreInfo
@@ -1585,7 +1585,7 @@ MagickExport MagickBooleanType SetMagickResourceLimit(const ResourceType type,
         resource_info.height_limit=MagickMin(limit,StringToSizeType(value,
           100.0));
       resource_info.height_limit=MagickMin(resource_info.height_limit,
-        (MagickSizeType) LONG_MAX);
+        (MagickSizeType) MAGICK_SSIZE_MAX);
       break;
     }
     case ListLengthResource:
@@ -1661,7 +1661,7 @@ MagickExport MagickBooleanType SetMagickResourceLimit(const ResourceType type,
         resource_info.width_limit=MagickMin(limit,StringToSizeType(value,
           100.0));
       resource_info.width_limit=MagickMin(resource_info.width_limit,
-        (MagickSizeType) LONG_MAX);
+        (MagickSizeType) MAGICK_SSIZE_MAX);
       break;
     }
     default:

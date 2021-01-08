@@ -934,7 +934,7 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
           for (x=0; x < (ssize_t) image->columns; x++)
           {
             if (bits_per_pixel >= 8)
-              color=(unsigned char) GetPixelIndex(indexes+x);
+              color=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
             else
               color=(unsigned char) (GetPixelIndex(indexes+x)*
                 ((one << bits_per_pixel)-1)/MagickMax(1*image->colors-1,1));

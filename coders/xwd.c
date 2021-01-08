@@ -931,7 +931,7 @@ static MagickBooleanType WriteXWDImage(const ImageInfo *image_info,Image *image)
       {
         indexes=GetVirtualIndexQueue(image);
         for (x=0; x < (ssize_t) image->columns; x++)
-          *q++=(unsigned char) GetPixelIndex(indexes+x);
+          *q++=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
       }
     else
       for (x=0; x < (ssize_t) image->columns; x++)

@@ -1115,7 +1115,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
             indexes=GetVirtualIndexQueue(image);
             q=pixels;
             for (x=0; x < (ssize_t) image->columns; x++)
-              *q++=(unsigned char) GetPixelIndex(indexes+x);
+              *q++=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
             if (PCXWritePixels(&pcx_info,pixels,image) == MagickFalse)
               break;
             if (image->previous == (Image *) NULL)

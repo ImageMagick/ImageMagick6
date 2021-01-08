@@ -1265,7 +1265,7 @@ static MagickBooleanType WriteDIBImage(const ImageInfo *image_info,Image *image)
         indexes=GetVirtualIndexQueue(image);
         q=pixels+(image->rows-y-1)*bytes_per_line;
         for (x=0; x < (ssize_t) image->columns; x++)
-          *q++=(unsigned char) GetPixelIndex(indexes+x);
+          *q++=(unsigned char) ((size_t) GetPixelIndex(indexes+x));
         for ( ; x < (ssize_t) bytes_per_line; x++)
           *q++=0x00;
         status=SetImageProgress(image,SaveImageTag,(MagickOffsetType) y,
