@@ -2293,7 +2293,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             length;
 
           /*
-            Parse if(condition test).
+            Parse if(condition test, true-expression, false-expression).
           */
           length=CopyMagickString(subexpression,expression+3,
             MagickPathExtent-1);
