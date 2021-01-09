@@ -1,8 +1,8 @@
-2021-01-08  6.9.11-57  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-57 GIT revision 16... 
+2021-01-09  6.9.11-57  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-57 GIT revision 16296:a48cba033:20210109
 
 2021-01-08  6.9.11-57  <quetzlzacatenango@image...>
-  * update automake/aucong configuration files.
+  * update automake/autoconf configuration files.
   * additional checks to prevent integer overflow.
 
 2021-01-05  6.9.11-56  <quetzlzacatenango@image...>
