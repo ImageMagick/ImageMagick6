@@ -2753,7 +2753,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
                   else
                     return(MagickFalse);
             }
-          } while (isxdigit((int) ((unsigned char) *name)) != MagickFalse);
+          } while (isxdigit((int) ((unsigned char) *name)) != 0);
           depth=4*(n/4);
         }
       color->colorspace=sRGBColorspace;
@@ -2799,14 +2799,15 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
             scale=(double) QuantumRange;
           icc_color=MagickTrue;
         }
-      if (LocaleCompare(colorspace,"icc-color") == 0)
+      if ((LocaleCompare(colorspace,"color") == 0) ||
+          (LocaleCompare(colorspace,"icc-color") == 0))
         {
           ssize_t
             j;
 
           (void) CopyMagickString(colorspace,name+i+2,MaxTextExtent);
           for (j=0; colorspace[j] != '\0'; j++)
-            if (colorspace[j] == ',')
+            if ((colorspace[j] == ' ') || (colorspace[j] == ','))
               break;
           colorspace[j--]='\0';
           i+=j+3;
@@ -2893,8 +2894,8 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
                     (MagickRealType) (scale*geometry_info.psi));
                 else
                   color->opacity=(MagickRealType) ClampToQuantum(
-                    (MagickRealType) (scale*(QuantumRange-QuantumRange*
-                    geometry_info.psi)));
+                    (MagickRealType) (QuantumRange-QuantumRange*
+                    geometry_info.psi));
               }
         }
       if (((flags & ChiValue) != 0) && (color->matte != MagickFalse))
