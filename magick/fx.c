@@ -93,6 +93,7 @@
 #include "magick/string-private.h"
 #include "magick/thread-private.h"
 #include "magick/threshold.h"
+#include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
 
