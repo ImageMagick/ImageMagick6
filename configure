@@ -1060,6 +1060,7 @@ MAGICK_TARGET_VENDOR
 MAGICK_TARGET_CPU
 CONFIGURE_ARGS
 DISTCHECK_CONFIG_FLAGS
+CONFIGURE_DEPENDENCIES
 AM_BACKSLASH
 AM_DEFAULT_VERBOSITY
 AM_DEFAULT_V
@@ -3759,6 +3760,7 @@ test -n "$target_alias" &&
   program_prefix=${target_alias}-
 
 
+
 am__api_version='1.16'
 
 # Find a good install program.  We prefer a C program (faster),
@@ -4445,6 +4447,7 @@ END
   fi
 fi
 
+
 # Check whether --enable-silent-rules was given.
 if test "${enable_silent_rules+set}" = set; then :
   enableval=$enable_silent_rules;
@@ -4483,6 +4486,8 @@ else
   AM_DEFAULT_V=$AM_DEFAULT_VERBOSITY
 fi
 AM_BACKSLASH='\'
+
+CONFIGURE_DEPENDENCIES="$CONFIGURE_DEPENDENCIES \$(top_srcdir)/ChangeLog \$(top_srcdir)/version.sh"
 
 
 #
@@ -4550,7 +4555,7 @@ MAGICK_PATCHLEVEL_VERSION=58
 
 MAGICK_VERSION=6.9.11-58
 
-MAGICK_GIT_REVISION=16302:1afccc12e:20210109
+MAGICK_GIT_REVISION=16319:4fdd42ccb:20210113
 
 
 # Substitute library versioning
