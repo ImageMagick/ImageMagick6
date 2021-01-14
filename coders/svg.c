@@ -3671,7 +3671,7 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   for (next=GetFirstImageInList(image); next != (Image *) NULL; )
   {
     (void) CopyMagickString(next->filename,image->filename,MaxTextExtent);
-    (void) CopyMagickString(next->magick,image->magick,MaxTextExtent);
+    (void) CopyMagickString(next->magick,"SVG",MaxTextExtent);
     next=GetNextImageInList(next);
   }
   return(GetFirstImageInList(image));
