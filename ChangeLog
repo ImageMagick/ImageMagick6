@@ -2,7 +2,8 @@
   * Release ImageMagick version 6.9.11-58 GIT revision 16...
 
 2021-01-11  6.9.11-58  <quetzlzacatenango@image...>
-  * ...
+  * properly identify SVG images (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3117).
 
 2021-01-09  6.9.11-57  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-57 GIT revision 16301:c2f75ef89:20210109
