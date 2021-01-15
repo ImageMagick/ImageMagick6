@@ -22,35 +22,9 @@
 AC_PREREQ(2.69)
 
 # ==============================================================================
-# ImageMagick versioning
-# ==============================================================================
-m4_define([magick_name], [ImageMagick])
-m4_define([magick_major_version], [6])
-m4_define([magick_minor_version], [9])
-m4_define([magick_micro_version], [11])
-m4_define([magick_patchlevel_version], [58])
-m4_define([magick_base_version],
-          [magick_major_version.magick_minor_version.magick_micro_version])
-m4_define([magick_version],
-          [magick_base_version-magick_patchlevel_version])
-m4_define([magick_bugreport], 
-          [https://github.com/ImageMagick/ImageMagick/issues])
-m4_define([magick_url], [https://imagemagick.org])
-m4_define([magick_lib_version],[0x69B])
-m4_define([magick_lib_version_number],
-          [magick_major_version,magick_minor_version,magick_micro_version,magick_patchlevel_version])
-m4_define([magick_git_revision],
-          esyscmd([
-            c=$(git log --full-history --format=tformat:. HEAD | wc -l)
-            h=$(git rev-parse --short HEAD)
-            d=$(date +%Y%m%d)
-            printf %s "$c:$h:$d"
-          ]))
-m4_define([magick_tarname],[ImageMagick])
-
-# ==============================================================================
 # Initalize Automake
 # ==============================================================================
+m4_include([m4/version.m4])
 AC_INIT([magick_name],
         [magick_version],
         [magick_bugreport],
