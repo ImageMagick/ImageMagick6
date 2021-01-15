@@ -74,7 +74,7 @@
 %
 %  The format of the ValidateColorspaces method is:
 %
-%      size_t ValidateColorspaces(ImageInfo *image_info,size_t *fail,
+%      size_t ValidateColorspaces(ImageInfo *image_info,size_t *fails,
 %        ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
@@ -816,13 +816,14 @@ static MagickBooleanType ValidateYUVToRGB()
   return(MagickTrue);
 }
 
-static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fail,
+static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fails,
   ExceptionInfo *exception)
 {
   MagickBooleanType
     status;
 
   size_t
+    fail,
     test;
 
   /*
@@ -848,6 +849,7 @@ static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fail,
      Y'CbCr       187.577791,  87.586330,  90.040886
   */
   (void) FormatLocaleFile(stdout,"validate colorspaces:\n");
+  fail=0;
   for (test=0; test < 26; test++)
   {
     CatchException(exception);
@@ -886,14 +888,15 @@ static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fail,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -915,7 +918,7 @@ static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fail,
 %
 %      size_t ValidateCompareCommand(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -931,7 +934,7 @@ static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fail,
 %
 */
 static size_t ValidateCompareCommand(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -949,8 +952,10 @@ static size_t ValidateCompareCommand(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate compare command line program:\n");
   for (i=0; compare_options[i] != (char *) NULL; i++)
@@ -965,7 +970,7 @@ static size_t ValidateCompareCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     status=CompareImageCommand(image_info,number_arguments,arguments,
@@ -977,14 +982,15 @@ static size_t ValidateCompareCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -1006,7 +1012,7 @@ static size_t ValidateCompareCommand(ImageInfo *image_info,
 %
 %      size_t ValidateCompositeCommand(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1022,7 +1028,7 @@ static size_t ValidateCompareCommand(ImageInfo *image_info,
 %
 */
 static size_t ValidateCompositeCommand(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -1040,8 +1046,10 @@ static size_t ValidateCompositeCommand(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate composite command line program:\n");
   for (i=0; composite_options[i] != (char *) NULL; i++)
@@ -1057,7 +1065,7 @@ static size_t ValidateCompositeCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     status=CompositeImageCommand(image_info,number_arguments,arguments,
@@ -1069,14 +1077,15 @@ static size_t ValidateCompositeCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -1098,7 +1107,7 @@ static size_t ValidateCompositeCommand(ImageInfo *image_info,
 %
 %      size_t ValidateConvertCommand(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1114,7 +1123,7 @@ static size_t ValidateCompositeCommand(ImageInfo *image_info,
 %
 */
 static size_t ValidateConvertCommand(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -1132,8 +1141,10 @@ static size_t ValidateConvertCommand(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate convert command line program:\n");
   for (i=0; convert_options[i] != (char *) NULL; i++)
@@ -1148,7 +1159,7 @@ static size_t ValidateConvertCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     status=ConvertImageCommand(image_info,number_arguments,arguments,
@@ -1162,14 +1173,15 @@ static size_t ValidateConvertCommand(ImageInfo *image_info,
           GetMagickModule());
         (void) LogMagickEvent(ExceptionEvent,GetMagickModule(),
           "%s",exception->reason);
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -1191,7 +1203,7 @@ static size_t ValidateConvertCommand(ImageInfo *image_info,
 %
 %      size_t ValidateIdentifyCommand(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1207,7 +1219,7 @@ static size_t ValidateConvertCommand(ImageInfo *image_info,
 %
 */
 static size_t ValidateIdentifyCommand(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -1225,9 +1237,11 @@ static size_t ValidateIdentifyCommand(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
   (void) output_filename;
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate identify command line program:\n");
   for (i=0; identify_options[i] != (char *) NULL; i++)
@@ -1242,7 +1256,7 @@ static size_t ValidateIdentifyCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     status=IdentifyImageCommand(image_info,number_arguments,arguments,
@@ -1254,14 +1268,15 @@ static size_t ValidateIdentifyCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
           GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -1283,7 +1298,7 @@ static size_t ValidateIdentifyCommand(ImageInfo *image_info,
 %
 %      size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1306,7 +1321,7 @@ static size_t ValidateIdentifyCommand(ImageInfo *image_info,
 #undef MagickCountTempFiles
 
 static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -1343,18 +1358,18 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
     *blob;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate image formats in memory:\n");
-
 #ifdef MagickCountTempFiles
   (void) GetPathTemplate(path);
   /* Remove file template except for the leading "/path/to/magick-" */
   path[strlen(path)-17]='\0';
   (void) FormatLocaleFile(stdout," tmp path is '%s*'\n",path);
 #endif
-
   for (i=0; reference_formats[i].magick != (char *) NULL; i++)
   {
     magick_info=GetMagickInfo(reference_formats[i].magick,exception);
@@ -1382,7 +1397,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       /*
@@ -1401,7 +1416,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1412,7 +1427,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1427,7 +1442,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       /*
@@ -1444,7 +1459,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       ping_image=DestroyImage(ping_image);
@@ -1462,7 +1477,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       /*
@@ -1485,7 +1500,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1501,7 +1516,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           blob=(unsigned char *) RelinquishMagickMemory(blob);
           continue;
         }
@@ -1521,7 +1536,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1543,7 +1558,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
           if (exception->reason != (char *) NULL)
             (void) FormatLocaleFile(stdout,"    reason:%s\n",exception->reason);
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       difference_image=DestroyImage(difference_image);
@@ -1551,7 +1566,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
         {
           (void) FormatLocaleFile(stdout,"... fail (with distortion %g).\n",
             QuantumScale*distortion);
-          (*fail)++;
+          fail++;
           continue;
         }
 
@@ -1571,7 +1586,8 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -1593,7 +1609,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
 %
 %      size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1609,7 +1625,7 @@ static size_t ValidateImageFormatsInMemory(ImageInfo *image_info,
 %
 */
 static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -1635,8 +1651,10 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate image formats on disk:\n");
   for (i=0; reference_formats[i].magick != (char *) NULL; i++)
@@ -1666,7 +1684,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       /*
@@ -1685,7 +1703,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1696,7 +1714,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1709,7 +1727,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       /*
@@ -1724,7 +1742,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       /*
@@ -1741,7 +1759,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1757,7 +1775,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1777,7 +1795,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       difference_image=DestroyImage(difference_image);
@@ -1785,7 +1803,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
         {
           (void) FormatLocaleFile(stdout,"... fail (with distortion %g).\n",
             QuantumScale*distortion);
-          (*fail)++;
+          fail++;
           continue;
         }
       (void) FormatLocaleFile(stdout,"... pass.\n");
@@ -1793,7 +1811,8 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -1815,7 +1834,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
 %
 %      size_t ValidateImportExportPixels(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1831,7 +1850,7 @@ static size_t ValidateImageFormatsOnDisk(ImageInfo *image_info,
 %
 */
 static size_t ValidateImportExportPixels(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   double
@@ -1856,9 +1875,11 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
     *pixels;
 
   size_t
+    fail,
     test;
 
   (void) output_filename;
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,
     "validate the import and export of image pixels:\n");
@@ -1882,7 +1903,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       if (LocaleNCompare(reference_map[i],"cmy",3) == 0)
@@ -1899,7 +1920,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1912,7 +1933,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           pixels=(unsigned char *) RelinquishMagickMemory(pixels);
           reference_image=DestroyImage(reference_image);
           continue;
@@ -1927,7 +1948,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
            pixels=(unsigned char *) RelinquishMagickMemory(pixels);
           reference_image=DestroyImage(reference_image);
           continue;
@@ -1950,7 +1971,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           reference_image=DestroyImage(reference_image);
           continue;
         }
@@ -1967,7 +1988,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
           (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
           CatchException(exception);
-          (*fail)++;
+          fail++;
           continue;
         }
       difference_image=DestroyImage(difference_image);
@@ -1975,7 +1996,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
         {
           (void) FormatLocaleFile(stdout,"... fail (with distortion %g).\n",
             QuantumScale*distortion);
-          (*fail)++;
+          fail++;
           continue;
         }
       (void) FormatLocaleFile(stdout,"... pass.\n");
@@ -1983,7 +2004,8 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -2005,7 +2027,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
 %
 %      size_t ValidateMontageCommand(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -2021,7 +2043,7 @@ static size_t ValidateImportExportPixels(ImageInfo *image_info,
 %
 */
 static size_t ValidateMontageCommand(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -2039,8 +2061,10 @@ static size_t ValidateMontageCommand(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate montage command line program:\n");
   for (i=0; montage_options[i] != (char *) NULL; i++)
@@ -2056,7 +2080,7 @@ static size_t ValidateMontageCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     status=MontageImageCommand(image_info,number_arguments,arguments,
@@ -2068,14 +2092,15 @@ static size_t ValidateMontageCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
@@ -2097,7 +2122,7 @@ static size_t ValidateMontageCommand(ImageInfo *image_info,
 %
 %      size_t ValidateStreamCommand(ImageInfo *image_info,
 %        const char *reference_filename,const char *output_filename,
-%        size_t *fail,ExceptionInfo *exception)
+%        size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -2113,7 +2138,7 @@ static size_t ValidateMontageCommand(ImageInfo *image_info,
 %
 */
 static size_t ValidateStreamCommand(ImageInfo *image_info,
-  const char *reference_filename,const char *output_filename,size_t *fail,
+  const char *reference_filename,const char *output_filename,size_t *fails,
   ExceptionInfo *exception)
 {
   char
@@ -2131,8 +2156,10 @@ static size_t ValidateStreamCommand(ImageInfo *image_info,
     j;
 
   size_t
+    fail,
     test;
 
+  fail=0;
   test=0;
   (void) FormatLocaleFile(stdout,"validate stream command line program:\n");
   for (i=0; stream_options[i] != (char *) NULL; i++)
@@ -2147,7 +2174,7 @@ static size_t ValidateStreamCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     status=StreamImageCommand(image_info,number_arguments,arguments,
@@ -2159,14 +2186,15 @@ static size_t ValidateStreamCommand(ImageInfo *image_info,
       {
         (void) FormatLocaleFile(stdout,"... fail @ %s/%s/%lu.\n",
             GetMagickModule());
-        (*fail)++;
+        fail++;
         continue;
       }
     (void) FormatLocaleFile(stdout,"... pass.\n");
   }
   (void) FormatLocaleFile(stdout,
     "  summary: %.20g subtests; %.20g passed; %.20g failed.\n",(double) test,
-    (double) (test-(*fail)),(double) *fail);
+    (double) (test-fail),(double) fail);
+  fails+=fail;
   return(test);
 }
 
