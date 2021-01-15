@@ -93,7 +93,7 @@
   Define declarations.
 */
 #define BezierQuantum  200
-#define PrimitiveExtentPad  2053
+#define PrimitiveExtentPad  2053.0
 #define MaxBezierCoordinates  67108864
 #define ThrowPointExpectedException(image,token) \
 { \
@@ -2234,7 +2234,7 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
 */
 
 static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
-  const size_t pad)
+  const double pad)
 {
   double
     extent;
@@ -2245,21 +2245,24 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   /*
     Check if there is enough storage for drawing pimitives.
   */
-  extent=(double) mvg_info->offset+pad+PrimitiveExtentPad+1;
+  extent=(double) mvg_info->offset+pad+PrimitiveExtentPad+1.0;
   quantum=sizeof(**mvg_info->primitive_info);
   if (extent <= (double) *mvg_info->extent)
     return(MagickTrue);
-  *mvg_info->primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
-    *mvg_info->primitive_info,(size_t) extent,quantum);
-  if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
+  if (extent == (double) CastDoubleToLong(extent))
     {
-      ssize_t
-        i;
+      *mvg_info->primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
+        *mvg_info->primitive_info,(size_t) extent,quantum);
+      if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
+        {
+          ssize_t
+            i;
 
-      *mvg_info->extent=(size_t) extent;
-      for (i=mvg_info->offset+1; i < (ssize_t) extent; i++)
-        (*mvg_info->primitive_info)[i].primitive=UndefinedPrimitive;
-      return(MagickTrue);
+          *mvg_info->extent=(size_t) extent;
+          for (i=mvg_info->offset+1; i < (ssize_t) extent; i++)
+            (*mvg_info->primitive_info)[i].primitive=UndefinedPrimitive;
+          return(MagickTrue);
+        }
     }
   /*
     Reallocation failed, allocate a primitive to facilitate unwinding.
@@ -2270,8 +2273,9 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
     ResourceLimitError,"MemoryAllocationFailed","`%s'","");
   *mvg_info->primitive_info=(PrimitiveInfo *)  AcquireCriticalMemory(
-    PrimitiveExtentPad*quantum);
-  (void) memset(*mvg_info->primitive_info,0,PrimitiveExtentPad*quantum);
+    (size_t) (PrimitiveExtentPad*quantum));
+  (void) memset(*mvg_info->primitive_info,0,(size_t)
+    (PrimitiveExtentPad*quantum));
   *mvg_info->extent=1;
   return(MagickFalse);
 }
@@ -2540,7 +2544,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
       ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
-  number_points=PrimitiveExtentPad;
+  number_points=(size_t) PrimitiveExtentPad;
   primitive_info=(PrimitiveInfo *) AcquireQuantumMemory((size_t) number_points,
     sizeof(*primitive_info));
   if (primitive_info == (PrimitiveInfo *) NULL)
@@ -3959,7 +3963,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
       mvg_info.offset=i;
       if (i < (ssize_t) number_points)
         continue;
-      status&=CheckPrimitiveExtent(&mvg_info,number_points);
+      status&=CheckPrimitiveExtent(&mvg_info,(double) number_points);
     }
     if (status == MagickFalse)
       break;
@@ -4015,13 +4019,6 @@ static MagickBooleanType RenderMVGContent(Image *image,
       case BezierPrimitive:
       {
         coordinates=(BezierQuantum*(double) primitive_info[j].coordinates);
-        if (primitive_info[j].coordinates > (108*BezierQuantum))
-          {
-            (void) ThrowMagickException(&image->exception,GetMagickModule(),
-              DrawError,"TooManyBezierCoordinates","`%s'",token);
-            status=MagickFalse;
-            break;
-          }
         break;
       }
       case PathPrimitive:
@@ -4071,7 +4068,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
             break;
           }
         mvg_info.offset=i;
-        status&=CheckPrimitiveExtent(&mvg_info,number_points);
+        status&=CheckPrimitiveExtent(&mvg_info,(double) number_points);
       }
     status&=CheckPrimitiveExtent(&mvg_info,PrimitiveExtentPad);
     if (status == MagickFalse)
@@ -4322,11 +4319,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
     /*
       Sanity check.
     */
-    status&=CheckPrimitiveExtent(&mvg_info,(size_t)
-      ExpandAffine(&graphic_context[n]->affine));
+    status&=CheckPrimitiveExtent(&mvg_info,ExpandAffine(
+      &graphic_context[n]->affine));
     if (status == 0)
       break;
-    status&=CheckPrimitiveExtent(&mvg_info,(size_t)
+    status&=CheckPrimitiveExtent(&mvg_info,(double)
       graphic_context[n]->stroke_width);
     if (status == 0)
       break;
@@ -6212,7 +6209,7 @@ static MagickBooleanType TraceBezier(MVGInfo *mvg_info,
       return(MagickFalse);
     }
   control_points=quantum*number_coordinates;
-  if (CheckPrimitiveExtent(mvg_info,control_points+1) == MagickFalse)
+  if (CheckPrimitiveExtent(mvg_info,(double) control_points+1) == MagickFalse)
     {
       points=(PointInfo *) RelinquishMagickMemory(points);
       coefficients=(double *) RelinquishMagickMemory(coefficients);
@@ -6337,13 +6334,7 @@ static MagickBooleanType TraceEllipse(MVGInfo *mvg_info,const PointInfo center,
     y+=360.0;
   angle.y=DegreesToRadians(y);
   coordinates=ceil((angle.y-angle.x)/step+1.0);
-  if (coordinates > (108.0*BezierQuantum))
-    {
-      (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
-        ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-      return(MagickFalse);
-    }
-  if (CheckPrimitiveExtent(mvg_info,(size_t) coordinates) == MagickFalse)
+  if (CheckPrimitiveExtent(mvg_info,coordinates) == MagickFalse)
     return(MagickFalse);
   primitive_info=(*mvg_info->primitive_info)+mvg_info->offset;
   for (p=primitive_info; angle.x < angle.y; angle.x+=step)
