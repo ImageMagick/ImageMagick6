@@ -107,7 +107,6 @@ TOP_EXTRA_DIST = \
   NEWS.txt \
   README.txt \
   index.html \
-  version.sh \
   winpath.sh
 
 # Additional files to distribute
@@ -284,7 +283,7 @@ magick-version: magick/version.h
 	fi ; \
 	touch magick-version
 
-magick/version.h:	$(top_srcdir)/ChangeLog $(top_srcdir)/version.sh
+magick/version.h:	$(top_srcdir)/ChangeLog $(top_srcdir)/m4/version.m4
 
 # Automagically reconfigure libtool
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
