@@ -1221,7 +1221,8 @@ ModuleExport void UnregisterSIXELImage(void)
 %    o exception: return any errors or warnings in this structure.
 %
 */
-static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,Image *image)
+static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,
+  Image *image)
 {
   ExceptionInfo
     *exception;
