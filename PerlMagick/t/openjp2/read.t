@@ -9,7 +9,7 @@ END {print "not ok $test\n" unless $loaded;}
 use Image::Magick;
 $loaded=1;
 
-require '/home/cristy/ImageMagick-6.9.9-36/PerlMagick/t/subroutines.pl';
+require 't/subroutines.pl';
 
 chdir 't/openjp2' || die 'Cd failed';
 
