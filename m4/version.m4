@@ -18,7 +18,7 @@ m4_define([magick_name], [ImageMagick])
 m4_define([magick_major_version], [6])
 m4_define([magick_minor_version], [9])
 m4_define([magick_micro_version], [11])
-m4_define([magick_patchlevel_version], [58])
+m4_define([magick_patchlevel_version], [59])
 m4_define([magick_base_version],
           [magick_major_version.magick_minor_version.magick_micro_version])
 m4_define([magick_version],
