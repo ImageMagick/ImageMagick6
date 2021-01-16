@@ -1,11 +1,13 @@
-2021-01-11  6.9.11-58  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-58 GIT revision 16... 
+2021-01-16  6.9.11-58  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-58 GIT revision 16343:f38ca0d37:20210116
 
 2021-01-11  6.9.11-58  <quetzlzacatenango@image...>
   * properly identify SVG images (reference
     https://github.com/ImageMagick/ImageMagick/issues/3117).
   * duplicate operator: inverse range parameter working again (reference
     https://github.com/ImageMagick/ImageMagick/issues/3113).
+  * Fix rounding error for CSS colors on i686 (reference
+    https://tracker.debian.org/pkg/imagemagick).
 
 2021-01-09  6.9.11-57  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-57 GIT revision 16301:c2f75ef89:20210109
