@@ -162,10 +162,8 @@ WandExport PixelIterator *ClonePixelIterator(const PixelIterator *iterator)
   assert(iterator->signature == WandSignature);
   if (iterator->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",iterator->name);
-  clone_iterator=(PixelIterator *) AcquireMagickMemory(sizeof(*clone_iterator));
-  if (clone_iterator == (PixelIterator *) NULL)
-    ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
-      iterator->name);
+  clone_iterator=(PixelIterator *) AcquireCriticalMemory(
+    sizeof(*clone_iterator));
   (void) memset(clone_iterator,0,sizeof(*clone_iterator));
   clone_iterator->id=AcquireWandId();
   (void) FormatLocaleString(clone_iterator->name,MaxTextExtent,"%s-%.20g",
@@ -316,10 +314,7 @@ WandExport PixelIterator *NewPixelIterator(MagickWand *wand)
   view=AcquireVirtualCacheView(image,exception);
   if (view == (CacheView *) NULL)
     return((PixelIterator *) NULL);
-  iterator=(PixelIterator *) AcquireMagickMemory(sizeof(*iterator));
-  if (iterator == (PixelIterator *) NULL)
-    ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
-      GetExceptionMessage(errno));
+  iterator=(PixelIterator *) AcquireCriticalMemory(sizeof(*iterator));
   (void) memset(iterator,0,sizeof(*iterator));
   iterator->id=AcquireWandId();
   (void) FormatLocaleString(iterator->name,MaxTextExtent,"%s-%.20g",
@@ -435,10 +430,7 @@ WandExport PixelIterator *NewPixelRegionIterator(MagickWand *wand,
   view=AcquireVirtualCacheView(image,exception);
   if (view == (CacheView *) NULL)
     return((PixelIterator *) NULL);
-  iterator=(PixelIterator *) AcquireMagickMemory(sizeof(*iterator));
-  if (iterator == (PixelIterator *) NULL)
-    ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
-      wand->name);
+  iterator=(PixelIterator *) AcquireCriticalMemory(sizeof(*iterator));
   (void) memset(iterator,0,sizeof(*iterator));
   iterator->id=AcquireWandId();
   (void) FormatLocaleString(iterator->name,MaxTextExtent,"%s-%.20g",

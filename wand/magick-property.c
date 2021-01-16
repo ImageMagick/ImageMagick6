@@ -706,8 +706,7 @@ WandExport unsigned char *MagickGetImageProfile(MagickWand *wand,
     sizeof(*datum));
   if (datum == (unsigned char *) NULL)
     return((unsigned char *) NULL);
-  (void) memcpy(datum,GetStringInfoDatum(profile),
-    GetStringInfoLength(profile));
+  (void) memcpy(datum,GetStringInfoDatum(profile),GetStringInfoLength(profile));
   *length=(size_t) GetStringInfoLength(profile);
   return(datum);
 }
