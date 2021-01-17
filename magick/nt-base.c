@@ -275,7 +275,7 @@ BOOL WINAPI DllMain(HINSTANCE handle,DWORD reason,LPVOID lpvReserved)
                 module_path[count+1]='\0';
                 break;
               }
-          path=(char *) AcquireQuantumMemory(16UL*MaxTextExtent,sizeof(*path));
+          path=(char *) AcquireQuantumMemory(MaxTextExtent,16*sizeof(*path));
           if (path == (char *) NULL)
             {
               module_path=DestroyString(module_path);
@@ -290,8 +290,8 @@ BOOL WINAPI DllMain(HINSTANCE handle,DWORD reason,LPVOID lpvReserved)
                   char
                     *variable;
 
-                  variable=(char *) AcquireQuantumMemory(16UL*MaxTextExtent,
-                    sizeof(*variable));
+                  variable=(char *) AcquireQuantumMemory(MaxTextExtent,
+                    16*sizeof(*variable));
                   if (variable == (char *) NULL)
                     {
                       path=DestroyString(path);
