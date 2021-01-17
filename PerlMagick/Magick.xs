@@ -6759,14 +6759,18 @@ GetPixels(ref,...)
         float
           *pixels;
 
-        pixels=(float *) AcquireQuantumMemory(strlen(map)*region.width,
+        MemoryInfo
+          *pixels_info;
+
+        pixels_info=AcquireVirtualemory(strlen(map)*region.width,
           region.height*sizeof(*pixels));
-        if (pixels == (float *) NULL)
+        if (pixel_info == (MemoryInfo *) NULL)
           {
             ThrowPerlException(exception,ResourceLimitError,
               "MemoryAllocationFailed",PackageName);
             goto PerlException;
           }
+        pixels=(float *) GetVirtualMemoryBlob(pixels_info);
         status=ExportImagePixels(image,region.x,region.y,region.width,
           region.height,map,FloatPixel,pixels,exception);
         if (status == MagickFalse)
@@ -6777,14 +6781,17 @@ GetPixels(ref,...)
             for (i=0; i < (ssize_t) (strlen(map)*region.width*region.height); i++)
               PUSHs(sv_2mortal(newSVnv(pixels[i])));
           }
-        pixels=(float *) RelinquishMagickMemory(pixels);
+        pixels_info=RelinquishVirtualMemory(pixels_info);
       }
     else
       {
+        MemoryInfo
+          *pixels_info;
+
         Quantum
           *pixels;
 
-        pixels=(Quantum *) AcquireQuantumMemory(strlen(map)*region.width,
+       pixels_info=AcquireVirtualemory(strlen(map)*region.width,
           region.height*sizeof(*pixels));
         if (pixels == (Quantum *) NULL)
           {
@@ -6792,6 +6799,7 @@ GetPixels(ref,...)
               "MemoryAllocationFailed",PackageName);
             goto PerlException;
           }
+        pixels=(Quantum *) GetVirtualMemoryBlob(pixels_info);
         status=ExportImagePixels(image,region.x,region.y,region.width,
           region.height,map,QuantumPixel,pixels,exception);
         if (status == MagickFalse)
@@ -6802,7 +6810,7 @@ GetPixels(ref,...)
             for (i=0; i < (ssize_t) (strlen(map)*region.width*region.height); i++)
               PUSHs(sv_2mortal(newSViv(pixels[i])));
           }
-        pixels=(Quantum *) RelinquishMagickMemory(pixels);
+        pixels_info=RelinquishVirtualMemory(pixels_info);
       }
 
   PerlException:
