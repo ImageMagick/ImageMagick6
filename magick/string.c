@@ -36,7 +36,7 @@
 */
 
 /*
-  include declarations.
+  Include declarations.
 */
 #include "magick/studio.h"
 #include "magick/blob.h"
