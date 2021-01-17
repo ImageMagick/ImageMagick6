@@ -420,8 +420,7 @@ static double **AcquirePixelThreadSet(const size_t columns,
   (void) memset(pixels,0,number_threads*sizeof(*pixels));
   for (i=0; i < (ssize_t) number_threads; i++)
   {
-    pixels[i]=(double *) AcquireQuantumMemory(columns,channels*
-      sizeof(**pixels));
+    pixels[i]=(double *) AcquireQuantumMemory(columns,channels*sizeof(**pixels));
     if (pixels[i] == (double *) NULL)
       return(DestroyPixelThreadSet(pixels));
   }
