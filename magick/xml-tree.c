@@ -284,7 +284,6 @@ MagickExport XMLTreeInfo *AddPathToXMLTree(XMLTreeInfo *xml_info,
 %
 %  The format of the CanonicalXMLContent method is:
 %
-%
 %      char *CanonicalXMLContent(const char *content,
 %        const MagickBooleanType pedantic)
 %
