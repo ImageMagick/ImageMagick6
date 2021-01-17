@@ -794,12 +794,12 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       number_grays=gray.opacity;
   cooccurrence=(ChannelStatistics **) AcquireQuantumMemory(number_grays,
     sizeof(*cooccurrence));
-  density_x=(ChannelStatistics *) AcquireQuantumMemory(2*(number_grays+1),
-    sizeof(*density_x));
-  density_xy=(ChannelStatistics *) AcquireQuantumMemory(2*(number_grays+1),
-    sizeof(*density_xy));
-  density_y=(ChannelStatistics *) AcquireQuantumMemory(2*(number_grays+1),
-    sizeof(*density_y));
+  density_x=(ChannelStatistics *) AcquireQuantumMemory(number_grays+1,
+    2*sizeof(*density_x));
+  density_xy=(ChannelStatistics *) AcquireQuantumMemory(number_grays+1,
+    2*sizeof(*density_xy));
+  density_y=(ChannelStatistics *) AcquireQuantumMemory(number_grays+1,
+    2*sizeof(*density_y));
   Q=(ChannelStatistics **) AcquireQuantumMemory(number_grays,sizeof(*Q));
   sum=(ChannelStatistics *) AcquireQuantumMemory(number_grays,sizeof(*sum));
   if ((cooccurrence == (ChannelStatistics **) NULL) ||
