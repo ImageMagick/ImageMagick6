@@ -760,9 +760,9 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
       channel_statistics[channel].minima)),GetMagickPrecision(),(double)
       ClampToQuantum(scale*(QuantumRange-channel_statistics[channel].maxima)),
       GetMagickPrecision(),scale*(QuantumRange-
-      channel_statistics[channel].mean),GetMagickPrecision(),scale*
+      channel_statistics[channel].mean),GetMagickPrecision(),
       IsNaN(channel_statistics[channel].standard_deviation) != 0 ? MagickEpsilon :
-      channel_statistics[channel].standard_deviation,GetMagickPrecision(),
+      scale*channel_statistics[channel].standard_deviation,GetMagickPrecision(),
       channel_statistics[channel].kurtosis,GetMagickPrecision(),
       channel_statistics[channel].skewness,GetMagickPrecision(),
       channel_statistics[channel].entropy);
@@ -771,9 +771,9 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
       (double) ClampToQuantum(scale*channel_statistics[channel].minima),
       GetMagickPrecision(),(double) ClampToQuantum(scale*
       channel_statistics[channel].maxima),GetMagickPrecision(),scale*
-      channel_statistics[channel].mean,GetMagickPrecision(),scale*
+      channel_statistics[channel].mean,GetMagickPrecision(),
       IsNaN(channel_statistics[channel].standard_deviation) != 0 ? MagickEpsilon :
-      channel_statistics[channel].standard_deviation,GetMagickPrecision(),
+      scale*channel_statistics[channel].standard_deviation,GetMagickPrecision(),
       channel_statistics[channel].kurtosis,GetMagickPrecision(),
       channel_statistics[channel].skewness,GetMagickPrecision(),
       channel_statistics[channel].entropy);
