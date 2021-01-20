@@ -1,3 +1,10 @@
+2021-01-20  6.9.11-59  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-59 GIT revision 16...
+
+2021-01-20  6.9.11-59  <quetzlzacatenango@image...>
+  * strip EXIF marker from profile (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3140).
+
 2021-01-16  6.9.11-58  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-58 GIT revision 16343:f38ca0d37:20210116
 

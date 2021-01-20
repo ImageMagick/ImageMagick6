@@ -1170,6 +1170,14 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
       {
         chunk.bytes=GetStringInfoDatum(profile);
         chunk.size=GetStringInfoLength(profile);
+        if ((chunk.size >= 6) &&
+            (chunk.bytes[0] == 'E') && (chunk.bytes[1] == 'x') &&
+            (chunk.bytes[2] == 'i') && (chunk.bytes[3] == 'f') &&
+            (chunk.bytes[4] == '\0') && (chunk.bytes[5] == '\0'))
+          {
+            chunk.bytes=GetStringInfoDatum(profile)+6;
+            chunk.size-=6;
+          }
         mux_error=WebPMuxSetChunk(mux,"EXIF",&chunk,0);
       }
     profile=GetImageProfile(image,"XMP");
