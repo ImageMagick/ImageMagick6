@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-    - master
+    - main
     paths:
     - 'ChangeLog'
 
@@ -40,7 +40,7 @@ jobs:
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
-        ref: refs/heads/master
+        ref: refs/heads/main
         fetch-depth: 1
 
     - name: Clone repositories
@@ -135,7 +135,7 @@ jobs:
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
-        ref: refs/heads/master
+        ref: refs/heads/main
         fetch-depth: 1
 
     - name: Clone repositories
@@ -148,7 +148,7 @@ jobs:
       shell: cmd
       run: |
         cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
-        7z a ImageMagick6-Windows.7z .\source\*
+        7z a ImageMagick6-WindowsF .\source\*
   
     - uses: actions/upload-artifact@v2
       with:
@@ -183,7 +183,7 @@ jobs:
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
-        ref: refs/heads/master
+        ref: refs/heads/main
         fetch-depth: 1
 
     - name: Clone repositories

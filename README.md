@@ -1,7 +1,7 @@
 # ImageMagick
 
-[![Build Status](https://travis-ci.org/ImageMagick/ImageMagick6.svg?branch=master)](https://travis-ci.org/ImageMagick/ImageMagick6)
-![master](https://github.com/ImageMagick/ImageMagick6/workflows/master/badge.svg)
+[![Build Status](https://travis-ci.org/ImageMagick/ImageMagick6.svg?branch=main)](https://travis-ci.org/ImageMagick/ImageMagick6)
+![main](https://github.com/ImageMagick/ImageMagick6/workflows/main/badge.svg)
 
 <p align="center">
 <img align="center" src="https://imagemagick.org/image/wizard.png" alt="ImageMagick logo" width="265"/>

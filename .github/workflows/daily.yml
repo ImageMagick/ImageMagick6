@@ -32,7 +32,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: ImageMagick/msttcorefonts
-        ref: refs/heads/master
+        ref: refs/heads/main
         fetch-depth: 1
 
     - name: Install msttcorefonts
@@ -84,7 +84,7 @@ jobs:
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
-        ref: refs/heads/master
+        ref: refs/heads/main
         fetch-depth: 1
 
     - name: Clone repositories
