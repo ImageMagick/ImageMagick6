@@ -1684,7 +1684,7 @@ static MagickBooleanType ValidateXMPProfile(Image *image,
   const StringInfo *profile)
 {
   (void) ThrowMagickException(&image->exception,GetMagickModule(),
-    MissingDelegateError,"DelegateLibrarySupportNotBuiltIn","'%s' (XML)",
+    MissingDelegateWarning,"DelegateLibrarySupportNotBuiltIn","'%s' (XML)",
     image->filename);
   return(MagickFalse);
 }
