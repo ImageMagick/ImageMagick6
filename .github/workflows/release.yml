@@ -38,28 +38,28 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        repository: ImageMagick/ImageMagick6-Windows
-        path: ImageMagick6-Windows
+        repository: ImageMagick/ImageMagick-Windows6
+        path: ImageMagick-Windows6
         ref: refs/heads/master
         fetch-depth: 1
 
     - name: Clone repositories
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
         CloneRepositories.cmd https://github.com/ImageMagick shallow
 
     - name: Download FFmpeg
       shell: cmd
       run: |
         powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/ImageMagick-Windows/releases/download/20200615/ffmpeg-4.2.3-win${{matrix.bit}}.exe -OutFile ffmpeg.exe
-        copy /Y ffmpeg.exe %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\bin
+        copy /Y ffmpeg.exe %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\bin
 
     - name: Download hp2xx
       shell: cmd
       run: |
         powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/ImageMagick-Windows/releases/download/20200615/hp2xx.exe -OutFile hp2xx.exe
-        copy /Y hp2xx.exe %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\bin
+        copy /Y hp2xx.exe %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\bin
 
     - name: Install Strawberry Perl
       if: ${{matrix.type == 'dll'}}
@@ -73,21 +73,21 @@ jobs:
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
         devenv /upgrade configure.vcxproj
         msbuild configure.sln /m /t:Rebuild /p:Configuration=Release,Platform=Win32
 
     - name: Configure ImageMagick
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
         configure.exe /noWizard /VS2019 /includeOptional /installedSupport /deprecated /${{matrix.hdri}} /${{matrix.quantum}} /${{matrix.platform}} /${{matrix.type_flag}}
 
     - name: Build ImageMagick
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick
         set /p solution=<solution
         msbuild %solution% /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.platform_alias}}
 
@@ -97,7 +97,7 @@ jobs:
       run: |
         set PATH=
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\ImageMagick\PerlMagick
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\ImageMagick\PerlMagick
         set PATH=%PATH%;C:\Strawberry${{matrix.bit}}\c\bin;C:\Strawberry${{matrix.bit}}\perl\site\bin;C:\Strawberry${{matrix.bit}}\perl\bin;C:\WINDOWS\System32\WindowsPowerShell\v1.0
         perl "Makefile.PL" "MAKE=nmake"
         nmake
@@ -107,24 +107,24 @@ jobs:
       uses: dlemstra/code-sign-action@v1
       with:
         certificate: '${{ secrets.CERTIFICATE }}'
-        folder: 'ImageMagick6-Windows\VisualMagick\bin'
+        folder: 'ImageMagick-Windows6\VisualMagick\bin'
 
     - name: Create installer
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        "C:\Program Files (x86)\Inno Setup 6\iscc.exe" %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\installer\im-${{matrix.platform}}${{matrix.hdri_flag}}-${{matrix.type}}-${{matrix.quantum}}.iss
+        "C:\Program Files (x86)\Inno Setup 6\iscc.exe" %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\installer\im-${{matrix.platform}}${{matrix.hdri_flag}}-${{matrix.type}}-${{matrix.quantum}}.iss
 
     - name: Sign installer
       uses: dlemstra/code-sign-action@v1
       with:
         certificate: '${{ secrets.CERTIFICATE }}'
-        folder: 'ImageMagick6-Windows\VisualMagick\installer\output'
+        folder: 'ImageMagick-Windows6\VisualMagick\installer\output'
   
     - uses: actions/upload-artifact@v2
       with:
         name: installers
-        path: 'ImageMagick6-Windows\VisualMagick\installer\output'
+        path: 'ImageMagick-Windows6\VisualMagick\installer\output'
 
   release_windows_source:
     name: 'Windows source'
@@ -133,27 +133,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        repository: ImageMagick/ImageMagick6-Windows
-        path: ImageMagick6-Windows
+        repository: ImageMagick/ImageMagick-Windows6
+        path: ImageMagick-Windows6
         ref: refs/heads/master
         fetch-depth: 1
 
     - name: Clone repositories
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
         CloneRepositories.cmd https://github.com/ImageMagick source
 
     - name: Create source archive
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
         7z a ImageMagick6-Windows.7z .\source\*
   
     - uses: actions/upload-artifact@v2
       with:
-        name: ImageMagick6-Windows
-        path: 'ImageMagick6-Windows\ImageMagick6-Windows.7z'
+        name: ImageMagick-Windows6
+        path: 'ImageMagick-Windows6\ImageMagick6-Windows.7z'
 
   release_windows_portable:
     name: 'Windows portable ${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.platform}}'
@@ -181,42 +181,42 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        repository: ImageMagick/ImageMagick6-Windows
-        path: ImageMagick6-Windows
+        repository: ImageMagick/ImageMagick-Windows6
+        path: ImageMagick-Windows6
         ref: refs/heads/master
         fetch-depth: 1
 
     - name: Clone repositories
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
         CloneRepositories.cmd https://github.com/ImageMagick shallow
 
     - name: Install FFmpeg
       shell: cmd
       run: |
         powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/ImageMagick-Windows/releases/download/20160630/ffmpeg-4.2-win${{matrix.bit}}.exe -OutFile ffmpeg.exe
-        copy /Y ffmpeg.exe %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\bin
+        copy /Y ffmpeg.exe %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\bin
 
     - name: Build configure
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
         devenv /upgrade configure.vcxproj
         msbuild configure.sln /m /t:Rebuild /p:Configuration=Release,Platform=Win32
 
     - name: Configure ImageMagick
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
         configure.exe /noWizard /VS2019 /noOpenMP /${{matrix.hdri}} /${{matrix.quantum}} /${{matrix.platform}} /smt
 
     - name: Build ImageMagick
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick
         set /p solution=<solution
         msbuild %solution% /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.platform_alias}}
 
@@ -224,35 +224,35 @@ jobs:
       uses: dlemstra/code-sign-action@v1
       with:
         certificate: '${{ secrets.CERTIFICATE }}'
-        folder: 'ImageMagick6-Windows\VisualMagick\bin'
+        folder: 'ImageMagick-Windows6\VisualMagick\bin'
 
     - name: Copy Files
       id: package
       shell: powershell
       run: |
         [void](New-Item -Name "portable" -ItemType directory)
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\*.exe" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\config\colors.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\config\english.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\config\locale.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\config\log.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\config\mime.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\config\quantization-table.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\configure.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\ImageMagick.rdf" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\delegates.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\policy.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\sRGB.icc" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\thresholds.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\type-ghostscript.xml" "portable"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\bin\type.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\*.exe" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\config\colors.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\config\english.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\config\locale.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\config\log.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\config\mime.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\config\quantization-table.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\configure.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\ImageMagick.rdf" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\delegates.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\policy.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\sRGB.icc" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\thresholds.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\type-ghostscript.xml" "portable"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\bin\type.xml" "portable"
 
-        Copy-Item "ImageMagick6-Windows\ImageMagick\ChangeLog" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\LICENSE" "portable\LICENSE.txt"
-        Copy-Item "ImageMagick6-Windows\VisualMagick\NOTICE.txt" "portable"
-        Copy-Item "ImageMagick6-Windows\ImageMagick\README.txt" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\ChangeLog" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\LICENSE" "portable\LICENSE.txt"
+        Copy-Item "ImageMagick-Windows6\VisualMagick\NOTICE.txt" "portable"
+        Copy-Item "ImageMagick-Windows6\ImageMagick\README.txt" "portable"
 
-        $version = (cat "ImageMagick6-Windows\VisualMagick\installer\inc\version.isx" | Select-String "MagickPackageVersion") | Out-String
+        $version = (cat "ImageMagick-Windows6\VisualMagick\installer\inc\version.isx" | Select-String "MagickPackageVersion") | Out-String
         $version = ($version | Select-String '".*"' -AllMatches |  Select -Expand Matches | Select -Expand Value | Out-String)
         $version = $version -Replace "`n|`r|""",""
         Write-Host "::set-output name=version::$version"

@@ -79,39 +79,39 @@ jobs:
             hdri: no
 
     steps:
-    - name: Clone ImageMagick6-Windows
+    - name: Clone ImageMagick-Windows6
       uses: actions/checkout@v2
       with:
-        repository: ImageMagick/ImageMagick6-Windows
-        path: ImageMagick6-Windows
+        repository: ImageMagick/ImageMagick-Windows6
+        path: ImageMagick-Windows6
         ref: refs/heads/master
         fetch-depth: 1
 
     - name: Clone repositories
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
         CloneRepositories.cmd https://github.com/ImageMagick shallow
 
     - name: Build configure
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
         devenv /upgrade configure.vcxproj
         msbuild configure.sln /m /t:Rebuild /p:Configuration=Release,Platform=Win32
 
     - name: Configure ImageMagick
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick\configure
         configure.exe /noWizard /VS2019 /${{matrix.platform}} /${{matrix.buildType}}
 
     - name: Build ImageMagick
       shell: cmd
       run: |
         call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick
+        cd %GITHUB_WORKSPACE%\ImageMagick-Windows6\VisualMagick
         dir /B *.sln > solution
         set /p solution=<solution
         msbuild %solution% /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.platform}}
