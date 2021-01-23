@@ -1577,8 +1577,14 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   last_character=(ssize_t) length-1;
   for (i=0; i < (ssize_t) length; i++)
   {
+    FT_BitmapGlyph
+      bitmap;
+
     FT_Outline
       outline;
+
+    PointInfo
+      point;
 
     /*
       Render UTF-8 sequence.
@@ -1636,16 +1642,19 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
       }
     FT_Vector_Transform(&glyph.origin,&affine);
     (void) FT_Glyph_Transform(glyph.image,&affine,&glyph.origin);
+    ft_status=FT_Glyph_To_Bitmap(&glyph.image,FT_RENDER_MODE_NORMAL,
+      (FT_Vector *) NULL,MagickTrue);
+    if (ft_status != 0)
+      continue;
+    bitmap=(FT_BitmapGlyph) glyph.image;
+    point.x=offset->x+bitmap->left;
+    if (bitmap->bitmap.pixel_mode == ft_pixel_mode_mono)
+      point.x+=(origin.x/64.0);
+    point.y=offset->y-bitmap->top;
     if (draw_info->render != MagickFalse)
       {
         CacheView
           *image_view;
-
-        FT_BitmapGlyph
-          bitmap;
-
-        PointInfo
-          point;
 
         unsigned char
           *p;
@@ -1656,15 +1665,6 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         /*
           Rasterize the glyph.
         */
-        ft_status=FT_Glyph_To_Bitmap(&glyph.image,FT_RENDER_MODE_NORMAL,
-          (FT_Vector *) NULL,MagickTrue);
-        if (ft_status != 0)
-          continue;
-        bitmap=(FT_BitmapGlyph) glyph.image;
-        point.x=offset->x+bitmap->left;
-        if (bitmap->bitmap.pixel_mode == ft_pixel_mode_mono)
-          point.x+=(origin.x/64.0);
-        point.y=offset->y-bitmap->top;
         transparent_fill=((draw_info->fill.opacity == TransparentOpacity) &&
           (draw_info->fill_pattern == (Image *) NULL) &&
           (draw_info->stroke.opacity == TransparentOpacity) &&
