@@ -175,6 +175,35 @@ static inline size_t ColorToNodeId(const Image *image,
   return(id);
 }
 
+static inline MagickBooleanType IsMagickColorMatch(const MagickPixelPacket *p,
+  const MagickPixelPacket *q)
+{
+  MagickRealType
+    alpha,
+    beta;
+
+  alpha=p->matte == MagickFalse ? OpaqueOpacity : p->opacity;
+  beta=q->matte == MagickFalse ? OpaqueOpacity : q->opacity;
+  if (AbsolutePixelValue(alpha-beta) >= MagickEpsilon)
+    return(MagickFalse);
+  if ((AbsolutePixelValue(alpha-TransparentOpacity) < MagickEpsilon) ||
+      (AbsolutePixelValue(beta-TransparentOpacity) < MagickEpsilon))
+    return(MagickTrue);  /* no color component if pixel is transparent */
+  if (AbsolutePixelValue(p->red-q->red) >= MagickEpsilon)
+    return(MagickFalse);
+  if (AbsolutePixelValue(p->green-q->green) >= MagickEpsilon)
+    return(MagickFalse);
+  if (AbsolutePixelValue(p->blue-q->blue) >= MagickEpsilon)
+    return(MagickFalse);
+  if (p->colorspace == CMYKColorspace)
+    {
+      if (AbsolutePixelValue(p->index-q->index) >= MagickEpsilon)
+        return(MagickFalse);
+    }
+  return(MagickTrue);
+}
+
+
 static CubeInfo *ClassifyImageColors(const Image *image,
   ExceptionInfo *exception)
 {
@@ -266,7 +295,7 @@ static CubeInfo *ClassifyImageColors(const Image *image,
       {
         SetMagickPixelPacket(image,&node_info->list[i].pixel,
           &node_info->list[i].index,&target);
-        if (IsMagickColorEqual(&pixel,&target) != MagickFalse)
+        if (IsMagickColorMatch(&pixel,&target) != MagickFalse)
           break;
       }
       if (i < (ssize_t) node_info->number_unique)
@@ -734,7 +763,7 @@ static MagickBooleanType CheckImageColors(const Image *image,
       {
         SetMagickPixelPacket(image,&node_info->list[i].pixel,
           &node_info->list[i].index,&target);
-        if (IsMagickColorEqual(&pixel,&target) != MagickFalse)
+        if (IsMagickColorMatch(&pixel,&target) != MagickFalse)
           break;
       }
       if (i < (ssize_t) node_info->number_unique)
@@ -910,7 +939,7 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
       {
         SetMagickPixelPacket(image,&node_info->list[i].pixel,
           &node_info->list[i].index,&target);
-        if (IsMagickColorEqual(&pixel,&target) != MagickFalse)
+        if (IsMagickColorMatch(&pixel,&target) != MagickFalse)
           break;
       }
       if (i < (ssize_t) node_info->number_unique)
