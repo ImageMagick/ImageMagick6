@@ -4774,8 +4774,10 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
       }
       delta.x=x-x_offset;
       delta.y=y-y_offset;
-      luma.x=fabs(MagickPixelLuma(pixels+0)-MagickPixelLuma(pixels+3));
-      luma.y=fabs(MagickPixelLuma(pixels+1)-MagickPixelLuma(pixels+2));
+      luma.x=fabs((double) (MagickPixelLuma(pixels+0)-
+        MagickPixelLuma(pixels+3)));
+      luma.y=fabs((double) (MagickPixelLuma(pixels+1)-
+        MagickPixelLuma(pixels+2)));
       if (luma.x < luma.y)
         {
           /*

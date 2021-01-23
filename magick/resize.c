@@ -2060,14 +2060,14 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
     magnify_indexes=GetCacheViewAuthenticIndexQueue(magnify_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      MagickRealType
-        intensity[9];
-
       const IndexPacket
         *magick_restrict indexes;
 
       const PixelPacket
         *magick_restrict p;
+
+      MagickRealType
+        intensity[9];
 
       register PixelPacket
         *magick_restrict r;
@@ -2088,8 +2088,8 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
       for (i=0; i < 9; i++)
         intensity[i]=GetPixelIntensity(image,p+i);
       r=q;
-      if ((fabs(intensity[1]-intensity[7]) < MagickEpsilon) ||
-          (fabs(intensity[3]-intensity[5]) < MagickEpsilon))
+      if ((fabs((double) (intensity[1]-intensity[7])) < MagickEpsilon) ||
+          (fabs((double) (intensity[3]-intensity[5])) < MagickEpsilon))
         {
           /*
             Clone center pixel.
@@ -2107,22 +2107,22 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
           /*
             Selectively clone pixel.
           */
-          if (fabs(intensity[1]-intensity[3]) < MagickEpsilon)
+          if (fabs((double) (intensity[1]-intensity[3])) < MagickEpsilon)
             *r=p[3];
           else
             *r=p[4];
           r++;
-          if (fabs(intensity[1]-intensity[5]) < MagickEpsilon)
+          if (fabs((double) (intensity[1]-intensity[5])) < MagickEpsilon)
             *r=p[5];
           else
             *r=p[4];
           r+=(magnify_image->columns-1);
-          if (fabs(intensity[3]-intensity[7]) < MagickEpsilon)
+          if (fabs((double) (intensity[3]-intensity[7])) < MagickEpsilon)
             *r=p[3];
           else
             *r=p[4];
           r++;
-          if (fabs(intensity[5]-intensity[7]) < MagickEpsilon)
+          if (fabs((double) (intensity[5]-intensity[7])) < MagickEpsilon)
             *r=p[5];
           else
             *r=p[4];
@@ -2136,8 +2136,8 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
             Magnify the colormap indexes.
           */
           r=magnify_indexes;
-          if ((fabs(intensity[1]-intensity[7]) < MagickEpsilon) ||
-              (fabs(intensity[3]-intensity[5]) < MagickEpsilon))
+          if ((fabs((double) (intensity[1]-intensity[7])) < MagickEpsilon) ||
+              (fabs((double) (intensity[3]-intensity[5])) < MagickEpsilon))
             {
               /*
                 Clone center pixel.
@@ -2155,22 +2155,22 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
               /*
                 Selectively clone pixel.
               */
-              if (fabs(intensity[1]-intensity[3]) < MagickEpsilon)
+              if (fabs((double) (intensity[1]-intensity[3])) < MagickEpsilon)
                 *r=indexes[3];
               else
                 *r=indexes[4];
               r++;
-              if (fabs(intensity[1]-intensity[5]) < MagickEpsilon)
+              if (fabs((double) (intensity[1]-intensity[5])) < MagickEpsilon)
                 *r=indexes[5];
               else
                 *r=indexes[4];
               r+=(magnify_image->columns-1);
-              if (fabs(intensity[3]-intensity[7]) < MagickEpsilon)
+              if (fabs((double) (intensity[3]-intensity[7])) < MagickEpsilon)
                 *r=indexes[3];
               else
                 *r=indexes[4];
               r++;
-              if (fabs(intensity[5]-intensity[7]) < MagickEpsilon)
+              if (fabs((double) (intensity[5]-intensity[7])) < MagickEpsilon)
                 *r=indexes[5];
               else
                 *r=indexes[4];

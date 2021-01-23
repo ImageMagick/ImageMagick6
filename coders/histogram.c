@@ -285,7 +285,7 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       maximum=histogram[x].blue;
   }
   scale=0.0;
-  if (fabs(maximum) >= MagickEpsilon)
+  if (fabs((double) maximum) >= MagickEpsilon)
     scale=(MagickRealType) histogram_image->rows/maximum;
   /*
     Initialize histogram image.
@@ -301,7 +301,7 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       break;
     if ((channel & RedChannel) != 0)
       {
-        y=CastDoubleToLong(ceil(histogram_image->rows-scale*
+        y=CastDoubleToLong(ceil((double) histogram_image->rows-scale*
           histogram[x].red-0.5));
         r=q+y;
         for ( ; y < (ssize_t) histogram_image->rows; y++)
@@ -312,7 +312,7 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       }
     if ((channel & GreenChannel) != 0)
       {
-        y=CastDoubleToLong(ceil(histogram_image->rows-scale*
+        y=CastDoubleToLong(ceil((double) histogram_image->rows-scale*
           histogram[x].green-0.5));
         r=q+y;
         for ( ; y < (ssize_t) histogram_image->rows; y++)
@@ -323,7 +323,7 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       }
     if ((channel & BlueChannel) != 0)
       {
-        y=CastDoubleToLong(ceil(histogram_image->rows-scale*
+        y=CastDoubleToLong(ceil((double) histogram_image->rows-scale*
           histogram[x].blue-0.5));
         r=q+y;
         for ( ; y < (ssize_t) histogram_image->rows; y++)
@@ -334,7 +334,8 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
       }
     if (SyncAuthenticPixels(histogram_image,exception) == MagickFalse)
       break;
-    status=SetImageProgress(image,SaveImageTag,y,histogram_image->rows);
+    status=SetImageProgress(image,SaveImageTag,(MagickOffsetType) y,
+      histogram_image->rows);
     if (status == MagickFalse)
       break;
   }
