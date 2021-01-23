@@ -640,15 +640,16 @@ static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
     {
       const TIFFField
         *field;
+
       field=TIFFFieldWithTag(tiff,TIFFTAG_RICHTIFFIPTC);
-      if (TIFFFieldDataType(field) == TIFF_LONG)
+      if (TIFFFieldDataType(field) != TIFF_LONG)
+        status=ReadProfile(image,"iptc",profile,length);
+      else
         {
           if (TIFFIsByteSwapped(tiff) != 0)
             TIFFSwabArrayOfLong((uint32 *) profile,(size_t) length);
           status=ReadProfile(image,"iptc",profile,4L*length);
         }
-      else
-        status=ReadProfile(image,"iptc",profile,length);
     }
 #endif
 #if defined(TIFFTAG_XMLPACKET)
