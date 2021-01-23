@@ -6782,7 +6782,7 @@ GetPixels(ref,...)
             for (i=0; i < (ssize_t) (strlen(map)*region.width*region.height); i++)
               PUSHs(sv_2mortal(newSVnv(pixels[i])));
           }
-        pixels_info=RelinquishVirtualMemory(pixels_info)
+        pixels_info=RelinquishVirtualMemory(pixels_info);
       }
     else
       {
@@ -6811,7 +6811,7 @@ GetPixels(ref,...)
             for (i=0; i < (ssize_t) (strlen(map)*region.width*region.height); i++)
               PUSHs(sv_2mortal(newSViv(pixels[i])));
           }
-        pixels_info=RelinquishVirtualMemory(pixels_info)
+        pixels_info=RelinquishVirtualMemory(pixels_info);
       }
 
   PerlException:
