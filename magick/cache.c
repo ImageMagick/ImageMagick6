@@ -586,20 +586,20 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
   CacheInfo
     *magick_restrict cache_info;
 
+  const PixelPacket
+    *magick_restrict r;
+
+  IndexPacket
+    *magick_restrict nexus_indexes,
+    *magick_restrict indexes;
+
   MagickOffsetType
     n;
 
   NexusInfo
     **magick_restrict clip_nexus;
 
-  const PixelPacket
-    *magick_restrict r;
-
-  register IndexPacket
-    *magick_restrict nexus_indexes,
-    *magick_restrict indexes;
-
-  register PixelPacket
+  PixelPacket
     *magick_restrict p,
     *magick_restrict q;
 
@@ -2964,8 +2964,15 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
   CacheInfo
     *magick_restrict cache_info;
 
+  const IndexPacket
+    *magick_restrict virtual_indexes;
+
+  const PixelPacket
+    *magick_restrict p;
+
   IndexPacket
-    virtual_index;
+    virtual_index,
+    *magick_restrict indexes;
 
   MagickOffsetType
     offset;
@@ -2979,19 +2986,8 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
 
   PixelPacket
     *magick_restrict pixels,
+    *magick_restrict q,
     virtual_pixel;
-
-  const IndexPacket
-    *magick_restrict virtual_indexes;
-
-  const PixelPacket
-    *magick_restrict p;
-
-  register IndexPacket
-    *magick_restrict indexes;
-
-  register PixelPacket
-    *magick_restrict q;
 
   ssize_t
     u,
@@ -3610,6 +3606,13 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   CacheInfo
     *magick_restrict cache_info;
 
+  const PixelPacket
+    *magick_restrict r;
+
+  IndexPacket
+    *magick_restrict nexus_indexes,
+    *magick_restrict indexes;
+
   MagickOffsetType
     n;
 
@@ -3620,14 +3623,7 @@ static MagickBooleanType MaskPixelCacheNexus(Image *image,NexusInfo *nexus_info,
   NexusInfo
     **magick_restrict mask_nexus;
 
-  const PixelPacket
-    *magick_restrict r;
-
-  register IndexPacket
-    *magick_restrict nexus_indexes,
-    *magick_restrict indexes;
-
-  register PixelPacket
+  PixelPacket
     *magick_restrict p,
     *magick_restrict q;
 
@@ -4612,6 +4608,9 @@ static MagickBooleanType ReadPixelCacheIndexes(
   CacheInfo *magick_restrict cache_info,NexusInfo *magick_restrict nexus_info,
   ExceptionInfo *exception)
 {
+  IndexPacket
+    *magick_restrict q;
+
   MagickOffsetType
     count,
     offset;
@@ -4619,9 +4618,6 @@ static MagickBooleanType ReadPixelCacheIndexes(
   MagickSizeType
     extent,
     length;
-
-  register IndexPacket
-    *magick_restrict q;
 
   ssize_t
     y;
@@ -4645,7 +4641,7 @@ static MagickBooleanType ReadPixelCacheIndexes(
     case MemoryCache:
     case MapCache:
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict p;
 
       /*
@@ -4788,7 +4784,7 @@ static MagickBooleanType ReadPixelCachePixels(
     extent,
     length;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -4817,7 +4813,7 @@ static MagickBooleanType ReadPixelCachePixels(
     case MemoryCache:
     case MapCache:
     {
-      register PixelPacket
+      PixelPacket
         *magick_restrict p;
 
       /*
@@ -5324,7 +5320,7 @@ static MagickBooleanType SetCacheAlphaChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -5758,7 +5754,7 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
     case MemoryCache:
     case MapCache:
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict q;
 
       /*
@@ -5924,7 +5920,7 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
     case MemoryCache:
     case MapCache:
     {
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       /*
