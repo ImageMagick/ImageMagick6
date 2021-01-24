@@ -148,7 +148,7 @@ jobs:
       shell: cmd
       run: |
         cd %GITHUB_WORKSPACE%\ImageMagick-Windows6
-        7z a ImageMagick6-WindowsF .\source\*
+        7z a ImageMagick6-Windows.7z .\source\*
   
     - uses: actions/upload-artifact@v2
       with:
