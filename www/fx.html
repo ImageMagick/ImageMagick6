@@ -152,26 +152,31 @@
   channel(4.28,3.86,6.68,0)/255; max(0,p+pnoise)' noisy.png
 </code></pre>
 
-<p>This Fx script utilizes a loop to create a <a href="https://en.wikipedia.org/wiki/Julia_set">Julia set</a>:</p>
+<p>This FX script utilizes a loop to create a <a href="https://en.wikipedia.org/wiki/Julia_set">Julia set</a>:</p>
 
 <pre class="highlight"><code>convert -size 400x400 xc:black -colorspace gray -fx " \
-  Xi=2.4*i/w-1.2;
-  Yj=2.4*j/h-1.2;
-  for (pixel=0.0, (hypot(Xi,Yj) &lt; 2.0) &amp;&amp; (pixel &lt; 1.0),
-    delta=Xi^2-Yj^2;
-    Yj=2.0*Xi*Yj+0.2;
-    Xi=delta+0.4;
-    pixel+=0.00390625
-  );
+  Xi=2.4*i/w-1.2; \
+  Yj=2.4*j/h-1.2; \
+  for (pixel=0.0, (hypot(Xi,Yj) &lt; 2.0) &amp;&amp; (pixel &lt; 1.0), \
+    delta=Xi^2-Yj^2; \
+    Yj=2.0*Xi*Yj+0.2; \
+    Xi=delta+0.4; \
+    pixel+=0.00390625 \
+  ); \
   pixel == 1.0 ? 0.0 : pixel" \
   \( -size 1x1 xc:white xc:red xc:orange xc:yellow xc:green1 xc:cyan xc:blue \
      xc:blueviolet xc:white -reverse +append -filter Cubic -resize 1024x1! \) \
-  -clut -rotate -90 julia-set.png
-</code></pre>
+  -clut -rotate -90 julia-set.png</code></pre>
 
 <ul>
   <a href="../images/julia-set.png"><img src="../images/julia-set.png" width="160" height="160" alt="Julia Fractals" /></a>
 </ul>
+
+<p>This FX script prints the first 10 prime numbers:</p>
+<pre class="highlight"><code>convert xc: -channel gray -fx " \
+  for (prime=2, prime &lt; 30, composite=0; \
+    for (nn=2, nn &lt; (prime/2+1), if ((prime % nn) == 0, composite++, ); nn++); \
+      if (composite &lt;= 0, debug(prime), ); prime++)" null:</code></pre>
 
 <p>See <a href="https://legacy.imagemagick.org/Usage/transform/index.html#fx">Using FX, The Special Effects Image Operator</a> for more examples.</p>
 
@@ -179,7 +184,7 @@
 
 <h2><a class="anchor" id="anatomy"></a>The Anatomy of an FX Expression</h2>
 
-<h3>The FX Expression Language</h3>
+<h5>The FX Expression Language</h5>
 
 <p>The formal FX expression language is defined here:</p>
 
@@ -194,6 +199,8 @@
      &amp;=, |=, ++, --, ==, !=, &amp; (bitwise AND),   | (bitwise OR),
      &amp;&amp; (logical AND),  || (logical OR),
      ~ (logical NOT),  ?: (ternary conditional)</dd>
+  <dt class="col-md-4"> array: </dt>
+    <dd class="col-md-8">an image offers array storage (e.g. p[-1,-1].r) bounded by its width and height.  An image sequence represents multiple arrays (e.g. u.p[0,0].r, v.p[0,0].r).  Storage is limited to Quantum values, e.g. [0..65535] for Q16 builds and floating point for HDRI-enabled builds.</dd>
   <dt class="col-md-4"> math functions: </dt>
      <dd class="col-md-8"> abs(), acos(), acosh(), airy(), alt(), asin(), asinh(), atan(), atanh(), atan2(), ceil(), clamp(), cos(), cosh(), debug(), drc(), erf(), exp(), floor(), gauss(), gcd(), hypot(), int(), isnan(), j0(), j1(), jinc(), ln(), log(), logtwo(), max(), min(), mod(), not(), pow(), rand(), round(), sign(), sin(), sinc(), sinh(), sqrt(), squish(), tan(), tanh(), trunc()</dd>
   <dt class="col-md-4"> channel functions: </dt>
@@ -262,7 +269,7 @@
   	<dd class="col-md-8"> image.depth, image.kurtosis, image.maxima, image.minima, image.resolution.x, image.resolution.y, image.skewness, image.standard_deviation</dd>
 </dl>
 
-<h3>The FX Expression</h3>
+<h5>The FX Expression</h5>
 
 <p>An FX expression may include any combination of the following:</p>
 <dl class="row">
@@ -331,7 +338,7 @@
 <dt class="col-md-4"> <code>gauss(</code><var>x</var><code>)</code></dt><dd class="col-md-8"> gaussian function; gauss(<var>x</var>)=exp(<var>-x*x/2</var>)/sqrt(2*pi)</dd>
 <dt class="col-md-4"> <code>gcd(</code><var>x</var>,<var>y</var><code>)</code></dt><dd class="col-md-8"> greatest common denominator</dd>
 <dt class="col-md-4"> <code>hypot(</code><var>x</var>,<var>y</var><code>)</code></dt><dd class="col-md-8"> the square root of x<sup>2</sup>+y<sup>2</sup></dd>
-<dt class="col-md-4"> <code>if(</code><var>condition test</var>, <var>expression</var>, <var>expression</var><code>)</code></dt><dd class="col-md-8"> interpret expression depending on condition</dd>
+<dt class="col-md-4"> <code>if(</code><var>condition test</var>, <var>nonzero-expression</var>, <var>zero-expression</var><code>)</code></dt><dd class="col-md-8"> interpret expression depending on condition</dd>
 <dt class="col-md-4"> <code>int(</code><var>x</var><code>)</code></dt><dd class="col-md-8"> greatest integer function (return greatest integer less than or equal to <var>x</var>)</dd>
 <dt class="col-md-4"> <code>isnan(</code><var>x</var><code>)</code></dt><dd class="col-md-8">return 1.0 if <var>x</var> is NAN, 0.0 otherwise</dd>
 <dt class="col-md-4"> <code>j0(</code><var>x</var><code>)</code></dt><dd class="col-md-8"> Bessel functions of <var>x</var> of the first kind of order 0</dd>
@@ -374,7 +381,7 @@
 <br/>
 
 
-<h3>Source Images</h3>
+<h5>Source Images</h5>
 
 <p>The symbols <code>u</code> and <code>v</code> refer to the first and second images, respectively, in the current image sequence.  Refer to a particular image in a sequence by appending its index to any image reference (usually <code>u</code>), with a zero index for the beginning of the sequence. A negative index counts from the end.  For example, <code>u[0]</code> is the first image in the sequence, <code>u[2]</code> is the third, <code>u[-1]</code> is the last image, and <code>u[t]</code> is the current image. The current image can also be referenced by <code>s</code>. If the sequence number exceeds the length of the sequence, the count is wrapped. Thus in a 3-image sequence,  <code>u[-1]</code>, <code>u[2]</code>, and <code>u[5]</code> all refer to the same (third) image.</p>
 
@@ -398,7 +405,7 @@
 </ul>
 
 <br/>
-<h3>Accessing Pixels</h3>
+<h5>Accessing Pixels</h5>
 
 <p>All color values are normalized to the range of 0.0 to 1.0.  The alpha channel ranges from 0.0 (fully transparent) to 1.0 (fully opaque).</p>
 
@@ -418,7 +425,7 @@ p{12,34}.b   blue pixel value at column number 12, row 34 of the image
 
 <p>A position outside the boundary of the image retrieves a value dictated by the <a href="command-line-options.html#virtual-pixel">-virtual-pixel</a> option setting.</p>
 
-<h3>Apply an Expression to Select Image Channels</h3>
+<h5>Apply an Expression to Select Image Channels</h5>
 
 <p>Use the <a href="command-line-options.html#channel">-channel</a> setting to specify the output channel of the result. If no output channel is given, the result is set over all channels except the opacity channel. For example, to replace the red channel of <code>alpha.png</code> with the average of the green channels from the images <code>alpha.png</code> and <code>beta.png</code>, use:</p>
 
@@ -426,7 +433,7 @@ p{12,34}.b   blue pixel value at column number 12, row 34 of the image
 </code></pre>
 
 
-<h3>Results</h3>
+<h5>Results</h5>
 
 <p>The <a href="command-line-options.html#fx">-fx</a> operator evaluates the given expression for each channel (set by <a href="command-line-options.html#channel">-channel</a>) of each pixel in the first image (<code>u</code>) in the sequence. The computed values are temporarily stored in a copy (clone) of that first image until all the pixels have been processed, after which this single new image replaces the list of images in the current image sequence.  As such, in the previous example the updated version of <code>alpha.png</code> replaces both of the original images, <code>alpha.png</code> and <code>beta.png</code>, before being saved as <code>gamma.png</code>.</p>
 
@@ -478,4 +485,3 @@ Red channel of NW corner of image #1 is 0.184582
   <script>window.jQuery || document.write('<script src="assets/jquery.slim.min.js"><\/script>')</script><script src="assets/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous">
 </body>
 </html>
-<!-- Magick Cache 1st January 2021 18:20 -->
