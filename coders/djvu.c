@@ -391,7 +391,7 @@ get_page_image(LoadContext *lc, ddjvu_page_t *page, int x, int y, int w, int h, 
 #if DEBUG
                 printf("%s: expanding BITONAL page/image\n", __FUNCTION__);
 #endif
-                register IndexPacket *indexes;
+                IndexPacket *indexes;
                 size_t bit, byte;
 
                 for (y=0; y < (ssize_t) image->rows; y++)
@@ -430,7 +430,7 @@ get_page_image(LoadContext *lc, ddjvu_page_t *page, int x, int y, int w, int h, 
                 /* old: */
                 char* r;
 #else
-                register PixelPacket *r;
+                PixelPacket *r;
                 unsigned char *s;
 #endif
                 s=q;
@@ -577,7 +577,7 @@ static Image *ReadOneDJVUImage(LoadContext* lc,const int pagenum,
         /* Read one DJVU image */
         image = lc->image;
 
-        /* register PixelPacket *q; */
+        /* PixelPacket *q; */
 
         logging=LogMagickEvent(CoderEvent,GetMagickModule(), "  enter ReadOneDJVUImage()");
         (void) logging;

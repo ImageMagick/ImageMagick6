@@ -416,7 +416,7 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
   MagickBooleanType
     proceed;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
@@ -501,7 +501,7 @@ MagickExport MagickBooleanType HuffmanDecodeImage(Image *image)
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; ((y < (ssize_t) image->rows) && (null_lines < 3)); )
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

@@ -433,13 +433,13 @@ static MagickBooleanType DecodeImage(Image *image,const ssize_t opacity)
   offset=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=QueueAuthenticPixels(image,0,offset,image->columns,1,exception);

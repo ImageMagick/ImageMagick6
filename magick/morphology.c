@@ -2667,10 +2667,10 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
       const IndexPacket
         *magick_restrict p_indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict q_indexes;
 
       ssize_t
@@ -2865,10 +2865,10 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
     const IndexPacket
       *magick_restrict p_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict q_indexes;
 
     ssize_t
@@ -3452,10 +3452,10 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
     const IndexPacket
       *magick_restrict p_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict q_indexes;
 
     ssize_t
@@ -3646,10 +3646,10 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
     const IndexPacket
       *magick_restrict p_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict q_indexes;
 
     ssize_t

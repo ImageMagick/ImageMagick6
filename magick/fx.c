@@ -2846,13 +2846,13 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
     double
       alpha;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict fx_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)

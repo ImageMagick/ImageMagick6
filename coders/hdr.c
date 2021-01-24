@@ -153,7 +153,7 @@ static Image *ReadHDRImage(const ImageInfo *image_info,ExceptionInfo *exception)
     status,
     value_expected;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

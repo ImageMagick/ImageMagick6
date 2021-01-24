@@ -447,7 +447,7 @@ static PixelPacket *GetAuthenticPixelsFromStream(const Image *image)
 static MagickBooleanType GetOneAuthenticPixelFromStream(Image *image,
   const ssize_t x,const ssize_t y,PixelPacket *pixel,ExceptionInfo *exception)
 {
-  register PixelPacket
+  PixelPacket
     *pixels;
 
   assert(image != (Image *) NULL);

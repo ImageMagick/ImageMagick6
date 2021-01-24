@@ -4390,13 +4390,13 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
   const unsigned char
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   size_t
@@ -4543,7 +4543,7 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
       Quantum
         quantum;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=GetAuthenticPixelQueue(image);
@@ -4562,7 +4562,7 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
       MagickRealType
         alpha;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       /*

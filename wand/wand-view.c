@@ -309,13 +309,13 @@ WandExport MagickBooleanType DuplexTransferWandViewIterator(WandView *source,
       *magick_restrict duplex_pixels,
       *magick_restrict pixels;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict destination_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict destination_pixels;
 
     if (status == MagickFalse)
@@ -984,13 +984,13 @@ WandExport MagickBooleanType SetWandViewIterator(WandView *destination,
     MagickBooleanType
       sync;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict pixels;
 
     if (status == MagickFalse)
@@ -1175,13 +1175,13 @@ WandExport MagickBooleanType TransferWandViewIterator(WandView *source,
     const PixelPacket
       *magick_restrict pixels;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict destination_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict destination_pixels;
 
     if (status == MagickFalse)
@@ -1342,13 +1342,13 @@ WandExport MagickBooleanType UpdateWandViewIterator(WandView *source,
     const int
       id = GetOpenMPThreadId();
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict pixels;
 
     if (status == MagickFalse)

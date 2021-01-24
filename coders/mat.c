@@ -192,7 +192,7 @@ static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
 
   double f;
   int x;
-  register PixelPacket *q;
+  PixelPacket *q;
 
   if (MinVal >= 0)
     MinVal = -1;
@@ -260,7 +260,7 @@ static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
 
   double f;
   int x;
-  register PixelPacket *q;
+  PixelPacket *q;
 
   if (MinVal >= 0)
     MinVal = -1;
@@ -761,7 +761,7 @@ static Image *ReadMATImageV4(const ImageInfo *image_info,Image *image,
     pixels=(unsigned char *) GetQuantumPixels(quantum_info);
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       count=ReadBlob(image,depth/8*image->columns,(unsigned char *) pixels);

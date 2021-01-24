@@ -257,14 +257,14 @@ static Image *ReadICONImage(const ImageInfo *image_info,
   MagickSizeType
     extent;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

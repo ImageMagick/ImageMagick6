@@ -389,7 +389,7 @@ static void DefineImageHistogram(const Image *image,NodeInfo *node_info,
       DefineImageHistogram(image,node_info->child[i],histogram);
   if (node_info->level == (MaxTreeDepth-1))
     {
-      register ColorPacket
+      ColorPacket
         *p;
 
       p=node_info->list;
@@ -1218,7 +1218,7 @@ MagickExport size_t GetNumberColors(const Image *image,FILE *file,
   MagickPixelPacket
     pixel;
 
-  register ColorPacket
+  ColorPacket
     *p;
 
   ssize_t
@@ -1339,13 +1339,13 @@ static void UniqueColorsToImage(Image *unique_image,CacheView *unique_view,
         node_info->child[i],exception);
   if (node_info->level == (MaxTreeDepth-1))
     {
-      register ColorPacket
+      ColorPacket
         *p;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       status=MagickTrue;

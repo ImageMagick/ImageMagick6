@@ -233,7 +233,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -313,7 +313,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -412,7 +412,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -465,7 +465,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -518,7 +518,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -579,7 +579,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
               const PixelPacket
                 *magick_restrict p;
 
-              register PixelPacket
+              PixelPacket
                 *magick_restrict q;
 
               ssize_t
@@ -671,7 +671,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -743,7 +743,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -815,7 +815,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -893,7 +893,7 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
               const PixelPacket
                 *magick_restrict p;
 
-              register PixelPacket
+              PixelPacket
                 *magick_restrict q;
 
               ssize_t

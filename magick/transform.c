@@ -259,14 +259,14 @@ MagickExport Image *ChopImage(const Image *image,const RectangleInfo *chop_info,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict chop_indexes,
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -323,14 +323,14 @@ MagickExport Image *ChopImage(const Image *image,const RectangleInfo *chop_info,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict chop_indexes,
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -454,7 +454,7 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       p=GetCacheViewVirtualPixels(image_view,0,y,images->columns,1,exception);
@@ -486,7 +486,7 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       p=GetCacheViewVirtualPixels(image_view,0,y,images->columns,1,exception);
@@ -518,7 +518,7 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       p=GetCacheViewVirtualPixels(image_view,0,y,images->columns,1,exception);
@@ -547,13 +547,13 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
       const PixelPacket
         *magick_restrict p;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       p=GetCacheViewVirtualPixels(image_view,0,y,images->columns,1,exception);
@@ -754,10 +754,10 @@ MagickExport Image *CropImage(const Image *image,const RectangleInfo *geometry,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict crop_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1090,11 +1090,11 @@ MagickExport Image *ExcerptImage(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict excerpt_indexes,
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1290,10 +1290,10 @@ MagickExport Image *FlipImage(const Image *image,ExceptionInfo *exception)
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict flip_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1419,13 +1419,13 @@ MagickExport Image *FlopImage(const Image *image,ExceptionInfo *exception)
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict flop_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1539,10 +1539,10 @@ static MagickBooleanType CopyImageRegion(Image *destination,const Image *source,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict destination_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -1847,14 +1847,14 @@ MagickExport Image *SpliceImage(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes,
       *magick_restrict splice_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1927,14 +1927,14 @@ MagickExport Image *SpliceImage(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes,
       *magick_restrict splice_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -2249,11 +2249,11 @@ MagickExport Image *TransposeImage(const Image *image,ExceptionInfo *exception)
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict transpose_indexes,
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -2382,14 +2382,14 @@ MagickExport Image *TransverseImage(const Image *image,ExceptionInfo *exception)
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict transverse_indexes,
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)

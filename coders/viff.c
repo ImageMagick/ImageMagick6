@@ -224,13 +224,13 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
   MagickSizeType
     number_pixels;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

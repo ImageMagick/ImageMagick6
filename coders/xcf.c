@@ -341,7 +341,7 @@ static MagickBooleanType load_tile(Image *image,Image *tile_image,
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t
@@ -430,7 +430,7 @@ static MagickBooleanType load_tile_rle(Image *image,Image *tile_image,
     alpha,
     data;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

@@ -3862,7 +3862,7 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
     }
   if (quantum_info->alpha_type == AssociatedQuantumAlpha)
     {
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       /*
@@ -3885,7 +3885,7 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
       Quantum
         quantum;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=GetAuthenticPixelQueue(image);
@@ -4025,7 +4025,7 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
       Quantum
         quantum;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=GetAuthenticPixelQueue(image);

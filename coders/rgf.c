@@ -104,10 +104,10 @@ static Image *ReadRGFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

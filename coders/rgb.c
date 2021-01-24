@@ -232,7 +232,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -316,7 +316,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
             const PixelPacket
               *magick_restrict p;
 
-            register PixelPacket
+            PixelPacket
               *magick_restrict q;
 
             ssize_t
@@ -417,7 +417,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -470,7 +470,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -523,7 +523,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -584,7 +584,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               const PixelPacket
                 *magick_restrict p;
 
-              register PixelPacket
+              PixelPacket
                 *magick_restrict q;
 
               ssize_t
@@ -677,7 +677,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -749,7 +749,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -821,7 +821,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const PixelPacket
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -895,7 +895,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               const PixelPacket
                 *magick_restrict p;
 
-              register PixelPacket
+              PixelPacket
                 *magick_restrict q;
 
               ssize_t

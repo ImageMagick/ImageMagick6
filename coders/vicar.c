@@ -164,7 +164,7 @@ static Image *ReadVICARImage(const ImageInfo *image_info,
   QuantumType
     quantum_type;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

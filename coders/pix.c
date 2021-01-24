@@ -102,13 +102,13 @@ static Image *ReadPIXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     green,
     red;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

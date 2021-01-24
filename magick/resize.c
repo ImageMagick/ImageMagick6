@@ -1722,10 +1722,10 @@ MagickExport Image *InterpolativeResizeImage(const Image *image,
     PointInfo
       offset;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict resize_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1914,10 +1914,10 @@ MagickExport Image *LiquidRescaleImage(const Image *image,const size_t columns,
   rescale_view=AcquireAuthenticCacheView(rescale_image,exception);
   while (lqr_carver_scan(carver,&x,&y,&packet) != 0)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict rescale_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=QueueCacheViewAuthenticPixels(rescale_view,x,y,1,1,exception);
@@ -2039,10 +2039,10 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict magnify_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2069,7 +2069,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
       MagickRealType
         intensity[9];
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict r;
 
       ssize_t
@@ -2129,7 +2129,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
         }
       if (indexes != (const IndexPacket *) NULL)
         {
-          register IndexPacket
+          IndexPacket
             *r;
 
           /*
@@ -2491,10 +2491,10 @@ static MagickBooleanType HorizontalFilter(
     ContributionInfo
       *magick_restrict contribution;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict resize_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2739,10 +2739,10 @@ static MagickBooleanType VerticalFilter(
     ContributionInfo
       *magick_restrict contribution;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict resize_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3154,10 +3154,10 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict sample_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3360,14 +3360,14 @@ MagickExport Image *ScaleImage(const Image *image,const size_t columns,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict scale_indexes;
 
-    register MagickPixelPacket
+    MagickPixelPacket
       *magick_restrict s,
       *magick_restrict t;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

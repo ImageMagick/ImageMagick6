@@ -506,7 +506,7 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     i,
     y;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

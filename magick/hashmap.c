@@ -332,7 +332,7 @@ MagickExport HashmapInfo *DestroyHashmap(HashmapInfo *hashmap_info)
   LinkedListInfo
     *list_info;
 
-  register EntryInfo
+  EntryInfo
     *entry;
 
   ssize_t
@@ -486,7 +486,7 @@ MagickExport void *GetNextKeyInHashmap(HashmapInfo *hashmap_info)
   LinkedListInfo
     *list_info;
 
-  register EntryInfo
+  EntryInfo
     *entry;
 
   void
@@ -547,7 +547,7 @@ MagickExport void *GetNextValueInHashmap(HashmapInfo *hashmap_info)
   LinkedListInfo
     *list_info;
 
-  register EntryInfo
+  EntryInfo
     *entry;
 
   void
@@ -714,7 +714,7 @@ MagickExport void *GetValueFromHashmap(HashmapInfo *hashmap_info,
   LinkedListInfo
     *list_info;
 
-  register EntryInfo
+  EntryInfo
     *entry;
 
   size_t

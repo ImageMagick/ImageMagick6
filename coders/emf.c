@@ -463,7 +463,7 @@ static Image *ReadEMFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   RGBQUAD
@@ -685,7 +685,7 @@ static Image *ReadEMFImage(const ImageInfo *image_info,
   MagickStatusType
     flags;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

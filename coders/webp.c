@@ -294,7 +294,7 @@ static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
   p=(unsigned char *) webp_image->u.RGBA.rgba;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *q;
 
     ssize_t

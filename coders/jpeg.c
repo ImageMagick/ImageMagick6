@@ -1465,13 +1465,13 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   scanline[0]=(JSAMPROW) jpeg_pixels;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (jpeg_read_scanlines(jpeg_info,scanline,1) != 1)

@@ -1280,7 +1280,7 @@ MagickExport MagickBooleanType ColorFloodfillImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -1400,7 +1400,7 @@ MagickExport MagickBooleanType ColorFloodfillImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -4935,7 +4935,7 @@ MagickExport MagickBooleanType MatteFloodfillImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -5055,7 +5055,7 @@ MagickExport MagickBooleanType MatteFloodfillImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -5333,7 +5333,7 @@ MagickExport MagickBooleanType OpaqueImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         q=GetAuthenticPixels(image,0,y,image->columns,1,&image->exception);
@@ -5371,7 +5371,7 @@ MagickExport MagickBooleanType OpaqueImage(Image *image,
             ssize_t
               x;
 
-            register PixelPacket
+            PixelPacket
               *magick_restrict q;
 
             q=GetAuthenticPixels(image,0,y,image->columns,1,&image->exception);
@@ -6275,11 +6275,11 @@ MagickExport unsigned int RandomChannelThresholdImage(Image *image,
     ssize_t
       x;
 
-    register IndexPacket
+    IndexPacket
       index,
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -6728,13 +6728,13 @@ MagickExport void SetImage(Image *image,const Quantum opacity)
       */
       for (y=0; y < (ssize_t) image->rows; y++)
       {
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         q=QueueAuthenticPixels(image,0,y,image->columns,1,&image->exception);
@@ -6761,7 +6761,7 @@ MagickExport void SetImage(Image *image,const Quantum opacity)
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=QueueAuthenticPixels(image,0,y,image->columns,1,&image->exception);
@@ -7465,13 +7465,13 @@ MagickExport unsigned int ThresholdImage(Image *image,const double threshold)
       "UnableToThresholdImage");
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetAuthenticPixels(image,0,y,image->columns,1,&image->exception);
@@ -7580,13 +7580,13 @@ MagickExport unsigned int ThresholdImageChannel(Image *image,
     }
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetAuthenticPixels(image,0,y,image->columns,1,&image->exception);
@@ -7837,7 +7837,7 @@ MagickExport MagickBooleanType TransparentImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetAuthenticPixels(image,0,y,image->columns,1,&image->exception);

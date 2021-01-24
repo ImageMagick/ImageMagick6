@@ -227,7 +227,7 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -332,13 +332,13 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -795,13 +795,13 @@ MagickExport Image *OilPaintImage(const Image *image,const double radius,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict paint_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     size_t
@@ -991,13 +991,13 @@ MagickExport MagickBooleanType OpaquePaintImageChannel(Image *image,
     MagickPixelPacket
       pixel;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1137,13 +1137,13 @@ MagickExport MagickBooleanType TransparentPaintImage(Image *image,
     MagickPixelPacket
       pixel;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1274,13 +1274,13 @@ MagickExport MagickBooleanType TransparentPaintImageChroma(Image *image,
     MagickPixelPacket
       pixel;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)

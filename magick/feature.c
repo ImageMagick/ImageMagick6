@@ -166,7 +166,7 @@ static MagickBooleanType TraceEdges(Image *edge_image,CacheView *edge_view,
   MagickBooleanType
     status;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t
@@ -433,7 +433,7 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
 #endif
   for (y=0; y < (ssize_t) edge_image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2236,7 +2236,7 @@ MagickExport Image *MeanShiftImage(const Image *image,const size_t width,
     const PixelPacket
       *magick_restrict p;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

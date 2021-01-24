@@ -1109,13 +1109,13 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               MagickBooleanType
                 sync;
 
-              register IndexPacket
+              IndexPacket
                 *magick_restrict indexes;
 
               double
                 *p;
 
-              register PixelPacket
+              PixelPacket
                 *magick_restrict q;
 
               ssize_t

@@ -103,7 +103,7 @@ static Image *ReadHRZImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

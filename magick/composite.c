@@ -1726,10 +1726,10 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         const PixelPacket
           *p;
 
-        register IndexPacket
+        IndexPacket
           *indexes;
 
-        register PixelPacket
+        PixelPacket
           *q;
 
         if (status == MagickFalse)
@@ -1890,10 +1890,10 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         const PixelPacket
           *magick_restrict p;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict r;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict canvas_indexes;
 
         ssize_t
@@ -1975,10 +1975,10 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         center,
         offset;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict canvas_indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict r;
 
       /*
@@ -2287,13 +2287,13 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -3008,13 +3008,13 @@ MagickExport MagickBooleanType TextureImage(Image *image,const Image *texture)
     const PixelPacket
       *p;
 
-    register IndexPacket
+    IndexPacket
       *indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *q;
 
     size_t

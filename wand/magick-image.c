@@ -11094,7 +11094,7 @@ WandExport MagickBooleanType MagickSetImagePixelColor(MagickWand *wand,
   IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   CacheView

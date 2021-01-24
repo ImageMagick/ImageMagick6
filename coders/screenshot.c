@@ -137,7 +137,7 @@ static Image *ReadSCREENSHOTImage(const ImageInfo *image_info,
     MagickBooleanType
       status;
 
-    register PixelPacket
+    PixelPacket
       *q;
 
     ssize_t

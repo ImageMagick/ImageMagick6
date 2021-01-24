@@ -118,7 +118,7 @@ static Image *ReadFLIFImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

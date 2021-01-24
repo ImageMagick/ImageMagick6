@@ -474,7 +474,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ssize_t
             x;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -519,7 +519,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ssize_t
             x;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -561,7 +561,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ssize_t
             x;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -619,7 +619,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           MagickBooleanType
             sync;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -680,7 +680,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const unsigned char
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -794,7 +794,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           const unsigned char
             *magick_restrict p;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -938,7 +938,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
       }
       case '7':
       {
-        register IndexPacket
+        IndexPacket
           *indexes;
 
         size_t
@@ -986,7 +986,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ssize_t
             x;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -1289,7 +1289,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           MagickBooleanType
             sync;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t

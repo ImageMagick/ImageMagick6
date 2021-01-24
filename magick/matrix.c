@@ -943,7 +943,7 @@ MagickExport Image *MatrixToImage(const MatrixInfo *matrix_info,
     double
       value;
 
-    register PixelPacket
+    PixelPacket
       *q;
 
     ssize_t

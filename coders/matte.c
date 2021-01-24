@@ -173,7 +173,7 @@ static MagickBooleanType WriteMATTEImage(const ImageInfo *image_info,
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

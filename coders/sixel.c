@@ -986,13 +986,13 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
   char
     *p;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *r;
 
   size_t

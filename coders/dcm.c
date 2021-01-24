@@ -2847,10 +2847,10 @@ static MagickBooleanType ReadDCMPixels(Image *image,DCMInfo *info,
     i,
     x;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t
@@ -4187,7 +4187,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ssize_t
             x;
 
-          register PixelPacket
+          PixelPacket
             *q;
 
           ssize_t

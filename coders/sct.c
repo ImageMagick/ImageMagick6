@@ -140,14 +140,14 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   Quantum
     pixel;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

@@ -1349,13 +1349,13 @@ MagickExport Image *ReadPICTImage(const ImageInfo *image_info,
   */
   for (y=0; y < image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *restrict q;
 
     q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);

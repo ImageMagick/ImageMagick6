@@ -248,7 +248,7 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
       *magick_restrict Bi,
       *magick_restrict Br;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict Ci,
       *magick_restrict Cr;
 
@@ -603,10 +603,10 @@ static MagickBooleanType ForwardFourier(const FourierInfo *fourier_info,
     *magnitude_info,
     *phase_info;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t
@@ -1436,10 +1436,10 @@ static MagickBooleanType InverseFourierTransform(FourierInfo *fourier_info,
   MemoryInfo
     *source_info;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

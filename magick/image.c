@@ -533,10 +533,10 @@ MagickExport Image *AppendImages(const Image *images,
       const PixelPacket
         *magick_restrict p;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict append_indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       ssize_t
@@ -1097,10 +1097,10 @@ MagickExport MagickBooleanType CopyImagePixels(Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2102,10 +2102,10 @@ MagickExport Image *NewMagickImage(const ImageInfo *image_info,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2306,10 +2306,10 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2414,7 +2414,7 @@ MagickExport MagickBooleanType SetImageBackgroundColor(Image *image)
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2432,7 +2432,7 @@ MagickExport MagickBooleanType SetImageBackgroundColor(Image *image)
       *q++=pixel;
     if (image->colorspace == CMYKColorspace)
       {
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
         indexes=GetCacheViewAuthenticIndexQueue(image_view);
@@ -2536,10 +2536,10 @@ MagickExport MagickBooleanType SetImageColor(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3231,7 +3231,7 @@ MagickExport MagickBooleanType SetImageOpacity(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3712,10 +3712,10 @@ MagickExport MagickBooleanType SyncImage(Image *image)
     IndexPacket
       index;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

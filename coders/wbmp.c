@@ -127,13 +127,13 @@ static Image *ReadWBMPImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

@@ -204,13 +204,13 @@ MagickExport MagickBooleanType CycleColormapImage(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -349,10 +349,10 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     ssize_t
       x;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,exception);

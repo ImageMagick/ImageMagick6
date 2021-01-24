@@ -560,7 +560,7 @@ MagickExport MagickBooleanType XAnnotateImage(Display *display,
     int
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetCacheViewAuthenticPixels(annotate_view,0,(ssize_t) y,
@@ -2422,7 +2422,7 @@ MagickExport MagickBooleanType XDrawImage(Display *display,
     int
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=QueueCacheViewAuthenticPixels(draw_view,0,(ssize_t) y,draw_image->columns,
@@ -2544,7 +2544,7 @@ MagickExport MagickBooleanType XDrawImage(Display *display,
     int
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetCacheViewAuthenticPixels(draw_view,0,(ssize_t) y,draw_image->columns,1,
@@ -3944,7 +3944,7 @@ static Image *XGetWindowImage(Display *display,const Window window,
   RectangleInfo
     crop_info;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   int
@@ -4109,7 +4109,7 @@ static Image *XGetWindowImage(Display *display,const Window window,
         j,
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       size_t
@@ -7612,7 +7612,7 @@ MagickExport void XMakeStandardColormap(Display *display,
   ExceptionInfo
     *exception;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
@@ -7658,7 +7658,7 @@ MagickExport void XMakeStandardColormap(Display *display,
             Image
               *affinity_image;
 
-            register PixelPacket
+            PixelPacket
               *magick_restrict q;
 
             /*

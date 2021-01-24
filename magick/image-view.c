@@ -264,7 +264,7 @@ MagickExport MagickBooleanType DuplexTransferImageViewIterator(
       *magick_restrict duplex_pixels,
       *magick_restrict pixels;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict destination_pixels;
 
     if (status == MagickFalse)
@@ -924,7 +924,7 @@ MagickExport MagickBooleanType SetImageViewIterator(ImageView *destination,
     MagickBooleanType
       sync;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict pixels;
 
     if (status == MagickFalse)
@@ -1099,7 +1099,7 @@ MagickExport MagickBooleanType TransferImageViewIterator(ImageView *source,
     const PixelPacket
       *magick_restrict pixels;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict destination_pixels;
 
     if (status == MagickFalse)
@@ -1231,7 +1231,7 @@ MagickExport MagickBooleanType UpdateImageViewIterator(ImageView *source,
     const int
       id = GetOpenMPThreadId();
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict pixels;
 
     if (status == MagickFalse)

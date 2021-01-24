@@ -309,10 +309,10 @@ static MagickBooleanType ReadVIPSPixelsNONE(Image *image,
   Quantum
     pixel;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

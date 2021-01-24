@@ -171,13 +171,13 @@ static Image *ReadXWDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickStatusType
     status;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

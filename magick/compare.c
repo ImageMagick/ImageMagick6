@@ -272,10 +272,10 @@ MagickExport Image *CompareImageChannels(Image *image,
       *magick_restrict p,
       *magick_restrict q;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict highlight_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict r;
 
     ssize_t
@@ -2167,7 +2167,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)

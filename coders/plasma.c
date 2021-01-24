@@ -97,7 +97,7 @@ static inline MagickBooleanType PlasmaPixel(Image *image,
   RandomInfo *magick_restrict random_info,const double x,const double y,
   ExceptionInfo *exception)
 {
-  register PixelPacket
+  PixelPacket
     *q;
 
   q=GetAuthenticPixels(image,(ssize_t) (x+0.5),(ssize_t) (y+0.5),1,1,
@@ -128,7 +128,7 @@ static Image *ReadPlasmaImage(const ImageInfo *image_info,
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

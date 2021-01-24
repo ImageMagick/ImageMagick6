@@ -358,10 +358,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict component_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -726,10 +726,10 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
     object[i].area=0.0;
     for (y=0; y < (ssize_t) bounding_box.height; y++)
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict component_indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       ssize_t

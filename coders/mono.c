@@ -105,10 +105,10 @@ static Image *ReadMONOImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

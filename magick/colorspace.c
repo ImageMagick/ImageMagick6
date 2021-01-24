@@ -339,13 +339,13 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         MagickPixelPacket
           pixel;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -405,7 +405,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -462,7 +462,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -539,7 +539,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -759,7 +759,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -825,7 +825,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -1122,7 +1122,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         size_t
@@ -1999,13 +1999,13 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         MagickPixelPacket
           pixel;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2063,7 +2063,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2125,7 +2125,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2203,7 +2203,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2426,7 +2426,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2492,7 +2492,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2726,7 +2726,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)

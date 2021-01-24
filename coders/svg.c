@@ -3290,7 +3290,7 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *q;
 
         RsvgHandle

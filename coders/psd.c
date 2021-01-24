@@ -324,7 +324,7 @@ static MagickBooleanType CorrectPSDAlphaBlend(const ImageInfo *image_info,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -397,7 +397,7 @@ static MagickBooleanType ApplyPSDLayerOpacity(Image *image,Quantum opacity,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -466,10 +466,10 @@ static MagickBooleanType ApplyPSDOpacityMask(Image *image,const Image *mask,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
-    register PixelPacket
+    PixelPacket
       *p;
 
     ssize_t
@@ -990,10 +990,10 @@ static MagickBooleanType ReadPSDChannelPixels(Image *image,
   const unsigned char
     *p;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

@@ -166,7 +166,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

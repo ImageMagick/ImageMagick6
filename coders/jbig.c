@@ -125,13 +125,13 @@ static Image *ReadJBIGImage(const ImageInfo *image_info,
   MagickStatusType
     status;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

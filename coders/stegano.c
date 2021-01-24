@@ -111,10 +111,10 @@ static Image *ReadSTEGANOImage(const ImageInfo *image_info,
   PixelPacket
     pixel;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

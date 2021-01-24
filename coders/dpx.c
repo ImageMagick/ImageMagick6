@@ -1267,7 +1267,7 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
       MagickBooleanType
         sync;
 
-      register PixelPacket
+      PixelPacket
         *q;
 
       size_t

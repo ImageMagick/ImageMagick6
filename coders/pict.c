@@ -858,13 +858,13 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
   PICTPixmap
     pixmap;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

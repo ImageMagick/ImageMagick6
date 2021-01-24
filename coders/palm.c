@@ -248,14 +248,14 @@ static Image *ReadPALMImage(const ImageInfo *image_info,
   MagickPixelPacket
     transpix;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t
@@ -717,13 +717,13 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
   QuantizeInfo
     *quantize_info;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *p;
 
   ssize_t

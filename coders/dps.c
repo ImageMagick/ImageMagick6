@@ -113,13 +113,13 @@ static Image *ReadDPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   Pixmap
     pixmap;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     i;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

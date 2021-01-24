@@ -105,13 +105,13 @@ static Image *ReadNULLImage(const ImageInfo *image_info,
   MagickPixelPacket
     background;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

@@ -191,7 +191,7 @@ static Image *ReadTTFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

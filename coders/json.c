@@ -1437,7 +1437,7 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
     }
   if (image->storage_class == PseudoClass)
     {
-      register PixelPacket
+      PixelPacket
         *magick_restrict p;
 
       (void) FormatLocaleFile(file,"    \"colormapEntries\": %.20g,\n",

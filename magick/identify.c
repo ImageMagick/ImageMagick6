@@ -1052,7 +1052,7 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
           MagickPixelPacket
             pixel;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict p;
 
           GetMagickPixelPacket(image,&pixel);

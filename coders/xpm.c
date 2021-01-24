@@ -265,10 +265,10 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     *p,
     *q;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *r;
 
   ssize_t
@@ -714,7 +714,7 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t
@@ -807,7 +807,7 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
   colors=picon->colors;
   if (transparent != MagickFalse)
     {
-      register IndexPacket
+      IndexPacket
         *indexes;
 
       colors++;

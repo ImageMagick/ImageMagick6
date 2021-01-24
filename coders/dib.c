@@ -477,13 +477,13 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MemoryInfo
     *pixel_info;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t
@@ -937,7 +937,7 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         q=GetAuthenticPixels(image,0,y,image->columns,1,exception);

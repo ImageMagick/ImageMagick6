@@ -1413,11 +1413,11 @@ RestoreMSCWarning
 #endif
       for (y=0; y < (ssize_t) image->rows; y++)
       {
+        PixelPacket
+          *magick_restrict q;
+
         ssize_t
           x;
-
-        register PixelPacket
-          *magick_restrict q;
 
         if (status == MagickFalse)
           continue;
@@ -1463,11 +1463,11 @@ RestoreMSCWarning
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
+    PixelPacket
+      *magick_restrict q;
+
     ssize_t
       x;
-
-    register PixelPacket
-      *magick_restrict q;
 
     if (status == MagickFalse)
       continue;

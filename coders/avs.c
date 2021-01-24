@@ -103,7 +103,7 @@ static Image *ReadAVSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MemoryInfo
     *pixel_info;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

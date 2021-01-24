@@ -512,7 +512,7 @@ static MagickBooleanType DecodeLabImage(Image *image,ExceptionInfo *exception)
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1806,10 +1806,10 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           int
             status;
 
-          register IndexPacket
+          IndexPacket
             *indexes;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -1909,7 +1909,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           rows_remaining=0;
           for (y=0; y < (ssize_t) image->rows; y++)
           {
-            register PixelPacket
+            PixelPacket
               *magick_restrict q;
 
             q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -2025,7 +2025,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
               p=tile_pixels;
               for (row=0; row < rows_remaining; row++)
               {
-                register PixelPacket
+                PixelPacket
                   *magick_restrict q;
 
                 q=GetAuthenticPixels(image,x,y+row,columns_remaining,1,
@@ -2088,7 +2088,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           ssize_t
             x;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
@@ -2794,7 +2794,7 @@ static MagickBooleanType EncodeLabImage(Image *image,ExceptionInfo *exception)
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

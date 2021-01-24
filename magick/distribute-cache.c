@@ -662,7 +662,7 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
   unsigned char
     *p;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char
@@ -716,7 +716,7 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

@@ -955,13 +955,13 @@ WandExport MagickBooleanType PixelSyncIterator(PixelIterator *iterator)
   ExceptionInfo
     *exception;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict pixels;
 
   assert(iterator != (const PixelIterator *) NULL);

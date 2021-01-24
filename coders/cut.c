@@ -107,13 +107,13 @@ static MagickBooleanType InsertRow(int bpp,unsigned char *p,ssize_t y,
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   IndexPacket
     index;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   exception=(&image->exception);
@@ -277,7 +277,7 @@ static int GetCutColors(Image *image)
     intensity,
     scale_intensity;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

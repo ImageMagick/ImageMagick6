@@ -433,7 +433,7 @@ static Image *ReadPANGOImage(const ImageInfo *image_info,
   p=pixels;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *q;
 
     ssize_t

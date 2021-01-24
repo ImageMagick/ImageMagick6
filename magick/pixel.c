@@ -2444,10 +2444,10 @@ static MagickBooleanType ImportCharPixel(Image *image,const RectangleInfo *roi,
   const unsigned char
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -2713,10 +2713,10 @@ static MagickBooleanType ImportDoublePixel(Image *image,
   const double
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -2969,10 +2969,10 @@ static MagickBooleanType ImportFloatPixel(Image *image,const RectangleInfo *roi,
   const float
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -3220,10 +3220,10 @@ static MagickBooleanType ImportIntegerPixel(Image *image,
   const unsigned int
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -3449,10 +3449,10 @@ static MagickBooleanType ImportLongPixel(Image *image,const RectangleInfo *roi,
   const unsigned int
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -3678,10 +3678,10 @@ static MagickBooleanType ImportQuantumPixel(Image *image,
   const Quantum
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t
@@ -3907,10 +3907,10 @@ static MagickBooleanType ImportShortPixel(Image *image,const RectangleInfo *roi,
   const unsigned short
     *magick_restrict p;
 
-  register IndexPacket
+  IndexPacket
     *magick_restrict indexes;
 
-  register PixelPacket
+  PixelPacket
     *magick_restrict q;
 
   ssize_t

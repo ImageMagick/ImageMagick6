@@ -1937,7 +1937,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                       ssize_t
                         x;
 
-                      register PixelPacket
+                      PixelPacket
                         *q;
 
                       CacheView

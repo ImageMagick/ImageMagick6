@@ -263,10 +263,10 @@ static MagickBooleanType WriteUILImage(const ImageInfo *image_info,Image *image)
       colors=image->colors;
       if (transparent != MagickFalse)
         {
-          register IndexPacket
+          IndexPacket
             *indexes;
 
-          register PixelPacket
+          PixelPacket
             *q;
 
           i=0;

@@ -570,13 +570,13 @@ MagickExport Image *EvaluateImages(const Image *images,
         const int
           id = GetOpenMPThreadId();
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict evaluate_indexes;
 
-        register MagickPixelPacket
+        MagickPixelPacket
           *evaluate_pixel;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         ssize_t
@@ -678,17 +678,17 @@ MagickExport Image *EvaluateImages(const Image *images,
         const int
           id = GetOpenMPThreadId();
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict evaluate_indexes;
 
         ssize_t
           i,
           x;
 
-        register MagickPixelPacket
+        MagickPixelPacket
           *evaluate_pixel;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -865,10 +865,10 @@ MagickExport MagickBooleanType EvaluateImageChannel(Image *image,
     const int
       id = GetOpenMPThreadId();
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1136,13 +1136,13 @@ MagickExport MagickBooleanType FunctionImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -2826,13 +2826,13 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
     const int
       id = GetOpenMPThreadId();
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict polynomial_indexes;
 
-    register MagickPixelPacket
+    MagickPixelPacket
       *polynomial_pixel;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3563,7 +3563,7 @@ static void ResetPixelList(PixelList *pixel_list)
   int
     level;
 
-  register ListNode
+  ListNode
     *root;
 
   SkipList
@@ -3676,10 +3676,10 @@ MagickExport Image *StatisticImageChannel(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict statistic_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

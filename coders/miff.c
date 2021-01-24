@@ -1433,13 +1433,13 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     length=0;
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       if (status == MagickFalse)

@@ -183,14 +183,14 @@ static Image *ReadXBMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   ssize_t
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char

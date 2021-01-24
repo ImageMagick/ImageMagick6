@@ -274,7 +274,7 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
     i,
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

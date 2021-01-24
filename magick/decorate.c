@@ -293,13 +293,13 @@ MagickExport Image *FrameImage(const Image *image,const FrameInfo *frame_info,
     frame_info->inner_bevel);
   if (height != 0)
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict frame_indexes;
 
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       /*
@@ -410,13 +410,13 @@ MagickExport Image *FrameImage(const Image *image,const FrameInfo *frame_info,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict frame_indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     /*
@@ -498,13 +498,13 @@ MagickExport Image *FrameImage(const Image *image,const FrameInfo *frame_info,
     frame_info->y-image->rows-bevel_width+frame_info->outer_bevel);
   if (height != 0)
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict frame_indexes;
 
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       /*
@@ -711,7 +711,7 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -786,7 +786,7 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -850,7 +850,7 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)

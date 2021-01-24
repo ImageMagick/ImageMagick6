@@ -276,13 +276,13 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   IndexPacket
     index;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
   exception=(&image->exception);

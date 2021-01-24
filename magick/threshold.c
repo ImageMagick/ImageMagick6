@@ -240,10 +240,10 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
       *magick_restrict p,
       *magick_restrict r;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict threshold_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -865,13 +865,13 @@ MagickExport MagickBooleanType BilevelImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1057,13 +1057,13 @@ MagickExport MagickBooleanType BlackThresholdImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1182,7 +1182,7 @@ MagickExport MagickBooleanType ClampImageChannel(Image *image,
       ssize_t
         i;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=image->colormap;
@@ -1209,13 +1209,13 @@ MagickExport MagickBooleanType ClampImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -1972,13 +1972,13 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
 #endif
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
       ssize_t
         x;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       if (status == MagickFalse)
@@ -2155,7 +2155,7 @@ MagickExport MagickBooleanType PerceptibleImageChannel(Image *image,
       ssize_t
         i;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=image->colormap;
@@ -2182,13 +2182,13 @@ MagickExport MagickBooleanType PerceptibleImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)
@@ -2379,13 +2379,13 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
         MagickBooleanType
           sync;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
         ssize_t
           x;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         if (status == MagickFalse)
@@ -2458,10 +2458,10 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
     const int
       id = GetOpenMPThreadId();
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2689,13 +2689,13 @@ MagickExport MagickBooleanType WhiteThresholdImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     if (status == MagickFalse)

@@ -182,7 +182,7 @@ static Image *ReadIPLImage(const ImageInfo *image_info,ExceptionInfo *exception)
   Image *image;
 
   MagickBooleanType status;
-  register PixelPacket *q;
+  PixelPacket *q;
   unsigned char magick[12], *pixels;
   ssize_t count;
   ssize_t y;

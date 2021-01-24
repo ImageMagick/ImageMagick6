@@ -530,10 +530,10 @@ static MagickBooleanType AssignImageColors(Image *image,CubeInfo *cube_info)
         CubeInfo
           cube;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         ssize_t
@@ -1090,7 +1090,7 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
         beta,
         distance;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict p;
 
       /*
@@ -1224,7 +1224,7 @@ static void DefineImageColormap(Image *image,CubeInfo *cube_info,
       MagickRealType
         alpha;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       /*
@@ -1499,10 +1499,10 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
       *current,
       *previous;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1764,10 +1764,10 @@ static MagickBooleanType RiemersmaDither(Image *image,CacheView *image_view,
       ExceptionInfo
         *exception;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       ssize_t
@@ -2358,10 +2358,10 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3280,10 +3280,10 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
 #endif
       for (y=0; y < (ssize_t) image->rows; y++)
       {
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         ssize_t
@@ -3362,7 +3362,7 @@ static MagickBooleanType SetGrayscaleImage(Image *image)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     const PixelPacket

@@ -208,7 +208,7 @@ static MagickBooleanType WriteHISTOGRAMImage(const ImageInfo *image_info,
   const PixelPacket
     *p;
 
-  register PixelPacket
+  PixelPacket
     *q,
     *r;
 

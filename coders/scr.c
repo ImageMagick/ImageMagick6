@@ -131,7 +131,7 @@ static Image *ReadSCRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

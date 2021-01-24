@@ -112,7 +112,7 @@ static void ClearBounds(Image *image,RectangleInfo *bounds)
     ssize_t
       x;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=GetAuthenticPixels(image,bounds->x,bounds->y+y,bounds->width,1,exception);

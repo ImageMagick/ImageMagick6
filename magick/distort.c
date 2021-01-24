@@ -2398,13 +2398,13 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         d,
         s;  /* transform destination image x,y  to source image x,y */
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
       ssize_t
         i;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=QueueCacheViewAuthenticPixels(distort_view,0,j,distort_image->columns,1,
@@ -3110,13 +3110,13 @@ MagickExport Image *SparseColorImage(const Image *image,
       MagickPixelPacket
         pixel;    /* pixel to assign to distorted image */
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
       ssize_t
         i;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=GetCacheViewAuthenticPixels(sparse_view,0,j,sparse_image->columns,

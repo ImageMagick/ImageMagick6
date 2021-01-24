@@ -808,10 +808,10 @@ MagickExport Image *IntegralRotateImage(const Image *image,size_t rotations,
           const PixelPacket
             *magick_restrict p;
 
-          register IndexPacket
+          IndexPacket
             *magick_restrict rotate_indexes;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -917,10 +917,10 @@ MagickExport Image *IntegralRotateImage(const Image *image,size_t rotations,
         const PixelPacket
           *magick_restrict p;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict rotate_indexes;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         ssize_t
@@ -1006,10 +1006,10 @@ MagickExport Image *IntegralRotateImage(const Image *image,size_t rotations,
           const PixelPacket
             *magick_restrict p;
 
-          register IndexPacket
+          IndexPacket
             *magick_restrict rotate_indexes;
 
-          register PixelPacket
+          PixelPacket
             *magick_restrict q;
 
           ssize_t
@@ -1199,11 +1199,11 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
       area,
       displacement;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes,
       *magick_restrict shear_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 
@@ -1421,14 +1421,14 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
       area,
       displacement;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes,
       *magick_restrict shear_indexes;
 
     ssize_t
       i;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict p,
       *magick_restrict q;
 

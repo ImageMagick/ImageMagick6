@@ -291,10 +291,10 @@ MagickExport Image *AdaptiveBlurImageChannel(const Image *image,
       *magick_restrict p,
       *magick_restrict r;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict blur_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -614,10 +614,10 @@ MagickExport Image *AdaptiveSharpenImageChannel(const Image *image,
       *magick_restrict p,
       *magick_restrict r;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict sharp_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1182,10 +1182,10 @@ MagickExport Image *DespeckleImage(const Image *image,ExceptionInfo *exception)
       MagickBooleanType
         sync;
 
-      register IndexPacket
+      IndexPacket
         *magick_restrict indexes;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       q=GetCacheViewAuthenticPixels(despeckle_view,0,y,despeckle_image->columns,
@@ -1609,10 +1609,10 @@ MagickExport Image *FilterImageChannel(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict filter_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2082,10 +2082,10 @@ MagickExport Image *MotionBlurImageChannel(const Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict blur_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2325,10 +2325,10 @@ MagickExport Image *KuwaharaImageChannel(const Image *image,
 #endif
   for (y=0; y < (ssize_t) kuwahara_image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict kuwahara_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2690,7 +2690,7 @@ MagickExport Image *LocalContrastImage(const Image *image,const double radius,
         *pix,
         *pixels;
 
-      register PixelPacket
+      PixelPacket
         *magick_restrict q;
 
       ssize_t
@@ -3429,10 +3429,10 @@ MagickExport Image *RotationalBlurImageChannel(const Image *image,
     const IndexPacket
       *magick_restrict indexes;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict blur_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3790,10 +3790,10 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
       *magick_restrict l,
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict blur_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -4144,7 +4144,7 @@ MagickExport Image *ShadeImage(const Image *image,const MagickBooleanType gray,
       *magick_restrict s1,
       *magick_restrict s2;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -4471,10 +4471,10 @@ MagickExport Image *SpreadImage(const Image *image,const double radius,
     MagickPixelPacket
       pixel;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -4658,10 +4658,10 @@ MagickExport Image *UnsharpMaskImageChannel(const Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict unsharp_indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

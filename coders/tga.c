@@ -156,10 +156,10 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PixelPacket
     pixel;
 
-  register IndexPacket
+  IndexPacket
     *indexes;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t

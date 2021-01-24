@@ -213,7 +213,7 @@ static Image *ReadPGXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     const void
       *stream;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);

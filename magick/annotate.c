@@ -1686,9 +1686,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
             fill_opacity;
 
           PixelPacket
-            fill_color;
-
-          register PixelPacket
+            fill_color,
             *magick_restrict q;
 
           ssize_t
@@ -2119,11 +2117,11 @@ static MagickBooleanType RenderPostscript(Image *image,
       annotate_view=AcquireAuthenticCacheView(annotate_image,exception);
       for (y=0; y < (ssize_t) annotate_image->rows; y++)
       {
+        PixelPacket
+          *magick_restrict q;
+
         ssize_t
           x;
-
-        register PixelPacket
-          *magick_restrict q;
 
         q=GetCacheViewAuthenticPixels(annotate_view,0,y,annotate_image->columns,
           1,exception);

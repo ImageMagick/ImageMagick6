@@ -643,7 +643,7 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
     double
       luma;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -813,10 +813,10 @@ MagickExport MagickBooleanType ClutImageChannel(Image *image,
     MagickPixelPacket
       pixel;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1003,7 +1003,7 @@ MagickExport MagickBooleanType ContrastImage(Image *image,
       green,
       red;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1205,7 +1205,7 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
     ssize_t
@@ -1477,10 +1477,10 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -1659,7 +1659,7 @@ MagickExport Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
     const PixelPacket
       *magick_restrict p;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2001,10 +2001,10 @@ MagickExport MagickBooleanType EqualizeImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2271,10 +2271,10 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2461,7 +2461,7 @@ MagickExport MagickBooleanType GrayscaleImage(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -2717,10 +2717,10 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
       pixel3,
       pixel4;
 
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3022,10 +3022,10 @@ MagickExport MagickBooleanType LevelImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3198,10 +3198,10 @@ MagickExport MagickBooleanType LevelizeImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -3837,7 +3837,7 @@ MagickExport MagickBooleanType ModulateImage(Image *image,const char *modulate)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -4044,10 +4044,10 @@ MagickExport MagickBooleanType NegateImageChannel(Image *image,
         MagickBooleanType
           sync;
 
-        register IndexPacket
+        IndexPacket
           *magick_restrict indexes;
 
-        register PixelPacket
+        PixelPacket
           *magick_restrict q;
 
         ssize_t
@@ -4113,10 +4113,10 @@ MagickExport MagickBooleanType NegateImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t
@@ -4461,10 +4461,10 @@ MagickExport MagickBooleanType SigmoidalContrastImageChannel(Image *image,
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    register IndexPacket
+    IndexPacket
       *magick_restrict indexes;
 
-    register PixelPacket
+    PixelPacket
       *magick_restrict q;
 
     ssize_t

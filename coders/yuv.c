@@ -115,7 +115,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     x;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned char
@@ -236,7 +236,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
       }
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      register PixelPacket
+      PixelPacket
         *chroma_pixels;
 
       if (interlace == NoInterlace)

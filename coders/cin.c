@@ -406,7 +406,7 @@ static Image *ReadCINImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     i;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   size_t

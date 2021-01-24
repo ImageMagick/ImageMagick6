@@ -3269,7 +3269,7 @@ static MagickBooleanType XColorEditImage(Display *display,
     y,
     y_offset;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   ssize_t
@@ -4244,7 +4244,7 @@ static MagickBooleanType XCompositeImage(Display *display,
       int
         x;
 
-      register PixelPacket
+      PixelPacket
         *q;
 
       /*
@@ -4556,7 +4556,7 @@ static MagickBooleanType XCropImage(Display *display,
     crop_info,
     highlight_info;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned int
@@ -9578,7 +9578,7 @@ static MagickBooleanType XMatteEditImage(Display *display,
   int
     i;
 
-  register PixelPacket
+  PixelPacket
     *q;
 
   unsigned int
@@ -13115,7 +13115,7 @@ static Image *XTileImage(Display *display,XResourceInfo *resource_info,
       int
         j;
 
-      register PixelPacket
+      PixelPacket
         *s;
 
       /*
