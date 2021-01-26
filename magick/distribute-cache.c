@@ -157,7 +157,6 @@ static inline MagickOffsetType dpc_read(int file,const MagickSizeType length,
   magick_unreferenced(file);
   magick_unreferenced(message);
 #endif
-
   count=0;
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
@@ -178,9 +177,7 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
 {
 #if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
   char
-    service[MaxTextExtent];
-
-  char
+    service[MaxTextExtent],
     *shared_secret;
 
   int
@@ -484,10 +481,8 @@ static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
     length;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Open distributed pixel cache.
@@ -526,6 +521,9 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
   const IndexPacket
     *indexes;
 
+  const PixelPacket
+    *p;
+
   Image
     *image;
 
@@ -538,14 +536,9 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
-  const PixelPacket
-    *p;
-
   unsigned char
+    message[MaxTextExtent],
     *q;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Read distributed pixel cache indexes.
@@ -583,6 +576,9 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
 static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
   int file,const size_t session_key,ExceptionInfo *exception)
 {
+  const PixelPacket
+    *p;
+
   Image
     *image;
 
@@ -595,14 +591,9 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
-  const PixelPacket
-    *p;
-
   unsigned char
+    message[MaxTextExtent],
     *q;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Read distributed pixel cache pixels.
@@ -658,15 +649,12 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
 
   RectangleInfo
     region;
-
-  unsigned char
-    *p;
-
   PixelPacket
     *q;
 
   unsigned char
-    message[MaxTextExtent];
+    message[MaxTextExtent],
+    *p;
 
   /*
     Write distributed pixel cache indexes.
@@ -713,17 +701,15 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
   MagickSizeType
     length;
 
-  RectangleInfo
-    region;
-
   PixelPacket
     *q;
 
-  unsigned char
-    *p;
+  RectangleInfo
+    region;
 
   unsigned char
-    message[MaxTextExtent];
+    message[MaxTextExtent],
+    *p;
 
   /*
     Write distributed pixel cache pixels.
@@ -1117,20 +1103,14 @@ MagickPrivate MagickBooleanType OpenDistributePixelCache(
   DistributeCacheInfo *server_info,Image *image)
 {
   MagickBooleanType
-#ifdef __VMS
-     status=MagickTrue;
-#else
     status;
-#endif
 
   MagickOffsetType
     count;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Open distributed pixel cache.
@@ -1207,10 +1187,8 @@ MagickPrivate MagickOffsetType ReadDistributePixelCacheIndexes(
     count;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Read distributed pixel cache indexes.
@@ -1282,10 +1260,8 @@ MagickPrivate MagickOffsetType ReadDistributePixelCachePixels(
     count;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Read distributed pixel cache pixels.
@@ -1344,20 +1320,14 @@ MagickPrivate MagickBooleanType RelinquishDistributePixelCache(
   DistributeCacheInfo *server_info)
 {
   MagickBooleanType
-#ifdef __VMS
-     status = MagickTrue;
-#else
     status;
-#endif
 
   MagickOffsetType
     count;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Delete distributed pixel cache.
@@ -1371,6 +1341,7 @@ MagickPrivate MagickBooleanType RelinquishDistributePixelCache(
   count=dpc_send(server_info->file,p-message,message);
   if (count != (MagickOffsetType) (p-message))
     return(MagickFalse);
+  status=MagickFalse;
   count=dpc_read(server_info->file,sizeof(status),(unsigned char *) &status);
   if (count != (MagickOffsetType) sizeof(status))
     return(MagickFalse);
@@ -1418,10 +1389,8 @@ MagickPrivate MagickOffsetType WriteDistributePixelCacheIndexes(
     count;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Write distributed pixel cache indexes.
@@ -1494,10 +1463,8 @@ MagickPrivate MagickOffsetType WriteDistributePixelCachePixels(
     count;
 
   unsigned char
+    message[MaxTextExtent],
     *p;
-
-  unsigned char
-    message[MaxTextExtent];
 
   /*
     Write distributed pixel cache pixels.
