@@ -736,6 +736,7 @@ static MagickBooleanType TIFFSetImageProperties(TIFF *tiff,Image *image,
       value[MagickPathExtent];
 
     StripString(buffer);
+    *buffer=(char) LocaleLowercase((int) *buffer);
     p=strchr(buffer,':');
     if (p == (char *) NULL)
       continue;
