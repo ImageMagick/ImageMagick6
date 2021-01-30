@@ -1,9 +1,13 @@
-2021-01-25  6.9.11-61  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-61 GIT revision 16...
+2021-01-30  6.9.11-61  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-61 GIT revision 16418:485a53860:20210130
 
 2021-01-25  6.9.11-61  <quetzlzacatenango@image...>
   * dng:decode element in delegates.xml quoted incorrectly (reference
     https://github.com/ImageMagick/ImageMagick/issues/3156).
+  * Extract GPS info from TIFF images (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3167).
+  * Revert tieing MagickFloatType to double (reference
+    https://github.com/ImageMagick/ImageMagick/pull/2832).
 
 2021-01-25  6.9.11-60  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.11-60 GIT revision 16407:584cabd8b:20210125
