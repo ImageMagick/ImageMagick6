@@ -598,9 +598,6 @@
 /* Define to 1 if you have the `TIFFMergeFieldInfo' function. */
 #undef HAVE_TIFFMERGEFIELDINFO
 
-/* Define to 1 if you have the `TIFFReadEXIFDirectory' function. */
-#undef HAVE_TIFFREADEXIFDIRECTORY
-
 /* Define to 1 if you have the `TIFFSetErrorHandlerExt' function. */
 #undef HAVE_TIFFSETERRORHANDLEREXT
 
