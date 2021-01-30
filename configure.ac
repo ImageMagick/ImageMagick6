@@ -2745,6 +2745,7 @@ if test "$with_tiff" != 'no'; then
             AC_CHECK_HEADERS(tiffconf.h)
             AC_CHECK_FUNCS([TIFFIsCODECConfigured TIFFMergeFieldInfo \
               TIFFIsBigEndian TIFFSetErrorHandlerExt TIFFSetTagExtender \
+              TIFFReadEXIFDirectory TIFFReadGPSDirectory \
               TIFFSetWarningHandlerExt TIFFSwabArrayOfTriples])
         fi
     else
