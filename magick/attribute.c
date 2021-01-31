@@ -401,7 +401,7 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
     status;
 
   MagickPixelPacket
-    target[3],
+    target[4],
     zero;
 
   RectangleInfo
@@ -446,6 +446,12 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
   if (p != (const PixelPacket *) NULL)
     SetMagickPixelPacket(image,p,GetCacheViewVirtualIndexQueue(image_view),
       &target[2]);
+  GetMagickPixelPacket(image,&target[3]);
+  p=GetCacheViewVirtualPixels(image_view,(ssize_t) image->columns-1,
+    (ssize_t) image->rows-1,1,1,exception);
+  if (p != (const PixelPacket *) NULL)
+    SetMagickPixelPacket(image,p,GetCacheViewVirtualIndexQueue(image_view),
+      &target[3]);
   status=MagickTrue;
   GetMagickPixelPacket(image,&zero);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -498,6 +504,13 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
       if ((y > (ssize_t) bounding_box.height) &&
           (IsMagickColorSimilar(&pixel,&target[2]) == MagickFalse))
         bounding_box.height=(size_t) y;
+      if ((x < (ssize_t) bounding_box.width) &&
+          (y > (ssize_t) bounding_box.height) &&
+          (IsFuzzyEquivalencePixelInfo(&pixel,&target[3]) == MagickFalse))
+        {
+          bounding_box.width=(size_t) x;
+          bounding_box.height=(size_t) y;
+        }
       p++;
     }
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
