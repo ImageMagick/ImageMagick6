@@ -506,7 +506,7 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
         bounding_box.height=(size_t) y;
       if ((x < (ssize_t) bounding_box.width) &&
           (y > (ssize_t) bounding_box.height) &&
-          (IsFuzzyEquivalencePixelInfo(&pixel,&target[3]) == MagickFalse))
+          (IsMagickColorSimilar(&pixel,&target[3]) == MagickFalse))
         {
           bounding_box.width=(size_t) x;
           bounding_box.height=(size_t) y;
