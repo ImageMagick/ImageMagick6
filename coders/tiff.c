@@ -736,8 +736,6 @@ static MagickBooleanType TIFFSetImageProperties(TIFF *tiff,Image *image,
       value[MagickPathExtent];
 
     StripString(buffer);
-    if (isupper((int) ((unsigned char) buffer[1])) == 0)
-      *buffer=(char) LocaleLowercase((int) *buffer);
     p=strchr(buffer,':');
     if (p == (char *) NULL)
       continue;
@@ -818,7 +816,7 @@ static MagickBooleanType TIFFGetGPSProperties(TIFF *tiff,Image *image)
       TIFFSetDirectory(tiff,directory);
       return(MagickFalse);
     }
-  status=TIFFSetImageProperties(tiff,image,"gps");
+  status=TIFFSetImageProperties(tiff,image,"exif:gps");
   TIFFSetDirectory(tiff,directory);
   return(status);
 #else
