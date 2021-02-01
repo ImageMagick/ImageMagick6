@@ -740,7 +740,7 @@ static MagickBooleanType TIFFSetImageProperties(TIFF *tiff,Image *image,
     if (p == (char *) NULL)
       continue;
     *p='\0';
-    (void) sprintf(property,"%s:%.1024s",tag,buffer);
+    (void) sprintf(property,"%s%.1024s",tag,buffer);
     (void) sprintf(value,"%s",p+1);
     StripString(value);
     (void) SetImageProperty(image,property,value);
@@ -778,7 +778,7 @@ static MagickBooleanType TIFFGetEXIFProperties(TIFF *tiff,Image *image)
       TIFFSetDirectory(tiff,directory);
       return(MagickFalse);
     }
-  status=TIFFSetImageProperties(tiff,image,"exif");
+  status=TIFFSetImageProperties(tiff,image,"exif:");
   TIFFSetDirectory(tiff,directory);
   return(status);
 #else
@@ -816,7 +816,7 @@ static MagickBooleanType TIFFGetGPSProperties(TIFF *tiff,Image *image)
       TIFFSetDirectory(tiff,directory);
       return(MagickFalse);
     }
-  status=TIFFSetImageProperties(tiff,image,"exif:gps");
+  status=TIFFSetImageProperties(tiff,image,"exif:GPS");
   TIFFSetDirectory(tiff,directory);
   return(status);
 #else
