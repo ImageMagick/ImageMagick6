@@ -1103,11 +1103,11 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
           */
           factor=1.0;
           if (distance > 0.0)
-            factor=pow(sin((double) (MagickPI*sqrt((double) distance)/
-              radius/2)),-amount);
+            factor=pow(sin((double) (MagickPI*sqrt((double) distance)*
+              PerceptibleReciprocal(radius)/2)),-amount);
           status=InterpolateMagickPixelPacket(image,image_view,
-            UndefinedInterpolatePixel,(double) (factor*delta.x/scale.x+
-            center.x),(double) (factor*delta.y/scale.y+center.y),&pixel,
+            UndefinedInterpolatePixel,(double) (factor*delta.x*PerceptibleReciprocal(scale.x)+
+            center.x),(double) (factor*delta.y*PerceptibleReciprocal(scale.y)+center.y),&pixel,
             exception);
           if (status == MagickFalse)
             break;
