@@ -1033,11 +1033,13 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
   center.y=0.5*image->rows;
   radius=center.x;
   if (image->columns > image->rows)
-    scale.y=(double) image->columns/(double) image->rows;
+    scale.y=(double) canvas_image->columns*PerceptibleReciprocal((double)
+      canvas_image->rows);
   else
     if (image->columns < image->rows)
       {
-        scale.x=(double) image->rows/(double) image->columns;
+        scale.x=(double) canvas_image->rows*PerceptibleReciprocal((double)
+          canvas_image->columns);
         radius=center.y;
       }
   /*
