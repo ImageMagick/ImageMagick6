@@ -46,6 +46,6 @@ m4_define([magick_library_current], [7])
 m4_define([magick_library_revision], [0])
 m4_define([magick_library_age], [0])
 
-m4_define([magickpp_library_current], [8])
+m4_define([magickpp_library_current], [9])
 m4_define([magickpp_library_revision], [0])
 m4_define([magickpp_library_age], [0])
