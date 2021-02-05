@@ -703,7 +703,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
         beta=mwcReadPseudoRandomValue(r);
         alpha*=beta;
       }
-      noise=(float) (QuantumRange*i/SigmaPoisson);
+      noise=(float) (QuantumRange*i*PerceptibleReciprocal(SigmaPoisson));
       break;
     }
     case RandomNoise:
