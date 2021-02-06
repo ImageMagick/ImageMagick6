@@ -240,8 +240,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
     image->columns=(size_t) floor(draw_info->pointsize+draw_info->stroke_width+
       0.5);
   if (image->rows == 0)
-    image->rows=(size_t) floor(metrics.ascent-metrics.descent+
-      draw_info->stroke_width+0.5);
+    image->rows=(size_t) floor(metrics.height+draw_info->stroke_width+0.5);
   if (image->rows == 0)
     image->rows=(size_t) floor(draw_info->pointsize+draw_info->stroke_width+
       0.5);
@@ -269,14 +268,8 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   (void) CloneString(&draw_info->geometry,geometry);
   status=AnnotateImage(image,draw_info);
   if (image_info->pointsize == 0.0)
-    {
-      char
-        pointsize[MagickPathExtent];
-
-      (void) FormatLocaleString(pointsize,MagickPathExtent,"%.20g",
-        draw_info->pointsize);
-      (void) SetImageProperty(image,"label:pointsize",pointsize);
-    }
+    (void) FormatImageProperty(image,"label:pointsize","%.20g",
+      draw_info->pointsize);
   draw_info=DestroyDrawInfo(draw_info);
   if (status == MagickFalse)
     {
