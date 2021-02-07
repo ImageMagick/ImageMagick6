@@ -1,5 +1,5 @@
-2021-02-05  6.9.11-62  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.11-62 GIT revision 16...
+2021-02-07  6.9.11-62  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.11-62 GIT revision 16452:52351447e:20210207
 
 2021-02-01  6.9.11-61  <quetzlzacatenango@image...>
   * -trim not working as expected (reference
