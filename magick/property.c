@@ -2739,7 +2739,8 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       */
       (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
         fabs(image->x_resolution) > MagickEpsilon ? image->x_resolution :
-        image->units == PixelsPerCentimeterResolution ? 72.0/2.54 : 72.0);
+        image->units == PixelsPerCentimeterResolution ? DefaultResolution/2.54 :
+        DefaultResolution);
       break;
     }
     case 'y':
@@ -2749,7 +2750,8 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       */
       (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
         fabs(image->y_resolution) > MagickEpsilon ? image->y_resolution :
-        image->units == PixelsPerCentimeterResolution ? 72.0/2.54 : 72.0);
+        image->units == PixelsPerCentimeterResolution ? DefaultResolution/2.54 :
+        DefaultResolution);
       break;
     }
     case 'z':

@@ -1541,8 +1541,8 @@ WandExport MagickBooleanType DrawGetFontResolution(const DrawingWand *wand,
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  *x=72.0;
-  *y=72.0;
+  *x=DefaultResolution;
+  *y=DefaultResolution;
   if (CurrentContext->density != (char *) NULL)
     {
       GeometryInfo
