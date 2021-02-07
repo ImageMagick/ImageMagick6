@@ -2830,11 +2830,14 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
     GetPathComponent(image_info->filename,ExtensionPath,extension);
   if (*extension != '\0')
     {
+      char
+        path[MaxTextExtent];
+
       /*
         Base path sans any compression extension.
       */
       GetPathComponent(image_info->filename,BasePathSansCompression,path);
-      GetPathComponent(path,ExtensionPath,component);
+      GetPathComponent(path,ExtensionPath,extension);
     }
   image_info->affirm=MagickFalse;
   sans_exception=AcquireExceptionInfo();
