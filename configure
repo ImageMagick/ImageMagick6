@@ -4540,7 +4540,7 @@ MAGICK_PATCHLEVEL_VERSION=62
 
 MAGICK_VERSION=6.9.11-62
 
-MAGICK_GIT_REVISION=16434:a78d92dc0:20210203
+MAGICK_GIT_REVISION=16442:2b4724b64:20210207
 
 
 # Substitute library versioning
@@ -4570,7 +4570,7 @@ PACKAGE_LIB_VERSION=0x69B
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,11,62
 
-PACKAGE_RELEASE_DATE=2021-01-30
+PACKAGE_RELEASE_DATE=2021-02-07
 
 
 # Ensure that make can run correctly
@@ -34629,13 +34629,6 @@ $as_echo_n "checking for Windows fonts directory... " >&6; }
 windows_font_dir=''
 if test "${with_windows_font_dir}" != 'default'; then
   windows_font_dir="${with_windows_font_dir}/"
-else
-  for font_dir in '/usr/X11R6/lib/X11/fonts/truetype/' '/usr/X11R7/lib/X11/fonts/truetype/' '/usr/share/fonts/msttcore/' '/usr/share/fonts/microsoft/' '/usr/share/fonts/truetype/msttcorefonts/'; do
-    if test -f "${font_dir}arial.ttf"; then
-      windows_font_dir="${font_dir}"
-      break 1
-    fi
-  done
 fi
 if test "${windows_font_dir}x" != 'x'; then
   type_include_files="${type_include_files} "'<include file="type-windows.xml" />'

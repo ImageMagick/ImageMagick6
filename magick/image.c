@@ -2836,7 +2836,7 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
       /*
         Base path sans any compression extension.
       */
-      GetPathComponent(image_info->filename,BasePathSansCompression,path);
+      GetPathComponent(image_info->filename,BasePathSansCompressExtension,path);
       GetPathComponent(path,ExtensionPath,extension);
     }
   image_info->affirm=MagickFalse;
