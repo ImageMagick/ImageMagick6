@@ -30,7 +30,7 @@ Introduction to ImageMagick
   that includes memory error and thread data race detection to prevent
   security vulnerabilities.
 
-  The current release is the ImageMagick 6.9.11-* series. It runs on Linux,
+  The current release is the ImageMagick 6.9.12-* series. It runs on Linux,
   Windows, Mac Os X, iOS, Android OS, and others.
 
   The authoritative ImageMagick version 6 web site is

@@ -19,7 +19,7 @@ ImageMagick is free software delivered as a ready-to-run binary distribution or 
 
 The ImageMagick development process ensures a stable API and ABI. Before each ImageMagick release, we perform a comprehensive security assessment that includes memory error and thread data race detection to prevent security vulnerabilities.
 
-The current release is the ImageMagick 6.9.11-* series. It runs on Linux, Windows, Mac Os X, iOS, Android OS, and others.
+The current release is the ImageMagick 6.9.12-* series. It runs on Linux, Windows, Mac Os X, iOS, Android OS, and others.
 
 The authoritative ImageMagick version 6 web site is https://legacy.imagemagick.org. The authoritative source code repository is https://github.com/ImageMagick/ImageMagick6. We maintain a source code mirror at https://gitlab.com/ImageMagick/ImageMagick6.
 
