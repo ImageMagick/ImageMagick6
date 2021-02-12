@@ -467,7 +467,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
   max_threshold+=MagickEpsilon;
   artifact=GetImageArtifact(image,"connected-components:background-id");
   if (artifact != (const char *) NULL)
-    background_id=StringToLong(artifact);
+    background_id=(ssize_t) StringToLong(artifact);
   artifact=GetImageArtifact(image,"connected-components:area-threshold");
   if (artifact != (const char *) NULL)
     {
@@ -557,7 +557,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       /*
         Keep top objects.
       */
-      top_ids=StringToLong(artifact);
+      top_ids=(ssize_t) StringToLong(artifact);
       top_objects=(CCObjectInfo *) AcquireQuantumMemory(component_image->colors,
         sizeof(*top_objects));
       if (top_objects == (CCObjectInfo *) NULL)
