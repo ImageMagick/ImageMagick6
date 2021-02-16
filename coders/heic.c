@@ -650,11 +650,8 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     */
 #if LIBHEIF_NUMERIC_VERSION > 0x01060200
     if (LocaleCompare(image_info->magick,"AVIF") == 0)
-      {
-        error=heif_context_get_encoder_for_format(heif_context,
-          heif_compression_AV1,&heif_encoder);
-        (void) CopyMagickString(image->magick,"AVIF",MagickPathExtent);
-      }
+      error=heif_context_get_encoder_for_format(heif_context,
+        heif_compression_AV1,&heif_encoder);
     else
 #endif
       error=heif_context_get_encoder_for_format(heif_context,
