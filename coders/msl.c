@@ -7805,7 +7805,7 @@ static MagickBooleanType ProcessMSLScript(const ImageInfo *image_info,
   *msl_info.image_info=CloneImageInfo(image_info);
   *msl_info.draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
   *msl_info.attributes=AcquireImage(image_info);
-  (void) SetImageExtent(*msl_info.attributes,1,1,exception);
+  (void) SetImageExtent(*msl_info.attributes,1,1);
   msl_info.group_info[0].numImages=0;
   /* the first slot is used to point to the MSL file image */
   *msl_info.image=msl_image;
