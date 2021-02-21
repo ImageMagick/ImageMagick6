@@ -413,13 +413,13 @@ static double GetUserSpaceCoordinateValue(const SVGInfo *svg_info,int type,
 
       if (type > 0)
         {
-          if (svg_info->view_box.width == 0.0)
+          if (svg_info->view_box.width < MagickEpsilon)
             return(0.0);
           return(svg_info->view_box.width*value/100.0);
         }
       if (type < 0)
         {
-          if (svg_info->view_box.height == 0.0)
+          if (svg_info->view_box.height < MagickEpsilon)
             return(0.0);
           return(svg_info->view_box.height*value/100.0);
         }
@@ -2424,7 +2424,7 @@ static void SVGStartElement(void *context,const xmlChar *name,
                 (void) GetNextToken(p,&p,MaxTextExtent,token);
               svg_info->view_box.width=StringToDouble(token,
                 (char **) NULL);
-              if (svg_info->bounds.width == 0)
+              if (svg_info->bounds.width < MagickEpsilon)
                 svg_info->bounds.width=svg_info->view_box.width;
               (void) GetNextToken(p,&p,MaxTextExtent,token);
               if (*token == ',')
@@ -2514,14 +2514,14 @@ static void SVGStartElement(void *context,const xmlChar *name,
             tx,
             ty;
 
-          if ((svg_info->view_box.width == 0.0) ||
-              (svg_info->view_box.height == 0.0))
+          if ((svg_info->view_box.width < MagickEpsilon) ||
+              (svg_info->view_box.height < MagickEpsilon))
             svg_info->view_box=svg_info->bounds;
           svg_info->width=0;
-          if (svg_info->bounds.width > 0.0)
+          if (svg_info->bounds.width >= MagickEpsilon)
             svg_info->width=(size_t) floor(svg_info->bounds.width+0.5);
           svg_info->height=0;
-          if (svg_info->bounds.height > 0.0)
+          if (svg_info->bounds.height >= MagickEpsilon)
             svg_info->height=(size_t) floor(svg_info->bounds.height+0.5);
           (void) FormatLocaleFile(svg_info->file,"viewbox 0 0 %.20g %.20g\n",
             (double) svg_info->width,(double) svg_info->height);
@@ -3349,10 +3349,10 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
               This can be checked by using the trick below.
             */
             rsvg_handle_set_dpi_x_y(svg_handle,image->x_resolution*256,
-              image->y_resolution*256);
+              image->y_resolution*256.0);
             rsvg_handle_get_dimensions(svg_handle,&dpi_dimension_info);
-            if ((dpi_dimension_info.width != dimension_info.width) ||
-                (dpi_dimension_info.height != dimension_info.height))
+            if ((fabs(dpi_dimension_info.width != dimension_info.width) >= MagickEpslon) ||
+                (fabs(dpi_dimension_info.height != dimension_info.height) >= MagickEpslon))
               apply_density=MagickFalse;
             rsvg_handle_set_dpi_x_y(svg_handle,image->x_resolution,
               image->y_resolution);
