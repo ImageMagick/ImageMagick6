@@ -3351,8 +3351,8 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
             rsvg_handle_set_dpi_x_y(svg_handle,image->x_resolution*256,
               image->y_resolution*256.0);
             rsvg_handle_get_dimensions(svg_handle,&dpi_dimension_info);
-            if ((fabs(dpi_dimension_info.width != dimension_info.width) >= MagickEpslon) ||
-                (fabs(dpi_dimension_info.height != dimension_info.height) >= MagickEpslon))
+            if ((fabs(dpi_dimension_info.width != dimension_info.width) >= MagickEpsilon) ||
+                (fabs(dpi_dimension_info.height != dimension_info.height) >= MagickEpsilon))
               apply_density=MagickFalse;
             rsvg_handle_set_dpi_x_y(svg_handle,image->x_resolution,
               image->y_resolution);
