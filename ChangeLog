@@ -1,6 +1,9 @@
 2021-02-21  6.9.12-2  <quetzlzacatenango@image...>
   * release ImageMagick version 6.9.12-2 GIT revision 16479:4c08b0d59:20210221
 
+2021-02-21  6.9.12-2  <quetzlzacatenango@image...>
+  * Clone properties from image stack.
+
 2021-02-21  6.9.12-1  <quetzlzacatenango@image...>
   * release ImageMagick version 6.9.12-1 GIT revision 16474:e6a300ef2:20210221
 
