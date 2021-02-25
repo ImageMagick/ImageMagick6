@@ -737,15 +737,15 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       if (logmap == (Quantum *) NULL)
         ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
           image->filename);
-      black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002/
-        film_gamma);
+      black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002*
+        PerceptibleReciprocal(film_gamma));
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static)
 #endif
       for (i=0; i <= (ssize_t) MaxMap; i++)
         logmap[i]=ScaleMapToQuantum((MagickRealType) (MaxMap*(reference_white+
-          log10(black+(1.0*i/MaxMap)*(1.0-black))/((gamma/density)*0.002/
-          film_gamma))/1024.0));
+          log10(black+(1.0*i/MaxMap)*(1.0-black))/((gamma/density)*0.002*
+          PerceptibleReciprocal(film_gamma)))/1024.0));
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
@@ -2396,14 +2396,14 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
       if (logmap == (Quantum *) NULL)
         ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
           image->filename);
-      black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002/
-        film_gamma);
+      black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002*
+        PerceptibleReciprocal(film_gamma));
       for (i=0; i <= (ssize_t) (reference_black*MaxMap/1024.0); i++)
         logmap[i]=(Quantum) 0;
       for ( ; i < (ssize_t) (reference_white*MaxMap/1024.0); i++)
         logmap[i]=ClampToQuantum((MagickRealType) QuantumRange/(1.0-black)*
-          (pow(10.0,(1024.0*i/MaxMap-reference_white)*(gamma/density)*0.002/
-          film_gamma)-black));
+          (pow(10.0,(1024.0*i/MaxMap-reference_white)*(gamma/density)*0.002*
+          PerceptibleReciprocal(film_gamma))-black));
       for ( ; i <= (ssize_t) MaxMap; i++)
         logmap[i]=QuantumRange;
       if (image->storage_class == PseudoClass)
