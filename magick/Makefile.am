@@ -31,8 +31,8 @@ MAGICK_BIN_SCRPTS = \
 
 MAGICK_PKGCONFIG = \
   magick/ImageMagick.pc \
-  magick/MagickCore.pc \
   magick/ImageMagick-@MAGICK_MAJOR_VERSION@.@MAGICK_ABI_SUFFIX@.pc \
+  magick/MagickCore.pc \
   magick/MagickCore-@MAGICK_MAJOR_VERSION@.@MAGICK_ABI_SUFFIX@.pc
 
 OSX_GCOV_LDFLAG = @OSX_GCOV_LDFLAG@
