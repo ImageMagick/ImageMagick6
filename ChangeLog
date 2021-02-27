@@ -1,5 +1,5 @@
 2021-02-27  6.9.12-2  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-2 GIT revision 16489:63d47686e:20210227
+  * Release ImageMagick version 6.9.12-2 GIT revision 16491:bbb2dff98:20210227
 
 2021-02-21  6.9.12-2  <happyerc...@...>
   * Division by zero error is possible if crafty file sets film-gamma property
