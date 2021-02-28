@@ -6048,6 +6048,11 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         for (i=0; (attributes[i] != (const xmlChar *) NULL); i++)
         {
           keyword=(const char *) attributes[i++];
+          if (msl_info->attributes[n] == (Image *) NULL)
+            {
+              ThrowMSLException(OptionError,"NoImagesDefined",keyword);
+              break;
+            }
           attribute=InterpretImageProperties(msl_info->image_info[n],
             msl_info->attributes[n],(const char *) attributes[i]);
           CloneString(&value,attribute);
