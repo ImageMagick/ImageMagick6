@@ -15,7 +15,7 @@
 #  Given a version number MAJOR.MINOR.MICRO-PATCH, increment the:
 #
 #  1. MAJOR version for incompatible API changes,
-#  2. MINOR version when MICRO version exceeds 15 e.g. 0x70F becomes 0x710
+#  2. MINOR version when MICRO version exceeds 15 e.g. 0x60F becomes 0x610
 #  3. MICRO version for added functionality in backwards compatible
 #     manner, and
 #  4. PATCH version when you make backwards compatible bug fixes.
