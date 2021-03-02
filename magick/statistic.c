@@ -1040,22 +1040,28 @@ static Quantum ApplyFunction(Quantum pixel,const MagickFunction function,
     }
     case ArcsinFunction:
     {
+      double
+        bias,
+        center,
+        range,
+        width;
+
       /* Arcsin Function  (peged at range limits for invalid results)
        * Parameters:   Width, Center, Range, Bias
        */
-      double  width,range,center,bias;
-      width  = ( number_parameters >= 1 ) ? parameters[0] : 1.0;
-      center = ( number_parameters >= 2 ) ? parameters[1] : 0.5;
-      range  = ( number_parameters >= 3 ) ? parameters[2] : 1.0;
-      bias   = ( number_parameters >= 4 ) ? parameters[3] : 0.5;
-      result = 2.0/width*(QuantumScale*pixel - center);
-      if ( result <= -1.0 )
-        result = bias - range/2.0;
-      else if ( result >= 1.0 )
-        result = bias + range/2.0;
+      width=(number_parameters >= 1) ? parameters[0] : 1.0;
+      center=(number_parameters >= 2) ? parameters[1] : 0.5;
+      range=(number_parameters >= 3) ? parameters[2] : 1.0;
+      bias=(number_parameters >= 4) ? parameters[3] : 0.5;
+      result=2.0*PerceptibleReciprocal(width)*(QuantumScale*pixel-center);
+      if (result <= -1.0)
+        result=bias-range/2.0;
       else
-        result=(MagickRealType) (range/MagickPI*asin((double) result)+bias);
-      result *= QuantumRange;
+        if (result >= 1.0)
+          result=bias+range/2.0;
+        else
+          result=(MagickRealType) (range/MagickPI*asin((double) result)+bias);
+      result*=QuantumRange;
       break;
     }
     case ArctanFunction:
