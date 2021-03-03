@@ -1,3 +1,10 @@
+2021-03-02  6.9.12-3  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-3 GIT revision 16...
+
+2021-02-27  6.9.12-3  <quetzlzacatenango@image...>
+  * Eliminate multiple division by zero exceptions (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3339 and others).
+
 2021-02-27  6.9.12-2  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-2 GIT revision 16494:64c0cc234:2021022
 
