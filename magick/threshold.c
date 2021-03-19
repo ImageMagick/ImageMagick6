@@ -116,7 +116,7 @@ struct _ThresholdMap
   #include "magick/threshold-map.h"
 #else
 static const char
-  *MinimalThresholdMap =
+  *BuiltinMap =
     "<?xml version=\"1.0\"?>"
     "<thresholds>"
     "  <threshold map=\"threshold\" alias=\"1x1\">"
@@ -1562,7 +1562,7 @@ MagickExport ThresholdMap *GetThresholdMap(const char *map_id,
   ThresholdMap
     *map;
 
-  map=GetThresholdMapFile(MinimalThresholdMap,"built-in",map_id,exception);
+  map=GetThresholdMapFile(BuiltinMap,"built-in",map_id,exception);
   if (map != (ThresholdMap *) NULL)
     return(map);
   options=GetConfigureOptions(ThresholdsFilename,exception);
