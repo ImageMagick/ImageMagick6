@@ -112,6 +112,9 @@ struct _ThresholdMap
 /*
   Static declarations.
 */
+#if MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
+  #include "magick/threshold-map.h"
+#else
 static const char
   *MinimalThresholdMap =
     "<?xml version=\"1.0\"?>"
@@ -130,6 +133,7 @@ static const char
     "    </levels>"
     "  </threshold>"
     "</thresholds>";
+#endif
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
