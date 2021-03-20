@@ -1,9 +1,10 @@
-2021-03-13  6.9.12-4  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-4 GIT revision 16...
+2021-03-20  6.9.12-4  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-4 GIT revision 16523:99ac1977d:20210320
 
 2021-03-13  6.9.12-4  <quetzlzacatenango@image...>
   * support caption:split define (reference
     https://github.com/ImageMagick/ImageMagick/discussions/3389).
+  * avoid an omp deadlock with policy string
 
 2021-03-06  6.9.12-3  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-3 GIT revision 16511:448f9271e:20210306
