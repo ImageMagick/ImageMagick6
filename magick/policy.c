@@ -445,7 +445,7 @@ static char *AcquirePolicyString(const char *source,const size_t pad)
     length+=strlen(source);
   destination=(char *) NULL;
   if (~length >= pad) 
-    destination=(char *) AcquireMagickMemory(length+pad,sizeof(*destination));
+    destination=(char *) AcquireMagickMemory((length+pad)*sizeof(*destination));
   if (destination == (char *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToAcquireString");
   if (source != (char *) NULL)
