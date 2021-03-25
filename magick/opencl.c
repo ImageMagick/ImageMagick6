@@ -1210,18 +1210,17 @@ static MagickBooleanType InitOpenCLPlatformDevice(MagickCLEnv clEnv, ExceptionIn
 
   /* check if there's an environment variable overriding the device selection */
   MAGICK_OCL_DEVICE = getenv("MAGICK_OCL_DEVICE");
-  if (MAGICK_OCL_DEVICE != NULL)
-  {
-    if (strcmp(MAGICK_OCL_DEVICE, "CPU") == 0)
-      clEnv->deviceType = CL_DEVICE_TYPE_CPU;
-    else if (strcmp(MAGICK_OCL_DEVICE, "GPU") == 0)
-      clEnv->deviceType = CL_DEVICE_TYPE_GPU;
-    else if (IsStringNotFalse(MAGICK_OCL_DEVICE) == MagickFalse)
-      goto cleanup;
-  }
-  else if (clEnv->deviceType == 0) {
-    clEnv->deviceType = CL_DEVICE_TYPE_ALL;
-  }
+   if (strcmp(MAGICK_OCL_DEVICE, "CPU") == 0)
+    clEnv->deviceType = CL_DEVICE_TYPE_CPU;
+  else if (strcmp(MAGICK_OCL_DEVICE, "GPU") == 0)
+    clEnv->deviceType = CL_DEVICE_TYPE_GPU;
+  else if (IsStringTrue(MAGICK_OCL_DEVICE) != MagickFalse)
+    {
+      if (clEnv->deviceType == 0)
+        clEnv->deviceType = CL_DEVICE_TYPE_ALL;
+    }
+  else
+    return(MagickFalse);
 
   if (clEnv->device != NULL)
   {

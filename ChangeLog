@@ -1,6 +1,10 @@
 2021-03-24  6.9.12-5  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-5 GIT revision 16...
 
+2021-03-25  6.9.12-5  Dirk Lemstra <dirk@lem.....org>
+  * OpenCL will be disable by default, use the environment variable
+    MAGICK_OCL_DEVICE to turn it on or select the device to use.
+
 2021-03-24  6.9.12-5  <quetzlzacatenango@image...>
   * eliminate extraneous spaces in AC_PATH_PROG (reference
     https://github.com/ImageMagick/ImageMagick/issues/3428).
