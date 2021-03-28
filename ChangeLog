@@ -9,6 +9,7 @@
   * eliminate extraneous spaces in AC_PATH_PROG (reference
     https://github.com/ImageMagick/ImageMagick/issues/3428).
   * fix handling of non-square images with -fft option.
+  * enable FFTW support with --with-fftw configure script command-line option.
 
 2021-03-20  6.9.12-4  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-4 GIT revision 16525:21991f726:20210320
