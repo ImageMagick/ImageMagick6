@@ -1,5 +1,5 @@
-2021-03-24  6.9.12-5  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-5 GIT revision 16...
+2021-03-28  6.9.12-5  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-5 GIT revision 16537:ffa0d49a7:20210328
 
 2021-03-25  6.9.12-5  Dirk Lemstra <dirk@lem.....org>
   * OpenCL will be disable by default, use the environment variable
