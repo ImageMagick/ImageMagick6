@@ -1,3 +1,9 @@
+2021-04-01  6.9.12-6  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-6 GIT revision 16543:fbecaf01e:20210401
+
+2021-04-01  6.9.12-6  Dirk Lemstra <dirk@lem.....org>
+  * fix portable Windows build.
+
 2021-03-28  6.9.12-5  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-5 GIT revision 16537:ffa0d49a7:20210328
 
