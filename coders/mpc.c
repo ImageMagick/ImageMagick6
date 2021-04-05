@@ -10,7 +10,7 @@
 %                            M   M  P       CCCC                              %
 %                                                                             %
 %                                                                             %
-%              Read/Write Magick Persistant Cache Image Format                %
+%                 Read/Write Magick Pixel Cache Image Format                  %
 %                                                                             %
 %                              Software Design                                %
 %                                   Cristy                                    %
@@ -74,6 +74,11 @@
 #include "magick/string-private.h"
 #include "magick/utility.h"
 #include "magick/version-private.h"
+
+/*
+  Define declarations..
+*/
+#define MagickPixelCacheNonce  "MagickPixelCache"
 
 /*
   Forward declarations.
@@ -186,6 +191,9 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
   ssize_t
     count;
 
+  StringInfo
+    *nonce;
+
   unsigned int
     signature;
 
@@ -226,7 +234,9 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
     profiles=(LinkedListInfo *) NULL;
     length=MaxTextExtent;
     options=AcquireString((char *) NULL);
-    signature=GetMagickCoreSignature((const StringInfo *) NULL);
+    nonce=StringToStringInfo(MagickPixelCacheNonce);
+    signature=GetMagickCoreSignature(nonce);
+    nonce=DestroyStringInfo(nonce);
     image->depth=8;
     image->compression=NoCompression;
     while ((isgraph((int) ((unsigned char) c)) != 0) && (c != (int) ':'))
@@ -776,12 +786,15 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
           profiles=DestroyLinkedList(profiles,RelinquishMagickMemory);
         ThrowReaderException(CorruptImageError,"ImproperImageHeader");
       }
-    if (signature != GetMagickCoreSignature((const StringInfo *) NULL))
+    nonce=StringToStringInfo(MagickPixelCacheNonce);
+    if (signature != GetMagickCoreSignature(nonce))
       {
+        nonce=DestroyStringInfo(nonce);
         if (profiles != (LinkedListInfo *) NULL)
           profiles=DestroyLinkedList(profiles,RelinquishMagickMemory);
         ThrowReaderException(CacheError,"IncompatibleAPI");
       }
+    nonce=DestroyStringInfo(nonce);
     if (image->montage != (char *) NULL)
       {
         char
@@ -1143,8 +1156,11 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
   imageListLength=GetImageListLength(image);
   do
   {
+    StringInfo
+      *nonce;
+
     /*
-      Write persistent cache meta-information.
+      Write cache meta-information.
     */
     (void) SetImageStorageClass(image,image->storage_class);
     depth=GetImageQuantumDepth(image,MagickTrue);
@@ -1152,8 +1168,10 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
         (image->colors > (one << depth)))
       (void) SetImageStorageClass(image,DirectClass);
     (void) WriteBlobString(image,"id=MagickPixelCache\n");
+    nonce=StringToStringInfo(MagickPixelCacheNonce);
     (void) FormatLocaleString(buffer,MaxTextExtent,"magick-signature=%u\n",
-      GetMagickCoreSignature((const StringInfo *) NULL));
+      GetMagickCoreSignature(nonce));
+    nonce=DestroyStringInfo(nonce);
     (void) WriteBlobString(image,buffer);
     (void) FormatLocaleString(buffer,MaxTextExtent,
       "class=%s  colors=%.20g  matte=%s\n",CommandOptionToMnemonic(
