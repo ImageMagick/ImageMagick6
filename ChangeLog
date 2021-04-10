@@ -1,8 +1,10 @@
-2021-04-09  6.9.12-7  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-7 GIT revision 16558:c4392aee3:20210409
+2021-04-10  6.9.12-7  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-7 GIT revision 16559:e183af8ec:20210410.
 
 2021-04-09  6.9.12-7  <quetzlzacatenango@image...>
   * constrain sub-image list.
+  * -layers optimize no longer produces broken output (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3520).
 
 2021-04-03  6.9.12-6  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-6 GIT revision 16552:6c4bc786e:20210403
