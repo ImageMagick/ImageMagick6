@@ -1482,6 +1482,8 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     }
   metrics->pixels_per_em.x=face->size->metrics.x_ppem;
   metrics->pixels_per_em.y=face->size->metrics.y_ppem;
+  metrics->ascent=(double) face->size->metrics.ascender/64.0;
+  metrics->descent=(double) face->size->metrics.descender/64.0;
   if (face->size->metrics.ascender == 0)
     {
       /*
@@ -1491,8 +1493,6 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
       if (face->size->metrics.descender == 0)
         metrics->descent=face->size->metrics.y_ppem/-3.5;
     }
-  metrics->ascent=(double) face->size->metrics.ascender/64.0;
-  metrics->descent=(double) face->size->metrics.descender/64.0;
   metrics->width=0;
   metrics->origin.x=0;
   metrics->origin.y=0;
