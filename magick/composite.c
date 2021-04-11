@@ -2660,12 +2660,8 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         /* Other Composition */
         case ChangeMaskCompositeOp:
         {
-          if (fabs((double) (QuantumRange*composite.opacity-OpaqueOpacity)) < MagickEpsilon)
-            {
-              composite.opacity=(MagickRealType) OpaqueOpacity;
-              break;
-            }
-          if (IsMagickColorSimilar(&source,&canvas) != MagickFalse)
+          if ((composite.opacity > ((MagickRealType) QuantumRange/2.0)) ||
+              (IsMagickColorSimilar(&source,&canvas) != MagickFalse))
             composite.opacity=(MagickRealType) TransparentOpacity;
           else
             composite.opacity=(MagickRealType) OpaqueOpacity;
