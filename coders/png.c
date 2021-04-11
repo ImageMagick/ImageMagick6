@@ -3658,8 +3658,9 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
             {
               for (x=0; x < ping_num_trans; x++)
               {
-                 image->colormap[x].opacity =
-                   ScaleCharToQuantum((unsigned char)(255-ping_trans_alpha[x]));
+                 if (ping_trans_alpha != (png_bytep) NULL)
+                   image->colormap[x].opacity = ScaleCharToQuantum(
+                     (unsigned char) (255-ping_trans_alpha[x]));
               }
             }
 
