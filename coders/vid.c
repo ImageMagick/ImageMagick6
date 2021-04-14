@@ -205,6 +205,8 @@ static Image *ReadVIDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       break;
   }
   read_info=DestroyImageInfo(read_info);
+  for (i=0; i < (ssize_t) number_files; i++)
+    filelist[i]=DestroyString(filelist[i]);
   filelist=(char **) RelinquishMagickMemory(filelist);
   if (images == (Image *) NULL)
     ThrowReaderException(CorruptImageError,
