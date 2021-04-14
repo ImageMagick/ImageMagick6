@@ -1245,6 +1245,11 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         TIFFClose(tiff);
         ThrowReaderException(CorruptImageError,"UnsupportedBitsPerPixel");
       }
+    if (samples_per_pixel > MaxPixelChannels)
+      {
+        TIFFClose(tiff);
+        ThrowReaderException(CorruptImageError,"MaximumChannelsExceeded");
+      }
     if (sample_format == SAMPLEFORMAT_IEEEFP)
       (void) SetImageProperty(image,"quantum:format","floating-point");
     switch (photometric)
@@ -1617,11 +1622,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
     if (image->matte != MagickFalse)
       (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
-    if (samples_per_pixel > MaxPixelChannels)
-      {
-        TIFFClose(tiff);
-        ThrowReaderException(CorruptImageError,"MaximumChannelsExceeded");
-      }
     method=ReadGenericMethod;
     rows_per_strip=(uint32) image->rows;
     if (TIFFGetField(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
