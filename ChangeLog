@@ -1,10 +1,13 @@
+2021-04-17  6.9.12-9  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-8 GIT revision 16...
+
+2021-04-17  6.9.12-9  <quetzlzacatenango@image...>
+  * eliminate uninitialized value.
+
 2021-04-17  6.9.12-8  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-8 GIT revision 16581:0eccd3556:20210417
 
-2021-04-10  6.9.12-7  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-7 GIT revision 16571:3415a1db1:20210411
-
-2021-04-09  6.9.12-7  <quetzlzacatenango@image...>
+2021-04-09  6.9.12-8  <quetzlzacatenango@image...>
   * constrain sub-image list.
   * -layers optimize no longer produces broken output (reference
     https://github.com/ImageMagick/ImageMagick/issues/3520).
