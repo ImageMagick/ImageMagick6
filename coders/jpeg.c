@@ -1098,7 +1098,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
     *option;
 
   ErrorManager
-    error_manager;
+    *error_manager;
 
   Image
     *image;
@@ -1167,20 +1167,23 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   /*
     Initialize JPEG parameters.
   */
-  (void) memset(&error_manager,0,sizeof(error_manager));
-  (void) memset(jpeg_info,0,sizeof(*jpeg_info));
+  error_manager=(ErrorManager *) AcquireMagickMemory(sizeof(*error_manager));
+  if (error_manager == (ErrorManager *) NULL)
+    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+  (void) memset(error_manager,0,sizeof(*error_manager));
   (void) memset(&jpeg_error,0,sizeof(jpeg_error));
   (void) memset(&jpeg_progress,0,sizeof(jpeg_progress));
   jpeg_info->err=jpeg_std_error(&jpeg_error);
   jpeg_info->err->emit_message=(void (*)(j_common_ptr,int)) JPEGWarningHandler;
   jpeg_info->err->error_exit=(void (*)(j_common_ptr)) JPEGErrorHandler;
   memory_info=(MemoryInfo *) NULL;
-  error_manager.image=image;
-  if (setjmp(error_manager.error_recovery) != 0)
+  error_manager->image=image;
+  if (setjmp(error_manager->error_recovery) != 0)
     {
       jpeg_destroy_decompress(jpeg_info);
-      if (error_manager.profile != (StringInfo *) NULL)
-        error_manager.profile=DestroyStringInfo(error_manager.profile);
+      if (error_manager->profile != (StringInfo *) NULL)
+        error_manager->profile=DestroyStringInfo(error_manager->profile);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       (void) CloseBlob(image);
       if (exception->severity < ErrorException)
         return(GetFirstImageInList(image));
@@ -1364,6 +1367,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
     if (AcquireImageColormap(image,StringToUnsignedLong(option)) == MagickFalse)
       {
         jpeg_destroy_decompress(jpeg_info);
+        error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
@@ -1376,6 +1380,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
       if (AcquireImageColormap(image,colors) == MagickFalse)
         {
           jpeg_destroy_decompress(jpeg_info);
+          error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
           InheritException(exception,&image->exception);
           return(DestroyImageList(image));
         }
@@ -1401,6 +1406,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   if (image_info->ping != MagickFalse)
     {
       jpeg_destroy_decompress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
@@ -1408,6 +1414,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   if (status == MagickFalse)
     {
       jpeg_destroy_decompress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
@@ -1416,6 +1423,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
       (jpeg_info->output_components != 3) && (jpeg_info->output_components != 4))
     {
       jpeg_destroy_decompress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       ThrowReaderException(CorruptImageError,"ImageTypeNotSupported");
     }
   memory_info=AcquireVirtualMemory((size_t) image->columns,
@@ -1423,6 +1431,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   if (memory_info == (MemoryInfo *) NULL)
     {
       jpeg_destroy_decompress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
     }
   jpeg_pixels=(JSAMPLE *) GetVirtualMemoryBlob(memory_info);
@@ -1431,11 +1440,12 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   /*
     Convert JPEG pixels to pixel packets.
   */
-  if (setjmp(error_manager.error_recovery) != 0)
+  if (setjmp(error_manager->error_recovery) != 0)
     {
       if (memory_info != (MemoryInfo *) NULL)
         memory_info=RelinquishVirtualMemory(memory_info);
       jpeg_destroy_decompress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       (void) CloseBlob(image);
       number_pixels=(MagickSizeType) image->columns*image->rows;
       if (number_pixels != 0)
@@ -1586,14 +1596,15 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   }
   if (status != MagickFalse)
     {
-      error_manager.finished=MagickTrue;
-      if (setjmp(error_manager.error_recovery) == 0)
+      error_manager->finished=MagickTrue;
+      if (setjmp(error_manager->error_recovery) == 0)
         (void) jpeg_finish_decompress(jpeg_info);
     }
   /*
     Free jpeg resources.
   */
   jpeg_destroy_decompress(jpeg_info);
+  error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
   memory_info=RelinquishVirtualMemory(memory_info);
   (void) CloseBlob(image);
   return(GetFirstImageInList(image));
@@ -2256,7 +2267,7 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
     *value;
 
   ErrorManager
-    error_manager;
+    *error_manager;
 
   ExceptionInfo
     *exception;
@@ -2314,7 +2325,10 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
   /*
     Initialize JPEG parameters.
   */
-  (void) memset(&error_manager,0,sizeof(error_manager));
+  error_manager=(ErrorManager *) AcquireMagickMemory(sizeof(*error_manager));
+  if (error_manager == (ErrorManager *) NULL)
+    ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+  (void) memset(error_manager,0,sizeof(*error_manager));
   (void) memset(jpeg_info,0,sizeof(*jpeg_info));
   (void) memset(&jpeg_error,0,sizeof(jpeg_error));
   volatile_image=image;
@@ -2322,11 +2336,12 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
   jpeg_info->err=jpeg_std_error(&jpeg_error);
   jpeg_info->err->emit_message=(void (*)(j_common_ptr,int)) JPEGWarningHandler;
   jpeg_info->err->error_exit=(void (*)(j_common_ptr)) JPEGErrorHandler;
-  error_manager.image=volatile_image;
+  error_manager->image=volatile_image;
   memory_info=(MemoryInfo *) NULL;
-  if (setjmp(error_manager.error_recovery) != 0)
+  if (setjmp(error_manager->error_recovery) != 0)
     {
       jpeg_destroy_compress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       (void) CloseBlob(volatile_image);
       return(MagickFalse);
     }
@@ -2847,9 +2862,10 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
   if (memory_info == (MemoryInfo *) NULL)
     ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
   jpeg_pixels=(JSAMPLE *) GetVirtualMemoryBlob(memory_info);
-  if (setjmp(error_manager.error_recovery) != 0)
+  if (setjmp(error_manager->error_recovery) != 0)
     {
       jpeg_destroy_compress(jpeg_info);
+      error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
       if (memory_info != (MemoryInfo *) NULL)
         memory_info=RelinquishVirtualMemory(memory_info);
       (void) CloseBlob(image);
@@ -3052,6 +3068,7 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
     Relinquish resources.
   */
   jpeg_destroy_compress(jpeg_info);
+  error_manager=(ErrorManager *) RelinquishMagickMemory(error_manager);
   memory_info=RelinquishVirtualMemory(memory_info);
   (void) CloseBlob(image);
   return(MagickTrue);
