@@ -1093,7 +1093,6 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
 {
 #define ThrowJPEGReaderException(exception,message) \
 { \
-  jpeg_destroy_decompress(jpeg_info);; \
   if (client_info != (JPEGClientInfo *) NULL) \
     client_info=(JPEGClientInfo *) RelinquishMagickMemory(client_info); \
   ThrowReaderException((exception),(message)); \
@@ -1430,11 +1429,17 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   (void) jpeg_start_decompress(jpeg_info);
   if ((jpeg_info->output_components != 1) &&
       (jpeg_info->output_components != 3) && (jpeg_info->output_components != 4))
-    ThrowJPEGReaderException(CorruptImageError,"ImageTypeNotSupported");
+    {
+      jpeg_destroy_decompress(jpeg_info);
+      ThrowJPEGReaderException(CorruptImageError,"ImageTypeNotSupported");
+    }
   memory_info=AcquireVirtualMemory((size_t) image->columns,
     jpeg_info->output_components*sizeof(*jpeg_pixels));
   if (memory_info == (MemoryInfo *) NULL)
-    ThrowJPEGReaderException(ResourceLimitError,"MemoryAllocationFailed");
+    {
+      jpeg_destroy_decompress(jpeg_info);
+      ThrowJPEGReaderException(ResourceLimitError,"MemoryAllocationFailed");
+    }
   jpeg_pixels=(JSAMPLE *) GetVirtualMemoryBlob(memory_info);
   (void) memset(jpeg_pixels,0,image->columns*jpeg_info->output_components*
     sizeof(*jpeg_pixels));
