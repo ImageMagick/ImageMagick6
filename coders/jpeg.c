@@ -1198,7 +1198,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
       InheritException(exception,&image->exception);
       return(DestroyImage(image));
     }
-  jpeg_info->client_data=(void *) &client_info;
+  jpeg_info->client_data=(void *) client_info;
   jpeg_create_decompress(jpeg_info);
   if (GetMaxMemoryRequest() != ~0UL)
     jpeg_info->mem->max_memory_to_use=(long) GetMaxMemoryRequest();
@@ -2360,7 +2360,7 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
       (void) CloseBlob(volatile_image);
       return(MagickFalse);
     }
-  jpeg_info->client_data=(void *) &client_info;
+  jpeg_info->client_data=(void *) client_info;
   jpeg_create_compress(jpeg_info);
   JPEGDestinationManager(jpeg_info,image);
   if ((image->columns != (unsigned int) image->columns) ||
