@@ -1,5 +1,5 @@
 2021-04-28  6.9.12-10  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-9 GIT revision 16...
+  * Release ImageMagick version 6.9.12-9 GIT revision 16599:5ee7e3eae:20210428
 
 2021-04-25  6.9.12-10  <quetzlzacatenango@image...>
   * Check image is not NULL before dereferencing.
