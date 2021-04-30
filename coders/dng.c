@@ -211,6 +211,22 @@ static void SetDNGProperties(Image *image,const libraw_data_t *raw_info)
   (void) SetImageProperty(image,"dng:focal.length.in.35mm.format",property);
 #endif
 }
+
+static void LibRawDataError(void *data,const char *magick_unused(file),
+  const int offset)
+{
+  magick_unreferenced(file);
+  /* Value below zero is an EOF and an exception will be raised instead */
+  if (offset >= 0)
+    {
+      ExceptionInfo
+        *exception;
+
+      exception=(ExceptionInfo *) data;
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        CorruptImageWarning,"Data corrupted at","`%d'",offset);
+  }
+}
 #endif
 
 static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
@@ -260,7 +276,8 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       *p;
 
     errcode=0;
-    raw_info=libraw_init(0);
+    raw_info=libraw_init(LIBRAW_OPIONS_NO_MEMERR_CALLBACK |
+      LIBRAW_OPIONS_NO_DATAERR_CALLBACK);
     if (raw_info == (libraw_data_t *) NULL)
       {
         (void) ThrowMagickException(exception,GetMagickModule(),CoderError,
@@ -268,6 +285,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
         libraw_close(raw_info);
         return(DestroyImageList(image));
       }
+    libraw_set_dataerror_handler(raw_info,LibRawDataError,exception);
     raw_info->params.use_camera_wb=IsStringTrue(GetImageOption(image_info,
       "dng:use-camera-wb"));
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && defined(_MSC_VER) && (_MSC_VER > 1310)
