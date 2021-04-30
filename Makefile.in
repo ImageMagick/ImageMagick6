@@ -12849,7 +12849,7 @@ uninstall-man: uninstall-man1
 
 @MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@$(libMagickCore_threshold_target): magick/threshold-map.h
 @MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@magick/threshold-map.h: config/thresholds.xml Makefile
-@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@  $(AM_V_GEN){ printf '%s\n  %s=\n' 'static const char *const' BuiltinMap; sed -e 's/"/\\"/g; s/^.*$$/    "&\\n"/; $$s/$$/;/' $<; } >$@
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@	$(AM_V_GEN){ printf '%s\n  %s=\n' 'static const char *const' BuiltinMap; sed -e 's/"/\\"/g; s/^.*$$/    "&\\n"/; $$s/$$/;/' $<; } >$@
 
 $(PERLMAGICK)/quantum/@MAGICK_ABI_SUFFIX@.xs: $(PERLMAGICK)/quantum/quantum.xs
 	$(AM_V_GEN) $(LN_S) quantum.xs $@

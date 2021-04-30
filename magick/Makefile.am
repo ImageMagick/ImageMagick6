@@ -492,5 +492,5 @@ $(libMagickCore_threshold_target): magick/threshold-map.h
 nodist_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES += magick/threshold-map.h
 CLEANFILES += magick/threshold-map.h
 magick/threshold-map.h: config/thresholds.xml Makefile
-  $(AM_V_GEN){ printf '%s\n  %s=\n' 'static const char *const' BuiltinMap; sed -e 's/"/\\"/g; s/^.*$$/    "&\\n"/; $$s/$$/;/' $<; } >$@
+	$(AM_V_GEN){ printf '%s\n  %s=\n' 'static const char *const' BuiltinMap; sed -e 's/"/\\"/g; s/^.*$$/    "&\\n"/; $$s/$$/;/' $<; } >$@
 endif
