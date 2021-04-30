@@ -258,6 +258,8 @@ bin_PROGRAMS = $(am__EXEEXT_1)
 TESTS = $(TESTS_TESTS) $(am__EXEEXT_5)
 XFAIL_TESTS = $(am__EXEEXT_6) $(am__EXEEXT_6)
 check_PROGRAMS = $(am__EXEEXT_2) $(am__EXEEXT_4)
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@am__append_1 = magick/threshold-map.h
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@am__append_2 = magick/threshold-map.h
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_func_fseeko.m4 \
@@ -1790,7 +1792,11 @@ am__objects_19 = filters/magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI
 @WITH_MODULES_FALSE@	$(am__objects_18) $(am__objects_19)
 @WITH_MODULES_TRUE@am_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS =  \
 @WITH_MODULES_TRUE@	$(am__objects_1) $(am__objects_2)
-magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS = $(am_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS)
+am__objects_20 =
+nodist_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS =  \
+	$(am__objects_20)
+magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS = $(am_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS) \
+	$(nodist_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS)
 magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LINK =  \
 	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -1799,7 +1805,7 @@ magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LINK =  \
 wand_libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_DEPENDENCIES =  \
 	$(MAGICKCORE_LIBS) $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1)
-am__objects_20 = wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-animate.lo \
+am__objects_21 = wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-animate.lo \
 	wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-compare.lo \
 	wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-composite.lo \
 	wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-conjure.lo \
@@ -1820,7 +1826,7 @@ am__objects_20 = wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_l
 	wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-wand.lo \
 	wand/libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-wand-view.lo
 am_wand_libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS =  \
-	$(am__objects_20)
+	$(am__objects_21)
 wand_libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS = $(am_wand_libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_OBJECTS)
 wand_libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LINK =  \
 	$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -2564,6 +2570,7 @@ SOURCES = $(Magick___lib_libMagick___@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_
 	$(coders_ycbcr_la_SOURCES) $(coders_yuv_la_SOURCES) \
 	$(filters_analyze_la_SOURCES) \
 	$(magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES) \
+	$(nodist_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES) \
 	$(wand_libMagickWand_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES) \
 	$(Magick___demo_analyze_SOURCES) \
 	$(Magick___demo_button_SOURCES) $(Magick___demo_demo_SOURCES) \
@@ -3371,6 +3378,7 @@ pkgconfigdir = $(libdir)/pkgconfig
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -3398,12 +3406,8 @@ MODULECOMMONCPPFLAGS = $(AM_CPPFLAGS)
 # compiler, headers, and libraries are used as for a normal build.
 DISTCHECK_CONFIGURE_FLAGS = $(DISTCHECK_CONFIG_FLAGS)
 DISTCLEANFILES = _configs.sed magick/magick-baseconfig.h
-CLEANFILES = \
-  $(WAND_CLEANFILES) \
-  $(MAGICKPP_CLEANFILES) \
-  $(UTILITIES_CLEANFILES) \
-  $(TESTS_CLEANFILES)
-
+CLEANFILES = $(WAND_CLEANFILES) $(MAGICKPP_CLEANFILES) \
+	$(UTILITIES_CLEANFILES) $(TESTS_CLEANFILES) $(am__append_2)
 
 # Binary scripts
 bin_SCRIPTS = \
@@ -4637,10 +4641,10 @@ magickincarchdir = $(INCLUDEARCH_PATH)/magick
 
 # Headers which are installed
 magickinc_HEADERS = \
-	$(MAGICK_INCLUDE_HDRS)
+  $(MAGICK_INCLUDE_HDRS)
 
 magickincarch_HEADERS = \
-	$(MAGICK_INCLUDEARCH_HDRS)
+  $(MAGICK_INCLUDEARCH_HDRS)
 
 MAGICK_BIN_SCRPTS = \
   magick/Magick-config \
@@ -4661,6 +4665,8 @@ MAGICKCORE_LIBS = magick/libMagickCore-@MAGICK_MAJOR_VERSION@.@MAGICK_ABI_SUFFIX
 @WITH_MODULES_TRUE@magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES = $(MAGICK_BASE_SRCS) $(MAGICK_PLATFORM_SRCS)
 @WITH_MODULES_FALSE@magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LIBADD = $(MAGICK_DEP_LIBS)
 @WITH_MODULES_TRUE@magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LIBADD = $(MAGICK_DEP_LIBS)
+nodist_magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES =  \
+	$(am__append_1)
 magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_CPPFLAGS = $(AM_CPPFLAGS) $(LIBRARY_EXTRA_CPPFLAGS)
 @HAVE_LD_VERSION_SCRIPT_FALSE@magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LDFLAGS_VERSION = -export-symbols-regex ".*"
 @HAVE_LD_VERSION_SCRIPT_TRUE@magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_LDFLAGS_VERSION = -Wl,--version-script=$(top_srcdir)/magick/libMagickCore.map
@@ -4673,419 +4679,420 @@ magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_DEPENDENCIES 
 
 # Library base sources
 MAGICK_BASE_SRCS = \
-	magick/ImageMagick.h \
-	magick/MagickCore.h \
-	magick/accelerate.c \
-	magick/accelerate-private.h \
-	magick/accelerate-kernels-private.h \
-	magick/animate.c \
-	magick/animate.h \
-	magick/animate-private.h \
-	magick/annotate.c \
-	magick/annotate.h \
-	magick/api.h \
-	magick/artifact.c \
-	magick/artifact.h \
-	magick/attribute.c \
-	magick/attribute.h \
-	magick/blob.c \
-	magick/blob.h \
-	magick/blob-private.h \
-	magick/cache.c \
-	magick/cache.h \
-	magick/cache-private.h \
-	magick/cache-view.c \
-	magick/cache-view.h \
-	magick/channel.c \
-	magick/channel.h \
-	magick/cipher.c \
-	magick/cipher.h \
-	magick/client.c \
-	magick/client.h \
-	magick/coder.c \
-	magick/coder.h \
-	magick/color.c \
-	magick/color.h \
-	magick/color-private.h \
-	magick/colormap.c \
-	magick/colormap.h \
-	magick/colormap-private.h \
-	magick/colorspace.c \
-	magick/colorspace.h \
-	magick/colorspace-private.h \
-	magick/compare.c \
-	magick/compare.h \
-	magick/composite.c \
-	magick/composite.h \
-	magick/composite-private.h \
-	magick/compress.c \
-	magick/compress.h \
-	magick/configure.c \
-	magick/configure.h \
-	magick/constitute.c \
-	magick/constitute.h \
-	magick/decorate.c \
-	magick/decorate.h \
-	magick/distribute-cache.c \
-	magick/distribute-cache.h \
-	magick/distribute-cache-private.h \
-	magick/delegate.c \
-	magick/delegate.h \
-	magick/delegate-private.h \
-	magick/deprecate.c \
-	magick/deprecate.h \
-	magick/display.c \
-	magick/display.h \
-	magick/display-private.h \
-	magick/distort.c \
-	magick/distort.h \
-	magick/draw.c \
-	magick/draw.h \
-	magick/draw-private.h \
-	magick/effect.c \
-	magick/effect.h \
-	magick/enhance.c \
-	magick/enhance.h \
-	magick/exception.c \
-	magick/exception.h \
-	magick/exception-private.h \
-	magick/feature.c \
-	magick/feature.h \
-	magick/fourier.c \
-	magick/fourier.h \
-	magick/fx.c \
-	magick/fx.h \
-	magick/fx-private.h \
-	magick/gem.c \
-	magick/gem.h \
-	magick/gem-private.h \
-	magick/geometry.c \
-	magick/geometry.h \
-	magick/hashmap.c \
-	magick/hashmap.h \
-	magick/histogram.c \
-	magick/histogram.h \
-	magick/identify.c \
-	magick/identify.h \
-	magick/image.c \
-	magick/image.h \
-	magick/image-private.h \
-	magick/image-view.c \
-	magick/image-view.h \
-	magick/layer.c \
-	magick/layer.h \
-	magick/list.c \
-	magick/list.h \
-	magick/locale.c \
-	magick/locale_.h \
-	magick/log.c \
-	magick/log.h \
-	magick/mac.h \
-	magick/magic.c \
-	magick/magic.h \
-	magick/magick.c \
-	magick/magick-baseconfig.h \
-	magick/magick-config.h \
-	magick/magick-type.h \
-	magick/magick.h \
-	magick/matrix.c \
-	magick/matrix.h \
-	magick/memory.c \
-	magick/memory_.h \
-	magick/memory-private.h \
-	magick/methods.h \
-	magick/method-attribute.h \
-	magick/mime.c \
-	magick/mime.h \
-	magick/module.c \
-	magick/module.h \
-	magick/monitor.c \
-	magick/monitor.h \
-	magick/monitor-private.h \
-	magick/montage.c \
-	magick/montage.h \
-	magick/morphology.c \
-	magick/morphology.h \
-	magick/morphology-private.h \
-	magick/mutex.h \
-	magick/nt-base.h \
-	magick/nt-base-private.h \
-	magick/nt-feature.h \
-	magick/opencl.c \
-	magick/opencl.h \
-	magick/opencl-private.h \
-	magick/option.c \
-	magick/option.h \
-	magick/option-private.h \
-	magick/paint.c \
-	magick/paint.h \
-	magick/pixel.c \
-	magick/pixel.h \
-	magick/pixel-accessor.h \
-	magick/pixel-private.h \
-	magick/policy.c \
-	magick/policy.h \
-	magick/policy-private.h \
-	magick/prepress.c \
-	magick/prepress.h \
-	magick/property.c \
-	magick/property.h \
-	magick/profile.c \
-	magick/profile.h \
-	magick/quantize.c \
-	magick/quantize.h \
-	magick/quantum.c \
-	magick/quantum.h \
-	magick/quantum-export.c \
-	magick/quantum-import.c \
-	magick/quantum-private.h \
-	magick/random.c \
-	magick/random_.h \
-	magick/random-private.h \
-	magick/registry.c \
-	magick/registry.h \
-	magick/resample.c \
-	magick/resample.h \
-	magick/resample-private.h \
-	magick/resize.c \
-	magick/resize.h \
-	magick/resize-private.h \
-	magick/resource.c \
-	magick/resource_.h \
-	magick/segment.c \
-	magick/segment.h \
-	magick/semaphore.c \
-	magick/semaphore.h \
-	magick/semaphore-private.h \
-	magick/shear.c \
-	magick/shear.h \
-	magick/signature.c \
-	magick/signature.h \
-	magick/signature-private.h \
-	magick/splay-tree.c \
-	magick/splay-tree.h \
-	magick/static.c \
-	magick/static.h \
-	magick/statistic.c \
-	magick/statistic.h \
-	magick/stream.c \
-	magick/stream.h \
-	magick/stream-private.h \
-	magick/string.c \
-	magick/string_.h \
-	magick/string-private.h \
-	magick/studio.h \
-	magick/thread.c \
-	magick/thread_.h \
-	magick/thread-private.h \
-	magick/timer.c \
-	magick/timer.h \
-	magick/timer-private.h \
-	magick/token.c \
-	magick/token.h \
-	magick/token-private.h \
-	magick/transform.c \
-	magick/transform.h \
-	magick/threshold.c \
-	magick/threshold.h \
-	magick/type.c \
-	magick/type.h \
-	magick/utility.c \
-	magick/utility.h \
-	magick/utility-private.h \
-	magick/version.c \
-	magick/version.h \
-	magick/version-private.h \
-	magick/vision.c \
-	magick/vision.h \
-	magick/visual-effects.c \
-	magick/visual-effects.h \
-	magick/vms.h \
-	magick/widget.c \
-	magick/widget.h \
-	magick/xml-tree.c \
-	magick/xml-tree.h \
-	magick/xml-tree-private.h \
-	magick/xwindow.c \
-	magick/xwindow.h 
+  magick/ImageMagick.h \
+  magick/MagickCore.h \
+  magick/accelerate.c \
+  magick/accelerate-private.h \
+  magick/accelerate-kernels-private.h \
+  magick/animate.c \
+  magick/animate.h \
+  magick/animate-private.h \
+  magick/annotate.c \
+  magick/annotate.h \
+  magick/api.h \
+  magick/artifact.c \
+  magick/artifact.h \
+  magick/attribute.c \
+  magick/attribute.h \
+  magick/blob.c \
+  magick/blob.h \
+  magick/blob-private.h \
+  magick/cache.c \
+  magick/cache.h \
+  magick/cache-private.h \
+  magick/cache-view.c \
+  magick/cache-view.h \
+  magick/channel.c \
+  magick/channel.h \
+  magick/cipher.c \
+  magick/cipher.h \
+  magick/client.c \
+  magick/client.h \
+  magick/coder.c \
+  magick/coder.h \
+  magick/color.c \
+  magick/color.h \
+  magick/color-private.h \
+  magick/colormap.c \
+  magick/colormap.h \
+  magick/colormap-private.h \
+  magick/colorspace.c \
+  magick/colorspace.h \
+  magick/colorspace-private.h \
+  magick/compare.c \
+  magick/compare.h \
+  magick/composite.c \
+  magick/composite.h \
+  magick/composite-private.h \
+  magick/compress.c \
+  magick/compress.h \
+  magick/configure.c \
+  magick/configure.h \
+  magick/constitute.c \
+  magick/constitute.h \
+  magick/decorate.c \
+  magick/decorate.h \
+  magick/distribute-cache.c \
+  magick/distribute-cache.h \
+  magick/distribute-cache-private.h \
+  magick/delegate.c \
+  magick/delegate.h \
+  magick/delegate-private.h \
+  magick/deprecate.c \
+  magick/deprecate.h \
+  magick/display.c \
+  magick/display.h \
+  magick/display-private.h \
+  magick/distort.c \
+  magick/distort.h \
+  magick/draw.c \
+  magick/draw.h \
+  magick/draw-private.h \
+  magick/effect.c \
+  magick/effect.h \
+  magick/enhance.c \
+  magick/enhance.h \
+  magick/exception.c \
+  magick/exception.h \
+  magick/exception-private.h \
+  magick/feature.c \
+  magick/feature.h \
+  magick/fourier.c \
+  magick/fourier.h \
+  magick/fx.c \
+  magick/fx.h \
+  magick/fx-private.h \
+  magick/gem.c \
+  magick/gem.h \
+  magick/gem-private.h \
+  magick/geometry.c \
+  magick/geometry.h \
+  magick/hashmap.c \
+  magick/hashmap.h \
+  magick/histogram.c \
+  magick/histogram.h \
+  magick/identify.c \
+  magick/identify.h \
+  magick/image.c \
+  magick/image.h \
+  magick/image-private.h \
+  magick/image-view.c \
+  magick/image-view.h \
+  magick/layer.c \
+  magick/layer.h \
+  magick/list.c \
+  magick/list.h \
+  magick/locale.c \
+  magick/locale_.h \
+  magick/log.c \
+  magick/log.h \
+  magick/mac.h \
+  magick/magic.c \
+  magick/magic.h \
+  magick/magick.c \
+  magick/magick-baseconfig.h \
+  magick/magick-config.h \
+  magick/magick-type.h \
+  magick/magick.h \
+  magick/matrix.c \
+  magick/matrix.h \
+  magick/memory.c \
+  magick/memory_.h \
+  magick/memory-private.h \
+  magick/methods.h \
+  magick/method-attribute.h \
+  magick/mime.c \
+  magick/mime.h \
+  magick/module.c \
+  magick/module.h \
+  magick/monitor.c \
+  magick/monitor.h \
+  magick/monitor-private.h \
+  magick/montage.c \
+  magick/montage.h \
+  magick/morphology.c \
+  magick/morphology.h \
+  magick/morphology-private.h \
+  magick/mutex.h \
+  magick/nt-base.h \
+  magick/nt-base-private.h \
+  magick/nt-feature.h \
+  magick/opencl.c \
+  magick/opencl.h \
+  magick/opencl-private.h \
+  magick/option.c \
+  magick/option.h \
+  magick/option-private.h \
+  magick/paint.c \
+  magick/paint.h \
+  magick/pixel.c \
+  magick/pixel.h \
+  magick/pixel-accessor.h \
+  magick/pixel-private.h \
+  magick/policy.c \
+  magick/policy.h \
+  magick/policy-private.h \
+  magick/prepress.c \
+  magick/prepress.h \
+  magick/property.c \
+  magick/property.h \
+  magick/profile.c \
+  magick/profile.h \
+  magick/quantize.c \
+  magick/quantize.h \
+  magick/quantum.c \
+  magick/quantum.h \
+  magick/quantum-export.c \
+  magick/quantum-import.c \
+  magick/quantum-private.h \
+  magick/random.c \
+  magick/random_.h \
+  magick/random-private.h \
+  magick/registry.c \
+  magick/registry.h \
+  magick/resample.c \
+  magick/resample.h \
+  magick/resample-private.h \
+  magick/resize.c \
+  magick/resize.h \
+  magick/resize-private.h \
+  magick/resource.c \
+  magick/resource_.h \
+  magick/segment.c \
+  magick/segment.h \
+  magick/semaphore.c \
+  magick/semaphore.h \
+  magick/semaphore-private.h \
+  magick/shear.c \
+  magick/shear.h \
+  magick/signature.c \
+  magick/signature.h \
+  magick/signature-private.h \
+  magick/splay-tree.c \
+  magick/splay-tree.h \
+  magick/static.c \
+  magick/static.h \
+  magick/statistic.c \
+  magick/statistic.h \
+  magick/stream.c \
+  magick/stream.h \
+  magick/stream-private.h \
+  magick/string.c \
+  magick/string_.h \
+  magick/string-private.h \
+  magick/studio.h \
+  magick/thread.c \
+  magick/thread_.h \
+  magick/thread-private.h \
+  magick/timer.c \
+  magick/timer.h \
+  magick/timer-private.h \
+  magick/token.c \
+  magick/token.h \
+  magick/token-private.h \
+  magick/transform.c \
+  magick/transform.h \
+  magick/threshold.c \
+  magick/threshold.h \
+  magick/type.c \
+  magick/type.h \
+  magick/utility.c \
+  magick/utility.h \
+  magick/utility-private.h \
+  magick/version.c \
+  magick/version.h \
+  magick/version-private.h \
+  magick/vision.c \
+  magick/vision.h \
+  magick/visual-effects.c \
+  magick/visual-effects.h \
+  magick/vms.h \
+  magick/widget.c \
+  magick/widget.h \
+  magick/xml-tree.c \
+  magick/xml-tree.h \
+  magick/xml-tree-private.h \
+  magick/xwindow.c \
+  magick/xwindow.h 
 
 @CYGWIN_BUILD_FALSE@@WIN32_NATIVE_BUILD_FALSE@MAGICK_PLATFORM_SRCS = 
 @CYGWIN_BUILD_TRUE@@WIN32_NATIVE_BUILD_FALSE@MAGICK_PLATFORM_SRCS = \
-@CYGWIN_BUILD_TRUE@@WIN32_NATIVE_BUILD_FALSE@	magick/nt-feature.c \
-@CYGWIN_BUILD_TRUE@@WIN32_NATIVE_BUILD_FALSE@	magick/nt-feature.h
+@CYGWIN_BUILD_TRUE@@WIN32_NATIVE_BUILD_FALSE@  magick/nt-feature.c \
+@CYGWIN_BUILD_TRUE@@WIN32_NATIVE_BUILD_FALSE@  magick/nt-feature.h
 
 @WIN32_NATIVE_BUILD_TRUE@MAGICK_PLATFORM_SRCS = \
-@WIN32_NATIVE_BUILD_TRUE@	magick/nt-base.c \
-@WIN32_NATIVE_BUILD_TRUE@	magick/nt-base.h \
-@WIN32_NATIVE_BUILD_TRUE@	magick/nt-base-private.h \
-@WIN32_NATIVE_BUILD_TRUE@	magick/nt-feature.c \
-@WIN32_NATIVE_BUILD_TRUE@	magick/nt-feature.h
+@WIN32_NATIVE_BUILD_TRUE@  magick/nt-base.c \
+@WIN32_NATIVE_BUILD_TRUE@  magick/nt-base.h \
+@WIN32_NATIVE_BUILD_TRUE@  magick/nt-base-private.h \
+@WIN32_NATIVE_BUILD_TRUE@  magick/nt-feature.c \
+@WIN32_NATIVE_BUILD_TRUE@  magick/nt-feature.h
 
 MAGICK_INCLUDE_HDRS = \
-	magick/ImageMagick.h \
-	magick/MagickCore.h \
-	magick/animate.h \
-	magick/annotate.h \
-	magick/api.h \
-	magick/artifact.h \
-	magick/attribute.h \
-	magick/blob.h \
-	magick/cache.h \
-	magick/cache-view.h \
-	magick/channel.h \
-	magick/cipher.h \
-	magick/client.h \
-	magick/coder.h \
-	magick/color.h \
-	magick/colormap.h \
-	magick/colorspace.h \
-	magick/compare.h \
-	magick/composite.h \
-	magick/compress.h \
-	magick/configure.h \
-	magick/constitute.h \
-	magick/decorate.h \
-	magick/delegate.h \
-	magick/deprecate.h \
-	magick/display.h \
-	magick/distribute-cache.h \
-	magick/distort.h \
-	magick/draw.h \
-	magick/effect.h \
-	magick/enhance.h \
-	magick/exception.h \
-	magick/feature.h \
-	magick/fourier.h \
-	magick/fx.h \
-	magick/gem.h \
-	magick/geometry.h \
-	magick/hashmap.h \
-	magick/histogram.h \
-	magick/identify.h \
-	magick/image.h \
-	magick/image-view.h \
-	magick/layer.h \
-	magick/list.h \
-	magick/locale_.h \
-	magick/log.h \
-	magick/magic.h \
-	magick/magick.h \
-	magick/magick-config.h \
-	magick/magick-type.h \
-	magick/matrix.h \
-	magick/memory_.h \
-	magick/methods.h \
-	magick/method-attribute.h \
-	magick/mime.h \
-	magick/module.h \
-	magick/monitor.h \
-	magick/montage.h \
-	magick/morphology.h \
-	magick/opencl.h \
-	magick/option.h \
-	magick/paint.h \
-	magick/pixel.h \
-	magick/pixel-accessor.h \
-	magick/policy.h \
-	magick/prepress.h \
-	magick/profile.h \
-	magick/property.h \
-	magick/quantize.h \
-	magick/quantum.h \
-	magick/random_.h \
-	magick/registry.h \
-	magick/resample.h \
-	magick/resize.h \
-	magick/resource_.h \
-	magick/segment.h \
-	magick/semaphore.h \
-	magick/shear.h \
-	magick/signature.h \
-	magick/splay-tree.h \
-	magick/static.h \
-	magick/statistic.h \
-	magick/stream.h \
-	magick/string_.h \
-	magick/studio.h \
-	magick/timer.h \
-	magick/token.h \
-	magick/transform.h \
-	magick/threshold.h \
-	magick/type.h \
-	magick/utility.h \
-	magick/version.h \
-	magick/vision.h \
-	magick/visual-effects.h \
-	magick/widget.h \
-	magick/xml-tree.h \
-	magick/xwindow.h
+  magick/ImageMagick.h \
+  magick/MagickCore.h \
+  magick/animate.h \
+  magick/annotate.h \
+  magick/api.h \
+  magick/artifact.h \
+  magick/attribute.h \
+  magick/blob.h \
+  magick/cache.h \
+  magick/cache-view.h \
+  magick/channel.h \
+  magick/cipher.h \
+  magick/client.h \
+  magick/coder.h \
+  magick/color.h \
+  magick/colormap.h \
+  magick/colorspace.h \
+  magick/compare.h \
+  magick/composite.h \
+  magick/compress.h \
+  magick/configure.h \
+  magick/constitute.h \
+  magick/decorate.h \
+  magick/delegate.h \
+  magick/deprecate.h \
+  magick/display.h \
+  magick/distribute-cache.h \
+  magick/distort.h \
+  magick/draw.h \
+  magick/effect.h \
+  magick/enhance.h \
+  magick/exception.h \
+  magick/feature.h \
+  magick/fourier.h \
+  magick/fx.h \
+  magick/gem.h \
+  magick/geometry.h \
+  magick/hashmap.h \
+  magick/histogram.h \
+  magick/identify.h \
+  magick/image.h \
+  magick/image-view.h \
+  magick/layer.h \
+  magick/list.h \
+  magick/locale_.h \
+  magick/log.h \
+  magick/magic.h \
+  magick/magick.h \
+  magick/magick-config.h \
+  magick/magick-type.h \
+  magick/matrix.h \
+  magick/memory_.h \
+  magick/methods.h \
+  magick/method-attribute.h \
+  magick/mime.h \
+  magick/module.h \
+  magick/monitor.h \
+  magick/montage.h \
+  magick/morphology.h \
+  magick/opencl.h \
+  magick/option.h \
+  magick/paint.h \
+  magick/pixel.h \
+  magick/pixel-accessor.h \
+  magick/policy.h \
+  magick/prepress.h \
+  magick/profile.h \
+  magick/property.h \
+  magick/quantize.h \
+  magick/quantum.h \
+  magick/random_.h \
+  magick/registry.h \
+  magick/resample.h \
+  magick/resize.h \
+  magick/resource_.h \
+  magick/segment.h \
+  magick/semaphore.h \
+  magick/shear.h \
+  magick/signature.h \
+  magick/splay-tree.h \
+  magick/static.h \
+  magick/statistic.h \
+  magick/stream.h \
+  magick/string_.h \
+  magick/studio.h \
+  magick/timer.h \
+  magick/token.h \
+  magick/transform.h \
+  magick/threshold.h \
+  magick/type.h \
+  magick/utility.h \
+  magick/version.h \
+  magick/vision.h \
+  magick/visual-effects.h \
+  magick/widget.h \
+  magick/xml-tree.h \
+  magick/xwindow.h
 
 MAGICK_NOINST_HDRS = \
-	magick/accelerate-private.h \
+  magick/accelerate-private.h \
   magick/accelerate-kernels-private.h \
-	magick/animate-private.h \
-	magick/blob-private.h \
-	magick/cache-private.h \
-	magick/color-private.h \
-	magick/colormap-private.h \
-	magick/colorspace-private.h \
-	magick/composite-private.h \
-	magick/delegate-private.h \
-	magick/display-private.h \
-	magick/distribute-cache-private.h \
-	magick/draw-private.h \
-	magick/exception-private.h \
-	magick/fx-private.h \
-	magick/gem-private.h \
-	magick/image-private.h \
-	magick/mac.h \
-	magick/memory-private.h \
-	magick/mime-private.h \
-	magick/monitor-private.h \
-	magick/morphology-private.h \
-	magick/mutex.h \
-	magick/nt-base.h \
-	magick/nt-base-private.h \
-	magick/nt-feature.h \
-	magick/opencl.h \
-	magick/option-private.h \
-	magick/pixel-private.h \
-	magick/policy-private.h \
-	magick/quantum-private.h \
-	magick/random-private.h \
-	magick/resample-private.h \
-	magick/resize-private.h \
-	magick/semaphore-private.h \
-	magick/signature-private.h \
-	magick/stream-private.h \
-	magick/string-private.h \
-	magick/thread_.h \
-	magick/thread-private.h \
-	magick/timer-private.h \
-	magick/token-private.h \
-	magick/utility-private.h \
-	magick/version-private.h \
-	magick/xml-tree-private.h \
-	magick/xwindow-private.h \
-	magick/vms.h
+  magick/animate-private.h \
+  magick/blob-private.h \
+  magick/cache-private.h \
+  magick/color-private.h \
+  magick/colormap-private.h \
+  magick/colorspace-private.h \
+  magick/composite-private.h \
+  magick/delegate-private.h \
+  magick/display-private.h \
+  magick/distribute-cache-private.h \
+  magick/draw-private.h \
+  magick/exception-private.h \
+  magick/fx-private.h \
+  magick/gem-private.h \
+  magick/image-private.h \
+  magick/mac.h \
+  magick/memory-private.h \
+  magick/mime-private.h \
+  magick/monitor-private.h \
+  magick/morphology-private.h \
+  magick/mutex.h \
+  magick/nt-base.h \
+  magick/nt-base-private.h \
+  magick/nt-feature.h \
+  magick/opencl.h \
+  magick/option-private.h \
+  magick/pixel-private.h \
+  magick/policy-private.h \
+  magick/quantum-private.h \
+  magick/random-private.h \
+  magick/resample-private.h \
+  magick/resize-private.h \
+  magick/semaphore-private.h \
+  magick/signature-private.h \
+  magick/stream-private.h \
+  magick/string-private.h \
+  magick/thread_.h \
+  magick/thread-private.h \
+  magick/timer-private.h \
+  magick/token-private.h \
+  magick/utility-private.h \
+  magick/version-private.h \
+  magick/xml-tree-private.h \
+  magick/xwindow-private.h \
+  magick/vms.h
 
 MAGICK_INCLUDEARCH_HDRS = \
-	magick/magick-baseconfig.h
+  magick/magick-baseconfig.h
 
 MAGICK_EXTRA_DIST = \
-	magick/Magick-config.in \
-	magick/MagickCore-config.in \
-	$(MAGICK_MANS) \
-	magick/ImageMagick.pc.in \
-	magick/libMagickCore.map \
-	magick/MagickCore.pc.in \
-	magick/config.h_vms \
-	magick/mac.c \
-	magick/nt-base.c \
-	magick/nt-feature.c \
-	magick/vms.c \
-	magick/xwdfile.h_vms 
+  magick/Magick-config.in \
+  magick/MagickCore-config.in \
+  $(MAGICK_MANS) \
+  magick/ImageMagick.pc.in \
+  magick/libMagickCore.map \
+  magick/MagickCore.pc.in \
+  magick/config.h_vms \
+  magick/mac.c \
+  magick/nt-base.c \
+  magick/nt-feature.c \
+  magick/vms.c \
+  magick/xwdfile.h_vms
 
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@libMagickCore_threshold_target = magick/libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la-threshold.lo
 
 # Where filter modules get installed
 filtersdir = $(FILTER_PATH)
@@ -12840,6 +12847,9 @@ uninstall-man: uninstall-man1
 
 .PRECIOUS: Makefile
 
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@$(libMagickCore_threshold_target): magick/threshold-map.h
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@magick/threshold-map.h: config/thresholds.xml Makefile
+@MAGICKCORE_ZERO_CONFIGURATION_SUPPORT_TRUE@  $(AM_V_GEN){ printf '%s\n  %s=\n' 'static const char *const' BuiltinMap; sed -e 's/"/\\"/g; s/^.*$$/    "&\\n"/; $$s/$$/;/' $<; } >$@
 
 $(PERLMAGICK)/quantum/@MAGICK_ABI_SUFFIX@.xs: $(PERLMAGICK)/quantum/quantum.xs
 	$(AM_V_GEN) $(LN_S) quantum.xs $@
