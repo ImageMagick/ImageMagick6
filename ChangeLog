@@ -1,5 +1,5 @@
 2021-05-04  6.9.12-11  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-11 GIT revision 16623:caee16574:20210504
+  * Release ImageMagick version 6.9.12-11 GIT revision 16625:7d8a3b762:20210504
 
 2021-04-25  6.9.12-11  <quetzlzacatenango@image...>
   * reverted color reduction patch so that it treats alpha blending properly.
