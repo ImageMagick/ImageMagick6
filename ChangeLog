@@ -1,5 +1,11 @@
+2021-05-04  6.9.12-11  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-11 GIT revision 16623:caee16574:20210504
+
+2021-04-25  6.9.12-11  <quetzlzacatenango@image...>
+  * reverted color reduction patch so that it treats alpha blending properly.
+
 2021-04-28  6.9.12-10  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-9 GIT revision 16602:f98edd4aa:20210428
+  * Release ImageMagick version 6.9.12-10 GIT revision 16602:f98edd4aa:20210428
 
 2021-04-25  6.9.12-10  <quetzlzacatenango@image...>
   * Check image is not NULL before dereferencing.
@@ -442,7 +448,7 @@
   * Release ImageMagick version 6.9.11-12, GIT revision 15602:96db62d:20200515.
 
 2020-05-12  6.9.11-12 Cristy  <quetzlzacatenango@image...>
-  * Black artefacts during quantization (reference
+  * Black artifacts during quantization (reference
     https://github.com/ImageMagick/ImageMagick/discussions/2007#discussioncomment-13546).
 
 2020-04-08  6.9.11-11 Cristy  <quetzlzacatenango@image...>
