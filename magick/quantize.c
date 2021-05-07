@@ -1784,11 +1784,11 @@ static MagickBooleanType RiemersmaDither(Image *image,CacheView *image_view,
       AssociateAlphaPixel(cube_info,q,&pixel);
       for (i=0; i < ErrorQueueLength; i++)
       {
-        pixel.red+=p->weights[i]*p->error[i].red;
-        pixel.green+=p->weights[i]*p->error[i].green;
-        pixel.blue+=p->weights[i]*p->error[i].blue;
+        pixel.red+=p->weights[i]*p->error[i].red/16;
+        pixel.green+=p->weights[i]*p->error[i].green/16;
+        pixel.blue+=p->weights[i]*p->error[i].blue/16;
         if (cube_info->associate_alpha != MagickFalse)
-          pixel.opacity+=p->weights[i]*p->error[i].opacity;
+          pixel.opacity+=p->weights[i]*p->error[i].opacity/16;
       }
       pixel.red=(MagickRealType) ClampPixel(pixel.red);
       pixel.green=(MagickRealType) ClampPixel(pixel.green);
@@ -1993,7 +1993,7 @@ static CubeInfo *GetCubeInfo(const QuantizeInfo *quantize_info,
   for (i=0; i < ErrorQueueLength; i++)
   {
     cube_info->weights[ErrorQueueLength-i-1]=PerceptibleReciprocal(weight);
-    weight*=exp(log(((double) QuantumRange+1.0))/(ErrorQueueLength-1.0));
+    weight*=exp(log(16)/(ErrorQueueLength-1.0));
   }
   /*
     Normalize the weighting factors.
