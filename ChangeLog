@@ -1,5 +1,5 @@
-2021-05-06  6.9.12-12  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-11 GIT revision 16...
+2021-05-07  6.9.12-12  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-11 GIT revision 16630:ed78be2e6:20210507
 
 2021-05-06  6.9.12-12  <quetzlzacatenango@image...>
   * -layers optimize no longer produces broken output (reference
