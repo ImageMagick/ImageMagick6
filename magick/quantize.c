@@ -292,6 +292,7 @@ typedef struct _CubeInfo
     error[ErrorQueueLength];
 
   MagickRealType
+    diffusion,
     weights[ErrorQueueLength];
 
   QuantizeInfo
@@ -1457,12 +1458,6 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
   CacheView
     *image_view;
 
-  const char
-    *artifact;
-
-  double
-    amount;
-
   DoublePixelPacket
     **pixels;
 
@@ -1483,10 +1478,6 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
     return(MagickFalse);
   exception=(&image->exception);
   status=MagickTrue;
-  amount=1.0;
-  artifact=GetImageArtifact(image,"dither:diffusion-amount");
-  if (artifact != (const char *) NULL)
-    amount=StringToDoubleInterval(artifact,1.0);
   image_view=AcquireAuthenticCacheView(image,exception);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -1542,34 +1533,35 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
       AssociateAlphaPixel(&cube,q+u,&pixel);
       if (x > 0)
         {
-          pixel.red+=7.0*amount*current[u-v].red/16;
-          pixel.green+=7.0*amount*current[u-v].green/16;
-          pixel.blue+=7.0*amount*current[u-v].blue/16;
+          pixel.red+=7.0*cube_info->diffusion*current[u-v].red/16;
+          pixel.green+=7.0*cube_info->diffusion*current[u-v].green/16;
+          pixel.blue+=7.0*cube_info->diffusion*current[u-v].blue/16;
           if (cube.associate_alpha != MagickFalse)
-            pixel.opacity+=7.0*amount*current[u-v].opacity/16;
+            pixel.opacity+=7.0*cube_info->diffusion*current[u-v].opacity/16;
         }
       if (y > 0)
         {
           if (x < (ssize_t) (image->columns-1))
             {
-              pixel.red+=previous[u+v].red/16;
-              pixel.green+=previous[u+v].green/16;
-              pixel.blue+=previous[u+v].blue/16;
+              pixel.red+=cube_info->diffusion*previous[u+v].red/16;
+              pixel.green+=cube_info->diffusion*previous[u+v].green/16;
+              pixel.blue+=cube_info->diffusion*previous[u+v].blue/16;
               if (cube.associate_alpha != MagickFalse)
-                pixel.opacity+=previous[u+v].opacity/16;
+                pixel.opacity+=cube_info->diffusion*previous[u+v].opacity/16;
             }
-          pixel.red+=5.0*amount*previous[u].red/16;
-          pixel.green+=5.0*amount*previous[u].green/16;
-          pixel.blue+=5.0*amount*previous[u].blue/16;
+          pixel.red+=5.0*cube_info->diffusion*previous[u].red/16;
+          pixel.green+=5.0*cube_info->diffusion*previous[u].green/16;
+          pixel.blue+=5.0*cube_info->diffusion*previous[u].blue/16;
           if (cube.associate_alpha != MagickFalse)
-            pixel.opacity+=5.0*amount*previous[u].opacity/16;
+            pixel.opacity+=5.0*cube_info->diffusion*previous[u].opacity/16;
           if (x > 0)
             {
-              pixel.red+=3.0*amount*previous[u-v].red/16;
-              pixel.green+=3.0*amount*previous[u-v].green/16;
-              pixel.blue+=3.0*amount*previous[u-v].blue/16;
+              pixel.red+=3.0*cube_info->diffusion*previous[u-v].red/16;
+              pixel.green+=3.0*cube_info->diffusion*previous[u-v].green/16;
+              pixel.blue+=3.0*cube_info->diffusion*previous[u-v].blue/16;
               if (cube.associate_alpha != MagickFalse)
-                pixel.opacity+=3.0*amount*previous[u-v].opacity/16;
+                pixel.opacity+=3.0*cube_info->diffusion*
+                  previous[u-v].opacity/16;
             }
         }
       pixel.red=(MagickRealType) ClampPixel(pixel.red);
@@ -1783,11 +1775,15 @@ static MagickBooleanType RiemersmaDither(Image *image,CacheView *image_view,
       AssociateAlphaPixel(cube_info,q,&pixel);
       for (i=0; i < ErrorQueueLength; i++)
       {
-        pixel.red+=ErrorRelativeWeight*p->weights[i]*p->error[i].red;
-        pixel.green+=ErrorRelativeWeight*p->weights[i]*p->error[i].green;
-        pixel.blue+=ErrorRelativeWeight*p->weights[i]*p->error[i].blue;
+        pixel.red+=ErrorRelativeWeight*cube_info->diffusion*p->weights[i]*
+          p->error[i].red;
+        pixel.green+=ErrorRelativeWeight*cube_info->diffusion*p->weights[i]*
+          p->error[i].green;
+        pixel.blue+=ErrorRelativeWeight*cube_info->diffusion*p->weights[i]*
+          p->error[i].blue;
         if (cube_info->associate_alpha != MagickFalse)
-          pixel.opacity+=ErrorRelativeWeight*p->weights[i]*p->error[i].opacity;
+          pixel.opacity+=ErrorRelativeWeight*cube_info->diffusion*p->weights[i]*
+            p->error[i].opacity;
       }
       pixel.red=(MagickRealType) ClampPixel(pixel.red);
       pixel.green=(MagickRealType) ClampPixel(pixel.green);
@@ -1868,6 +1864,9 @@ static MagickBooleanType DitherImage(Image *image,CubeInfo *cube_info)
   CacheView
     *image_view;
 
+  const char
+    *artifact;
+
   MagickBooleanType
     status;
 
@@ -1875,6 +1874,9 @@ static MagickBooleanType DitherImage(Image *image,CubeInfo *cube_info)
     extent,
     level;
 
+  artifact=GetImageArtifact(image,"dither:diffusion-amount");
+  if (artifact != (const char *) NULL)
+    cube_info->diffusion=StringToDoubleInterval(artifact,1.0);
   if (cube_info->quantize_info->dither_method != RiemersmaDitherMethod)
     return(FloydSteinbergDither(image,cube_info));
   /*
@@ -1990,6 +1992,7 @@ static CubeInfo *GetCubeInfo(const QuantizeInfo *quantize_info,
     cube_info->weights[i]=PerceptibleReciprocal(weight);
     weight*=exp(log(1.0/ErrorRelativeWeight)/(ErrorQueueLength-1.0));
   }
+  cube_info->diffusion=1.0;
   return(cube_info);
 }
 
