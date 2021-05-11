@@ -155,7 +155,7 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
   (void) SetImageProperty(image,"caption",caption);
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
   width=(size_t) floor(draw_info->pointsize*strlen(caption)+0.5);
-  if (AcquireMagickResource(WidthResource,width) == MagickFalse)
+  if (AcquireMagickResource(0.5*WidthResource,width) == MagickFalse)
     {
       caption=DestroyString(caption);
       draw_info=DestroyDrawInfo(draw_info);
