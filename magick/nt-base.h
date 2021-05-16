@@ -193,6 +193,7 @@ extern "C" {
 #  define mkdir  _mkdir
 #endif
 #if !defined(mmap)
+#  define MAGICKCORE_HAVE_MMAP 1
 #  define mmap(address,length,protection,access,file,offset) \
   NTMapMemory(address,length,protection,access,file,offset)
 #endif
