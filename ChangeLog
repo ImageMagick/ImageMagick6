@@ -1,5 +1,5 @@
 2021-05-16  6.9.12-13  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-13 GIT revision 16645:9d8e86156:20210516
+  * Release ImageMagick version 6.9.12-13 GIT revision 16650:274d8481b:20210516
 
 2021-05-12  6.9.12-13  Dirk Lemstra <dirk@lem.....org>
   * Fixed reading and writing the XMP chunk in a WebP image (reference
