@@ -2669,11 +2669,10 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
   /*
     Initialize color return value.
   */
-  assert(name != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",name);
   assert(color != (MagickPixelPacket *) NULL);
   if ((name == (char *) NULL) || (*name == '\0'))
     name=BackgroundColor;
+  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",name);
   while (isspace((int) ((unsigned char) *name)) != 0)
     name++;
   GetMagickPixelPacket((Image *) NULL,color);
