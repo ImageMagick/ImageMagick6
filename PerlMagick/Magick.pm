@@ -123,12 +123,12 @@ It was originally developed to be used by CGI scripts for Web pages.
 
 A web page has been set up for this extension. See:
 
-	 file:///usr/share/doc/ImageMagick-6/www/perl-magick.html
-	 https://legacy.imagemagick.org/script/perl-magick.php
+   https://legacy.imagemagick.org/script/perl-magick.php
+   https://github.com/ImageMagick/ImageMagick-6/blob/main/www/perl-magick.html
 
 If you have problems, go to
 
-   https://github.com/ImageMagick/ImageMagick6/issues
+   https://github.com/ImageMagick/ImageMagick/issues
 
 =head1 AUTHOR
 
