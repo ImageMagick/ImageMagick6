@@ -2197,7 +2197,12 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
       SetGeometryInfo(&geometry_info);
       value=GetImageArtifact(image,"compose:args");
       if (value != (char *) NULL)
-        (void) ParseGeometry(value,&geometry_info);
+        {
+          flags=ParseGeometry(value,&geometry_info);
+          if (flags == NoValue)
+            (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
+              "InvalidGeometry","`%s'",value);
+        }
       break;
     }
     case ModulateCompositeOp:
