@@ -1155,6 +1155,22 @@ static MagickBooleanType WritePOCKETMODImage(const ImageInfo *image_info,
   return(status);
 }
 
+static size_t GetColorProfileChannelCount(const StringInfo *profile)
+{
+  if (GetStringInfoLength(profile) > 20)
+    {
+      const char
+        *p;
+
+      p=(const char *) GetStringInfoDatum(profile)+16;
+      if (strncmp(p,"GRAY",4) == 0)
+        return(1);
+      if (strncmp(p,"CMYK",4) == 0)
+        return(4);
+    }
+  return(3);
+}
+
 static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
 {
 #define CFormat  "/Filter [ /%s ]\n"
@@ -1226,7 +1242,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     *value;
 
   const StringInfo
-    *profile;
+    *icc_profile;
 
   double
     pointsize;
@@ -1334,8 +1350,8 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
   for (next=image; next != (Image *) NULL; next=GetNextImageInList(next))
   {
     (void) SetImageGray(image,&image->exception);
-    profile=GetImageProfile(next,"icc");
-    if (profile != (StringInfo *) NULL)
+    icc_profile=GetImageProfile(next,"icc");
+    if (icc_profile != (StringInfo *) NULL)
       {
         (void) SetImageStorageClass(next,DirectClass);
         version=(size_t) MagickMax(version,7);
@@ -1453,8 +1469,8 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
       for ( ; GetNextImageInList(kid_image) != (Image *) NULL; count+=ObjectsPerImage)
       {
         page_count++;
-        profile=GetImageProfile(kid_image,"icc");
-        if (profile != (StringInfo *) NULL)
+        icc_profile=GetImageProfile(kid_image,"icc");
+        if (icc_profile != (StringInfo *) NULL)
           count+=2;
         (void) FormatLocaleString(buffer,MaxTextExtent,"%.20g 0 R ",(double)
           count);
@@ -1476,11 +1492,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
   imageListLength=GetImageListLength(image);
   do
   {
-    MagickBooleanType
-      has_icc_profile;
-
-    profile=GetImageProfile(image,"icc");
-    has_icc_profile=profile != (StringInfo *) NULL ? MagickTrue : MagickFalse;
+    icc_profile=GetImageProfile(image,"icc");
     compression=image->compression;
     if (image_info->compression != UndefinedCompression)
       compression=image_info->compression;
@@ -1651,7 +1663,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
       (double) object+1);
     (void) WriteBlobString(image,buffer);
     (void) FormatLocaleString(buffer,MaxTextExtent,"/Thumb %.20g 0 R\n",
-      (double) object+(has_icc_profile != MagickFalse ? 10 : 8));
+      (double) object+(icc_profile != (StringInfo *) NULL ? 10 : 8));
     (void) WriteBlobString(image,buffer);
     (void) WriteBlobString(image,">>\n");
     (void) WriteBlobString(image,"endobj\n");
@@ -1829,7 +1841,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     if (image->matte != MagickFalse)
       {
         (void) FormatLocaleString(buffer,MaxTextExtent,"/SMask %.20g 0 R\n",
-          (double) object+(has_icc_profile != MagickFalse ? 9 : 7));
+          (double) object+(icc_profile != (StringInfo *) NULL ? 9 : 7));
         (void) WriteBlobString(image,buffer);
       }
     (void) FormatLocaleString(buffer,MaxTextExtent,"/Length %.20g 0 R\n",
@@ -2218,14 +2230,14 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
             device="DeviceRGB";
             channels=3;
           }
-    if (has_icc_profile == MagickFalse)
+    if (icc_profile == (StringInfo *) NULL)
       {
         if (channels != 0)
           (void) FormatLocaleString(buffer,MaxTextExtent,"/%s\n",device);
         else
           (void) FormatLocaleString(buffer,MaxTextExtent,
             "[ /Indexed /%s %.20g %.20g 0 R ]\n",device,(double) image->colors-
-            1,(double) object+(has_icc_profile ? 4 : 3));
+            1,(double) object+3);
         (void) WriteBlobString(image,buffer);
       }
     else
@@ -2246,12 +2258,13 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
         (void) WriteBlobString(image,buffer);
         (void) FormatLocaleString(buffer,MaxTextExtent,"<<\n/N %.20g\n"
           "/Filter /ASCII85Decode\n/Length %.20g 0 R\n/Alternate /%s\n>>\n"
-          "stream\n",(double) channels,(double) object+1,device);
+          "stream\n",(double) GetColorProfileChannelCount(icc_profile),
+          (double) object+1,device);
         (void) WriteBlobString(image,buffer);
         offset=TellBlob(image);
         Ascii85Initialize(image);
-        p=GetStringInfoDatum(profile);
-        for (i=0; i < (ssize_t) GetStringInfoLength(profile); i++)
+        p=GetStringInfoDatum(icc_profile);
+        for (i=0; i < (ssize_t) GetStringInfoLength(icc_profile); i++)
           Ascii85Encode(image,(unsigned char) *p++);
         Ascii85Flush(image);
         offset=TellBlob(image)-offset;
@@ -2351,7 +2364,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
       tile_image->rows);
     (void) WriteBlobString(image,buffer);
     (void) FormatLocaleString(buffer,MaxTextExtent,"/ColorSpace %.20g 0 R\n",
-      (double) object-(has_icc_profile != MagickFalse ? 3 : 1));
+      (double) object-(icc_profile != (StringInfo *) NULL ? 3 : 1));
     (void) WriteBlobString(image,buffer);
     (void) FormatLocaleString(buffer,MaxTextExtent,"/BitsPerComponent %d\n",
       (compression == FaxCompression) || (compression == Group4Compression) ?
