@@ -1,5 +1,5 @@
 2021-06-12  6.9.12-15  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-15 GIT revision 16677:dabbe4450:20210612
+  * Release ImageMagick version 6.9.12-15 GIT revision 16679:b21457a7e:20210612
 
 2021-06-02  6.9.12-15  <quetzlzacatenango@image...>
   * SVG no longer hangs when handling class in <defs> (reference
