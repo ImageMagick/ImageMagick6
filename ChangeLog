@@ -1,4 +1,9 @@
+2021-06-11  6.9.12-15  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-15 GIT revision 16...
+
 2021-06-02  6.9.12-15  <quetzlzacatenango@image...>
+  * SVG no longer hangs when handling class in <defs> (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3818).
   * Raise exception for invalid compose:args geometry (reference
     https://github.com/ImageMagick/ImageMagick/issues/3765).
 
