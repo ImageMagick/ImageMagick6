@@ -385,13 +385,6 @@ static Image *ReadXPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) CopyMagickString(postscript_image->magick,image->magick,
       MagickPathExtent);
     postscript_image->page=page;
-    if (image_info->ping != MagickFalse)
-      {
-        postscript_image->magick_columns*=image->x_resolution/2.0;
-        postscript_image->magick_rows*=image->y_resolution/2.0;
-        postscript_image->columns*=image->x_resolution/2.0;
-        postscript_image->rows*=image->y_resolution/2.0;
-      }
     (void) CloneImageProfiles(postscript_image,image);
     (void) CloneImageProperties(postscript_image,image);
     next=SyncNextImageInList(postscript_image);

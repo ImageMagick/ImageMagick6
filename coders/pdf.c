@@ -716,13 +716,6 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) CopyMagickString(pdf_image->filename,filename,MaxTextExtent);
     (void) CopyMagickString(pdf_image->magick,image->magick,MaxTextExtent);
     pdf_image->page=page;
-    if (image_info->ping != MagickFalse)
-      {
-        pdf_image->magick_columns*=image->x_resolution/2.0;
-        pdf_image->magick_rows*=image->y_resolution/2.0;
-        pdf_image->columns*=image->x_resolution/2.0;
-        pdf_image->rows*=image->y_resolution/2.0;
-      }
     (void) CloneImageProfiles(pdf_image,image);
     (void) CloneImageProperties(pdf_image,image);
     next=SyncNextImageInList(pdf_image);
