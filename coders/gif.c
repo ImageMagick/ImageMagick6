@@ -58,6 +58,7 @@
 #include "magick/profile.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/option.h"
@@ -1120,8 +1121,9 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if (((ssize_t) (count+offset+MagickPathExtent)) >= (ssize_t) extent)
                 {
                   extent<<=1;
-                  comments=(char *) ResizeQuantumMemory(comments,extent+
-                    MagickPathExtent,sizeof(*comments));
+                  comments=(char *) ResizeQuantumMemory(comments,
+                    OverAllocateMemory(extent+MagickPathExtent),
+                    sizeof(*comments));
                   if (comments == (char *) NULL)
                     ThrowGIFException(ResourceLimitError,
                       "MemoryAllocationFailed");

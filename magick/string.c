@@ -512,8 +512,8 @@ MagickExport MagickBooleanType ConcatenateString(
   length+=source_length;
   if (~length < MaxTextExtent)
     ThrowFatalException(ResourceLimitFatalError,"UnableToConcatenateString");
-  *destination=(char *) ResizeQuantumMemory(*destination,length+MaxTextExtent,
-    sizeof(**destination));
+  *destination=(char *) ResizeQuantumMemory(*destination,
+    OverAllocateMemory(length+MaxTextExtent),sizeof(**destination));
   if (*destination == (char *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToConcatenateString");
   if (source_length != 0)
@@ -560,7 +560,19 @@ MagickExport void ConcatenateStringInfo(StringInfo *string_info,
   length=string_info->length;
   if (~length < source->length)
     ThrowFatalException(ResourceLimitFatalError,"UnableToConcatenateString");
-  SetStringInfoLength(string_info,length+source->length);
+  length+=source->length;
+  if (~length < MagickPathExtent)
+    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  string_info->length=length;
+  if (string_info->datum == (unsigned char *) NULL)
+    string_info->datum=(unsigned char *) AcquireQuantumMemory(length+
+      MagickPathExtent,sizeof(*string_info->datum));
+  else
+    string_info->datum=(unsigned char *) ResizeQuantumMemory( 
+      string_info->datum,OverAllocateMemory(length+MagickPathExtent),
+      sizeof(*string_info->datum));
+  if (string_info->datum == (unsigned char *) NULL)
+    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   (void) memcpy(string_info->datum+length,source->datum,source->length);
 }
 
@@ -2578,8 +2590,8 @@ MagickExport MagickBooleanType SubstituteString(char **string,
         */
         offset=(ssize_t) (p-(*string));
         extent=strlen(*string)+replace_extent-search_extent+1;
-        *string=(char *) ResizeQuantumMemory(*string,extent+MaxTextExtent,
-          sizeof(*p));
+        *string=(char *) ResizeQuantumMemory(*string,
+          OverAllocateMemory(extent+MaxTextExtent),sizeof(*p));
         if (*string == (char *) NULL)
           ThrowFatalException(ResourceLimitFatalError,"UnableToAcquireString");
         p=(*string)+offset;
