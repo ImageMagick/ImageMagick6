@@ -1,3 +1,10 @@
+2021-06-19  6.9.12-16  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-16 GIT revision 16...
+
+2021-06-19  6.9.12-16  <quetzlzacatenango@image...>
+  * Correct TGA orientation (reference
+    https://github.com/ImageMagick/ImageMagick/issues/3844).
+
 2021-06-12  6.9.12-15  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-15 GIT revision 16679:b21457a7e:20210612
 

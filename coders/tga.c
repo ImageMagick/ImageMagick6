@@ -421,7 +421,10 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   offset=0;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    q=QueueAuthenticPixels(image,0,offset,image->columns,1,exception);
+    x=offset;
+    if (((unsigned char) (tga_info.attributes & 0x20) >> 5) == 0)
+      x=image->rows-x-1;
+    q=QueueAuthenticPixels(image,0,x,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)
       break;
     indexes=GetAuthenticIndexQueue(image);
