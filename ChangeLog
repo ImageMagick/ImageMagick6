@@ -1,5 +1,9 @@
-2021-06-20  6.9.12-16  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-16 GIT revision 16689:d02e016da:20210620
+2021-06-25  6.9.12-17  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-17 GIT revision 16689:d02e016da:20210620
+
+2021-06-25  6.9.12-17  <quetzlzacatenango@image...>
+  * malloc() corruption fix (reference
+    https://github.com/ImageMagick/ImageMagick6/issues/159).
 
 2021-06-19  6.9.12-16  <quetzlzacatenango@image...>
   * Correct TGA orientation (reference
