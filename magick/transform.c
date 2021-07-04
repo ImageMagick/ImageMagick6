@@ -857,8 +857,6 @@ MagickExport Image *CropImageToTiles(const Image *image,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  crop_image=NewImageList();
-  next=NewImageList();
   flags=ParseGravityGeometry(image,crop_geometry,&geometry,exception);
   if ((flags & AreaValue) != 0)
     {
@@ -876,6 +874,7 @@ MagickExport Image *CropImageToTiles(const Image *image,
       /*
         Crop into NxM tiles (@ flag).
       */
+      crop_image=NewImageList();
       width=image->columns;
       height=image->rows;
       if (geometry.width == 0)
@@ -989,7 +988,8 @@ MagickExport Image *CropImageToTiles(const Image *image,
       height=geometry.height;
       if (height == 0)
         height=page.height;
-      next=NewImageList();
+      crop_image=NewImageList();
+      next=(Image *) NULL;
       for (y=0; y < (ssize_t) page.height; y+=(ssize_t) height)
       {
         for (x=0; x < (ssize_t) page.width; x+=(ssize_t) width)
