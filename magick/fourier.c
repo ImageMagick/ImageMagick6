@@ -295,15 +295,15 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
         default:
         {
           Cr->red=Ar->red;
-          Ci->red=(-Bi->red);
+          Ci->red=(-Ai->red);
           Cr->green=Ar->green;
-          Ci->green=(-Bi->green);
+          Ci->green=(-Ai->green);
           Cr->blue=Ar->blue;
-          Ci->blue=(-Bi->blue);
+          Ci->blue=(-Ai->blue);
           if (images->matte != MagickFalse)
             {
               Cr->opacity=Ar->opacity;
-              Ci->opacity=(-Bi->opacity);
+              Ci->opacity=(-Ai->opacity);
             }
           break;
         }
