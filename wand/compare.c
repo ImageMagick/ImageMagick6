@@ -1242,8 +1242,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case RootMeanSquaredErrorMetric:
             {
               (void) FormatLocaleFile(stderr,"%.*g (%.*g)",GetMagickPrecision(),
-                QuantumRange*distortion,GetMagickPrecision(),
-                (double) distortion);
+                QuantumRange*distortion,GetMagickPrecision(),distortion);
               break;
             }
             case AbsoluteErrorMetric:

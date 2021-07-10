@@ -1227,7 +1227,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
     gamma=image_statistics[i].standard_deviation*
       reconstruct_statistics[i].standard_deviation;
     gamma=PerceptibleReciprocal(gamma);
-    distortion[i]=QuantumRange*gamma*distortion[i];
+    distortion[i]=MagickMin(QuantumRange*gamma*distortion[i],1.0);
   }
   distortion[CompositeChannels]=0.0;
   if ((channel & RedChannel) != 0)
