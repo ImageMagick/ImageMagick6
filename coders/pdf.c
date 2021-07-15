@@ -497,7 +497,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       page.height=(size_t) ((ssize_t) ceil((double) ((info.bounds.y2-
         info.bounds.y1)*image->y_resolution/delta.y)-0.5));
     }
-  fitPage=image_info->ping == MagickFalse ? MagickFalse : MagickTrue;
+  fitPage=MagickFalse;
   option=GetImageOption(image_info,"pdf:fit-page");
   if (option != (char *) NULL)
     {
@@ -575,9 +575,10 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     image->y_resolution);
   if (image_info->ping != MagickFalse)
     (void) FormatLocaleString(density,MagickPathExtent,"2.0x2.0");
-  if ((image_info->page != (char *) NULL) || (fitPage != MagickFalse))
-    (void) FormatLocaleString(options,MaxTextExtent,"-g%.20gx%.20g ",(double)
-      page.width,(double) page.height);
+  else
+    if ((image_info->page != (char *) NULL) || (fitPage != MagickFalse))
+      (void) FormatLocaleString(options,MaxTextExtent,"-g%.20gx%.20g ",
+        (double) page.width,(double) page.height);
   if (fitPage != MagickFalse)
     (void) ConcatenateMagickString(options,"-dPSFitPage ",MaxTextExtent);
   if (info.cropbox != MagickFalse)
@@ -716,6 +717,13 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) CopyMagickString(pdf_image->filename,filename,MaxTextExtent);
     (void) CopyMagickString(pdf_image->magick,image->magick,MaxTextExtent);
     pdf_image->page=page;
+    if (image_info->ping != MagickFalse)
+      {
+        pdf_image->magick_columns=page.width;
+        pdf_image->magick_rows=page.width;
+        pdf_image->columns=page.width;
+        pdf_image->rows=page.height;
+      }
     (void) CloneImageProfiles(pdf_image,image);
     (void) CloneImageProperties(pdf_image,image);
     next=SyncNextImageInList(pdf_image);
