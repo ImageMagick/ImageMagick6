@@ -497,7 +497,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       page.height=(size_t) ((ssize_t) ceil((double) ((info.bounds.y2-
         info.bounds.y1)*image->y_resolution/delta.y)-0.5));
     }
-  fitPage=MagickFalse;
+  fitPage=image_info->ping == MagickFalse ? MagickFalse : MagickTrue;
   option=GetImageOption(image_info,"pdf:fit-page");
   if (option != (char *) NULL)
     {
