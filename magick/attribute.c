@@ -293,12 +293,12 @@ static RectangleInfo GetEdgeBoundingBox(const Image *image,
     0,1,0,0,exception);
   edge.bottom=GetEdgeBackgroundFactor(edge_image,edge_view,SouthGravity,
     0,1,0,0,exception);
-  percent_background=1.0;
+  percent_background=MagickEpsilon;
   artifact=GetImageArtifact(edge_image,"trim:percent-background");
   if (artifact != (const char *) NULL)
     percent_background=StringToDouble(artifact,(char **) NULL)/100.0;
   percent_background=MagickMin(MagickMax(1.0-percent_background,MagickEpsilon),
-    1.0);
+    MagickEpsilon);
   background_factor=GetMinEdgeBackgroundFactor(&edge);
   for ( ; background_factor < percent_background;
           background_factor=GetMinEdgeBackgroundFactor(&edge))
@@ -420,8 +420,8 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
   artifact=GetImageArtifact(image,"trim:percent-background");
   if (artifact != (const char *) NULL)
     return(GetEdgeBoundingBox(image,exception));
-  bounds.width=0;
-  bounds.height=0;
+  bounds.width=image->columns == 1 ? 1 : 0;
+  bounds.height=image->rows == 1 ? 1 : 0;
   bounds.x=(ssize_t) image->columns;
   bounds.y=(ssize_t) image->rows;
   GetMagickPixelPacket(image,&target[0]);
