@@ -1429,6 +1429,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             (void) FormatLocaleFile(stderr,"    Offset: %.20g,%.20g\n",(double)
               difference_image->page.x,(double) difference_image->page.y);
         }
+      (void) ResetImagePage(image,"0x0+0+0");
       status&=WriteImages(image_info,difference_image,argv[argc-1],exception);
       if ((metadata != (char **) NULL) && (format != (char *) NULL))
         {
