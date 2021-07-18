@@ -73,7 +73,7 @@ static int IdentifyMain(int argc,char **argv)
   MagickBooleanType
     status;
 
-  MagickCoreGenesis(*argv,MagickTrue);
+  MagickWandGenesis();
   exception=AcquireExceptionInfo();
   image_info=AcquireImageInfo();
   metadata=(char *) NULL;
@@ -83,7 +83,7 @@ static int IdentifyMain(int argc,char **argv)
     metadata=DestroyString(metadata);
   image_info=DestroyImageInfo(image_info);
   exception=DestroyExceptionInfo(exception);
-  MagickCoreTerminus();
+  MagickWandTerminus();
   return(status != MagickFalse ? 0 : 1);
 }
 

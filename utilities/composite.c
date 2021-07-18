@@ -69,14 +69,14 @@ static int CompositeMain(int argc,char **argv)
   MagickBooleanType
     status;
 
-  MagickCoreGenesis(*argv,MagickTrue);
+  MagickWandGenesis();
   exception=AcquireExceptionInfo();
   image_info=AcquireImageInfo();
   status=MagickCommandGenesis(image_info,CompositeImageCommand,argc,argv,
     (char **) NULL,exception);
   image_info=DestroyImageInfo(image_info);
   exception=DestroyExceptionInfo(exception);
-  MagickCoreTerminus();
+  MagickWandTerminus();
   return(status != MagickFalse ? 0 : 1);
 }
 
