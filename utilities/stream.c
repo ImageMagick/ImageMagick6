@@ -71,14 +71,15 @@ static int StreamMain(int argc,char **argv)
   MagickBooleanType
     status;
 
-  MagickWandGenesis();
+  MagickCoreGenesis(*argv,MagickTrue);
   exception=AcquireExceptionInfo();
   image_info=AcquireImageInfo();
   status=MagickCommandGenesis(image_info,StreamImageCommand,argc,argv,
     (char **) NULL,exception);
   image_info=DestroyImageInfo(image_info);
   exception=DestroyExceptionInfo(exception);
-  MagickWandTerminus();
+  DestroyWandIds();
+  MagickCoreTerminus();
   return(status != MagickFalse ? 0 : 1);
 }
 

@@ -77,7 +77,7 @@ static int CompareMain(int argc,char **argv)
     dissimilar,
     status;
 
-  MagickWandGenesis();
+  MagickCoreGenesis(*argv,MagickTrue);
   exception=AcquireExceptionInfo();
   image_info=AcquireImageInfo();
   metadata=(char *) NULL;
@@ -89,7 +89,8 @@ static int CompareMain(int argc,char **argv)
   dissimilar=IsMagickTrue(option);
   image_info=DestroyImageInfo(image_info);
   exception=DestroyExceptionInfo(exception);
-  MagickWandTerminus();
+  DestroyWandIds();
+  MagickCoreTerminus();
   if (dissimilar != MagickFalse)
     return(1);
   return(status != MagickFalse ? 0 : 2);
