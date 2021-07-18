@@ -92,7 +92,6 @@ typedef struct _MagickWand
 #include "wand/pixel-iterator.h"
 #include "wand/pixel-wand.h"
 #include "wand/stream.h"
-#include "wand/wand.h"
 #include "wand/wand-view.h"
 
 extern WandExport char

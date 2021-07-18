@@ -89,14 +89,14 @@ WAND_INCLUDE_HDRS = \
 	wand/pixel-iterator.h \
 	wand/pixel-wand.h \
 	wand/stream.h \
-	wand/wand.h \
 	wand/wand-view.h
 
 WAND_NOINST_HDRS = \
 	wand/mogrify-private.h \
 	wand/magick-wand-private.h \
 	wand/pixel-wand-private.h \
-	wand/studio.h
+	wand/studio.h \
+	wand/wand.h
 
 # Headers which are installed
 wandinc_HEADERS = \
