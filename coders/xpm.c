@@ -1093,7 +1093,7 @@ static MagickBooleanType WriteXPMImage(const ImageInfo *image_info,Image *image)
     if (isalnum((int) ((unsigned char) basename[i])) == 0)
       basename[i]='_';
   (void) FormatLocaleString(buffer,MaxTextExtent,
-    "static char *%.1024s[] = {\n",basename);
+    "static const char *%.1024s[] = {\n",basename);
   (void) WriteBlobString(image,buffer);
   (void) WriteBlobString(image,"/* columns rows colors chars-per-pixel */\n");
   (void) FormatLocaleString(buffer,MaxTextExtent,
