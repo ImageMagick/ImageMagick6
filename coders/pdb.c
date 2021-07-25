@@ -801,7 +801,8 @@ static MagickBooleanType WritePDBImage(const ImageInfo *image_info,Image *image)
   status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
-  (void) TransformImageColorspace(image,sRGBColorspace);
+  if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+    (void) TransformImageColorspace(image,sRGBColorspace);
   if ((image -> colors <= 2 ) ||
       (GetImageType(image,&image->exception ) == BilevelType)) {
     bits_per_pixel=1;
@@ -885,7 +886,8 @@ static MagickBooleanType WritePDBImage(const ImageInfo *image_info,Image *image)
   (void) memset(buffer,0,512*sizeof(*buffer));
   (void) memset(scanline,0,image->columns*packet_size*sizeof(*scanline));
   if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
-    (void) TransformImageColorspace(image,sRGBColorspace);
+    if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+      (void) TransformImageColorspace(image,sRGBColorspace);
   /*
     Convert to GRAY raster scanline.
   */

@@ -1445,7 +1445,7 @@ MagickExport MagickBooleanType SetImageMonochrome(Image *image,
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  if (image->type == BilevelType)
+  if (IsMonochromeImage(image,&image->exception) != MagickFalse)
     return(MagickTrue);
   if ((IsGrayColorspace(image->colorspace) == MagickFalse) &&
       (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse))

@@ -703,7 +703,8 @@ static MagickBooleanType WriteHDRImage(const ImageInfo *image_info,Image *image)
   if (status == MagickFalse)
     return(status);
   if (IsRGBColorspace(image->colorspace) == MagickFalse)
-    (void) TransformImageColorspace(image,sRGBColorspace);
+    if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+      (void) TransformImageColorspace(image,sRGBColorspace);
   /*
     Write header.
   */

@@ -806,7 +806,8 @@ static MagickBooleanType WriteXWDImage(const ImageInfo *image_info,Image *image)
     ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
   if ((image->storage_class == PseudoClass) && (image->colors > 256))
     (void) SetImageType(image,TrueColorType);
-  (void) TransformImageColorspace(image,sRGBColorspace);
+  if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+    (void) TransformImageColorspace(image,sRGBColorspace);
   /*
     Initialize XWD file header.
   */

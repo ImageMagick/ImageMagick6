@@ -247,7 +247,8 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
   if (status == MagickFalse)
     return(status);
   (void) CloseBlob(image);
-  (void) TransformImageColorspace(image,sRGBColorspace);
+  if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+    (void) TransformImageColorspace(image,sRGBColorspace);
   *url='\0';
   if ((LocaleCompare(image_info->magick,"FTP") == 0) ||
       (LocaleCompare(image_info->magick,"HTTP") == 0))

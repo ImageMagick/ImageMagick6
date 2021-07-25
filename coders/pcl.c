@@ -740,7 +740,8 @@ static MagickBooleanType WritePCLImage(const ImageInfo *image_info,Image *image)
     /*
       Initialize the printer.
     */
-    (void) TransformImageColorspace(image,sRGBColorspace);
+    if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+      (void) TransformImageColorspace(image,sRGBColorspace);
     (void) WriteBlobString(image,"\033E");  /* printer reset */
     (void) WriteBlobString(image,"\033*r3F");  /* set presentation mode */
     (void) FormatLocaleString(buffer,MaxTextExtent,"\033*r%.20gs%.20gT",

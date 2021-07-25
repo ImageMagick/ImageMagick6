@@ -3101,7 +3101,8 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
           ChromaticityInfo
             save_chromaticity = image->chromaticity;
 
-          SetImageColorspace(image,sRGBColorspace);
+          if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+            (void) SetImageColorspace(image,sRGBColorspace);
           image->rendering_intent = save_rendering_intent;
           image->chromaticity = save_chromaticity;
         }

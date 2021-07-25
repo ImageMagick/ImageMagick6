@@ -3406,7 +3406,8 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
            (image->colorspace != CMYKColorspace)) &&
           (image_info->colorspace != CMYKColorspace))
         {
-          (void) TransformImageColorspace(image,sRGBColorspace);
+          if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+            (void) TransformImageColorspace(image,sRGBColorspace);
           (void) WriteBlobMSBShort(image,(unsigned short)
             (image->storage_class == PseudoClass ? IndexedMode : RGBMode));
         }

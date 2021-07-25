@@ -371,7 +371,8 @@ static MagickBooleanType WritePGXImage(const ImageInfo *image_info,Image *image)
   (void) FormatLocaleString(buffer,MaxTextExtent,"PG ML + %g %g %g\n",
     (double) image->depth,(double) image->columns,(double) image->rows);
   (void) WriteBlob(image,strlen(buffer),(unsigned char *) buffer);
-  (void) TransformImageColorspace(image,sRGBColorspace);
+  if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+    (void) TransformImageColorspace(image,sRGBColorspace);
   quantum_info=AcquireQuantumInfo(image_info,image);
   pixels=(unsigned char *) GetQuantumPixels(quantum_info);
   for (y=0; y < (ssize_t) image->rows; y++)

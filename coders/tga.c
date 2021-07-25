@@ -778,7 +778,8 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
   */
   if ((image->columns > 65535L) || (image->rows > 65535L))
     ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
-  (void) TransformImageColorspace(image,sRGBColorspace);
+  if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+    (void) TransformImageColorspace(image,sRGBColorspace);
   compression=image->compression;
   if (image_info->compression != UndefinedCompression)
     compression=image_info->compression;

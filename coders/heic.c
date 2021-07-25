@@ -397,7 +397,8 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   file_data=RelinquishMagickMemory(file_data);
   profile=GetImageProfile(image,"icc");
   if (profile != (const StringInfo *) NULL)
-    (void) TransformImageColorspace(image,sRGBColorspace);
+    if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
+      (void) TransformImageColorspace(image,sRGBColorspace);
   return(GetFirstImageInList(image));
 }
 #endif
