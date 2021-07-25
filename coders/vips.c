@@ -617,7 +617,7 @@ ModuleExport void UnregisterVIPSImage(void)
 %
 */
 
-static inline void WriteVIPSPixel(Image *image, const Quantum value)
+static inline void WriteVIPSPixel(Image *image,const Quantum value)
 {
   if (image->depth == 16)
     (void) WriteBlobShort(image,ScaleQuantumToShort(value));
@@ -737,8 +737,11 @@ static MagickBooleanType WriteVIPSImage(const ImageInfo *image_info,
         WriteVIPSPixel(image,GetPixelAlpha(p));
       else
         {
-          WriteVIPSPixel(image,GetPixelGreen(p));
-          WriteVIPSPixel(image,GetPixelBlue(p));
+          if (channels >= 3)
+            {
+              WriteVIPSPixel(image,GetPixelGreen(p));
+              WriteVIPSPixel(image,GetPixelBlue(p));
+            }
           if (channels >= 4)
             {
               if (image->colorspace == CMYKColorspace)
