@@ -773,8 +773,8 @@ static MagickBooleanType CheckImageColors(const Image *image,
           /*
             Add this unique color to the color list.
           */
-          if (node_info->number_unique == 0)
-            node_info->list=(ColorPacket *) AcquireQuantumMemory(max_colors,
+          if (node_info->list == (ColorPacket *) NULL)
+            node_info->list=(ColorPacket *) AcquireQuantumMemory(1,
               sizeof(*node_info->list));
           else
             node_info->list=(ColorPacket *) ResizeQuantumMemory(node_info->list,
