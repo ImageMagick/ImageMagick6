@@ -8699,6 +8699,9 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 #endif
 
   image_colors = (int) image->colors;
+  number_opaque = (int) image->colors;
+  number_transparent = 0;
+  number_semitransparent = 0;
 
   if (mng_info->write_png_colortype &&
      (mng_info->write_png_colortype > 4 || (mng_info->write_png_depth >= 8 &&
@@ -8745,7 +8748,8 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
   tried_333 = MagickFalse;
   tried_444 = MagickFalse;
 
-  (void) SetImageDepth(image,image->depth);
+  if (image->depth != GetImageDepth(image,&image->exception))
+    (void) SetImageDepth(image,image->depth);
   for (j=0; j<6; j++)
   {
     /*
@@ -8857,9 +8861,10 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
      number_semitransparent = 0;
      number_transparent = 0;
 
+     (void) SetImageStorageClass(image,image->storage_class);
      for (y=0; y < (ssize_t) image->rows; y++)
      {
-       q=GetAuthenticPixels(image,0,y,image->columns,1,exception);
+       q=GetVirtualPixels(image,0,y,image->columns,1,exception);
 
        if (q == (PixelPacket *) NULL)
          break;
