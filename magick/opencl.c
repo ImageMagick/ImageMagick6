@@ -1468,7 +1468,7 @@ MagickExport
 MagickBooleanType InitOpenCLEnv(MagickCLEnv clEnv, ExceptionInfo* exception) {
   MagickBooleanType status = MagickFalse;
 
-  if (clEnv == NULL)
+  if ((clEnv == NULL) || (getenv("MAGICK_OCL_DEVICE") == (const char *) NULL))
     return MagickFalse;
 
 #ifdef MAGICKCORE_CLPERFMARKER
