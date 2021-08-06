@@ -1477,8 +1477,7 @@ MagickBooleanType InitOpenCLEnv(MagickCLEnv clEnv, ExceptionInfo* exception) {
 
   LockSemaphoreInfo(clEnv->lock);
   if (clEnv->OpenCLInitialized == MagickFalse) {
-    if (clEnv->device==NULL
-        && clEnv->OpenCLDisabled == MagickFalse)
+    if (clEnv->device==NULL && clEnv->OpenCLDisabled == MagickFalse)
       status = autoSelectDevice(clEnv, exception);
     else
       status = InitOpenCLEnvInternal(clEnv, exception);
