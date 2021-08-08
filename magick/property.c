@@ -3922,8 +3922,8 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
             FX - value calculator.
           */
           fx_info=AcquireFxInfo(image,pattern+3);
-          status=FxEvaluateChannelExpression(fx_info,DefaultChannels,0,0,&value,
-            &image->exception);
+          status=FxEvaluateChannelExpression(fx_info,property_info->channel,0,0,
+            &value,&image->exception);
           fx_info=DestroyFxInfo(fx_info);
           if (status != MagickFalse)
             {
