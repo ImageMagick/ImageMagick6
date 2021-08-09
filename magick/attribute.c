@@ -1576,11 +1576,7 @@ MagickExport MagickBooleanType SetImageType(Image *image,const ImageType type)
     {
       status=TransformImageColorspace(image,GRAYColorspace);
       (void) NormalizeImage(image);
-      quantize_info=AcquireQuantizeInfo(image_info);
-      quantize_info->number_colors=2;
-      quantize_info->colorspace=GRAYColorspace;
-      status=QuantizeImage(quantize_info,image);
-      quantize_info=DestroyQuantizeInfo(quantize_info);
+      status=BilevelImage(image,QuantumRange/2.0);
       image->matte=MagickFalse;
       break;
     }
