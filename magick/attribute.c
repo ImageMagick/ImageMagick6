@@ -1574,6 +1574,8 @@ MagickExport MagickBooleanType SetImageType(Image *image,const ImageType type)
   {
     case BilevelType:
     {
+      status=TransformImageColorspace(image,GRAYColorspace);
+      (void) NormalizeImage(image);
       status=BilevelImage(image,QuantumRange/2.0);
       quantize_info=AcquireQuantizeInfo(image_info);
       quantize_info->number_colors=2;
