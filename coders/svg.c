@@ -3083,7 +3083,7 @@ static void SVGError(void *context,const char *format,...)
     reason,"`%s`",message);
   message=DestroyString(message);
   va_end(operands);
-  svg_info->parser->instate=XML_PARSER_EOF;
+  xmlStopParser(svg_info->parser);
 }
 
 static void SVGCDataBlock(void *context,const xmlChar *value,int length)
