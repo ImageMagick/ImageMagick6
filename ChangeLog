@@ -1,5 +1,5 @@
 2021-08-21  6.9.12-20  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-20 GIT revision 16759:4e5510e02:20210821
+  * Release ImageMagick version 6.9.12-20 GIT revision 16761:d49be7fbb:20210821
 
 2021-07-26  6.9.12-20  <quetzlzacatenango@image...>
   * heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell).
