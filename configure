@@ -1172,7 +1172,6 @@ enable_cipher
 enable_zero_configuration
 enable_hdri
 enable_pipes
-enable_assert
 enable_maintainer_mode
 enable_hugepages
 enable_ccmalloc
@@ -1193,6 +1192,7 @@ with_jemalloc
 with_tcmalloc
 with_umem
 with_libstdc
+enable_assert
 with_bzlib
 with_x
 with_zlib
@@ -1964,7 +1964,6 @@ Optional Features:
   --enable-hdri           accurately represent the wide range of intensity
                           levels found in real scenes
   --enable-pipes          enable pipes (|) in filenames
-  --disable-assert        disable assert() statements in build
   --enable-maintainer-mode
                           enable make rules and dependencies not useful (and
                           sometimes confusing) to the casual installer
@@ -4552,7 +4551,7 @@ MAGICK_PATCHLEVEL_VERSION=21
 
 MAGICK_VERSION=6.9.12-21
 
-MAGICK_GIT_REVISION=16763:0f1b20cf7:20210822
+MAGICK_GIT_REVISION=16764:397b5c324:20210824
 
 
 # Substitute library versioning
@@ -22034,21 +22033,6 @@ if test "$enable_pipes" = 'yes'; then
 $as_echo "#define PIPES_SUPPORT 1" >>confdefs.h
 
     MAGICK_FEATURES="Pipes $MAGICK_FEATURES"
-fi
-
-# Build a version of ImageMagick with assert statements.
-# Check whether --enable-assert was given.
-if test "${enable_assert+set}" = set; then :
-  enableval=$enable_assert; enable_assert=$enableval
-else
-  enable_assert='yes'
-fi
-
-
-if test "$enable_assert" = 'no'; then
-
-$as_echo "#define NDEBUG 1" >>confdefs.h
-
 fi
 
 # Don't emit "rebuild rules" for configure, Makefile.ins, etc.
