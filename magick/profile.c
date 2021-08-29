@@ -781,11 +781,11 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
   const void *datum,const size_t length,
   const MagickBooleanType magick_unused(clone))
 {
-#define GetLCMSPixel(source_info,pixel) \
-  (source_info.scale*QuantumScale*(pixel)+source_info.translate)
+#define GetLCMSPixel(source_info,pixel,translate) \
+  (source_info.scale*(QuantumScale*(pixel)+(translate)))
 #define ProfileImageTag  "Profile/Image"
-#define SetLCMSPixel(target_info,pixel) \
-  ClampToQuantum(target_info.scale*QuantumRange*(pixel)+target_info.translate)
+#define SetLCMSPixel(target_info,pixel,translate) \
+  ClampToQuantum(target_info.scale*(QuantumRange*(pixel)+(translate)))
 #define ThrowProfileException(severity,tag,context) \
 { \
   if (profile != (StringInfo *) NULL) \
@@ -1138,17 +1138,19 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               p=source_info.pixels[id];
               for (x=0; x < (ssize_t) image->columns; x++)
               {
-                *p++=GetLCMSPixel(source_info,GetPixelRed(q));
+                *p++=GetLCMSPixel(source_info,GetPixelRed(q),0.0);
                 if (source_info.channels > 1)
                   {
-                    *p++=GetLCMSPixel(source_info,GetPixelGreen(q));
-                    *p++=GetLCMSPixel(source_info,GetPixelBlue(q));
+                    *p++=GetLCMSPixel(source_info,GetPixelGreen(q),
+                      source_info.translate);
+                    *p++=GetLCMSPixel(source_info,GetPixelBlue(q),
+                      source_info.translate);
                   }
                 if (source_info.channels > 3)
                   {
-                    *p=GetLCMSPixel(source_info,0);
+                    *p=GetLCMSPixel(source_info,0,0.0);
                     if (indexes != (IndexPacket *) NULL)
-                      *p=GetLCMSPixel(source_info,GetPixelIndex(indexes+x));
+                      *p=GetLCMSPixel(source_info,GetPixelIndex(indexes+x),0.0);
                     p++;
                   }
                 q++;
@@ -1159,21 +1161,23 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               q-=image->columns;
               for (x=0; x < (ssize_t) image->columns; x++)
               {
-                SetPixelRed(q,SetLCMSPixel(target_info,*p));
+                SetPixelRed(q,SetLCMSPixel(target_info,*p,0.0));
                 SetPixelGreen(q,GetPixelRed(q));
                 SetPixelBlue(q,GetPixelRed(q));
                 p++;
                 if (target_info.channels > 1)
                   {
-                    SetPixelGreen(q,SetLCMSPixel(target_info,*p));
+                    SetPixelGreen(q,SetLCMSPixel(target_info,*p,
+                      target_info.translate));
                     p++;
-                    SetPixelBlue(q,SetLCMSPixel(target_info,*p));
+                    SetPixelBlue(q,SetLCMSPixel(target_info,*p,
+                      target_info.translate));
                     p++;
                   }
                 if (target_info.channels > 3)
                   {
                     if (indexes != (IndexPacket *) NULL)
-                      SetPixelIndex(indexes+x,SetLCMSPixel(target_info,*p));
+                      SetPixelIndex(indexes+x,SetLCMSPixel(target_info,*p,0.0));
                     p++;
                   }
                 q++;
