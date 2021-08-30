@@ -782,10 +782,10 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
   const MagickBooleanType magick_unused(clone))
 {
 #define GetLCMSPixel(source_info,pixel,translate) \
-  (source_info.scale*(QuantumScale*(pixel)+(translate)))
+  (source_info->scale*((QuantumScale*pixel)+translate))
 #define ProfileImageTag  "Profile/Image"
 #define SetLCMSPixel(target_info,pixel,translate) \
-  ClampToQuantum(target_info.scale*(QuantumRange*(pixel)+(translate)))
+  ClampToQuantum(target_info->scale*((QuantumRange*pixel)+translate))
 #define ThrowProfileException(severity,tag,context) \
 { \
   if (profile != (StringInfo *) NULL) \
