@@ -358,8 +358,8 @@ typedef struct _LCMSInfo
 
   double
     **magick_restrict pixels,
-    scale,
-    translate;
+    scale[4],
+    translate[4];
 } LCMSInfo;
 
 #if LCMS_VERSION < 2060
@@ -482,6 +482,22 @@ static void LCMSExceptionHandler(cmsContext context,cmsUInt32Number severity,
   if (image != (Image *) NULL)
     (void) ThrowMagickException(&image->exception,GetMagickModule(),
       ImageWarning,"UnableToTransformColorspace","`%s'",image->filename);
+}
+
+static inline void SetLCMSInfoTranslate(LCMSInfo *info,const double translate)
+{
+  info->translate[0]=translate;
+  info->translate[1]=translate;
+  info->translate[2]=translate;
+  info->translate[3]=translate;
+}
+
+static inline void SetLCMSInfoScale(LCMSInfo *info,const double scale)
+{
+  info->scale[0]=scale;
+  info->scale[1]=scale;
+  info->scale[2]=scale;
+  info->scale[3]=scale;
 }
 #endif
 
@@ -781,11 +797,11 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
   const void *datum,const size_t length,
   const MagickBooleanType magick_unused(clone))
 {
-#define GetLCMSPixel(source_info,pixel,translate) \
-  (source_info->scale*((QuantumScale*pixel)+translate))
+#define GetLCMSPixel(source_info,pixel,index) \
+  (source_info.scale[index]*((QuantumScale*pixel)+source_info.translate[index]))
 #define ProfileImageTag  "Profile/Image"
-#define SetLCMSPixel(target_info,pixel,translate) \
-  ClampToQuantum(target_info->scale*((QuantumRange*pixel)+translate))
+#define SetLCMSPixel(target_info,pixel,index) \
+  ClampToQuantum(target_info.scale[index]*((QuantumRange*pixel)+target_info.translate[index]))
 #define ThrowProfileException(severity,tag,context) \
 { \
   if (profile != (StringInfo *) NULL) \
@@ -939,8 +955,8 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
                   ThrowProfileException(ResourceLimitError,
                     "ColorspaceColorProfileMismatch",name);
               }
-            source_info.scale=1.0;
-            source_info.translate=0.0;
+            SetLCMSInfoScale(&source_info,1.0);
+            SetLCMSInfoTranslate(&source_info,0.0);
             source_info.colorspace=sRGBColorspace;
             source_info.channels=3;
             switch (cmsGetColorSpace(source_info.profile))
@@ -950,7 +966,7 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
                 source_info.colorspace=CMYKColorspace;
                 source_info.channels=4;
                 source_info.type=(cmsUInt32Number) TYPE_CMYK_DBL;
-                source_info.scale=100.0;
+                SetLCMSInfoScale(&source_info,100.0);
                 break;
               }
               case cmsSigGrayData:
@@ -964,8 +980,11 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               {
                 source_info.colorspace=LabColorspace;
                 source_info.type=(cmsUInt32Number) TYPE_Lab_DBL;
-                source_info.scale=100.0;
-                source_info.translate=(-0.5);
+                source_info.scale[0]=100.0;
+                source_info.scale[1]=255.0;
+                source_info.scale[2]=255.0;
+                source_info.translate[1]=(-0.5);
+                source_info.translate[2]=(-0.5);
                 break;
               }
               case cmsSigRgbData:
@@ -987,8 +1006,8 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
             signature=cmsGetPCS(source_info.profile);
             if (target_info.profile != (cmsHPROFILE) NULL)
               signature=cmsGetColorSpace(target_info.profile);
-            target_info.scale=1.0;
-            target_info.translate=0.0;
+            SetLCMSInfoScale(&target_info,1.0);
+            SetLCMSInfoTranslate(&target_info,0.0);
             target_info.channels=3;
             switch (signature)
             {
@@ -997,7 +1016,7 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
                 target_info.colorspace=CMYKColorspace;
                 target_info.channels=4;
                 target_info.type=(cmsUInt32Number) TYPE_CMYK_DBL;
-                target_info.scale=0.01;
+                SetLCMSInfoScale(&target_info,0.01);
                 break;
               }
               case cmsSigGrayData:
@@ -1011,8 +1030,11 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               {
                 target_info.colorspace=LabColorspace;
                 target_info.type=(cmsUInt32Number) TYPE_Lab_DBL;
-                target_info.scale=0.01;
-                target_info.translate=0.5;
+                target_info.scale[0]=0.01;
+                target_info.scale[1]=1/255.0;
+                target_info.scale[2]=1/255.0;
+                target_info.translate[1]=0.5;
+                target_info.translate[2]=0.5;
                 break;
               }
               case cmsSigRgbData:
@@ -1138,19 +1160,17 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               p=source_info.pixels[id];
               for (x=0; x < (ssize_t) image->columns; x++)
               {
-                *p++=GetLCMSPixel(source_info,GetPixelRed(q),0.0);
+                *p++=GetLCMSPixel(source_info,GetPixelRed(q),0);
                 if (source_info.channels > 1)
                   {
-                    *p++=GetLCMSPixel(source_info,GetPixelGreen(q),
-                      source_info.translate);
-                    *p++=GetLCMSPixel(source_info,GetPixelBlue(q),
-                      source_info.translate);
+                    *p++=GetLCMSPixel(source_info,GetPixelGreen(q),1);
+                    *p++=GetLCMSPixel(source_info,GetPixelBlue(q),2);
                   }
                 if (source_info.channels > 3)
                   {
-                    *p=GetLCMSPixel(source_info,0,0.0);
+                    *p=GetLCMSPixel(source_info,0,3);
                     if (indexes != (IndexPacket *) NULL)
-                      *p=GetLCMSPixel(source_info,GetPixelIndex(indexes+x),0.0);
+                      *p=GetLCMSPixel(source_info,GetPixelIndex(indexes+x),3);
                     p++;
                   }
                 q++;
@@ -1161,23 +1181,21 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
               q-=image->columns;
               for (x=0; x < (ssize_t) image->columns; x++)
               {
-                SetPixelRed(q,SetLCMSPixel(target_info,*p,0.0));
+                SetPixelRed(q,SetLCMSPixel(target_info,*p,0));
                 SetPixelGreen(q,GetPixelRed(q));
                 SetPixelBlue(q,GetPixelRed(q));
                 p++;
                 if (target_info.channels > 1)
                   {
-                    SetPixelGreen(q,SetLCMSPixel(target_info,*p,
-                      target_info.translate));
+                    SetPixelGreen(q,SetLCMSPixel(target_info,*p,1));
                     p++;
-                    SetPixelBlue(q,SetLCMSPixel(target_info,*p,
-                      target_info.translate));
+                    SetPixelBlue(q,SetLCMSPixel(target_info,*p,2));
                     p++;
                   }
                 if (target_info.channels > 3)
                   {
                     if (indexes != (IndexPacket *) NULL)
-                      SetPixelIndex(indexes+x,SetLCMSPixel(target_info,*p,0.0));
+                      SetPixelIndex(indexes+x,SetLCMSPixel(target_info,*p,3));
                     p++;
                   }
                 q++;
