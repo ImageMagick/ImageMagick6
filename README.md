@@ -1,6 +1,7 @@
 # ImageMagick
 
 [![Build Status](https://github.com/ImageMagick/ImageMagick6/workflows/main/badge.svg)](https://github.com/ImageMagick/ImageMagick6/actions)
+[![Donate](https://img.shields.io/badge/%24-donate-ff00ff.svg)](https://github.com/sponsors/ImageMagick)
 
 <p align="center">
 <img align="center" src="https://imagemagick.org/image/wizard.png" alt="ImageMagick logo" width="265"/>
