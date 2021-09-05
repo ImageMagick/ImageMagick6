@@ -1,6 +1,5 @@
 # ImageMagick
 
-[![Build Status](https://travis-ci.org/ImageMagick/ImageMagick6.svg?branch=main)](https://travis-ci.org/ImageMagick/ImageMagick6)
 ![main](https://github.com/ImageMagick/ImageMagick6/workflows/main/badge.svg)
 
 <p align="center">
