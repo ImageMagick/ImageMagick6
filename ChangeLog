@@ -1,3 +1,10 @@
+2021-09-06  6.9.12-22  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-21 GIT revision 16...
+
+2021-09-06  6.9.12-22  <quetzlzacatenango@image...>
+  * prevent color reduction merging into one color (reference
+    https://github.com/ImageMagick/ImageMagick/issues/4059).
+
 2021-09-04  6.9.12-21  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-21 GIT revision 16778:e0967eae2:20210904
 

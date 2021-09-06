@@ -1578,10 +1578,9 @@ MagickExport MagickBooleanType SetImageType(Image *image,const ImageType type)
       (void) NormalizeImage(image);
       quantize_info=AcquireQuantizeInfo(image_info);
       quantize_info->number_colors=2;
-      quantize_info->dither_method=FloydSteinbergDitherMethod;
+      quantize_info->colorspace=GRAYColorspace;
       status=QuantizeImage(quantize_info,image);
       quantize_info=DestroyQuantizeInfo(quantize_info);
-      status=MinMaxStretchImage(image,0.0,0.0,1.0);
       image->matte=MagickFalse;
       break;
     }
