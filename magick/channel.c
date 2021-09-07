@@ -674,6 +674,8 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
   {
     case ActivateAlphaChannel:
     {
+      if (image->matte == MagickTrue)
+        return(status);
       image->matte=MagickTrue;
       break;
     }
@@ -829,6 +831,8 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
     }
     case DeactivateAlphaChannel:
     {
+      if (image->matte == MagickFalse)
+        return(status);
       image->matte=MagickFalse;
       break;
     }
