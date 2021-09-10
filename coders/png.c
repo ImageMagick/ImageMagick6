@@ -36,7 +36,6 @@
 %
 %
 */
-
 
 /*
   Include declarations.
