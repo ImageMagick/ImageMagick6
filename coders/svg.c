@@ -76,6 +76,7 @@
 #include "magick/string-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
+
 #if defined(MAGICKCORE_XML_DELEGATE)
 #  if defined(MAGICKCORE_WINDOWS_SUPPORT)
 #    if !defined(__MINGW32__)
@@ -638,8 +639,8 @@ static Image *RenderRSVGImage(const ImageInfo *image_info,Image *image,
     next=GetNextImageInList(next);
   }
   return(GetFirstImageInList(image));
-#endif
 }
+#endif
 
 #if defined(MAGICKCORE_XML_DELEGATE)
 static SVGInfo *AcquireSVGInfo(void)
@@ -3471,7 +3472,8 @@ static void SVGExternalSubset(void *context,const xmlChar *name,
 }
 #endif
 
-static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
+static Image *RenderMSVGImage(const ImageInfo *image_info,Image *image,
+  ExceptionInfo *exception)
 {
   char
     filename[MaxTextExtent];
@@ -3483,7 +3485,6 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
     *file;
 
   Image
-    *image,
     *next;
 
   int
@@ -3505,61 +3506,6 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   xmlSAXHandlerPtr
     sax_handler;
 
-  /*
-    Open image file.
-  */
-  assert(image_info != (const ImageInfo *) NULL);
-  assert(image_info->signature == MagickCoreSignature);
-  assert(exception != (ExceptionInfo *) NULL);
-  if (image_info->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
-      image_info->filename);
-  assert(exception->signature == MagickCoreSignature);
-  image=AcquireImage(image_info);
-  status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
-  if (status == MagickFalse)
-    {
-      image=DestroyImageList(image);
-      return((Image *) NULL);
-    }
-  if ((fabs(image->x_resolution) < MagickEpsilon) ||
-      (fabs(image->y_resolution) < MagickEpsilon))
-    {
-      GeometryInfo
-        geometry_info;
-
-      int
-        flags;
-
-      flags=ParseGeometry(SVGDensityGeometry,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
-    }
-  if (LocaleCompare(image_info->magick,"MSVG") != 0)
-    {
-      Image
-        *svg_image;
-
-#if defined(MAGICKCORE_RSVG_DELEGATE)
-      if (LocaleCompare(image_info->magick,"RSVG") == 0)
-        {
-          image=RenderRSVGImage(image_info,image,exception);
-          return(image);
-        }
-#endif
-      svg_image=RenderSVGImage(image_info,image,exception);
-      if (svg_image != (Image *) NULL)
-        {
-          image=DestroyImageList(image);
-          return(svg_image);
-        }
-#if defined(MAGICKCORE_RSVG_DELEGATE)
-      image=RenderRSVGImage(image_info,image,exception);
-      return(image);
-#endif
-    }
   /*
     Open draw file.
   */
@@ -3712,15 +3658,27 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   return(GetFirstImageInList(image));
 }
 #else
+static Image *RenderMSVGImage(const ImageInfo *magick_unused(image_info),
+  Image *image,ExceptionInfo *magick_unused(exception))
+{
+  magick_unreferenced(image_info);
+  magick_unreferenced(exception);
+  image=DestroyImageList(image);
+  return((Image *) NULL);
+}
+#endif
+
 static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
   Image
-    *image,
-    *svg_image;
+    *image;
 
   MagickBooleanType
     status;
 
+  /*
+    Open image file.
+  */
   assert(image_info != (const ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
   assert(exception != (ExceptionInfo *) NULL);
@@ -3750,11 +3708,32 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if ((flags & SigmaValue) == 0)
         image->y_resolution=image->x_resolution;
     }
-  svg_image=RenderSVGImage(image_info,image,exception);
-  image=DestroyImage(image);
-  return(svg_image);
-}
+  if (LocaleCompare(image_info->magick,"MSVG") != 0)
+    {
+      Image
+        *svg_image;
+
+#if defined(MAGICKCORE_RSVG_DELEGATE)
+      if (LocaleCompare(image_info->magick,"RSVG") == 0)
+        {
+          image=RenderRSVGImage(image_info,image,exception);
+          return(image);
+        }
 #endif
+      svg_image=RenderSVGImage(image_info,image,exception);
+      if (svg_image != (Image *) NULL)
+        {
+          image=DestroyImageList(image);
+          return(svg_image);
+        }
+#if defined(MAGICKCORE_RSVG_DELEGATE)
+      image=RenderRSVGImage(image_info,image,exception);
+      return(image);
+#endif
+    }
+  image=RenderMSVGImage(image_info,image,exception);
+  return(image);
+}
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
