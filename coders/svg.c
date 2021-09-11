@@ -68,6 +68,7 @@
 #include "magick/option.h"
 #include "magick/pixel-accessor.h"
 #include "magick/pixel-private.h"
+#include "magick/policy.h"
 #include "magick/property.h"
 #include "magick/quantum-private.h"
 #include "magick/resource_.h"
@@ -3731,7 +3732,11 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       return(image);
 #endif
     }
-  image=RenderMSVGImage(image_info,image,exception);
+  status=IsRightsAuthorized(CoderPolicyDomain,ReadPolicyRights,"MSVG");
+  if (status == MagickFalse)
+    image=DestroyImageList(image);
+  else
+    image=RenderMSVGImage(image_info,image,exception);
   return(image);
 }
 
