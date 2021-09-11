@@ -1,8 +1,12 @@
 2021-09-06  6.9.12-22  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-21 GIT revision 16...
 
+2021-09-11  6.9.12-22  Dirk Lemstra <dirk@lem.....org>
+  * Fixed incorrect check when module is used as the domain in policy.xml
+    that would allow the use of a disabled module.
+
 2021-09-06  6.9.12-22  <quetzlzacatenango@image...>
-  * prevent color reduction merging into one color (reference
+  * Prevent color reduction merging into one color (reference
     https://github.com/ImageMagick/ImageMagick/issues/4059).
 
 2021-09-04  6.9.12-21  <quetzlzacatenango@image...>
@@ -15,19 +19,19 @@
     https://github.com/ImageMagick/ImageMagick/issues/4105).
 
 2021-08-21  6.9.12-20  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-20 GIT revision 16761:d49be7fbb:20210821 
+  * Release ImageMagick version 6.9.12-20 GIT revision 16761:d49be7fbb:20210821
 
 2021-07-26  6.9.12-20  <quetzlzacatenango@image...>
-  * heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell).
-  * grayscale image write optimization
+  * Heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell).
+  * Grayscale image write optimization
 
 2021-07-18  6.9.12-19  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-19 GIT revision 16731:1015767a1:20210718
 
 2021-07-17  6.9.12-19  <quetzlzacatenango@image...>
-  * trim no longer returns an empty image on 1-pixel width input (reference
+  * Trim no longer returns an empty image on 1-pixel width input (reference
     https://github.com/ImageMagick/ImageMagick/issues/3896).
-  * remove virtual canvas offset from difference image.
+  * Remove virtual canvas offset from difference image.
 
 2021-07-17  6.9.12-18  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-18 GIT revision 16714:4ce1321c4:20210717
