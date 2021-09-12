@@ -1,9 +1,9 @@
-2021-09-06  6.9.12-22  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-21 GIT revision 16...
+2021-09-11  6.9.12-22  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-21 GIT revision 16800:3177df671:20210911.
 
 2021-09-11  6.9.12-22  Dirk Lemstra <dirk@lem.....org>
   * Fixed incorrect check when module is used as the domain in policy.xml
-    that would allow the use of a disabled module.
+    that could allow the use of a disabled module.
 
 2021-09-06  6.9.12-22  <quetzlzacatenango@image...>
   * Prevent color reduction merging into one color (reference
