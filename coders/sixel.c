@@ -1101,6 +1101,7 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
         {
           j=(ssize_t) sixel_pixels[y * image->columns + x];
           SetPixelIndex(indexes+x,j);
+          SetPixelRGBO(r,image->colormap+(ssize_t) j);
           r++;
         }
         if (SyncAuthenticPixels(image,exception) == MagickFalse)
