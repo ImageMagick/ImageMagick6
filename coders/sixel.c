@@ -48,6 +48,7 @@
 #include "magick/color.h"
 #include "magick/color-private.h"
 #include "magick/colormap.h"
+#include "magick/colormap-private.h"
 #include "magick/colorspace.h"
 #include "magick/colorspace-private.h"
 #include "magick/exception.h"
@@ -1100,6 +1101,7 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
         for (x=0; x < (ssize_t) image->columns; x++)
         {
           j=(ssize_t) sixel_pixels[y * image->columns + x];
+          j=ConstrainColormapIndex(image,j);
           SetPixelIndex(indexes+x,j);
           SetPixelRGBO(r,image->colormap+(ssize_t) j);
           r++;
