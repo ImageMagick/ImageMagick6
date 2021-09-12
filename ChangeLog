@@ -1,5 +1,5 @@
-2021-09-11  6.9.12-22  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-21 GIT revision 16800:3177df671:20210911.
+2021-09-12  6.9.12-22  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-21 GIT revision 16803:02ce9e1bb:20210912
 
 2021-09-11  6.9.12-22  Dirk Lemstra <dirk@lem.....org>
   * Fixed incorrect check when module is used as the domain in policy.xml
