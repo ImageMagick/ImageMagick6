@@ -348,6 +348,8 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
           version[i++]=(char) c;
         }
         version[i]='\0';
+        if (c == EOF)
+          break;
       }
     if (CompareMagickByteBuffer(&buffer,ImageData,strlen(ImageData)) != MagickFalse)
       {
@@ -415,6 +417,8 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
           name[i++]=(char) ReadMagickByteBuffer(&buffer);
         }
         name[i]='\0';
+        if (c == EOF)
+          break;
         value=ConstantString(name);
         (void) StripString(value);
         if (*value != '\0')
@@ -444,6 +448,8 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,
                 }
               datum[i]=(unsigned char) c;
             }
+            if (c == EOF)
+              break;
             SetStringInfoLength(ps_info->icc_profile,(size_t) i+1);
           }
         continue;
