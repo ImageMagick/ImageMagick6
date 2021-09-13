@@ -590,6 +590,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     file;
 
   MagickBooleanType
+    crop,
     fitPage,
     status;
 
@@ -692,7 +693,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   fitPage=MagickFalse;
   option=GetImageOption(image_info,"eps:fit-page");
-  if (option != (char *) NULL)
+  if (option != (const char *) NULL)
     {
       char
         *geometry;
@@ -717,6 +718,14 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
         image->y_resolution/delta.y)-0.5));
       geometry=DestroyString(geometry);
       fitPage=MagickTrue;
+    }
+  crop=MagickFalse;
+  if (*image_info->magick == 'E')
+    {
+      option=GetImageOption(image_info,"eps:use-cropbox");
+      if ((option == (const char *) NULL) ||
+          (IsStringTrue(option) != MagickFalse))
+        crop=MagickTrue;
     }
   if (IssRGBCompatibleColorspace(image_info->colorspace) != MagickFalse)
     info.cmyk=MagickFalse;
@@ -769,11 +778,14 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   options=AcquireString("");
   (void) FormatLocaleString(density,MaxTextExtent,"%gx%g",resolution.x,
     resolution.y);
-  if (image_info->ping != MagickFalse)
-    (void) FormatLocaleString(density,MagickPathExtent,"2.0x2.0");
-  else
-    (void) FormatLocaleString(options,MaxTextExtent,"-g%.20gx%.20g ",
-    (double) page.width,(double) page.height);
+  if (crop == MagickFalse)
+    {
+      if (image_info->ping != MagickFalse)
+        (void) FormatLocaleString(density,MagickPathExtent,"2.0x2.0");
+      else
+        (void) FormatLocaleString(options,MaxTextExtent,"-g%.20gx%.20g ",
+          (double) page.width,(double) page.height);
+    }
   read_info=CloneImageInfo(image_info);
   *read_info->magick='\0';
   if (read_info->number_scenes != 0)
@@ -791,9 +803,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   if (*image_info->magick == 'E')
     {
-      option=GetImageOption(image_info,"eps:use-cropbox");
-      if ((option == (const char *) NULL) ||
-          (IsStringTrue(option) != MagickFalse))
+      if (crop != MagickFalse)
         (void) ConcatenateMagickString(options,"-dEPSCrop ",MaxTextExtent);
       if (fitPage != MagickFalse)
         (void) ConcatenateMagickString(options,"-dEPSFitPage ",MaxTextExtent);
