@@ -116,7 +116,7 @@ typedef struct sixel_output {
 
     Image *image;
     int pos;
-    unsigned char buffer[1];
+    unsigned char buffer[SIXEL_OUTPUT_PACKET_SIZE*2];
 
 } sixel_output_t;
 
@@ -578,7 +578,7 @@ sixel_output_t *sixel_output_create(Image *image)
 {
     sixel_output_t *output;
 
-    output = (sixel_output_t *) AcquireQuantumMemory(sizeof(sixel_output_t) + SIXEL_OUTPUT_PACKET_SIZE * 2, 1);
+    output = (sixel_output_t *) AcquireMagickMemory(sizeof(sixel_output_t));
     if (output == (sixel_output_t *) NULL)
       return((sixel_output_t *) NULL);
     output->has_8bit_control = 0;
