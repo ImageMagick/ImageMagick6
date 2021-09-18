@@ -1,5 +1,12 @@
+2021-09-18  6.9.12-23  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-23 GIT revision 16816:eef08ccf4:20210918
+
+2021-09-17  6.9.12-23  Dirk Lemstra <dirk@lem.....org>
+  * Check for `null` in InvokeDelegate() (reference
+    https://github.com/ImageMagick/ImageMagick/issues/4225).
+
 2021-09-12  6.9.12-22  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-21 GIT revision 16809:ae88f07cd:20210912
+  * Release ImageMagick version 6.9.12-22 GIT revision 16809:ae88f07cd:20210912
 
 2021-09-11  6.9.12-22  Dirk Lemstra <dirk@lem.....org>
   * Fixed incorrect check when module is used as the domain in policy.xml
