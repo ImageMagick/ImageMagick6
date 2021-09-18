@@ -1,5 +1,5 @@
 2021-09-18  6.9.12-23  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-23 GIT revision 16816:eef08ccf4:20210918
+  * Release ImageMagick version 6.9.12-23 GIT revision 16818:bd9fb58de:20210918
 
 2021-09-17  6.9.12-23  Dirk Lemstra <dirk@lem.....org>
   * Check for `null` in InvokeDelegate() (reference
