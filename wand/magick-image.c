@@ -10575,6 +10575,7 @@ WandExport MagickBooleanType MagickSetImageFormat(MagickWand *wand,
     return(MagickFalse);
   ClearMagickException(wand->exception);
   (void) CopyMagickString(wand->images->magick,format,MaxTextExtent);
+  LocaleUpper(wand->images->magick);
   return(MagickTrue);
 }
 
