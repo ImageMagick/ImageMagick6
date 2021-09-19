@@ -356,35 +356,38 @@ static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
     (void) WebPMuxGetFeatures(mux,&webp_flags);
     if ((webp_flags & ICCP_FLAG) &&
         (WebPMuxGetChunk(mux,"ICCP",&chunk) == WEBP_MUX_OK))
-      {
-        profile=BlobToStringInfo(chunk.bytes,chunk.size);
-        if (profile != (StringInfo *) NULL)
-          {
-            SetImageProfile(image,"ICC",profile);
-            profile=DestroyStringInfo(profile);
-          }
-      }
+      if (chunk.size != 0)
+        {
+          profile=BlobToStringInfo(chunk.bytes,chunk.size);
+          if (profile != (StringInfo *) NULL)
+            {
+              SetImageProfile(image,"ICC",profile);
+              profile=DestroyStringInfo(profile);
+            }
+        }
     if ((webp_flags & EXIF_FLAG) &&
         (WebPMuxGetChunk(mux,"EXIF",&chunk) == WEBP_MUX_OK))
-      {
-        WebPMuxGetChunk(mux,"EXIF",&chunk);
-        profile=BlobToStringInfo(chunk.bytes,chunk.size);
-        if (profile != (StringInfo *) NULL)
-          {
-            SetImageProfile(image,"EXIF",profile);
-            profile=DestroyStringInfo(profile);
-          }
-      }
+      if (chunk.size != 0)
+        {
+          WebPMuxGetChunk(mux,"EXIF",&chunk);
+          profile=BlobToStringInfo(chunk.bytes,chunk.size);
+          if (profile != (StringInfo *) NULL)
+            {
+              SetImageProfile(image,"EXIF",profile);
+              profile=DestroyStringInfo(profile);
+            }
+        }
     if ((webp_flags & XMP_FLAG) &&
         (WebPMuxGetChunk(mux,"XMP ",&chunk) == WEBP_MUX_OK))
-      {
-        profile=BlobToStringInfo(chunk.bytes,chunk.size);
-        if (profile != (StringInfo *) NULL)
-          {
-            SetImageProfile(image,"XMP",profile);
-            profile=DestroyStringInfo(profile);
-          }
-      }
+      if (chunk.size != 0)
+        {
+          profile=BlobToStringInfo(chunk.bytes,chunk.size);
+          if (profile != (StringInfo *) NULL)
+            {
+              SetImageProfile(image,"XMP",profile);
+              profile=DestroyStringInfo(profile);
+            }
+        }
     WebPMuxDelete(mux);
   }
 #endif
