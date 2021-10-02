@@ -120,12 +120,12 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  TypeMetric
-    metrics;
-
   size_t
     height,
     width;
+
+  TypeMetric
+    metrics;
 
   /*
     Initialize Image structure.
