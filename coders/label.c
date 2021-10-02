@@ -88,6 +88,7 @@
 %    o exception: return any errors or warnings in this structure.
 %
 */
+
 static inline void AdjustTypeMetricBounds(TypeMetric *metrics)
 {
   double
