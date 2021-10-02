@@ -580,34 +580,29 @@ MagickExport ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
     status;
 
   char
-    *p = (*caption),
-    *q = draw_info->text,
-    *s = (char *) NULL;
-
-  size_t
-    width = 0;
+    *p,
+    *q,
+    *s;
 
   ssize_t
-    i,
+    i;
+
+  size_t
+    width;
+
+  ssize_t
     n;
 
-  for ( ; GetUTFCode(p) != 0; p+=GetUTFOctets(p))
+  q=draw_info->text;
+  s=(char *) NULL;
+  for (p=(*caption); GetUTFCode(p) != 0; p+=GetUTFOctets(p))
   {
+    if (IsUTFSpace(GetUTFCode(p)) != MagickFalse)
+      s=p;
     if (GetUTFCode(p) == '\n')
       {
         q=draw_info->text;
         continue;
-      }
-    if (IsUTFSpace(GetUTFCode(p)) != MagickFalse)
-      {
-        s=p;
-        if (width > image->columns)
-          {
-            for (i=0; i < (ssize_t) GetUTFOctets(s); i++)
-              *(s+i)=' ';
-            *s='\n';
-            p=s;
-          }
       }
     for (i=0; i < (ssize_t) GetUTFOctets(p); i++)
       *q++=(*(p+i));
@@ -1468,12 +1463,12 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         geometry_info;
 
       MagickStatusType
-        geometry_flags;
+        flags;
 
-      geometry_flags=ParseGeometry(draw_info->density,&geometry_info);
+      flags=ParseGeometry(draw_info->density,&geometry_info);
       resolution.x=geometry_info.rho;
       resolution.y=geometry_info.sigma;
-      if ((geometry_flags & SigmaValue) == 0)
+      if ((flags & SigmaValue) == 0)
         resolution.y=resolution.x;
     }
   ft_status=FT_Set_Char_Size(face,(FT_F26Dot6) (64.0*draw_info->pointsize),
