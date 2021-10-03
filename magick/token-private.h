@@ -149,7 +149,7 @@ static inline unsigned int GetUTFOctets(const char *magick_restrict text)
   return(octets);
 }
 
-static inline MagickBooleanType IsNonBreakingUTFSpace(int code)
+static inline MagickBooleanType IsNonBreakingUTFSpace(const int code)
 {
   if (code == 0x00a0)
     return(MagickTrue);
@@ -167,7 +167,7 @@ static inline MagickBooleanType IsUTFSpace(int code)
   return(MagickFalse);
 }
 
-static inline MagickBooleanType IsUTFValid(int code)
+static inline MagickBooleanType IsUTFValid(const int code)
 {
   int
     mask;
