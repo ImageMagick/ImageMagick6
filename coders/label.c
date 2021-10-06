@@ -89,8 +89,11 @@
 %
 */
 
-static inline void AdjustTypeMetricBounds(TypeMetric *metrics)
+static inline void AdjustTypeMetricBounds(const DrawInfo *draw_info,
+  TypeMetric *metrics)
 {
+  if (draw_info->gravity == UndefinedGravity)
+    return;
   if (metrics->bounds.x1 >= 0.0)
     metrics->bounds.x1=0.0;
   else
@@ -166,7 +169,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   draw_info->text=ConstantString(label);
   (void) memset(&metrics,0,sizeof(metrics));
   status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-  AdjustTypeMetricBounds(&metrics);
+  AdjustTypeMetricBounds(draw_info,&metrics);
   if ((image->columns == 0) && (image->rows == 0))
     {
       image->columns=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
@@ -194,7 +197,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
           if (draw_info->gravity == UndefinedGravity)
             (void) CloneString(&draw_info->geometry,geometry);
           status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-          AdjustTypeMetricBounds(&metrics);
+          AdjustTypeMetricBounds(draw_info,&metrics);
           if (status == MagickFalse)
             break;
           width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
@@ -225,7 +228,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
           if (draw_info->gravity == UndefinedGravity)
             (void) CloneString(&draw_info->geometry,geometry);
           status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-          AdjustTypeMetricBounds(&metrics);
+          AdjustTypeMetricBounds(draw_info,&metrics);
           if (status == MagickFalse)
             break;
           width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
@@ -248,7 +251,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
           {
             draw_info->pointsize=floor((low+high)/2.0-0.5);
             status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-            AdjustTypeMetricBounds(&metrics);
+            AdjustTypeMetricBounds(draw_info,&metrics);
           }
       }
   label=DestroyString(label);
