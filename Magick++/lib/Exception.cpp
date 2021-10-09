@@ -14,9 +14,9 @@
 #include <errno.h>
 #include <string.h>
 
-using namespace std;
-
 #include "Magick++/Exception.h"
+
+using namespace std;
 
 Magick::Exception::Exception(const std::string& what_)
   : std::exception(),
