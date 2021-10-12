@@ -1,26 +1,23 @@
-2021-10-11  6.9.12-27  <quetzlzacatenango@image...>
+2021-10-11  6.9.12-26  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-27 GIT revision 16...
 
-2021-10-11  6.9.12-27  <quetzlzacatenango@image...>
+2021-10-11  6.9.12-26  <quetzlzacatenango@image...>
   *
 
-2021-10-10  6.9.12-26  <quetzlzacatenango@image...>
+2021-10-10  6.9.12-25  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-26 GIT revision 16849:2c96ab5d0:20211010
 
-2021-10-03  6.9.12-26  <quetzlzacatenango@image...>
+2021-10-03  6.9.12-25  <quetzlzacatenango@image...>
   * improved algorithm for automatic calculation of pointsize for caption and
     labels.
   * support -auto-orient option in the identify utlity.
   
-2021-10-03  6.9.12-25  <quetzlzacatenango@image...>
+2021-10-03  6.9.12-24  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-25 GIT revision 16842:f6fdd0321:20211003
 
-2021-10-03  6.9.12-25  Dirk Lemstra <dirk@lem.....org>
+2021-10-03  6.9.12-24  Dirk Lemstra <dirk@lem.....org>
   * improved algorithm for automatic calculation of word breaks and pointsize
     for caption and labels.
-
-2021-09-19  6.9.12-24  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-24 GIT revision 16...
 
 2021-09-19  6.9.12-24  <quetzlzacatenango@image...>
   * improve wrapping between words and within words (reference
