@@ -746,10 +746,11 @@ static Image *ReadEMFImage(const ImageInfo *image_info,
   else if (image_info->density != (char *) NULL)
     {
       flags=ParseGeometry(image_info->density,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
+      if ((flags & RhoValue) != 0)
+        image->x_resolution=geometry_info.rho;
+      image->y_resolution=image->x_resolution;
+      if ((flags & SigmaValue) != 0)
+        image->y_resolution=geometry_info.sigma;
       EMFSetDimensions(image,source);
     }
   if (SetImageExtent(image,image->columns,image->rows) == MagickFalse)

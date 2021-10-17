@@ -221,10 +221,11 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
         flags;
 
       flags=ParseGeometry(PSDensityGeometry,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
+      if ((flags & RhoValue) != 0)
+        image->x_resolution=geometry_info.rho;
+      image->y_resolution=image->x_resolution;
+      if ((flags & SigmaValue) != 0)
+        image->y_resolution=geometry_info.sigma;
     }
   page.width=612;
   page.height=792;

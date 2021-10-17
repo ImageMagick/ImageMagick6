@@ -460,18 +460,20 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if ((image->x_resolution == 0.0) || (image->y_resolution == 0.0))
     {
       flags=ParseGeometry(PSDensityGeometry,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
+      if ((flags & RhoValue) != 0)
+        image->x_resolution=geometry_info.rho;
+      image->y_resolution=image->x_resolution;
+      if ((flags & SigmaValue) != 0)
+        image->y_resolution=geometry_info.sigma;
     }
   if (image_info->density != (char *) NULL)
     {
       flags=ParseGeometry(image_info->density,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
+      if ((flags & RhoValue) != 0)
+        image->x_resolution=geometry_info.rho;
+      image->y_resolution=image->x_resolution;
+      if ((flags & SigmaValue) != 0)
+        image->y_resolution=geometry_info.sigma;
     }
   (void) memset(&page,0,sizeof(page));
   (void) ParseAbsoluteGeometry(PSPageGeometry,&page);
@@ -1635,18 +1637,20 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     if ((resolution.x == 0.0) || (resolution.y == 0.0))
       {
         flags=ParseGeometry(PSDensityGeometry,&geometry_info);
-        resolution.x=geometry_info.rho;
-        resolution.y=geometry_info.sigma;
-        if ((flags & SigmaValue) == 0)
-          resolution.y=resolution.x;
+        if ((flags & RhoValue) != 0)
+          resolution.x=geometry_info.rho;
+        resolution.y=resolution.x;
+        if ((flags & SigmaValue) != 0)
+          resolution.y=geometry_info.sigma;
       }
     if (image_info->density != (char *) NULL)
       {
         flags=ParseGeometry(image_info->density,&geometry_info);
-        resolution.x=geometry_info.rho;
-        resolution.y=geometry_info.sigma;
-        if ((flags & SigmaValue) == 0)
-          resolution.y=resolution.x;
+        if ((flags & RhoValue) != 0)
+          resolution.x=geometry_info.rho;
+        resolution.y=resolution.x;
+        if ((flags & SigmaValue) != 0)
+          resolution.y=geometry_info.sigma;
       }
     if (image->units == PixelsPerCentimeterResolution)
       {
