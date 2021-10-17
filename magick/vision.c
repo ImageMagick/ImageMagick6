@@ -671,9 +671,6 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       ssize_t
         x;
 
-      size_t
-        n;
-
       if (status == MagickFalse)
         continue;
       p=GetCacheViewVirtualPixels(component_view,bounding_box.x,
@@ -686,11 +683,14 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       indexes=GetCacheViewVirtualIndexQueue(component_view);
       for (x=0; x < (ssize_t) bounding_box.width; x++)
       {
+        size_t
+          k;
+
         if (status == MagickFalse)
           continue;
         j=(ssize_t) indexes[x];
         if (j == i)
-          for (n=0; n < (ssize_t) (connectivity > 4 ? 4 : 2); n++)
+          for (k=0; k < (ssize_t) (connectivity > 4 ? 4 : 2); k++)
           {
             const IndexPacket
               *magick_restrict indexes;
@@ -703,8 +703,8 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
             */
             if (status == MagickFalse)
               continue;
-            dx=connectivity > 4 ? connect8[n][1] : connect4[n][1];
-            dy=connectivity > 4 ? connect8[n][0] : connect4[n][0];
+            dx=connectivity > 4 ? connect8[k][1] : connect4[k][1];
+            dy=connectivity > 4 ? connect8[k][0] : connect4[k][0];
             p=GetCacheViewVirtualPixels(object_view,bounding_box.x+x+dx,
               bounding_box.y+y+dy,1,1,exception);
             if (p == (const PixelPacket *) NULL)
