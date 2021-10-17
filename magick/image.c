@@ -3827,10 +3827,11 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
   if (option != (const char *) NULL)
     {
       flags=ParseGeometry(option,&geometry_info);
-      image->chromaticity.blue_primary.x=geometry_info.rho;
-      image->chromaticity.blue_primary.y=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->chromaticity.blue_primary.y=image->chromaticity.blue_primary.x;
+      if ((flags & RhoValue) != 0)
+        image->chromaticity.blue_primary.x=geometry_info.rho;
+      image->chromaticity.blue_primary.y=image->chromaticity.blue_primary.x;
+      if ((flags & SigmaValue) != 0)
+        image->chromaticity.blue_primary.y=geometry_info.sigma;
     }
   option=GetImageOption(image_info,"bordercolor");
   if (option != (const char *) NULL)
@@ -3860,10 +3861,11 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
         Set image density.
       */
       flags=ParseGeometry(option,&geometry_info);
-      image->x_resolution=geometry_info.rho;
-      image->y_resolution=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->y_resolution=image->x_resolution;
+      if ((flags & RhoValue) != 0)
+        image->x_resolution=geometry_info.rho;
+      image->y_resolution=image->x_resolution;
+      if ((flags & SigmaValue) != 0)
+        image->y_resolution=geometry_info.sigma;
     }
   option=GetImageOption(image_info,"depth");
   if (option != (const char *) NULL)
@@ -3887,10 +3889,11 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
   if (option != (const char *) NULL)
     {
       flags=ParseGeometry(option,&geometry_info);
-      image->chromaticity.green_primary.x=geometry_info.rho;
-      image->chromaticity.green_primary.y=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->chromaticity.green_primary.y=image->chromaticity.green_primary.x;
+      if ((flags & RhoValue) != 0)
+        image->chromaticity.green_primary.x=geometry_info.rho;
+      image->chromaticity.green_primary.y=image->chromaticity.green_primary.x;
+      if ((flags & SigmaValue) != 0)
+        image->chromaticity.green_primary.y=geometry_info.sigma;
     }
   option=GetImageOption(image_info,"intensity");
   if (option != (const char *) NULL)
@@ -3935,10 +3938,11 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
   if (option != (const char *) NULL)
     {
       flags=ParseGeometry(option,&geometry_info);
-      image->chromaticity.red_primary.x=geometry_info.rho;
-      image->chromaticity.red_primary.y=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->chromaticity.red_primary.y=image->chromaticity.red_primary.x;
+      if ((flags & RhoValue) != 0)
+        image->chromaticity.red_primary.x=geometry_info.rho;
+      image->chromaticity.red_primary.y=image->chromaticity.red_primary.x;
+      if ((flags & SigmaValue) != 0)
+        image->chromaticity.red_primary.y=geometry_info.sigma;
     }
   if (image_info->quality != UndefinedCompressionQuality)
     image->quality=image_info->quality;
@@ -4005,20 +4009,22 @@ MagickExport MagickBooleanType SyncImageSettings(const ImageInfo *image_info,
       if (option != (const char *) NULL)
         {
           flags=ParseGeometry(option,&geometry_info);
-          image->x_resolution=geometry_info.rho;
-          image->y_resolution=geometry_info.sigma;
-          if ((flags & SigmaValue) == 0)
-            image->y_resolution=image->x_resolution;
+          if ((flags & RhoValue) != 0)
+            image->x_resolution=geometry_info.rho;
+          image->y_resolution=image->x_resolution;
+          if ((flags & SigmaValue) != 0)
+            image->y_resolution=geometry_info.sigma;
         }
     }
   option=GetImageOption(image_info,"white-point");
   if (option != (const char *) NULL)
     {
       flags=ParseGeometry(option,&geometry_info);
-      image->chromaticity.white_point.x=geometry_info.rho;
-      image->chromaticity.white_point.y=geometry_info.sigma;
-      if ((flags & SigmaValue) == 0)
-        image->chromaticity.white_point.y=image->chromaticity.white_point.x;
+      if ((flags & RhoValue) != 0)
+        image->chromaticity.white_point.x=geometry_info.rho;
+      image->chromaticity.white_point.y=image->chromaticity.white_point.x;
+      if ((flags & SigmaValue) != 0)
+        image->chromaticity.white_point.y=geometry_info.sigma;
     }
   ResetImageOptionIterator(image_info);
   for (option=GetNextImageOption(image_info); option != (const char *) NULL; )

@@ -1093,8 +1093,8 @@ MagickExport MagickBooleanType ContrastStretchImage(Image *image,
   const char *levels)
 {
   double
-    black_point,
-    white_point;
+    black_point = 0.0,
+    white_point = (double) image->columns*image->rows;
 
   GeometryInfo
     geometry_info;
@@ -1111,8 +1111,8 @@ MagickExport MagickBooleanType ContrastStretchImage(Image *image,
   if (levels == (char *) NULL)
     return(MagickFalse);
   flags=ParseGeometry(levels,&geometry_info);
-  black_point=geometry_info.rho;
-  white_point=(double) image->columns*image->rows;
+  if ((flags & RhoValue) != 0)
+    black_point=geometry_info.rho;
   if ((flags & SigmaValue) != 0)
     white_point=geometry_info.sigma;
   if ((flags & PercentValue) != 0)
@@ -2141,14 +2141,16 @@ MagickExport MagickBooleanType GammaImage(Image *image,const char *level)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (level == (char *) NULL)
     return(MagickFalse);
+  gamma.red=0.0;
   flags=ParseGeometry(level,&geometry_info);
-  gamma.red=geometry_info.rho;
-  gamma.green=geometry_info.sigma;
-  if ((flags & SigmaValue) == 0)
-    gamma.green=gamma.red;
-  gamma.blue=geometry_info.xi;
-  if ((flags & XiValue) == 0)
-    gamma.blue=gamma.red;
+  if ((flags & RhoValue) != 0)
+    gamma.red=geometry_info.rho;
+  gamma.green=gamma.red;
+  if ((flags & SigmaValue) != 0)
+    gamma.green=geometry_info.sigma;
+  gamma.blue=gamma.red;
+  if ((flags & XiValue) != 0)
+    gamma.blue=geometry_info.xi;
   if ((gamma.red == 1.0) && (gamma.green == 1.0) && (gamma.blue == 1.0))
     return(MagickTrue);
   if ((gamma.red == gamma.green) && (gamma.green == gamma.blue))
@@ -2860,9 +2862,9 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
 MagickExport MagickBooleanType LevelImage(Image *image,const char *levels)
 {
   double
-    black_point,
-    gamma,
-    white_point;
+    black_point = 0.0,
+    gamma = 1.0,
+    white_point = (double) QuantumRange;
 
   GeometryInfo
     geometry_info;
@@ -2879,11 +2881,10 @@ MagickExport MagickBooleanType LevelImage(Image *image,const char *levels)
   if (levels == (char *) NULL)
     return(MagickFalse);
   flags=ParseGeometry(levels,&geometry_info);
-  black_point=geometry_info.rho;
-  white_point=(double) QuantumRange;
+  if ((flags & RhoValue) != 0)
+    black_point=geometry_info.rho;
   if ((flags & SigmaValue) != 0)
     white_point=geometry_info.sigma;
-  gamma=1.0;
   if ((flags & XiValue) != 0)
     gamma=geometry_info.xi;
   if ((flags & PercentValue) != 0)
@@ -3689,9 +3690,9 @@ MagickExport MagickBooleanType ModulateImage(Image *image,const char *modulate)
     *artifact;
 
   double
-    percent_brightness,
-    percent_hue,
-    percent_saturation;
+    percent_brightness = 100.0,
+    percent_hue = 100.0,
+    percent_saturation = 100.0;
 
   ExceptionInfo
     *exception;
@@ -3726,13 +3727,12 @@ MagickExport MagickBooleanType ModulateImage(Image *image,const char *modulate)
   if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
     (void) SetImageColorspace(image,sRGBColorspace);
   flags=ParseGeometry(modulate,&geometry_info);
-  percent_brightness=geometry_info.rho;
-  percent_saturation=geometry_info.sigma;
-  if ((flags & SigmaValue) == 0)
-    percent_saturation=100.0;
-  percent_hue=geometry_info.xi;
-  if ((flags & XiValue) == 0)
-    percent_hue=100.0;
+  if ((flags & RhoValue) != 0)
+    percent_brightness=geometry_info.rho;
+  if ((flags & SigmaValue) != 0)
+    percent_saturation=geometry_info.sigma;
+  if ((flags & XiValue) != 0)
+    percent_hue=geometry_info.xi;
   colorspace=UndefinedColorspace;
   artifact=GetImageArtifact(image,"modulate:colorspace");
   if (artifact != (const char *) NULL)

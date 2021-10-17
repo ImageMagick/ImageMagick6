@@ -3148,13 +3148,14 @@ MagickExport void XGetPixelPacket(Display *display,
             Initialize map relative to display and image gamma.
           */
           flags=ParseGeometry(resource_info->display_gamma,&geometry_info);
-          red_gamma=geometry_info.rho;
-          green_gamma=geometry_info.sigma;
-          if ((flags & SigmaValue) == 0)
-            green_gamma=red_gamma;
-          blue_gamma=geometry_info.xi;
-          if ((flags & XiValue) == 0)
-            blue_gamma=red_gamma;
+          if ((flags & RhoValue) != 0)
+            red_gamma=geometry_info.rho;
+          green_gamma=red_gamma;
+          if ((flags & SigmaValue) != 0)
+            green_gamma=geometry_info.sigma;
+          blue_gamma=red_gamma;
+          if ((flags & XiValue) != 0)
+            blue_gamma=geometry_info.xi;
           red_gamma*=image->gamma;
           green_gamma*=image->gamma;
           blue_gamma*=image->gamma;
