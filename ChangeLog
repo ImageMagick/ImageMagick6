@@ -6,6 +6,8 @@
     https://github.com/ImageMagick/ImageMagick/issues/4372).
   * fix possible unitialized values (reference
     https://github.com/ImageMagick/ImageMagick/issues/4379).
+  * fix stack overflow when parsing malicious tiff image file (report from
+    Muhammad Aldo Firmansyah).
 
 2021-10-10  6.9.12-25  <quetzlzacatenango@image...>
   * Release ImageMagick version 6.9.12-25 GIT revision 16849:2c96ab5d0:20211010
