@@ -1,5 +1,5 @@
-2021-10-11  6.9.12-26  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-27 GIT revision 16....
+2021-10-21  6.9.12-26  <quetzlzacatenango@image...>
+  * Release ImageMagick version 6.9.12-27 GIT revision 16862:85a370c79:20211021
 
 2021-10-11  6.9.12-26  <quetzlzacatenango@image...>
   * fix connected component abort trap (reference
