@@ -167,7 +167,6 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
     return(DestroyImageList(image));
   (void) SetImageProperty(image,"caption",caption);
   draw_info=CloneDrawInfo(image_info,(DrawInfo *) NULL);
-  draw_info->render=MagickFalse;
   width=(size_t) floor(draw_info->pointsize*strlen(caption)+0.5);
   if (AcquireMagickResource(0.5*WidthResource,width) == MagickFalse)
     {
@@ -311,7 +310,6 @@ static Image *ReadCAPTIONImage(const ImageInfo *image_info,
   /*
     Draw caption.
   */
-  draw_info->render=MagickTrue;
   i=FormatMagickCaption(image,draw_info,split,&metrics,&caption);
   AdjustTypeMetricBounds(&metrics);
   (void) CloneString(&draw_info->text,caption);
