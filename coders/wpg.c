@@ -719,10 +719,18 @@ unsigned Flags;
  if(Flags & LCK) (void) ReadBlobLSBLong(image);  /*Edit lock*/
  if(Flags & OID)
   {
-  if(Precision==0)
-    {(void) ReadBlobLSBShort(image);}  /*ObjectID*/
-  else
-    {(void) ReadBlobLSBLong(image);}  /*ObjectID (Double precision)*/
+    /* Read object ID. */
+    if (Precision == 0)
+      {
+        x=ReadBlobLSBShort(image);
+        if (x >= 0x8000)
+          {
+            Precision=1;
+            (void) ReadBlobLSBShort(image);
+          }
+      }
+    else
+      (void) ReadBlobLSBLong(image);
   }
  if(Flags & ROT)
   {
