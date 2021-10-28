@@ -1,5 +1,5 @@
 2021-10-28  6.9.12-28  <quetzlzacatenango@image...>
-  * Release ImageMagick version 6.9.12-28 GIT revision 16878:d480691c7:20211028
+  * Release ImageMagick version 6.9.12-28 GIT revision 16880:ba7e11c5e:20211028
 
 2021-10-28  6.9.12-28  Dirk Lemstra <dirk@lem.....org>
   * Fix stack overflow when parsing malicious PS image file (report from
