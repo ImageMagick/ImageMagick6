@@ -3238,7 +3238,9 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               */
               ThrowDCMException(CorruptImageError,"ImproperImageHeader");
             }
-          memcpy(&info,info_copy,sizeof(info));
+          if (info.scale != (Quantum *) NULL)
+            info.scale=(Quantum *) RelinquishMagickMemory(info.scale);
+          (void) memcpy(&info,info_copy,sizeof(info));
           info_copy=(DCMInfo *) RelinquishMagickMemory(info_copy);
         }
       /*
@@ -3248,7 +3250,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (strcmp(explicit_vr,"SQ") == 0)
         {
           DCMInfo *info_copy = (DCMInfo *) AcquireMagickMemory(sizeof(info));
-          memcpy(info_copy,&info,sizeof(info));
+          (void) memcpy(info_copy,&info,sizeof(info));
           AppendValueToLinkedList(stack,info_copy);
           sequence_depth++;
         }
