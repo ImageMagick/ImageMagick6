@@ -3239,7 +3239,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
               ThrowDCMException(CorruptImageError,"ImproperImageHeader");
             }
           memcpy(&info,info_copy,sizeof(info));
-          RelinquishMagickMemory(info_copy);
+          info_copy=(DCMInfo *) RelinquishMagickMemory(info_copy);
         }
       /*
         If we're entering a sequence, push the current image parameters onto
