@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Magick Image File Format</title>
+  <title>ImageMagick (legacy) – Magick Image File Format</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magick, image, file, format, image processing software" />
@@ -99,11 +99,11 @@
 <h2><a class="anchor" id="miff-header"></a>MIFF Header</h2>
 
 
-<p>The MIFF header is composed entirely of ISO-8859-1 characters.  The fields in the header are key and value combination in the <var>key = value</var> format, with each key and value separated by an equal sign (<code>=</code>).  Each <var>key = value</var> combination is delimited by at least one control or whitespace character.  Comments may appear in the header section and are always delimited by braces.  The MIFF header always ends with a colon (<code>:</code>) character, followed by a <var>ctrl-Z</var> character.  It is also common to proceed the colon with a <var>formfeed</var> and a <var>newline</var> character.  The <var>formfeed</var> prevents the listing of binary data when using the <code>more</code> Unix program, whereas, the <var>ctrl-Z</var> has the same effect with the <code>type</code> command on the Windows command line.</p>
+<p>The MIFF header is composed entirely of ISO-8859-1 characters.  The fields in the header are key and value combination in the <var>key = value</var> format, with each key and value separated by an equal sign (<code>=</code>).  Each <var>key = value</var> combination is delimited by at least one control or whitespace character.  Comments may appear in the header section and are always delimited by braces.  The MIFF header always ends with a colon (<code>:</code>) character, followed by a <var>ctrl-Z</var> character.  It is also common to proceed the colon with a <var>formfeed</var> and a <var>newline</var> character.  The <var>formfeed</var> prevents the listing of binary data when using the <code>more</code> Linux program, whereas, the <var>ctrl-Z</var> has the same effect with the <code>type</code> command on the Windows command line.</p>
 
 <p>The following is a partial list of <var> key = value</var> combinations that are typically be found in a MIFF file:</p>
 
-<div class="table-responsive" style="font-size:87.5% !important;">
+<div class="table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <td>background-color = <var>color</var></td>
@@ -229,14 +229,14 @@
 
 <p>Other key value pairs are permitted.  If a value contains whitespace it must be enclosed with braces as illustrated here:</p>
 
-<pre class="highlight"><code>id=ImageMagick
+<ul><pre class="bg-light text-dark"><code>id=ImageMagick
 class=PseudoClass  colors=256  matte=False
 columns=1280  rows=1024  depth=8
 compression=RLE
 colorspace=RGB
 copyright={© 1999-2017 ImageMagick Studio LLC}
 &#8942;
-</code></pre>
+</code></pre></ul>
 
 <p>Note that <var>key = value</var> combinations may be separated by <var>newlines</var> or spaces and may occur in any order within the header.  Comments (within braces) may appear anywhere before the colon.</p>
 
@@ -288,4 +288,3 @@ or fewer colors in the image, each byte of image data contains an index value. I
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 12:13 -->

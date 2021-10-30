@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Resources</title>
+  <title>ImageMagick (legacy) – Resources</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="resources, image processing software" />
@@ -159,20 +159,20 @@ file or data stream.
 </dd>
 
 <dt class="col-md-4"><a href="https://imagemagick.org/source/policy.xml">policy.xml</a></dt>
-  <dd class="col-md-8">Configure ImageMagick policies.
+  <dd class="col-md-8">Configure ImageMagick <a href="security-policy.html">security policies</a>.
   By default any coder, delegate, filter, or file path is permitted.  Use a policy to deny access to, for example, the MPEG video delegate, or permit reading images from a file system but deny writing to that same file system.  Or use the resource policy to set resource limits.  Policies are useful for multi-user servers that want to limit the overall impact ImageMagick has on the system.  For example, to limit the maximum image size in memory to 100MP:
 
-<pre class="highlight"><code>&lt;policy domain="resource" name="area" value="100KP"/></code></pre>
+<ul><pre class="bg-light text-dark"><code>&lt;policy domain="resource" name="area" value="100KP"/></code></pre></ul>
 
 Any image larger than this area limit is cached to disk rather than memory.
 
 Use <code>width</code> to limit the maximum width of an image in pixels.  Exceed this limit and an exception is thrown and processing stops.
 
-<pre class="highlight"><code>&lt;policy domain="resource" name="width" value="8KP"/></code></pre>
+<ul><pre class="bg-light text-dark"><code>&lt;policy domain="resource" name="width" value="8KP"/></code></pre></ul>
 
 To limit the elapsed time of any ImageMagick command to 5 minutes, use this policy:
 
-<pre class="highlight"><code>&lt;policy domain="resource" name="time" value="300"/></code></pre>
+<ul><pre class="bg-light text-dark"><code>&lt;policy domain="resource" name="time" value="300"/></code></pre></ul>
 Define arguments for the memory, map, and disk resources with SI prefixes (.e.g 100MB).  In addition, resource policies are maximums for each instance of ImageMagick (e.g. policy memory limit 1GB, the <code>-limit 2GB</code> option exceeds policy maximum so memory limit is 1GB). </dd>
 
 <dt class="col-md-4"><a href="https://imagemagick.org/source/quantization-table.xml">quantization-table.xml</a></dt>
@@ -195,88 +195,88 @@ Define arguments for the memory, map, and disk resources with SI prefixes (.e.g 
   <dd class="col-md-8">Associate names with Windows font glyphs.</dd>
 </dl>
 
-<p>Under Unix and Linux, ImageMagick searches for each of the configuration files listed above by looking in the locations given below, in order, and loads them if found:</p>
+<p>Under Linux and Linux, ImageMagick searches for each of the configuration files listed above by looking in the locations given below, in order, and loads them if found:</p>
 
-<pre class="highlight"><code>$MAGICK_CONFIGURE_PATH
+<ul><pre class="bg-light text-dark"><code>$MAGICK_CONFIGURE_PATH
 $PREFIX/etc/ImageMagick-6 
 $PREFIX/share/ImageMagick-6 
 $XDG_CACHE_HOME/ImageMagick
 $HOME/.config/ImageMagick
-&lt;<var>client path</var>&gt;/etc/ImageMagick</code></pre>
+&lt;<var>client path</var>&gt;/etc/ImageMagick</code></pre></ul>
 
 <p>The environmental variable $PREFIX is the default install path (e.g. <code>/usr/local</code>). The <var>client path</var> is the execution path of your ImageMagick client (e.g. <code>/usr/local</code>) .</p>
 
-<p>For the Unix or Linux pre-compiled uninstalled binary distributions, the configuration load order is:</p>
+<p>For the Linux or Linux pre-compiled uninstalled binary distributions, the configuration load order is:</p>
 
-<pre class="highlight"><code>$MAGICK_CONFIGURE_PATH
+<ul><pre class="bg-light text-dark"><code>$MAGICK_CONFIGURE_PATH
 $MAGICK_HOME/etc/ImageMagick-6 
 $MAGICK_HOME/share/ImageMagick-6 
 $PREFIX/share/ImageMagick-6 
 $XDG_CACHE_HOME/ImageMagick
 $HOME/.config/ImageMagick/
 &lt;<var>client path</var>&gt;/etc/ImageMagick
-&lt;<var>current directory</var>&gt;</code></pre>
+&lt;<var>current directory</var>&gt;</code></pre></ul>
 
 <p>Under Windows, ImageMagick searches for these configuration files in the following order, and loads them if found:</p>
 
-<pre class="highlight"><code>$MAGICK_CONFIGURE_PATH
+<ul><pre class="bg-light text-dark"><code>$MAGICK_CONFIGURE_PATH
 &lt;<var>windows registry</var>&gt;
 $PREFIX/config
 $USERPROFILE/.config/ImageMagick
-&lt;<var>client path</var>&gt;</code></pre>
+&lt;<var>client path</var>&gt;</code></pre></ul>
 
-<p>Above, $PREFIX is the default install path, typically <code>c:\\Program Files\\ImageMagick-6.9.11</code>.</p>
+<p>Above, $PREFIX is the default install path, typically <code>c:\\Program Files\\ImageMagick-6.9.12</code>.</p>
 
 <p>For an uninstalled Windows installation, the configuration load order is:</p>
 
-<pre class="highlight"><code>$MAGICK_CONFIGURE_PATH
+<ul><pre class="bg-light text-dark"><code>$MAGICK_CONFIGURE_PATH
 $MAGICK_HOME
 $USERPROFILE/.config/ImageMagick
 <var>client path</var>
-&lt;<var>current directory</var>&gt;</code></pre>
+&lt;<var>current directory</var>&gt;</code></pre></ul>
 
 <p>If a configuration file cannot not be found, ImageMagick relies on built-in default values.</p>
 
 <h2><a class="anchor" id="modules"></a>Modules</h2>
 
-<h5>Coders</h5>
+<h4>Coders</h4>
 <p>An image coder (i.e. encoder / decoder) is responsible for registering, optionally classifying, optionally reading, optionally writing, and unregistering one image format (e.g. PNG, GIF, JPEG, etc.).  ImageMagick searches for coders in the following order and it uses the first match found:</p>
 
-<pre class="highlight"><code>$MAGICK_HOME/lib/ImageMagick-6.9.11/modules-Q16/coders
-&lt;<var>client path</var>&gt;/../lib/ImageMagick-6.9.11/modules-Q16/coders
-$MAGICK_HOME/lib/ImageMagick-6.9.11/modules-Q16/coders
-$MAGICK_HOME/share/ImageMagick-6.9.11/modules-Q16/coders
+<ul><pre class="bg-light text-dark"><code>$MAGICK_HOME/lib/ImageMagick-6.9.12/modules-Q16/coders
+&lt;<var>client path</var>&gt;/../lib/ImageMagick-6.9.12/modules-Q16/coders
+$MAGICK_HOME/lib/ImageMagick-6.9.12/modules-Q16/coders
+$MAGICK_HOME/share/ImageMagick-6.9.12/modules-Q16/coders
 $XDG_CACHE_HOME/ImageMagick
 $HOME/.config/ImageMagick
-&lt;<var>client path</var>&gt;/lib/ImageMagick-6.9.11/modules-Q16/coders</code></pre>
+&lt;<var>client path</var>&gt;/lib/ImageMagick-6.9.12/modules-Q16/coders</code></pre></ul>
 
-<h5>Filters</h5>
+<h4>Filters</h4>
 <p>ImageMagick provides a convenient mechanism for adding your own custom image processing algorithms.  ImageMagick searches for filters in the following order and it uses the first match found:</p>
-<pre class="highlight"><code>$MAGICK_HOME/lib/ImageMagick-6.9.11/modules-Q16/filters
-&lt;<var>client path</var>&gt;/../lib/ImageMagick-6.9.11/modules-Q16/filters
-$MAGICK_HOME/lib/ImageMagick-6.9.11/modules-Q16/filters
-$MAGICK_HOME/share/ImageMagick-6.9.11/modules-Q16/filters
+<ul><pre class="bg-light text-dark"><code>$MAGICK_HOME/lib/ImageMagick-6.9.12/modules-Q16/filters
+&lt;<var>client path</var>&gt;/../lib/ImageMagick-6.9.12/modules-Q16/filters
+$MAGICK_HOME/lib/ImageMagick-6.9.12/modules-Q16/filters
+$MAGICK_HOME/share/ImageMagick-6.9.12/modules-Q16/filters
 $XDG_CACHE_HOME/ImageMagick
 $HOME/.config/ImageMagick
-&lt;<var>client path</var>&gt;/lib/ImageMagick-6.9.11/modules-Q16/filters</code></pre>
+&lt;<var>client path</var>&gt;/lib/ImageMagick-6.9.12/modules-Q16/filters</code></pre></ul>
 
 <h2><a class="anchor" id="fonts"></a>Fonts</h2>
 
 <p>ImageMagick is able to load raw TrueType and Postscript font files.  It searches for the font configuration file, <a href="resources.html#type.xml">type.xml</a>, in the following order, and loads them if found:</p>
 
-<pre class="highlight"><code>$MAGICK_CONFIGURE_PATH
-$MAGICK_HOME/etc/ImageMagick/-6.9.11
-$MAGICK_HOME/share/ImageMagick-6.9.11
+<ul><pre class="bg-light text-dark"><code>$MAGICK_CONFIGURE_PATH
+$MAGICK_HOME/etc/ImageMagick/-6.9.12
+$MAGICK_HOME/share/ImageMagick-6.9.12
 $XDG_CACHE_HOME/ImageMagick
 $HOME/.config/ImageMagick
 &lt;<var>client path</var>&gt;/etc/ImageMagick
-$MAGICK_FONT_PATH</code></pre>
+$MAGICK_FONT_PATH</code></pre></ul>
 
 <h2><a class="anchor" id="environment"></a>Environment Variables</h2>
 
 <p>Environment variables recognized by ImageMagick include:</p>
 
-<div class="table-responsive" style="font-size:87.5% !important;">
+<div class="table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <td>HOME</td>
@@ -292,15 +292,15 @@ $MAGICK_FONT_PATH</code></pre>
   </tr>
   <tr>
     <td>MAGICK_CODER_FILTER_PATH</td>
-    <td>Set search path to use when searching for filter process modules (invoked via  <a href="command-line-options.html#process">-process</a>).  This path permits the user to extend ImageMagick's image processing functionality by adding loadable modules to a preferred location rather than copying them into the ImageMagick installation directory.  The formatting of the search path is similar to operating system search paths (i.e. colon delimited for Unix, and semi-colon delimited for Microsoft Windows). This user specified search path is searched before trying the <a href="resources.html#modules">default search path</a>.</td>
+    <td>Set search path to use when searching for filter process modules (invoked via  <a href="command-line-options.html#process">-process</a>).  This path permits the user to extend ImageMagick's image processing functionality by adding loadable modules to a preferred location rather than copying them into the ImageMagick installation directory.  The formatting of the search path is similar to operating system search paths (i.e. colon delimited for Linux, and semi-colon delimited for Microsoft Windows). This user specified search path is searched before trying the <a href="resources.html#modules">default search path</a>.</td>
   </tr>
   <tr>
     <td>MAGICK_CODER_MODULE_PATH</td>
-    <td>Set path where ImageMagick can locate its coder modules.  This path permits the user to arbitrarily extend the image formats supported by ImageMagick by adding loadable coder modules from an preferred location rather than copying them into the ImageMagick installation directory.  The formatting of the search path is similar to operating system search paths (i.e. colon delimited for Unix, and semi-colon delimited for Microsoft Windows). This user specified search path is searched before trying the <a href="resources.html#modules">default search path</a>.</td>
+    <td>Set path where ImageMagick can locate its coder modules.  This path permits the user to arbitrarily extend the image formats supported by ImageMagick by adding loadable coder modules from an preferred location rather than copying them into the ImageMagick installation directory.  The formatting of the search path is similar to operating system search paths (i.e. colon delimited for Linux, and semi-colon delimited for Microsoft Windows). This user specified search path is searched before trying the <a href="resources.html#modules">default search path</a>.</td>
   </tr>
   <tr>
     <td>MAGICK_CONFIGURE_PATH</td>
-    <td>Set path where ImageMagick can locate its configuration files.  Use this search path to search for configuration (.xml) files. The formatting of the search path is similar to operating system search paths (i.e. colon delimited for Unix, and semi-colon delimited for Microsoft Windows). This user specified search path is searched before trying the <a href="resources.html#configure">default search path</a>.</td>
+    <td>Set path where ImageMagick can locate its configuration files.  Use this search path to search for configuration (.xml) files. The formatting of the search path is similar to operating system search paths (i.e. colon delimited for Linux, and semi-colon delimited for Microsoft Windows). This user specified search path is searched before trying the <a href="resources.html#configure">default search path</a>.</td>
   </tr>
   <tr>
     <td>MAGICK_DEBUG</td>
@@ -384,7 +384,7 @@ $MAGICK_FONT_PATH</code></pre>
   </tr>
 </table></div>
 
-<p>Define arguments for the <code>MAGICK_MEMORY_LIMIT</code>, <code>MAGICK_DISK_LIMIT</code>, and <code>MAGICK_MEMORY_LIMIT</code> environment variables with SI prefixes (.e.g <code>100MB</code>). <code>MAGICK_WIDTH_LIMIT</code>, <code>MAGICK_HEIGHT_LIMIT</code> and <code>MAGICK_AREA_LIMIT</code> accepts pixel suffixes such as MP for mega-pixels (e.g. 100MP).</p>
+<p>Define arguments for the <code>MAGICK_MEMORY_LIMIT</code>, <code>MAGICK_DISK_LIMIT</code>, and <code>MAGICK_MEMORY_LIMIT</code> environment variables with SI prefixes (.e.g <code>100MB</code>). <code>MAGICK_WIDTH_LIMIT</code>, <code>MAGICK_HEIGHT_LIMIT</code> and <code>MAGICK_AREA_LIMIT</code> accepts pixel suffixes such as MP for mega-pixels (e.g. 100MP). Note, you can restrict limits relative to any <a href="https://legacy.imagemagick.org/www/security-policy.xml">security policies</a>, but you cannot relax them.</p>
 
 </div>
   </div>
@@ -415,4 +415,3 @@ $MAGICK_FONT_PATH</code></pre>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 14:08 -->

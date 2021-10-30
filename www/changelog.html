@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Changelog</title>
+  <title>ImageMagick (legacy) – Changelog</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="changelog, image processing software" />
@@ -90,8 +90,140 @@
 
   <main class="container">
   <div class="magick-template">
-<div class="magick-header"><dl><dt>2021-02-05  6.9.11-62  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Release ImageMagick version 6.9.11-62 GIT revision 16...</li>
+<div class="magick-header"><dl><dt>2021-10-29  6.9.12-28  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-28 GIT revision 16883:4b5c30c0b:20211029</li>
+<dt>2021-10-28  6.9.12-28  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> Fix stack overflow when parsing malicious PS image file (report from    Muhammad Aldo Firmansyah).</li>
+<dt>2021-10-25  6.9.12-27  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-27 GIT revision 16873:60fcc2499:20211025</li>
+<dt>2021-10-25  6.9.12-27  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> fix x64 Windows build.</li>
+<dt>2021-10-24  6.9.12-26  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-26 GIT revision 16871:3430fb87b:20211024</li>
+<dt>2021-10-11  6.9.12-26  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> fix connected component abort trap (reference    https://github.com/ImageMagick/ImageMagick/issues/4372).</li>
+  <li> fix possible unitialized values (reference    https://github.com/ImageMagick/ImageMagick/issues/4379).</li>
+  <li> fix stack overflow when parsing malicious tiff image file (report from    Muhammad Aldo Firmansyah).</li>
+<dt>2021-10-10  6.9.12-25  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-25 GIT revision 16849:2c96ab5d0:20211010</li>
+<dt>2021-10-03  6.9.12-25  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> improved algorithm for automatic calculation of pointsize for caption and    labels.</li>
+  <li> support -auto-orient option in the identify utlity.  <dt>2021-10-03  6.9.12-24  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-24 GIT revision 16842:f6fdd0321:20211003</li>
+<dt>2021-10-03  6.9.12-24  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> improved algorithm for automatic calculation of word breaks and pointsize    for caption and labels.</li>
+<dt>2021-09-19  6.9.12-24  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> improve wrapping between words and within words (reference    https://github.com/ImageMagick/ImageMagick/discussions/4227).</li>
+<dt>2021-09-18  6.9.12-23  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-23 GIT revision 16818:bd9fb58de:20210918</li>
+<dt>2021-09-17  6.9.12-23  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> Check for `null` in InvokeDelegate() (reference    https://github.com/ImageMagick/ImageMagick/issues/4225).</li>
+<dt>2021-09-12  6.9.12-22  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-22 GIT revision 16809:ae88f07cd:20210912</li>
+<dt>2021-09-11  6.9.12-22  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> Fixed incorrect check when module is used as the domain in policy.xml    that could allow the use of a disabled module. (reference    https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-qvhr-jj4p-j2qr).</li>
+<dt>2021-09-06  6.9.12-22  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Prevent color reduction merging into one color (reference    https://github.com/ImageMagick/ImageMagick/issues/4059).</li>
+<dt>2021-09-04  6.9.12-21  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-21 GIT revision 16778:e0967eae2:20210904</li>
+<dt>2021-08-21  6.9.12-21  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Tweak the bilevel image type (reference    https://github.com/ImageMagick/ImageMagick/issues/4121).</li>
+  <li> Converting from LAB to RGB leads to wrong colors (reference    https://github.com/ImageMagick/ImageMagick/issues/4105).</li>
+<dt>2021-08-21  6.9.12-20  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-20 GIT revision 16761:d49be7fbb:20210821</li>
+<dt>2021-07-26  6.9.12-20  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Heap-based buffer overflow in TIFF coder (alert from Hunter Mitchell).</li>
+  <li> Grayscale image write optimization</li>
+<dt>2021-07-18  6.9.12-19  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-19 GIT revision 16731:1015767a1:20210718</li>
+<dt>2021-07-17  6.9.12-19  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Trim no longer returns an empty image on 1-pixel width input (reference    https://github.com/ImageMagick/ImageMagick/issues/3896).</li>
+  <li> Remove virtual canvas offset from difference image.</li>
+<dt>2021-07-17  6.9.12-18  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-18 GIT revision 16714:4ce1321c4:20210717</li>
+<dt>2021-06-26  6.9.12-18  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> system() is not supported under IOS.</li>
+<dt>2021-06-25  6.9.12-17  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-17 GIT revision 16689:d02e016da:20210620</li>
+<dt>2021-06-25  6.9.12-17  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> malloc() corruption fix (reference    https://github.com/ImageMagick/ImageMagick6/issues/159).</li>
+<dt>2021-06-19  6.9.12-16  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Correct TGA orientation (reference    https://github.com/ImageMagick/ImageMagick/issues/3844).</li>
+<dt>2021-06-12  6.9.12-15  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-15 GIT revision 16679:b21457a7e:20210612</li>
+<dt>2021-06-02  6.9.12-15  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> SVG no longer hangs when handling class in &lt;defs&gt; (reference    https://github.com/ImageMagick/ImageMagick/issues/3818).</li>
+  <li> Raise exception for invalid compose:args geometry (reference    https://github.com/ImageMagick/ImageMagick/issues/3765).</li>
+<dt>2021-05-31  6.9.12-14  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-14 GIT revision 16665:c75ae771a:20210531</li>
+<dt>2021-05-17  6.9.12-13  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-13 GIT revision 16653:8305ee312:20210517</li>
+<dt>2021-05-12  6.9.12-13  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> Fixed reading and writing the XMP chunk in a WebP image (reference    https://github.com/ImageMagick/ImageMagick/discussions/3617).</li>
+<dt>2021-05-11  6.9.12-13  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> label and caption sanity check is too conservative.</li>
+<dt>2021-05-07  6.9.12-12  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-12 GIT revision 16630:ed78be2e6:20210507</li>
+<dt>2021-05-06  6.9.12-12  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> -layers optimize no longer produces broken output (reference    https://github.com/ImageMagick/ImageMagick/issues/3520).</li>
+<dt>2021-05-04  6.9.12-11  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-11 GIT revision 16625:7d8a3b762:20210504</li>
+<dt>2021-04-25  6.9.12-11  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> reverted color reduction patch so that it treats alpha blending properly.</li>
+<dt>2021-04-28  6.9.12-10  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-10 GIT revision 16602:f98edd4aa:20210428</li>
+<dt>2021-04-25  6.9.12-10  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Check image is not NULL before dereferencing.</li>
+<dt>2021-04-25  6.9.12-9  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-9 GIT revision 16...</li>
+<dt>2021-04-25  6.9.12-9  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> eliminate uninitialized value.</li>
+  <li> Differences in computing linear gray (reference    https://github.com/ImageMagick/ImageMagick/issues/3571).</li>
+<dt>2021-04-17  6.9.12-8  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-8 GIT revision 16581:0eccd3556:20210417</li>
+<dt>2021-04-09  6.9.12-8  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> constrain sub-image list.</li>
+  <li> write tiff colormapped images with an alpha channel as PHOTOMETRIC_RGB</li>
+<dt>2021-04-03  6.9.12-6  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-6 GIT revision 16552:6c4bc786e:20210403</li>
+<dt>2021-04-01  6.9.12-6  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> fix portable Windows build.</li>
+<dt>2021-03-28  6.9.12-5  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-5 GIT revision 16537:ffa0d49a7:20210328</li>
+<dt>2021-03-25  6.9.12-5  Dirk Lemstra &lt;dirk@lem.....org&gt;</dt>
+  <li> OpenCL will be disabled by default, use the environment variable    MAGICK_OCL_DEVICE to turn it on or select the device to use.</li>
+<dt>2021-03-24  6.9.12-5  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> eliminate extraneous spaces in AC_PATH_PROG (reference    https://github.com/ImageMagick/ImageMagick/issues/3428).</li>
+  <li> fix handling of non-square images with -fft option.</li>
+  <li> enable FFTW support with --with-fftw configure script command-line option.</li>
+<dt>2021-03-20  6.9.12-4  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-4 GIT revision 16525:21991f726:20210320</li>
+<dt>2021-03-13  6.9.12-4  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> support caption:split define (reference    https://github.com/ImageMagick/ImageMagick/discussions/3389).</li>
+  <li> avoid an omp deadlock with policy string</li>
+<dt>2021-03-06  6.9.12-3  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-3 GIT revision 16511:448f9271e:20210306</li>
+<dt>2021-03-02  6.9.12-3  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Eliminate multiple division by zero exceptions (reference    https://github.com/ImageMagick/ImageMagick/issues/3339 and others).</li>
+  <li> Use -define filename:literal=true to bypass interpretting embedded     formatting characters and instead use the filename literally.</li>
+<dt>2021-02-27  6.9.12-2  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-2 GIT revision 16494:64c0cc234:2021022</li>
+<dt>2021-02-21  6.9.12-2  &lt;happyerc...@...&gt;</dt>
+  <li> Division by zero error is possible if crafty file sets film-gamma property</li>
+  <li> Check for overflow in thumbnail coder</li>
+  <li> Prevent compiler from optimizing out buffer clearing in cipher</li>
+<dt>2021-02-21  6.9.12-2  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Clone properties from image stack.</li>
+<dt>2021-02-21  6.9.12-1  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-1 GIT revision 16474:e6a300ef2:20210221</li>
+<dt>2021-02-15  6.9.12-1  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> fix EXR crash (reference    https://github.com/ImageMagick/ImageMagick/issues/3242</li>
+<dt>2021-02-13  6.9.12-0  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.12-0 GIT revision 16464:dab48bafd:20210213</li>
+<dt>2021-02-10  6.9.12-0  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> bump minor version #.</li>
+<dt>2021-02-07  6.9.11-62  &lt;quetzlzacatenango@image...&gt;</dt>
+  <li> Release ImageMagick version 6.9.11-62 GIT revision 16452:52351447e:20210207</li>
 <dt>2021-02-01  6.9.11-61  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> -trim not working as expected (reference    https://github.com/ImageMagick/ImageMagick/discussions/3172).</li>
   <li> possible undefined behavior (reference    https://github.com/ImageMagick/ImageMagick/issues/3195).</li>
@@ -105,7 +237,7 @@
 <dt>2021-01-25  6.9.11-60  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.11-60 GIT revision 16407:584cabd8b:20210125</li>
 <dt>2021-01-24  6.9.11-60  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> nothing new, lockstep with IMv7 release.</li>
+  <li> nothing new, lockstep with IMv7 Release.</li>
 <dt>2021-01-24  6.9.11-59  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.11-59 GIT revision 16399:3614d5e0a:20210124</li>
 <dt>2021-01-20  6.9.11-59  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -314,7 +446,7 @@
 <dt>2020-05-15  6.9.11-12 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.11-12, GIT revision 15602:96db62d:20200515.</li>
 <dt>2020-05-12  6.9.11-12 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Black artefacts during quantization (reference    https://github.com/ImageMagick/ImageMagick/discussions/2007#discussioncomment-13546).</li>
+  <li> Black artifacts during quantization (reference    https://github.com/ImageMagick/ImageMagick/discussions/2007#discussioncomment-13546).</li>
 <dt>2020-04-08  6.9.11-11 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.11-11, GIT revision 15592:6c1c1a9:20200508</li>
 <dt>2020-04-28  6.9.11-11 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -464,7 +596,7 @@
 <dt>2019-12-22  6.9.10-80 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.10-80, GIT revision 15135:8aa94ec27:20191222</li>
 <dt>2019-12-18  6.9.10-80 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Some clang releases do not support _aligned_alloc().</li>
+  <li> Some clang Releases do not support _aligned_alloc().</li>
 <dt>2019-12-07  6.9.10-79 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.10-79, GIT revision 15127:fa10678:20191215.</li>
 <dt>2019-12-07  6.9.10-79 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -1179,7 +1311,7 @@
 <dt>2016-12-10  6.9.7-0 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> Release ImageMagick version 6.9.7-0, GIT revision 11230:d5e8abc:20161218.</li>
 <dt>2016-12-14  6.9.7-0 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Bump release to 6.9.7 to ensure coinstallability of old and new library.</li>
+  <li> Bump Release to 6.9.7 to ensure coinstallability of old and new library.</li>
   <li> Lazily evaluate the image storage class and colorspace to prevent cache    allocation when pinging an image.</li>
   <li> Do not close path for linejoins of round (reference    https://imagemagick.org/discourse-server//viewtopic.html?f=3&amp;t=31039).</li>
 <dt>2016-12-10  6.9.6-8 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -1601,7 +1733,7 @@
   <li> Writing histograms / mpeg working again (reference    https://imagemagick.org/discourse-server//viewtopic.html?f=3&amp;t=27089).</li>
   <li> The -linear-stretch option worked for Q16 but not Q32 (reference    https://imagemagick.org/discourse-server//viewtopic.html?f=3&amp;t=27112).</li>
 <dt>2015-02-22  6.9.0-8 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
-  <li> Bogus release, withdrawn.</li>
+  <li> Bogus Release, withdrawn.</li>
 <dt>2015-02-22  6.9.0-7 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> New version 6.9.0-7, SVN revision 18067.</li>
 <dt>2015-02-15  6.9.0-7 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -2322,7 +2454,7 @@
 <dt>2013-02-09  6.8.2-9 Bastien Roucaries  &lt;roucaries.basti...&gt;</dt>
   <li> Export versioning to automake in order to use it for library prefix.</li>
   <li> So bump was incomplete due to no changing map file.</li>
-  <li> Change abi name by adding major version to lib name (will simplify    next imagemagick major version release work) and reset release version    to 1 (due to changing abi name).</li>
+  <li> Change abi name by adding major version to lib name (will simplify    next imagemagick major version Release work) and reset release version    to 1 (due to changing abi name).</li>
 <dt>2013-02-09  6.8.2-9 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
   <li> The DOT coders now compiles with GraphViz 2.30 (reference    https://imagemagick.org/discourse-server//viewtopic.html?f=3&amp;t=22767).</li>
 <dt>2013-02-09  6.8.2-8 Cristy  &lt;quetzlzacatenango@image...&gt;</dt>
@@ -4339,7 +4471,7 @@
 <dt>2009-02-27  6.4.9-8 Anthony Thyssen &lt;A.Thyssen@griffith...&gt;</dt>
   <li> Fix old -clut bug for re-coloring gray images using transparent and    semi-transparent colors.</li>
 <dt>2009-02-22  6.4.9-7 Rick Mabry  &lt;rick.mabry@anony...&gt;</dt>
-  <li> Changes have been made to scores of the files that generate the    documentation. The most noticeable cosmetic changes are to the command-line    examples and command-line snippets, which now have a new look: dark blue    boxes with white/yellow text to indicate sample input/output.  Inclusion of    current version and release dates in appropriate places are now    automatically generated. Also, many changes have been made to begin to    bring the pages into strict W3C compliance with respect to both HTML and    CSS.</li>
+  <li> Changes have been made to scores of the files that generate the    documentation. The most noticeable cosmetic changes are to the command-line    examples and command-line snippets, which now have a new look: dark blue    boxes with white/yellow text to indicate sample input/output.  Inclusion of    current version and Release dates in appropriate places are now    automatically generated. Also, many changes have been made to begin to    bring the pages into strict W3C compliance with respect to both HTML and    CSS.</li>
 <dt>2009-02-21  6.4.9-7 Chris Madison  &lt;madisonblu@gmail...&gt;</dt>
   <li> The identify program reads the image pixels when the -format option is    asking for image statistics.</li>
   <li> Much improved ImageMagick validation suite (exercise with 'make check').</li>
@@ -5161,4 +5293,3 @@
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 11:20 -->

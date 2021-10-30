@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Command-line Tools: Composite</title>
+  <title>ImageMagick (legacy) – Command-line Tools: Composite</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="command-line, tools:, composite, image processing software" />
@@ -100,7 +100,7 @@
 
 <p>We list a few examples of the <code>composite</code> command here to illustrate its usefulness and ease of use.  To get started, lets overlay a smiley face over a rose:</p>
 
-<pre class="highlight"><code>composite -gravity center smile.gif  rose: rose-over.png
+<pre class="bg-light text-dark"><code>composite -gravity center smile.gif  rose: rose-over.png
 </code></pre>
 
 <ul>
@@ -113,7 +113,7 @@
 
 <p>You can create three-dimensional effect with the <var>Atop</var>:</p>
 
-<pre class="highlight"><code>convert -size 70x70 canvas:none -fill red -draw 'circle 35,35 10,30' red-circle.png
+<pre class="bg-light text-dark"><code>convert -size 70x70 canvas:none -fill red -draw 'circle 35,35 10,30' red-circle.png
 convert -size 70x70 canvas:none -draw 'circle 35,35 35,20' -negate \
 -channel A -gaussian-blur 0x8 white-highlight.png
 composite -compose atop -geometry -13-17 white-highlight.png red-circle.png red-ball.png
@@ -568,4 +568,3 @@ transparent, extract, background, or shape the alpha channel</td>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 13:02 -->

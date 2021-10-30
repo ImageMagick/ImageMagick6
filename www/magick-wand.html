@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - MagickWand, C API</title>
+  <title>ImageMagick (legacy) – MagickWand, C API</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magickwc, api, image processing software" />
@@ -95,29 +95,29 @@
 <p class="lead magick-description">The <a href="api/MagickWand/index.html">MagickWand API</a> is the recommended interface between the C programming language and the ImageMagick image processing libraries.  Unlike the <a href="api/MagickCore/index.html">MagickCore</a> C API, MagickWand uses only a few opaque types.  Accessors are available to set or get important wand properties.  A description of the MagickWand public methods are found here:</p>
 
 <ul>
-  <li><a href="https://legacy.imagemagick.org/api/magick-wand.html">Magick Wand Methods</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/magick-property.html">Set or Get Magick Wand Properties</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/magick-image.html">Magick Wand Image Methods</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/pixel-iterator.html">Pixel Iterator Methods</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/pixel-wand.html">Pixel Wand Methods</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/drawing-wand.html">Image Vector Drawing</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/mogrify.html">Command-line Interface</a></li>
-  <li><a href="https://legacy.imagemagick.org/api/wand-view.html">Wand View Methods</a></li>
+  <li><a href="api/magick-wand.html">Magick Wand Methods</a></li>
+  <li><a href="api/magick-property.html">Set or Get Magick Wand Properties</a></li>
+  <li><a href="api/magick-image.html">Magick Wand Image Methods</a></li>
+  <li><a href="api/pixel-iterator.html">Pixel Iterator Methods</a></li>
+  <li><a href="api/pixel-wand.html">Pixel Wand Methods</a></li>
+  <li><a href="api/drawing-wand.html">Image Vector Drawing</a></li>
+  <li><a href="api/mogrify.html">Command-line Interface</a></li>
+  <li><a href="api/wand-view.html">Wand View Methods</a></li>
   <li><a href="https://legacy.imagemagick.org/api/magick-deprecate.html">Deprecated Methods</a></li>
   <li><a href="exception.html">Error and Warning Codes</a></li>
 </ul>
 
 <p>After you write your MagickWand program, compile it like this:</p>
 
-<ul><pre class="highlight"><code>cc -o wand wand.c `pkg-config --cflags --libs MagickWand`</code></pre></ul>
+<ul><pre class="bg-light text-dark"><code>cc -o wand wand.c `pkg-config --cflags --libs MagickWand`</code></pre></ul>
 
 <p>Set the <code>PKG_CONFIG_PATH</code> environment variable if ImageMagick is not in your default system path:</p>
 
-<ul><pre class="highlight"><code>export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig</code></pre></ul>
+<ul><pre class="bg-light text-dark"><code>export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig</code></pre></ul>
 
 <p>Here is a example program that utilizes the MagickWand API to get you started, <a href="https://imagemagick.org/source/wand.c">wand.c</a>. It reads an image, creates a thumbnail, and writes the result to disk.</p>
 
-<ul><pre class="pre-scrollable highlight"><code>#include &lt;stdio.h>
+<ul><pre class="pre-scrollable bg-light text-dark"><code>#include &lt;stdio.h>
 #include &lt;stdlib.h>
 #include &lt;wand/MagickWand.h>
 
@@ -176,7 +176,7 @@ int main(int argc,char **argv)
 
 <p>Here is another program that shows one way to get and set image pixels with the MagickWand API, <a href="https://imagemagick.org/source/contrast.c">contrast.c</a>. It reads an image, applies sigmoidal non-linearity contrast control, and writes the result to disk.</p>
 
-<ul><pre class="pre-scrollable highlight"><code>#include &lt;stdio.h>
+<ul><pre class="pre-scrollable bg-light text-dark"><code>#include &lt;stdio.h>
 #include &lt;stdlib.h>
 #include &lt;math.h>
 #include &lt;wand/MagickWand.h>
@@ -285,7 +285,7 @@ int main(int argc,char **argv)
 </code></pre>
 <p><a class="anchor" id="wand-view"></a>Now lets perform the same contrast enhancement while taking advantage of our dual or quad-core processing system by running the algorithm in parallel utilizing wand views.  The <a href="https://imagemagick.org/source/wand/sigmoidal-contrast.c">sigmoidal-contrast.c</a> module reads an image, applies sigmoidal non-linearity contrast control, and writes the result to disk just like the previous contrast enhancement program, but now it does its work in parallel (assumes ImageMagick is built with OpenMP support).</p>
 
-<pre class="pre-scrollable highlight"><code>#include &lt;stdio.h>
+<pre class="pre-scrollable bg-light text-dark"><code>#include &lt;stdio.h>
 #include &lt;stdlib.h>
 #include &lt;math.h>
 #include &lt;wand/MagickWand.h>
@@ -422,4 +422,3 @@ int main(int argc,char **argv)
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 12:22 -->

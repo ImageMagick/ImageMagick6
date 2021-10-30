@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Magick++, C++ API for ImageMagick</title>
+  <title>ImageMagick (legacy) – Magick++, C++ API for ImageMagick</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="magick++, c++, api, for, imagemagick, image processing software" />
@@ -133,34 +133,34 @@ Windows.
 </p>
 <h2>Usage</h2>
 <p>A helper script named <code>Magick++-config</code> is installed
-under Unix which assists with recalling compilation options required
+under Linux which assists with recalling compilation options required
 to compile and link programs which use Magick++. For example, the
 following command compiles and links the source file <code>demo.cpp</code>
 to produce the executable <code>demo</code> (notice that quotes are
 backward quotes): 
 </p>
-<pre class="highlight"><code>c++ `Magick++-config --cxxflags --cppflags` -O2 -o demo demo.cpp \
+<pre class="bg-light text-dark"><code>c++ `Magick++-config --cxxflags --cppflags` -O2 -o demo demo.cpp \
   `Magick++-config --ldflags --libs`
 </code></pre>
 <p>Set the <code>PKG_CONFIG_PATH</code> environment variable if ImageMagick is not in your default system path:</p>
 
-<pre class="highlight"><code>export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+<pre class="bg-light text-dark"><code>export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 </code></pre>
 
 <p>Windows users may get started by manually editing a project file
 for one of the Magick++ demo programs. 
 </p>
 <p>Note, under Windows (and possibly the Mac) it may be necessary to initialize the ImageMagick library prior to using the Magick++ library. This initialization is performed by passing the path to the ImageMagick DLLs (assumed to be in the same directory as your program) to the InitializeMagick() function call. This is commonly performed by providing the path to your program (argv[0]) as shown in the following example: </p>
-<pre class="highlight"><code>int main( int argc, char ** argv) {
+<pre class="bg-light text-dark"><code>int main( int argc, char ** argv) {
   InitializeMagick(*argv);
   ...
 </code></pre>
-<p>This initialization step is not required under Unix, Linux,
+<p>This initialization step is not required under Linux, Linux,
 Cygwin, or any other operating environment that supports the notion
 of <var>installing</var> ImageMagick in a known location.  </p>
 <p>Here is a example program that utilizes the Magick++ API to get you started, <a href="https://imagemagick.org/source/magick++.cpp">magick++.cpp</a>. It reads an image, crops it, and writes it to disk in the PNG image format.</p>
 
-<pre class="pre-scrollable highlight"><code>
+<pre class="pre-scrollable bg-light text-dark"><code>
 #include &lt;Magick++.h> 
 #include &lt;iostream> 
 
@@ -227,4 +227,3 @@ int main(int argc,char **argv)
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 14:08 -->

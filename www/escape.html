@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Format and Print Image Properties</title>
+  <title>ImageMagick (legacy) – Format and Print Image Properties</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="format, print, image, properties, image processing software" />
@@ -93,7 +93,7 @@
 <div class="magick-header">
 <p class="lead magick-description">There are copious amounts of extra data associated with images (metadata), beyond the actual image pixels. This metadata can be useful, either for display, or for various calculations, or in modifying the behavior of later image processing operations.  You can utilize percent escapes in a number of options, for example in <a href="command-line-options.html#format_identify_">-format</a> or in montage <a href="command-line-options.html#label" >-label</a>, to print various properties and other settings associated with an image.</p>
 
-<div class="table-responsive" style="font-size:87.5% !important;">
+<div class="table-responsive" style="font-size:smaller !important;">
 <table class="table table-hover">
 <tr>
     <td><b>Profile Data</b></td>
@@ -129,7 +129,7 @@
     </td></tr>
 </table></div>
 
-<h3>Percent Escape Handling</h3>
+<h2>Percent Escape Handling</h2>
 
 <p>If you request a percent escape such as <code>%[key]</code> the setting
 is looked for in the following order until the first match has been
@@ -160,20 +160,20 @@ insensitive manner. </p>
 free-form string tables directly, allowing you to override the above sequence,
 and avoid accessing an attribute or property of the same name.</p>
 
-<pre class="highlight"><code>%[artifact:<var>setting</var>]
+<pre class="bg-light text-dark"><code>%[artifact:<var>setting</var>]
 %[option:<var>setting</var>]
 </code></pre>
 
 <p>Escape handling requires access to an image container.  If none are available, a blank image is created to ensure the expression can be processed and a value returned.  For example, <code>convert -print "%[fx:.8765/3.14]" null: null:</code>.</p>
 
 
-<h3>Single Letter Attribute Percent Escapes</h3>
+<h2>Single Letter Attribute Percent Escapes</h2>
 
 <p>Here are common single letter escapes (short form) is used to report the most
 common attributes and properties of an image, such as: the image filename
 filename, type, width, height. </p>
 
-<div class="table-responsive" style="font-size:87.5% !important;">
+<div class="table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <td>\</td>
@@ -379,7 +379,7 @@ filename, type, width, height. </p>
 <p>Here is a sample command and its output for an image with filename
 <code>bird.miff</code> and whose width is 512 and height is 480.</p>
 
-<pre class="highlight"><code>-> identify -format "%m:%f %wx%h" bird.miff
+<pre class="bg-light text-dark"><code>-> identify -format "%m:%f %wx%h" bird.miff
 MIFF:bird.miff 512x480
 </code></pre>
 
@@ -396,12 +396,12 @@ is after a number.  For example,  <code>10%x10</code> does not expand the
 <p>Also be warned that calculated attributes can take some time to generate,
 especially for large images.</p>
 
-<h3>Long Form Attribute Percent Escapes</h3>
+<h2>Long Form Attribute Percent Escapes</h2>
 
 <p>In addition to the above specific and calculated attributes are recognized
 when enclosed in braces (long form):</p>
 
-<div class="table-responsive" style="font-size:87.5% !important;">
+<div class="table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <td>%[basename]</td>
@@ -609,7 +609,7 @@ when enclosed in braces (long form):</p>
   </tr>
 </table></div>
 
-<h3>Properties</h3>
+<h2>Properties</h2>
 
 <p>All other long forms of percent escapes (not single letter long form) are
 handled in a case insensitive manner. Such escapes will attempt to look
@@ -637,7 +637,7 @@ href="command-line-options.html#set" >-set</a>.
 images when write, if the image file format allows. </p>
 
 
-<h3>Artifacts and Options</h3>
+<h2>Artifacts and Options</h2>
 
 <p>The previous percent escapes are associated with the primary Attributes and
 Properties. Which is the original and primary focus of such percent escapes.
@@ -689,13 +689,13 @@ Options, only per-image Artifacts. </p>
 Artifact. </p>
 
 
-<h3>Glob-Pattern Listing of Properties, Artifacts and Options</h3>
+<h2>Glob-Pattern Listing of Properties, Artifacts and Options</h2>
 
 <p>The <var>setting</var> can contain a glob pattern. As such you can
 now list all free-form string properties, artifacts, and options, (but not
 specific image attributes) using...</p>
 
-<pre class="highlight"><code>convert ... \
+<pre class="bg-light text-dark"><code>convert ... \
    -print "__Properties__\n%[*]" \
    -print "__Artifacts__\n%[artifact:*]" \
    -print "__Options__\n%[option:*]" \
@@ -707,36 +707,36 @@ only used to list specific settings, such as when debugging, rather than being
 used for image processing use. </p>
 
 
-<h3>Calculated Percent Escape Prefixes</h3>
+<h2>Calculated Percent Escape Prefixes</h2>
 
 <p>There are some special prefixes (before the first ':') which performs
 calculations based on the user provided string that follows that prefix.  For
 example you can do a numerical calculation use <code>%[fx:...]</code> to
 evaluate the given <a href="fx.html">FX</a> expressions:</p>
 
-<pre class="highlight"><code>%[fx:<var>expression</var>]
+<pre class="bg-light text-dark"><code>%[fx:<var>expression</var>]
 </code></pre>
 
 <p>Use <code>pixel:</code> or <code>hex:</code> to evaluate a pixel color as defined by the <a
 href="fx.html">FX</a>
 expression:</p>
 
-<pre class="highlight"><code>%[pixel:<var>expression</var>]
+<pre class="bg-light text-dark"><code>%[pixel:<var>expression</var>]
 </code></pre>
 
 <p>Use <a href="command-line-options.html#define">-define</a> to specify the color compliance (e.g. <code>-define pixel:compliance=css</code>)</p>.
 
-<h3>Specific Profile Percent Escape Prefixes</h3>
+<h2>Specific Profile Percent Escape Prefixes</h2>
 
 <p>You can also use the following special formatting syntax to print EXIF
 mage meta-data that was included in the image read in:</p>
 
-<pre class="highlight"><code>%[EXIF:<var>tag</var>]
+<pre class="bg-light text-dark"><code>%[EXIF:<var>tag</var>]
 </code></pre>
 
 <p>Choose <var>tag</var> from the following:</p>
 
-<pre class="pre-scrollable highlight"><code>
+<pre class="pre-scrollable bg-light text-dark"><code>
 *  (print all EXIF tags, in keyword=data format)
 !  (print all EXIF tags, in tag_number data format)
 #hhhh (print data for EXIF tag #hhhh)
@@ -830,12 +830,12 @@ shell from misinterpreting any spaces and square brackets.</p>
 <p>The following special formatting syntax can be used to print IPTC
 information contained in the file:</p>
 
-<pre class="highlight"><code>%[IPTC:<var>dataset</var>:<var>record</var>]
+<pre class="bg-light text-dark"><code>%[IPTC:<var>dataset</var>:<var>record</var>]
 </code></pre>
 
 <p>Select <var>dataset</var> and <var>record</var> from the following:</p>
 
-<pre class="pre-scrollable highlight:">
+<pre class="pre-scrollable bg-light text-dark:">
   Envelope Record
   1:00  Model Version
   1:05  Destination
@@ -951,4 +951,3 @@ Post ObjectData Descriptor Record
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 12:35 -->

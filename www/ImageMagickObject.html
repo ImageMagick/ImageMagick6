@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Install the ImageMagickObject COM+ Component</title>
+  <title>ImageMagick (legacy) – Install the ImageMagickObject COM+ Component</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="install, the, imagemagickobject, com+, component, image processing software" />
@@ -100,15 +100,15 @@
 
 <p>ImageMagick provides a statically-built ImageMagick object as part of its <a href="download.html#windows">Windows installation package</a>.  When this package is installed, ImageMagickObject and its sample programs are installed to this path:</p>
 
-<pre class="highlight"><code>  c:\Program Files\ImageMagick-6.9.11-Q16\ImageMagickObject
-</code></pre>
+<ul><pre class="bg-light text-dark"><code>  c:\Program Files\ImageMagick-6.9.12-Q16\ImageMagickObject
+</code></pre></ul>
 
 <p>The ImageMagickObject is registered if the checkbox, <code>Register ImageMagickObject</code>, is checked at install time.</p>
 
 <p>To execute the sample program from the Windows Command Shell, type:</p>
 
-<pre class="highlight"><code>cscript SimpleTest.vbs
-</code></pre>
+<ul><pre class="bg-light text-dark"><code>cscript SimpleTest.vbs
+</code></pre></ul>
 
 <p>Since the ImageMagick utility command line parsers are incorporated within ImageMagickObject, please refer to the <a href="command-line-tools.html">command-line tools</a> discussion to learn how to use it. The sample VBS scripts show how the object should be called and used and have lots of comments.</p>
 
@@ -122,21 +122,21 @@
 
 <p>Once the VisualStaticMT project has been built, build the ImageMagickObject with this procedure:</p>
 
-<pre class="highlight"><code>cd ImageMagick/contrib/win32/ATL7/ImageMagickObject
+<ul><pre class="bg-light text-dark"><code>cd ImageMagick/contrib/win32/ATL7/ImageMagickObject
 BuildImageMagickObject release
-</code></pre>
+</code></pre></ul>
 
 <p>Here, we assume that the VisualStaticMT project has been built using the release setting for an optimized build. If the debug setting was used for a debug build, specify the argument <code>debug</code>; instead.</p>
 
 <p>To register the DLL as a COM+ server, type</p>
 
-<pre class="highlight"><code>regsvr32 /c /s ImageMagickObject.dll
-</code></pre>
+<ul><pre class="bg-light text-dark"><code>regsvr32 /c /s ImageMagickObject.dll
+</code></pre></ul>
 
 <p>To unregister the DLL, type</p>
 
-<pre class="highlight"><code>regsvr32 /u /s ImageMagickObject.dll
-</code></pre>
+<ul><pre class="bg-light text-dark"><code>regsvr32 /u /s ImageMagickObject.dll
+</code></pre></ul>
 
 <p>Use MagickCMD to exercise ImageMagickObject to verify that it is working properly.</p>
 
@@ -169,4 +169,3 @@ BuildImageMagickObject release
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 13:03 -->

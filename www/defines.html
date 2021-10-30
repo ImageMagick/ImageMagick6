@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Defines</title>
+  <title>ImageMagick (legacy) – Defines</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="defines, image processing software" />
@@ -112,20 +112,20 @@ is case-dependent.</p>
 
 <p>Such settings are global in scope, and affect all images and operations. </p>
 
-<pre class="highlight"><code>magick bilevel.tif -define ps:imagemask eps3:stencil.ps
+<pre class="bg-light text-dark"><code>magick bilevel.tif -define ps:imagemask eps3:stencil.ps
 </code></pre>
 
 <p>Set attributes of the image registry by prefixing the value with
 <code>registry:</code>.  For example, to set a temporary path to put work files,
 use:</p>
 
-<pre class="highlight"><code>-define registry:temporary-path=/data/tmp
+<pre class="bg-light text-dark"><code>-define registry:temporary-path=/data/tmp
 </code></pre>
 
 <p>Here is a list of recognized defines:</p>
 
 
-<div class="table-responsive" style="font-size:87.5% !important;">
+<div class="table-responsive" style="font-size:smaller !important;">
 
 <table class="table table-sm table-hover">
    <tr>
@@ -335,6 +335,11 @@ use:</p>
   <tr>
     <td>dither:diffusion-amount=<var>X%</var></td>
     <td>Set the amount of diffusion to use with Floyd-Steinberg diffusion</td>
+  </tr>
+
+  <tr>
+    <td>filename:literal=<var>true</var></td>
+    <td>By default, an output filename can contain <a href="command-line-processing.html#output">embedded formatting characters</a>.  Use this option to bypass interpretting embedded formatting characters and instead use the filename literally.</td>
   </tr>
 
   <tr>
@@ -711,6 +716,11 @@ use:</p>
   </tr>
 
   <tr>
+    <td>{caption,label}:{max,start}-pointsize=<var>value</var></td>
+    <td>This sets the bounding pointsize to use when searching for the maximum pointsize where the text annotation still fits within the image boundaries.</td>
+  </tr>
+
+  <tr>
     <td>dcm:display-range=<var>reset</var></td>
      <td>Set the display range to the minimum and maximum pixel values for the
     DCM image format.</td>
@@ -1052,7 +1062,7 @@ use:</p>
     the PNG file.  Because the list is processed from left to right, you
     can achieve this with a single define:</p>
 
-<pre class="highlight"><code>-define png:include-chunk=none,gAMA
+<pre class="bg-light text-dark"><code>-define png:include-chunk=none,gAMA
 </code></pre>
 
     <p>As a special case, if the <code>sRGB</code> chunk is not excluded and
@@ -1075,7 +1085,7 @@ use:</p>
     <p>The <a href="command-line-options.html#strip">-strip</a> option does the equivalent of the
     following for PNG output:</p>
 
-<pre class="highlight"><code>-define png:exclude-chunk=EXIF,iCCP,iTXt,sRGB,tEXt,zCCP,zTXt,date</code></pre>
+<pre class="bg-light text-dark"><code>-define png:exclude-chunk=EXIF,iCCP,iTXt,sRGB,tEXt,zCCP,zTXt,date</code></pre>
 
     <p>The default behavior is to include all known PNG ancillary chunks
     plus ImageMagick's private <code>vpAg</code> ("virtual page") chunk,
@@ -1251,6 +1261,11 @@ use:</p>
   <tr>
     <td>caption:max-pointsize=<var>pointsize</var></td>
      <td>Limit the maximum point size</td>
+  </tr>
+
+  <tr>
+    <td>caption:split=<var>boolean</var></td>
+   <td>split text if required to fit caption on canvas</td>
   </tr>
 
    <tr>
@@ -1472,4 +1487,3 @@ use:</p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 14:08 -->

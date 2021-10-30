@@ -7,9 +7,9 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Command-line Tools: Stream</title>
+  <title>ImageMagick (legacy) – Command-line Tools: Stream</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="" />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
   <meta name="keywords" content="command-line, tools:, stream, image processing software" />
@@ -100,18 +100,18 @@
 
 <p>We list a few examples of the <code>stream</code> command here to illustrate its usefulness and ease of use. To get started, lets stream the red, green, blue components of a 640x480 JPEG image to disk as unsigned characters:</p>
 
-<ul><pre class="highlight"><code>stream -map rgb -storage-type char image.jpg pixels.dat
+<ul><pre class="bg-light text-dark"><code>stream -map rgb -storage-type char image.jpg pixels.dat
 display -depth 8 -size 640x480 rgb:pixels.dat
 </code></pre></ul>
 
 <p>Here we extract a 100x100 region from a TIFF image in the grayscale format as doubles:</p>
 
-<ul><pre class="highlight"><code>stream -map i -storage-type double -extract 100x100+30+40 image.tif gray.raw
+<ul><pre class="bg-light text-dark"><code>stream -map i -storage-type double -extract 100x100+30+40 image.tif gray.raw
 </code></pre></ul>
 
 <p>You can also associate the region to extract with the image filename:</p>
 
-<ul><pre class="highlight"><code>stream -map i -storage-type double 'image.tif[100x100+30+40]' gray.raw
+<ul><pre class="bg-light text-dark"><code>stream -map i -storage-type double 'image.tif[100x100+30+40]' gray.raw
 </code></pre></ul>
 
 <p>Streaming requires that the image coder read the image pixels in row order.  Not all formats adhere to this requirement.  Verify a particular image format first, before you utilize streaming in your workflow.</p>
@@ -318,4 +318,3 @@ display -depth 8 -size 640x480 rgb:pixels.dat
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 14:08 -->

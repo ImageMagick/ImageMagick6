@@ -7,12 +7,12 @@
 <head>
   <meta charset="utf-8"  />
   <meta name="viewport" content="width=device-width, initial-scale=1"  />
-  <title>ImageMagick (legacy) - Formats</title>
+  <title>ImageMagick (legacy) – Image Formats</title>
   <meta name="application-name" content="ImageMagick (legacy)" />
-  <meta name="description" content="Use ImageMagick® to create, edit, compose, and convert digital images. Resize an image, crop it, change its shades and colors, add captions, and more." />
+  <meta name="description" content="Read and write images in a variety of formats (over 200)." />
   <meta name="application-url" content="https://legacy.imagemagick.org" />
   <meta name="generator" content="PHP" />
-  <meta name="keywords" content="formats, image processing software" />
+  <meta name="keywords" content="image, formats, image processing software" />
   <meta name="rating" content="GENERAL" />
   <meta name="robots" content="INDEX, FOLLOW" />
   <meta name="generator" content="ImageMagick Studio LLC" />
@@ -98,10 +98,10 @@
 
 <p>To get a complete listing of which image formats are supported on your system, type</p>
 
-<pre class="highlight"><code>identify -list format
+<pre class="bg-light text-dark"><code>identify -list format
 </code></pre>
 
-<p>On some platforms, ImageMagick automagically processes these extensions: .gz for Zip compression, .Z for Unix compression, .bz2 for block compression, and .pgp for PGP encryption. For example, a PNM image called image.pnm.gz is automagically uncompressed.</p>
+<p>On some platforms, ImageMagick automagically processes these extensions: .gz for Zip compression, .Z for Linux compression, .bz2 for block compression, and .pgp for PGP encryption. For example, a PNM image called image.pnm.gz is automagically uncompressed.</p>
 
 <h2><a class="anchor" id="colorspace"></a>A Word about Colorspaces</h2>
  <p>A majority of the image formats assume an sRGB
@@ -111,7 +111,7 @@ Then there is the occasional format that also supports LAB (that is CieLAB)
 (e.g. TIFF, PSD, JPG, JP2).  To determine the colorspace of your image, use
 this command:</p>
 
-<pre class="highlight"><code>-> identify -verbose image.jpg
+<pre class="bg-light text-dark"><code>-> identify -verbose image.jpg
 Image: image.jpg
 Format: JPEG (Joint Photographic Experts Group JFIF format)
 ...
@@ -119,7 +119,7 @@ Colorspace: sRGB
 </code></pre>
 
 OR use the appropriate percent escape
-<pre class="highlight"><code>-> convert image.jpg -print "%[colorspace]\n" null:
+<pre class="bg-light text-dark"><code>$ convert image.jpg -print "%[colorspace]\n" null:
 sRGB
 </code></pre>
 
@@ -130,7 +130,7 @@ satisfactory results processing in the sRGB colorspace, you may get improved
 results in linear RGB (essentially sRGB with the gamma function removed).  For
 example,</p>
 
-<pre class="highlight"><code>convert image.jpg -colorspace RGB -resize 50% -colorspace sRGB resize.jpg
+<pre class="bg-light text-dark"><code>convert image.jpg -colorspace RGB -resize 50% -colorspace sRGB resize.jpg
 </code></pre>
 
 <p>As of IM 6.7.8-2 one can properly work in LAB colorspace whether or not
@@ -138,7 +138,7 @@ Imagemagick is <a href="high-dynamic-range.html">HDRI</a>-enabled.  Essentially 
 B channels are stored with a 50% gray bias, to allow it to handle the
 negatives required by the format.</p>
 
-<pre class="highlight"><code>convert lab.tif -resize 50% resize.jpg
+<pre class="bg-light text-dark"><code>convert lab.tif -resize 50% resize.jpg
 </code></pre>
 
 <p>Again, it may not make sense for some image processing operators to work
@@ -151,7 +151,7 @@ reasonable results.</p>
 including sub-formats). The following table provides a summary of
 the supported image formats.</p>
 
-<div class="pre-scrollable highlight table-responsive" style="font-size:87.5% !important;">
+<div class="pre-scrollable bg-light text-dark table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tbody>
   <tr>
@@ -390,49 +390,49 @@ the supported image formats.</p>
     <td>EPI</td>
     <td>RW</td>
     <td>Adobe Encapsulated PostScript Interchange format</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>EPS</td>
     <td>RW</td>
     <td>Adobe Encapsulated PostScript</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>EPS2</td>
     <td>W</td>
     <td>Adobe Level II Encapsulated PostScript</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>EPS3</td>
     <td>W</td>
     <td>Adobe Level III Encapsulated PostScript</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>EPSF</td>
     <td>RW</td>
     <td>Adobe Encapsulated PostScript</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>EPSI</td>
     <td>RW</td>
     <td>Adobe Encapsulated PostScript Interchange format</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>EPT</td>
     <td>RW</td>
     <td>Adobe Encapsulated PostScript Interchange format with <a href="formats.html#TIFF">TIFF</a> preview</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
@@ -535,7 +535,7 @@ the supported image formats.</p>
 
   <tr>
     <td><a href="https://en.wikipedia.org/wiki/High_Efficiency_Image_File_Format">HEIC</a></td>
-    <td>R</td>
+    <td>RW</td>
     <td>Apple High efficiency Image Format</td>
     <td>HEIC requires the <a href="https://github.com/strukturag/libheif">libheif</a> delegate library.</td>
   </tr>
@@ -669,7 +669,7 @@ the supported image formats.</p>
   <tr>
     <td>MAN</td>
     <td>R</td>
-    <td>Unix reference manual pages</td>
+    <td>Linux reference manual pages</td>
     <td>Requires that GNU groff and Ghostcript are installed.</td>
   </tr>
 
@@ -718,7 +718,7 @@ the supported image formats.</p>
   <tr>
     <td>MPC</td>
     <td>RW</td>
-    <td>Magick Persistent Cache image file format</td>
+    <td>Magick Pixel Cache image file format</td>
     <td>The most efficient data processing pattern is a write-once, read-many-times pattern. The image is generated or copied from source, then various analyses are performed on the image pixels over time.  MPC supports this pattern. MPC is the native <var>in-memory</var> ImageMagick uncompressed file format. This file format is identical to that used by ImageMagick to represent images in memory and is read by mapping the file directly into memory. The MPC format is not portable and is not suitable as an archive format. It is suitable as an intermediate format for high-performance image processing.  The MPC format requires two files to support one image. Image attributes are written to a file with the extension <code>.mpc</code>, whereas, image pixels are written to a file with the extension <code>.cache</code>.</td>
   </tr>
 
@@ -727,7 +727,7 @@ the supported image formats.</p>
     <td>RW</td>
     <td>Magick Persistent Registry</td>
     <td>This format permits you to write to and read images from memory.  The image persists until the program exits.  For example, let's use the MPR to create a checkerboard:
-<pre class="highlight"><code>convert \( -size 15x15 canvas:black canvas:white -append \) \
+<pre class="bg-light text-dark"><code>convert \( -size 15x15 canvas:black canvas:white -append \) \
   \( +clone -flip \) +append -write mpr:checkers +delete \
   -size 240x240 tile:mpr:checkers board.png
 </code></pre></td>
@@ -862,7 +862,7 @@ the supported image formats.</p>
     <td>PDF</td>
     <td>RW</td>
     <td>Portable Document Format</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.  By default, ImageMagick sets the page size to the MediaBox. Some PDF files, however, have a CropBox or TrimBox that is smaller than the MediaBox and may include white space, registration or cutting marks outside the CropBox or TrimBox. To force ImageMagick to use the CropBox or TrimBox rather than the MediaBox, use <a href="command-line-options.html#define">-define</a> (e.g. <code>-define pdf:use-cropbox=true</code> or <code>-define pdf:use-trimbox=true</code>).  Use <a href="command-line-options.html#density">-density</a> to improve the appearance of your PDF rendering (e.g. -density 300x300).  Use <a href="command-line-options.html#alpha">-alpha remove </a> to remove transparency. To specify direct conversion from  Postscript to PDF, use <code>-define delegate:bimodel=true</code>. Use <code>-define pdf:fit-page=true</code> to scale to the page size. To immediately stop processing upon an error, set <code>-define pdf:stop-on-error</code> to <code>true</code>. To set the page direction preferences to right-to-left, try  <code>-define pdf:page-direction=right-to-left</code>. Use <a href="command-line-options.html#alpha">-alpha remove </a> to remove transparency.  When writing to a PDF, thumbnails are included by default.  To skip generating thumbnails, <code>-define pdf:thumbnail=false</code>. To enable interpolation when rendering, use <code>-define pdf:interpolate=true</code>.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.  By default, ImageMagick sets the page size to the MediaBox. Some PDF files, however, have a CropBox or TrimBox that is smaller than the MediaBox and may include white space, registration or cutting marks outside the CropBox or TrimBox. To force ImageMagick to use the CropBox or TrimBox rather than the MediaBox, use <a href="command-line-options.html#define">-define</a> (e.g. <code>-define pdf:use-cropbox=true</code> or <code>-define pdf:use-trimbox=true</code>).  Use <a href="command-line-options.html#density">-density</a> to improve the appearance of your PDF rendering (e.g. -density 300x300).  Use <a href="command-line-options.html#alpha">-alpha remove </a> to remove transparency. To specify direct conversion from  Postscript to PDF, use <code>-define delegate:bimodel=true</code>. Use <code>-define pdf:fit-page=true</code> to scale to the page size. To immediately stop processing upon an error, set <code>-define pdf:stop-on-error</code> to <code>true</code>. To set the page direction preferences to right-to-left, try  <code>-define pdf:page-direction=right-to-left</code>. Use <a href="command-line-options.html#alpha">-alpha remove </a> to remove transparency.  When writing to a PDF, thumbnails are included by default.  To skip generating thumbnails, <code>-define pdf:thumbnail=false</code>. To enable interpolation when rendering, use <code>-define pdf:interpolate=true</code>.</td>
   </tr>
 
   <tr>
@@ -1002,21 +1002,21 @@ the supported image formats.</p>
     <td>PS</td>
     <td>RW</td>
     <td>Adobe PostScript file</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read. To force ImageMagick to respect the crop box, use <a href="command-line-options.html#define">-define</a> (e.g. <code>-define eps:use-cropbox=true</code>). Use <a href="command-line-options.html#density">-density</a> to improve the appearance of your Postscript rendering (e.g. -density 300x300).  Use <a href="command-line-options.html#alpha">-alpha remove </a> to remove transparency. To specify direct conversion from PDF to Postscript, use <code>-define delegate:bimodel=true</code>.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read. To force ImageMagick to respect the crop box, use <a href="command-line-options.html#define">-define</a> (e.g. <code>-define eps:use-cropbox=true</code>). Use <a href="command-line-options.html#density">-density</a> to improve the appearance of your Postscript rendering (e.g. -density 300x300).  Use <a href="command-line-options.html#alpha">-alpha remove </a> to remove transparency. To specify direct conversion from PDF to Postscript, use <code>-define delegate:bimodel=true</code>.</td>
   </tr>
 
   <tr>
     <td>PS2</td>
     <td>RW</td>
     <td>Adobe Level II PostScript file</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
     <td>PS3</td>
     <td>RW</td>
     <td>Adobe Level III PostScript file</td>
-    <td>Requires <a href="http://www.cs.wisc.edu/%7Eghost">Ghostscript</a> to read.</td>
+    <td>Requires <a href="https://www.ghostscript.com/download.html">Ghostscript</a> to read.</td>
   </tr>
 
   <tr>
@@ -1348,7 +1348,7 @@ the supported image formats.</p>
 
 <p>ImageMagick supports a number of image format specifications which refer to images prepared via an algorithm, or input/output targets. The following table lists these pseudo-image formats:</p>
 
-<div class="pre-scrollable highlight table-responsive" style="font-size:87.5% !important;">
+<div class="pre-scrollable bg-light text-dark table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <th>Tag</th>
@@ -1384,7 +1384,7 @@ the supported image formats.</p>
     <td>CAPTION</td>
     <td>R</td>
     <td>Image caption</td>
-    <td> </td>
+    <td>Use <code>-define caption:split=true</code> to split text if required to fit caption on the canvas</td>
   </tr>
 
   <tr>
@@ -1498,7 +1498,7 @@ the supported image formats.</p>
     <td>PRINT</td>
     <td>W</td>
     <td>Send image to your computer printer</td>
-    <td>Unix users may set the PRINTER (for 'lpr') or LPDEST (for 'lp') environment variables to select the desired printer.</td>
+    <td>Linux users may set the PRINTER (for 'lpr') or LPDEST (for 'lp') environment variables to select the desired printer.</td>
   </tr>
 
   <tr>
@@ -1589,7 +1589,7 @@ the supported image formats.</p>
 
 <p>ImageMagick includes a number of built-in (embedded) images which may be referenced as if they were an image file. The <code>convert:</code> format tag may be used via the syntax <code>magick:</code><var>name</var> to request an embedded image (e.g. <code>magick:logo</code>). For backwards compatibility, the image specifications <code>GRANITE:</code>, <code>LOGO:</code>, <code>NETSCAPE:</code>, and <code>ROSE:</code> may also be used to request images with those names.</p>
 
-<div class="pre-scrollable highlight table-responsive" style="font-size:87.5% !important;">
+<div class="pre-scrollable bg-light text-dark table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <th>Tag</th>
@@ -1640,7 +1640,7 @@ the supported image formats.</p>
 
 <p>ImageMagick includes a number of built-in (embedded) patterns which may be referenced as if they were an image file. The <code>pattern:</code> format tag may be used via the syntax <code>pattern:</code><var>name</var> to request an embedded pattern (e.g. <code>pattern:checkerboard</code>). The pattern size is controlled with the <a href="command-line-options.html#size">-size</a> command line option.</p>
 
-<div class="pre-scrollable highlight table-responsive" style="font-size:87.5% !important;">
+<div class="pre-scrollable bg-light text-dark table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tr>
     <th>Tag</th>
@@ -2033,7 +2033,7 @@ the supported image formats.</p>
 
 <p>ImageMagick provides a number of format identifiers which are used to add, remove, and save embedded profiles for images which can support embedded profiles. Image types which may contain embedded profiles are TIFF, JPEG, and PDF.</p>
 
-<div class="pre-scrollable highlight table-responsive" style="font-size:87.5% !important;">
+<div class="pre-scrollable bg-light text-dark table-responsive" style="font-size:smaller !important;">
 <table class="table table-sm table-hover">
   <tbody>
   <tr>
@@ -2124,4 +2124,3 @@ the supported image formats.</p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 13th February 2021 14:08 -->
