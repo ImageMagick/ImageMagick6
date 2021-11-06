@@ -1097,7 +1097,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     *image;
 
   int
-    tiff_status;
+    tiff_status = 0;
 
   MagickBooleanType
     more_frames;
@@ -1939,7 +1939,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
               columns_remaining=image->columns-x;
               if ((ssize_t) (x+columns) < (ssize_t) image->columns)
                 columns_remaining=columns;
-              if (TIFFReadTile(tiff,tile_pixels,(uint32) x,(uint32) y,0,i) == -1)
+              tiff_status=TIFFReadTile(tiff,tile_pixels,(uint32) x,(uint32) y,
+                0,i);
+              if (tiff_status == -1)
                 break;
               p=tile_pixels;
               for (row=0; row < rows_remaining; row++)
@@ -1999,9 +2001,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         if (generic_info == (MemoryInfo *) NULL)
           ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
         pixels=(uint32 *) GetVirtualMemoryBlob(generic_info);
-        status=TIFFReadRGBAImage(tiff,(uint32) image->columns,(uint32)
+        tiff_status=TIFFReadRGBAImage(tiff,(uint32) image->columns,(uint32)
           image->rows,(uint32 *) pixels,0);
-        if (status == -1)
+        if (tiff_status == -1)
           {
             generic_info=RelinquishVirtualMemory(generic_info);
             break;
@@ -2050,6 +2052,11 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
   next_tiff_frame:
     if (quantum_info != (QuantumInfo *) NULL)
       quantum_info=DestroyQuantumInfo(quantum_info);
+    if (tiff_status == -1)
+      {
+        status=MagickFalse;
+        break;
+      }
     if (photometric == PHOTOMETRIC_CIELAB)
       DecodeLabImage(image,exception);
     if ((photometric == PHOTOMETRIC_LOGL) ||
@@ -3055,6 +3062,9 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
   EndianType
     endian_type;
 
+  int
+    tiff_status = 0;
+
   MagickBooleanType
     debug,
     status;
@@ -3738,7 +3748,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
                 break;
               (void) ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,quantum_type,pixels,&image->exception);
-              if (TIFFWritePixels(tiff,&tiff_info,y,0,image) == -1)
+              tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
+              if (tiff_status == -1)
                 break;
               if (image->previous == (Image *) NULL)
                 {
@@ -3766,7 +3777,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
                 break;
               (void) ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,RedQuantum,pixels,&image->exception);
-              if (TIFFWritePixels(tiff,&tiff_info,y,0,image) == -1)
+              tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
+              if (tiff_status == -1)
                 break;
             }
             if (image->previous == (Image *) NULL)
@@ -3785,7 +3797,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
                 break;
               (void) ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,GreenQuantum,pixels,&image->exception);
-              if (TIFFWritePixels(tiff,&tiff_info,y,1,image) == -1)
+              tiff_status=TIFFWritePixels(tiff,&tiff_info,y,1,image);
+              if (tiff_status == -1)
                 break;
             }
             if (image->previous == (Image *) NULL)
@@ -3804,7 +3817,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
                 break;
               (void) ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,BlueQuantum,pixels,&image->exception);
-              if (TIFFWritePixels(tiff,&tiff_info,y,2,image) == -1)
+              tiff_status=TIFFWritePixels(tiff,&tiff_info,y,2,image);
+              if (tiff_status == -1)
                 break;
             }
             if (image->previous == (Image *) NULL)
@@ -3825,7 +3839,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
                   break;
                 (void) ExportQuantumPixels(image,(const CacheView *) NULL,
                   quantum_info,AlphaQuantum,pixels,&image->exception);
-                if (TIFFWritePixels(tiff,&tiff_info,y,3,image) == -1)
+                tiff_status=TIFFWritePixels(tiff,&tiff_info,y,3,image);
+                if (tiff_status == -1)
                   break;
               }
             if (image->previous == (Image *) NULL)
@@ -3859,7 +3874,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
             break;
           (void) ExportQuantumPixels(image,(const CacheView *) NULL,
             quantum_info,quantum_type,pixels,&image->exception);
-          if (TIFFWritePixels(tiff,&tiff_info,y,0,image) == -1)
+          tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
+          if (tiff_status == -1)
             break;
           if (image->previous == (Image *) NULL)
             {
@@ -3938,7 +3954,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
             break;
           (void) ExportQuantumPixels(image,(const CacheView *) NULL,
             quantum_info,quantum_type,pixels,&image->exception);
-          if (TIFFWritePixels(tiff,&tiff_info,y,0,image) == -1)
+          tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
+          if (tiff_status == -1)
             break;
           if (image->previous == (Image *) NULL)
             {
@@ -3955,6 +3972,11 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
     if (image->colorspace == LabColorspace)
       DecodeLabImage(image,&image->exception);
     DestroyTIFFInfo(&tiff_info);
+    if (tiff_status == -1)
+      {
+        status=MagickFalse;
+        break;
+      }
     /* TIFFPrintDirectory(tiff,stdout,MagickFalse); */
     if (TIFFWriteDirectory(tiff) == 0)
       {
