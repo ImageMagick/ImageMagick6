@@ -732,6 +732,8 @@ static MagickBooleanType CheckImageColors(const Image *image,
     if (p == (const PixelPacket *) NULL)
       break;
     indexes=GetCacheViewVirtualIndexQueue(image_view);
+    if (indexes == (const IndexPacket *) NULL)
+      break;
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       /*

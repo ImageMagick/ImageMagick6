@@ -295,6 +295,11 @@ MagickExport Image *CompareImageChannels(Image *image,
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
     highlight_indexes=GetCacheViewAuthenticIndexQueue(highlight_view);
+    if (highlight_indexes == (IndexPacket *) NULL)
+      {
+        status=MagickFalse;
+        continue;
+      }
     pixel=zero;
     reconstruct_pixel=zero;
     for (x=0; x < (ssize_t) columns; x++)

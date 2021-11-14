@@ -930,6 +930,8 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
     if (p == (const PixelPacket *) NULL)
       break;
     indexes=GetVirtualIndexQueue(image);
+    if (indexes == (const IndexPacket *) NULL)
+      break;
     if (compression == RLECompression)
       {
         x=0;

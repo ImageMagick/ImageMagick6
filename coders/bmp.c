@@ -1116,7 +1116,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
         while (((bmp_info.green_mask << sample) & 0x80000000UL) != 0)
         {
           sample++;
-          if (sample > 32U)
+          if (sample >= 32U)
             break;
         }
         quantum_bits.green=ClampToQuantum((MagickRealType) sample-shift.green);
@@ -1124,7 +1124,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
         while (((bmp_info.blue_mask << sample) & 0x80000000UL) != 0)
         {
           sample++;
-          if (sample > 32U)
+          if (sample >= 32U)
             break;
         }
         quantum_bits.blue=ClampToQuantum((MagickRealType) sample-shift.blue);
@@ -1132,7 +1132,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
         while (((bmp_info.alpha_mask << sample) & 0x80000000UL) != 0)
         {
           sample++;
-          if (sample > 32U)
+          if (sample >= 32U)
             break;
         }
         quantum_bits.opacity=ClampToQuantum((MagickRealType) sample-
