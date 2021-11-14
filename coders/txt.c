@@ -632,7 +632,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   } while (LocaleNCompare((char *) text,MagickID,strlen(MagickID)) == 0);
   (void) CloseBlob(image);
   if (q == (PixelPacket *) NULL)
-    return(DestroyImage(image));
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 
