@@ -2556,6 +2556,11 @@ MagickExport MagickBooleanType SetImageColor(Image *image,
         continue;
       }
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
+    if (indexes == (IndexPacket *) NULL)
+      {
+        status=MagickFalse;
+        continue;
+      }
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       SetPixelPacket(image,color,q,indexes+x);
