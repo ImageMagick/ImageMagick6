@@ -351,7 +351,7 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
     }
   (void) AnnotateImage(image,draw_info);
   if (texture != (Image *) NULL)
-    texture=DestroyImage(texture);
+    texture=DestroyImageList(texture);
   draw_info=DestroyDrawInfo(draw_info);
   (void) CloseBlob(image);
   if (status == MagickFalse)
