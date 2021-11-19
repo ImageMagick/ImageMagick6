@@ -4628,7 +4628,7 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             *name='\0';
             (void) GetNextToken(q,&q,extent,token);
             if (*q == '"')
-              (void) GetNextToken(q,&q,extent,name);
+              (void) GetNextToken(q,&q,MaxTextExtent,name);
             if (LocaleCompare("clip-path",token) == 0)
               {
                 (void) GetNextToken(q,&q,extent,token);
