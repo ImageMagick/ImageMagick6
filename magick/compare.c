@@ -295,11 +295,6 @@ MagickExport Image *CompareImageChannels(Image *image,
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
     highlight_indexes=GetCacheViewAuthenticIndexQueue(highlight_view);
-    if (highlight_indexes == (IndexPacket *) NULL)
-      {
-        status=MagickFalse;
-        continue;
-      }
     pixel=zero;
     reconstruct_pixel=zero;
     for (x=0; x < (ssize_t) columns; x++)
@@ -367,9 +362,11 @@ MagickExport Image *CompareImageChannels(Image *image,
             }
         }
       if (difference != MagickFalse)
-        SetPixelPacket(highlight_image,&highlight,r,highlight_indexes+x);
+        SetPixelPacket(highlight_image,&highlight,r,highlight_indexes ==
+          (IndexPacket *) NULL ? NULL : highlight_indexes+x);
       else
-        SetPixelPacket(highlight_image,&lowlight,r,highlight_indexes+x);
+        SetPixelPacket(highlight_image,&lowlight,r,highlight_indexes ==
+          (IndexPacket *) NULL ? NULL : highlight_indexes+x);
       p++;
       q++;
       r++;
