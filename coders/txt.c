@@ -818,11 +818,10 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
       if (p == (const PixelPacket *) NULL)
         break;
       indexes=GetVirtualIndexQueue(image);
-      if (indexes == (const IndexPacket *) NULL)
-        break;
       for (x=0; x < (ssize_t) image->columns; x++)
       {
-        SetMagickPixelPacket(image,p,indexes+x,&pixel);
+        SetMagickPixelPacket(image,p,indexes == (IndexPacket *) NULL ? NULL :
+          indexes+x,&pixel);
         if (LocaleCompare(image_info->magick,"SPARSE-COLOR") == 0)
           {
             /*
