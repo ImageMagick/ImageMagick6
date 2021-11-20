@@ -2123,14 +2123,8 @@ MagickExport MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
   MagickBooleanType
     status;
 
-  ssize_t
-    i;
-
   size_t
     quantum;
-
-  ssize_t
-    count;
 
   struct stat
     file_stats;
@@ -2206,9 +2200,9 @@ MagickExport MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
       ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
-  for (i=0; ; i+=count)
+  for ( ; ; )
   {
-    count=read(file,buffer,quantum);
+    ssize_t count = read(file,buffer,quantum);
     if (count <= 0)
       {
         count=0;
