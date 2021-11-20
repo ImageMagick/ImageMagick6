@@ -930,8 +930,6 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
     if (p == (const PixelPacket *) NULL)
       break;
     indexes=GetVirtualIndexQueue(image);
-    if (indexes == (const IndexPacket *) NULL)
-      break;
     if (compression == RLECompression)
       {
         x=0;
@@ -998,7 +996,8 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
       }
     else
       for (x=0; x < (ssize_t) image->columns; x++)
-        WriteTGAPixel(image,tga_info.image_type,indexes+x,p++,range,midpoint);
+        WriteTGAPixel(image,tga_info.image_type,indexes ==
+          (IndexPacket *) NULL ? NULL : indexes+x,p++,range,midpoint);
     if (((unsigned char) (tga_info.attributes & 0xc0) >> 6) == 2)
       offset+=2;
     else
