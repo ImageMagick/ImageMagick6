@@ -302,9 +302,10 @@ MagickExport Image *CompareImageChannels(Image *image,
       MagickStatusType
         difference;
 
-      SetMagickPixelPacket(image,p,indexes+x,&pixel);
-      SetMagickPixelPacket(reconstruct_image,q,reconstruct_indexes+x,
-        &reconstruct_pixel);
+      SetMagickPixelPacket(image,p,indexes == (IndexPacket *) NULL ? NULL :
+        indexes+x,&pixel);
+      SetMagickPixelPacket(reconstruct_image,q,reconstruct_indexes ==
+        (IndexPacket *) NULL ? NULL : reconstruct_indexes+x,&reconstruct_pixel);
       difference=MagickFalse;
       if (channel == CompositeChannels)
         {
