@@ -2171,7 +2171,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
-          FxReturn((alpha/(*beta*(alpha-1.0)+1.0)));
+          FxReturn(alpha*PerceptibleReciprocal(*beta*(alpha-1.0)+1.0));
         }
       break;
     }
