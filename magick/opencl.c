@@ -92,10 +92,6 @@
 
 #if defined(MAGICKCORE_OPENCL_SUPPORT)
 
-#ifdef MAGICKCORE_HAVE_OPENCL_CL_H
-#define MAGICKCORE_OPENCL_MACOSX  1
-#endif
-
 #define NUM_CL_RAND_GENERATORS 1024  /* number of random number generators running in parallel */
 #define PROFILE_OCL_KERNELS 0
 
@@ -395,7 +391,7 @@ SemaphoreInfo* OpenCLLibLock;
 
 static MagickBooleanType bindOpenCLFunctions(void* library)
 {
-#ifdef MAGICKCORE_OPENCL_MACOSX
+#ifdef MAGICKCORE_HAVE_OPENCL_CL_H
 #define BIND(X) OpenCLLib->X= &X;
 #else
 #define BIND(X)\
