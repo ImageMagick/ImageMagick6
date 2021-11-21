@@ -143,13 +143,12 @@ extern "C" {
 # include <arm/limits.h>
 #endif
 
-#if defined(MAGICKCORE__OPENCL) && !defined(MAGICK_PIXEL_RGBA)
-#if defined(MAGICKCORE_HAVE_CL_CL_H)
+#if defined(MAGICKCORE_HAVE_CL_CL_H) && !defined(MAGICK_PIXEL_RGBA)
 #  include <CL/cl.h>
+#  define MAGICKCORE_OPENCL_SUPPORT  1
 #endif
-#if defined(MAGICKCORE_HAVE_OPENCL_CL_H)
+#if defined(MAGICKCORE_HAVE_OPENCL_CL_H) && !defined(MAGICK_PIXEL_RGBA)
 #  include <OpenCL/cl.h>
-#endif
 #  define MAGICKCORE_OPENCL_SUPPORT  1
 #endif
 
