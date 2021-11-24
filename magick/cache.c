@@ -446,7 +446,6 @@ MagickExport NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
     nexus_info[i]=(*nexus_info+i);
     if (i < (ssize_t) number_threads)
       nexus_info[i]->virtual_nexus=(*nexus_info+number_threads+i);
-    nexus_info[i]->semaphore=AllocateSemaphoreInfo();
     nexus_info[i]->signature=MagickCoreSignature;
   }
   return(nexus_info);
@@ -1260,8 +1259,6 @@ MagickExport NexusInfo **DestroyPixelCacheNexus(NexusInfo **nexus_info,
   {
     if (nexus_info[i]->cache != (PixelPacket *) NULL)
       RelinquishCacheNexusPixels(nexus_info[i]);
-    if (nexus_info[i]->semaphore != (SemaphoreInfo *) NULL)
-      DestroySemaphoreInfo(&nexus_info[i]->semaphore);
     nexus_info[i]->signature=(~MagickCoreSignature);
   }
   *nexus_info=(NexusInfo *) RelinquishMagickMemory(*nexus_info);
@@ -5239,23 +5236,14 @@ static PixelPacket *SetPixelCacheNexusPixels(
   if (cache_info->active_index_channel != MagickFalse)
     length+=number_pixels*sizeof(IndexPacket);
   status=MagickTrue;
-  if ((nexus_info->cache == (PixelPacket *) NULL) ||
-      (nexus_info->length < length))
-    {
-      /*
-        Allocate or grow nexus pixel cache.
-      */
-      if (nexus_info->cache == (PixelPacket *) NULL)
+  if (nexus_info->cache == (PixelPacket *) NULL)
+    status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
+  else
+    if (nexus_info->length < length)
+      {
+        RelinquishCacheNexusPixels(nexus_info);
         status=AcquireCacheNexusPixels(cache_info,length,nexus_info,exception);
-      else
-        if (nexus_info->length < length)
-          {
-            RelinquishCacheNexusPixels(nexus_info);
-            status=AcquireCacheNexusPixels(cache_info,length,nexus_info,
-              exception);
-          }
-      UnlockSemaphoreInfo(nexus_info->semaphore);
-    }
+      }
   if (status == MagickFalse)
     {
       (void) memset(&nexus_info->region,0,sizeof(nexus_info->region));
