@@ -1238,6 +1238,11 @@ MagickExport void MagickCoreGenesis(const char *path,
   /*
     Initialize the Magick environment.
   */
+#if defined(__has_feature)
+#if __has_feature(address_sanitizer)
+  (void) putenv("MAGICK_THREAD_LIMIT=1");
+#endif
+#endif
   InitializeMagickMutex();
   LockMagickMutex();
   if (instantiate_magickcore != MagickFalse)
