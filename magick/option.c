@@ -68,6 +68,7 @@
 #include "magick/property.h"
 #include "magick/quantize.h"
 #include "magick/quantum.h"
+#include "magick/registry.h"
 #include "magick/resample.h"
 #include "magick/resource_.h"
 #include "magick/splay-tree.h"
@@ -2252,10 +2253,25 @@ MagickExport char *GetNextImageOption(const ImageInfo *image_info)
 */
 MagickExport MagickBooleanType IsCommandOption(const char *option)
 {
+  char
+    *value;
+  
+  ExceptionInfo
+    *exception = AcquireExceptionInfo();
+
+  MagickBooleanType
+    pedantic;
+  
   assert(option != (const char *) NULL);
   if ((*option != '-') && (*option != '+'))
     return(MagickFalse);
-  if (IsPathAccessible(option) != MagickFalse)
+  value=(char *) GetImageRegistry(StringRegistryType,"option:pedantic",
+    exception);
+  exception=DestroyExceptionInfo(exception);
+  pedantic=IsStringTrue(value);
+  if (value != (char *) NULL)
+    value=DestroyString(value);
+  if ((pedantic == MagickFalse) && (IsPathAccessible(option) != MagickFalse))
     return(MagickFalse);
   if (strlen(option) == 1)
     return(((*option == '{') || (*option == '}') || (*option == '[') ||
