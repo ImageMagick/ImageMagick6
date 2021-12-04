@@ -4366,7 +4366,6 @@ MagickExport void XFileBrowserWidget(Display *display,XWindows *windows,
   visible_files=0;
   anomaly=(LocaleCompare(action,"Composite") == 0) ||
     (LocaleCompare(action,"Open") == 0) || (LocaleCompare(action,"Map") == 0);
-  *reply='\0';
   delay=SuspendTime << 2;
   state=UpdateConfigurationState;
   do
