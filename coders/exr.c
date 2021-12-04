@@ -217,6 +217,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
+      (void) ImfCloseInputFile(file);
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
