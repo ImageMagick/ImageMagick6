@@ -1696,15 +1696,11 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
       case 'o':
       case 'x':
       {
-        char
-          sanitize_format[MagickPathExtent];
-
         q++;
         c=(*q);
         *q='\0';
-        (void) FormatLocaleString(sanitize_format,MagickPathExtent,"%s",p);
         (void) FormatLocaleString(filename+(p-format-offset),(size_t)
-          (MaxTextExtent-(p-format-offset)),sanitize_format,value);
+          (MaxTextExtent-(p-format-offset)),p,value);
         offset+=(4-field_width);
         *q=c;
         (void) ConcatenateMagickString(filename,q,MaxTextExtent);
