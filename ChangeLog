@@ -1,6 +1,9 @@
 2021-12-11  6.9.12-33  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-33 GIT revision 16...
 
+2021-12-11  6.9.12-33  <quetzlzacatenango@image...>
+  * support face index for font collections, e.g. msgothic.ttc[1].
+
 2021-12-11  6.9.12-33  Dirk Lemstra <dirk@lem.....org>
   * Improved adjustment of page offset when resizing an image.
 
