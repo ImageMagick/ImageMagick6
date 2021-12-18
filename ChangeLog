@@ -1,5 +1,5 @@
-2021-12-11  6.9.12-33  <quetzlzacatenango@image...> 
-  * Release ImageMagick version 6.9.12-33 GIT revision 16...
+2021-12-18  6.9.12-33  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-33 GIT revision 16952:add9cb14e:20211218
 
 2021-12-11  6.9.12-33  <quetzlzacatenango@image...>
   * support face index for font collections, e.g. msgothic.ttc[1].
