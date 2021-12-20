@@ -461,7 +461,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         return(DestroyImageList(image));
       }
     if (colorspace != UndefinedColorspace)
-      (void) SetImageColorspace(image,colorspace,exception);
+      (void) SetImageColorspace(image,colorspace);
     (void) ResetImagePixels(image,exception);
     /*
       Convert PNM pixels.
