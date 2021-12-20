@@ -238,6 +238,9 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   char
     format;
 
+  ColorspaceType
+    colorspace;
+
   CommentInfo
     comment_info;
 
@@ -306,6 +309,7 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if ((count != 1) || (format != 'P'))
       ThrowPNMException(CorruptImageError,"ImproperImageHeader");
     max_value=1;
+    colorspace=UndefinedColorspace;
     quantum_type=UndefinedQuantum;
     quantum_scale=1.0;
     format=(char) ReadBlobByte(image);
@@ -396,23 +400,23 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             {
               if (LocaleCompare(value,"BLACKANDWHITE") == 0)
                 {
-                  (void) SetImageColorspace(image,GRAYColorspace);
+                  colorspace=GRAYColorspace;
                   quantum_type=GrayQuantum;
                 }
               if (LocaleCompare(value,"BLACKANDWHITE_ALPHA") == 0)
                 {
-                  (void) SetImageColorspace(image,GRAYColorspace);
+                  colorspace=GRAYColorspace;
                   image->matte=MagickTrue;
                   quantum_type=GrayAlphaQuantum;
                 }
               if (LocaleCompare(value,"GRAYSCALE") == 0)
                 {
-                  (void) SetImageColorspace(image,GRAYColorspace);
+                  colorspace=GRAYColorspace;
                   quantum_type=GrayQuantum;
                 }
               if (LocaleCompare(value,"GRAYSCALE_ALPHA") == 0)
                 {
-                  (void) SetImageColorspace(image,GRAYColorspace);
+                  colorspace=GRAYColorspace;
                   image->matte=MagickTrue;
                   quantum_type=GrayAlphaQuantum;
                 }
@@ -423,12 +427,12 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 }
               if (LocaleCompare(value,"CMYK") == 0)
                 {
-                  (void) SetImageColorspace(image,CMYKColorspace);
+                  colorspace=CMYKColorspace;
                   quantum_type=CMYKQuantum;
                 }
               if (LocaleCompare(value,"CMYK_ALPHA") == 0)
                 {
-                  (void) SetImageColorspace(image,CMYKColorspace);
+                  colorspace=CMYKColorspace;
                   image->matte=MagickTrue;
                   quantum_type=CMYKAQuantum;
                 }
@@ -456,6 +460,8 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         InheritException(exception,&image->exception);
         return(DestroyImageList(image));
       }
+    if (colorspace != UndefinedColorspace)
+      (void) SetImageColorspace(image,colorspace,exception);
     (void) ResetImagePixels(image,exception);
     /*
       Convert PNM pixels.
