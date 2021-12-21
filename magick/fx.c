@@ -2641,6 +2641,9 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
   alpha=InterpretSiPrefixValue(expression,&q);
   if (q == expression)
     alpha=FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception);
+  if (*q == ')')
+    (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
+      "UnbalancedParenthesis","`%s'",expression);
   FxReturn(alpha);
 }
 
