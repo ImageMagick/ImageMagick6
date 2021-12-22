@@ -1,5 +1,5 @@
 2021-12-22  6.9.12-34  <quetzlzacatenango@image...> 
-  * Release ImageMagick version 6.9.12-34 GIT revision 16...
+  * Release ImageMagick version 6.9.12-34 GIT revision 16959:c10351c16:20211222
 
 2021-12-22  6.9.12-34  <quetzlzacatenango@image...>
   * possible DoS for certain SVG constructs (reference
