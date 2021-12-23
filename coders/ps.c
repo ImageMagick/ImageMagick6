@@ -203,8 +203,7 @@ static inline int ProfileInteger(MagickByteBuffer *buffer,short int *hex_digits)
   return(value);
 }
 
-static void ReadPSInfo(const ImageInfo *image_info,Image *image,
-  PSInfo *ps_info)
+static void ReadPSInfo(const ImageInfo *image_info,Image *image,PSInfo *ps_info)
 {
 #define BeginDocument  "BeginDocument:"
 #define EndDocument  "EndDocument:"
