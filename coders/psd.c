@@ -1538,11 +1538,14 @@ static MagickBooleanType ReadPSDLayer(Image *image,const ImageInfo *image_info,
   return(status);
 }
 
-static MagickBooleanType CheckPSDChannels(const PSDInfo *psd_info,
-  LayerInfo *layer_info)
+static MagickBooleanType CheckPSDChannels(const Image *image,
+  const PSDInfo *psd_info,LayerInfo *layer_info)
 {
   int
     channel_type;
+
+  size_t
+    blob_size;
 
   ssize_t
     i;
@@ -1554,11 +1557,14 @@ static MagickBooleanType CheckPSDChannels(const PSDInfo *psd_info,
     channel_type|=(GreenChannel | BlueChannel);
   if (psd_info->min_channels >= 4)
     channel_type|=BlackChannel;
+  blob_size=(size_t) GetBlobSize(image);
   for (i=0; i < (ssize_t) layer_info->channels; i++)
   {
     short
       type;
 
+    if (layer_info->channel_info[i].size >= blob_size)
+      return(MagickFalse);
     type=layer_info->channel_info[i].type;
     if ((i == 0) && (psd_info->mode == IndexedMode) && (type != 0))
       return(MagickFalse);
@@ -1762,7 +1768,7 @@ static MagickBooleanType ReadPSDLayersInternal(Image *image,
               (double) layer_info[i].channel_info[j].type,
               (double) layer_info[i].channel_info[j].size);
         }
-        if (CheckPSDChannels(psd_info,&layer_info[i]) == MagickFalse)
+        if (CheckPSDChannels(image,psd_info,&layer_info[i]) == MagickFalse)
           {
             layer_info=DestroyLayerInfo(layer_info,number_layers);
             ThrowBinaryException(CorruptImageError,"ImproperImageHeader",
