@@ -64,6 +64,9 @@ extern "C" {
 #   define SSIZE_MAX LONG_MAX
 # endif
 #endif
+#ifndef S_ISCHR
+#  define S_ISCHR(m) (((m) & S_IFMT) == S_IFCHR)
+#endif
 
 #if !defined(chsize)
 # if defined(__BORLANDC__)
