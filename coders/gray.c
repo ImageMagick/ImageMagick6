@@ -165,18 +165,18 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,
     exception);
   if (canvas_image == (Image *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+  quantum_type=GrayQuantum;
+  if (LocaleCompare(image_info->magick,"GRAYA") == 0)
+    {
+      quantum_type=GrayAlphaQuantum;
+      canvas_image->matte=MagickTrue;
+    }
   (void) SetImageVirtualPixelMethod(canvas_image,BlackVirtualPixelMethod);
   quantum_info=AcquireQuantumInfo(image_info,canvas_image);
   if (quantum_info == (QuantumInfo *) NULL)
     {
       canvas_image=DestroyImage(canvas_image);
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-    }
-  quantum_type=GrayQuantum;
-  if (LocaleCompare(image_info->magick,"GRAYA") == 0)
-    {
-      quantum_type=GrayAlphaQuantum;
-      image->matte=MagickTrue;
     }
   pixels=GetQuantumPixels(quantum_info);
   if (image_info->number_scenes != 0)
@@ -204,6 +204,7 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,
     /*
       Read pixels to virtual canvas image then push to image.
     */
+    image->matte=canvas_image->matte;
     if ((image_info->ping != MagickFalse) && (image_info->number_scenes != 0))
       if (image->scene >= (image_info->scene+image_info->number_scenes-1))
         break;
