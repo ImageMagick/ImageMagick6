@@ -4397,6 +4397,23 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
                 argv[i]);
             break;
           }
+        if (LocaleCompare("compose",option+1) == 0)
+          {
+            ssize_t
+              compose;
+
+            if (*option == '+')
+              break;
+            i++;
+            if (i == (ssize_t) argc)
+              ThrowMogrifyException(OptionError,"MissingArgument",option);
+            compose=ParseCommandOption(MagickComposeOptions,MagickFalse,
+              argv[i]);
+            if (compose < 0)
+              ThrowMogrifyException(OptionError,"UnrecognizedComposeOperator",
+                argv[i]);
+            break;
+          }
         if (LocaleCompare("composite",option+1) == 0)
           break;
         if (LocaleCompare("compress",option+1) == 0)
