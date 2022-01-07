@@ -2209,30 +2209,52 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       return(DestroyImageList(image));
     }
   psd_info.min_channels=3;
-  if (psd_info.mode == LabMode)
-    (void) SetImageColorspace(image,LabColorspace);
-  if (psd_info.mode == CMYKMode)
+  switch (psd_info.mode)
+  {
+    case LabMode:
+    {
+      (void) SetImageColorspace(image,LabColorspace);
+      break;
+    }
+    case CMYKMode:
     {
       psd_info.min_channels=4;
       (void) SetImageColorspace(image,CMYKColorspace);
+      break;
     }
-  else
-    if ((psd_info.mode == BitmapMode) || (psd_info.mode == GrayscaleMode) ||
-           (psd_info.mode == DuotoneMode))
-      {
-        if (psd_info.depth != 32)
-          {
-            status=AcquireImageColormap(image,MagickMin((size_t)
-              (psd_info.depth < 16 ? 256 : 65536), MaxColormapSize));
-            if (status == MagickFalse)
-              ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-            if (image->debug != MagickFalse)
-              (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                "  Image colormap allocated");
-          }
-        psd_info.min_channels=1;
-        (void) SetImageColorspace(image,GRAYColorspace);
-      }
+    case BitmapMode:
+    case GrayscaleMode:
+    case DuotoneMode:
+    {
+      if (psd_info.depth != 32)
+        {
+          status=AcquireImageColormap(image,MagickMin((size_t)
+            (psd_info.depth < 16 ? 256 : 65536), MaxColormapSize));
+          if (status == MagickFalse)
+            ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+          if (image->debug != MagickFalse)
+            (void) LogMagickEvent(CoderEvent,GetMagickModule(),
+              "  Image colormap allocated");
+        }
+      psd_info.min_channels=1;
+      (void) SetImageColorspace(image,GRAYColorspace);
+      break;
+    }
+    case IndexedMode:
+    {
+      psd_info.min_channels=1;
+      break;
+    }
+    case MultichannelMode:
+    {
+      if ((psd_info.channels > 0) && (psd_info.channels < 3))
+        {
+          psd_info.min_channels=psd_info.channels;
+          (void) SetImageColorspace(image,GRAYColorspace);
+        }
+      break;
+    }
+  }
   if (psd_info.channels < psd_info.min_channels)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   /*
