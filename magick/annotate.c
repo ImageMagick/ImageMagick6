@@ -988,7 +988,7 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
   if ((type_info == (const TypeInfo *) NULL) &&
       (draw_info->family != (const char *) NULL))
     {
-      if (strchr(draw_info->family,',') == (char *) NULL)
+      if (strstr(draw_info->family,",'\"") == (char *) NULL)
         type_info=GetTypeInfoByFamily(draw_info->family,draw_info->style,
           draw_info->stretch,draw_info->weight,&image->exception);
       if (type_info == (const TypeInfo *) NULL)
@@ -1008,6 +1008,7 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
           family=StringToArgv(draw_info->family,&number_families);
           for (i=1; i < (ssize_t) number_families; i++)
           {
+            (void) SubstituteString(&family[i],",","");
             type_info=GetTypeInfoByFamily(family[i],draw_info->style,
               draw_info->stretch,draw_info->weight,&image->exception);
             if ((type_info != (const TypeInfo *) NULL) &&
