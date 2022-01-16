@@ -754,6 +754,7 @@ static Image *ReadCINImage(const ImageInfo *image_info,ExceptionInfo *exception)
   SetQuantumPack(quantum_info,MagickFalse);
   quantum_type=RGBQuantum;
   extent=GetQuantumExtent(image,quantum_info,quantum_type);
+  (void) extent;
   length=GetBytesPerRow(image->columns,3,image->depth,MagickTrue);
   if (cin.image.number_channels == 1)
     {

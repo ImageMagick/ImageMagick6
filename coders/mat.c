@@ -1295,7 +1295,7 @@ RestoreMSCWarning
               "  MAT set image pixels returns unexpected NULL on a row %u.", (unsigned)(MATLAB_HDR.SizeY-i-1));
             goto done_reading;    /* Skip image rotation, when cannot set image pixels    */
           }
-        if(ReadBlob(image2,ldblk,(unsigned char *)BImgBuff) != ldblk)
+        if(ReadBlob(image2,ldblk,(unsigned char *)BImgBuff) != (ssize_t) ldblk)
           {
             if (logging) (void)LogMagickEvent(CoderEvent,GetMagickModule(),
               "  MAT cannot read scanrow %u from a file.", (unsigned)(MATLAB_HDR.SizeY-i-1));

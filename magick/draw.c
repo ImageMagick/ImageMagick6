@@ -5456,7 +5456,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       else
         if (*primitive_info->text != '\0')
           {
-            MagickBooleanType
+            MagickStatusType
               status;
 
             struct stat
