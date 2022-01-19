@@ -3266,7 +3266,7 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
         }
       if (LocaleNCompare("papersize:",property,10) == 0)
         {
-          const char
+          char
             *papersize;
 
           *value='\0';
@@ -3274,11 +3274,12 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
           if (papersize != (const char *) NULL)
             {
               RectangleInfo
-                page;
+                page = { 0, 0, 0, 0 };
 
               (void) ParseAbsoluteGeometry(papersize,&page);
               (void) FormatLocaleString(value,MaxTextExtent,"%.20gx%.20g",
                 (double) page.width,(double) page.height);
+              papersize=DestroyString(papersize);
             }
           break;
         }
