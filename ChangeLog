@@ -1,5 +1,5 @@
-2022-01-12  6.9.12-35  <quetzlzacatenango@image...> 
-  * Release ImageMagick version 6.9.12-35 GIT revision 16...
+2022-01-21  6.9.12-35  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-35 GIT revision 16991:2287dca49:20220121
 
 2022-01-12  6.9.12-35  <quetzlzacatenango@image...>
   * Perist frame delay when converting APNG to Webp (reference
