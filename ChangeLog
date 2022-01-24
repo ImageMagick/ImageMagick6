@@ -1,3 +1,9 @@
+2022-01-24  6.9.12-37  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-37 GIT revision 16...
+
+2022-01-24  6.9.12-33  Dirk Lemstra <dirk@lem.....org>
+  * Add missing HEIC version check.
+
 2022-01-21  6.9.12-35  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-35 GIT revision 16991:2287dca49:20220121 
 
