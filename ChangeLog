@@ -1,5 +1,9 @@
 2022-01-27  6.9.12-36  <quetzlzacatenango@image...> 
-  * Release ImageMagick version 6.9.12-36 GIT revision 17001:ba2e0efa4:20220127
+  * Release ImageMagick version 6.9.12-36 GIT revision 17003:8e326c63f:20220127
+
+2022-01-21  6.9.12-35  <quetzlzacatenango@image...> 
+  * PDF now shows the correct Unicode title (reference
+    https://github.com/ImageMagick/ImageMagick/issues/4771).
 
 2022-01-24  6.9.12-36  Dirk Lemstra <dirk@lem.....org>
   * Add missing HEIC version check.
