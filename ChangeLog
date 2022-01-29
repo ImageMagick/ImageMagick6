@@ -1,7 +1,15 @@
+2022-01-29  6.9.12-37  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-37 GIT revision 17...
+
+2022-01-29  6.9.12-37  <quetzlzacatenango@image...> 
+  * limit colorname length to avoid possible DoS
+  * restore MPRI URI in SVG
+
+    https://github.com/ImageMagick/ImageMagick/issues/4771).
 2022-01-28  6.9.12-36  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-36 GIT revision 17005:bf36be468:20220128
 
-2022-01-21  6.9.12-35  <quetzlzacatenango@image...> 
+2022-01-21  6.9.12-36  <quetzlzacatenango@image...> 
   * PDF now shows the correct Unicode title (reference
     https://github.com/ImageMagick/ImageMagick/issues/4771).
 
