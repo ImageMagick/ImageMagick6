@@ -5453,31 +5453,41 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
         if (*primitive_info->text != '\0')
           {
             MagickStatusType
-              status;
+              path_status;
 
             struct stat
               attributes;
 
+            /*
+              Read composite image.
+            */
             (void) CopyMagickString(clone_info->filename,primitive_info->text,
               MagickPathExtent);
+            (void) SetImageInfo(clone_info,1,exception);
             (void) CopyMagickString(clone_info->filename,primitive_info->text,
               MagickPathExtent);
-            status=GetPathAttributes(clone_info->filename,&attributes);
-            if ((status != MagickFalse) && (S_ISCHR(attributes.st_mode) == 0))
+            if (clone_info->size != (char *) NULL)
+              clone_info->size=DestroyString(clone_info->size);
+            if (clone_info->extract != (char *) NULL)
+              clone_info->extract=DestroyString(clone_info->extract);
+            path_status=GetPathAttributes(clone_info->filename,&attributes);
+            if (path_status != MagickFalse)
               {
-                status&=SetImageInfo(clone_info,1,exception);
-                (void) CopyMagickString(clone_info->filename,
-                  primitive_info->text,MagickPathExtent);
-                if (clone_info->size != (char *) NULL)
-                  clone_info->size=DestroyString(clone_info->size);
-                if (clone_info->extract != (char *) NULL)
-                  clone_info->extract=DestroyString(clone_info->extract);
-                if ((LocaleCompare(clone_info->magick,"file") == 0) ||
-                    (LocaleCompare(clone_info->magick,"https") == 0) ||
-                    (LocaleCompare(clone_info->magick,"http") == 0) ||
-                    (IsPathAccessible(clone_info->filename) != MagickFalse))
+                if (S_ISCHR(attributes.st_mode) == 0)
                   composite_images=ReadImage(clone_info,exception);
+                else
+                  (void) ThrowMagickException(exception,GetMagickModule(),
+                    FileOpenError,"UnableToOpenFile","`%s'",
+                    clone_info->filename);
               }
+            else
+              if ((LocaleCompare(clone_info->magick,"ftp") != 0) &&
+                  (LocaleCompare(clone_info->magick,"https") != 0) &&
+                  (LocaleCompare(clone_info->magick,"http") != 0))
+                composite_images=ReadImage(clone_info,exception);
+              else
+                (void) ThrowMagickException(exception,GetMagickModule(),
+                  FileOpenError,"UnableToOpenFile","`%s'",clone_info->filename);
           }
       clone_info=DestroyImageInfo(clone_info);
       if (composite_images == (Image *) NULL)
