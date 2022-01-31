@@ -171,6 +171,10 @@ static Image *ReadVIDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) CopyMagickString(read_info->filename,filelist[i],MaxTextExtent);
     filelist[i]=DestroyString(filelist[i]);
     *read_info->magick='\0';
+    (void) SetImageInfo(read_info,1,exception);
+    if (LocaleCompare(read_info->magick,"VID") == 0)
+      (void) FormatLocaleString(read_info->filename,MagickPathExtent,"miff:%s",
+        filelist[i]);
     next_image=ReadImage(read_info,exception);
     CatchException(exception);
     if (next_image == (Image *) NULL)
