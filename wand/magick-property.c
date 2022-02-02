@@ -1511,10 +1511,10 @@ WandExport double *MagickGetSamplingFactors(MagickWand *wand,
   if (wand->image_info->sampling_factor == (char *) NULL)
     return(sampling_factors);
   i=0;
-  for (p=wand->image_info->sampling_factor; p != (char *) NULL; p=strchr(p,','))
+  for (p=wand->image_info->sampling_factor; p != (char *) NULL; p=strchr(p,':'))
   {
     while (((int) *p != 0) && ((isspace((int) ((unsigned char) *p)) != 0) ||
-           (*p == ',')))
+           (*p == ':')))
       p++;
     i++;
   }
@@ -1524,10 +1524,10 @@ WandExport double *MagickGetSamplingFactors(MagickWand *wand,
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
       wand->image_info->filename);
   i=0;
-  for (p=wand->image_info->sampling_factor; p != (char *) NULL; p=strchr(p,','))
+  for (p=wand->image_info->sampling_factor; p != (char *) NULL; p=strchr(p,':'))
   {
     while (((int) *p != 0) && ((isspace((int) ((unsigned char) *p)) != 0) ||
-           (*p == ',')))
+           (*p == ':')))
       p++;
     sampling_factors[i]=StringToDouble(p,(char **) NULL);
     i++;
@@ -2807,7 +2807,7 @@ WandExport MagickBooleanType MagickSetSamplingFactors(MagickWand *wand,
     return(MagickTrue);
   for (i=0; i < (ssize_t) (number_factors-1); i++)
   {
-    (void) FormatLocaleString(sampling_factor,MaxTextExtent,"%g,",
+    (void) FormatLocaleString(sampling_factor,MaxTextExtent,"%g:",
       sampling_factors[i]);
     (void) ConcatenateString(&wand->image_info->sampling_factor,
       sampling_factor);

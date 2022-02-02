@@ -396,7 +396,7 @@ struct _ImageInfo
     quality;
 
   char
-    *sampling_factor,
+    *sampling_factor,  /* Chroma subsampling ratio string */
     *server_name,
     *font,
     *texture,
