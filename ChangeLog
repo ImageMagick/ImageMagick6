@@ -3,6 +3,8 @@
 
 2022-02-02  6.9.12-38  <quetzlzacatenango@image...> 
   * limit recursion when reading the VID image format.
+  * improperly resizing memory due to errant check (reference
+    https://github.com/ImageMagick/ImageMagick/issues/4807).
 
 2022-01-29  6.9.12-37  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-37 GIT revision 17011:4dd4d0df4:20220129
