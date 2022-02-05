@@ -53,6 +53,7 @@
 #include "magick/image.h"
 #include "magick/image-private.h"
 #include "magick/list.h"
+#include "magick/locale-private.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
 #include "magick/module.h"
@@ -332,7 +333,7 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
       {
         if (isspace((int) ((unsigned char) keyword[i])) != 0)
           break;
-        keyword[i]=LocaleLowercase((int) ((unsigned char) keyword[i]));
+        keyword[i]=LocaleToLowercase((int) ((unsigned char) keyword[i]));
       }
       keyword[i]='\0';
       count=ReadBlob(image,72,(unsigned char *) value);

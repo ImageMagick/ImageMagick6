@@ -54,6 +54,7 @@
 #include "magick/image.h"
 #include "magick/image-private.h"
 #include "magick/list.h"
+#include "magick/locale-private.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
 #include "magick/monitor.h"
@@ -1128,7 +1129,7 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
       if (channel_statistics == (ChannelStatistics *) NULL)
         return(MagickFalse);
       (void) CopyMagickString(target,locate,MaxTextExtent);
-      *target=(char) LocaleUppercase((int) ((unsigned char) *target));
+      *target=(char) LocaleToUppercase((int) ((unsigned char) *target));
       (void) FormatLocaleFile(file,"    \"channel%s\": {\n",target);
       if (image->matte != MagickFalse)
         (void) PrintChannelLocations(file,image,AlphaChannel,"alpha",

@@ -48,6 +48,7 @@
 #include "magick/hashmap.h"
 #include "magick/image-private.h"
 #include "magick/locale_.h"
+#include "magick/locale-private.h"
 #include "magick/log.h"
 #include "magick/memory_.h"
 #include "magick/nt-base-private.h"
@@ -1494,7 +1495,7 @@ MagickExport void LocaleLower(char *string)
 
   assert(string != (char *) NULL);
   for (q=string; *q != '\0'; q++)
-    *q=(char) LocaleLowercase((int) *q);
+    *q=(char) LocaleToLowercase((int) *q);
 }
 
 /*
@@ -1508,11 +1509,11 @@ MagickExport void LocaleLower(char *string)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  LocaleLowercase() convert to uppercase.
+%  LocaleLowercase() converts the character to lowercase.
 %
 %  The format of the LocaleLowercase method is:
 %
-%      void LocaleLowercase(const int c)
+%      int LocaleLowercase(const int c)
 %
 %  A description of each parameter follows:
 %
@@ -1521,13 +1522,7 @@ MagickExport void LocaleLower(char *string)
 */
 MagickExport int LocaleLowercase(const int c)
 {
-  if ((c == EOF) || (c != (unsigned char) c))
-    return(c);
-#if defined(MAGICKCORE_LOCALE_SUPPORT)
-  if (c_locale != (locale_t) NULL)
-    return(tolower_l((int) ((unsigned char) c),c_locale));
-#endif
-  return(tolower((int) ((unsigned char) c)));
+  return(LocaleToLowercase(c));
 }
 
 /*
@@ -1634,7 +1629,7 @@ MagickExport void LocaleUpper(char *string)
 
   assert(string != (char *) NULL);
   for (q=string; *q != '\0'; q++)
-    *q=(char) LocaleUppercase((int) *q);
+    *q=(char) LocaleToUppercase((int) *q);
 }
 
 /*
@@ -1648,11 +1643,11 @@ MagickExport void LocaleUpper(char *string)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  LocaleUppercase() convert to uppercase.
+%  LocaleUppercase() converts the character to uppercase.
 %
 %  The format of the LocaleUppercase method is:
 %
-%      void LocaleUppercase(const int c)
+%      int LocaleUppercase(const int c)
 %
 %  A description of each parameter follows:
 %
@@ -1661,13 +1656,7 @@ MagickExport void LocaleUpper(char *string)
 */
 MagickExport int LocaleUppercase(const int c)
 {
-  if (c == EOF)
-    return(c);
-#if defined(MAGICKCORE_LOCALE_SUPPORT)
-  if (c_locale != (locale_t) NULL)
-    return(toupper_l((int) ((unsigned char) c),c_locale));
-#endif
-  return(toupper((int) ((unsigned char) c)));
+  return(LocaleToUppercase(c));
 }
 
 /*
