@@ -2244,8 +2244,10 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
     extent;
 
   size_t
-    i,
     quantum;
+
+  ssize_t
+    i;
 
   /*
     Check if there is enough storage for drawing primitives.
