@@ -57,6 +57,7 @@
 #include "magick/list.h"
 #include "magick/magick.h"
 #include "magick/memory_.h"
+#include "magick/module.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/pixel-accessor.h"
@@ -68,8 +69,8 @@
 #include "magick/splay-tree.h"
 #include "magick/static.h"
 #include "magick/string_.h"
-#include "magick/module.h"
 #include "magick/threshold.h"
+#include "magick/token.h"
 #include "magick/utility.h"
 
 /*
@@ -336,15 +337,20 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (xpm_buffer == (char *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   /*
-    Remove comments.
+    Remove comments & read properties.
   */
   count=0;
   width=0;
   for (p=xpm_buffer; *p != '\0'; p++)
   {
+    char
+      properties[MagickPathExtent];
+
     if (*p != '"')
       continue;
-    count=(ssize_t) sscanf(p+1,"%lu %lu %lu %lu",&columns,&rows,&colors,&width);
+    (void) GetNextToken(p,(const char **) NULL,MagickPathExtent,properties);
+    count=(ssize_t) sscanf(properties,"%lu %lu %lu %lu",&columns,&rows,&colors,
+      &width);
     image->columns=columns;
     image->rows=rows;
     image->colors=colors;

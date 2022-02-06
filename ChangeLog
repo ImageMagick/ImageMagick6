@@ -1,3 +1,9 @@
+2022-02-06  6.9.12-39  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-39 GIT revision 17...
+
+2022-02-06  6.9.12-39  <quetzlzacatenango@image...> 
+  * optimize reading of XPM properties.
+
 2022-02-05  6.9.12-38  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-38 GIT revision 17024:bbf05a344:20220205
 
