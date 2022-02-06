@@ -52,6 +52,7 @@
 #include "magick/exception.h"
 #include "magick/exception-private.h"
 #include "magick/image-private.h"
+#include "magick/locale-private.h"
 #include "magick/memory_.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
