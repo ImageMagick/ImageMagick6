@@ -173,7 +173,7 @@ typedef struct _QuantizationTable
 */
 static const char
   xmp_namespace[] = "http://ns.adobe.com/xap/1.0/ ";
-#define XmpNamespaceExtent 28
+#define XMPNamespaceExtent 28
 
 /*
   Forward declarations.
@@ -794,8 +794,8 @@ static boolean ReadProfile(j_decompress_ptr jpeg_info)
       if ((length > 4) && (LocaleNCompare((char *) p,"exif",4) == 0))
         (void) CopyMagickString(name,"exif",MaxTextExtent);
       else
-        if ((length > XmpNamespaceExtent) &&
-            (LocaleNCompare((char *) p,xmp_namespace,XmpNamespaceExtent-1) == 0))
+        if ((length > XMPNamespaceExtent) &&
+            (LocaleNCompare((char *) p,xmp_namespace,XMPNamespaceExtent-1) == 0))
           {
             ssize_t
               j;
@@ -803,8 +803,8 @@ static boolean ReadProfile(j_decompress_ptr jpeg_info)
             /*
               Extract namespace from XMP profile.
             */
-            p=GetStringInfoDatum(profile)+XmpNamespaceExtent;
-            for (j=XmpNamespaceExtent; j < (ssize_t) GetStringInfoLength(profile); j++)
+            p=GetStringInfoDatum(profile)+XMPNamespaceExtent;
+            for (j=XMPNamespaceExtent; j < (ssize_t) GetStringInfoLength(profile); j++)
             {
               if (*p == '\0')
                 break;
@@ -2192,7 +2192,7 @@ static void WriteProfiles(j_compress_ptr jpeg_info,Image *image)
         if (xmp_profile != (StringInfo *) NULL)
           {
             ConcatenateStringInfo(xmp_profile,profile);
-            GetStringInfoDatum(xmp_profile)[XmpNamespaceExtent]='\0';
+            GetStringInfoDatum(xmp_profile)[XMPNamespaceExtent]='\0';
             length=GetStringInfoLength(xmp_profile);
             jpeg_write_marker(jpeg_info,XML_MARKER,
               GetStringInfoDatum(xmp_profile),(unsigned int) length);
