@@ -501,10 +501,7 @@ static MagickBooleanType ReadProfile(Image *image,const char *name,
       image->filename);
   status=SetImageProfile(image,name,profile);
   profile=DestroyStringInfo(profile);
-  if (status == MagickFalse)
-    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
-      image->filename);
-  return(MagickTrue);
+  return(status);
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -1129,21 +1126,21 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     method;
 
   uint16
-    compress_tag,
-    bits_per_sample,
-    endian,
-    extra_samples,
-    interlace,
-    max_sample_value,
-    min_sample_value,
-    orientation,
-    pages,
-    photometric,
-    *sample_info,
-    sample_format,
-    samples_per_pixel,
-    units,
-    value;
+    compress_tag = 0,
+    bits_per_sample = 0,
+    endian = 0,
+    extra_samples = 0,
+    interlace = 0,
+    max_sample_value = 0,
+    min_sample_value = 0,
+    orientation = 0,
+    pages = 0,
+    photometric = 0,
+    *sample_info = NULL,
+    sample_format = 0,
+    samples_per_pixel = 0,
+    units = 0,
+    value = 0;
 
   uint32
     height,
