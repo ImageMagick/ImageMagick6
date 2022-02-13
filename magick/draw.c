@@ -4733,7 +4733,7 @@ static double GetOpacityPixel(PolygonInfo *polygon_info,const double mid,
           else
             {
               alpha=PerceptibleReciprocal(alpha);
-              beta=delta.x*(y-q->y)-delta.y*(x-q->x)+MagickEpsilon;
+              beta=delta.x*(y-q->y)-delta.y*(x-q->x);
               distance=alpha*beta*beta;
             }
         }
@@ -4939,11 +4939,9 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
           *magick_restrict q;
 
         ssize_t
-          x;
-
-        ssize_t
           start_x,
-          stop_x;
+          stop_x,
+          x;
 
         if (status == MagickFalse)
           continue;
