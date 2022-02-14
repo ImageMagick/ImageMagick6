@@ -1,3 +1,10 @@
+2022-02-13  6.9.12-40  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-40 GIT revision 17...
+
+2022-02-13  6.9.12-40  <quetzlzacatenango@image...> 
+  * incontinuity in straight segment of polyline (reference
+    https://github.com/ImageMagick/ImageMagick/issues/4837).
+
 2022-02-12  6.9.12-39  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-39 GIT revision 17043:99ef124d0:20220212
 
