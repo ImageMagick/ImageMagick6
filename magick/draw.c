@@ -4810,7 +4810,7 @@ static double GetOpacityPixel(PolygonInfo *polygon_info,const double mid,
         break;
     q=p->points+i-1;
     if ((((q+1)->x-q->x)*(y-q->y)) <= (((q+1)->y-q->y)*(x-q->x)))
-      winding_number+=p->direction ? 1 : -1;
+      winding_number+=p->direction != 0 ? 1 : -1;
   }
   if (fill_rule != NonZeroRule)
     {
@@ -5016,6 +5016,8 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
         status=MagickFalse;
         continue;
       }
+    fill_opacity=GetOpacityPixel(polygon_info[id],mid,fill,draw_info->fill_rule,
+      start_x,y,&stroke_opacity);
     for (x=start_x; x <= stop_x; x++)
     {
       /*
