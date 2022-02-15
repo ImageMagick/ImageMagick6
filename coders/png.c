@@ -2023,7 +2023,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
     num_text,
     num_text_total,
     num_passes,
-    number_colors,
+    number_colors = 0,
     pass,
     ping_bit_depth = 0,
     ping_color_type = 0,
@@ -2039,6 +2039,9 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
 
   LongPixelPacket
     transparent_color;
+
+  IndexPacket
+    *indexes;
 
   MagickBooleanType
     logging,
@@ -2071,31 +2074,13 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
     text;
 
   png_uint_32
-    ping_height,
-    ping_width,
+    ping_height = 0,
+    ping_width = 0,
     x_resolution,
     y_resolution;
 
-  ssize_t
-    y;
-
-  unsigned char
-    *p;
-
-  IndexPacket
-    *indexes;
-
-  ssize_t
-    i,
-    x;
-
   PixelPacket
     *q;
-
-  size_t
-    length,
-    ping_rowbytes,
-    row_offset;
 
   Quantum
     *volatile quantum_scanline;
@@ -2103,10 +2088,19 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
   QuantumInfo
     *volatile quantum_info;
 
+  size_t
+    length,
+    ping_rowbytes = 0,
+    row_offset,
+    y;
+
   ssize_t
-    j;
+    i,
+    j,
+    x;
 
   unsigned char
+    *p,
     *ping_pixels;
 
 #ifdef PNG_UNKNOWN_CHUNKS_SUPPORTED
@@ -2827,7 +2821,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
   if (png_get_valid(ping,ping_info,PNG_INFO_PLTE))
     {
       png_colorp
-        palette;
+        palette = (png_colorp) NULL;
 
       (void) png_get_PLTE(ping,ping_info,&palette,&number_colors);
 
@@ -3134,7 +3128,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
       if ((int) ping_color_type == PNG_COLOR_TYPE_PALETTE)
         {
           png_colorp
-            palette;
+            palette = (png_colorp) NULL;
 
           (void) png_get_PLTE(ping,ping_info,&palette,&number_colors);
           image->colors=(size_t) number_colors;
@@ -3156,7 +3150,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
       if ((int) ping_color_type == PNG_COLOR_TYPE_PALETTE)
         {
           png_colorp
-            palette;
+            palette = (png_colorp) NULL;
 
           (void) png_get_PLTE(ping,ping_info,&palette,&number_colors);
 
@@ -3880,7 +3874,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
           if (png_get_valid(ping,ping_info,PNG_INFO_PLTE))
             {
               png_colorp
-                plte;
+                plte = (png_colorp) NULL;
 
               /*
                 Copy the PLTE to the object buffer.
