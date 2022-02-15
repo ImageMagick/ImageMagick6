@@ -168,6 +168,8 @@ static Image *ReadVIDImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (image_info->debug != MagickFalse)
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),"name: %s",
         filelist[i]);
+    if (LocaleNCompare(filelist[i],"VID:",4) == 0)
+      continue;
     (void) CopyMagickString(read_info->filename,filelist[i],MaxTextExtent);
     filelist[i]=DestroyString(filelist[i]);
     *read_info->magick='\0';
