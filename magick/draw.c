@@ -4826,6 +4826,15 @@ static double GetOpacityPixel(PolygonInfo *polygon_info,const double mid,
 static MagickBooleanType DrawPolygonPrimitive(Image *image,
   const DrawInfo *draw_info,const PrimitiveInfo *primitive_info)
 {
+  typedef struct _ExtentInfo
+  {
+    ssize_t
+      x1,
+      y1,
+      x2,
+      y2;
+  } ExtentInfo;
+
   CacheView
     *image_view;
 
@@ -4837,6 +4846,9 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
 
   ExceptionInfo
     *exception;
+
+  ExtentInfo
+    poly_extent;
 
   MagickBooleanType
     fill,
@@ -4855,8 +4867,6 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
     bounds;
 
   ssize_t
-    start_y,
-    stop_y,
     y;
 
   assert(image != (Image *) NULL);
@@ -4915,6 +4925,10 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
     (double) image->columns-1.0 : bounds.x2;
   bounds.y2=bounds.y2 < 0.0 ? 0.0 : bounds.y2 >= (double) image->rows-1.0 ?
     (double) image->rows-1.0 : bounds.y2;
+  poly_extent.x1=CastDoubleToLong(ceil(bounds.x1-0.5));
+  poly_extent.y1=CastDoubleToLong(ceil(bounds.y1-0.5));
+  poly_extent.x2=CastDoubleToLong(floor(bounds.x2+0.5));
+  poly_extent.y2=CastDoubleToLong(floor(bounds.y2+0.5));
   status=MagickTrue;
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
@@ -4924,13 +4938,11 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
       /*
         Draw point.
       */
-      start_y=CastDoubleToLong(ceil(bounds.y1-0.5));
-      stop_y=CastDoubleToLong(floor(bounds.y2+0.5));
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
-        magick_number_threads(image,image,stop_y-start_y+1,1)
+        magick_number_threads(image,image,poly_extent.y2-poly_extent.y1+1,1)
 #endif
-      for (y=start_y; y <= stop_y; y++)
+      for (y=poly_extent.y1; y <= poly_extent.y2; y++)
       {
         MagickBooleanType
           sync;
@@ -4939,27 +4951,23 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
           *magick_restrict q;
 
         ssize_t
-          start_x,
-          stop_x,
           x;
 
         if (status == MagickFalse)
           continue;
-        start_x=CastDoubleToLong(ceil(bounds.x1-0.5));
-        stop_x=CastDoubleToLong(floor(bounds.x2+0.5));
-        x=start_x;
-        q=GetCacheViewAuthenticPixels(image_view,x,y,(size_t) (stop_x-x+1),1,
-          exception);
+        x=poly_extent.x1;
+        q=GetCacheViewAuthenticPixels(image_view,x,y,(size_t) (poly_extent.x2-
+          x+1),1,exception);
         if (q == (PixelPacket *) NULL)
           {
             status=MagickFalse;
             continue;
           }
-        for ( ; x <= stop_x; x++)
+        for ( ; x <= poly_extent.x2; x++)
         {
           if ((x == CastDoubleToLong(ceil(primitive_info->point.x-0.5))) &&
               (y == CastDoubleToLong(ceil(primitive_info->point.y-0.5))))
-            (void) GetFillColor(draw_info,x-start_x,y-start_y,q);
+            (void) GetFillColor(draw_info,x-poly_extent.x1,y-poly_extent.y1,q);
           q++;
         }
         sync=SyncCacheViewAuthenticPixels(image_view,exception);
@@ -4976,13 +4984,13 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   /*
     Draw polygon or line.
   */
-  start_y=CastDoubleToLong(ceil(bounds.y1-0.5));
-  stop_y=CastDoubleToLong(floor(bounds.y2+0.5));
+  poly_extent.y1=CastDoubleToLong(ceil(bounds.y1-0.5));
+  poly_extent.y2=CastDoubleToLong(floor(bounds.y2+0.5));
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,stop_y-start_y+1,1)
+    magick_number_threads(image,image,poly_extent.y2-poly_extent.y1+1,1)
 #endif
-  for (y=start_y; y <= stop_y; y++)
+  for (y=poly_extent.y1; y <= poly_extent.y2; y++)
   {
     const int
       id = GetOpenMPThreadId();
@@ -5001,24 +5009,18 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
     ssize_t
       x;
 
-    ssize_t
-      start_x,
-      stop_x;
-
     if (status == MagickFalse)
       continue;
-    start_x=CastDoubleToLong(ceil(bounds.x1-0.5));
-    stop_x=CastDoubleToLong(floor(bounds.x2+0.5));
-    q=GetCacheViewAuthenticPixels(image_view,start_x,y,(size_t) (stop_x-start_x+
-      1),1,exception);
+    q=GetCacheViewAuthenticPixels(image_view,poly_extent.x1,y,(size_t)
+      (poly_extent.x2-poly_extent.x1+1),1,exception);
     if (q == (PixelPacket *) NULL)
       {
         status=MagickFalse;
         continue;
       }
     fill_opacity=GetOpacityPixel(polygon_info[id],mid,fill,draw_info->fill_rule,
-      start_x,y,&stroke_opacity);
-    for (x=start_x; x <= stop_x; x++)
+      poly_extent.x1,y,&stroke_opacity);
+    for (x=poly_extent.x1; x <= poly_extent.x2; x++)
     {
       /*
         Fill and/or stroke.
@@ -5030,12 +5032,14 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
           fill_opacity=fill_opacity > 0.5 ? 1.0 : 0.0;
           stroke_opacity=stroke_opacity > 0.5 ? 1.0 : 0.0;
         }
-      (void) GetFillColor(draw_info,x-start_x,y-start_y,&fill_color);
+      (void) GetFillColor(draw_info,x-poly_extent.x1,y-poly_extent.y1,
+        &fill_color);
       fill_opacity=(double) (QuantumRange-fill_opacity*(QuantumRange-
         fill_color.opacity));
       MagickCompositeOver(&fill_color,(MagickRealType) fill_opacity,q,
         (MagickRealType) q->opacity,q);
-      (void) GetStrokeColor(draw_info,x-start_x,y-start_y,&stroke_color);
+      (void) GetStrokeColor(draw_info,x-poly_extent.x1,y-poly_extent.y1,
+        &stroke_color);
       stroke_opacity=(double) (QuantumRange-stroke_opacity*(QuantumRange-
         stroke_color.opacity));
       MagickCompositeOver(&stroke_color,(MagickRealType) stroke_opacity,q,
