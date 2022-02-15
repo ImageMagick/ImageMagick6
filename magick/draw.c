@@ -4690,7 +4690,8 @@ static double GetOpacityPixel(PolygonInfo *polygon_info,const double mid,
       break;
     if ((double) y > (p->bounds.y2+mid+0.5))
       {
-        (void) DestroyEdge(polygon_info,j);
+        p--;
+        (void) DestroyEdge(polygon_info,j--);
         continue;
       }
     if (((double) x <= (p->bounds.x1-mid-0.5)) ||
@@ -4995,10 +4996,6 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
     const int
       id = GetOpenMPThreadId();
 
-    double
-      fill_opacity,
-      stroke_opacity;
-
     PixelPacket
       fill_color,
       stroke_color;
@@ -5018,10 +5015,12 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
         status=MagickFalse;
         continue;
       }
-    fill_opacity=GetOpacityPixel(polygon_info[id],mid,fill,draw_info->fill_rule,
-      poly_extent.x1,y,&stroke_opacity);
     for (x=poly_extent.x1; x <= poly_extent.x2; x++)
     {
+      double
+        fill_opacity,
+        stroke_opacity;
+
       /*
         Fill and/or stroke.
       */
