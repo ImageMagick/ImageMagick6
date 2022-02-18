@@ -1274,7 +1274,7 @@ MagickExport MagickBooleanType DrawAffineImage(Image *image,
 
     ssize_t
       x_offset;
-  
+
     if (status == MagickFalse)
       continue;
     inverse_edge=AffineEdge(source,&inverse_affine,(double) y,&edge);
@@ -2894,21 +2894,31 @@ static MagickBooleanType RenderMVGContent(Image *image,
       {
         if (LocaleCompare("fill",keyword) == 0)
           {
+            const char
+              *mvg_class;
+
             (void) GetNextToken(q,&q,extent,token);
             if (graphic_context[n]->clip_path != MagickFalse)
               break;
+            mvg_class=(const char *) GetValueFromSplayTree(macros,token);
+            if (mvg_class != (const char *) NULL)
+              {
+                (void) DrawPatternPath(image,draw_info,mvg_class,
+                  &graphic_context[n]->fill_pattern);
+                break;
+              }
             (void) FormatLocaleString(pattern,MaxTextExtent,"%s",token);
             if (GetImageArtifact(image,pattern) != (const char *) NULL)
-              (void) DrawPatternPath(image,draw_info,token,
-                &graphic_context[n]->fill_pattern);
-            else
               {
-                status&=QueryColorDatabase(token,&graphic_context[n]->fill,
-                  &image->exception);
-                if (graphic_context[n]->fill_opacity != OpaqueOpacity)
-                  graphic_context[n]->fill.opacity=ClampToQuantum(
-                    graphic_context[n]->fill_opacity);
+                (void) DrawPatternPath(image,draw_info,token,
+                  &graphic_context[n]->fill_pattern);
+                break;
               }
+            status&=QueryColorDatabase(token,&graphic_context[n]->fill,
+              &image->exception);
+            if (graphic_context[n]->fill_opacity != OpaqueOpacity)
+              graphic_context[n]->fill.opacity=ClampToQuantum(
+                graphic_context[n]->fill_opacity);
             break;
           }
         if (LocaleCompare("fill-opacity",keyword) == 0)
@@ -3591,21 +3601,31 @@ static MagickBooleanType RenderMVGContent(Image *image,
           }
         if (LocaleCompare("stroke",keyword) == 0)
           {
+            const char
+              *mvg_class;
+
             (void) GetNextToken(q,&q,extent,token);
             if (graphic_context[n]->clip_path != MagickFalse)
               break;
+            mvg_class=(const char *) GetValueFromSplayTree(macros,token);
+            if (mvg_class != (const char *) NULL)
+              {
+                (void) DrawPatternPath(image,draw_info,mvg_class,
+                  &graphic_context[n]->stroke_pattern);
+                break;
+              }
             (void) FormatLocaleString(pattern,MaxTextExtent,"%s",token);
             if (GetImageArtifact(image,pattern) != (const char *) NULL)
-              (void) DrawPatternPath(image,draw_info,token,
-                &graphic_context[n]->stroke_pattern);
-            else
               {
-                status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
-                  &image->exception);
-                if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
-                  graphic_context[n]->stroke.opacity=ClampToQuantum(
-                    graphic_context[n]->stroke_opacity);
+                (void) DrawPatternPath(image,draw_info,token,
+                  &graphic_context[n]->stroke_pattern);
+                break;
               }
+            status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
+              &image->exception);
+            if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
+              graphic_context[n]->stroke.opacity=ClampToQuantum(
+                graphic_context[n]->stroke_opacity);
             break;
           }
         if (LocaleCompare("stroke-antialias",keyword) == 0)
