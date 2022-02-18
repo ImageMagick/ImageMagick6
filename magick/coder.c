@@ -257,7 +257,6 @@ static const CoderMapInfo
     { "WMZ", "WMF" },
     { "X3f", "DNG" },
     { "XMP", "META" },
-    { "XTRNARRAY", "XTRN" },
     { "XV", "VIFF" },
     { "Y", "RAW" },
     { "YCbCrA", "YCbCr" }

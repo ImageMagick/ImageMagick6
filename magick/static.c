@@ -237,9 +237,6 @@ static struct
   { "XCF", MagickFalse, RegisterXCFImage, UnregisterXCFImage },
   { "XPM", MagickFalse, RegisterXPMImage, UnregisterXPMImage },
   { "XPS", MagickFalse, RegisterXPSImage, UnregisterXPSImage },
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
-  { "XTRN", MagickFalse, RegisterXTRNImage, UnregisterXTRNImage },
-#endif
 #if defined(MAGICKCORE_X11_DELEGATE)
   { "XWD", MagickFalse, RegisterXWDImage, UnregisterXWDImage },
 #endif
