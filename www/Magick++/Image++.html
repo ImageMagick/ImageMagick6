@@ -22,7 +22,7 @@ Methods</a> </li>
 Access</a> </li>
 </ul>
 <p>Image is the primary object in Magick++ and represents
-a single image frame (see <a href="ImageDesign.html">design</a> ). The
+a single image frame (see <a href="https://legacy.imagemagick.org/Magick++/ImageDesign.html">design</a> ). The
 <a href="STL.html">STL interface</a> <b>must</b> be used to operate on
 image sequences or images (e.g. of format GIF, TIFF, MIFF, Postscript,
 &amp; MNG) which are comprized of multiple image frames. Individual
@@ -284,7 +284,7 @@ string &amp;magick_</font></td>
       <td><font size="-1">const size_t width_,&#160;</font> <br />
       <font size="-1">const size_t height_,</font> <br />
       <font size="-1">std::string map_,</font> <br />
-      <font size="-1">const <a href="Enumerations.html#StorageType">
+      <font size="-1">const <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#StorageType">
 StorageType</a> type_,</font> <br />
       <font size="-1">const void *pixels_</font></td>
       <td><font size="-1">Construct a new Image based on an array of
@@ -316,7 +316,7 @@ order of the pixels in the supplied pixel array.</font></td>
           </tr>
           <tr>
             <td><font size="-1">type_</font></td>
-            <td><font size="-1"><a href="Enumerations.html#StorageType">Pixel
+            <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#StorageType">Pixel
 storage type</a> (CharPixel, ShortPixel, IntegerPixel, FloatPixel, or
 DoublePixel)</font></td>
           </tr>
@@ -385,7 +385,7 @@ compute the threshold.</font><br />
       <td style="text-align: center;">
       <center><a name="addNoise"></a> <font size="-1">addNoise</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#NoiseType">NoiseType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#NoiseType">NoiseType</a>
 noiseType_</font></td>
       <td><font size="-1">Add noise to image with specified noise type.</font></td>
     </tr>
@@ -425,7 +425,7 @@ location</font></td>
     </tr>
     <tr>
       <td><font size="-1">string text_, const <a href="Geometry.html">Geometry</a>
-&amp;boundingArea_, <a href="Enumerations.html#GravityType">GravityType</a>
+&amp;boundingArea_, <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#GravityType">GravityType</a>
 gravity_</font></td>
       <td><font size="-1">Annotate using specified text, bounding area,
 and placement gravity. If <i>boundingArea_</i> is invalid, then
@@ -434,7 +434,7 @@ bounding area is entire image.</font></td>
     <tr>
       <td><font size="-1">const std::string &amp;text_, const <a
  href="Geometry.html"> Geometry</a> &amp;boundingArea_, <a
- href="Enumerations.html#GravityType">GravityType</a> gravity_, double
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#GravityType">GravityType</a> gravity_, double
 degrees_,&#160;</font></td>
       <td><font size="-1">Annotate with text using specified text,
 bounding area, placement gravity, and rotation. If <i>boundingArea_</i>
@@ -442,7 +442,7 @@ is invalid, then bounding area is entire image.</font></td>
     </tr>
     <tr>
       <td><font size="-1">const std::string &amp;text_, <a
- href="Enumerations.html#GravityType"> GravityType</a> gravity_</font></td>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#GravityType"> GravityType</a> gravity_</font></td>
       <td><font size="-1">Annotate with text (bounding area is entire
 image) and placement gravity.</font></td>
     </tr>
@@ -493,7 +493,7 @@ color of the border is specified by the <i>borderColor</i> attribute.</font></td
       <td style="text-align: center;">
       <center><a name="channel"></a> <font size="-1">channel</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#ChannelType">ChannelType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ChannelType">ChannelType</a>
 layer_</font></td>
       <td><font size="-1">Extract channel from image. Use this option
 to extract a particular channel from&#160; the image.&#160; <i>MatteChannel</i>
@@ -547,7 +547,7 @@ image).&#160; By default, each image is commented with its file name.
 Use&#160; this&#160; method to&#160; assign a specific comment to the
 image.&#160; Optionally you can include the image filename, type,
 width, height, or other&#160; image&#160; attributes by embedding <a
- href="FormatCharacters.html">special format characters.</a> </font></td>
+ href="https://legacy.imagemagick.org/Magick++/FormatCharacters.html">special format characters.</a> </font></td>
     </tr>
     <tr>
       <td style="text-align: center;" valign="middle"><font size="-1"><a
@@ -571,7 +571,7 @@ matte differ from the current image.</font><br />
       </td>
       <td><font size="-1">const <a href="Image++.html">Image</a>
 &amp;compositeImage_, ssize_t xOffset_, ssize_t yOffset_, <a
- href="Enumerations.html#CompositeOperator"> CompositeOperator</a>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompositeOperator"> CompositeOperator</a>
 compose_ = <i>InCompositeOp</i></font></td>
       <td><font size="-1">Compose an image onto the current image at
 offset specified by <i>xOffset_</i>, <i>yOffset_ </i>using the
@@ -580,7 +580,7 @@ composition algorithm specified by <i>compose_</i>.&#160;</font></td>
     <tr>
       <td><font size="-1">const <a href="Image++.html">Image</a>
 &amp;compositeImage_, const <a href="Geometry.html">Geometry</a>
-&amp;offset_, <a href="Enumerations.html#CompositeOperator">CompositeOperator</a>
+&amp;offset_, <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompositeOperator">CompositeOperator</a>
 compose_ = <i>InCompositeOp</i></font></td>
       <td><font size="-1">Compose an image onto the current image at
 offset specified by <i>offset_</i> using the composition algorithm
@@ -588,8 +588,8 @@ specified by <i>compose_</i> .&#160;</font></td>
     </tr>
     <tr>
       <td><font size="-1">const <a href="Image++.html">Image</a>
-&amp;compositeImage_, <a href="Enumerations.html#GravityType">GravityType</a>
-gravity_, <a href="Enumerations.html#CompositeOperator">CompositeOperator</a>
+&amp;compositeImage_, <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#GravityType">GravityType</a>
+gravity_, <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompositeOperator">CompositeOperator</a>
 compose_ = <i>InCompositeOp</i></font></td>
       <td><font size="-1">Compose an image onto the current image with
 placement specified by <i>gravity_ </i>using the composition
@@ -644,7 +644,7 @@ kernel to apply.</font></td>
       <td><font size="-1">void</font></td>
       <td><font size="-1">Display image on screen.</font> <br />
       <font size="-1"><b><font color="#ff0000">Caution: </font></b> if
-an image format is is not compatible with the display visual (e.g.
+an image format is not compatible with the display visual (e.g.
 JPEG on a colormapped display) then the original image will be
 altered. Use a copy of the original if this is a problem.</font></td>
     </tr>
@@ -725,14 +725,14 @@ background color.</font></td>
 &amp;geometry_, const <a href="Color.html">Color</a> &amp;backgroundColor_</font></td>
     </tr>
     <tr>
-      <td><font size="-1">const <a href="Geometry.html"> Geometry</a> &amp;geometry_, const <a href="Enumerations.html#GravityType">GravityType</a>
+      <td><font size="-1">const <a href="Geometry.html"> Geometry</a> &amp;geometry_, const <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#GravityType">GravityType</a>
 &amp;gravity_</font></td>
       <td rowspan="2"><font size="-1">extends the image as defined by the geometry, gravity, and image background color.</font></td>
     </tr>
     <tr>
       <td><font size="-1">const <a href="Geometry.html">Geometry</a>
 &amp;geometry_, const <a href="Color.html">Color</a> &amp;backgroundColor_,
-const <a href="Enumerations.html#GravityType">GravityType</a> &amp;gravity_</font></td>
+const <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#GravityType">GravityType</a> &amp;gravity_</font></td>
     </tr>
     <tr>
       <td style="text-align: center;">
@@ -910,7 +910,7 @@ specified by 'sigma_'.</font></td>
       <td><font size="-1">Assign a label to an image. Use this option
 to&#160; assign&#160; a&#160; specific label to the image. Optionally
 you can include the image filename, type, width, height, or scene
-number in the label by embedding&#160; <a href="FormatCharacters.html">
+number in the label by embedding&#160; <a href="https://legacy.imagemagick.org/Magick++/FormatCharacters.html">
 special format characters.</a> If the first character of string is @,
 the
 image label is read from a file titled by the remaining characters in
@@ -987,7 +987,7 @@ with this option.</font></td>
       <td><font size="-1">const <a href="Color.html">Color</a>
 &amp;target_, const unsigned int&#160; opacity_, const ssize_t x_, const
 ssize_t
-y_, <a href="Enumerations.html#PaintMethod">PaintMethod</a> method_</font></td>
+y_, <a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#PaintMethod">PaintMethod</a> method_</font></td>
       <td><font size="-1">Floodfill designated area with a replacement
 opacity value.</font></td>
     </tr>
@@ -1002,7 +1002,7 @@ component with the median color in a circular neighborhood</font></td>
       <td style="text-align: center;">
       <center><a name="mergeLayers"></a> <font size="-1">mergeLayers</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#LayerMethod">LayerMethod</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#LayerMethod">LayerMethod</a>
 noiseType_</font></td>
       <td><font size="-1">handle multiple images forming a set of image layers or animation frames.</font></td>
     </tr>
@@ -1030,9 +1030,9 @@ the image. Copies the underlying image to a new image if necessary.</font></td>
 double hue_</font></td>
       <td><font size="-1">Modulate percent hue, saturation, and
 brightness of an image. Modulation of saturation and brightness is as a
-ratio of the current value (100.0 for no change). Modulation of hue is an
+ratio of the current value (1.0 for no change). Modulation of hue is an
 absolute rotation of -180 degrees to +180 degrees from the current
-position corresponding to an argument range of 0 to 200.0 (100.0 for no
+position corresponding to an argument range of 0 to 2.0 (1.0 for no
 change).</font></td>
     </tr>
     <tr>
@@ -1933,10 +1933,10 @@ y=0.329)</font></td>
       <td>
       <center><a name="classType"></a> <font size="-1">classType</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#ClassType">ClassType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ClassType">ClassType</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1">&#160;<a href="Enumerations.html#ClassType">ClassType</a>
+      <td><font size="-1">&#160;<a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ClassType">ClassType</a>
 class_</font></td>
       <td><font size="-1">Image storage class.&#160; Note that
 conversion from a DirectClass image to a PseudoClass image may result
@@ -2003,10 +2003,10 @@ ensure that the image colormap indexes reference valid colormap entries.</font><
       <td>
       <center><a name="colorSpace"></a> <font size="-1">colorSpace</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#ColorspaceType">ColorspaceType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ColorspaceType">ColorspaceType</a>
 colorSpace_</font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#ColorspaceType">ColorspaceType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ColorspaceType">ColorspaceType</a>
 colorSpace_</font></td>
       <td><font size="-1">The colorspace (e.g. CMYK) used to represent
 the image pixel colors. Image pixels are always stored as RGB(A) except
@@ -2034,11 +2034,11 @@ for the case of CMY(K).</font></td>
       <td>
       <center><a name="compose"></a> <font size="-1">compose</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#CompositeOperator">CompositeOperator</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompositeOperator">CompositeOperator</a>
       </font></td>
       <td><small><font size="-1"><small>void</small></font></small></td>
       <td><small><font size="-1"><small><a
- href="Enumerations.html#CompositeOperator">CompositeOperator</a>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompositeOperator">CompositeOperator</a>
 compose_</small></font></small></td>
       <td><font size="-1">Composition operator to be used when
 composition is implicitly used (such as for image flattening).</font></td>
@@ -2049,11 +2049,11 @@ composition is implicitly used (such as for image flattening).</font></td>
       <br />
       <font size="-1">Type</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#CompressionType">CompressionType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompressionType">CompressionType</a>
       </font></td>
       <td><small><font size="-1"><small>void</small></font></small></td>
       <td><small><font size="-1"><small><a
- href="Enumerations.html#CompressionType">CompressionType</a>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#CompressionType">CompressionType</a>
 compressType_</small></font></small></td>
       <td><font size="-1">Image compresion type. The default is the
 compression type of the specified image file.</font></td>
@@ -2144,10 +2144,10 @@ ImageMagick is compiled with.</font></td>
       <td>
       <center><a name="endian"></a> <font size="-1">endian</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#EndianType">EndianType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#EndianType">EndianType</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#EndianType">EndianType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#EndianType">EndianType</a>
 endian_</font></td>
       <td><font size="-1">Specify (or obtain) endian option for formats
 which support it.</font></td>
@@ -2211,7 +2211,7 @@ objects.</font></td>
       <td>
       <center><a name="fillRule"></a> <font size="-1">fillRule</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#FillRule">FillRule</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#FillRule">FillRule</a>
       </font></td>
       <td><font size="-1">void</font></td>
       <td><font size="-1">const Magick::FillRule &amp;fillRule_</font></td>
@@ -2221,10 +2221,10 @@ objects.</font></td>
       <td>
       <center><a name="filterType"></a> <font size="-1">filterType</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#FilterTypes">FilterTypes</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#FilterTypes">FilterTypes</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#FilterTypes">FilterTypes</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#FilterTypes">FilterTypes</a>
 filterType_</font></td>
       <td><font size="-1">Filter to use when resizing image. The
 reduction filter employed has a sigificant effect on the time required
@@ -2335,10 +2335,10 @@ International Color Consortium</a> for the format of ICC color profiles.</font><
       <br />
       <font size="-1">Type</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#InterlaceType">InterlaceType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#InterlaceType">InterlaceType</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#InterlaceType">InterlaceType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#InterlaceType">InterlaceType</a>
 interlace_</font></td>
       <td><font size="-1">The type of interlacing scheme (default <i>NoInterlace</i>
 ). This option is used to specify the type of&#160; interlacing
@@ -2492,11 +2492,11 @@ is set to true and the image has just been quantized.</font></td>
  name="orientation"></a>orientation<br />
       </small></td>
       <td style="vertical-align: middle;"><small><a
- href="Enumerations.html#OrientationType">OrientationType</a></small></td>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#OrientationType">OrientationType</a></small></td>
       <td style="vertical-align: top;"><small>void</small><br />
       </td>
       <td style="vertical-align: middle;"><small><a
- href="Enumerations.html#OrientationType">OrientationType</a>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#OrientationType">OrientationType</a>
 orientation_</small></td>
       <td style="vertical-align: top;"><small>Image orientation.
 &#160;Supported by some file formats such as DPX and TIFF. Useful for
@@ -2598,10 +2598,10 @@ option will have any duplicate or unused colors removed.</font></td>
       <br />
       <font size="-1">ColorSpace</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#ColorspaceType">ColorspaceType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ColorspaceType">ColorspaceType</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#ColorspaceType">ColorspaceType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ColorspaceType">ColorspaceType</a>
 colorSpace_</font></td>
       <td><font size="-1">Colorspace to quantize colors in (default
 RGB). Empirical evidence suggests that distances in color spaces such
@@ -2648,10 +2648,10 @@ may be used to manually adjust the tree depth.</font></td>
       <br />
       <font size="-1">Intent</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#RenderingIntent">RenderingIntent</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#RenderingIntent">RenderingIntent</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#RenderingIntent">RenderingIntent</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#RenderingIntent">RenderingIntent</a>
 render_</font></td>
       <td><font size="-1">The type of rendering intent</font></td>
     </tr>
@@ -2661,10 +2661,10 @@ render_</font></td>
       <br />
       <font size="-1">Units</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#ResolutionType">ResolutionType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ResolutionType">ResolutionType</a>
       </font></td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#ResolutionType">ResolutionType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ResolutionType">ResolutionType</a>
 units_</font></td>
       <td><font size="-1">Units of image resolution</font></td>
     </tr>
@@ -2877,11 +2877,11 @@ designed to support Unicode.</small><br />
       <td>
       <center><a name="type"></a> <font size="-1">type</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#ImageType">ImageType</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ImageType">ImageType</a>
       </font></td>
       <td><font size="-1">void</font></td>
       <td bgcolor="#ffffff"><font size="-1"><a
- href="Enumerations.html#ImageType"> ImageType</a> </font></td>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#ImageType"> ImageType</a> </font></td>
       <td><font size="-1">Image type.</font></td>
     </tr>
     <tr>
@@ -2906,11 +2906,11 @@ designed to support Unicode.</small><br />
       <td>
       <center><a name="virtualPixelMethod"></a> <font size="-1">virtualPixelMethod</font></center>
       </td>
-      <td><font size="-1"><a href="Enumerations.html#VirtualPixelMethod">VirtualPixelMethod</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#VirtualPixelMethod">VirtualPixelMethod</a>
       </font></td>
       <td><small><font size="-1"><small>void</small></font></small></td>
       <td><small><font size="-1"><small><a
- href="Enumerations.html#VirtualPixelMethod">VirtualPixelMethod</a>
+ href="https://legacy.imagemagick.org/Magick++/Enumerations.html#VirtualPixelMethod">VirtualPixelMethod</a>
 virtualPixelMethod_</small></font></small></td>
       <td><font size="-1">Image virtual pixel method.</font></td>
     </tr>
@@ -2947,7 +2947,7 @@ or to capture image from</font></td>
 <center>
 <h3> <a name="Raw Image Pixel Access"></a> Low-Level Image Pixel Access</h3>
 </center>
-Image pixels (of type <i><a href="PixelPacket.html">PixelPacket</a> </i>)
+Image pixels (of type <i><a href="https://legacy.imagemagick.org/Magick++/PixelPacket.html">PixelPacket</a> </i>)
 may be accessed directly via the <i>Image Pixel Cache</i> .&#160; The
 image pixel cache is a rectangular window into the actual image pixels
 (which may be in memory, memory-mapped from a disk file, or entirely on
@@ -3026,7 +3026,7 @@ image.write("horse.png");
       <td>
       <center><a name="getConstPixels"></a> <font size="-1">getConstPixels</font></center>
       </td>
-      <td><font size="-1">const <a href="PixelPacket.html">PixelPacket</a>
+      <td><font size="-1">const <a href="https://legacy.imagemagick.org/Magick++/PixelPacket.html">PixelPacket</a>
 *</font></td>
       <td><font size="-1">const ssize_t x_, const ssize_t y_, const size_t
 columns_, const size_t rows_</font></td>
@@ -3081,7 +3081,7 @@ images, the indexes are used to contain the alpha channel.</font></td>
       <td>
       <center><a name="getPixels"></a> <font size="-1">getPixels</font></center>
       </td>
-      <td><font size="-1"><a href="PixelPacket.html">PixelPacket</a> *</font></td>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/PixelPacket.html">PixelPacket</a> *</font></td>
       <td><font size="-1">const ssize_t x_, const ssize_t y_, const size_t
 columns_, const size_t rows_</font></td>
       <td><font size="-1">Transfers pixels from the image to the pixel
@@ -3096,7 +3096,7 @@ user.</font><font size="-1"></font></td>
       <td>
       <center><a name="setPixels"></a> <font size="-1">setPixels</font></center>
       </td>
-      <td><font size="-1"><a href="PixelPacket.html">PixelPacket</a> *</font></td>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/PixelPacket.html">PixelPacket</a> *</font></td>
       <td><font size="-1">const ssize_t x_, const ssize_t y_, const size_t
 columns_, const size_t rows_</font></td>
       <td><font size="-1">Allocates a pixel cache region to store image
@@ -3119,7 +3119,7 @@ should never be deallocated by the user.</font></td>
       <center><a name="readPixels"></a> <font size="-1">readPixels</font></center>
       </td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#QuantumTypes">QuantumTypes</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#QuantumTypes">QuantumTypes</a>
 quantum_, unsigned char *source_,</font></td>
       <td><font size="-1">Transfers one or more pixel components from a
 buffer or file into the image pixel cache of an image. ReadPixels is
@@ -3131,7 +3131,7 @@ corresponds to the region set by a preceding setPixels call.</font></td>
       <center><a name="writePixels"></a> <font size="-1">writePixels</font></center>
       </td>
       <td><font size="-1">void</font></td>
-      <td><font size="-1"><a href="Enumerations.html#QuantumTypes">QuantumTypes</a>
+      <td><font size="-1"><a href="https://legacy.imagemagick.org/Magick++/Enumerations.html#QuantumTypes">QuantumTypes</a>
 quantum_, unsigned char *destination_</font></td>
       <td><font size="-1">Transfers one or more pixel components from
 the image pixel cache to a buffer or file. WritePixels is typically
