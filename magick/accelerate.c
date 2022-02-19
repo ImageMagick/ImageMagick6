@@ -368,7 +368,7 @@ static Image *ComputeAddNoiseImage(const Image *image,
   option=GetImageArtifact(image,"attenuate");
   if (option != (char *) NULL)
     attenuate=StringToDouble(option,(char **) NULL);
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   key=GetRandomSecretKey(random_info[0]);
   (void) key;

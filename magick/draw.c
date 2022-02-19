@@ -4562,7 +4562,7 @@ MagickExport MagickBooleanType DrawPatternPath(Image *image,
 %
 */
 
-static PolygonInfo **DestroyPolygonThreadSet(PolygonInfo **polygon_info)
+static PolygonInfo **DestroyPolygonTLS(PolygonInfo **polygon_info)
 {
   ssize_t
     i;
@@ -4575,7 +4575,7 @@ static PolygonInfo **DestroyPolygonThreadSet(PolygonInfo **polygon_info)
   return(polygon_info);
 }
 
-static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
+static PolygonInfo **AcquirePolygonTLS(const DrawInfo *draw_info,
   const PrimitiveInfo *primitive_info,ExceptionInfo *exception)
 {
   PathInfo
@@ -4599,19 +4599,19 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
   (void) memset(polygon_info,0,number_threads*sizeof(*polygon_info));
   path_info=ConvertPrimitiveToPath(draw_info,primitive_info,exception);
   if (path_info == (PathInfo *) NULL)
-    return(DestroyPolygonThreadSet(polygon_info));
+    return(DestroyPolygonTLS(polygon_info));
   polygon_info[0]=ConvertPathToPolygon(path_info,exception);
   if (polygon_info[0] == (PolygonInfo *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-      return(DestroyPolygonThreadSet(polygon_info));
+      return(DestroyPolygonTLS(polygon_info));
     }
   path_info=(PathInfo *) RelinquishMagickMemory(path_info);
   return(polygon_info);
 }
 
-static MagickBooleanType ClonePolygonEdges(PolygonInfo **polygon_info,
+static MagickBooleanType AcquirePolygonEdgesTLS(PolygonInfo **polygon_info,
   const size_t number_threads,ExceptionInfo *exception)
 {
   ssize_t
@@ -4909,8 +4909,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   /*
     Compute bounding box.
   */
-  polygon_info=AcquirePolygonThreadSet(draw_info,primitive_info,
-    &image->exception);
+  polygon_info=AcquirePolygonTLS(draw_info,primitive_info,&image->exception);
   if (polygon_info == (PolygonInfo **) NULL)
     return(MagickFalse);
   if (image->debug != MagickFalse)
@@ -4942,7 +4941,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
       (bounds.y1 >= (double) image->rows) ||
       (bounds.x2 <= 0.0) || (bounds.y2 <= 0.0))
     {
-      polygon_info=DestroyPolygonThreadSet(polygon_info);
+      polygon_info=DestroyPolygonTLS(polygon_info);
       return(MagickTrue);  /* virtual polygon */
     }
   bounds.x1=bounds.x1 < 0.0 ? 0.0 : bounds.x1 >= (double) image->columns-1.0 ?
@@ -4959,10 +4958,10 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   poly_extent.y2=CastDoubleToLong(floor(bounds.y2+0.5));
   number_threads=GetMagickNumberThreads(image,image,poly_extent.y2-
     poly_extent.y1+1,1);
-  status=ClonePolygonEdges(polygon_info,number_threads,&image->exception);
+  status=AcquirePolygonEdgesTLS(polygon_info,number_threads,&image->exception);
   if (status == MagickFalse)
     {
-      polygon_info=DestroyPolygonThreadSet(polygon_info);
+      polygon_info=DestroyPolygonTLS(polygon_info);
       return(status);
     }
   status=MagickTrue;
@@ -5011,7 +5010,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
           status=MagickFalse;
       }
       image_view=DestroyCacheView(image_view);
-      polygon_info=DestroyPolygonThreadSet(polygon_info);
+      polygon_info=DestroyPolygonTLS(polygon_info);
       if (image->debug != MagickFalse)
         (void) LogMagickEvent(DrawEvent,GetMagickModule(),
           "    end draw-polygon");
@@ -5084,7 +5083,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
       status=MagickFalse;
   }
   image_view=DestroyCacheView(image_view);
-  polygon_info=DestroyPolygonThreadSet(polygon_info);
+  polygon_info=DestroyPolygonTLS(polygon_info);
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"    end draw-polygon");
   return(status);

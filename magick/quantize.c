@@ -1391,7 +1391,7 @@ MagickExport QuantizeInfo *DestroyQuantizeInfo(QuantizeInfo *quantize_info)
 %
 */
 
-static DoublePixelPacket **DestroyPixelThreadSet(DoublePixelPacket **pixels)
+static DoublePixelPacket **DestroyPixelTLS(DoublePixelPacket **pixels)
 {
   ssize_t
     i;
@@ -1404,7 +1404,7 @@ static DoublePixelPacket **DestroyPixelThreadSet(DoublePixelPacket **pixels)
   return(pixels);
 }
 
-static DoublePixelPacket **AcquirePixelThreadSet(const size_t count)
+static DoublePixelPacket **AcquirePixelTLS(const size_t count)
 {
   DoublePixelPacket
     **pixels;
@@ -1426,7 +1426,7 @@ static DoublePixelPacket **AcquirePixelThreadSet(const size_t count)
     pixels[i]=(DoublePixelPacket *) AcquireQuantumMemory(count,
       2*sizeof(**pixels));
     if (pixels[i] == (DoublePixelPacket *) NULL)
-      return(DestroyPixelThreadSet(pixels));
+      return(DestroyPixelTLS(pixels));
   }
   return(pixels);
 }
@@ -1472,7 +1472,7 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
   /*
     Distribute quantization error using Floyd-Steinberg.
   */
-  pixels=AcquirePixelThreadSet(image->columns);
+  pixels=AcquirePixelTLS(image->columns);
   if (pixels == (DoublePixelPacket **) NULL)
     return(MagickFalse);
   exception=(&image->exception);
@@ -1633,7 +1633,7 @@ static MagickBooleanType FloydSteinbergDither(Image *image,CubeInfo *cube_info)
     }
   }
   image_view=DestroyCacheView(image_view);
-  pixels=DestroyPixelThreadSet(pixels);
+  pixels=DestroyPixelTLS(pixels);
   return(MagickTrue);
 }
 

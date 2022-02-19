@@ -2718,7 +2718,7 @@ MagickExport MagickBooleanType FxEvaluateChannelExpression(FxInfo *fx_info,
 %
 */
 
-static FxInfo **DestroyFxThreadSet(FxInfo **fx_info)
+static FxInfo **DestroyFxTLS(FxInfo **fx_info)
 {
   ssize_t
     i;
@@ -2731,7 +2731,7 @@ static FxInfo **DestroyFxThreadSet(FxInfo **fx_info)
   return(fx_info);
 }
 
-static FxInfo **AcquireFxThreadSet(const Image *image,const char *expression,
+static FxInfo **AcquireFxTLS(const Image *image,const char *expression,
   ExceptionInfo *exception)
 {
   char
@@ -2776,7 +2776,7 @@ static FxInfo **AcquireFxThreadSet(const Image *image,const char *expression,
   }
   fx_expression=DestroyString(fx_expression);
   if (i < (ssize_t) number_threads)
-    fx_info=DestroyFxThreadSet(fx_info);
+    fx_info=DestroyFxTLS(fx_info);
   return(fx_info);
 }
 
@@ -2819,19 +2819,19 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (expression == (const char *) NULL)
     return(CloneImage(image,0,0,MagickTrue,exception));
-  fx_info=AcquireFxThreadSet(image,expression,exception);
+  fx_info=AcquireFxTLS(image,expression,exception);
   if (fx_info == (FxInfo **) NULL)
     return((Image *) NULL);
   fx_image=CloneImage(image,0,0,MagickTrue,exception);
   if (fx_image == (Image *) NULL)
     {
-      fx_info=DestroyFxThreadSet(fx_info);
+      fx_info=DestroyFxTLS(fx_info);
       return((Image *) NULL);
     }
   if (SetImageStorageClass(fx_image,DirectClass) == MagickFalse)
     {
       InheritException(exception,&fx_image->exception);
-      fx_info=DestroyFxThreadSet(fx_info);
+      fx_info=DestroyFxTLS(fx_info);
       fx_image=DestroyImage(fx_image);
       return((Image *) NULL);
     }
@@ -2931,7 +2931,7 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
       }
   }
   fx_view=DestroyCacheView(fx_view);
-  fx_info=DestroyFxThreadSet(fx_info);
+  fx_info=DestroyFxTLS(fx_info);
   if (status == MagickFalse)
     fx_image=DestroyImage(fx_image);
   return(fx_image);

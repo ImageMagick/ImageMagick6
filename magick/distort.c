@@ -2372,7 +2372,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
     status=MagickTrue;
     progress=0;
     GetMagickPixelPacket(distort_image,&zero);
-    resample_filter=AcquireResampleFilterThreadSet(image,
+    resample_filter=AcquireResampleFilterTLS(image,
       UndefinedVirtualPixelMethod,MagickFalse,exception);
     distort_view=AcquireAuthenticCacheView(distort_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -2811,7 +2811,7 @@ if ( d.x == 0.5 && d.y == 0.5 ) {
         }
     }
     distort_view=DestroyCacheView(distort_view);
-    resample_filter=DestroyResampleFilterThreadSet(resample_filter);
+    resample_filter=DestroyResampleFilterTLS(resample_filter);
 
     if (status == MagickFalse)
       distort_image=DestroyImage(distort_image);

@@ -210,7 +210,7 @@ MagickExport Image *AddNoiseImageChannel(const Image *image,
     attenuate=StringToDouble(option,(char **) NULL);
   status=MagickTrue;
   progress=0;
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
   image_view=AcquireVirtualCacheView(image,exception);
   noise_view=AcquireAuthenticCacheView(noise_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -302,7 +302,7 @@ MagickExport Image *AddNoiseImageChannel(const Image *image,
   }
   noise_view=DestroyCacheView(noise_view);
   image_view=DestroyCacheView(image_view);
-  random_info=DestroyRandomInfoThreadSet(random_info);
+  random_info=DestroyRandomInfoTLS(random_info);
   if (status == MagickFalse)
     noise_image=DestroyImage(noise_image);
   return(noise_image);
@@ -2212,7 +2212,7 @@ MagickExport Image *SketchImage(const Image *image,const double radius,
     return((Image *) NULL);
   status=MagickTrue;
   GetMagickPixelPacket(random_image,&zero);
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
   random_view=AcquireAuthenticCacheView(random_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   key=GetRandomSecretKey(random_info[0]);
@@ -2261,7 +2261,7 @@ magick_number_threads(random_image,random_image,random_image->rows,key == ~0UL)
     if (SyncCacheViewAuthenticPixels(random_view,exception) == MagickFalse)
       status=MagickFalse;
   }
-  random_info=DestroyRandomInfoThreadSet(random_info);
+  random_info=DestroyRandomInfoTLS(random_info);
   if (status == MagickFalse)
     {
       random_view=DestroyCacheView(random_view);

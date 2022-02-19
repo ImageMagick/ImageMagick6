@@ -2368,7 +2368,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
       if (AcquireImageColormap(image,2) == MagickFalse)
         ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
           image->filename);
-      random_info=AcquireRandomInfoThreadSet();
+      random_info=AcquireRandomInfoTLS();
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       key=GetRandomSecretKey(random_info[0]);
@@ -2442,7 +2442,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
           }
       }
       image_view=DestroyCacheView(image_view);
-      random_info=DestroyRandomInfoThreadSet(random_info);
+      random_info=DestroyRandomInfoTLS(random_info);
       return(status);
     }
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
@@ -2450,7 +2450,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
       InheritException(exception,&image->exception);
       return(MagickFalse);
     }
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   key=GetRandomSecretKey(random_info[0]);
@@ -2573,7 +2573,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
       }
   }
   image_view=DestroyCacheView(image_view);
-  random_info=DestroyRandomInfoThreadSet(random_info);
+  random_info=DestroyRandomInfoTLS(random_info);
   return(status);
 }
 

@@ -275,7 +275,7 @@ WandExport PixelView *ClonePixelView(const PixelView *pixel_view)
 %
 */
 
-static PixelWand ***DestroyPixelsThreadSet(PixelWand ***pixel_wands,
+static PixelWand ***DestroyPixelsTLS(PixelWand ***pixel_wands,
   const size_t number_wands,const size_t number_threads)
 {
   ssize_t
@@ -293,7 +293,7 @@ WandExport PixelView *DestroyPixelView(PixelView *pixel_view)
 {
   assert(pixel_view != (PixelView *) NULL);
   assert(pixel_view->signature == WandSignature);
-  pixel_view->pixel_wands=DestroyPixelsThreadSet(pixel_view->pixel_wands,
+  pixel_view->pixel_wands=DestroyPixelsTLS(pixel_view->pixel_wands,
     pixel_view->region.width,pixel_view->number_threads);
   pixel_view->view=DestroyCacheView(pixel_view->view);
   pixel_view->exception=DestroyExceptionInfo(pixel_view->exception);
@@ -2536,7 +2536,7 @@ WandExport unsigned char *MagickWriteImageBlob(MagickWand *wand,size_t *length)
 %
 */
 
-static PixelWand ***AcquirePixelsThreadSet(const size_t number_wands,
+static PixelWand ***AcquirePixelsTLS(const size_t number_wands,
   const size_t number_threads)
 {
   PixelWand
@@ -2554,7 +2554,7 @@ static PixelWand ***AcquirePixelsThreadSet(const size_t number_wands,
   {
     pixel_wands[i]=NewPixelWands(number_wands);
     if (pixel_wands[i] == (PixelWand **) NULL)
-      return(DestroyPixelsThreadSet(pixel_wands,number_wands,number_threads));
+      return(DestroyPixelsTLS(pixel_wands,number_wands,number_threads));
   }
   return(pixel_wands);
 }
@@ -2581,7 +2581,7 @@ WandExport PixelView *NewPixelView(MagickWand *wand)
   pixel_view->region.width=wand->images->columns;
   pixel_view->region.height=wand->images->rows;
   pixel_view->number_threads=GetOpenMPMaximumThreads();
-  pixel_view->pixel_wands=AcquirePixelsThreadSet(pixel_view->region.width,
+  pixel_view->pixel_wands=AcquirePixelsTLS(pixel_view->region.width,
     pixel_view->number_threads);
   if (pixel_view->pixel_wands == (PixelWand ***) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",
@@ -2643,7 +2643,7 @@ WandExport PixelView *NewPixelViewRegion(MagickWand *wand,const ssize_t x,
   pixel_view->region.x=x;
   pixel_view->region.y=y;
   pixel_view->number_threads=GetOpenMPMaximumThreads();
-  pixel_view->pixel_wands=AcquirePixelsThreadSet(pixel_view->region.width,
+  pixel_view->pixel_wands=AcquirePixelsTLS(pixel_view->region.width,
     pixel_view->number_threads);
   if (pixel_view->pixel_wands == (PixelWand ***) NULL)
     ThrowWandFatalException(ResourceLimitFatalError,"MemoryAllocationFailed",

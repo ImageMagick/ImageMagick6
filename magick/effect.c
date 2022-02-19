@@ -4455,7 +4455,7 @@ MagickExport Image *SpreadImage(const Image *image,const double radius,
   progress=0;
   GetMagickPixelPacket(spread_image,&bias);
   width=GetOptimalKernelWidth1D(radius,0.5);
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
   image_view=AcquireVirtualCacheView(image,exception);
   spread_view=AcquireAuthenticCacheView(spread_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -4524,7 +4524,7 @@ MagickExport Image *SpreadImage(const Image *image,const double radius,
   }
   spread_view=DestroyCacheView(spread_view);
   image_view=DestroyCacheView(image_view);
-  random_info=DestroyRandomInfoThreadSet(random_info);
+  random_info=DestroyRandomInfoTLS(random_info);
   if (status == MagickFalse)
     spread_image=DestroyImage(spread_image);
   return(spread_image);

@@ -136,7 +136,7 @@
 %
 */
 
-static MagickPixelPacket **DestroyPixelThreadSet(const Image *images,
+static MagickPixelPacket **DestroyPixelTLS(const Image *images,
   MagickPixelPacket **pixels)
 {
   ssize_t
@@ -155,7 +155,7 @@ static MagickPixelPacket **DestroyPixelThreadSet(const Image *images,
   return(pixels);
 }
 
-static MagickPixelPacket **AcquirePixelThreadSet(const Image *images)
+static MagickPixelPacket **AcquirePixelTLS(const Image *images)
 {
   const Image
     *next;
@@ -185,7 +185,7 @@ static MagickPixelPacket **AcquirePixelThreadSet(const Image *images)
     pixels[i]=(MagickPixelPacket *) AcquireQuantumMemory(columns,
       sizeof(**pixels));
     if (pixels[i] == (MagickPixelPacket *) NULL)
-      return(DestroyPixelThreadSet(images,pixels));
+      return(DestroyPixelTLS(images,pixels));
     for (j=0; j < (ssize_t) columns; j++)
       GetMagickPixelPacket(images,&pixels[i][j]);
   }
@@ -535,7 +535,7 @@ MagickExport Image *EvaluateImages(const Image *images,
       image=DestroyImage(image);
       return((Image *) NULL);
     }
-  evaluate_pixels=AcquirePixelThreadSet(images);
+  evaluate_pixels=AcquirePixelTLS(images);
   if (evaluate_pixels == (MagickPixelPacket **) NULL)
     {
       image=DestroyImage(image);
@@ -550,7 +550,7 @@ MagickExport Image *EvaluateImages(const Image *images,
   progress=0;
   number_images=GetImageListLength(images);
   GetMagickPixelPacket(images,&zero);
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
   evaluate_view=AcquireAuthenticCacheView(image,exception);
   if (op == MedianEvaluateOperator)
     {
@@ -809,8 +809,8 @@ MagickExport Image *EvaluateImages(const Image *images,
       }
     }
   evaluate_view=DestroyCacheView(evaluate_view);
-  evaluate_pixels=DestroyPixelThreadSet(images,evaluate_pixels);
-  random_info=DestroyRandomInfoThreadSet(random_info);
+  evaluate_pixels=DestroyPixelTLS(images,evaluate_pixels);
+  random_info=DestroyRandomInfoTLS(random_info);
   if (status == MagickFalse)
     image=DestroyImage(image);
   return(image);
@@ -853,7 +853,7 @@ MagickExport MagickBooleanType EvaluateImageChannel(Image *image,
     }
   status=MagickTrue;
   progress=0;
-  random_info=AcquireRandomInfoThreadSet();
+  random_info=AcquireRandomInfoTLS();
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   key=GetRandomSecretKey(random_info[0]);
@@ -953,7 +953,7 @@ MagickExport MagickBooleanType EvaluateImageChannel(Image *image,
       }
   }
   image_view=DestroyCacheView(image_view);
-  random_info=DestroyRandomInfoThreadSet(random_info);
+  random_info=DestroyRandomInfoTLS(random_info);
   return(status);
 }
 
@@ -2802,7 +2802,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
       image=DestroyImage(image);
       return((Image *) NULL);
     }
-  polynomial_pixels=AcquirePixelThreadSet(images);
+  polynomial_pixels=AcquirePixelTLS(images);
   if (polynomial_pixels == (MagickPixelPacket **) NULL)
     {
       image=DestroyImage(image);
@@ -2939,7 +2939,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
       }
   }
   polynomial_view=DestroyCacheView(polynomial_view);
-  polynomial_pixels=DestroyPixelThreadSet(images,polynomial_pixels);
+  polynomial_pixels=DestroyPixelTLS(images,polynomial_pixels);
   if (status == MagickFalse)
     image=DestroyImage(image);
   return(image);
@@ -3028,7 +3028,7 @@ static PixelList *DestroyPixelList(PixelList *pixel_list)
   return(pixel_list);
 }
 
-static PixelList **DestroyPixelListThreadSet(PixelList **pixel_list)
+static PixelList **DestroyPixelListTLS(PixelList **pixel_list)
 {
   ssize_t
     i;
@@ -3067,7 +3067,7 @@ static PixelList *AcquirePixelList(const size_t width,const size_t height)
   return(pixel_list);
 }
 
-static PixelList **AcquirePixelListThreadSet(const size_t width,
+static PixelList **AcquirePixelListTLS(const size_t width,
   const size_t height)
 {
   PixelList
@@ -3089,7 +3089,7 @@ static PixelList **AcquirePixelListThreadSet(const size_t width,
   {
     pixel_list[i]=AcquirePixelList(width,height);
     if (pixel_list[i] == (PixelList *) NULL)
-      return(DestroyPixelListThreadSet(pixel_list));
+      return(DestroyPixelListTLS(pixel_list));
   }
   return(pixel_list);
 }
@@ -3654,7 +3654,7 @@ MagickExport Image *StatisticImageChannel(const Image *image,
     width;
   neighbor_height=height == 0 ? GetOptimalKernelWidth2D((double) height,0.5) :
     height;
-  pixel_list=AcquirePixelListThreadSet(neighbor_width,neighbor_height);
+  pixel_list=AcquirePixelListTLS(neighbor_width,neighbor_height);
   if (pixel_list == (PixelList **) NULL)
     {
       statistic_image=DestroyImage(statistic_image);
@@ -3823,7 +3823,7 @@ MagickExport Image *StatisticImageChannel(const Image *image,
   }
   statistic_view=DestroyCacheView(statistic_view);
   image_view=DestroyCacheView(image_view);
-  pixel_list=DestroyPixelListThreadSet(pixel_list);
+  pixel_list=DestroyPixelListTLS(pixel_list);
   if (status == MagickFalse)
     statistic_image=DestroyImage(statistic_image);
   return(statistic_image);
