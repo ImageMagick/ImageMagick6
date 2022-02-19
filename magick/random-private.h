@@ -24,8 +24,7 @@
 extern "C" {
 #endif
 
-static inline RandomInfo **DestroyRandomInfoTLS(
-  RandomInfo **random_info)
+static inline RandomInfo **DestroyRandomInfoTLS(RandomInfo **random_info)
 {
   ssize_t
     i;
