@@ -4957,7 +4957,6 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   poly_extent.y1=CastDoubleToLong(ceil(bounds.y1-0.5));
   poly_extent.x2=CastDoubleToLong(floor(bounds.x2+0.5));
   poly_extent.y2=CastDoubleToLong(floor(bounds.y2+0.5));
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
   number_threads=GetMagickNumberThreads(image,image,poly_extent.y2-
     poly_extent.y1+1,1);
   status=ClonePolygonEdges(polygon_info,number_threads,&image->exception);
@@ -4966,7 +4965,6 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
       polygon_info=DestroyPolygonThreadSet(polygon_info);
       return(status);
     }
-#endif
   status=MagickTrue;
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
