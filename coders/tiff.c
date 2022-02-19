@@ -1176,6 +1176,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     TIFFUnmapBlob);
   if (tiff == (TIFF *) NULL)
     {
+      if (exception->severity == UndefinedException)
+          ThrowReaderException(CorruptImageError,"UnableToReadImageData");
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
