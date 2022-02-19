@@ -4584,9 +4584,6 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
   PolygonInfo
     **polygon_info;
 
-  ssize_t
-    i;
-
   size_t
     number_threads;
 
@@ -4610,6 +4607,16 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
         ResourceLimitError,"MemoryAllocationFailed","`%s'","");
       return(DestroyPolygonThreadSet(polygon_info));
     }
+  path_info=(PathInfo *) RelinquishMagickMemory(path_info);
+  return(polygon_info);
+}
+
+static MagickBooleanType ClonePolygonEdges(PolygonInfo **polygon_info,
+  const size_t number_threads,ExceptionInfo *exception)
+{
+  ssize_t
+    i;
+
   for (i=1; i < (ssize_t) number_threads; i++)
   {
     EdgeInfo
@@ -4624,7 +4631,7 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
       {
         (void) ThrowMagickException(exception,GetMagickModule(),
           ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-        return(DestroyPolygonThreadSet(polygon_info));
+        return(MagickFalse);
       }
     polygon_info[i]->number_edges=0;
     edge_info=polygon_info[0]->edges;
@@ -4634,7 +4641,7 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
       {
         (void) ThrowMagickException(exception,GetMagickModule(),
           ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-        return(DestroyPolygonThreadSet(polygon_info));
+        return(MagickFalse);
       }
     (void) memcpy(polygon_info[i]->edges,edge_info,
       polygon_info[0]->number_edges*sizeof(*edge_info));
@@ -4650,14 +4657,13 @@ static PolygonInfo **AcquirePolygonThreadSet(const DrawInfo *draw_info,
         {
           (void) ThrowMagickException(exception,GetMagickModule(),
             ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-          return(DestroyPolygonThreadSet(polygon_info));
+          return(MagickFalse);
         }
       (void) memcpy(polygon_info[i]->edges[j].points,edge_info->points,
         edge_info->number_points*sizeof(*edge_info->points));
     }
   }
-  path_info=(PathInfo *) RelinquishMagickMemory(path_info);
-  return(polygon_info);
+ return(MagickTrue);
 }
 
 static size_t DestroyEdge(PolygonInfo *polygon_info,const ssize_t edge)
@@ -4881,13 +4887,14 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   EdgeInfo
     *p;
 
-  ssize_t
-    i;
-
   SegmentInfo
     bounds;
 
+  size_t
+    number_threads = 1;
+
   ssize_t
+    i,
     y;
 
   assert(image != (Image *) NULL);
@@ -4950,6 +4957,16 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   poly_extent.y1=CastDoubleToLong(ceil(bounds.y1-0.5));
   poly_extent.x2=CastDoubleToLong(floor(bounds.x2+0.5));
   poly_extent.y2=CastDoubleToLong(floor(bounds.y2+0.5));
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  number_threads=GetMagickNumberThreads(image,image,poly_extent.y2-
+    poly_extent.y1+1,1);
+  status=ClonePolygonEdges(polygon_info,number_threads,&image->exception);
+  if (status == MagickFalse)
+    {
+      polygon_info=DestroyPolygonThreadSet(polygon_info);
+      return(status);
+    }
+#endif
   status=MagickTrue;
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
@@ -4961,7 +4978,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
       */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
-        magick_number_threads(image,image,poly_extent.y2-poly_extent.y1+1,1)
+        num_threads(number_threads)
 #endif
       for (y=poly_extent.y1; y <= poly_extent.y2; y++)
       {
@@ -5009,7 +5026,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   poly_extent.y2=CastDoubleToLong(floor(bounds.y2+0.5));
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,poly_extent.y2-poly_extent.y1+1,1)
+    num_threads(number_threads)
 #endif
   for (y=poly_extent.y1; y <= poly_extent.y2; y++)
   {
