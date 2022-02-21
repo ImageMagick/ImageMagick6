@@ -1,5 +1,5 @@
 2022-02-20  6.9.12-41  <quetzlzacatenango@image...> 
-  * Release ImageMagick version 6.9.12-41 GIT revision 17084:9ce4ebad1:20220220
+  * Release ImageMagick version 6.9.12-41 GIT revision 17086:e6d7f782f:20220221
 
 2022-02-18  6.9.12-41  <quetzlzacatenango@image...> 
   * unrecognized color as the color is used before it is defined (reference
