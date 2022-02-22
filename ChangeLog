@@ -1,3 +1,9 @@
+2022-02-21  6.9.12-42  <quetzlzacatenango@image...> 
+  * Release ImageMagick version 6.9.12-42 GIT revision 17...
+
+2022-02-21  6.9.12-42  <quetzlzacatenango@image...> 
+  * eliminate autoconf 2.71 warnings.
+
 2022-02-21  6.9.12-41  <quetzlzacatenango@image...> 
   * Release ImageMagick version 6.9.12-41 GIT revision 17088:8c1bf8917:20220221
 
