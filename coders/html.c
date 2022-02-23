@@ -198,7 +198,8 @@ ModuleExport void UnregisterHTMLImage(void)
 %
 %  The format of the WriteHTMLImage method is:
 %
-%      MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,Image *image)
+%      MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
+%        Image *image)
 %
 %  A description of each parameter follows.
 %
@@ -208,6 +209,22 @@ ModuleExport void UnregisterHTMLImage(void)
 %
 %
 */
+
+static ssize_t WriteURLComponent(Image *image,const int c)
+{
+  char
+    encoding[MagickPathExtent],
+    html5;
+
+  html5=isalnum(c) != 0 || (c == '*') || (c == '-') || (c == '.') ||
+    (c == '_') ?  c : (c == ' ') ? '+' : 0;
+  if (html5 != 0)
+    (void) FormatLocaleString(encoding,MagickPathExtent,"%c",html5);
+  else
+    (void) FormatLocaleString(encoding,MagickPathExtent,"%%%02X",c);
+  return(WriteBlobString(image,encoding));
+}
+
 static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
   Image *image)
 {
@@ -350,16 +367,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
       else
         for (p=image->directory; *p != '\0'; p++)
           if (*p != '\xff')
-            {
-              if (*p != '\n')
-                (void) WriteBlobByte(image,(unsigned char) *p);
-              else
-                {
-                  (void) WriteBlobByte(image,'%');
-                  (void) WriteBlobByte(image,'0');
-                  (void) WriteBlobByte(image,'A');
-                }
-            }
+            (void) WriteURLComponent(image,(unsigned char) *p);
           else
             {
               (void) FormatLocaleString(buffer,MaxTextExtent,"\" shape="
@@ -434,16 +442,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
   else
     for (p=image->directory; *p != '\0'; p++)
       if (*p != '\xff')
-        {
-          if (*p != '\n')
-            (void) WriteBlobByte(image,(unsigned char) *p);
-          else
-            {
-              (void) WriteBlobByte(image,'%');
-              (void) WriteBlobByte(image,'0');
-              (void) WriteBlobByte(image,'A');
-            }
-        }
+        (void) WriteURLComponent(image,(unsigned char) *p);
       else
         {
           (void) FormatLocaleString(buffer,MaxTextExtent,"\" shape=\"rect\""
