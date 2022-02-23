@@ -1322,6 +1322,12 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
             break;
           }
         image=SyncNextImageInList(image);
+        status=SetImageExtent(image,image->columns,image->rows);
+        if (status == MagickFalse)
+          {
+            InheritException(exception,&image->exception);
+            break;
+          }
         status=SetImageProgress(image,LoadImagesTag,TellBlob(image),
           GetBlobSize(image));
         if (status == MagickFalse)
