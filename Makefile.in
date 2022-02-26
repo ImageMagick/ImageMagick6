@@ -2960,10 +2960,10 @@ am__DIST_COMMON = $(srcdir)/ImageMagick.spec.in \
 	$(top_srcdir)/wand/MagickWand-config.in \
 	$(top_srcdir)/wand/MagickWand.pc.in \
 	$(top_srcdir)/wand/Wand-config.in \
-	$(top_srcdir)/wand/Wand.pc.in ChangeLog config/ar-lib \
-	config/compile config/config.guess config/config.sub \
-	config/depcomp config/install-sh config/ltmain.sh \
-	config/missing config/mkinstalldirs
+	$(top_srcdir)/wand/Wand.pc.in config/ar-lib config/compile \
+	config/config.guess config/config.sub config/depcomp \
+	config/install-sh config/ltmain.sh config/missing \
+	config/mkinstalldirs
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -3429,7 +3429,7 @@ TESTS_ENVIRONMENT = \
 
 TOP_EXTRA_DIST = \
   AUTHORS.txt \
-  ChangeLog \
+  ChangeLog.md \
   LICENSE \
   QuickStart.txt \
   NOTICE \
@@ -5614,7 +5614,7 @@ pkgconfig_DATA = \
 
 @INSTALL_DOC_TRUE@doc_DATA = \
 @INSTALL_DOC_TRUE@  LICENSE \
-@INSTALL_DOC_TRUE@  ChangeLog \
+@INSTALL_DOC_TRUE@  ChangeLog.md \
 @INSTALL_DOC_TRUE@  NEWS.txt
 
 @MAINTAINER_MODE_TRUE@MAINTAINER_TARGETS = \
@@ -12979,7 +12979,7 @@ magick-version: magick/version.h
 	fi ; \
 	touch magick-version
 
-magick/version.h:	$(top_srcdir)/ChangeLog $(top_srcdir)/m4/version.m4
+magick/version.h:	$(top_srcdir)/ChangeLog.md $(top_srcdir)/m4/version.m4
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
