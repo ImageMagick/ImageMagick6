@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.9.12-41](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-40...6.9.12-41) - 2022-02-21
+
+### Commits
+
+- ... [`757c88c`](https://github.com/ImageMagick/ImageMagick6/commit/757c88cfe941df0cff8f2fef4681bd2b665c091c)
+- Removed the xtrn coder. [`768f648`](https://github.com/ImageMagick/ImageMagick6/commit/768f648cce36a641b54092d78117435996c74a9a)
+- rename method to TLS-moniker, thread local storage [`8860c28`](https://github.com/ImageMagick/ImageMagick6/commit/8860c28c64ae2cf5717e309325592c1ccb7cb969)
+- Removed NTGhostscriptDLL and NTGhostscriptLoadDLL from the private header. [`70b7dfa`](https://github.com/ImageMagick/ImageMagick6/commit/70b7dfaf4d2f75af8b649d542d49374d6f447c11)
+- remove reference to ImageMagickObject [`d64a152`](https://github.com/ImageMagick/ImageMagick6/commit/d64a15289a17a9d1d9856758f2ba82b75325f370)
+- Fixes for installation in a folder that contains non ASCII characters. [`e3d32a2`](https://github.com/ImageMagick/ImageMagick6/commit/e3d32a2bdb9e50ddb2fd5966c847f0726e128815)
+- ... [`695af8d`](https://github.com/ImageMagick/ImageMagick6/commit/695af8d4be0d25b36129d7b3fdf5a1b991216784)
+- https://github.com/ImageMagick/ImageMagick/issues/4843 [`b24793c`](https://github.com/ImageMagick/ImageMagick6/commit/b24793c396083176cbf019a09847ad3ab427e240)
+- https://github.com/ImageMagick/ImageMagick/issues/4761 [`77d68d3`](https://github.com/ImageMagick/ImageMagick6/commit/77d68d3e554ecd0e38ceb6a3f1decf65a69362c5)
+- don't over-allocate thread-specific data [`b61069a`](https://github.com/ImageMagick/ImageMagick6/commit/b61069a33bab43a022992b3f7c81a50e06a7b45a)
+- ... [`45d3733`](https://github.com/ImageMagick/ImageMagick6/commit/45d37331ef1a38712740e9bd7090fb855557b7cb)
+- cosmetic [`6831beb`](https://github.com/ImageMagick/ImageMagick6/commit/6831bebd3067bddc10e954fe09bc98a3e6947be7)
+- Removed the xtrn coder. [`854e7be`](https://github.com/ImageMagick/ImageMagick6/commit/854e7be5f0ce94c0a431d49a1c82a9eb50916be4)
+- fix compiler exception under Cygwin [`32315c9`](https://github.com/ImageMagick/ImageMagick6/commit/32315c92a4e31c0b75fb88548c0bf40242f0e5f1)
+- https://github.com/ImageMagick/ImageMagick/issues/4867 [`8c1bf89`](https://github.com/ImageMagick/ImageMagick6/commit/8c1bf8917a7a23daa6aaa03bb4293fd9ff7859a2)
+- remove references to ImageMagickObject [`1e63c5c`](https://github.com/ImageMagick/ImageMagick6/commit/1e63c5c2d7f2c1d5c6aba0e8935ee855656cbb46)
+- ... [`ba6e51f`](https://github.com/ImageMagick/ImageMagick6/commit/ba6e51f8e3b49c3d5015df5c4d152e07a37007aa)
+- pending release [`9b99699`](https://github.com/ImageMagick/ImageMagick6/commit/9b9969944c92ccaf4fa7d34c1c258a794a1e23b9)
+- pending release [`9ce4eba`](https://github.com/ImageMagick/ImageMagick6/commit/9ce4ebad1337a10bc9d6b74bddd57ad7dc3cde70)
+- cosmetic [`c02d827`](https://github.com/ImageMagick/ImageMagick6/commit/c02d827078d59950e19e169ffeb3d988d0e1185c)
+- pending release [`8a8673a`](https://github.com/ImageMagick/ImageMagick6/commit/8a8673a9bc1a7b915252645f305a65f0c990b491)
+- https://github.com/ImageMagick/ImageMagick/issues/4865 [`e6d7f78`](https://github.com/ImageMagick/ImageMagick6/commit/e6d7f782fc1b6484c52fe7fb987c06559b489726)
+- pending release [`e7418d5`](https://github.com/ImageMagick/ImageMagick6/commit/e7418d54c54b4646505ba95ce6458f352a94debf)
+- pending release [`b855d8e`](https://github.com/ImageMagick/ImageMagick6/commit/b855d8ec0bb360deb7d80a14b5c1a5a1ffc47ee1)
+- no need for conditional compile [`d5fe059`](https://github.com/ImageMagick/ImageMagick6/commit/d5fe0590573b15208f302d57e0b1c97a60e3d16d)
+- off-by-one fix [`d0a2bc4`](https://github.com/ImageMagick/ImageMagick6/commit/d0a2bc44117217a7619d6ade90af0f40d9321c6e)
+- Whitespace. [`b36de79`](https://github.com/ImageMagick/ImageMagick6/commit/b36de79c6cb913f4423f7eb71901d9f07946f573)
+- Raise exception when image could not be read but no exception was raised. [`3e15c68`](https://github.com/ImageMagick/ImageMagick6/commit/3e15c68efcb1e6383c93e7dfe38ba6c37e614d1b)
+- pending release [`fd143dc`](https://github.com/ImageMagick/ImageMagick6/commit/fd143dc849b6c191464f40e581b0abe344b6e41e)
+- ... [`cecdf6f`](https://github.com/ImageMagick/ImageMagick6/commit/cecdf6f89642589221edc543144d45c5bde71b77)
+- https://github.com/ImageMagick/ImageMagick/discussions/4755 [`1e86532`](https://github.com/ImageMagick/ImageMagick6/commit/1e8653229aeea1a6731ca3632bf5963b417312ed)
+
 ## [6.9.12-40](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-39...6.9.12-40) - 2022-02-15
 
 ### Commits
