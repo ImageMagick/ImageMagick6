@@ -5142,7 +5142,7 @@ static Image *ReadJNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
 #endif
 
 static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
-     ExceptionInfo *exception)
+  ExceptionInfo *exception)
 {
   char
     page_geometry[MaxTextExtent];
@@ -6069,6 +6069,10 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
 
                 /* Record starting point.  */
                 loop_iters=mng_get_long(&chunk[1]);
+                loop_iters=mng_get_long(&chunk[1]);
+                if (image_info->number_scenes != 0)
+                  if (loop_iters > image_info->number_scenes)
+                    loop_iters=image_info->number_scenes;
 
                 if (logging != MagickFalse)
                   (void) LogMagickEvent(CoderEvent,GetMagickModule(),
