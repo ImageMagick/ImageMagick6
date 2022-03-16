@@ -3243,18 +3243,17 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           (void) memcpy(&info,info_copy,sizeof(info));
           info_copy=(DCMInfo *) RelinquishMagickMemory(info_copy);
         }
-      /*
-        If we're entering a sequence, push the current image parameters onto
-        the stack, so we can restore them at the end of the sequence.
-      */
       if (strcmp(explicit_vr,"SQ") == 0)
         {
-          DCMInfo *info_copy = (DCMInfo *) AcquireMagickMemory(sizeof(info));
-          (void) memcpy(info_copy,&info,sizeof(info));
-          AppendValueToLinkedList(stack,info_copy);
+          /*
+            If we're entering a sequence, push the current image parameters
+            onto the stack, so we can restore them at the end of the sequence.
+          */
+          DCMInfo *clone_info = (DCMInfo *) AcquireMagickMemory(sizeof(info));
+          (void) memcpy(clone_info,&info,sizeof(info));
+          AppendValueToLinkedList(stack,clone_info);
           sequence_depth++;
         }
-
       datum=0;
       if (quantum == 4)
         {
