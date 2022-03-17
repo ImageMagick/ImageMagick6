@@ -111,11 +111,15 @@
 #   include <zstd.h>
 # endif
 
-#if defined(MAGICKCORE_HAVE_STDINT_H) && (TIFFLIB_VERSION >= 20201219)
+#if (TIFFLIB_VERSION >= 20201219)
+#if defined(MAGICKCORE_HAVE_STDINT_H) || defined(MAGICKCORE_WINDOWS_SUPPORT)
 #  undef uint16
 #  define uint16  uint16_t
 #  undef uint32
 #  define uint32  uint32_t
+#  undef uint64
+#  define uint64  uint64_t
+#endif
 #endif
 
 /*
@@ -849,10 +853,10 @@ static tsize_t TIFFReadBlob(thandle_t image,tdata_t data,tsize_t size)
   return(count);
 }
 
-static int32 TIFFReadPixels(TIFF *tiff,const tsample_t sample,const ssize_t row,
+static int TIFFReadPixels(TIFF *tiff,const tsample_t sample,const ssize_t row,
   tdata_t scanline)
 {
-  int32
+  int
     status;
 
   status=TIFFReadScanline(tiff,scanline,(uint32) row,sample);
@@ -2830,18 +2834,14 @@ static MagickBooleanType GetTIFFInfo(const ImageInfo *image_info,TIFF *tiff,
   return(MagickTrue);
 }
 
-static int32 TIFFWritePixels(TIFF *tiff,TIFFInfo *tiff_info,ssize_t row,
+static tmsize_t TIFFWritePixels(TIFF *tiff,TIFFInfo *tiff_info,ssize_t row,
   tsample_t sample,Image *image)
 {
-  int32
-    status;
-
   ssize_t
     i;
 
-  unsigned char
-    *p,
-    *q;
+  tmsize_t
+    status;
 
   size_t
     number_tiles,
@@ -2852,6 +2852,10 @@ static int32 TIFFWritePixels(TIFF *tiff,TIFFInfo *tiff_info,ssize_t row,
     j,
     k,
     l;
+
+  unsigned char
+    *p,
+    *q;
 
   if (TIFFIsTiled(tiff) == 0)
     return(TIFFWriteScanline(tiff,tiff_info->scanline,(uint32) row,sample));

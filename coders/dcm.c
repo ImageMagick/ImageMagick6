@@ -2709,6 +2709,7 @@ typedef struct _DCMInfo
     mask,
     max_value,
     samples_per_pixel,
+    scale_size,
     signed_data,
     significant_bits,
     width,
@@ -4017,7 +4018,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           ThrowDCMException(CorruptImageError,"InsufficientImageDataInFile");
         if (info.scale != (Quantum *) NULL)
           info.scale=(Quantum *) RelinquishMagickMemory(info.scale);
-        info.scale=(Quantum *) AcquireQuantumMemory(MagickMax(length,MaxMap)+1,
+        info.scale_size=MagickMax(length,MaxMap);
+        info.scale=(Quantum *) AcquireQuantumMemory(info.scale_size+1,
           sizeof(*info.scale));
         if (info.scale == (Quantum *) NULL)
           ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
@@ -4116,7 +4118,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             {
               index=redmap[i];
               if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index <= (int) info.scale_size))
+                  (index < (int) info.scale_size))
                 index=(int) info.scale[index];
               image->colormap[i].red=(Quantum) index;
             }
@@ -4125,7 +4127,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             {
               index=greenmap[i];
               if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index <= (int) info.scale_size))
+                  (index < (int) info.scale_size))
                 index=(int) info.scale[index];
               image->colormap[i].green=(Quantum) index;
             }
@@ -4134,7 +4136,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             {
               index=bluemap[i];
               if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index <= (int) info.scale_size))
+                  (index < (int) info.scale_size))
                 index=(int) info.scale[index];
               image->colormap[i].blue=(Quantum) index;
             }
@@ -4143,7 +4145,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             {
               index=graymap[i];
               if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index <= (int) info.scale_size))
+                  (index < (int) info.scale_size))
                 index=(int) info.scale[index];
               image->colormap[i].red=(Quantum) index;
               image->colormap[i].green=(Quantum) index;
