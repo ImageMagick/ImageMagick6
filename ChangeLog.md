@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.9.12-43](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-42...6.9.12-43) - 2022-03-20
+
+### Commits
+
+- magick: support getentropy() [`d29a057`](https://github.com/ImageMagick/ImageMagick6/commit/d29a057a3689f7b944b879dee92e7d39a33bf3cc)
+- Coders: eliminate compiler warnings [`ee332c5`](https://github.com/ImageMagick/ImageMagick6/commit/ee332c511445a1fb2934f40246c3c958aefd73e9)
+- ... [`96d197f`](https://github.com/ImageMagick/ImageMagick6/commit/96d197f14932d4ba8a116e06fe306403ea1e32f1)
+- Pull request: https://github.com/ImageMagick/ImageMagick/pull/4963 [`450949e`](https://github.com/ImageMagick/ImageMagick6/commit/450949ed017f009b399c937cf362f0058eacc5fa)
+- Coders: https://github.com/ImageMagick/ImageMagick/issues/4947 [`78f03b6`](https://github.com/ImageMagick/ImageMagick6/commit/78f03b619d08d7c2e0fcaccab407e3ac93c2ee8f)
+- Coders: PS and EPS %%BoundingBox not being parsed #4961 [`2a67214`](https://github.com/ImageMagick/ImageMagick6/commit/2a67214abc2410931064b1f4e2c01f177d768edf)
+- Changed the format of MAGICK_GIT_REVISION and use this in -version. [`bd49573`](https://github.com/ImageMagick/ImageMagick6/commit/bd495730646575af3c867ed09adc8588061079ab)
+- https://github.com/ImageMagick/ImageMagick/issues/4927 [`932cf02`](https://github.com/ImageMagick/ImageMagick6/commit/932cf023db383394c4ec304c95730aed631c57d2)
+- Coders: proper check for out of bounds per https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=45640 [`5468786`](https://github.com/ImageMagick/ImageMagick6/commit/5468786406b323fef6a5fe50bc56dabde3da4130)
+- https://github.com/ImageMagick/ImageMagick/issues/4927 [`594366f`](https://github.com/ImageMagick/ImageMagick6/commit/594366fd3a5268d0456c4f60c5746a9f586ab035)
+- correct date format [`625ff11`](https://github.com/ImageMagick/ImageMagick6/commit/625ff113cc9acf864c56c266471829bb19439299)
+- getentropy() requires sys/random.h include [`005bac2`](https://github.com/ImageMagick/ImageMagick6/commit/005bac2904c18bc6f03a2ac31bdda51005411355)
+- no need to check for &lt; 0 [`dead6a8`](https://github.com/ImageMagick/ImageMagick6/commit/dead6a806786eb2712dd76c38e3ff75c2f94997b)
+- build: pending release [`775c781`](https://github.com/ImageMagick/ImageMagick6/commit/775c7817f3700514173e0655776e0d9465e93d6c)
+- build: release [`2d5e8e3`](https://github.com/ImageMagick/ImageMagick6/commit/2d5e8e387e1c6daaf45f8efd1c24ee6a53e70e01)
+- Coders: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=42549 [`de6ada9`](https://github.com/ImageMagick/ImageMagick6/commit/de6ada9a068b01494bfb848024ed46942da9d238)
+
+## [6.9.12-42](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-41...6.9.12-42) - 2022-03-04
+
+### Commits
+
+- auto-generate the change log from git commit [`553ca1b`](https://github.com/ImageMagick/ImageMagick6/commit/553ca1b6e5bcc7d89af226cecfa6b6197a90a98c)
+- https://github.com/ImageMagick/ImageMagick/issues/4876 [`52e5cc1`](https://github.com/ImageMagick/ImageMagick6/commit/52e5cc1988b15b9a6f3d7e9e3b7b72e3a346cfc9)
+- https://github.com/ImageMagick/ImageMagick/issues/966 [`d9544e7`](https://github.com/ImageMagick/ImageMagick6/commit/d9544e78bfe55361b7768ddb00eb24b7f33f2137)
+- pending release [`4f420a4`](https://github.com/ImageMagick/ImageMagick6/commit/4f420a43ce112948baa8de9a1ba56ee7b17afb0f)
+- ... [`8f1f6c3`](https://github.com/ImageMagick/ImageMagick6/commit/8f1f6c32bfb13ac1e8b8a7ce2f59a28ef06cb18b)
+- https://github.com/ImageMagick/ImageMagick/issues/4870 [`8b7b17c`](https://github.com/ImageMagick/ImageMagick6/commit/8b7b17c8fef72dab479e6ca676676d8c5e395dd6)
+- escape \n character [`32a4bf3`](https://github.com/ImageMagick/ImageMagick6/commit/32a4bf395e8201896c0a21f95661766bed41e470)
+- https://github.com/ImageMagick/ImageMagick/issues/966 [`2db42a9`](https://github.com/ImageMagick/ImageMagick6/commit/2db42a9e1dde7e88dc370deb04a3be48c01dedf5)
+- throw exception on reserved filename character (\xff) [`8215fc2`](https://github.com/ImageMagick/ImageMagick6/commit/8215fc2e71513877d3040fbddfd1f16ca54499a7)
+- https://github.com/ImageMagick/ImageMagick/issues/4888 [`2eb8b86`](https://github.com/ImageMagick/ImageMagick6/commit/2eb8b8660dac0d647a7045a6af7f3e8fcca1d8f8)
+- https://github.com/ImageMagick/ImageMagick/issues/4888 [`ba2242d`](https://github.com/ImageMagick/ImageMagick6/commit/ba2242da46bfbd2cc4890486ff147a0113e08735)
+- ... [`4c2da37`](https://github.com/ImageMagick/ImageMagick6/commit/4c2da37f2bcc98059f44cecf304e8b3c53664bfd)
+- https://github.com/ImageMagick/ImageMagick/issues/966 [`bb79523`](https://github.com/ImageMagick/ImageMagick6/commit/bb795235696e2ace0f3d0b5703065a4b9a882f04)
+- pending release [`dad876f`](https://github.com/ImageMagick/ImageMagick6/commit/dad876ff6b5e873bc59e0661d40e157eb599fcc1)
+- ChangeLog =&gt; ChangeLog.md [`8a6726a`](https://github.com/ImageMagick/ImageMagick6/commit/8a6726af81ac40b41e962cafa8fd014d2659d432)
+- Changed trigger for release. [`552bddd`](https://github.com/ImageMagick/ImageMagick6/commit/552bddd79749d8195cf5a1871929076adf9a479e)
+- canonical copyright notice [`1e5a283`](https://github.com/ImageMagick/ImageMagick6/commit/1e5a28310d73e9c8c29fad113c872351340595a3)
+- Fixed memory leak in ThumbnailImage. [`161f49b`](https://github.com/ImageMagick/ImageMagick6/commit/161f49b3b6a7d3121a566654f12916700d7f2d07)
+
 ## [6.9.12-41](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-40...6.9.12-41) - 2022-02-21
 
 ### Commits
