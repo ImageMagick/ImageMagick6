@@ -1128,6 +1128,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
           CorruptImageError,"ImproperImageHeader","`%s'",image->filename);
         break;
       }
+    *id='\0';
     if (image->montage != (char *) NULL)
       {
         char
@@ -1716,7 +1717,6 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
         /*
           Allocate next image structure.
         */
-        *id='\0';
         AcquireNextImage(image_info,image);
         if (GetNextImageInList(image) == (Image *) NULL)
           {
