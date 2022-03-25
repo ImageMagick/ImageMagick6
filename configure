@@ -695,7 +695,6 @@ XPSDelegate
 WWWDecodeDelegate
 WebPEncodeDelegate
 WebPDecodeDelegate
-UniconvertorDelegate
 TraceEncodeDelegate
 TextEncodeDelegate
 SVGDecodeDelegate
@@ -4551,7 +4550,7 @@ MAGICK_PATCHLEVEL_VERSION=44
 
 MAGICK_VERSION=6.9.12-44
 
-MAGICK_GIT_REVISION=775c7817f:20220320
+MAGICK_GIT_REVISION=7962da1bc:20220325
 
 
 # Substitute library versioning
@@ -4581,7 +4580,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,44
 
-PACKAGE_RELEASE_DATE=2022-03-20
+PACKAGE_RELEASE_DATE=2022-03-25
 
 
 # Ensure that make can run correctly
@@ -33027,7 +33026,6 @@ RSVGDecodeDelegateDefault='rsvg-convert'
 SVGDecodeDelegateDefault='inkscape'
 TextEncodeDelegateDefault='tesseract'
 TraceEncodeDelegateDefault='potrace'
-UniconvertorDelegateDefault='uniconvertor'
 VIDEODecodeDelegateDefault='ffmpeg'
 VIDEOEncodeDelegateDefault='ffmpeg'
 WebPDecodeDelegateDefault='dwebp'
@@ -34399,47 +34397,6 @@ $as_echo "no" >&6; }
 fi
 
 
-# Extract the first word of ""$UniconvertorDelegateDefault"", so it can be a program name with args.
-set dummy "$UniconvertorDelegateDefault"; ac_word=$2
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-$as_echo_n "checking for $ac_word... " >&6; }
-if ${ac_cv_path_UniconvertorDelegate+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  case $UniconvertorDelegate in
-  [\\/]* | ?:[\\/]*)
-  ac_cv_path_UniconvertorDelegate="$UniconvertorDelegate" # Let the user override the test with a path.
-  ;;
-  *)
-  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir/$ac_word$ac_exec_ext"; then
-    ac_cv_path_UniconvertorDelegate="$as_dir/$ac_word$ac_exec_ext"
-    $as_echo "$as_me:${as_lineno-$LINENO}: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-  test -z "$ac_cv_path_UniconvertorDelegate" && ac_cv_path_UniconvertorDelegate=""$UniconvertorDelegateDefault""
-  ;;
-esac
-fi
-UniconvertorDelegate=$ac_cv_path_UniconvertorDelegate
-if test -n "$UniconvertorDelegate"; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: $UniconvertorDelegate" >&5
-$as_echo "$UniconvertorDelegate" >&6; }
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-fi
-
-
 # Extract the first word of ""$WebPDecodeDelegateDefault"", so it can be a program name with args.
 set dummy "$WebPDecodeDelegateDefault"; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
@@ -34808,7 +34765,6 @@ if test "$with_frozenpaths" != 'yes'; then
   ShowImageDelegate="$ShowImageDelegateDefault"
   TextEncodeDelegate="$TextEncodeDelegateDefault"
   TraceEncodeDelegate="$TraceEncodeDelegateDefault"
-  UniconvertorDelegate="$UniconvertorDelegateDefault"
   WebPDecodeDelegate="$WebPDecodeDelegateDefault"
   WebPEncodeDelegate="$WebPEncodeDelegateDefault"
   WWWDecodeDelegate="$WWWDecodeDelegateDefault"
@@ -34816,7 +34772,6 @@ if test "$with_frozenpaths" != 'yes'; then
 fi
 
 # Delegate substitutions
-
 
 
 

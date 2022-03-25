@@ -3149,7 +3149,6 @@ RSVGDecodeDelegateDefault='rsvg-convert'
 SVGDecodeDelegateDefault='inkscape'
 TextEncodeDelegateDefault='tesseract'
 TraceEncodeDelegateDefault='potrace'
-UniconvertorDelegateDefault='uniconvertor'
 VIDEODecodeDelegateDefault='ffmpeg'
 VIDEOEncodeDelegateDefault='ffmpeg'
 WebPDecodeDelegateDefault='dwebp'
@@ -3191,7 +3190,6 @@ AC_PATH_PROG([RSVGDecodeDelegate],["$RSVGDecodeDelegateDefault"],["$RSVGDecodeDe
 AC_PATH_PROG([SVGDecodeDelegate],["$SVGDecodeDelegateDefault"],["$SVGDecodeDelegateDefault"])
 AC_PATH_PROG([TextEncodeDelegate],["$TextEncodeDelegateDefault"],["$TextEncodeDelegateDefault"])
 AC_PATH_PROG([TraceEncodeDelegate],["$TraceEncodeDelegateDefault"],["$TraceEncodeDelegateDefault"])
-AC_PATH_PROG([UniconvertorDelegate],["$UniconvertorDelegateDefault"],["$UniconvertorDelegateDefault"])
 AC_PATH_PROG([WebPDecodeDelegate],["$WebPDecodeDelegateDefault"],["$WebPDecodeDelegateDefault"])
 AC_PATH_PROG([WebPEncodeDelegate],["$WebPEncodeDelegateDefault"],["$WebPEncodeDelegateDefault"])
 AC_PATH_PROG([WWWDecodeDelegate],["$WWWDecodeDelegateDefault"],["$WWWDecodeDelegateDelegateDefault"])
@@ -3385,7 +3383,6 @@ if test "$with_frozenpaths" != 'yes'; then
   ShowImageDelegate="$ShowImageDelegateDefault"
   TextEncodeDelegate="$TextEncodeDelegateDefault"
   TraceEncodeDelegate="$TraceEncodeDelegateDefault"
-  UniconvertorDelegate="$UniconvertorDelegateDefault"
   WebPDecodeDelegate="$WebPDecodeDelegateDefault"
   WebPEncodeDelegate="$WebPEncodeDelegateDefault"
   WWWDecodeDelegate="$WWWDecodeDelegateDefault"
@@ -3419,7 +3416,6 @@ AC_SUBST([PSDelegate])
 AC_SUBST([ShowImageDelegate])
 AC_SUBST([TextEncodeDelegate])
 AC_SUBST([TraceEncodeDelegate])
-AC_SUBST([UniconvertorDelegate])
 AC_SUBST([WebPDecodeDelegate])
 AC_SUBST([WebPEncodeDelegate])
 AC_SUBST([WWWDecodeDelegate])
