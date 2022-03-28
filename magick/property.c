@@ -1721,7 +1721,8 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
           {
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoDescription,"en",
               "US",info,MagickMin(MagickPathExtent-1,extent));
-            (void) SetImageProperty((Image *) image,"icc:description",info);
+            if (*info != '\0')
+              (void) SetImageProperty((Image *) image,"icc:description",info);
          }
         extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoManufacturer,"en","US",
           NULL,0);
@@ -1729,7 +1730,8 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
           {
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoManufacturer,"en",
               "US",info,MagickMin(MagickPathExtent-1,extent));
-            (void) SetImageProperty((Image *) image,"icc:manufacturer",info);
+            if (*info != '\0')
+              (void) SetImageProperty((Image *) image,"icc:manufacturer",info);
           }
         extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoModel,"en","US",
           NULL,0);
@@ -1737,7 +1739,8 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
           {
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoModel,"en","US",
               info,MagickMin(MagickPathExtent-1,extent));
-            (void) SetImageProperty((Image *) image,"icc:model",info);
+            if (*info != '\0')
+              (void) SetImageProperty((Image *) image,"icc:model",info);
           }
         extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoCopyright,"en","US",
           NULL,0);
@@ -1745,7 +1748,8 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
           {
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoCopyright,"en",
               "US",info,MagickMin(MagickPathExtent-1,extent));
-            (void) SetImageProperty((Image *) image,"icc:copyright",info);
+            if (*info != '\0')
+              (void) SetImageProperty((Image *) image,"icc:copyright",info);
           }
 #endif
         (void) cmsCloseProfile(icc_profile);
