@@ -1722,7 +1722,7 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
             SetStringInfoLength(info,extent+1);
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoDescription,"en",
               "US",(char *) GetStringInfoDatum(info),extent);
-            if ((extent != 0) && (*GetStringInfoDatum(info) != '\0'))
+            if (extent != 0)
               (void) SetImageProperty((Image *) image,"icc:description",
                 (char *) GetStringInfoDatum(info));
          }
@@ -1733,7 +1733,7 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
             SetStringInfoLength(info,extent+1);
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoManufacturer,"en",
               "US",(char *) GetStringInfoDatum(info),extent);
-            if ((extent != 0) && (*GetStringInfoDatum(info) != '\0'))
+            if (extent != 0)
               (void) SetImageProperty((Image *) image,"icc:manufacturer",
                 (char *) GetStringInfoDatum(info));
           }
@@ -1744,7 +1744,7 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
             SetStringInfoLength(info,extent+1);
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoModel,"en","US",
               (char *) GetStringInfoDatum(info),extent);
-            if ((extent != 0) && (*GetStringInfoDatum(info) != '\0'))
+            if (extent != 0)
               (void) SetImageProperty((Image *) image,"icc:model",
                 (char *) GetStringInfoDatum(info));
           }
@@ -1755,7 +1755,7 @@ static MagickBooleanType GetICCProperty(const Image *image,const char *property)
             SetStringInfoLength(info,extent+1);
             extent=cmsGetProfileInfoASCII(icc_profile,cmsInfoCopyright,"en",
               "US",(char *) GetStringInfoDatum(info),extent);
-            if ((extent != 0) && (*GetStringInfoDatum(info) != '\0'))
+            if (extent != 0)
               (void) SetImageProperty((Image *) image,"icc:copyright",
                 (char *) GetStringInfoDatum(info));
           }
