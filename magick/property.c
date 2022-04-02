@@ -1677,31 +1677,22 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
   return(status);
 }
 
-static const char *GetICCProperty(const Image *image,const char *key)
+static MagickBooleanType GetICCProperty(const Image *image,const char *property)
 {
-  const char
-    *value;
-
   const StringInfo
     *profile;
 
   /*
     Return ICC profile property.
   */
-  if (image->properties != (void *) NULL)
-    {
-      value=(const char *) GetValueFromSplayTree((SplayTreeInfo *)
-        image->properties,key);
-      if (value != (const char *) NULL)
-        return(value);
-    }
+  magick_unreferenced(property);
   profile=GetImageProfile(image,"icc");
   if (profile == (StringInfo *) NULL)
     profile=GetImageProfile(image,"icm");
   if (profile == (StringInfo *) NULL)
-    return((const char *) NULL);
+    return(MagickFalse);
   if (GetStringInfoLength(profile) < 128)
-    return((const char *) NULL);  /* minimum ICC profile length */
+    return(MagickFalse);  /* minimum ICC profile length */
 #if defined(MAGICKCORE_LCMS_DELEGATE)
   {
     cmsHPROFILE
@@ -1776,14 +1767,7 @@ static const char *GetICCProperty(const Image *image,const char *key)
       }
   }
 #endif
-  if (image->properties != (void *) NULL)
-    {
-      value=(const char *) GetValueFromSplayTree((SplayTreeInfo *)
-        image->properties,key);
-      if (value != (const char *) NULL)
-        return(value);
-    }
-  return((const char *) NULL);
+  return(MagickTrue);
 }
 
 static MagickBooleanType SkipXMPValue(const char *value)
