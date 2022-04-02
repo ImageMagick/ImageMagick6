@@ -4213,6 +4213,10 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
   MagickStatusType
     flags;
 
+  size_t
+    property_length;
+
+
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   if (image->debug != MagickFalse)
@@ -4223,6 +4227,15 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
       RelinquishMagickMemory,RelinquishMagickMemory);  /* create splay-tree */
   if (value == (const char *) NULL)
     return(DeleteImageProperty(image,property));  /* delete if NULL */
+  exception=(&image->exception);
+  property_length=strlen(property);
+  if ((property_length > 2) && (*(property+(property_length-2)) == ':') &&
+      (*(property+(property_length-1)) == '*'))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        OptionWarning,"SetReadOnlyProperty","`%s'",property);
+      return(MagickFalse);
+    }
   /*
     FUTURE: These should produce 'illegal settings'
      * binary chars in p[roperty key
@@ -4231,7 +4244,6 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
      * known special prefix (read only, they don't get saved!)
   */
   status=MagickTrue;
-  exception=(&image->exception);
   switch (*property)
   {
     case 'B':
