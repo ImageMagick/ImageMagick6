@@ -1714,7 +1714,7 @@ static MagickBooleanType WritePNMImage(const ImageInfo *image_info,Image *image)
           {
             packet_size=1;
             (void) CopyMagickString(type,"GRAYSCALE",MaxTextExtent);
-            if (IdentifyImageMonochrome(image,&image->exception) != MagickFalse)
+            if (GetQuantumRange(image->depth) == 1)
               (void) CopyMagickString(type,"BLACKANDWHITE",MaxTextExtent);
             break;
           }
