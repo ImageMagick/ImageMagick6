@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.9.12-44](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-43...6.9.12-44) - 2022-03-27
+
+### Commits
+
+- no suitable delegate utility for CGM or FIG formats [`19b1aa9`](https://github.com/ImageMagick/ImageMagick6/commit/19b1aa98f5e4ba72bf238bceb99fe2855f6dbd16)
+- latest changes [`34cbd5f`](https://github.com/ImageMagick/ImageMagick6/commit/34cbd5f1249944f8e96b718a9e9632b9b5ac2b2f)
+- ... [`2095de7`](https://github.com/ImageMagick/ImageMagick6/commit/2095de7a1ffeb72fbb8b3dd72e70c2c23c534991)
+- https://github.com/ImageMagick/ImageMagick/issues/4987 [`7962da1`](https://github.com/ImageMagick/ImageMagick6/commit/7962da1bc92349f205fce473f07ab6c1dffa29e6)
+- over allocate quantum pixel buffer [`db2fd39`](https://github.com/ImageMagick/ImageMagick6/commit/db2fd39c1ba4fc9da61cc874506e28f5822bd82a)
+- set quantum extent [`9e2fbee`](https://github.com/ImageMagick/ImageMagick6/commit/9e2fbee19683fca2aca3425fdc45dab8dc4a0054)
+- revert [`1811528`](https://github.com/ImageMagick/ImageMagick6/commit/1811528ecccb81cc744a9ec49e1b292edac56aa5)
+- revert [`9d10d1e`](https://github.com/ImageMagick/ImageMagick6/commit/9d10d1e402c71972fbcde2fd3380c94f3ee2989b)
+- cosmetic [`dfb7339`](https://github.com/ImageMagick/ImageMagick6/commit/dfb73390fdae16eb53000574e2fdcc65e4883061)
+- https://github.com/ImageMagick/ImageMagick/pull/4986 [`29c8abc`](https://github.com/ImageMagick/ImageMagick6/commit/29c8abce0da56b536542f76a9ddfebdaab5b2943)
+- speculative allocation since we don't yet know the quantum type [`cf8f393`](https://github.com/ImageMagick/ImageMagick6/commit/cf8f3935cfcc97a4827fe7f60bb5b1b0de6f7eec)
+- enforce one `id` per MIFF image [`ab0133d`](https://github.com/ImageMagick/ImageMagick6/commit/ab0133d9e5eefbaa8eb8050e1600be63b8734db9)
+- release [`b350dd1`](https://github.com/ImageMagick/ImageMagick6/commit/b350dd13b3c748973249f9cb63e431f1e488f2fc)
+- pending release [`44a7f86`](https://github.com/ImageMagick/ImageMagick6/commit/44a7f8628ef12e1acf1340cad31c8cd3ffc05d8f)
+- pending release [`64ad194`](https://github.com/ImageMagick/ImageMagick6/commit/64ad1943ce394c78a6884bf2064e8d03b5238e05)
+- cosmetic [`8192e98`](https://github.com/ImageMagick/ImageMagick6/commit/8192e981094a776529fd37eb1744bc265f73b89b)
+- https://github.com/ImageMagick/ImageMagick/issues/4988 [`e6ea587`](https://github.com/ImageMagick/ImageMagick6/commit/e6ea5876e0228165ee3abc6e959aa174cee06680)
+- reset id [`e87f9fd`](https://github.com/ImageMagick/ImageMagick6/commit/e87f9fdb519be34daeed85f9d9bd98740518d53b)
+- lastest changes [`70202da`](https://github.com/ImageMagick/ImageMagick6/commit/70202daef0dffb77a48100185724f8eac13d82c4)
+- https://github.com/ImageMagick/ImageMagick/issues/4975 [`5eb276a`](https://github.com/ImageMagick/ImageMagick6/commit/5eb276ac65c0fbc55546ecbf5f92942f39d7d2ff)
+- https://github.com/ImageMagick/ImageMagick/issues/4974 [`1f860f5`](https://github.com/ImageMagick/ImageMagick6/commit/1f860f52bd8d58737ad883072203391096b30b51)
+- reset id [`ee32452`](https://github.com/ImageMagick/ImageMagick6/commit/ee32452ea6b54e3566a82aa60bf2a17de29b48d5)
+
 ## [6.9.12-43](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-42...6.9.12-43) - 2022-03-20
 
 ### Commits
