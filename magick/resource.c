@@ -188,9 +188,9 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
   const MagickSizeType size)
 {
   char
-    resource_current[MaxTextExtent],
-    resource_limit[MaxTextExtent],
-    resource_request[MaxTextExtent];
+    resource_current[MaxTextExtent] = "",
+    resource_limit[MaxTextExtent] = "",
+    resource_request[MaxTextExtent] = "";
 
   MagickBooleanType
     logging,

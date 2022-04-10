@@ -882,7 +882,11 @@ static MagickBooleanType WriteAnimatedWEBPImage(const ImageInfo *image_info,
   while (image != NULL)
   {
     if (WebPPictureInit(&picture) == 0)
-      ThrowWriterException(ResourceLimitError,"UnableToEncodeImageFile");
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          ResourceLimitError,"UnableToEncodeImageFile","`%s'",image->filename);
+        break;
+      }
 
     WriteSingleWEBPImage(image_info, image, &picture, current, exception);
 

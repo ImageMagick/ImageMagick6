@@ -752,7 +752,7 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
     *exception;
 
   MagickBooleanType
-    status;
+    status = 0;
 
   MagickOffsetType
     count;

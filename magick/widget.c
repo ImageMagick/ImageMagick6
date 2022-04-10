@@ -5468,12 +5468,12 @@ MagickExport void XFontBrowserWidget(Display *display,XWindows *windows,
 #define ResetButtonText  "Reset"
 
   char
-    back_pattern[MaxTextExtent],
+    back_pattern[MaxTextExtent] = "",
     **fontlist,
     **listhead,
-    primary_selection[MaxTextExtent],
-    reset_pattern[MaxTextExtent],
-    text[MaxTextExtent];
+    primary_selection[MaxTextExtent] = "",
+    reset_pattern[MaxTextExtent] = "",
+    text[MaxTextExtent] = "";
 
   int
     fonts,

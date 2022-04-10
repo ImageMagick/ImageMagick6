@@ -6508,6 +6508,7 @@ static ssize_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
   attribute=0;
   number_coordinates=0;
   z_count=0;
+  *token='\0';
   primitive_type=primitive_info->primitive;
   q=primitive_info;
   for (p=path; *p != '\0'; )

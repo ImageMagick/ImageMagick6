@@ -3253,8 +3253,8 @@ static MagickBooleanType XColorEditImage(Display *display,
     border_color = { 0, 0, 0, 0, 0, 0 };
 
   char
-    command[MaxTextExtent],
-    text[MaxTextExtent];
+    command[MaxTextExtent] = "",
+    text[MaxTextExtent] = "";
 
   Cursor
     cursor;
