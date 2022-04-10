@@ -6461,7 +6461,7 @@ static ssize_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
 {
   char
     *next_token,
-    token[MaxTextExtent];
+    token[MaxTextExtent] = "";
 
   const char
     *p;
