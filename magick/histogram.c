@@ -590,8 +590,8 @@ MagickExport ColorPacket *GetImageHistogram(const Image *image,
           root=histogram;
           DefineImageHistogram(image,cube_info->root,&root);
         }
+      cube_info=DestroyCubeInfo(image,cube_info);
     }
-  cube_info=DestroyCubeInfo(image,cube_info);
   return(histogram);
 }
 
@@ -1237,8 +1237,10 @@ MagickExport size_t GetNumberColors(const Image *image,FILE *file,
 
       cube_info=ClassifyImageColors(image,exception);
       if (cube_info != (CubeInfo *) NULL)
-        number_colors=cube_info->colors;
-      cube_info=DestroyCubeInfo(image,cube_info);
+        {
+          number_colors=cube_info->colors;
+          cube_info=DestroyCubeInfo(image,cube_info);
+        }
       return(number_colors);
     }
   histogram=GetImageHistogram(image,&number_colors,exception);
