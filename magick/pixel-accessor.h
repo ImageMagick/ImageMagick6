@@ -178,7 +178,7 @@ static inline MagickBooleanType IsPixelAtDepth(const Quantum pixel,
     (((MagickRealType) range*pixel)/QuantumRange+0.5)))/range+0.5);
 #else
   quantum=(Quantum) (((MagickRealType) QuantumRange*((QuantumAny)
-    (((MagickRealType) range*pixel)/QuantumRange+0.5)))/range);
+    (((MagickRealType) range*pixel)/QuantumRange+0.5)))/(MagickRealType) range);
 #endif
   return(pixel == quantum ? MagickTrue : MagickFalse);
 }
