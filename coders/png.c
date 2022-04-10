@@ -2091,13 +2091,13 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
   size_t
     length,
     ping_rowbytes = 0,
-    row_offset,
-    y;
+    row_offset;
 
   ssize_t
     i,
     j,
-    x;
+    x,
+    y;
 
   unsigned char
     *p,
