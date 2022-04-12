@@ -1607,7 +1607,7 @@ MagickExport void XColorBrowserWidget(Display *display,XWindows *windows,
 
   char
     **colorlist,
-    primary_selection[MaxTextExtent],
+    primary_selection[MaxTextExtent] = "",
     reset_pattern[MaxTextExtent],
     text[MaxTextExtent];
 
