@@ -9566,7 +9566,7 @@ static MagickBooleanType XMatteEditImage(Display *display,
 
   char
     command[MaxTextExtent],
-    text[MaxTextExtent];
+    text[MaxTextExtent] = "";
 
   Cursor
     cursor;
