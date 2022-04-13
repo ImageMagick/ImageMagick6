@@ -2590,14 +2590,7 @@ static inline MagickBooleanType SetStreamBuffering(const ImageInfo *image_info,
   size_t
     size;
 
-  struct stat
-    file_stats;
-
   size=MagickMinBufferExtent;
-  if ((image->blob->file_info.file != (FILE *) NULL) &&
-      (fstat(fileno(image->blob->file_info.file),&file_stats) == 0) &&
-      (file_stats.st_blksize > 0))
-    size=file_stats.st_blksize;
   option=GetImageOption(image_info,"stream:buffer-size");
   if (option != (const char *) NULL)
     size=StringToUnsignedLong(option);
