@@ -1566,6 +1566,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
           (void) FT_Done_FreeType(library);
           ThrowFreetypeErrorException("UnrecognizedFontEncoding",ft_status,
             encoding);
+          stream=(FT_StreamRec *) RelinquishMagickMemory(stream);
           return(MagickFalse);
         }
     }
@@ -1598,6 +1599,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
       (void) FT_Done_FreeType(library);
       ThrowFreetypeErrorException("UnableToReadFont",ft_status,
         draw_info->font);
+      stream=(FT_StreamRec *) RelinquishMagickMemory(stream);
       return(MagickFalse);
     }
   metrics->pixels_per_em.x=face->size->metrics.x_ppem;
@@ -1635,6 +1637,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     {
       (void) FT_Done_Face(face);
       (void) FT_Done_FreeType(library);
+      stream=(FT_StreamRec *) RelinquishMagickMemory(stream);
       return(MagickTrue);
     }
   /*
@@ -1749,13 +1752,13 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     if (ft_status != 0)
       continue;
     if ((bounds.xMin < metrics->bounds.x1) && (bounds.xMin != 0))
-        metrics->bounds.x1=(double) bounds.xMin;
+      metrics->bounds.x1=(double) bounds.xMin;
     if ((bounds.yMin < metrics->bounds.y1) && (bounds.yMin != 0))
-        metrics->bounds.y1=(double) bounds.yMin;
+      metrics->bounds.y1=(double) bounds.yMin;
     if ((bounds.xMax > metrics->bounds.x2) && (bounds.xMax != 0))
-        metrics->bounds.x2=(double) bounds.xMax;
+      metrics->bounds.x2=(double) bounds.xMax;
     if ((bounds.yMax > metrics->bounds.y2) && (bounds.yMax != 0))
-        metrics->bounds.y2=(double) bounds.yMax;
+      metrics->bounds.y2=(double) bounds.yMax;
     if (((draw_info->stroke.opacity != TransparentOpacity) ||
          (draw_info->stroke_pattern != (Image *) NULL)) &&
         ((status != MagickFalse) && (draw_info->render != MagickFalse)))
