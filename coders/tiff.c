@@ -2790,13 +2790,13 @@ static MagickBooleanType GetTIFFInfo(const ImageInfo *image_info,TIFF *tiff,
         extent;
 
       uint32
-        rows,
-        rows_per_strip;
+        rows = 0,
+        rows_per_strip = 0;
 
       extent=TIFFScanlineSize(tiff);
       rows_per_strip=TIFFStripSizeDefault/(extent == 0 ? 1 : (uint32) extent);
       rows_per_strip=16*(((rows_per_strip < 16 ? 16 : rows_per_strip)+1)/16);
-      TIFFGetField(tiff,TIFFTAG_IMAGELENGTH,&rows);
+      (void) TIFFGetField(tiff,TIFFTAG_IMAGELENGTH,&rows);
       if (rows_per_strip > rows)
         rows_per_strip=rows;
       option=GetImageOption(image_info,"tiff:rows-per-strip");

@@ -867,12 +867,15 @@ static MagickBooleanType WriteAnimatedWEBPImage(const ImageInfo *image_info,
   WebPPicture
     picture;
 
+  image=CoalesceImages(image, exception);
+  if (image == (Image *) NULL)
+    return(MagickFalse);
+  first_image=image;
+
   WebPAnimEncoderOptionsInit(&enc_options);
   if (image_info->verbose)
     enc_options.verbose = 1;
 
-  image=CoalesceImages(image, exception);
-  first_image=image;
   enc=WebPAnimEncoderNew((int) image->page.width,(int) image->page.height,
     &enc_options);
 

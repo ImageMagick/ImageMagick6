@@ -170,6 +170,8 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
       {
         if (*(p+1) == ')')
           return(flags);
+        (void) CopyMagickString(p,p+1,MaxTextExtent);
+        break;
       }
       case ')':
       {

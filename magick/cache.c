@@ -763,6 +763,7 @@ MagickExport void ClonePixelCacheMethods(Cache clone,const Cache cache)
 %                                                                             %
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
+%
 %  ClonePixelCacheRepository() clones the source pixel cache to the destination
 %  cache.
 %
@@ -4310,7 +4311,9 @@ MagickExport MagickBooleanType PersistPixelCache(Image *image,
   clone_info->length=cache_info->length;
   clone_info->channels=cache_info->channels;
   clone_info->offset=(*offset);
-  status=ClonePixelCacheRepository(clone_info,cache_info,exception);
+  status=OpenPixelCacheOnDisk(clone_info,WriteMode);
+  if (status != MagickFalse)
+    status=ClonePixelCacheRepository(clone_info,cache_info,exception);
   *offset+=cache_info->length+page_size-(cache_info->length % page_size);
   clone_info=(CacheInfo *) DestroyPixelCache(clone_info);
   return(status);

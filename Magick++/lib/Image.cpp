@@ -3119,7 +3119,7 @@ void Magick::Image::fontTypeMetricsMultiline(const std::string &text_,
 
   drawInfo=options()->drawInfo();
   drawInfo->text=const_cast<char *>(text_.c_str());
-  GetMultilineTypeMetrics(image(),drawInfo,&(metrics->_typeMetric));
+  (void) GetMultilineTypeMetrics(image(),drawInfo,&(metrics->_typeMetric));
   drawInfo->text=0;
 }
 

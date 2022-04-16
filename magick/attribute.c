@@ -197,6 +197,8 @@ static double GetEdgeBackgroundFactor(const Image *image,
       break;
     }
   }
+  if (p == (const PixelPacket *) NULL)
+    return(0.0);
   GetMagickPixelPacket(image,&background);
   SetMagickPixelPacket(image,p,(IndexPacket *) NULL,&background);
   artifact=GetImageArtifact(image,"background");

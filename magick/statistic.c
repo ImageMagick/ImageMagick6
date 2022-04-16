@@ -364,12 +364,8 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case PowEvaluateOperator:
     {
-      if (pixel < 0)
-        result=(MagickRealType) -(QuantumRange*pow((double) -(QuantumScale*
-          pixel),(double) value));
-      else
-        result=(MagickRealType) (QuantumRange*pow((double) (QuantumScale*pixel),
-          (double) value));
+      result=(MagickRealType) (QuantumRange*pow((double) (QuantumScale*pixel),
+        (double) value));
       break;
     }
     case RightShiftEvaluateOperator:
