@@ -2944,7 +2944,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 graphic_context[n]->fill_opacity;
             else
               graphic_context[n]->fill.opacity=ClampToQuantum(QuantumRange*
-                opacity);
+                (1.0-opacity));
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
