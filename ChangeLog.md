@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.9.12-45](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-44...6.9.12-45) - 2022-04-16
+
+### Commits
+
+- https://github.com/ImageMagick/ImageMagick/issues/5028 [`6dca9a7`](https://github.com/ImageMagick/ImageMagick6/commit/6dca9a7c5c99d416e86605220970f3b85064e4a6)
+- eliminate Coverity defects [`6ef3cb2`](https://github.com/ImageMagick/ImageMagick6/commit/6ef3cb2a758a3dd806df968e89a9fd7c51fed4bd)
+- eliminate arbitrary limit on CMS descriptions [`2c452fc`](https://github.com/ImageMagick/ImageMagick6/commit/2c452fcffdf5d0a66287b5c89a7f7f0c721e8582)
+- eliminate Coverity defects [`dcc7a67`](https://github.com/ImageMagick/ImageMagick6/commit/dcc7a6748c41c11a7926a4af6ac18f4ceccd48e5)
+- prep next release [`df41269`](https://github.com/ImageMagick/ImageMagick6/commit/df41269a8f39e276a0da4c5a2ad1bfc7e938c506)
+- eliminate coverity defects [`68fe465`](https://github.com/ImageMagick/ImageMagick6/commit/68fe465b16694f67f1e09e8c1c7fbaec396e4a41)
+- check to see if ICC property exists before its created [`a5263ab`](https://github.com/ImageMagick/ImageMagick6/commit/a5263ab3e463729adfe714cf1435430e84995672)
+- pending release [`e8700b9`](https://github.com/ImageMagick/ImageMagick6/commit/e8700b9d02223d6e0e47c792ee293bf1989fd024)
+- revert [`354943b`](https://github.com/ImageMagick/ImageMagick6/commit/354943bd85df291c82e74650ae007f2af1f5b2da)
+- Improved freetype error reporting. [`05d5d26`](https://github.com/ImageMagick/ImageMagick6/commit/05d5d26f6cce099ba2e43c727144bac7b303087e)
+- future: throw an exception if type cache cannot be acquired [`ae21b8c`](https://github.com/ImageMagick/ImageMagick6/commit/ae21b8c554681a9884a572341ea55419a51f7da1)
+- do not permit setting read-only properties (e.g. exif:*) [`98abe54`](https://github.com/ImageMagick/ImageMagick6/commit/98abe54e6b54b4cfeef90ea7a5943cf453b680a3)
+- streaming interface must be allocated on the heap [`f2ab27b`](https://github.com/ImageMagick/ImageMagick6/commit/f2ab27b2279e982ade0d29ceaf418b3c53d3b34a)
+- eliminate Coverity defects [`d6ccd35`](https://github.com/ImageMagick/ImageMagick6/commit/d6ccd350830317daf252202b5daf37e8c7e19678)
+- eliminate Coverity defects [`f730f49`](https://github.com/ImageMagick/ImageMagick6/commit/f730f493939fbe42ae80a0b58d2777d56427e8db)
+- Added missing version check. [`93bbd3a`](https://github.com/ImageMagick/ImageMagick6/commit/93bbd3a26b9de035f2578eed05db3896f418ac12)
+- do not set ICC properties unless the value is non-null [`5988721`](https://github.com/ImageMagick/ImageMagick6/commit/598872147bfb031a7d24749d8d1b9216e5153582)
+- eliminate leak in Freetype streaming interface [`980bfe2`](https://github.com/ImageMagick/ImageMagick6/commit/980bfe2047986aab0400d517827ab1761ea82733)
+- check for empty string not needed [`cbbcfa1`](https://github.com/ImageMagick/ImageMagick6/commit/cbbcfa180ac7c06cd518d2d7ab8d0eb2e22b50f1)
+- Removed unused assignment. [`44f42c2`](https://github.com/ImageMagick/ImageMagick6/commit/44f42c2521de1f8de17a87ac89d2345235071527)
+- revert [`65b99c4`](https://github.com/ImageMagick/ImageMagick6/commit/65b99c4dc37287a8f8c2f264da22f0066da75626)
+- utilitze fstat() blocksize to set stream buffer size [`7462d84`](https://github.com/ImageMagick/ImageMagick6/commit/7462d84b7bc6076522d2763a3d507429642666df)
+- eliminate Coverity defect [`c64edf6`](https://github.com/ImageMagick/ImageMagick6/commit/c64edf606451d522298a4cd172d9cb652236663d)
+- eliminate Coverity defects [`3d50253`](https://github.com/ImageMagick/ImageMagick6/commit/3d5025390e29252b9ca9fadd43e53956b0e3e43e)
+- eliminate compiler warning [`8ca2579`](https://github.com/ImageMagick/ImageMagick6/commit/8ca2579216dfbcb3a576ae1876dd8ac9ad68edae)
+- https://github.com/ImageMagick/ImageMagick/pull/5034 [`dc070da`](https://github.com/ImageMagick/ImageMagick6/commit/dc070da861a015d3c97488fdcca6063b44d47a7b)
+- prevent double free in Freetype streaming interface [`212564a`](https://github.com/ImageMagick/ImageMagick6/commit/212564a2693c2e9189d12e11a1d67907ad2cf970)
+- https://github.com/ImageMagick/ImageMagick/issues/5037 [`1eb8339`](https://github.com/ImageMagick/ImageMagick6/commit/1eb8339661a982ff8a1cb82f0da34fe0931afc44)
+- release [`e2d55af`](https://github.com/ImageMagick/ImageMagick6/commit/e2d55af5bad16596e3bb43c10eb47b5bfec435c9)
+- fix fill-opacity special case where the fill color alpha is fully transparent [`83bd597`](https://github.com/ImageMagick/ImageMagick6/commit/83bd597344deb87274a774452145654507335690)
+- eliminate compiler warning [`f82bd6a`](https://github.com/ImageMagick/ImageMagick6/commit/f82bd6a040f159a60a85a36abd3e748ea9da52cf)
+- revert [`8c9e882`](https://github.com/ImageMagick/ImageMagick6/commit/8c9e882635e2dad22f9bfa41b82161b1aaebd0bb)
+- revert [`f49d606`](https://github.com/ImageMagick/ImageMagick6/commit/f49d606db5b3b0e6a45e5fab05ef17bdf047efbf)
+- eliminate Coverity defects [`5923cb3`](https://github.com/ImageMagick/ImageMagick6/commit/5923cb343f5787e814b3bc49880b739b08ee9399)
+- https://github.com/ImageMagick/ImageMagick/issues/5027 [`6f7a9e2`](https://github.com/ImageMagick/ImageMagick6/commit/6f7a9e23d816478c0dcccea32d38cef4ab517019)
+- Corrected check. [`17aa89f`](https://github.com/ImageMagick/ImageMagick6/commit/17aa89f702a61cb9aa6026eec0739e3e3ae23661)
+- Revert local check. [`8126c53`](https://github.com/ImageMagick/ImageMagick6/commit/8126c53d6793c702c960e32731ea08dedf7ba5b5)
+- fix memory leak in Freetype stream [`8ead70f`](https://github.com/ImageMagick/ImageMagick6/commit/8ead70f34a83ec16c7e346c3fb105e226b27b229)
+
 ## [6.9.12-44](https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-43...6.9.12-44) - 2022-03-27
 
 ### Commits
