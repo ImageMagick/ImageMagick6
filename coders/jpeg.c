@@ -728,9 +728,6 @@ static boolean ReadProfile(j_decompress_ptr jpeg_info)
   Image
     *image;
 
-  int
-    marker;
-
   JPEGClientInfo
     *client_info;
 
@@ -738,6 +735,7 @@ static boolean ReadProfile(j_decompress_ptr jpeg_info)
     status;
 
   ssize_t
+    marker,
     i;
 
   unsigned char
