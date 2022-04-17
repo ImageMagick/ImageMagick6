@@ -102,6 +102,7 @@
 #define ICC_PROFILE  "ICC_PROFILE"
 #define IPTC_MARKER  (JPEG_APP0+13)
 #define XML_MARKER  (JPEG_APP0+1)
+#define MaxJPEGProfiles  16
 #define MaxJPEGScans  1024
 
 /*
@@ -728,6 +729,9 @@ static boolean ReadProfile(j_decompress_ptr jpeg_info)
   Image
     *image;
 
+  int
+    marker;
+
   JPEGClientInfo
     *client_info;
 
@@ -735,7 +739,6 @@ static boolean ReadProfile(j_decompress_ptr jpeg_info)
     status;
 
   ssize_t
-    marker,
     i;
 
   unsigned char
@@ -1210,7 +1213,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
     jpeg_set_marker_processor(jpeg_info,ICC_MARKER,ReadICCProfile);
   if (IsOptionMember("IPTC",option) == MagickFalse)
     jpeg_set_marker_processor(jpeg_info,IPTC_MARKER,ReadIPTCProfile);
-  for (i=1; i < 16; i++)
+  for (i=1; i < MaxJPEGProfiles; i++)
     if ((i != 2) && (i != 13) && (i != 14))
       if (IsOptionMember("APP",option) == MagickFalse)
         jpeg_set_marker_processor(jpeg_info,(int) (JPEG_APP0+i),ReadProfile);
