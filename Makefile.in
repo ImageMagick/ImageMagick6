@@ -3273,7 +3273,6 @@ TIFF_LIBS = @TIFF_LIBS@
 TextEncodeDelegate = @TextEncodeDelegate@
 TraceEncodeDelegate = @TraceEncodeDelegate@
 UMEM_LIBS = @UMEM_LIBS@
-UniconvertorDelegate = @UniconvertorDelegate@
 VERSION = @VERSION@
 VIDEODecodeDelegate = @VIDEODecodeDelegate@
 VIDEOEncodeDelegate = @VIDEOEncodeDelegate@
