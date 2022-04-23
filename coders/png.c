@@ -1343,10 +1343,10 @@ static void png_get_data(png_structp png_ptr,png_bytep data,png_size_t length)
   image=(Image *) png_get_io_ptr(png_ptr);
   if (length != 0)
     {
-      size_t
+      png_size_t
         check;
 
-      check=ReadBlob(image,length,data);
+      check=(png_size_t) ReadBlob(image,(size_t) length,data);
       if (check != length)
         {
           char
@@ -4219,7 +4219,8 @@ static Image *ReadPNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
 %
 */
 
-static void DestroyJNG(unsigned char *chunk,Image **color_image,
+static void
+DestroyJNG(unsigned char *chunk,Image **color_image,
   ImageInfo **color_image_info,Image **alpha_image,ImageInfo **alpha_image_info)
 {
   (void) RelinquishMagickMemory(chunk);
@@ -4247,9 +4248,6 @@ static void DestroyJNG(unsigned char *chunk,Image **color_image,
 static Image *ReadOneJNGImage(MngInfo *mng_info,
     const ImageInfo *image_info, ExceptionInfo *exception)
 {
-  const PixelPacket
-    *s;
-
   Image
     *alpha_image,
     *color_image,
@@ -4260,11 +4258,11 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
     *alpha_image_info,
     *color_image_info;
 
-  int
-    unique_filenames;
-
   MagickBooleanType
     logging;
+
+  int
+    unique_filenames;
 
   ssize_t
     y;
@@ -4285,6 +4283,9 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
     jng_alpha_compression_method,
     jng_alpha_filter_method,
     jng_alpha_interlace_method;
+
+  const PixelPacket
+    *s;
 
   ssize_t
     i,
@@ -5147,8 +5148,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
     page_geometry[MaxTextExtent];
 
   Image
-    *image,
-    *previous;
+    *image;
 
   MagickBooleanType
     logging;
@@ -6631,47 +6631,35 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
           ThrowReaderException(CorruptImageError,"ImproperImageHeader");
       }
 
-    previous=(Image *) NULL;
     mng_info->image=image;
     mng_info->mng_type=mng_type;
     mng_info->object_id=object_id;
 
     if (memcmp(type,mng_IHDR,4) == 0)
-      {
-        Image *png_image = ReadOnePNGImage(mng_info,image_info,exception);
-        if (png_image != (Image *) NULL)
-          previous=image;
-        image=png_image;
-      }
+      image=ReadOnePNGImage(mng_info,image_info,exception);
 
 #if defined(JNG_SUPPORTED)
     else
-      {
-        Image *jng_image = ReadOneJNGImage(mng_info,image_info,exception);
-        if (jng_image != (Image *) NULL)
-          previous=image;
-        image=jng_image;
-      }
+      image=ReadOneJNGImage(mng_info,image_info,exception);
 #endif
 
     if (image == (Image *) NULL)
       {
-        if (previous != (Image *) NULL)
-          {
-            CloseBlob(previous);
-            previous=DestroyImageList(previous);
-          }
         if (logging != MagickFalse)
           (void) LogMagickEvent(CoderEvent,GetMagickModule(),
             "exit ReadJNGImage() with error");
-        mng_info=MngInfoFreeStruct(mng_info);
+
+        if (mng_info->image != (Image *) NULL)
+          { 
+            CloseBlob(mng_info->image);
+            mng_info->image=DestroyImageList(mng_info->image);
+          }
         return((Image *) NULL);
       }
 
     if (image->columns == 0 || image->rows == 0)
       {
         (void) CloseBlob(image);
-        mng_info=MngInfoFreeStruct(mng_info);
         return(DestroyImageList(image));
       }
 
