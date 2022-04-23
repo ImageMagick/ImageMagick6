@@ -44,7 +44,7 @@ extern "C" {
 #define MagickHomeURL  "file://@DOCUMENTATION_PATH@/index.html"
 #define MagickAuthoritativeLicense  \
   "https://imagemagick.org/script/license.php"
-#define MagickAuthoritativeURL  "https://imagemagick.org"
+#define MagickAuthoritativeURL  "https://legacy.imagemagick.org"
 #if (MAGICKCORE_QUANTUM_DEPTH == 8)
 #define MagickQuantumDepth  "Q8"
 #define MagickQuantumRange  "255"
