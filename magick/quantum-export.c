@@ -3842,7 +3842,7 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(quantum_info != (QuantumInfo *) NULL);
   assert(quantum_info->signature == MagickCoreSignature);

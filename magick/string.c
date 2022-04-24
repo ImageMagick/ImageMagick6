@@ -1038,8 +1038,9 @@ MagickExport StringInfo *FileToStringInfo(const char *filename,
     *string_info;
 
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   string_info=AcquireStringInfoContainer();
   (void) CopyMagickString(string_info->path,filename,MaxTextExtent);
   string_info->datum=FileToBlob(filename,extent,&string_info->length,exception);

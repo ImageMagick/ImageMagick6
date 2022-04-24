@@ -426,8 +426,9 @@ MagickExport const ConfigureInfo **GetConfigureInfoList(const char *pattern,
     Allocate configure list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_options != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_options=0;
   p=GetConfigureInfo("*",exception);
   if (p == (const ConfigureInfo *) NULL)
@@ -520,8 +521,9 @@ MagickExport char **GetConfigureList(const char *pattern,
     Allocate configure list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_options != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_options=0;
   p=GetConfigureInfo("*",exception);
   if (p == (const ConfigureInfo *) NULL)
@@ -581,7 +583,8 @@ MagickExport char *GetConfigureOption(const char *option)
     *exception;
 
   assert(option != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",option);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",option);
   exception=AcquireExceptionInfo();
   configure_info=GetConfigureInfo(option,exception);
   exception=DestroyExceptionInfo(exception);
@@ -636,8 +639,9 @@ MagickExport LinkedListInfo *GetConfigureOptions(const char *filename,
     *xml;
 
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   (void) CopyMagickString(path,filename,MaxTextExtent);
   /*
     Load XML from configuration files to linked-list.
@@ -724,8 +728,9 @@ MagickExport LinkedListInfo *GetConfigurePaths(const char *filename,
     *paths;
 
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   (void) exception;
   (void) CopyMagickString(path,filename,MaxTextExtent);
   paths=NewLinkedList(0);
@@ -961,7 +966,8 @@ MagickExport LinkedListInfo *GetConfigurePaths(const char *filename,
 */
 MagickExport const char *GetConfigureValue(const ConfigureInfo *configure_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(configure_info != (ConfigureInfo *) NULL);
   assert(configure_info->signature == MagickCoreSignature);
   return(configure_info->value);

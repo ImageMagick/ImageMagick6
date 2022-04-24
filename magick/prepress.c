@@ -98,9 +98,9 @@ MagickExport double GetImageTotalInkDensity(Image *image)
     y;
 
   assert(image != (Image *) NULL);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(image->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   if (image->colorspace != CMYKColorspace)
     {
       (void) ThrowMagickException(&image->exception,GetMagickModule(),

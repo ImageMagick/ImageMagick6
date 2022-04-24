@@ -248,7 +248,7 @@ static CubeInfo *ClassifyImageColors(const Image *image,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   cube_info=GetCubeInfo();
   if (cube_info == (CubeInfo *) NULL)
@@ -813,7 +813,7 @@ MagickExport MagickBooleanType IdentifyPaletteImage(const Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   return(CheckImageColors(image,exception,256));
 }
@@ -884,7 +884,7 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((image->storage_class == PseudoClass) &&
       (image->colors <= MaximumUniqueColors))
@@ -1016,7 +1016,7 @@ MagickExport MagickBooleanType IsPaletteImage(const Image *image,
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   magick_unreferenced(exception);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->storage_class != PseudoClass)
     return(MagickFalse);

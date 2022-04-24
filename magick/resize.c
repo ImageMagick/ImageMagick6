@@ -889,11 +889,11 @@ MagickExport ResizeFilter *AcquireResizeFilter(const Image *image,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(UndefinedFilter < filter && filter < SentinelFilter);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   (void) exception;
   resize_filter=(ResizeFilter *) AcquireMagickMemory(sizeof(*resize_filter));
   if (resize_filter == (ResizeFilter *) NULL)
@@ -1687,10 +1687,10 @@ MagickExport Image *InterpolativeResizeImage(const Image *image,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((columns == 0) || (rows == 0))
     return((Image *) NULL);
   if ((columns == image->columns) && (rows == image->rows))
@@ -1854,10 +1854,10 @@ MagickExport Image *LiquidRescaleImage(const Image *image,const size_t columns,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((columns == 0) || (rows == 0))
     return((Image *) NULL);
   if ((columns == image->columns) && (rows == image->rows))
@@ -1958,10 +1958,10 @@ MagickExport Image *LiquidRescaleImage(const Image *image,
 {
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   (void) ThrowMagickException(exception,GetMagickModule(),MissingDelegateError,
     "DelegateLibrarySupportNotBuiltIn","`%s' (LQR)",image->filename);
   return((Image *) NULL);
@@ -2018,10 +2018,10 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   magnify_image=CloneImage(image,2*image->columns,2*image->rows,MagickTrue,
     exception);
   if (magnify_image == (Image *) NULL)
@@ -2234,10 +2234,10 @@ MagickExport Image *MinifyImage(const Image *image,ExceptionInfo *exception)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   minify_image=ResizeImage(image,image->columns/2,image->rows/2,SplineFilter,
     1.0,exception);
   return(minify_image);
@@ -2295,10 +2295,10 @@ MagickExport Image *ResampleImage(const Image *image,const double x_resolution,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   width=(size_t) (x_resolution*image->columns/(image->x_resolution == 0.0 ?
     DefaultResolution : image->x_resolution)+0.5);
   height=(size_t) (y_resolution*image->rows/(image->y_resolution == 0.0 ?
@@ -2937,10 +2937,10 @@ MagickExport Image *ResizeImage(const Image *image,const size_t columns,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((columns == 0) || (rows == 0))
     ThrowImageException(ImageError,"NegativeOrZeroImageSize");
   if ((columns == image->columns) && (rows == image->rows) &&
@@ -3087,10 +3087,10 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((columns == 0) || (rows == 0))
     ThrowImageException(ImageError,"NegativeOrZeroImageSize");
   if ((columns == image->columns) && (rows == image->rows))
@@ -3289,10 +3289,10 @@ MagickExport Image *ScaleImage(const Image *image,const size_t columns,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((columns == 0) || (rows == 0))
     return((Image *) NULL);
   if ((columns == image->columns) && (rows == image->rows))
@@ -3726,10 +3726,10 @@ MagickExport Image *ThumbnailImage(const Image *image,const size_t columns,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   x_factor=(ssize_t) image->columns/columns;
   y_factor=(ssize_t) image->rows/rows;
   clone_image=CloneImage(image,0,0,MagickTrue,exception);

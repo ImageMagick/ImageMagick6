@@ -789,7 +789,8 @@ WandExport char **MagickQueryFormats(const char *pattern,
 */
 WandExport void *MagickRelinquishMemory(void *memory)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   return(RelinquishMagickMemory(memory));
 }
 

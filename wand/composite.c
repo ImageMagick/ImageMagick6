@@ -118,9 +118,9 @@ static MagickBooleanType CompositeImageList(ImageInfo *image_info,Image **image,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image **) NULL);
   assert((*image)->signature == MagickCoreSignature);
-  if ((*image)->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",(*image)->filename);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",(*image)->filename);
   (void) image_info;
   status=MagickTrue;
   if (composite_image != (Image *) NULL)

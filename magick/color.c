@@ -1289,8 +1289,9 @@ MagickExport const ColorInfo **GetColorInfoList(const char *pattern,
     Allocate color list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_colors != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_colors=0;
   p=GetColorInfo("*",exception);
   if (p == (const ColorInfo *) NULL)
@@ -1382,8 +1383,9 @@ MagickExport char **GetColorList(const char *pattern,
     Allocate color list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_colors != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_colors=0;
   p=GetColorInfo("*",exception);
   if (p == (const ColorInfo *) NULL)
@@ -1517,7 +1519,8 @@ MagickExport void GetColorTuple(const MagickPixelPacket *pixel,
 
   assert(pixel != (const MagickPixelPacket *) NULL);
   assert(tuple != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",tuple);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",tuple);
   *tuple='\0';
   if (hex != MagickFalse)
     {
@@ -1790,13 +1793,13 @@ MagickExport MagickBooleanType IsImageSimilar(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(target_image != (Image *) NULL);
   assert(target_image->signature == MagickCoreSignature);
   assert(x_offset != (ssize_t *) NULL);
   assert(y_offset != (ssize_t *) NULL);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   x=0;
   status=MagickTrue;
   GetMagickPixelPacket(image,&pixel);
@@ -2672,7 +2675,8 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
   assert(color != (MagickPixelPacket *) NULL);
   if ((name == (char *) NULL) || (*name == '\0'))
     name=BackgroundColor;
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",name);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",name);
   if (strlen(name) > MagickPathExtent)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),OptionWarning,

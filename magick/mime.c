@@ -463,8 +463,9 @@ MagickExport const MimeInfo **GetMimeInfoList(const char *pattern,
     Allocate mime list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_aliases != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_aliases=0;
   p=GetMimeInfo((char *) NULL,(unsigned char *) "*",0,exception);
   if (p == (const MimeInfo *) NULL)
@@ -558,8 +559,9 @@ MagickExport char **GetMimeList(const char *pattern,
     Allocate configure list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_aliases != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_aliases=0;
   p=GetMimeInfo((char *) NULL,(unsigned char *) "*",0,exception);
   if (p == (const MimeInfo *) NULL)
@@ -609,9 +611,10 @@ MagickExport char **GetMimeList(const char *pattern,
 */
 MagickExport const char *GetMimeDescription(const MimeInfo *mime_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(mime_info != (MimeInfo *) NULL);
   assert(mime_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   return(mime_info->description);
 }
 
@@ -639,9 +642,10 @@ MagickExport const char *GetMimeDescription(const MimeInfo *mime_info)
 */
 MagickExport const char *GetMimeType(const MimeInfo *mime_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(mime_info != (MimeInfo *) NULL);
   assert(mime_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   return(mime_info->type);
 }
 

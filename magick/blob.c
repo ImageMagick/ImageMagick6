@@ -207,7 +207,7 @@ MagickExport void AttachBlob(BlobInfo *blob_info,const void *blob,
   const size_t length)
 {
   assert(blob_info != (BlobInfo *) NULL);
-  if (blob_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   blob_info->length=length;
   blob_info->extent=length;
@@ -262,7 +262,8 @@ MagickExport MagickBooleanType BlobToFile(char *filename,const void *blob,
     count;
 
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(blob != (const void *) NULL);
   if (*filename == '\0')
     file=AcquireUniqueFileResource(filename);
@@ -342,7 +343,7 @@ MagickExport Image *BlobToImage(const ImageInfo *image_info,const void *blob,
 
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   assert(exception != (ExceptionInfo *) NULL);
@@ -513,7 +514,7 @@ MagickExport MagickBooleanType CloseBlob(Image *image)
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   blob_info=image->blob;
   if ((blob_info == (BlobInfo *) NULL) || (blob_info->type == UndefinedStream))
@@ -679,7 +680,7 @@ MagickExport void DestroyBlob(Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->signature == MagickCoreSignature);
@@ -736,7 +737,7 @@ MagickExport unsigned char *DetachBlob(BlobInfo *blob_info)
     *data;
 
   assert(blob_info != (BlobInfo *) NULL);
-  if (blob_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   if (blob_info->mapped != MagickFalse)
     {
@@ -793,7 +794,7 @@ MagickPrivate void DisassociateBlob(Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->signature == MagickCoreSignature);
@@ -898,7 +899,7 @@ MagickExport void DuplicateBlob(Image *image,const Image *duplicate)
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(duplicate != (Image *) NULL);
   assert(duplicate->signature == MagickCoreSignature);
@@ -936,7 +937,7 @@ MagickExport int EOFBlob(const Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);
@@ -1014,7 +1015,7 @@ MagickExport int ErrorBlob(const Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);
@@ -1118,7 +1119,8 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
     *map;
 
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
   *length=0;
   status=IsRightsAuthorized(PathPolicyDomain,ReadPolicyRights,filename);
@@ -1335,7 +1337,8 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   status=IsRightsAuthorized(PathPolicyDomain,WritePolicyRights,filename);
   if (status == MagickFalse)
     {
@@ -1417,7 +1420,7 @@ MagickExport MagickBooleanType GetBlobError(const Image *image)
 {
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((image->blob->status != MagickFalse) && (image->blob->error_number != 0))
     errno=image->blob->error_number;
@@ -1515,7 +1518,7 @@ MagickExport const struct stat *GetBlobProperties(const Image *image)
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   return(&image->blob->properties);
 }
@@ -1553,7 +1556,7 @@ MagickExport MagickSizeType GetBlobSize(const Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   blob_info=image->blob;
@@ -1663,7 +1666,7 @@ MagickExport StreamHandler GetBlobStreamHandler(const Image *image)
 {
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   return(image->blob->stream);
 }
@@ -1718,7 +1721,7 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
 
   assert(image_info != (const ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   assert(image != (Image *) NULL);
@@ -1866,7 +1869,7 @@ MagickExport MagickBooleanType ImageToFile(Image *image,char *filename,
   assert(image->signature == MagickCoreSignature);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(filename != (const char *) NULL);
   if (*filename == '\0')
@@ -1976,7 +1979,7 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
 
   assert(image_info != (const ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   assert(images != (Image *) NULL);
@@ -2141,7 +2144,7 @@ MagickExport MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(inject_image != (Image *) NULL);
   assert(inject_image->signature == MagickCoreSignature);
@@ -2248,7 +2251,7 @@ MagickExport MagickBooleanType IsBlobExempt(const Image *image)
 {
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   return(image->blob->exempt);
 }
@@ -2282,7 +2285,7 @@ MagickExport MagickBooleanType IsBlobSeekable(const Image *image)
 
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   blob_info=image->blob;
   switch (blob_info->type)
@@ -2351,7 +2354,7 @@ MagickExport MagickBooleanType IsBlobTemporary(const Image *image)
 {
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   return(image->blob->temporary);
 }
@@ -2617,7 +2620,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
 
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   assert(image != (Image *) NULL);
@@ -2992,7 +2995,7 @@ MagickExport Image *PingBlob(const ImageInfo *image_info,const void *blob,
 
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   assert(exception != (ExceptionInfo *) NULL);
@@ -4264,7 +4267,7 @@ MagickExport BlobInfo *ReferenceBlob(BlobInfo *blob)
 {
   assert(blob != (BlobInfo *) NULL);
   assert(blob->signature == MagickCoreSignature);
-  if (blob->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   LockSemaphoreInfo(blob->semaphore);
   blob->reference_count++;
@@ -4313,7 +4316,7 @@ MagickExport MagickOffsetType SeekBlob(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);
@@ -4422,7 +4425,7 @@ MagickExport void SetBlobExempt(Image *image,const MagickBooleanType exempt)
 {
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   image->blob->exempt=exempt;
 }
@@ -4461,7 +4464,7 @@ MagickExport MagickBooleanType SetBlobExtent(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);
@@ -4611,7 +4614,7 @@ static int SyncBlob(Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);
@@ -4682,7 +4685,7 @@ MagickExport MagickOffsetType TellBlob(const Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(image->blob != (BlobInfo *) NULL);
   assert(image->blob->type != UndefinedStream);

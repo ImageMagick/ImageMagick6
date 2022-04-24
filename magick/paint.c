@@ -178,10 +178,10 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (DrawInfo *) NULL);
   assert(draw_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((x_offset < 0) || (x_offset >= (ssize_t) image->columns))
     return(MagickFalse);
   if ((y_offset < 0) || (y_offset >= (ssize_t) image->rows))
@@ -453,10 +453,10 @@ MagickExport MagickBooleanType GradientImage(Image *image,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(start_color != (const PixelPacket *) NULL);
   assert(stop_color != (const PixelPacket *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   draw_info=AcquireDrawInfo();
   gradient=(&draw_info->gradient);
   gradient->type=type;
@@ -753,10 +753,10 @@ MagickExport Image *OilPaintImage(const Image *image,const double radius,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   width=GetOptimalKernelWidth2D(radius,0.5);
   linear_image=CloneImage(image,0,0,MagickTrue,exception);
   paint_image=CloneImage(image,0,0,MagickTrue,exception);
@@ -974,7 +974,7 @@ MagickExport MagickBooleanType OpaquePaintImageChannel(Image *image,
   assert(image->signature == MagickCoreSignature);
   assert(target != (MagickPixelPacket *) NULL);
   assert(fill != (MagickPixelPacket *) NULL);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
@@ -1120,7 +1120,7 @@ MagickExport MagickBooleanType TransparentPaintImage(Image *image,
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   assert(target != (MagickPixelPacket *) NULL);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
@@ -1255,7 +1255,7 @@ MagickExport MagickBooleanType TransparentPaintImageChroma(Image *image,
   assert(image->signature == MagickCoreSignature);
   assert(high != (MagickPixelPacket *) NULL);
   assert(low != (MagickPixelPacket *) NULL);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);

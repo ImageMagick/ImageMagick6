@@ -124,10 +124,10 @@ MagickExport MagickBooleanType CloneImageProfiles(Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(clone_image != (const Image *) NULL);
   assert(clone_image->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   image->color_profile.length=clone_image->color_profile.length;
   image->color_profile.info=clone_image->color_profile.info;
   image->iptc_profile.length=clone_image->iptc_profile.length;
@@ -289,7 +289,7 @@ MagickExport char *GetNextImageProfile(const Image *image)
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->profiles == (SplayTreeInfo *) NULL)
     return((char *) NULL);
@@ -476,8 +476,9 @@ static void LCMSExceptionHandler(cmsContext context,cmsUInt32Number severity,
   Image
     *image;
 
-  (void) LogMagickEvent(TransformEvent,GetMagickModule(),"lcms: #%u, %s",
-    severity,message != (char *) NULL ? message : "no message");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TransformEvent,GetMagickModule(),"lcms: #%u, %s",
+      severity,message != (char *) NULL ? message : "no message");
   image=(Image *) cmsGetContextUserData(context);
   if (image != (Image *) NULL)
     (void) ThrowMagickException(&image->exception,GetMagickModule(),
@@ -825,9 +826,9 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(name != (const char *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((datum == (const void *) NULL) || (length == 0))
     {
       char
@@ -1293,7 +1294,7 @@ MagickExport StringInfo *RemoveImageProfile(Image *image,const char *name)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->profiles == (SplayTreeInfo *) NULL)
     return((StringInfo *) NULL);
@@ -1347,7 +1348,7 @@ MagickExport void ResetImageProfileIterator(const Image *image)
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->profiles == (SplayTreeInfo *) NULL)
     return;
@@ -1727,7 +1728,7 @@ static MagickBooleanType SetImageProfileInternal(Image *image,const char *name,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((LocaleCompare(name,"xmp") == 0) &&
       (ValidateXMPProfile(image,profile) == MagickFalse))

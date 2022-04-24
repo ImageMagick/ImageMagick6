@@ -476,7 +476,8 @@ MagickExport char *GetPageGeometry(const char *page_geometry)
     i;
 
   assert(page_geometry != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",page_geometry);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",page_geometry);
   (void) CopyMagickString(page,page_geometry,MaxTextExtent);
   for (i=0; i < (ssize_t) (sizeof(PageSizes)/sizeof(PageSizes[0])); i++)
   {
@@ -1393,7 +1394,8 @@ MagickExport MagickStatusType ParseMetaGeometry(const char *geometry,ssize_t *x,
   assert(height != (size_t *) NULL);
   if ((geometry == (char *) NULL) || (*geometry == '\0'))
     return(NoValue);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",geometry);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",geometry);
   /*
     Parse geometry using GetGeometry.
   */
@@ -1694,7 +1696,7 @@ MagickExport void SetGeometry(const Image *image,RectangleInfo *geometry)
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(geometry != (RectangleInfo *) NULL);
   (void) memset(geometry,0,sizeof(*geometry));
@@ -1727,6 +1729,7 @@ MagickExport void SetGeometry(const Image *image,RectangleInfo *geometry)
 MagickExport void SetGeometryInfo(GeometryInfo *geometry_info)
 {
   assert(geometry_info != (GeometryInfo *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   (void) memset(geometry_info,0,sizeof(*geometry_info));
 }

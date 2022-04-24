@@ -554,7 +554,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   *value='\0';
   string=(const char *) value;
@@ -1036,7 +1036,7 @@ static char *InterpretDelegateProperties(const ImageInfo *image_info,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (embed_text == (const char *) NULL)
     return(ConstantString(""));
@@ -1181,7 +1181,7 @@ MagickExport char *GetDelegateCommand(const ImageInfo *image_info,Image *image,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   delegate_info=GetDelegateInfo(decode,encode,exception);
   if (delegate_info == (const DelegateInfo *) NULL)
@@ -1235,7 +1235,8 @@ MagickExport char *GetDelegateCommand(const ImageInfo *image_info,Image *image,
 */
 MagickExport const char *GetDelegateCommands(const DelegateInfo *delegate_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(delegate_info != (DelegateInfo *) NULL);
   assert(delegate_info->signature == MagickCoreSignature);
   return(delegate_info->commands);
@@ -1402,8 +1403,9 @@ MagickExport const DelegateInfo **GetDelegateInfoList(const char *pattern,
     Allocate delegate list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_delegates != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_delegates=0;
   p=GetDelegateInfo("*","*",exception);
   if (p == (const DelegateInfo *) NULL)
@@ -1498,8 +1500,9 @@ MagickExport char **GetDelegateList(const char *pattern,
     Allocate delegate list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_delegates != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_delegates=0;
   p=GetDelegateInfo("*","*",exception);
   if (p == (const DelegateInfo *) NULL)
@@ -1552,7 +1555,8 @@ MagickExport char **GetDelegateList(const char *pattern,
 */
 MagickExport ssize_t GetDelegateMode(const DelegateInfo *delegate_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(delegate_info != (DelegateInfo *) NULL);
   assert(delegate_info->signature == MagickCoreSignature);
   return(delegate_info->mode);
@@ -1585,7 +1589,8 @@ MagickExport ssize_t GetDelegateMode(const DelegateInfo *delegate_info)
 MagickExport MagickBooleanType GetDelegateThreadSupport(
   const DelegateInfo *delegate_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(delegate_info != (DelegateInfo *) NULL);
   assert(delegate_info->signature == MagickCoreSignature);
   return(delegate_info->thread_support);
@@ -1760,7 +1765,7 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   rights=ExecutePolicyRights;
   if ((decode != (const char *) NULL) &&

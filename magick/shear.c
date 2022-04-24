@@ -1171,7 +1171,7 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   GetMagickPixelPacket(image,&background);
   SetMagickPixelPacket(image,&image->background_color,(IndexPacket *) NULL,
@@ -1393,7 +1393,7 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   GetMagickPixelPacket(image,&background);
   SetMagickPixelPacket(image,&image->background_color,(IndexPacket *) NULL,
@@ -1608,10 +1608,10 @@ MagickExport Image *ShearImage(const Image *image,const double x_shear,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((x_shear != 0.0) && (fmod(x_shear,90.0) == 0.0))
     ThrowImageException(ImageError,"AngleIsDiscontinuous");
   if ((y_shear != 0.0) && (fmod(y_shear,90.0) == 0.0))
@@ -1754,10 +1754,10 @@ MagickExport Image *ShearRotateImage(const Image *image,const double degrees,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   angle=fmod(degrees,360.0);
   if (angle < -45.0)
     angle+=360.0;

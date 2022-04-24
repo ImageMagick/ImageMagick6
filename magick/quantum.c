@@ -526,7 +526,7 @@ MagickExport QuantumType GetQuantumType(Image *image,ExceptionInfo *exception)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   (void) exception;
   quantum_type=RGBQuantum;
@@ -670,10 +670,10 @@ MagickExport MagickBooleanType SetQuantumDepth(const Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(quantum_info != (QuantumInfo *) NULL);
   assert(quantum_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   quantum_info->depth=MagickMin(depth,64);
   if (quantum_info->format == FloatingPointQuantumFormat)
     {
@@ -737,10 +737,10 @@ MagickExport MagickBooleanType SetQuantumEndian(const Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(quantum_info != (QuantumInfo *) NULL);
   assert(quantum_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   quantum_info->endian=endian;
   return(SetQuantumDepth(image,quantum_info,quantum_info->depth));
 }
@@ -777,10 +777,10 @@ MagickExport MagickBooleanType SetQuantumFormat(const Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(quantum_info != (QuantumInfo *) NULL);
   assert(quantum_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   quantum_info->format=format;
   return(SetQuantumDepth(image,quantum_info,quantum_info->depth));
 }
@@ -816,7 +816,7 @@ MagickExport void SetQuantumImageType(Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   switch (quantum_type)
   {
@@ -917,10 +917,10 @@ MagickExport MagickBooleanType SetQuantumPad(const Image *image,
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(quantum_info != (QuantumInfo *) NULL);
   assert(quantum_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   quantum_info->pad=pad;
   return(SetQuantumDepth(image,quantum_info,quantum_info->depth));
 }

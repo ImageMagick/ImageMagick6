@@ -531,8 +531,9 @@ MagickExport const LogInfo **GetLogInfoList(const char *pattern,
     Allocate log list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_preferences != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_preferences=0;
   p=GetLogInfo("*",exception);
   if (p == (const LogInfo *) NULL)
@@ -624,8 +625,9 @@ MagickExport char **GetLogList(const char *pattern,
     Allocate log list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_preferences != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_preferences=0;
   p=GetLogInfo("*",exception);
   if (p == (const LogInfo *) NULL)

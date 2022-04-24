@@ -325,6 +325,9 @@ typedef struct _XResourceInfo
 
   char
     home_directory[MaxTextExtent];
+
+  MagickBooleanType
+    debug;
 } XResourceInfo;
 
 typedef struct _XWindowInfo

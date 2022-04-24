@@ -211,10 +211,10 @@ MagickExport ResampleFilter *AcquireResampleFilter(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
 
   resample_filter=(ResampleFilter *) AcquireQuantumMemory(1,
     sizeof(*resample_filter));
@@ -272,7 +272,7 @@ MagickExport ResampleFilter *DestroyResampleFilter(
   assert(resample_filter != (ResampleFilter *) NULL);
   assert(resample_filter->signature == MagickCoreSignature);
   assert(resample_filter->image != (Image *) NULL);
-  if (resample_filter->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       resample_filter->image->filename);
   resample_filter->view=DestroyCacheView(resample_filter->view);
@@ -1421,7 +1421,7 @@ MagickExport MagickBooleanType SetResampleFilterInterpolateMethod(
   assert(resample_filter != (ResampleFilter *) NULL);
   assert(resample_filter->signature == MagickCoreSignature);
   assert(resample_filter->image != (Image *) NULL);
-  if (resample_filter->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       resample_filter->image->filename);
   resample_filter->interpolate=method;
@@ -1460,7 +1460,7 @@ MagickExport MagickBooleanType SetResampleFilterVirtualPixelMethod(
   assert(resample_filter != (ResampleFilter *) NULL);
   assert(resample_filter->signature == MagickCoreSignature);
   assert(resample_filter->image != (Image *) NULL);
-  if (resample_filter->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       resample_filter->image->filename);
   resample_filter->virtual_pixel=method;

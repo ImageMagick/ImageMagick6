@@ -518,10 +518,10 @@ MagickExport Image *EvaluateImages(const Image *images,
 
   assert(images != (Image *) NULL);
   assert(images->signature == MagickCoreSignature);
-  if (images->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   image=AcquireImageCanvas(images,exception);
   if (image == (Image *) NULL)
     return((Image *) NULL);
@@ -838,10 +838,10 @@ MagickExport MagickBooleanType EvaluateImageChannel(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     {
       InheritException(exception,&image->exception);
@@ -1114,10 +1114,10 @@ MagickExport MagickBooleanType FunctionImageChannel(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     {
       InheritException(exception,&image->exception);
@@ -1248,7 +1248,7 @@ MagickExport MagickBooleanType GetImageChannelEntropy(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   channel_statistics=GetImageChannelStatistics(image,exception);
   if (channel_statistics == (ChannelStatistics *) NULL)
@@ -1350,7 +1350,7 @@ MagickExport MagickBooleanType GetImageChannelExtrema(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   status=GetImageChannelRange(image,channel,&min,&max,exception);
   *minima=(size_t) ceil(min-0.5);
@@ -1420,7 +1420,7 @@ MagickExport MagickBooleanType GetImageChannelKurtosis(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   *kurtosis=0.0;
   *skewness=0.0;
@@ -1581,7 +1581,7 @@ MagickExport MagickBooleanType GetImageChannelMean(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   channel_statistics=GetImageChannelStatistics(image,exception);
   if (channel_statistics == (ChannelStatistics *) NULL)
@@ -1701,7 +1701,7 @@ MagickExport ChannelMoments *GetImageChannelMoments(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   length=CompositeChannels+1UL;
   channel_moments=(ChannelMoments *) AcquireQuantumMemory(length,
@@ -2239,7 +2239,7 @@ MagickExport MagickBooleanType GetImageChannelRange(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   *maxima=(-MagickMaximumValue);
   *minima=MagickMaximumValue;
@@ -2367,7 +2367,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   length=CompositeChannels+1UL;
   channel_statistics=(ChannelStatistics *) AcquireQuantumMemory(length,
@@ -2785,7 +2785,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
 
   assert(images != (Image *) NULL);
   assert(images->signature == MagickCoreSignature);
-  if (images->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
@@ -3633,7 +3633,7 @@ MagickExport Image *StatisticImageChannel(const Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);

@@ -146,10 +146,11 @@ MagickExport Image *ConstituteImage(const size_t columns,
     Allocate image structure.
   */
   assert(map != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",map);
   assert(pixels != (void *) NULL);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",map);
   image=AcquireImage((ImageInfo *) NULL);
   if (image == (Image *) NULL)
     return((Image *) NULL);
@@ -279,10 +280,10 @@ MagickExport Image *PingImage(const ImageInfo *image_info,
 
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(exception != (ExceptionInfo *) NULL);
   ping_info=CloneImageInfo(image_info);
   ping_info->ping=MagickTrue;
   image=ReadStream(ping_info,&PingStream,exception);
@@ -338,10 +339,10 @@ MagickExport Image *PingImages(const ImageInfo *image_info,
   */
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(exception != (ExceptionInfo *) NULL);
   (void) InterpretImageFilename(image_info,(Image *) NULL,image_info->filename,
     (int) image_info->scene,filename);
   if (LocaleCompare(filename,image_info->filename) != 0)
@@ -468,10 +469,10 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
   assert(image_info->filename != (char *) NULL);
-  if (image_info->debug != MagickFalse)
+  assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(exception != (ExceptionInfo *) NULL);
   read_info=CloneImageInfo(image_info);
   (void) CopyMagickString(magick_filename,read_info->filename,MaxTextExtent);
   (void) SetImageInfo(read_info,0,exception);
@@ -919,10 +920,10 @@ MagickExport Image *ReadImages(const ImageInfo *image_info,
   */
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-  if (image_info->debug != MagickFalse)
+  assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(exception != (ExceptionInfo *) NULL);
   read_info=CloneImageInfo(image_info);
   *read_info->magick='\0';
   (void) InterpretImageFilename(read_info,(Image *) NULL,read_info->filename,
@@ -1122,10 +1123,10 @@ MagickExport MagickBooleanType WriteImage(const ImageInfo *image_info,
   assert(image_info != (ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
-  if (image->debug != MagickFalse)
+  assert(image->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(image->signature == MagickCoreSignature);
   exception=(&image->exception);
   sans_exception=AcquireExceptionInfo();
   write_info=CloneImageInfo(image_info);
@@ -1410,9 +1411,9 @@ MagickExport MagickBooleanType WriteImages(const ImageInfo *image_info,
   assert(image_info->signature == MagickCoreSignature);
   assert(images != (Image *) NULL);
   assert(images->signature == MagickCoreSignature);
-  if (images->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   write_info=CloneImageInfo(image_info);
   *write_info->magick='\0';
   images=GetFirstImageInList(images);

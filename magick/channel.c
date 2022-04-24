@@ -118,7 +118,7 @@ MagickExport Image *CombineImages(const Image *image,const ChannelType channel,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
@@ -317,7 +317,7 @@ MagickExport Image *CombineImages(const Image *image,const ChannelType channel,
 MagickExport MagickBooleanType GetImageAlphaChannel(const Image *image)
 {
   assert(image != (const Image *) NULL);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(image->signature == MagickCoreSignature);
   return(image->matte);
@@ -367,7 +367,7 @@ MagickExport Image *SeparateImage(const Image *image,const ChannelType channel,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
@@ -402,7 +402,7 @@ MagickExport MagickBooleanType SeparateImageChannel(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
@@ -583,7 +583,7 @@ MagickExport Image *SeparateImages(const Image *image,const ChannelType channel,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   images=NewImageList();
   if ((channel & RedChannel) != 0)
@@ -665,7 +665,7 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
     y;
 
   assert(image != (Image *) NULL);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(image->signature == MagickCoreSignature);
   exception=(&image->exception);

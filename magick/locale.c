@@ -324,7 +324,8 @@ static void *DestroyOptions(void *message)
 MagickExport LinkedListInfo *DestroyLocaleOptions(LinkedListInfo *messages)
 {
   assert(messages != (LinkedListInfo *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   return(DestroyLinkedList(messages,DestroyOptions));
 }
 
@@ -625,8 +626,9 @@ MagickExport const LocaleInfo **GetLocaleInfoList(const char *pattern,
     Allocate locale list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_messages != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_messages=0;
   p=GetLocaleInfo_("*",exception);
   if (p == (const LocaleInfo *) NULL)
@@ -720,8 +722,9 @@ MagickExport char **GetLocaleList(const char *pattern,
     Allocate locale list.
   */
   assert(pattern != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   assert(number_messages != (size_t *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",pattern);
   *number_messages=0;
   p=GetLocaleInfo_("*",exception);
   if (p == (const LocaleInfo *) NULL)
@@ -834,8 +837,9 @@ MagickExport LinkedListInfo *GetLocaleOptions(const char *filename,
     *xml;
 
   assert(filename != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(exception != (ExceptionInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   (void) CopyMagickString(path,filename,MaxTextExtent);
   /*
     Load XML from configuration files to linked-list.
@@ -903,7 +907,8 @@ MagickExport LinkedListInfo *GetLocaleOptions(const char *filename,
 */
 MagickExport const char *GetLocaleValue(const LocaleInfo *locale_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(locale_info != (LocaleInfo *) NULL);
   assert(locale_info->signature == MagickCoreSignature);
   return(locale_info->message);

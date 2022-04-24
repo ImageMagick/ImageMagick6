@@ -1164,7 +1164,7 @@ MagickExport MagickBooleanType CompressImageColormap(Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (IsPaletteImage(image,&image->exception) == MagickFalse)
     return(MagickFalse);
@@ -1355,9 +1355,10 @@ static void DestroyCubeInfo(CubeInfo *cube_info)
 */
 MagickExport QuantizeInfo *DestroyQuantizeInfo(QuantizeInfo *quantize_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(quantize_info != (QuantizeInfo *) NULL);
   assert(quantize_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   quantize_info->signature=(~MagickCoreSignature);
   quantize_info=(QuantizeInfo *) RelinquishMagickMemory(quantize_info);
   return(quantize_info);
@@ -2164,7 +2165,7 @@ MagickExport MagickBooleanType GetImageQuantizeError(Image *image)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   image->total_colors=GetNumberColors(image,(FILE *) NULL,&image->exception);
   (void) memset(&image->error,0,sizeof(image->error));
@@ -2252,8 +2253,9 @@ MagickExport MagickBooleanType GetImageQuantizeError(Image *image)
 */
 MagickExport void GetQuantizeInfo(QuantizeInfo *quantize_info)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(quantize_info != (QuantizeInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   (void) memset(quantize_info,0,sizeof(*quantize_info));
   quantize_info->number_colors=256;
   quantize_info->dither=MagickTrue;
@@ -2345,7 +2347,7 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (image->storage_class == PseudoClass)
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
@@ -2633,7 +2635,7 @@ MagickExport MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
   assert(quantize_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   maximum_colors=quantize_info->number_colors;
   if (maximum_colors == 0)
@@ -2741,7 +2743,7 @@ MagickExport MagickBooleanType QuantizeImages(const QuantizeInfo *quantize_info,
   assert(quantize_info->signature == MagickCoreSignature);
   assert(images != (Image *) NULL);
   assert(images->signature == MagickCoreSignature);
-  if (images->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   if (GetNextImageInList(images) == (Image *) NULL)
     {
@@ -3098,7 +3100,7 @@ MagickExport MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(remap_image != (Image *) NULL);
   assert(remap_image->signature == MagickCoreSignature);
@@ -3162,7 +3164,7 @@ MagickExport MagickBooleanType RemapImages(const QuantizeInfo *quantize_info,
 
   assert(images != (Image *) NULL);
   assert(images->signature == MagickCoreSignature);
-  if (images->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",images->filename);
   image=images;
   if (remap_image == (Image *) NULL)

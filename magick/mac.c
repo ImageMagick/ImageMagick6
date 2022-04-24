@@ -306,7 +306,7 @@ static short BottleneckTest(PicHandle picture,CodecType *codec,int *depth,
 */
 MagickExport void closedir(DIR *entry)
 {
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(entry != (DIR *) NULL);
   RelinquishMagickMemory(entry);
@@ -458,7 +458,7 @@ MagickExport MagickBooleanType MACIsMagickConflict(const char *magick)
     volume_name;
 
   assert(magick != (char *) NULL);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",magick);
   (void) CopyMagickString((char *) volume_name,magick,MaxTextExtent);
   c2pstr((char *) volume_name);
@@ -1559,9 +1559,9 @@ MagickExport void SetApplicationType(const char *filename,const char *magick,
     name;
 
   assert(filename != (char *) NULL);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   assert(magick != (const char *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   filetype='    ';
   (void) CopyMagickString((char *) &filetype,magick,MagickMin(strlen(magick),
     4));

@@ -295,11 +295,11 @@ MagickExport Image *AffineTransformImage(const Image *image,
     Affine transform image.
   */
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(affine_matrix != (AffineMatrix *) NULL);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   distort[0]=affine_matrix->sx;
   distort[1]=affine_matrix->rx;
   distort[2]=affine_matrix->ry;
@@ -1483,10 +1483,10 @@ MagickExport Image *DistortResizeImage(const Image *image,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if ((columns == 0) || (rows == 0))
     return((Image *) NULL);
   /* Do not short-circuit this resize if final image size is unchanged */
@@ -1697,11 +1697,10 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   /*
     Handle Special Compound Distortions
   */
@@ -2883,10 +2882,10 @@ MagickExport Image *RotateImage(const Image *image,const double degrees,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   angle=fmod(degrees,360.0);
   while (angle < -45.0)
     angle+=360.0;
@@ -2970,12 +2969,13 @@ MagickExport Image *SparseColorImage(const Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-
-  /* Determine number of color values needed per control point */
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  /*
+    Determine number of color values needed per control point.
+  */
   number_colors=0;
   if ( channel & RedChannel     ) number_colors++;
   if ( channel & GreenChannel   ) number_colors++;

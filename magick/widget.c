@@ -1679,7 +1679,8 @@ MagickExport void XColorBrowserWidget(Display *display,XWindows *windows,
   assert(windows != (XWindows *) NULL);
   assert(action != (char *) NULL);
   assert(reply != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
   (void) CopyMagickString(reset_pattern,"*",MaxTextExtent);
@@ -2903,9 +2904,10 @@ MagickExport int XCommandWidget(Display *display,XWindows *windows,
   XFontStruct
     *font_info;
 
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(display != (Display *) NULL);
   assert(windows != (XWindows *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   font_info=windows->command.font_info;
   height=(unsigned int) (font_info->ascent+font_info->descent);
   id=(~0);
@@ -3260,7 +3262,8 @@ MagickExport int XConfirmWidget(Display *display,XWindows *windows,
   assert(windows != (XWindows *) NULL);
   assert(reason != (char *) NULL);
   assert(description != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",reason);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",reason);
   XCheckRefreshWindows(display,windows);
   font_info=windows->widget.font_info;
   width=WidgetTextWidth(font_info,CancelButtonText);
@@ -3677,7 +3680,8 @@ MagickExport int XDialogWidget(Display *display,XWindows *windows,
   assert(action != (char *) NULL);
   assert(query != (char *) NULL);
   assert(reply != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
   XCheckRefreshWindows(display,windows);
   font_info=windows->widget.font_info;
   width=WidgetTextWidth(font_info,(char *) action);
@@ -4280,7 +4284,8 @@ MagickExport void XFileBrowserWidget(Display *display,XWindows *windows,
   assert(windows != (XWindows *) NULL);
   assert(action != (char *) NULL);
   assert(reply != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
   directory=getcwd(home_directory,MaxTextExtent);
@@ -5537,7 +5542,8 @@ MagickExport void XFontBrowserWidget(Display *display,XWindows *windows,
   assert(windows != (XWindows *) NULL);
   assert(action != (char *) NULL);
   assert(reply != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
   (void) CopyMagickString(back_pattern,glob_pattern,MaxTextExtent);
@@ -6654,10 +6660,11 @@ MagickExport void XInfoWidget(Display *display,XWindows *windows,
   /*
     Map Info widget.
   */
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(display != (Display *) NULL);
   assert(windows != (XWindows *) NULL);
   assert(activity != (char *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   font_info=windows->info.font_info;
   width=WidgetTextWidth(font_info,(char *) activity)+((3*QuantumMargin) >> 1)+4;
   height=(unsigned int) (((6*(font_info->ascent+font_info->descent)) >> 2)+4);
@@ -6805,7 +6812,8 @@ MagickExport void XListBrowserWidget(Display *display,XWindows *windows,
   assert(action != (char *) NULL);
   assert(query != (char *) NULL);
   assert(reply != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",action);
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
   if (list == (const char **) NULL)
@@ -7697,7 +7705,8 @@ MagickExport int XMenuWidget(Display *display,XWindows *windows,
   assert(title != (char *) NULL);
   assert(selections != (const char **) NULL);
   assert(item != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",title);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",title);
   font_info=windows->widget.font_info;
   windows->widget.width=submenu_info.active == 0 ?
     WidgetTextWidth(font_info,(char *) title) : 0;
@@ -8134,7 +8143,8 @@ MagickExport void XNoticeWidget(Display *display,XWindows *windows,
   assert(display != (Display *) NULL);
   assert(windows != (XWindows *) NULL);
   assert(reason != (char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",reason);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",reason);
   XDelay(display,SuspendTime << 3);  /* avoid surpise with delay */
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
@@ -8479,10 +8489,11 @@ MagickExport MagickBooleanType XPreferencesWidget(Display *display,
   /*
     Determine Preferences widget attributes.
   */
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(display != (Display *) NULL);
   assert(resource_info != (XResourceInfo *) NULL);
   assert(windows != (XWindows *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   XCheckRefreshWindows(display,windows);
   font_info=windows->widget.font_info;
   text_width=WidgetTextWidth(font_info,CacheButtonText);
@@ -8886,7 +8897,8 @@ MagickExport void XProgressMonitorWidget(Display *display,XWindows *windows,
   assert(display != (Display *) NULL);
   assert(windows != (XWindows *) NULL);
   assert(task != (const char *) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",task);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",task);
   if (span == 0)
     return;
   /*
@@ -9013,7 +9025,8 @@ MagickExport void XTextViewWidget(Display *display,
   assert(windows != (XWindows *) NULL);
   assert(title != (const char *) NULL);
   assert(textlist != (const char **) NULL);
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",title);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",title);
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
   if (textlist == (const char **) NULL)

@@ -974,9 +974,9 @@ static PathInfo *ConvertPrimitiveToPath(
 MagickExport DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
 {
   assert(draw_info != (DrawInfo *) NULL);
-  if (draw_info->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(draw_info->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   if (draw_info->id != (char *) NULL)
     draw_info->id=DestroyString(draw_info->id);
   if (draw_info->primitive != (char *) NULL)
@@ -1198,10 +1198,10 @@ MagickExport MagickBooleanType DrawAffineImage(Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(source != (const Image *) NULL);
   assert(source->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(affine != (AffineMatrix *) NULL);
   extent[0].x=0.0;
   extent[0].y=0.0;
@@ -1579,9 +1579,9 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (const DrawInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   clip_mask=AcquireImage((const ImageInfo *) NULL);
   status=SetImageExtent(clip_mask,image->columns,image->rows);
   if (status == MagickFalse)
@@ -1591,7 +1591,7 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
     &clip_mask->background_color,exception);
   clip_mask->background_color.opacity=(Quantum) TransparentOpacity;
   status=SetImageBackgroundColor(clip_mask);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"\nbegin clip-path %s",
       id);
   clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
@@ -1612,7 +1612,7 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
     status&=NegateImage(clip_mask,MagickFalse);
   if (status == MagickFalse)
     clip_mask=DestroyImage(clip_mask);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end clip-path");
   return(clip_mask);
 }
@@ -1665,9 +1665,9 @@ static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (const DrawInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   composite_mask=AcquireImage((const ImageInfo *) NULL);
   status=SetImageExtent(composite_mask,image->columns,image->rows);
   if (status == MagickFalse)
@@ -1677,7 +1677,7 @@ static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
     &composite_mask->background_color,exception);
   composite_mask->background_color.opacity=(Quantum) TransparentOpacity;
   (void) SetImageBackgroundColor(composite_mask);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"\nbegin mask-path %s",
       id);
   clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
@@ -1694,7 +1694,7 @@ static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
   status&=NegateImage(composite_mask,MagickFalse);
   if (status == MagickFalse)
     composite_mask=DestroyImage(composite_mask);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end mask-path");
   return(composite_mask);
 }
@@ -1762,7 +1762,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
     n;
 
   assert(draw_info != (const DrawInfo *) NULL);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"    begin draw-dash");
   for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++) ;
   number_vertices=(size_t) i;
@@ -1879,7 +1879,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
     }
   dash_polygon=(PrimitiveInfo *) RelinquishMagickMemory(dash_polygon);
   clone_info=DestroyDrawInfo(clone_info);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"    end draw-dash");
   return(status != 0 ? MagickTrue : MagickFalse);
 }
@@ -2004,9 +2004,9 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (const DrawInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   gradient=(&draw_info->gradient);
   gradient_vector=(&gradient->gradient_vector);
   point.x=gradient_vector->x2-gradient_vector->x1;
@@ -2511,19 +2511,17 @@ static MagickBooleanType RenderMVGContent(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (DrawInfo *) NULL);
   assert(draw_info->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (depth > MagickMaxRecursionDepth)
     ThrowBinaryImageException(DrawError,"VectorGraphicsNestedTooDeeply",
       image->filename);
   if ((draw_info->primitive == (char *) NULL) ||
       (*draw_info->primitive == '\0'))
     return(MagickFalse);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"begin draw-image");
   if (SetImageStorageClass(image,DirectClass) == MagickFalse)
     return(MagickFalse);
@@ -3944,7 +3942,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
       }
     if (primitive_type == UndefinedPrimitive)
       {
-        if ((image->debug != MagickFalse) && (q > p))
+        if ((draw_info->debug != MagickFalse) && (q > p))
           (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int)
             (q-p-1),p);
         continue;
@@ -4344,7 +4342,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     if (status == 0)
       break;
     primitive_info[i].primitive=UndefinedPrimitive;
-    if ((image->debug != MagickFalse) && (q > p))
+    if ((draw_info->debug != MagickFalse) && (q > p))
       (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  %.*s",(int) (q-p),p);
     /*
       Sanity check.
@@ -4410,7 +4408,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     if (status == 0)
       break;
   }
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end draw-image");
   /*
     Relinquish resources.
@@ -4492,9 +4490,9 @@ MagickExport MagickBooleanType DrawPatternPath(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (const DrawInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(name != (const char *) NULL);
   (void) FormatLocaleString(property,MaxTextExtent,"%s",name);
   path=GetImageArtifact(image,property);
@@ -4513,7 +4511,7 @@ MagickExport MagickBooleanType DrawPatternPath(Image *image,
   (void) QueryColorDatabase("#00000000",&(*pattern)->background_color,
     &image->exception);
   (void) SetImageBackgroundColor(*pattern);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),
       "begin pattern-path %s %s",name,geometry);
   clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
@@ -4529,7 +4527,7 @@ MagickExport MagickBooleanType DrawPatternPath(Image *image,
   (void) CloneString(&clone_info->primitive,path);
   status=RenderMVGContent(*pattern,clone_info,0);
   clone_info=DestroyDrawInfo(clone_info);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"end pattern-path");
   return(status);
 }
@@ -4899,11 +4897,11 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(draw_info != (DrawInfo *) NULL);
   assert(draw_info->signature == MagickCoreSignature);
   assert(primitive_info != (PrimitiveInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (primitive_info->coordinates <= 1)
     return(MagickTrue);
   /*
@@ -4912,7 +4910,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   polygon_info=AcquirePolygonTLS(draw_info,primitive_info,&image->exception);
   if (polygon_info == (PolygonInfo **) NULL)
     return(MagickFalse);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"    begin draw-polygon");
   fill=(primitive_info->method == FillToBorderMethod) ||
     (primitive_info->method == FloodfillMethod) ? MagickTrue : MagickFalse;
@@ -5011,7 +5009,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
       }
       image_view=DestroyCacheView(image_view);
       polygon_info=DestroyPolygonTLS(polygon_info);
-      if (image->debug != MagickFalse)
+      if (draw_info->debug != MagickFalse)
         (void) LogMagickEvent(DrawEvent,GetMagickModule(),
           "    end draw-polygon");
       return(status);
@@ -5084,7 +5082,7 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
   }
   image_view=DestroyCacheView(image_view);
   polygon_info=DestroyPolygonTLS(polygon_info);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"    end draw-polygon");
   return(status);
 }
@@ -5237,7 +5235,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
   ssize_t
     y;
 
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     {
       (void) LogMagickEvent(DrawEvent,GetMagickModule(),
         "  begin draw-primitive");
@@ -5704,7 +5702,7 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
       status&=SetImageClipMask(image,(Image *) NULL);
       status&=SetImageMask(image,(Image *) NULL);
     }
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),"  end draw-primitive");
   return(status != 0 ? MagickTrue : MagickFalse);
 }
@@ -5781,7 +5779,7 @@ static MagickBooleanType DrawStrokePolygon(Image *image,
   /*
     Draw stroked polygon.
   */
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),
       "    begin draw-stroke-polygon");
   clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
@@ -5818,7 +5816,7 @@ static MagickBooleanType DrawStrokePolygon(Image *image,
       }
   }
   clone_info=DestroyDrawInfo(clone_info);
-  if (image->debug != MagickFalse)
+  if (draw_info->debug != MagickFalse)
     (void) LogMagickEvent(DrawEvent,GetMagickModule(),
       "    end draw-stroke-polygon");
   return(status != 0 ? MagickTrue : MagickFalse);
@@ -5849,8 +5847,9 @@ static MagickBooleanType DrawStrokePolygon(Image *image,
 */
 MagickExport void GetAffineMatrix(AffineMatrix *affine_matrix)
 {
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(affine_matrix != (AffineMatrix *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   (void) memset(affine_matrix,0,sizeof(*affine_matrix));
   affine_matrix->sx=1.0;
   affine_matrix->sy=1.0;
@@ -5897,8 +5896,9 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
   /*
     Initialize draw attributes.
   */
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   assert(draw_info != (DrawInfo *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   (void) memset(draw_info,0,sizeof(*draw_info));
   clone_info=CloneImageInfo(image_info);
   GetAffineMatrix(&draw_info->affine);

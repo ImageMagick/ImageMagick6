@@ -4385,6 +4385,12 @@ MagickExport Image *MorphologyImageChannel(const Image *image,
    * This is done BEFORE the ShowKernelInfo() function is called so that
    * users can see the results of the 'option:convolve:scale' option.
    */
+  assert(image != (const Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
+  assert(exception != (ExceptionInfo *) NULL);
+  assert(exception->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   curr_kernel = (KernelInfo *) kernel;
   bias=image->bias;
   if ((method == ConvolveMorphology) || (method == CorrelateMorphology))
