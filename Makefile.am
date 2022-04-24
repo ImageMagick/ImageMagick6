@@ -94,7 +94,6 @@ XFAIL_TESTS = \
 
 TOP_EXTRA_DIST = \
   AUTHORS.txt \
-  ChangeLog.md \
   LICENSE \
   QuickStart.txt \
   NOTICE \
@@ -168,7 +167,6 @@ man_MANS = \
 
 doc_DATA = \
   LICENSE \
-  ChangeLog.md \
   NEWS.txt
 endif
 
@@ -283,7 +281,7 @@ magick-version: magick/version.h
 	fi ; \
 	touch magick-version
 
-magick/version.h:	$(top_srcdir)/ChangeLog.md $(top_srcdir)/m4/version.m4
+magick/version.h:	$(top_srcdir)/m4/version.m4
 
 # Automagically reconfigure libtool
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
