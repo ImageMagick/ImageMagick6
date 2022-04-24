@@ -625,10 +625,11 @@ MagickExport MagickBooleanType IsRightsAuthorized(const PolicyDomain domain,
   PolicyInfo
     *p;
 
-  (void) LogMagickEvent(PolicyEvent,GetMagickModule(),
-    "Domain: %s; rights=%s; pattern=\"%s\" ...",
-    CommandOptionToMnemonic(MagickPolicyDomainOptions,domain),
-    CommandOptionToMnemonic(MagickPolicyRightsOptions,rights),pattern);
+  if ((GetLogEventMask() & PolicyEvent) != 0)
+    (void) LogMagickEvent(PolicyEvent,GetMagickModule(),
+      "Domain: %s; rights=%s; pattern=\"%s\" ...",
+      CommandOptionToMnemonic(MagickPolicyDomainOptions,domain),
+      CommandOptionToMnemonic(MagickPolicyRightsOptions,rights),pattern);
   exception=AcquireExceptionInfo();
   policy_info=GetPolicyInfo("*",exception);
   exception=DestroyExceptionInfo(exception);

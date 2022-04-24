@@ -381,6 +381,40 @@ MagickExport void CloseMagickLog(void)
 %                                                                             %
 %                                                                             %
 %                                                                             %
+%   G e t L o g E v e n t M a s k                                             %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  GetLogEventMask() returns the current log event mask.
+%
+%  The format of the GetLogEventMask method is:
+%
+%      const char *GetLogEventMask(void)
+%
+*/
+MagickExport const LogEventType GetLogEventMask(void)
+{
+  ExceptionInfo
+    *exception;
+
+  LogInfo
+    *log_info;
+
+  exception=AcquireExceptionInfo();
+  log_info=GetLogInfo("*",exception);
+  exception=DestroyExceptionInfo(exception);
+  if (log_info == (const LogInfo *) NULL)
+    return(NoEvents);
+  return(log_info->event_mask);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 +   G e t L o g I n f o                                                       %
 %                                                                             %
 %                                                                             %

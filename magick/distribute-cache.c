@@ -356,7 +356,8 @@ MagickPrivate DistributeCacheInfo *AcquireDistributeCacheInfo(
     {
       server_info->session_key=session_key;
       (void) CopyMagickString(server_info->hostname,hostname,MaxTextExtent);
-      server_info->debug=IsEventLogging();
+      server_info->debug=GetLogEventMask() & CacheEvent ? MagickTrue :
+        MagickFalse;
     }
   hostname=DestroyString(hostname);
   return(server_info);

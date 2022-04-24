@@ -397,7 +397,7 @@ MagickExport Cache AcquirePixelCache(const size_t number_threads)
   cache_info->semaphore=AllocateSemaphoreInfo();
   cache_info->reference_count=1;
   cache_info->file_semaphore=AllocateSemaphoreInfo();
-  cache_info->debug=IsEventLogging();
+  cache_info->debug=GetLogEventMask() & CacheEvent ? MagickTrue : MagickFalse;
   cache_info->signature=MagickCoreSignature;
   return((Cache ) cache_info);
 }

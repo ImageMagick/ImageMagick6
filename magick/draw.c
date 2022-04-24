@@ -381,7 +381,7 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
     clone_info->composite_mask=CloneImage(draw_info->composite_mask,0,0,
       MagickTrue,&draw_info->composite_mask->exception);
   clone_info->render=draw_info->render;
-  clone_info->debug=IsEventLogging();
+  clone_info->debug=draw_info->debug;
   return(clone_info);
 }
 
@@ -785,7 +785,7 @@ static PolygonInfo *ConvertPathToPolygon(const PathInfo *path_info,
   }
   qsort(polygon_info->edges,(size_t) polygon_info->number_edges,
     sizeof(*polygon_info->edges),DrawCompareEdges);
-  if (IsEventLogging() != MagickFalse)
+  if ((GetLogEventMask() & DrawEvent) != 0)
     LogPolygonInfo(polygon_info);
   return(polygon_info);
 }
@@ -5930,7 +5930,8 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
     draw_info->server_name=AcquireString(clone_info->server_name);
   draw_info->render=MagickTrue;
   draw_info->clip_path=MagickFalse;
-  draw_info->debug=IsEventLogging();
+  draw_info->debug=(GetLogEventMask() & (DrawEvent | AnnotateEvent)) != 0 ?
+    MagickTrue : MagickFalse;
   option=GetImageOption(clone_info,"direction");
   if (option != (const char *) NULL)
     draw_info->direction=(DirectionType) ParseCommandOption(

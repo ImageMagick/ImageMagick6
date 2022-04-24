@@ -103,12 +103,12 @@ extern "C" {
 #define SetPixelYellow(pixel,value) ((pixel)->blue=(Quantum) (value))
 #define SetPixelY(pixel,value) ((pixel)->red=(Quantum) (value))
 
-static inline MagickRealType AbsolutePixelValue(const MagickRealType x)
+static inline const MagickRealType AbsolutePixelValue(const MagickRealType x)
 {
   return(x < 0.0f ? -x : x);
 }
 
-static inline Quantum ClampPixel(const MagickRealType value)
+static inline const Quantum ClampPixel(const MagickRealType value)
 { 
   if (value < 0.0f)
     return((Quantum) 0); 
@@ -121,7 +121,7 @@ static inline Quantum ClampPixel(const MagickRealType value)
 #endif
 }
 
-static inline double PerceptibleReciprocal(const double x)
+static inline const double PerceptibleReciprocal(const double x)
 { 
   double
     sign;
@@ -135,8 +135,8 @@ static inline double PerceptibleReciprocal(const double x)
   return(sign/MagickEpsilon);
 }   
 
-static inline MagickRealType GetPixelLuma(const Image *magick_restrict image,
-  const PixelPacket *magick_restrict pixel)
+static inline const MagickRealType GetPixelLuma(
+  const Image *magick_restrict image,const PixelPacket *magick_restrict pixel)
 {
   MagickRealType
     intensity;
@@ -147,7 +147,7 @@ static inline MagickRealType GetPixelLuma(const Image *magick_restrict image,
   return(intensity);
 }
 
-static inline MagickRealType GetPixelLuminance(
+static inline const MagickRealType GetPixelLuminance(
   const Image *magick_restrict image,const PixelPacket *magick_restrict pixel)
 {
   MagickRealType
@@ -165,7 +165,7 @@ static inline MagickRealType GetPixelLuminance(
   return(intensity);
 }
 
-static inline MagickBooleanType IsPixelAtDepth(const Quantum pixel,
+static inline const MagickBooleanType IsPixelAtDepth(const Quantum pixel,
   const QuantumAny range)
 {
   Quantum
@@ -183,7 +183,7 @@ static inline MagickBooleanType IsPixelAtDepth(const Quantum pixel,
   return(pixel == quantum ? MagickTrue : MagickFalse);
 }
 
-static inline MagickBooleanType IsPixelGray(const PixelPacket *pixel)
+static inline const MagickBooleanType IsPixelGray(const PixelPacket *pixel)
 {
   MagickRealType
     green_blue,
@@ -197,7 +197,8 @@ static inline MagickBooleanType IsPixelGray(const PixelPacket *pixel)
   return(MagickFalse);
 }
 
-static inline MagickBooleanType IsPixelMonochrome(const PixelPacket *pixel)
+static inline const MagickBooleanType IsPixelMonochrome(
+  const PixelPacket *pixel)
 {
   MagickRealType
     green_blue,
@@ -216,7 +217,7 @@ static inline MagickBooleanType IsPixelMonochrome(const PixelPacket *pixel)
   return(MagickFalse);
 }
 
-static inline Quantum PixelPacketIntensity(const PixelPacket *pixel)
+static inline const Quantum PixelPacketIntensity(const PixelPacket *pixel)
 {
   MagickRealType
     intensity;
