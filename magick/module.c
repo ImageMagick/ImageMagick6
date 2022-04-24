@@ -1711,7 +1711,7 @@ MagickExport MagickBooleanType InvokeDynamicImageFilter(const char *tag,
           signature;
 
         if ((*image)->debug != MagickFalse)
-          (void) LogMagickEvent(TransformnEvent,GetMagickModule(),
+          (void) LogMagickEvent(TransformEvent,GetMagickModule(),
             "Invoking \"%s\" static image filter",tag);
         signature=image_filter(image,argc,argv,exception);
         if ((*image)->debug != MagickFalse)
