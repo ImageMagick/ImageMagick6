@@ -3428,7 +3428,6 @@ TESTS_ENVIRONMENT = \
 
 TOP_EXTRA_DIST = \
   AUTHORS.txt \
-  ChangeLog.md \
   LICENSE \
   QuickStart.txt \
   NOTICE \
@@ -5613,7 +5612,6 @@ pkgconfig_DATA = \
 
 @INSTALL_DOC_TRUE@doc_DATA = \
 @INSTALL_DOC_TRUE@  LICENSE \
-@INSTALL_DOC_TRUE@  ChangeLog.md \
 @INSTALL_DOC_TRUE@  NEWS.txt
 
 @MAINTAINER_MODE_TRUE@MAINTAINER_TARGETS = \
@@ -12978,7 +12976,7 @@ magick-version: magick/version.h
 	fi ; \
 	touch magick-version
 
-magick/version.h:	$(top_srcdir)/ChangeLog.md $(top_srcdir)/m4/version.m4
+magick/version.h:	$(top_srcdir)/m4/version.m4
 libtool: $(LIBTOOL_DEPS)
 	$(SHELL) ./config.status --recheck
 
