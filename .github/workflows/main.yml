@@ -90,25 +90,25 @@ jobs:
     - name: Clone repositories
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows
+        cd ImageMagick6-Windows
         CloneRepositories.cmd https://github.com/ImageMagick shallow
 
     - name: Build configure
       shell: cmd
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd ImageMagick6-Windows\VisualMagick\configure
         msbuild configure.2022.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
 
     - name: Configure ImageMagick
       shell: cmd
       run: |
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick\configure
+        cd ImageMagick6-Windows\VisualMagick\configure
         configure.exe /noWizard /VS2022 /x64 /smtd
 
     - name: Build ImageMagick
       shell: cmd
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd %GITHUB_WORKSPACE%\ImageMagick6-Windows\VisualMagick
+        cd ImageMagick6-Windows\VisualMagick
         msbuild VisualStaticMTD.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
