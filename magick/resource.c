@@ -206,7 +206,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
   if (request < 0)
     return(MagickFalse);
   status=MagickFalse;
-  logging=IsEventLogging();
+  logging=(GetLogEventMask() & ResourceEvent) != 0 ? MagickTrue : MagickFalse;
   switch (type)
   {
     case DiskResource:
@@ -627,7 +627,8 @@ MagickExport int AcquireUniqueFileResource(char *path)
     *datum;
 
   assert(path != (char *) NULL);
-  (void) LogMagickEvent(ResourceEvent,GetMagickModule(),"...");
+  if ((GetLogEventMask() & ResourceEvent) != 0)
+    (void) LogMagickEvent(ResourceEvent,GetMagickModule(),"...");
   if (random_info == (RandomInfo *) NULL)
     {
       if (resource_semaphore[FileResource] == (SemaphoreInfo *) NULL)
@@ -683,7 +684,8 @@ MagickExport int AcquireUniqueFileResource(char *path)
     if ((file >= 0) || (errno != EEXIST))
       break;
   }
-  (void) LogMagickEvent(ResourceEvent,GetMagickModule(),"Acquire %s",path);
+  if ((GetLogEventMask() & ResourceEvent) != 0)
+    (void) LogMagickEvent(ResourceEvent,GetMagickModule(),"Acquire %s",path);
   if (file == -1)
     return(file);
   if (resource_semaphore[FileResource] == (SemaphoreInfo *) NULL)
@@ -1082,7 +1084,7 @@ MagickExport void RelinquishMagickResource(const ResourceType type,
   MagickBooleanType
     logging;
 
-  logging=IsEventLogging();
+  logging=(GetLogEventMask() & ResourceEvent) != 0 ? MagickTrue : MagickFalse;
   if (logging != MagickFalse)
     (void) FormatMagickSize(size,MagickFalse,resource_request);
   switch (type)
@@ -1294,7 +1296,8 @@ MagickExport MagickBooleanType RelinquishUniqueFileResource(const char *path)
 
   assert(path != (const char *) NULL);
   status=MagickFalse;
-  (void) LogMagickEvent(ResourceEvent,GetMagickModule(),"Relinquish %s",path);
+  if ((GetLogEventMask() & ResourceEvent) != 0)
+    (void) LogMagickEvent(ResourceEvent,GetMagickModule(),"Relinquish %s",path);
   if (resource_semaphore[FileResource] == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&resource_semaphore[FileResource]);
   LockSemaphoreInfo(resource_semaphore[FileResource]);
