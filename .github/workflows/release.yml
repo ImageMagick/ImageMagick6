@@ -36,7 +36,7 @@ jobs:
             hdri_flag: '-HDRI'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
@@ -136,7 +136,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
@@ -182,7 +182,7 @@ jobs:
             hdri_flag: '-HDRI'
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         repository: ImageMagick/ImageMagick-Windows6
         path: ImageMagick-Windows6
