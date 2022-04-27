@@ -1376,6 +1376,7 @@ ModuleExport size_t RegisterDPXImage(void)
   entry->encoder=(EncodeImageHandler *) WriteDPXImage;
   entry->magick=(IsImageFormatHandler *) IsDPX;
   entry->seekable_stream=MagickTrue;
+  entry->endian_support=MagickTrue;
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("SMPTE 268M-2003 (DPX 2.0)");
   entry->note=ConstantString(DPXNote);
