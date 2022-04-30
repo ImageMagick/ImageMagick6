@@ -778,13 +778,11 @@ static Image *ReadDJVUImage(const ImageInfo *image_info,
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
+  image = AcquireImage(image_info); /* mmc: ?? */
   if (image->debug != MagickFalse)
     logging=LogMagickEvent(CoderEvent,GetMagickModule(),
       "enter ReadDJVUImage()");
   (void) logging;
-
-  image = AcquireImage(image_info); /* mmc: ?? */
-
 
   lc = (LoadContext *) NULL;
   status = OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
