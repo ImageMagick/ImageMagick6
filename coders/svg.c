@@ -688,8 +688,9 @@ static double GetUserSpaceCoordinateValue(const SVGInfo *svg_info,int type,
   double
     value;
 
-  (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",string);
   assert(string != (const char *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",string);
   p=(const char *) string;
   (void) GetNextToken(p,&p,MaxTextExtent,token);
   value=StringToDouble(token,&next_token);
@@ -3683,10 +3684,10 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   assert(image_info != (const ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
   assert(exception != (ExceptionInfo *) NULL);
+  assert(exception->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  assert(exception->signature == MagickCoreSignature);
   image=AcquireImage(image_info);
   status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
   if (status == MagickFalse)
@@ -4190,7 +4191,7 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)

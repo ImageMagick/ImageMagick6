@@ -231,6 +231,8 @@ static MagickBooleanType WriteBRAILLEImage(const ImageInfo *image_info,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   if (LocaleCompare(image_info->magick,"UBRL") == 0)
     unicode=1;
   else
@@ -250,8 +252,6 @@ static MagickBooleanType WriteBRAILLEImage(const ImageInfo *image_info,
         }
       else
         cell_height=3;
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);

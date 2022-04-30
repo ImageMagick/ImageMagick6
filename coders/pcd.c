@@ -179,11 +179,11 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   */
   assert(image != (const Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(luma != (unsigned char *) NULL);
   assert(chroma1 != (unsigned char *) NULL);
   assert(chroma2 != (unsigned char *) NULL);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   buffer=(unsigned char *) AcquireQuantumMemory(0x800,sizeof(*buffer));
   if (buffer == (unsigned char *) NULL)
     ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
@@ -1110,7 +1110,7 @@ static MagickBooleanType WritePCDImage(const ImageInfo *image_info,Image *image)
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  if (image->debug != MagickFalse)
+  if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   pcd_image=image;
   if (image->columns < image->rows)

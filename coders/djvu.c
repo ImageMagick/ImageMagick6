@@ -773,16 +773,14 @@ static Image *ReadDJVUImage(const ImageInfo *image_info,
    */
   assert(image_info != (const ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
-
-
-  if (IsEventLogging() != MagickFalse)
-    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s", image_info->filename);
-
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
-
-
-  logging = LogMagickEvent(CoderEvent,GetMagickModule(),"enter ReadDJVUImage()");
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
+      image_info->filename);
+  if (image->debug != MagickFalse)
+    logging=LogMagickEvent(CoderEvent,GetMagickModule(),
+      "enter ReadDJVUImage()");
   (void) logging;
 
   image = AcquireImage(image_info); /* mmc: ?? */
