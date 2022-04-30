@@ -1248,7 +1248,7 @@ static MagickBooleanType InverseFourier(FourierInfo *fourier_info,
     sizeof(*magnitude_pixels));
   phase_info=AcquireVirtualMemory(fourier_info->width,fourier_info->height*
     sizeof(*phase_pixels));
-  inverse_info=AcquireVirtualMemory((fourier_info->width,(fourier_info->height/
+  inverse_info=AcquireVirtualMemory(fourier_info->width,(fourier_info->height/
     2+1)*sizeof(*inverse_pixels));
   if ((magnitude_info == (MemoryInfo *) NULL) ||
       (phase_info == (MemoryInfo *) NULL) ||
