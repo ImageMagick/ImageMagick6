@@ -407,16 +407,22 @@ static MagickBooleanType JPEGWarningHandler(j_common_ptr jpeg_info,int level)
 static boolean ReadComment(j_decompress_ptr jpeg_info)
 {
 #define GetProfileLength(jpeg_info,length) \
+do \
 { \
   int \
-    c[2]; \
-\
-  length=0; \
-  c[0]=GetCharacter(jpeg_info); \
-  c[1]=GetCharacter(jpeg_info); \
-  if ((c[0] >= 0) && (c[1] >= 0)) \
-    length=(size_t) ((c[0] << 8) | c[1]); \
-}
+    c; \
+ \
+  if (((c=GetCharacter(jpeg_info)) == EOF) || (c < 0)) \
+    length=0; \
+  else \
+    { \
+      length=256*c; \
+      if (((c=GetCharacter(jpeg_info)) == EOF) || (c < 0)) \
+        length=0; \
+      else \
+        length+=c; \
+    } \
+} while(0)
 
   Image
     *image;
