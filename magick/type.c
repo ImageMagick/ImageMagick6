@@ -1090,8 +1090,9 @@ static MagickBooleanType LoadTypeCache(SplayTreeInfo *cache,const char *xml,
   /*
     Load the type map file.
   */
-  (void) LogMagickEvent(ConfigureEvent,GetMagickModule(),
-    "Loading type configure file \"%s\" ...",filename);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(ConfigureEvent,GetMagickModule(),
+      "Loading type configure file \"%s\" ...",filename);
   if (xml == (const char *) NULL)
     return(MagickFalse);
   status=MagickTrue;
