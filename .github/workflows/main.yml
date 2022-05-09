@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         compiler: [ gcc, clang ]
 
@@ -106,3 +106,31 @@ jobs:
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
         cd ImageMagick6-Windows\VisualMagick
         msbuild VisualStaticMTD.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
+
+  build_msys2:
+    name: Build MSYS2
+    runs-on: windows-latest
+
+    steps:
+    - name: Prepare git
+      run: git config --global core.autocrlf false
+
+    - uses: actions/checkout@v3
+
+    - uses: actions/checkout@v3
+      with:
+        repository: ImageMagick/ImageMagick6-Windows
+        path: ImageMagick6-Windows
+        ref: refs/heads/main
+
+    - uses: msys2/setup-msys2@v2
+      with:
+        install: mingw-w64-x86_64-toolchain base-devel binutils
+        update: true
+
+    - name: Building ImageMagick
+      run: cd ImageMagick6-Windows && makepkg-mingw --noconfirm --syncdeps
+      env:
+        MINGW_ARCH: mingw64
+        PKGEXT: ".pkg.tar.xz"
+      shell: msys2 {0}
