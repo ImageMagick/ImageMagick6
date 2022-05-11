@@ -70,11 +70,7 @@
 /*
   Define declarations.
 */
-#if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__MINGW32__)
-#define BI_RGB  0
-#define BI_RLE8  1
-#define BI_BITFIELDS  3
-#endif
+#define IconRgbCompression (size_t) 0
 #define MaxIcons  1024
 
 /*
@@ -1033,7 +1029,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
       (void) TransformImageColorspace(image,sRGBColorspace);
         icon_info.file_size=14+12+28;
         icon_info.offset_bits=icon_info.file_size;
-        icon_info.compression=BI_RGB;
+        icon_info.compression=IconRgbCompression;
         if ((next->storage_class != DirectClass) && (next->colors > 256))
           (void) SetImageStorageClass(next,DirectClass);
         if (next->storage_class == DirectClass)
@@ -1043,7 +1039,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
             */
             icon_info.number_colors=0;
             icon_info.bits_per_pixel=32;
-            icon_info.compression=(size_t) BI_RGB;
+            icon_info.compression=IconRgbCompression;
           }
         else
           {
@@ -1065,7 +1061,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
                 (void) SetImageStorageClass(next,DirectClass);
                 icon_info.number_colors=0;
                 icon_info.bits_per_pixel=(unsigned short) 24;
-                icon_info.compression=(size_t) BI_RGB;
+                icon_info.compression=IconRgbCompression;
               }
             else
               {
