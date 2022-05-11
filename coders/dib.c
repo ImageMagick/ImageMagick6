@@ -152,16 +152,13 @@ static MagickBooleanType DecodeImage(Image *image,
   const MagickBooleanType compression,unsigned char *pixels,
   const size_t number_pixels)
 {
-#if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__MINGW32__)
-#define BI_RGB  0
-#define BI_RLE8  1
-#define BI_RLE4  2
-#define BI_BITFIELDS  3
-#undef BI_JPEG
-#define BI_JPEG  4
-#undef BI_PNG
-#define BI_PNG  5
-#endif
+
+#define DibRgbCompression  0
+#define DibRle8Compression  1
+#define DibRle4Compression  2
+#define DibBitfieldsCompression  3
+#define DibJpegCompression  4
+#define DibPngCompression  5
 
   int
     byte,
@@ -207,7 +204,7 @@ static MagickBooleanType DecodeImage(Image *image,
         byte=ReadBlobByte(image);
         if (byte == EOF)
           break;
-        if (compression == BI_RLE8)
+        if (compression == DibRle8Compression)
           {
             for (i=0; i < (ssize_t) count; i++)
               *p++=(unsigned char) byte;
@@ -258,7 +255,7 @@ static MagickBooleanType DecodeImage(Image *image,
               Absolute mode.
             */
             count=(int) MagickMin((size_t) count,(size_t) (q-p));
-            if (compression == BI_RLE8)
+            if (compression == DibRle8Compression)
               for (i=0; i < (ssize_t) count; i++)
               {
                 byte=ReadBlobByte(image);
@@ -282,7 +279,7 @@ static MagickBooleanType DecodeImage(Image *image,
             /*
               Read pad byte.
             */
-            if (compression == BI_RLE8)
+            if (compression == DibRle8Compression)
               {
                 if ((count & 0x01) != 0)
                   if (ReadBlobByte(image) == EOF)
@@ -543,7 +540,7 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (dib_info.bits_per_pixel != 8) && (dib_info.bits_per_pixel != 16) &&
       (dib_info.bits_per_pixel != 24) && (dib_info.bits_per_pixel != 32))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-  if ((dib_info.compression == BI_BITFIELDS) &&
+  if ((dib_info.compression == DibBitfieldsCompression) &&
       ((dib_info.bits_per_pixel == 16) || (dib_info.bits_per_pixel == 32)))
     {
       dib_info.red_mask=(unsigned short) ReadBlobLSBLong(image);
@@ -573,14 +570,14 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
     ThrowReaderException(CorruptImageError,"UnsupportedBitsPerPixel");
   switch (dib_info.compression)
   {
-    case BI_RGB:
-    case BI_RLE8:
-    case BI_RLE4:
-    case BI_BITFIELDS:
+    case DibRgbCompression:
+    case DibRle8Compression:
+    case DibRle4Compression:
+    case DibBitfieldsCompression:
       break;
-    case BI_JPEG:
+    case DibJpegCompression:
       ThrowReaderException(CoderError,"JPEGCompressNotSupported");
-    case BI_PNG:
+    case DibPngCompression:
       ThrowReaderException(CoderError,"PNGCompressNotSupported");
     default:
       ThrowReaderException(CorruptImageError,"UnrecognizedImageCompression");
@@ -668,7 +665,7 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Read image data.
   */
-  if (dib_info.compression == BI_RLE4)
+  if (dib_info.compression == DibRle4Compression)
     dib_info.bits_per_pixel<<=1;
   bytes_per_line=4*((image->columns*dib_info.bits_per_pixel+31)/32);
   length=bytes_per_line*image->rows;
@@ -679,8 +676,8 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (pixel_info == (MemoryInfo *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
-  if ((dib_info.compression == BI_RGB) ||
-      (dib_info.compression == BI_BITFIELDS))
+  if ((dib_info.compression == DibRgbCompression) ||
+      (dib_info.compression == DibBitfieldsCompression))
     {
       count=ReadBlob(image,length,pixels);
       if (count != (ssize_t) (length))
@@ -801,8 +798,8 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
       /*
         Convert PseudoColor scanline.
       */
-      if ((dib_info.compression == BI_RLE8) ||
-          (dib_info.compression == BI_RLE4))
+      if ((dib_info.compression == DibRle8Compression) ||
+          (dib_info.compression == DibRle4Compression))
         bytes_per_line=image->columns;
       for (y=(ssize_t) image->rows-1; y >= 0; y--)
       {
@@ -840,7 +837,7 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         Convert PseudoColor scanline.
       */
       image->storage_class=DirectClass;
-      if (dib_info.compression == BI_RLE8)
+      if (dib_info.compression == DibRle8Compression)
         bytes_per_line=2*image->columns;
       for (y=(ssize_t) image->rows-1; y >= 0; y--)
       {
@@ -1177,7 +1174,7 @@ static MagickBooleanType WriteDIBImage(const ImageInfo *image_info,Image *image)
   dib_info.height=(int) image->rows;
   dib_info.planes=1;
   dib_info.compression=(unsigned int) (dib_info.bits_per_pixel == 16 ?
-    BI_BITFIELDS : BI_RGB);
+    DibBitfieldsCompression : DibRgbCompression);
   dib_info.image_size=(unsigned int) (bytes_per_line*image->rows);
   dib_info.x_pixels=75*39;
   dib_info.y_pixels=75*39;
@@ -1363,7 +1360,7 @@ static MagickBooleanType WriteDIBImage(const ImageInfo *image_info,Image *image)
           pixels,dib_data);
         pixels=(unsigned char *) RelinquishMagickMemory(pixels);
         pixels=dib_data;
-        dib_info.compression = BI_RLE8;
+        dib_info.compression = DibRle8Compression;
       }
   /*
     Write DIB header.
@@ -1417,7 +1414,7 @@ static MagickBooleanType WriteDIBImage(const ImageInfo *image_info,Image *image)
         }
       else
         if ((dib_info.bits_per_pixel == 16) &&
-            (dib_info.compression == BI_BITFIELDS))
+            (dib_info.compression == DibBitfieldsCompression))
           {
             (void) WriteBlobLSBLong(image,0xf800);
             (void) WriteBlobLSBLong(image,0x07e0);
