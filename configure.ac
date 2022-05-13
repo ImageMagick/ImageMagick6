@@ -19,7 +19,7 @@
 #  notice and this notice are preserved.
 
 # Process this file with autoconf to create configure script.
-AC_PREREQ([2.71])
+AC_PREREQ([2.69])
 
 # ==============================================================================
 # Initalize Automake
