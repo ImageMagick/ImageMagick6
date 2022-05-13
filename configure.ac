@@ -19,7 +19,7 @@
 #  notice and this notice are preserved.
 
 # Process this file with autoconf to create configure script.
-AC_PREREQ([2.69])
+AC_PREREQ(2.69)
 
 # ==============================================================================
 # Initalize Automake
@@ -42,7 +42,11 @@ m4_define([magick_release_date],
             printf %s "$d"
           ]))
 
-AC_INIT([magick_name],[magick_version],[magick_bugreport],[magick_tarname],[magick_url])
+AC_INIT([magick_name],
+        [magick_version],
+        [magick_bugreport],
+        [magick_tarname],
+        [magick_url])
 
 AC_CONFIG_SRCDIR([magick/MagickCore.h])
 AC_CONFIG_AUX_DIR([config])
@@ -994,10 +998,20 @@ AC_CHECK_SIZEOF([unsigned long long])
 
 AC_CHECK_SIZEOF([void *])
 
-#
-# Check for sendfile support
-#
-########
+#AC_MSG_CHECKING([whether our compiler supports __func__])
+#AC_TRY_COMPILE([],
+# [{ const char *func = __func__; return(func != 0 ? 0 : 1); }],
+# AC_MSG_RESULT([yes]),
+# AC_MSG_RESULT([no])
+# AC_MSG_CHECKING([whether our compiler supports __FUNCTION__])
+# AC_TRY_COMPILE([],
+#   [{ const char *func = __FUNCTION__; return(func != 0 ? 0 : 1); }],
+#   AC_MSG_RESULT([yes])
+#   AC_DEFINE(__func__, __FUNCTION__,
+#     [Define to appropriate substitute if compiler does not have __func__]),
+#   AC_MSG_RESULT([no])
+#   AC_DEFINE(__func__, __FILE__,
+#     [Define to appropriate substitute if compiler does not have __func__])))
 
 ########
 #
@@ -1099,7 +1113,6 @@ if test "$with_magick_plus_plus" = 'yes'; then
     if \
         test $ax_cv_cxx_bool = 'yes' && \
         test $ax_cv_cxx_namespaces = 'yes' && \
-        test $ac_cv_cxx_have_std_libs = 'yes' && \
         test $ax_cv_cxx_have_std_namespace = 'yes'; then
         have_magick_plus_plus='yes'
     else

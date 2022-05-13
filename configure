@@ -5125,7 +5125,7 @@ MAGICK_PATCHLEVEL_VERSION=49
 
 MAGICK_VERSION=6.9.12-49
 
-MAGICK_GIT_REVISION=12bcac5d4:20220513
+MAGICK_GIT_REVISION=4f055aa73:20220513
 
 
 # Substitute library versioning
@@ -25535,10 +25535,20 @@ printf "%s\n" "#define SIZEOF_VOID_P $ac_cv_sizeof_void_p" >>confdefs.h
 
 
 
-#
-# Check for sendfile support
-#
-########
+#AC_MSG_CHECKING([whether our compiler supports __func__])
+#AC_TRY_COMPILE([],
+# [{ const char *func = __func__; return(func != 0 ? 0 : 1); }],
+# AC_MSG_RESULT([yes]),
+# AC_MSG_RESULT([no])
+# AC_MSG_CHECKING([whether our compiler supports __FUNCTION__])
+# AC_TRY_COMPILE([],
+#   [{ const char *func = __FUNCTION__; return(func != 0 ? 0 : 1); }],
+#   AC_MSG_RESULT([yes])
+#   AC_DEFINE(__func__, __FUNCTION__,
+#     [Define to appropriate substitute if compiler does not have __func__]),
+#   AC_MSG_RESULT([no])
+#   AC_DEFINE(__func__, __FILE__,
+#     [Define to appropriate substitute if compiler does not have __func__])))
 
 ########
 #
@@ -27520,7 +27530,6 @@ printf %s "checking whether C++ compiler is sufficient for Magick++... " >&6; }
     if \
         test $ax_cv_cxx_bool = 'yes' && \
         test $ax_cv_cxx_namespaces = 'yes' && \
-        test $ac_cv_cxx_have_std_libs = 'yes' && \
         test $ax_cv_cxx_have_std_namespace = 'yes'; then
         have_magick_plus_plus='yes'
     else
