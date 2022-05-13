@@ -5125,7 +5125,7 @@ MAGICK_PATCHLEVEL_VERSION=49
 
 MAGICK_VERSION=6.9.12-49
 
-MAGICK_GIT_REVISION=4f055aa73:20220513
+MAGICK_GIT_REVISION=beb34e12c:20220513
 
 
 # Substitute library versioning
@@ -11293,23 +11293,45 @@ fi
 # Check for sendfile support
 #
 ########
-#AC_CACHE_CHECK([Linux compatible sendfile()],ac_cv_have_linux_sendfile,[
-#  AC_LINK_IFELSE([
-#    #undef _FILE_OFFSET_BITS
-#    #include <sys/types.h>
-#    #include <sys/socket.h>
-#    #include <sys/sendfile.h>
-#  ], [
-#    sendfile(0, 0, (void *) 0, 0);
-#  ], [
-#    ac_cv_have_linux_sendfile=yes
-#  ], [
-#    ac_cv_have_linux_sendfile=no
-#  ])
-#])
-#if test $ac_cv_have_linux_sendfile = yes; then
-#  AC_DEFINE([HAVE_LINUX_SENDFILE],[1], [Define if you have Linux-compatible sendfile()])
-#fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking Linux compatible sendfile()" >&5
+printf %s "checking Linux compatible sendfile()... " >&6; }
+if test ${ac_cv_have_linux_sendfile+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+
+  cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+    #undef _FILE_OFFSET_BITS
+    #include <sys/types.h>
+    #include <sys/socket.h>
+    #include <sys/sendfile.h>
+
+int
+main (void)
+{
+
+    sendfile(0, 0, (void *) 0, 0);
+
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_linux_sendfile" >&5
+printf "%s\n" "$ac_cv_have_linux_sendfile" >&6; }
+if test $ac_cv_have_linux_sendfile = yes; then
+
+printf "%s\n" "#define HAVE_LINUX_SENDFILE 1" >>confdefs.h
+
+fi
 
 #
 # Set SETJMP_IS_THREAD_SAFE define.
@@ -25535,20 +25557,28 @@ printf "%s\n" "#define SIZEOF_VOID_P $ac_cv_sizeof_void_p" >>confdefs.h
 
 
 
-#AC_MSG_CHECKING([whether our compiler supports __func__])
-#AC_TRY_COMPILE([],
-# [{ const char *func = __func__; return(func != 0 ? 0 : 1); }],
-# AC_MSG_RESULT([yes]),
-# AC_MSG_RESULT([no])
-# AC_MSG_CHECKING([whether our compiler supports __FUNCTION__])
-# AC_TRY_COMPILE([],
-#   [{ const char *func = __FUNCTION__; return(func != 0 ? 0 : 1); }],
-#   AC_MSG_RESULT([yes])
-#   AC_DEFINE(__func__, __FUNCTION__,
-#     [Define to appropriate substitute if compiler does not have __func__]),
-#   AC_MSG_RESULT([no])
-#   AC_DEFINE(__func__, __FILE__,
-#     [Define to appropriate substitute if compiler does not have __func__])))
+#
+# Check for __func__ support
+#
+########
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether our compiler supports __func__" >&5
+printf %s "checking whether our compiler supports __func__... " >&6; }
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+int
+main (void)
+{
+{ const char *func = __func__; return(func != 0 ? 0 : 1); }
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
 
 ########
 #
