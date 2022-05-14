@@ -515,7 +515,7 @@ static int LogInfoCompare(const void *x,const void *y)
 }
 #endif
 
-MagickExport LogInfo **GetLogInfoList(const char *pattern,
+MagickExport const LogInfo **GetLogInfoList(const char *pattern,
   size_t *number_preferences,ExceptionInfo *exception)
 {
   const LogInfo

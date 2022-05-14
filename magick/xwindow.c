@@ -5384,6 +5384,7 @@ MagickExport MagickBooleanType XMakeImage(Display *display,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   if ((window->width == 0) || (window->height == 0))
     return(MagickFalse);
+  (void) length;
   /*
     Apply user transforms to the image.
   */
