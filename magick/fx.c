@@ -1234,6 +1234,7 @@ static const char *FxOperatorPrecedence(const char *expression,
             expression+=2;  /* scientific notation */
             break;
           }
+        break;
       }
       case 'J':
       case 'j':
@@ -1914,6 +1915,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
+          if (*p == '\0')
+            FxReturn(alpha);
           FxReturn(*beta);
         }
         default:
