@@ -125,20 +125,20 @@ namespace MagickCore
 #          pragma comment(lib, "CORE_DB_lcms_.lib")
 #        endif
 #        if defined(MAGICKCORE_HEIC_DELEGATE)
-#          pragma comment(lib, "CORE_DB_libde265_.lib")
-#          pragma comment(lib, "CORE_DB_libheif_.lib")
+#          pragma comment(lib, "CORE_DB_de265_.lib")
+#          pragma comment(lib, "CORE_DB_heif_.lib")
 #        endif
 #        if defined(MAGICKCORE_LZMA_DELEGATE)
 #          pragma comment(lib, "CORE_DB_lzma_.lib")
 #        endif
 #        if defined(MAGICKCORE_RAW_R_DELEGATE)
-#          pragma comment(lib, "CORE_DB_libraw_.lib")
+#          pragma comment(lib, "CORE_DB_raw_.lib")
 #        endif
 #        if defined(MAGICKCORE_RSVG_DELEGATE)
-#          pragma comment(lib, "CORE_DB_librsvg_.lib")
+#          pragma comment(lib, "CORE_DB_rsvg_.lib")
 #        endif
 #        if defined(MAGICKCORE_XML_DELEGATE)
-#          pragma comment(lib, "CORE_DB_libxml_.lib")
+#          pragma comment(lib, "CORE_DB_xml_.lib")
 #        endif
 #        if defined(MAGICKCORE_LQR_DELEGATE)
 #          pragma comment(lib, "CORE_DB_ffi_.lib")
@@ -202,20 +202,20 @@ namespace MagickCore
 #          pragma comment(lib, "CORE_RL_lcms_.lib")
 #        endif
 #        if defined(MAGICKCORE_HEIC_DELEGATE)
-#          pragma comment(lib, "CORE_RL_libde265_.lib")
-#          pragma comment(lib, "CORE_RL_libheif_.lib")
+#          pragma comment(lib, "CORE_RL_de265_.lib")
+#          pragma comment(lib, "CORE_RL_heif_.lib")
 #        endif
 #        if defined(MAGICKCORE_LZMA_DELEGATE)
 #          pragma comment(lib, "CORE_RL_lzma_.lib")
 #        endif
 #        if defined(MAGICKCORE_RAW_R_DELEGATE)
-#          pragma comment(lib, "CORE_RL_libraw_.lib")
+#          pragma comment(lib, "CORE_RL_raw_.lib")
 #        endif
 #        if defined(MAGICKCORE_RSVG_DELEGATE)
-#          pragma comment(lib, "CORE_RL_librsvg_.lib")
+#          pragma comment(lib, "CORE_RL_rsvg_.lib")
 #        endif
 #        if defined(MAGICKCORE_XML_DELEGATE)
-#          pragma comment(lib, "CORE_RL_libxml_.lib")
+#          pragma comment(lib, "CORE_RL_xml_.lib")
 #        endif
 #        if defined(MAGICKCORE_LQR_DELEGATE)
 #          pragma comment(lib, "CORE_RL_ffi_.lib")
