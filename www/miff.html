@@ -45,7 +45,7 @@
     <div class="collapse navbar-collapse" id="magick-navbars">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link " href="../index.html">Home</a>
+          <a class="nav-link " href="index.html">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="download.html">Download</a>
@@ -161,8 +161,8 @@
     <td>the gamma of the image.  If it is not specified, a gamma of 1.0 (linear brightness response) is assumed.</td>
   </tr>
   <tr>
-    <td>id = ImageMagick</td>
-    <td>identifies the file as a MIFF-format image file.  This key is required and has no default.  Although this key can appear anywhere in the header, it should start as the first key of the header in column 1.  This will allow programs like <code>file</code>(1) to easily identify the file as MIFF.</td>
+    <td>id=ImageMagick</td>
+    <td>identifies the file as a MIFF-format image file.  This key is required, must be the first key-value pair, can only appear once, and has no default.  Although this key can appear anywhere in the header, it should start as the first key of the header in column 1.  This will allow programs like <code>file</code>(1) to easily identify the file as MIFF.</td>
 	</tr>
 	<tr>
     <td>iterations = <var>value</var></td>
@@ -288,3 +288,4 @@ or fewer colors in the image, each byte of image data contains an index value. I
   <script src="assets/magick.js" ></script>
   </body>
 </html>
+<!-- Magick Cache 30th May 2022 18:03 -->

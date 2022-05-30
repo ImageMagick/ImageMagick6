@@ -45,7 +45,7 @@
     <div class="collapse navbar-collapse" id="magick-navbars">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link " href="../index.html">Home</a>
+          <a class="nav-link " href="index.html">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="download.html">Download</a>
@@ -5503,6 +5503,8 @@ after being created. </p>
 
 <p class="magick-description">Specify orientation of a digital camera image.</p>
 
+<p>Note, this is a setting.  This merely sets the orientation metadata, and does not change the image.</p>
+
 <p>Choose from these orientations:</p>
 
 <ul>< class="bg-light text-dark mx-4"><code>bottom-left    right-top
@@ -7240,7 +7242,7 @@ a radius of 0 to have the method select a suitable radius.</p>
 
 <p class="magick-description">Soften the edges of the image in vignette style.</p>
 
-<p>The vignette effect rolloff is controlled by radiusxsigma. For nominal rolloff, this would be set to 0xsigma. A value of 0x0 will produce a circle/ellipse with no rolloff. The arguments x and y control the size of the circle. Larger values decrease the radii and smaller values increase the radii. Values of +0+0 will generate a circle/ellipse the same size as the image. The default values for x and y are 10% of the corresponding image dimension. Thus, the radii will be decreased by 10%, i.e., the diameters of the circle/ellipse will be 80% of the corresponding image dimension.</p>
+<p>The vignette effect rolloff is controlled by radiusxsigma. For nominal rolloff, this would be set to 0xsigma. A value of 0x0 will produce a circle/ellipse with no rolloff. The arguments x and y control the size of the circle. Larger values decrease the radii and smaller values increase the radii. Values of +0+0 will generate a circle/ellipse the same size as the image. The default values for x and y are 10% of the corresponding image dimension. Thus, the radii will be decreased by 10%, i.e., the diameters of the circle/ellipse will be 80% of the corresponding image dimension. Note, the percent symbol in a geometry affects <var>x</var> and <var>y</var>, whereas <var>radius</var> and <var>sigma</var> are absolute (e.g., <samp>-vignette "0x2+10%+10%")</p>
 
 <div style="margin: auto;">
   <h2><a class="anchor" id="virtual-pixel"></a>-virtual-pixel <var>method</var></h2>
@@ -7471,3 +7473,4 @@ but with strict boolean masking. </p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
+<!-- Magick Cache 30th May 2022 16:18 -->

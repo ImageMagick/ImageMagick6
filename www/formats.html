@@ -45,7 +45,7 @@
     <div class="collapse navbar-collapse" id="magick-navbars">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <a class="nav-link " href="../index.html">Home</a>
+          <a class="nav-link " href="index.html">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="download.html">Download</a>
@@ -236,13 +236,6 @@ the supported image formats.</p>
     <td>R</td>
     <td>Continuous Acquisition and Life-cycle Support Type 1 image</td>
     <td>Specified in MIL-R-28002 and MIL-PRF-28002. Standard blueprint archive format as used by the US military to replace microfiche.</td>
-  </tr>
-
-  <tr>
-    <td><a href="http://www.fileformat.info/format/cgm/egff.htm">CGM</a></td>
-    <td>R</td>
-    <td>Computer Graphics Metafile</td>
-    <td>Requires <a href="http://www.agocg.ac.uk/train/cgm/ralcgm.htm">ralcgm</a> to render CGM files.</td>
   </tr>
 
   <tr>
@@ -464,13 +457,6 @@ the supported image formats.</p>
   </tr>
 
   <tr>
-    <td><a href="http://homepage.usask.ca/~ijm451/fig/">FIG</a></td>
-    <td>R</td>
-    <td>FIG graphics format</td>
-    <td>Requires <a href="ftp://ftp.x.org/contrib/applications/drawing_tools/transfig">TransFig</a>.</td>
-  </tr>
-
-  <tr>
     <td><a href="http://www.cv.nrao.edu/fits/">FITS</a></td>
     <td>RW</td>
     <td>Flexible Image Transport System</td>
@@ -557,7 +543,7 @@ the supported image formats.</p>
   <tr>
     <td>HRZ</td>
     <td>RW</td>
-    <td>Slow Scane TeleVision</td>
+    <td>Slow Scan TeleVision</td>
     <td> </td>
   </tr>
 
@@ -565,7 +551,7 @@ the supported image formats.</p>
     <td>HTML</td>
     <td>RW</td>
     <td>Hypertext Markup Language with a client-side image map</td>
-    <td>Also known as <samp>HTM</samp>. Requires <a href="http://user.it.uu.se/%7Ejan/html2ps.html">html2ps</a> to read.</td>
+    <td>Also known as <samp>HTM</samp>. Requires <a href="http://user.it.uu.se/%7Ejan/html2ps.html">html2ps</a> to read.   Note, the <samp>\\xff</samp> character is not permitted in any filename when exporting client-side image maps.</td>
   </tr>
 
   <tr>
@@ -1426,7 +1412,7 @@ the supported image formats.</p>
     <td>GRADIENT</td>
     <td>R</td>
     <td>Gradual passing from one shade to another</td>
-    <td>Returns a rendered linear top-to-bottom <a href="gradient.html">gradient image</a> using the specified image size.</td>
+    <td>Returns a rendered linear or radial top-to-bottom <a href="gradient.html">gradient image</a> using the specified image size.</td>
 
   </tr>
 
@@ -1539,7 +1525,7 @@ the supported image formats.</p>
   <tr>
     <td>SCREENSHOT</td>
     <td>R</td>
-    <td>an image that shows the contents of a computer display</td>
+    <td>an image that shows the contents of a computer display.  Under Windows, if you have multiple monitors, it returns a screenshot for each monitor.</td>
     <td> </td>
   </tr>
 
@@ -2138,3 +2124,4 @@ the supported image formats.</p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
+<!-- Magick Cache 30th May 2022 16:42 -->
