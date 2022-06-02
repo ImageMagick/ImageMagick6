@@ -1066,6 +1066,9 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   if (value != (char *) NULL)
     configure.use_sharp_yuv=StringToInteger(value);
 #endif
+  if ((configure.target_size > 0 || configure.target_PSNR > 0) &&
+      (configure.pass == 1))
+    configure.pass=6;
   if (WebPValidateConfig(&configure) == 0)
     ThrowWriterException(ResourceLimitError,"UnableToEncodeImageFile");
 
