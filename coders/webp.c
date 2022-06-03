@@ -1077,9 +1077,9 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
 #if defined(MAGICKCORE_WEBPMUX_DELEGATE)
   if ((image_info->adjoin != MagickFalse) &&
       (GetPreviousImageInList(image) == (Image *) NULL) &&
-      (GetNextImageInList(image) != (Image *) NULL) &&
-      (image->iterations != 1))
-    WriteAnimatedWEBPImage(image_info,image,&configure,&writer_info,&image->exception);
+      (GetNextImageInList(image) != (Image *) NULL))
+    WriteAnimatedWEBPImage(image_info,image,&configure,&writer_info,
+      &image->exception);
 #endif
 
   webp_status=WebPEncode(&configure,&picture);
