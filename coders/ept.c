@@ -207,6 +207,8 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) ReadBlobLSBLong(image);
   ept_info.tiff_offset=(MagickOffsetType) ReadBlobLSBLong(image);
   ept_info.tiff_length=ReadBlobLSBLong(image);
+  if ((ept_info.postscript_length+ept_info.tiff_length) == 0)
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   if ((MagickSizeType) ept_info.tiff_length > GetBlobSize(image))
     ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   (void) ReadBlobLSBShort(image);
