@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization         %
+%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -39,32 +39,33 @@
 /*
   Include declarations.
 */
-#include "MagickCore/studio.h"
-#include "MagickCore/blob.h"
-#include "MagickCore/blob-private.h"
-#include "MagickCore/color.h"
-#include "MagickCore/constitute.h"
-#include "MagickCore/draw.h"
-#include "MagickCore/exception.h"
-#include "MagickCore/exception-private.h"
-#include "MagickCore/delegate.h"
-#include "MagickCore/geometry.h"
-#include "MagickCore/histogram.h"
-#include "MagickCore/image.h"
-#include "MagickCore/image-private.h"
-#include "MagickCore/list.h"
-#include "MagickCore/magick.h"
-#include "MagickCore/memory_.h"
-#include "MagickCore/monitor.h"
-#include "MagickCore/monitor-private.h"
-#include "MagickCore/quantize.h"
-#include "MagickCore/resource_.h"
-#include "MagickCore/resize.h"
-#include "MagickCore/quantum-private.h"
-#include "MagickCore/static.h"
-#include "MagickCore/string_.h"
-#include "MagickCore/module.h"
-#include "MagickCore/utility.h"
+#include "magick/studio.h"
+#include "magick/blob.h"
+#include "magick/blob-private.h"
+#include "magick/color.h"
+#include "magick/constitute.h"
+#include "magick/draw.h"
+#include "magick/exception.h"
+#include "magick/exception-private.h"
+#include "magick/delegate.h"
+#include "magick/geometry.h"
+#include "magick/histogram.h"
+#include "magick/image.h"
+#include "magick/image-private.h"
+#include "magick/list.h"
+#include "magick/magick.h"
+#include "magick/memory_.h"
+#include "magick/monitor.h"
+#include "magick/monitor-private.h"
+#include "magick/pixel-accessor.h"
+#include "magick/quantize.h"
+#include "magick/quantum-private.h"
+#include "magick/resource_.h"
+#include "magick/static.h"
+#include "magick/string_.h"
+#include "magick/module.h"
+#include "magick/transform.h"
+#include "magick/utility.h"
 
 /*
   Typedef declarations.
@@ -91,7 +92,7 @@ typedef struct _EPTInfo
   Forward declarations.
 */
 static MagickBooleanType
-  WriteEPTImage(const ImageInfo *,Image *,ExceptionInfo *);
+  WriteEPTImage(const ImageInfo *,Image *);
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -164,8 +165,7 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     ept_info;
 
   Image
-    *image,
-    *tiff_image;
+    *image;
 
   ImageInfo
     *read_info;
@@ -189,7 +189,7 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  image=AcquireImage(image_info,exception);
+  image=AcquireImage(image_info);
   status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
   if (status == MagickFalse)
     {
@@ -207,8 +207,6 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) ReadBlobLSBLong(image);
   ept_info.tiff_offset=(MagickOffsetType) ReadBlobLSBLong(image);
   ept_info.tiff_length=ReadBlobLSBLong(image);
-  if ((ept_info.postscript_length+ept_info.tiff_length) == 0)
-    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   if ((MagickSizeType) ept_info.tiff_length > GetBlobSize(image))
     ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   (void) ReadBlobLSBShort(image);
@@ -260,44 +258,25 @@ static Image *ReadEPTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) CloseBlob(image);
   image=DestroyImage(image);
   read_info=CloneImageInfo(image_info);
-  read_info->number_scenes=1;
-  read_info->scene=0;
   (void) CopyMagickString(read_info->magick,"EPS",MagickPathExtent);
-  if (ept_info.postscript_length != 0)
+  image=BlobToImage(read_info,postscript_data,ept_info.postscript_length,
+    exception);
+  if (image == (Image *) NULL)
     {
-      /*
-        Convert Postscript blob to image.
-      */
-      image=BlobToImage(read_info,postscript_data,ept_info.postscript_length,
-        exception);
-      if (image != (Image *) NULL)
-        {
-          (void) CopyMagickString(image->filename,image_info->filename,
-            MagickPathExtent);
-          (void) CopyMagickString(image->magick,"EPT",MagickPathExtent);
-        }
-    }
-  if (ept_info.tiff_length != 0)
-    {
-      /*
-        Convert TIFF blob to image.
-      */
       (void) CopyMagickString(read_info->magick,"TIFF",MagickPathExtent);
-      tiff_image=BlobToImage(read_info,tiff_data,ept_info.tiff_length,
-        exception);
-      if (tiff_image != (Image *) NULL)
-        {
-          if (image == (Image *) NULL)
-            image=tiff_image;
-          else
-            AppendImageToList(&image,tiff_image);
-        }
+      image=BlobToImage(read_info,tiff_data,ept_info.tiff_length,exception);
     }
   read_info=DestroyImageInfo(read_info);
+  if (image != (Image *) NULL)
+    {
+      (void) CopyMagickString(image->filename,image_info->filename,
+        MagickPathExtent);
+      (void) CopyMagickString(image->magick,"EPT",MagickPathExtent);
+    }
   ept_info.tiff=(unsigned char *) RelinquishMagickMemory(ept_info.tiff);
   ept_info.postscript=(unsigned char *) RelinquishMagickMemory(
     ept_info.postscript);
-  return(GetFirstImageInList(image));
+  return(image);
 }
 
 /*
@@ -328,31 +307,37 @@ ModuleExport size_t RegisterEPTImage(void)
   MagickInfo
     *entry;
 
-  entry=AcquireMagickInfo("EPT","EPT",
+  entry=SetMagickInfo("EPT");
+  entry->decoder=(DecodeImageHandler *) ReadEPTImage;
+  entry->encoder=(EncodeImageHandler *) WriteEPTImage;
+  entry->magick=(IsImageFormatHandler *) IsEPT;
+  entry->seekable_stream=MagickTrue;
+  entry->adjoin=MagickFalse;
+  entry->blob_support=MagickFalse;
+  entry->description=ConstantString(
     "Encapsulated PostScript with TIFF preview");
+  entry->magick_module=ConstantString("EPT");
+  (void) RegisterMagickInfo(entry);
+  entry=SetMagickInfo("EPT2");
   entry->decoder=(DecodeImageHandler *) ReadEPTImage;
   entry->encoder=(EncodeImageHandler *) WriteEPTImage;
   entry->magick=(IsImageFormatHandler *) IsEPT;
-  entry->flags|=CoderDecoderSeekableStreamFlag;
-  entry->flags^=CoderAdjoinFlag;
-  entry->flags^=CoderBlobSupportFlag;
-  (void) RegisterMagickInfo(entry);
-  entry=AcquireMagickInfo("EPT","EPT2",
+  entry->adjoin=MagickFalse;
+  entry->seekable_stream=MagickTrue;
+  entry->blob_support=MagickFalse;
+  entry->description=ConstantString(
     "Encapsulated PostScript Level II with TIFF preview");
-  entry->decoder=(DecodeImageHandler *) ReadEPTImage;
-  entry->encoder=(EncodeImageHandler *) WriteEPTImage;
-  entry->magick=(IsImageFormatHandler *) IsEPT;
-  entry->flags^=CoderAdjoinFlag;
-  entry->flags|=CoderDecoderSeekableStreamFlag;
-  entry->flags^=CoderBlobSupportFlag;
+  entry->magick_module=ConstantString("EPT");
   (void) RegisterMagickInfo(entry);
-  entry=AcquireMagickInfo("EPT","EPT3",
-    "Encapsulated PostScript Level III with TIFF preview");
+  entry=SetMagickInfo("EPT3");
   entry->decoder=(DecodeImageHandler *) ReadEPTImage;
   entry->encoder=(EncodeImageHandler *) WriteEPTImage;
   entry->magick=(IsImageFormatHandler *) IsEPT;
-  entry->flags|=CoderDecoderSeekableStreamFlag;
-  entry->flags^=CoderBlobSupportFlag;
+  entry->seekable_stream=MagickTrue;
+  entry->blob_support=MagickFalse;
+  entry->description=ConstantString(
+    "Encapsulated PostScript Level III with TIFF preview");
+  entry->magick_module=ConstantString("EPT");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
@@ -397,8 +382,7 @@ ModuleExport void UnregisterEPTImage(void)
 %
 %  The format of the WriteEPTImage method is:
 %
-%      MagickBooleanType WriteEPTImage(const ImageInfo *image_info,
-%        Image *image,ExceptionInfo *exception)
+%      MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image)
 %
 %  A description of each parameter follows.
 %
@@ -406,14 +390,11 @@ ModuleExport void UnregisterEPTImage(void)
 %
 %    o image:  The image.
 %
-%    o exception: return any errors or warnings in this structure.
-%
 */
-static MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image,
-  ExceptionInfo *exception)
+static MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image)
 {
   char
-    filename[MagickPathExtent];
+    filename[MaxTextExtent];
 
   EPTInfo
     ept_info;
@@ -436,12 +417,10 @@ static MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  assert(exception != (ExceptionInfo *) NULL);
-  assert(exception->signature == MagickCoreSignature);
-  status=OpenBlob(image_info,image,WriteBinaryBlobMode,exception);
+  status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
-  write_image=CloneImage(image,0,0,MagickTrue,exception);
+  write_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (write_image == (Image *) NULL)
     return(MagickFalse);
   write_info=CloneImageInfo(image_info);
@@ -460,32 +439,20 @@ static MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image,
   (void) memset(&ept_info,0,sizeof(ept_info));
   ept_info.magick=0xc6d3d0c5ul;
   ept_info.postscript=(unsigned char *) ImageToBlob(write_info,write_image,
-    &ept_info.postscript_length,exception);
+    &ept_info.postscript_length,&image->exception);
   write_image=DestroyImage(write_image);
   write_info=DestroyImageInfo(write_info);
   if (ept_info.postscript == (void *) NULL)
     return(MagickFalse);
-  write_image=CloneImage(image,0,0,MagickTrue,exception);
+  write_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (write_image == (Image *) NULL)
     return(MagickFalse);
   write_info=CloneImageInfo(image_info);
-  (void) CopyMagickString(write_info->magick,"TIFF",MagickPathExtent);
-  (void) FormatLocaleString(filename,MagickPathExtent,"tiff:%s",
+  (void) CopyMagickString(write_info->magick,"TIFF",MaxTextExtent);
+  (void) FormatLocaleString(filename,MaxTextExtent,"tiff:%s",
     write_info->filename);
-  (void) CopyMagickString(write_info->filename,filename,MagickPathExtent);
-  if ((write_image->columns > 512) || (write_image->rows > 512))
-    {
-      Image
-        *resize_image;
-
-      resize_image=ResizeImage(write_image,512,512,write_image->filter,
-        exception);
-      if (resize_image != (Image *) NULL)
-        {
-          write_image=DestroyImage(write_image);
-          write_image=resize_image;
-        }
-    }
+  (void) CopyMagickString(write_info->filename,filename,MaxTextExtent);
+  (void) TransformImage(&write_image,(char *) NULL,"512x512>");
   if ((write_image->storage_class == DirectClass) ||
       (write_image->colors > 256))
     {
@@ -496,13 +463,13 @@ static MagickBooleanType WriteEPTImage(const ImageInfo *image_info,Image *image,
         EPT preview requires that the image is colormapped.
       */
       GetQuantizeInfo(&quantize_info);
-      quantize_info.dither_method=IdentifyPaletteImage(write_image,
-        exception) == MagickFalse ? RiemersmaDitherMethod : NoDitherMethod;
-      (void) QuantizeImage(&quantize_info,write_image,exception);
+      quantize_info.dither=IsPaletteImage(write_image,&image->exception) ==
+        MagickFalse ? MagickTrue : MagickFalse;
+      (void) QuantizeImage(&quantize_info,write_image);
     }
   write_info->compression=NoCompression;
   ept_info.tiff=(unsigned char *) ImageToBlob(write_info,write_image,
-    &ept_info.tiff_length,exception);
+    &ept_info.tiff_length,&image->exception);
   write_image=DestroyImage(write_image);
   write_info=DestroyImageInfo(write_info);
   if (ept_info.tiff == (void *) NULL)
