@@ -1832,10 +1832,9 @@ MagickExport size_t MultilineCensus(const char *label)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  ShredFile() overwrites the specified file with zeros or random data and then
-%  removes it.  The overwrite is optional and is only required to help keep
-%  the contents of the file private.  On the first pass, the file is zeroed.
-%  For subsequent passes, random data is written.
+%  ShredFile() overwrites the specified file with random data and then removes
+%  it.  The overwrite is optional and is only required to help keep the
+%  contents of the file private.
 %
 %  The format of the ShredFile method is:
 %
@@ -1848,9 +1847,6 @@ MagickExport size_t MultilineCensus(const char *label)
 */
 MagickPrivate MagickBooleanType ShredFile(const char *path)
 {
-  char
-    *passes;
-
   int
     file,
     status;
@@ -1864,20 +1860,33 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   size_t
     quantum;
 
+  static ssize_t
+    passes = -1;
+
   struct stat
     file_stats;
 
   if ((path == (const char *) NULL) || (*path == '\0'))
     return(MagickFalse);
-  passes=GetPolicyValue("system:shred");
-  if (passes == (char *) NULL)
-    passes=GetEnvironmentValue("MAGICK_SHRED_PASSES");
-  if (passes == (char *) NULL)
+  if (passes == -1)
+    {
+      char
+        *property;
+
+      property=GetPolicyValue("system:shred");
+      if (property == (char *) NULL)
+        property=GetEnvironmentValue("MAGICK_SHRED_PASSES");
+      if (property != (char *) NULL)
+        {
+          passes=(ssize_t) StringToInteger(property);
+          property=DestroyString(property);
+        }
+    }
+  if (passes <= 0)
     {
       /*
         Don't shred the file, just remove it.
       */
-      passes=DestroyString(passes);
       status=remove_utf8(path);
       if (status == -1)
         {
@@ -1893,7 +1902,6 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
       /*
         Don't shred the file, just remove it.
       */
-      passes=DestroyString(passes);
       status=remove_utf8(path);
       if (status == -1)
         (void) LogMagickEvent(ExceptionEvent,GetMagickModule(),
@@ -1907,7 +1915,7 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   if ((fstat(file,&file_stats) == 0) && (file_stats.st_size > 0))
     quantum=(size_t) MagickMin(file_stats.st_size,MagickMaxBufferExtent);
   length=(MagickSizeType) file_stats.st_size;
-  for (i=0; i < (ssize_t) StringToInteger(passes); i++)
+  for (i=0; i < passes; i++)
   {
     RandomInfo
       *random_info;
@@ -1927,8 +1935,6 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
         *key;
 
       key=GetRandomKey(random_info,quantum);
-      if (i == 0)
-        ResetStringInfo(key);  /* zero on first pass */
       count=write(file,GetStringInfoDatum(key),(size_t)
         MagickMin((MagickSizeType) quantum,length-j));
       key=DestroyStringInfo(key);
@@ -1945,8 +1951,5 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   }
   status=close(file);
   status=remove_utf8(path);
-  if (status != -1)
-    status=StringToInteger(passes);
-  passes=DestroyString(passes);
-  return((status == -1 || i < (ssize_t) status) ? MagickFalse : MagickTrue);
+  return((status == -1 || i < passes) ? MagickFalse : MagickTrue);
 }
