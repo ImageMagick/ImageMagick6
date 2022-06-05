@@ -33,7 +33,7 @@ jobs:
         mv ChangeLog.md artifacts/ChangeLog.md
 
     - name: Upload ChangeLog.md
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: ChangeLog
         path: artifacts
@@ -162,7 +162,7 @@ jobs:
         certificate: '${{ secrets.CERTIFICATE }}'
         folder: 'ImageMagick-Windows6\VisualMagick\installer\output'
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: installers
         path: 'ImageMagick-Windows6\VisualMagick\installer\output'
@@ -198,7 +198,7 @@ jobs:
         cd ImageMagick-Windows6
         7z a ImageMagick6-Windows.7z .\source\*
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: ImageMagick-Windows6
         path: 'ImageMagick-Windows6\ImageMagick6-Windows.7z'
@@ -309,7 +309,7 @@ jobs:
         $version = $version -Replace "`n|`r|""",""
         Write-Host "::set-output name=version::$version"
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: 'ImageMagick-${{steps.package.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.platform}}'
         path: portable
