@@ -1646,6 +1646,7 @@ MagickPrivate MagickBooleanType ShredMagickMemory(void *memory,
       SetRandomKey(random_info,quantum,GetStringInfoDatum(key));
       (void) memcpy(p,GetStringInfoDatum(key),(size_t)
         MagickMin(quantum,length-j));
+      p+=quantum;
     }
     if (j < length)
       break;
