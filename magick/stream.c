@@ -128,12 +128,6 @@ static PixelPacket
 #endif
 
 /*
-  Global declarations.
-*/
-static ssize_t
-  cache_anonymous_memory = (-1);
-
-/*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
 %                                                                             %
@@ -203,15 +197,12 @@ static inline void RelinquishStreamPixels(CacheInfo *cache_info)
   assert(cache_info != (CacheInfo *) NULL);
   if (cache_info->pixels != NULL)
     {
-      if (cache_info->mapped == MagickFalse)
-        (void) RelinquishAlignedMemory(cache_info->pixels);
-      else
-        (void) UnmapBlob(cache_info->pixels,(size_t) cache_info->length);
+      (void) ShredMagickMemory(cache_info->pixels,(size_t) cache_info->length);
+      cache_info->pixels=(PixelPacket *) RelinquishAlignedMemory(
+        cache_info->pixels);
     }
-  cache_info->pixels=(PixelPacket *) NULL;
   cache_info->indexes=(IndexPacket *) NULL;
   cache_info->length=0;
-  cache_info->mapped=MagickFalse;
 }
 
 static void DestroyPixelStream(Image *image)
@@ -658,46 +649,11 @@ static inline MagickBooleanType AcquireStreamPixels(CacheInfo *cache_info,
 {
   if (cache_info->length != (MagickSizeType) ((size_t) cache_info->length))
     return(MagickFalse);
-  if (cache_anonymous_memory < 0)
-    {
-      char
-        *value;
-
-      /*
-        Does the security policy require anonymous mapping for pixel cache?
-      */
-      cache_anonymous_memory=0;
-      value=GetPolicyValue("pixel-cache-memory");
-      if (value == (char *) NULL)
-        value=GetPolicyValue("cache:memory-map");
-      if (LocaleCompare(value,"anonymous") == 0)
-        {
-#if defined(MAGICKCORE_HAVE_MMAP) && defined(MAP_ANONYMOUS)
-          cache_anonymous_memory=1;
-#else
-          (void) ThrowMagickException(exception,GetMagickModule(),
-            MissingDelegateError,"DelegateLibrarySupportNotBuiltIn",
-            "'%s' (policy requires anonymous memory mapping)",
-            cache_info->filename);
-#endif
-        }
-      value=DestroyString(value);
-    }
-   if (cache_anonymous_memory <= 0)
-     {
-       cache_info->mapped=MagickFalse;
-       cache_info->pixels=(PixelPacket *) MagickAssumeAligned(
-         AcquireAlignedMemory(1,(size_t) cache_info->length));
-       if (cache_info->pixels != (PixelPacket *) NULL)
-         (void) memset(cache_info->pixels,0,(size_t) cache_info->length);
-     }
-   else
-     {
-       cache_info->mapped=MagickTrue;
-       cache_info->pixels=(PixelPacket *) MapBlob(-1,IOMode,0,(size_t)
-         cache_info->length);
-     }
-  if (cache_info->pixels == (PixelPacket *) NULL)
+  cache_info->pixels=(PixelPacket *) MagickAssumeAligned(
+    AcquireAlignedMemory(1,(size_t) cache_info->length));
+  if (cache_info->pixels != (PixelPacket *) NULL)
+    (void) memset(cache_info->pixels,0,(size_t) cache_info->length);
+  else
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",
