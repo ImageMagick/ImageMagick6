@@ -7174,6 +7174,7 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
       if (*filename == '\0')
         break;
       status=ShredFile(filename);
+      status|=remove_utf8(filename);
       if (status != MagickFalse)
         XNoticeWidget(display,windows,"Unable to delete image file:",filename);
       break;
@@ -13098,6 +13099,7 @@ static Image *XTileImage(Display *display,XResourceInfo *resource_info,
       if (status <= 0)
         break;
       status=ShredFile(filename);
+      status|=remove_utf8(filename);
       if (status != MagickFalse)
         {
           XNoticeWidget(display,windows,"Unable to delete image file:",
