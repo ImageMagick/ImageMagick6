@@ -1901,9 +1901,9 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   /*
     Shred the file.
   */
-  quantum=(size_t) MagickMaxBufferExtent;
+  quantum=(size_t) MagickMinBufferExtent;
   if ((fstat(file,&file_stats) == 0) && (file_stats.st_size > 0))
-    quantum=(size_t) MagickMin(file_stats.st_size,MagickMaxBufferExtent);
+    quantum=(size_t) MagickMin(file_stats.st_size,MagickMinBufferExtent);
   length=(MagickSizeType) file_stats.st_size;
   random_info=AcquireRandomInfo();
   key=GetRandomKey(random_info,quantum);
