@@ -198,12 +198,12 @@ static inline void RelinquishStreamPixels(CacheInfo *cache_info)
   if (cache_info->pixels != NULL)
     {
       if (cache_info->mapped == MagickFalse)
-        cache_info->pixels=(Quantum *) RelinquishAlignedMemory(
+        cache_info->pixels=(PixelPacket *) RelinquishAlignedMemory(
           cache_info->pixels);
       else
         { 
           (void) UnmapBlob(cache_info->pixels,(size_t) cache_info->length);
-          cache_info->pixels=(Quantum *) NULL;
+          cache_info->pixels=(PixelPacket *) NULL;
         }
     }
   cache_info->mapped=MagickFalse;

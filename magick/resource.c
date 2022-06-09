@@ -1293,7 +1293,7 @@ MagickExport MagickBooleanType RelinquishUniqueFileResource(const char *path)
   char
     cache_path[MaxTextExtent];
 
-  MagickBooleanType
+  MagickStatusType
     status;
 
   assert(path != (const char *) NULL);
@@ -1318,7 +1318,7 @@ MagickExport MagickBooleanType RelinquishUniqueFileResource(const char *path)
       status=ShredFile(path);
       status|=remove_utf8(path);
     }
-  return(status);
+  return(status == 0 ? MagickFalse : MagickTrue);
 }
 
 /*
