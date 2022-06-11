@@ -4402,6 +4402,8 @@ static Image *XGetWindowImage(Display *display,const Window window,
                 composite_image=DestroyImage(composite_image);
                 return((Image *) NULL);
               }
+            if (colors == (XColor *) NULL)
+              break;
             for (i=0; i < (int) composite_image->colors; i++)
             {
               composite_image->colormap[colors[i].pixel].red=
@@ -5866,8 +5868,9 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
       if (pattern != (Image *) NULL)
         {
           canvas=CloneImage(image,0,0,MagickTrue,&image->exception);
-          if (canvas != (Image *) NULL)
-            (void) CompositeImage(canvas,DstOverCompositeOp,pattern,0,0);
+          if (canvas == (Image *) NULL)
+            return;
+          (void) CompositeImage(canvas,DstOverCompositeOp,pattern,0,0);
           pattern=DestroyImage(pattern);
         }
     }
@@ -6474,8 +6477,9 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
       if (pattern != (Image *) NULL)
         {
           canvas=CloneImage(image,0,0,MagickTrue,&image->exception);
-          if (canvas != (Image *) NULL)
-            (void) CompositeImage(canvas,DstOverCompositeOp,pattern,0,0);
+          if (canvas == (Image *) NULL)
+            return;
+          (void) CompositeImage(canvas,DstOverCompositeOp,pattern,0,0);
           pattern=DestroyImage(pattern);
         }
     }

@@ -2154,11 +2154,9 @@ MagickExport Image *MotionBlurImageChannel(const Image *image,
       else
         {
           double
-            alpha,
-            gamma;
+            alpha = 0.0,
+            gamma = 0.0;
 
-          alpha=0.0;
-          gamma=0.0;
           for (i=0; i < (ssize_t) width; i++)
           {
             (void) GetOneCacheViewVirtualPixel(image_view,x+offset[i].x,y+
@@ -2830,15 +2828,13 @@ MagickExport Image *PreviewImage(const Image *image,const PreviewType preview,
   RectangleInfo
     geometry;
 
-  ssize_t
-    i,
-    x;
-
   size_t
     colors;
 
   ssize_t
-    y;
+    i,
+    x = 0,
+    y = 0;
 
   /*
     Open output image file.

@@ -1417,6 +1417,8 @@ MagickExport MagickBooleanType WriteImages(const ImageInfo *image_info,
   write_info=CloneImageInfo(image_info);
   *write_info->magick='\0';
   images=GetFirstImageInList(images);
+  if (images == (Image *) NULL)
+    return(MagickFalse);
   if (filename != (const char *) NULL)
     for (p=images; p != (Image *) NULL; p=GetNextImageInList(p))
       (void) CopyMagickString(p->filename,filename,MaxTextExtent);

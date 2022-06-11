@@ -1528,7 +1528,12 @@ static NodeInfo *Splay(SplayTreeInfo *splay_tree,const size_t depth,
 
   n=(*node);
   if (n == (NodeInfo *) NULL)
-    return(*parent);
+    {
+      if (parent != (NodeInfo **) NULL)
+        return(*parent);
+      else
+        return((NodeInfo *) NULL);
+    }
   if (splay_tree->compare != (int (*)(const void *,const void *)) NULL)
     compare=splay_tree->compare(n->key,key);
   else
