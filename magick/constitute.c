@@ -829,7 +829,7 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       }
     if (source_date_epoch == (const char *) NULL)
       {
-        (void) FormatMagickTime(GetMagickTime(),MaxTextExtent,timestamp);
+        (void) FormatMagickTime(image->timestamp,MaxTextExtent,timestamp);
         (void) SetImageProperty(next,"date:timestamp",timestamp);
         (void) FormatMagickTime((time_t) GetBlobProperties(next)->st_mtime,
           MaxTextExtent,timestamp);
