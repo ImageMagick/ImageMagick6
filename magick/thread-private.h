@@ -59,8 +59,8 @@ static inline int GetMagickNumberThreads(const Image *source,
   const Image *destination,const size_t chunk,int multithreaded)
 {
   const CacheType
-    destination_type = (const CacheType) GetImagePixelCacheType(destination),
-    source_type = (const CacheType) GetImagePixelCacheType(source);
+    destination_type = (CacheType) GetImagePixelCacheType(destination),
+    source_type = (CacheType) GetImagePixelCacheType(source);
 
   int
     number_threads;

@@ -94,7 +94,7 @@ static inline MagickBooleanType HeapOverflowSanityCheckGetSize(
       errno=ENOMEM;
       return(MagickTrue);
     }
-  if (extent != (size_t *const) NULL)
+  if (extent != (size_t *) NULL)
     *extent=length;
   return(MagickFalse);
 }

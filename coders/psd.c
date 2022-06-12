@@ -1908,9 +1908,9 @@ static MagickBooleanType ReadPSDLayersInternal(Image *image,
                     ThrowBinaryException(CorruptImageError,
                       "InsufficientImageDataInFile",image->filename);
                   }
-                layer_info[i].info=AcquireStringInfo((const size_t) length);
+                layer_info[i].info=AcquireStringInfo((size_t) length);
                 info=GetStringInfoDatum(layer_info[i].info);
-                (void) ReadBlob(image,(const size_t) length,info);
+                (void) ReadBlob(image,(size_t) length,info);
               }
           }
       }
@@ -2273,7 +2273,7 @@ static Image *ReadPSDImage(const ImageInfo *image_info,ExceptionInfo *exception)
           /*
             Duotone image data;  the format of this data is undocumented.
           */
-          (void) SeekBlob(image,(const MagickOffsetType) length,SEEK_CUR);
+          (void) SeekBlob(image,(MagickOffsetType) length,SEEK_CUR);
         }
       else
         {
@@ -3323,7 +3323,7 @@ static const StringInfo *GetAdditionalInformation(const ImageInfo *image_info,
   profile=RemoveImageProfile(image,"psd:additional-info");
   if (length == 0)
     return(DestroyStringInfo(profile));
-  SetStringInfoLength(profile,(const size_t) length);
+  SetStringInfoLength(profile,(size_t) length);
   (void) SetImageProfile(image,"psd:additional-info",info);
   return(profile);
 }
@@ -3623,11 +3623,11 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
         mask->page.y+=image->page.y;
         mask->page.x+=image->page.x;
         size+=WriteBlobMSBLong(image,20);
-        size+=WriteBlobMSBSignedLong(image,(const signed int) mask->page.y);
-        size+=WriteBlobMSBSignedLong(image,(const signed int) mask->page.x);
-        size+=WriteBlobMSBSignedLong(image,(const signed int) (mask->rows+
+        size+=WriteBlobMSBSignedLong(image,(signed int) mask->page.y);
+        size+=WriteBlobMSBSignedLong(image,(signed int) mask->page.x);
+        size+=WriteBlobMSBSignedLong(image,(signed int) (mask->rows+
           mask->page.y));
-        size+=WriteBlobMSBSignedLong(image,(const signed int) (mask->columns+
+        size+=WriteBlobMSBSignedLong(image,(signed int) (mask->columns+
           mask->page.x));
         size+=WriteBlobByte(image,default_color);
         size+=WriteBlobByte(image,(unsigned char) (
