@@ -149,6 +149,7 @@ MagickExport MagickBooleanType DefineImageRegistry(const RegistryType type,
 */
 MagickExport MagickBooleanType DeleteImageRegistry(const char *key)
 {
+  assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (registry == (void *) NULL)
@@ -192,6 +193,7 @@ MagickExport void *GetImageRegistry(const RegistryType type,const char *key,
   RegistryInfo
     *registry_info;
 
+  assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (registry == (void *) NULL)
@@ -354,6 +356,7 @@ MagickExport void RegistryComponentTerminus(void)
 */
 MagickExport void *RemoveImageRegistry(const char *key)
 {
+  assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (registry == (void *) NULL)
@@ -457,6 +460,7 @@ MagickExport MagickBooleanType SetImageRegistry(const RegistryType type,
   void
     *clone_value;
 
+  assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (value == (const void *) NULL)
