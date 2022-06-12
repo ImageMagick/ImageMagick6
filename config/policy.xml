@@ -75,8 +75,9 @@
   <!-- <policy domain="cache" name="memory-map" value="anonymous"/> -->
   <!-- <policy domain="cache" name="synchronize" value="True"/> -->
   <!-- <policy domain="cache" name="shared-secret" value="passphrase" stealth="true"/> -->
+  <!-- <policy domain="cache" name="synchronize" value="True"/> -->
   <!-- <policy domain="system" name="max-memory-request" value="256MiB"/> -->
   <!-- <policy domain="system" name="shred" value="1"/> -->
   <!-- <policy domain="system" name="font" value="/path/to/unicode-font.ttf"/> -->
-  <policy domain="cache" name="synchronize" value="False"/>
+  <policy domain="Undefined" rights="none"/>
 </policymap>
