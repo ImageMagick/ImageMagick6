@@ -685,10 +685,13 @@ static inline void WriteTGAPixel(Image *image,TGAImageType image_type,
   const double midpoint)
 {
   if (image_type == TGAColormap || image_type == TGARLEColormap)
-    (void) WriteBlobByte(image,(unsigned char) GetPixelIndex(indexes));
+    {
+      assert(indexes != (IndexPacket *) NULL);
+      (void) WriteBlobByte(image,(unsigned char) GetPixelIndex(indexes));
+    }
   else
     {
-      if (image_type == TGAMonochrome || image_type == TGARLEMonochrome)
+      if ((image_type == TGAMonochrome) || (image_type == TGARLEMonochrome))
         (void) WriteBlobByte(image,ScaleQuantumToChar(ClampToQuantum(
           GetPixelLuma(image,p))));
       else

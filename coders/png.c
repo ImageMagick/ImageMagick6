@@ -13282,7 +13282,7 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
     status;
 
   volatile MagickBooleanType
-    logging;
+    logging = MagickFalse;
 
   MngInfo
     *mng_info;

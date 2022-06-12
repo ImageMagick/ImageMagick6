@@ -3651,12 +3651,13 @@ static Image *RenderMSVGImage(const ImageInfo *image_info,Image *image,
     }
   svg_info=DestroySVGInfo(svg_info);
   (void) RelinquishUniqueFileResource(filename);
-  for (next=GetFirstImageInList(image); next != (Image *) NULL; )
-  {
-    (void) CopyMagickString(next->filename,image->filename,MaxTextExtent);
-    (void) CopyMagickString(next->magick,"SVG",MaxTextExtent);
-    next=GetNextImageInList(next);
-  }
+  if (image != (Image *) NULL)
+    for (next=GetFirstImageInList(image); next != (Image *) NULL; )
+    {
+      (void) CopyMagickString(next->filename,image->filename,MaxTextExtent);
+      (void) CopyMagickString(next->magick,"SVG",MaxTextExtent);
+      next=GetNextImageInList(next);
+    }
   return(GetFirstImageInList(image));
 }
 #else
