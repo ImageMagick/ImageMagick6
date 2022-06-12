@@ -1578,11 +1578,14 @@ MagickExport int SetMagickPrecision(const int precision)
       char
         *limit;
 
-      /*
-        Precision reset, or it has not been set yet.
-      */
+      ExceptionInfo
+        *exception = AcquireExceptionInfo();
+
       magick_precision=MagickPrecision;
-      limit=GetEnvironmentValue("MAGICK_PRECISION");
+      limit=(char *) GetImageRegistry(StringRegistryType,"precision",exception);
+      exception=DestroyExceptionInfo(exception);
+      if (limit == (char *) NULL)
+        limit=GetEnvironmentValue("MAGICK_PRECISION");
       if (limit == (char *) NULL)
         limit=GetPolicyValue("system:precision");
       if (limit != (char *) NULL)
