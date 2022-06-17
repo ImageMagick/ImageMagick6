@@ -2599,6 +2599,28 @@ static inline MagickBooleanType SetStreamBuffering(const ImageInfo *image_info,
   return(status == 0 ? MagickTrue : MagickFalse);
 }
 
+#if defined(MAGICKCORE_ZLIB_DELEGATE)
+static inline gzFile gzopen_utf8(const char *path,const char *mode)
+{
+#if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__CYGWIN__)
+  return(gzopen(path,mode));
+#else
+   gzFile
+     file;
+
+   wchar_t
+     *path_wide;
+
+   path_wide=create_wchar_path(path);
+   if (path_wide == (wchar_t *) NULL)
+     return((gzFile) NULL);
+   file=gzopen_w(path_wide,mode);
+   path_wide=(wchar_t *) RelinquishMagickMemory(path_wide);
+   return(file);
+#endif
+}
+#endif
+
 MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
   Image *image,const BlobMode mode,ExceptionInfo *exception)
 {
@@ -2817,7 +2839,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
             if (((int) magick[0] == 0x1F) && ((int) magick[1] == 0x8B) &&
                 ((int) magick[2] == 0x08))
               {
-                blob_info->file_info.gzfile=gzopen(filename,"rb");
+                blob_info->file_info.gzfile=gzopen_utf8(filename,"rb");
                 if (blob_info->file_info.gzfile != (gzFile) NULL)
                   {
                     (void) fclose(blob_info->file_info.file);
@@ -2890,7 +2912,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
             (LocaleCompare(extension,"wmz") == 0) ||
             (LocaleCompare(extension,"svgz") == 0))
           {
-            blob_info->file_info.gzfile=gzopen(filename,"wb");
+            blob_info->file_info.gzfile=gzopen_utf8(filename,"wb");
             if (blob_info->file_info.gzfile != (gzFile) NULL)
               blob_info->type=ZipStream;
           }
