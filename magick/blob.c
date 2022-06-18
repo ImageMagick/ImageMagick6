@@ -2844,7 +2844,6 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
                   {
                     if (blob_info->file_info.file != (FILE *) NULL)
                       (void) fclose(blob_info->file_info.file);
-                    (void) fclose(blob_info->file_info.file);
                     blob_info->file_info.file=(FILE *) NULL;
                     blob_info->type=ZipStream;
                   }
