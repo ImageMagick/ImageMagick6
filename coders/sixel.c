@@ -84,7 +84,7 @@
 /*
   Macros
 */
-#define SIXEL_RGB(r, g, b) ((int) (((ssize_t) (r) << 16) + ((g) << 8) +  (b)))
+#define SIXEL_RGB(r, g, b) ((int) (((ssize_t) ((r) & 0xff) << 16) + (((g) & 0xff) << 8) +  ((b) & 0xff)))
 #define SIXEL_PALVAL(n,a,m) ((int) (((ssize_t) (n) * (a) + ((m) / 2)) / (m)))
 #define SIXEL_XRGB(r,g,b) SIXEL_RGB(SIXEL_PALVAL(r, 255, 100), SIXEL_PALVAL(g, 255, 100), SIXEL_PALVAL(b, 255, 100))
 
