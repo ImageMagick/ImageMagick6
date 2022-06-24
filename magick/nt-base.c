@@ -183,7 +183,7 @@ static inline char *create_utf8_string(const wchar_t *wideChar)
   count=WideCharToMultiByte(CP_UTF8,0,wideChar,-1,NULL,0,NULL,NULL);
   if (count < 0)
     return((char *) NULL);
-  utf8=(char *) AcquireQuantumMemory(count+1,sizeof(*utf8));
+  utf8=(char *) NTAcquireQuantumMemory(count+1,sizeof(*utf8));
   if (utf8 == (char *) NULL)
     return((char *) NULL);
   count=WideCharToMultiByte(CP_UTF8,0,wideChar,-1,utf8,count,NULL,NULL);
@@ -230,7 +230,7 @@ static unsigned char *NTGetRegistryValue(HKEY root,const char *key,DWORD flags,
       LPBYTE
         wide;
 
-      wide=(LPBYTE) AcquireQuantumMemory((const size_t) size,sizeof(*wide));
+      wide=(LPBYTE) NTAcquireQuantumMemory((const size_t) size,sizeof(*wide));
       if (wide != (LPBYTE) NULL)
         {
           status=RegQueryValueExW(registry_key,wide_name,0,&type,wide,&size);
@@ -305,7 +305,7 @@ BOOL WINAPI DllMain(HINSTANCE handle,DWORD reason,LPVOID lpvReserved)
         *wide_path;
 
       MagickCoreGenesis((const char*) NULL,MagickFalse);
-      wide_path=(wchar_t *) AcquireQuantumMemory(MaxTextExtent,
+      wide_path=(wchar_t *) NTAcquireQuantumMemory(MaxTextExtent,
         sizeof(*wide_path));
       if (wide_path == (wchar_t *) NULL)
         return(FALSE);
@@ -322,7 +322,7 @@ BOOL WINAPI DllMain(HINSTANCE handle,DWORD reason,LPVOID lpvReserved)
                 module_path[count+1]='\0';
                 break;
               }
-          path=(char *) AcquireQuantumMemory(MaxTextExtent,16*sizeof(*path));
+          path=(char *) NTAcquireQuantumMemory(MaxTextExtent,16*sizeof(*path));
           if (path == (char *) NULL)
             {
               module_path=DestroyString(module_path);
@@ -337,7 +337,7 @@ BOOL WINAPI DllMain(HINSTANCE handle,DWORD reason,LPVOID lpvReserved)
                   char
                     *variable;
 
-                  variable=(char *) AcquireQuantumMemory(MaxTextExtent,
+                  variable=(char *) NTAcquireQuantumMemory(MaxTextExtent,
                     16*sizeof(*variable));
                   if (variable == (char *) NULL)
                     {
@@ -470,7 +470,7 @@ MagickPrivate char **NTArgvToUTF8(const int argc,wchar_t **argv)
   ssize_t
     i;
 
-  utf8=(char **) AcquireQuantumMemory(argc,sizeof(*utf8));
+  utf8=(char **) NTAcquireQuantumMemory(argc,sizeof(*utf8));
   if (utf8 == (char **) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToConvertStringToARGV");
   for (i=0; i < (ssize_t) argc; i++)
