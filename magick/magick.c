@@ -1241,13 +1241,32 @@ static SignalHandler *RegisterMagickSignalHandler(int signal_number)
   return(handler);
 }
 
+static void SetClientNameAndPath(const char *path)
+{
+  char
+    execution_path[MaxTextExtent],
+    filename[MaxTextExtent];
+
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+  if ((path != (const char *) NULL) && (IsPathAccessible(path) != MagickFalse))
+#else
+  if ((path != (const char *) NULL) && (*path == *DirectorySeparator) &&
+      (IsPathAccessible(path) != MagickFalse))
+#endif
+    (void) CopyMagickString(execution_path,path,MaxTextExtent);
+  else
+    (void) GetExecutionPath(execution_path,MaxTextExtent);
+  GetPathComponent(execution_path,TailPath,filename);
+  (void) SetClientName(filename);
+  GetPathComponent(execution_path,HeadPath,execution_path);
+  (void) SetClientPath(execution_path);
+}
+
 MagickExport void MagickCoreGenesis(const char *path,
   const MagickBooleanType establish_signal_handlers)
 {
   char
-    *events,
-    execution_path[MaxTextExtent],
-    filename[MaxTextExtent];
+    *events;
 
   /*
     Initialize the Magick environment.
@@ -1266,6 +1285,7 @@ MagickExport void MagickCoreGenesis(const char *path,
     }
   (void) SemaphoreComponentGenesis();
   (void) ExceptionComponentGenesis();
+  SetClientNameAndPath(path);
   (void) LogComponentGenesis();
   (void) LocaleComponentGenesis();
   (void) RandomComponentGenesis();
@@ -1278,22 +1298,6 @@ MagickExport void MagickCoreGenesis(const char *path,
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
   NTWindowsGenesis();
 #endif
-  /*
-    Set client name and execution path.
-  */
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
-  if ((path != (const char *) NULL) && (IsPathAccessible(path) != MagickFalse))
-#else
-  if ((path != (const char *) NULL) && (*path == *DirectorySeparator) &&
-      (IsPathAccessible(path) != MagickFalse))
-#endif
-    (void) CopyMagickString(execution_path,path,MaxTextExtent);
-  else
-    (void) GetExecutionPath(execution_path,MaxTextExtent);
-  GetPathComponent(execution_path,TailPath,filename);
-  (void) SetClientName(filename);
-  GetPathComponent(execution_path,HeadPath,execution_path);
-  (void) SetClientPath(execution_path);
   if (establish_signal_handlers != MagickFalse)
     {
       /*
