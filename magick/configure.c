@@ -901,6 +901,7 @@ MagickExport LinkedListInfo *GetConfigurePaths(const char *filename,
     char
       module_path[MaxTextExtent];
 
+#if defined(_MAGICKDLL_)
     if ((NTGetModulePath("CORE_RL_magick_.dll",module_path) != MagickFalse) ||
         (NTGetModulePath("CORE_DB_magick_.dll",module_path) != MagickFalse))
       {
@@ -918,6 +919,7 @@ MagickExport LinkedListInfo *GetConfigurePaths(const char *filename,
         else
           key_value=(unsigned char *) RelinquishMagickMemory(key_value);
       }
+#endif
     if (NTGetModulePath("Magick.dll",module_path) != MagickFalse)
       {
         /*
