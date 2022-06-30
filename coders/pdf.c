@@ -1090,6 +1090,7 @@ static MagickBooleanType Huffman2DEncodeImage(const ImageInfo *image_info,
   write_info=CloneImageInfo(image_info);
   (void) CopyMagickString(write_info->filename,"GROUP4:",MaxTextExtent);
   (void) CopyMagickString(write_info->magick,"GROUP4",MaxTextExtent);
+  (void) SetImageArtifact(group4_image,"tiff:photometric","min-is-white");
   group4=(unsigned char *) ImageToBlob(write_info,group4_image,&length,
     &image->exception);
   group4_image=DestroyImage(group4_image);
@@ -1810,11 +1811,11 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     (void) FormatLocaleString(buffer,MaxTextExtent,"%.20g 0 obj\n",(double)
       object);
     (void) WriteBlobString(image,buffer);
-    if ((image->storage_class == DirectClass) || (image->colors > 256))
-      (void) CopyMagickString(buffer,"[ /PDF /Text /ImageC",MaxTextExtent);
+    if ((compression == FaxCompression) || (compression == Group4Compression))
+      (void) CopyMagickString(buffer,"[ /PDF /Text /ImageB",MaxTextExtent);
     else
-      if ((compression == FaxCompression) || (compression == Group4Compression))
-        (void) CopyMagickString(buffer,"[ /PDF /Text /ImageB",MaxTextExtent);
+      if ((image->storage_class == DirectClass) || (image->colors > 256))
+        (void) CopyMagickString(buffer,"[ /PDF /Text /ImageC",MaxTextExtent);
       else
         (void) CopyMagickString(buffer,"[ /PDF /Text /ImageI",MaxTextExtent);
     (void) WriteBlobString(image,buffer);
