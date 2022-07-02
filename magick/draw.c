@@ -1732,6 +1732,8 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
   const PrimitiveInfo *primitive_info,Image *image)
 {
   double
+    dx,
+    dy,
     length,
     maximum_length,
     offset,
@@ -1746,10 +1748,6 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
 
   PrimitiveInfo
     *dash_polygon;
-
-  double
-    dx,
-    dy;
 
   ssize_t
     i;
@@ -3675,7 +3673,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     &next_token);
                   if (token == next_token)
                     ThrowPointExpectedException(image,token);
-                  if (graphic_context[n]->dash_pattern[j] < 0.0)
+                  if (graphic_context[n]->dash_pattern[j] <= 0.0)
                     status=MagickFalse;
                 }
                 if ((x & 0x01) != 0)
