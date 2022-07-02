@@ -729,9 +729,6 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
                   }
                 if (LocaleCompare(keyword,"columns") == 0)
                   {
-                    if (image->columns != 0)
-                      ThrowReaderException(CorruptImageError,
-                        "ImproperImageHeader");
                     image->columns=StringToUnsignedLong(options);
                     break;
                   }
@@ -1006,9 +1003,6 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
                   }
                 if (LocaleCompare(keyword,"rows") == 0)
                   {
-                    if (image->rows != 0)
-                      ThrowReaderException(CorruptImageError,
-                        "ImproperImageHeader");
                     image->rows=StringToUnsignedLong(options);
                     break;
                   }
