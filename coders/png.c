@@ -12073,8 +12073,10 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
       mng_info->write_png_colortype = /* 6 */  7;
       mng_info->write_png_depth = 8;
       image->depth = 8;
-      image->matte = MagickTrue;
-      (void) SetImageType(image,TrueColorMatteType);
+      if (image->matte != MagickFalse)
+        (void) SetImageType(image,TrueColorMatteType);
+      else
+        (void) SetImageType(image,TrueColorType);
       (void) SyncImage(image);
     }
 
@@ -12083,13 +12085,10 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
       mng_info->write_png_colortype = /* 2 */ 3;
       mng_info->write_png_depth = 16;
       image->depth = 16;
-
       if (image->matte != MagickFalse)
         (void) SetImageType(image,TrueColorMatteType);
-
       else
         (void) SetImageType(image,TrueColorType);
-
       (void) SyncImage(image);
     }
 
@@ -12098,8 +12097,10 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
       mng_info->write_png_colortype = /* 6 */  7;
       mng_info->write_png_depth = 16;
       image->depth = 16;
-      image->matte = MagickTrue;
-      (void) SetImageType(image,TrueColorMatteType);
+      if (image->matte != MagickFalse)
+        (void) SetImageType(image,TrueColorMatteType);
+      else
+        (void) SetImageType(image,TrueColorType);
       (void) SyncImage(image);
     }
 
