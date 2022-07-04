@@ -394,6 +394,8 @@ MagickExport const MagicInfo *GetMagicInfo(const unsigned char *magic,
   while (p != (const MagicInfo *) NULL)
   {
     assert(p->offset >= 0);
+    if (LocaleCompare(p->name,"SVG") == 0)
+      while (isspace(*magic) != 0) magic++;
     if (((size_t) (p->offset+p->length) <= length) &&
         (memcmp(magic+p->offset,p->magic,p->length) == 0))
       break;
