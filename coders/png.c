@@ -4063,7 +4063,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
    *    Throwing an Exception when an error occurs.
    */
 
-  image->depth=ping_file_depth
+  image->depth=ping_file_depth;
   return(image);
 
 /* end of reading one PNG image */
