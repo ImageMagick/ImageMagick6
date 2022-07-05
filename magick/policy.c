@@ -575,6 +575,7 @@ static MagickBooleanType IsPolicyCacheInstantiated(ExceptionInfo *exception)
 {
   if (policy_cache == (LinkedListInfo *) NULL)
     {
+      GetMaxMemoryRequest();  /* avoid OMP deadlock */
       if (policy_semaphore == (SemaphoreInfo *) NULL)
         ActivateSemaphoreInfo(&policy_semaphore);
       LockSemaphoreInfo(policy_semaphore);
