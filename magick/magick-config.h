@@ -47,6 +47,11 @@ extern "C" {
 # endif
 #endif
 
+/* Define to 1 if assertions should be disabled. */
+#if defined(MAGICKCORE_NDEBUG)
+#define NDEBUG 1
+#endif
+
 
 #if !defined(MAGICKCORE_HDRI_ENABLE) && defined(MAGICKCORE_HDRI_ENABLE_OBSOLETE_IN_H)
 # warning "you should set MAGICKCORE_HDRI_ENABLE to sensible default set it to configure time default"
