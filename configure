@@ -5126,7 +5126,7 @@ MAGICK_PATCHLEVEL_VERSION=59
 
 MAGICK_VERSION=6.9.12-59
 
-MAGICK_GIT_REVISION=ecc4153d3:20220709
+MAGICK_GIT_REVISION=dcb6e1eca:20220717
 
 
 # Substitute library versioning
@@ -5160,7 +5160,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,59
 
-PACKAGE_RELEASE_DATE=2022-07-09
+PACKAGE_RELEASE_DATE=2022-07-17
 
 
 # Ensure that make can run correctly
@@ -11322,13 +11322,18 @@ _ACEOF
 if ac_fn_c_try_compile "$LINENO"
 then :
 
+    ac_cv_have_linux_sendfile=yes
+
+else $as_nop
+
+    ac_cv_have_linux_sendfile=no
+
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
-
 fi
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_have_linux_sendfile" >&5
 printf "%s\n" "$ac_cv_have_linux_sendfile" >&6; }
-if test $ac_cv_have_linux_sendfile = yes; then
+if test "$ac_cv_have_linux_sendfile" = 'yes'; then
 
 printf "%s\n" "#define HAVE_LINUX_SENDFILE 1" >>confdefs.h
 
