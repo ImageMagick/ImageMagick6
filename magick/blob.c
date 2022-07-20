@@ -2026,14 +2026,12 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
           status=WriteImages(clone_info,images,images->filename,exception);
           *length=images->blob->length;
           blob=DetachBlob(images->blob);
-          if (blob != (unsigned char *) NULL)
-            {
-              if (status == MagickFalse)
-                blob=(unsigned char *) RelinquishMagickMemory(blob);
-              else
-                blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
-                  sizeof(*blob));
-            }
+          if (blob == (void *) NULL)
+            clone_info->blob=RelinquishMagickMemory(clone_info->blob);
+          else if (status == MagickFalse)
+            blob=RelinquishMagickMemory(blob);
+          else
+            blob=ResizeQuantumMemory(blob,*length+1,sizeof(unsigned char));
         }
     }
   else
