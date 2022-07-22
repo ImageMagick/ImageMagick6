@@ -372,7 +372,7 @@ static KernelInfo *ParseKernelArray(const char *kernel_string)
 static KernelInfo *ParseKernelName(const char *kernel_string)
 {
   char
-    token[MaxTextExtent];
+    token[MaxTextExtent] = "";
 
   const char
     *p,
