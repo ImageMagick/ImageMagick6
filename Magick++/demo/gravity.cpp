@@ -9,7 +9,7 @@
 // are using X-Windows to see an animated result.
 //
 // Concept and algorithms lifted from PerlMagick demo script written
-// by John Christy.
+// by Cristy.
 //
 
 #include <Magick++.h>

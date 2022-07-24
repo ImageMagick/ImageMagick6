@@ -4968,8 +4968,12 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
           else
             for (x=(ssize_t) image->columns; x != 0; x--,q++,s++)
             {
-              SetPixelAlpha(q,GetPixelRed(s));
-              if (GetPixelOpacity(q) != OpaqueOpacity)
+              Quantum
+                alpha;
+
+              alpha=GetPixelRed(s);
+              SetPixelAlpha(q,alpha);
+              if (alpha != OpaqueOpacity)
                 image->matte=MagickTrue;
             }
 
