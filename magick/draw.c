@@ -1253,18 +1253,15 @@ MagickExport MagickBooleanType DrawAffineImage(Image *image,
 #endif
   for (y=start; y <= stop; y++)
   {
+    IndexPacket
+      *magick_restrict indexes;
+
     MagickPixelPacket
       composite,
       pixel;
 
     PointInfo
       point;
-
-    IndexPacket
-      *magick_restrict indexes;
-
-    ssize_t
-      x;
 
     PixelPacket
       *magick_restrict q;
@@ -1273,6 +1270,7 @@ MagickExport MagickBooleanType DrawAffineImage(Image *image,
       inverse_edge;
 
     ssize_t
+      x,
       x_offset;
 
     if (status == MagickFalse)
