@@ -7,7 +7,8 @@
 <img align="center" src="https://imagemagick.org/image/wizard.png" alt="ImageMagick logo" width="265"/>
 </p>
 
-Use [ImageMagick®](https://imagemagick.org/) to create, edit, compose, or convert bitmap images. It can read and write images in a variety of [formats](https://imagemagick.org/script/formats.php) (over 200) including PNG, JPEG, GIF, HEIC, TIFF, DPX, EXR, WebP, Postscript, PDF, and SVG.  Use ImageMagick to resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses and Bézier curves.
+Use [ImageMagick®](https://legacy.imagemagick.org/) to create, edit, compose, or convert digital images. It can read and write images in a variety of formats (over 200) including PNG, JPEG, GIF, WebP, HEIC, SVG, PDF, DPX, EXR, and TIFF. ImageMagick can resize, flip, mirror, rotate, distort, shear and transform images, adjust image colors, apply various special effects, or draw text, lines, polygons, ellipses, and Bézier curves.
+
 
 #### What is ImageMagick?
 
@@ -17,13 +18,12 @@ ImageMagick utilizes multiple computational threads to increase performance and 
 
 ImageMagick is free software delivered as a ready-to-run binary distribution or as source code that you may use, copy, modify, and distribute in both open and proprietary applications. It is distributed under a derived Apache 2.0 [license](https://imagemagick.org/script/license.php).
 
-The ImageMagick development process ensures a stable API and ABI. Before each ImageMagick release, we perform a comprehensive security assessment that includes memory error and thread data race detection to prevent security vulnerabilities.
+ImageMagick is free software delivered as a ready-to-run binary distribution or as source code that you may use, copy, modify, and distribute in both open and proprietary applications. It is distributed under a derived Apache 2.0 [license](https://imagemagick.org/script/license.php).
 
-The current release is the ImageMagick 6.9.12-* series. It runs on Linux, Windows, Mac Os X, iOS, Android OS, and others.
+ImageMagick utilizes multiple computational threads to increase performance and can read, process, or write mega-, giga-, or tera-pixel image sizes.
+The current release is the ImageMagick 7.1.0 series. It runs on Linux, Windows, macOS X, iOS, Android OS, and others.
 
-The authoritative ImageMagick version 6 web site is https://legacy.imagemagick.org. The authoritative source code repository is https://github.com/ImageMagick/ImageMagick6. We maintain a source code mirror at https://gitlab.com/ImageMagick/ImageMagick6.
-
-The design of ImageMagick is an evolutionary process, with the design and implementation efforts serving to influence and guide further progress in the other. With ImageMagick version 7 we aim to improve the design based on lessons learned from the version 6 implementation.
+The design of ImageMagick is an evolutionary process, with the design and implementation efforts serving to influence and guide further progress in the other. With [ImageMagick version 7](https://imagemagick.org/), we aim to improve the design based on lessons learned from the version 6 implementation. As ImageMagick version 6 is near end of life, we recommend you switch to ImageMagick version 7. In the mean-time we continue to support and add security patches, but not enhance, ImageMagick version 6, until at least August 1, 2028.
 
 #### Features and Capabilities
 
