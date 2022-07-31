@@ -177,7 +177,7 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
 {
 #if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
   char
-    service[MaxTextExtent],
+    service[MagickPathExtent],
     *shared_secret;
 
   int
@@ -186,6 +186,9 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
   SOCKET_TYPE
     client_socket;
 
+  StringInfo
+    *nonce;
+
   ssize_t
     count;
 
@@ -193,21 +196,10 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
     hint,
     *result;
 
-  unsigned char
-    secret[MaxTextExtent];
-
   /*
     Connect to distributed pixel cache and get session key.
   */
   *session_key=0;
-  shared_secret=GetPolicyValue("cache:shared-secret");
-  if (shared_secret == (char *) NULL)
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
-        "DistributedPixelCache","'%s'","shared secret expected");
-      return(-1);
-    }
-  shared_secret=DestroyString(shared_secret);
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
   NTInitializeWinsock(MagickTrue);
 #endif
@@ -215,7 +207,7 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
   hint.ai_family=AF_INET;
   hint.ai_socktype=SOCK_STREAM;
   hint.ai_flags=AI_PASSIVE;
-  (void) FormatLocaleString(service,MaxTextExtent,"%d",port);
+  (void) FormatLocaleString(service,MagickPathExtent,"%d",port);
   status=getaddrinfo(hostname,service,&hint,&result);
   if (status != 0)
     {
@@ -233,37 +225,45 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
       return(-1);
     }
   status=connect(client_socket,result->ai_addr,(socklen_t) result->ai_addrlen);
+  freeaddrinfo(result);
   if (status == -1)
     {
       CLOSE_SOCKET(client_socket);
-      freeaddrinfo(result);
       (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
         "DistributedPixelCache","'%s'",hostname);
       return(-1);
     }
-  count=recv(client_socket,CHAR_TYPE_CAST secret,MaxTextExtent,0);
-  if (count != -1)
-    {
-      StringInfo
-        *nonce;
-
-      nonce=AcquireStringInfo(count);
-      (void) memcpy(GetStringInfoDatum(nonce),secret,(size_t) count);
-      *session_key=GetMagickCoreSignature(nonce);
-      nonce=DestroyStringInfo(nonce);
-    }
-  if (*session_key == 0)
+  count=recv(client_socket,(unsigned char *) session_key,sizeof(size_t),0);
+  if (count == -1)
     {
       CLOSE_SOCKET(client_socket);
-      client_socket=(SOCKET_TYPE) (-1);
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "DistributedPixelCache","'%s'",hostname);
+      return(-1);
     }
-  freeaddrinfo(result);
+  /*
+    Authenticate client session key to server session key.
+  */
+  shared_secret=GetPolicyValue("cache:shared-secret");
+  if (shared_secret == (char *) NULL)
+    {
+      CLOSE_SOCKET(client_socket);
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "DistributedPixelCache","'shared secret expected: %s'",hostname);
+      return(-1);
+    }
+  nonce=StringToStringInfo(shared_secret);
+  if (GetMagickCoreSignature(nonce) != *session_key)
+    {
+      CLOSE_SOCKET(client_socket);
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "DistributedPixelCache","'authentication failed: %s'",hostname);
+      return(-1);
+    }
+  shared_secret=DestroyString(shared_secret);
+  nonce=DestroyStringInfo(nonce);
   return(client_socket);
 #else
-  magick_unreferenced(hostname);
-  magick_unreferenced(port);
-  magick_unreferenced(session_key);
-  magick_unreferenced(exception);
   (void) ThrowMagickException(exception,GetMagickModule(),MissingDelegateError,
     "DelegateLibrarySupportNotBuiltIn","distributed pixel cache");
   return(MagickFalse);
@@ -340,9 +340,8 @@ MagickPrivate DistributeCacheInfo *AcquireDistributeCacheInfo(
   /*
     Connect to the distributed pixel cache server.
   */
-  server_info=(DistributeCacheInfo *) AcquireMagickMemory(sizeof(*server_info));
-  if (server_info == (DistributeCacheInfo *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+  server_info=(DistributeCacheInfo *) AcquireCriticalMemory(
+    sizeof(*server_info));
   (void) memset(server_info,0,sizeof(*server_info));
   server_info->signature=MagickCoreSignature;
   server_info->port=0;
@@ -355,7 +354,7 @@ MagickPrivate DistributeCacheInfo *AcquireDistributeCacheInfo(
   else
     {
       server_info->session_key=session_key;
-      (void) CopyMagickString(server_info->hostname,hostname,MaxTextExtent);
+      (void) CopyMagickString(server_info->hostname,hostname,MagickPathExtent);
       server_info->debug=GetLogEventMask() & CacheEvent ? MagickTrue :
         MagickFalse;
     }
@@ -488,7 +487,7 @@ static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
     length;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -547,7 +546,7 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
     region;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *q;
 
   /*
@@ -605,7 +604,7 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
     region;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *q;
 
   /*
@@ -669,7 +668,7 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
     *q;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -727,7 +726,7 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
     region;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -776,12 +775,6 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
   MagickOffsetType
     count;
 
-  RandomInfo
-    *random_info;
-
-  unsigned char
-    *p;
-
   size_t
     key,
     session_key;
@@ -793,33 +786,29 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
     *registry;
 
   StringInfo
-    *secret;
+    *nonce;
 
   unsigned char
-    command,
-    session[2*MaxTextExtent];
+    command;
 
   /*
-    Distributed pixel cache client.
+    Generate session key.
   */
   shared_secret=GetPolicyValue("cache:shared-secret");
   if (shared_secret == (char *) NULL)
     ThrowFatalException(CacheFatalError,"shared secret expected");
-  p=session;
-  (void) CopyMagickString((char *) p,shared_secret,MaxTextExtent);
-  p+=strlen(shared_secret);
+  nonce=StringToStringInfo(shared_secret);
   shared_secret=DestroyString(shared_secret);
-  random_info=AcquireRandomInfo();
-  secret=GetRandomKey(random_info,DPCSessionKeyLength);
-  (void) memcpy(p,GetStringInfoDatum(secret),DPCSessionKeyLength);
-  session_key=GetMagickCoreSignature(secret);
-  random_info=DestroyRandomInfo(random_info);
+  session_key=GetMagickCoreSignature(nonce);
+  nonce=DestroyStringInfo(nonce);
   exception=AcquireExceptionInfo();
+  /*
+    Process client commands.
+  */
   registry=NewSplayTree((int (*)(const void *,const void *)) NULL,
     (void *(*)(void *)) NULL,RelinquishImageRegistry);
-  client_socket=(*(int *) socket);
-  count=dpc_send(client_socket,DPCSessionKeyLength,GetStringInfoDatum(secret));
-  secret=DestroyStringInfo(secret);
+  client_socket=(*(SOCKET_TYPE *) socket);
+  count=dpc_send(client_socket,sizeof(size_t),(unsigned char *) &session_key);
   for (status=MagickFalse; ; )
   {
     count=dpc_read(client_socket,1,(unsigned char *) &command);
@@ -845,8 +834,8 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
       }
       case 'R':
       {
-        status=ReadDistributeCacheIndexes(registry,client_socket,session_key,
-          exception);
+        status=ReadDistributeCacheIndexes(registry,client_socket,
+          session_key,exception);
         break;
       }
       case 'w':
@@ -857,8 +846,8 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
       }
       case 'W':
       {
-        status=WriteDistributeCacheIndexes(registry,client_socket,session_key,
-          exception);
+        status=WriteDistributeCacheIndexes(registry,client_socket,
+          session_key,exception);
         break;
       }
       case 'd':
@@ -886,7 +875,7 @@ MagickExport void DistributePixelCacheServer(const int port,
 {
 #if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
   char
-    service[MaxTextExtent];
+    service[MagickPathExtent];
 
   int
     status;
@@ -930,7 +919,7 @@ MagickExport void DistributePixelCacheServer(const int port,
   hint.ai_family=AF_INET;
   hint.ai_socktype=SOCK_STREAM;
   hint.ai_flags=AI_PASSIVE;
-  (void) FormatLocaleString(service,MaxTextExtent,"%d",port);
+  (void) FormatLocaleString(service,MagickPathExtent,"%d",port);
   status=getaddrinfo((const char *) NULL,service,&hint,&result);
   if (status != 0)
     ThrowFatalException(CacheFatalError,"UnableToListen");
@@ -986,8 +975,7 @@ MagickExport void DistributePixelCacheServer(const int port,
     if (status == -1)
       ThrowFatalException(CacheFatalError,"UnableToCreateClientThread");
 #elif defined(MAGICKCORE_WINDOWS_SUPPORT)
-    if (CreateThread(0,0,DistributePixelCacheClient,(void*) &client_socket,0,
-        &threadID) == (HANDLE) NULL)
+    if (CreateThread(0,0,DistributePixelCacheClient,(void*) &client_socket,0,&threadID) == (HANDLE) NULL)
       ThrowFatalException(CacheFatalError,"UnableToCreateClientThread");
 #else
     Not implemented!
@@ -1127,7 +1115,7 @@ MagickPrivate MagickBooleanType OpenDistributePixelCache(
     count;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -1205,7 +1193,7 @@ MagickPrivate MagickOffsetType ReadDistributePixelCacheIndexes(
     count;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -1278,7 +1266,7 @@ MagickPrivate MagickOffsetType ReadDistributePixelCachePixels(
     count;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -1344,7 +1332,7 @@ MagickPrivate MagickBooleanType RelinquishDistributePixelCache(
     count;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -1407,7 +1395,7 @@ MagickPrivate MagickOffsetType WriteDistributePixelCacheIndexes(
     count;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
@@ -1481,7 +1469,7 @@ MagickPrivate MagickOffsetType WriteDistributePixelCachePixels(
     count;
 
   unsigned char
-    message[MaxTextExtent],
+    message[MagickPathExtent],
     *p;
 
   /*
