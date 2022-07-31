@@ -1250,7 +1250,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
     distortion[CompositeChannels]+=distortion[BlackChannel]*
       distortion[BlackChannel];
   distortion[CompositeChannels]=sqrt(distortion[CompositeChannels]/
-    GetNumberChannels(image,channel));
+    GetNumberChannels(image,channel))/(double) GetNumberChannels(image,channel);
   /*
     Free resources.
   */
