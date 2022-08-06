@@ -1879,7 +1879,9 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
       cache_info=(CacheInfo *) image->cache;
       if (cache_info->file != -1)
         (void) ClosePixelCacheOnDisk(cache_info);
-      ThrowFatalException(ResourceLimitFatalError,"TimeLimitExceeded");
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        ResourceLimitFatalError,"TimeLimitExceeded","`%s'",image->filename);
+      return((Cache) NULL);
     }
   LockSemaphoreInfo(image->semaphore);
   assert(image->cache != (Cache) NULL);
