@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization         %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -162,10 +162,6 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PixelPacket
     *q;
 
-  ssize_t
-    i,
-    x;
-
   size_t
     base,
     flag,
@@ -174,6 +170,8 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
   ssize_t
     count,
+    i,
+    x,
     y;
 
   TGAInfo
@@ -747,22 +745,18 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
     *p;
 
   ssize_t
-    x;
-
-  ssize_t
-    i;
-
-  unsigned char
-    *q;
-
-  ssize_t
     base,
     count,
+    i,
     offset,
+    x,
     y;
 
   TGAInfo
     tga_info;
+
+  unsigned char
+    *q;
 
   /*
     Open output image file.
