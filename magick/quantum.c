@@ -261,6 +261,7 @@ static void DestroyQuantumPixels(QuantumInfo *quantum_info)
   for (i=0; i < (ssize_t) quantum_info->number_threads; i++)
     if (quantum_info->pixels[i] != (MemoryInfo *) NULL)
       {
+#ifndef NDEBUG
         unsigned char
           *pixels;
 
@@ -269,6 +270,7 @@ static void DestroyQuantumPixels(QuantumInfo *quantum_info)
         */
         pixels=(unsigned char *) GetVirtualMemoryBlob(quantum_info->pixels[i]);
         assert(pixels[extent] == QuantumSignature);
+#endif
         quantum_info->pixels[i]=RelinquishVirtualMemory(
           quantum_info->pixels[i]);
       }
