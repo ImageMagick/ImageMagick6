@@ -3944,6 +3944,8 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
             char
               filename[MagickPathExtent];
 
+            if (format != (char *) NULL)
+              (void) CopyMagickString(magic,format,MagickPathExtent);
             (void) FormatLocaleString(filename,MagickPathExtent,"%s:%s",magic,
               image->filename);
             (void) CopyMagickString(image->filename,filename,MagickPathExtent);
