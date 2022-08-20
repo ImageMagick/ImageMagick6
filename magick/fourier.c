@@ -274,37 +274,47 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
       }
     for (x=0; x < (ssize_t) columns; x++)
     {
+      QuantumPixelPacket
+        ai = { QuantumScale*GetPixelRed(Ai), QuantumScale*GetPixelGreen(Ai),
+               QuantumScale*GetPixelBlue(Ai), image->matte != MagickFalse ?
+               QuantumScale*GetPixelOpacity(Ai) : OpaqueOpacity, 0 },
+        ar = { QuantumScale*GetPixelRed(Ar), QuantumScale*GetPixelGreen(Ar),
+               QuantumScale*GetPixelBlue(Ar), image->matte != MagickFalse ?
+               QuantumScale*GetPixelOpacity(Ar) : OpaqueOpacity, 0 },
+        bi = { QuantumScale*GetPixelRed(Bi), QuantumScale*GetPixelGreen(Bi),
+               QuantumScale*GetPixelBlue(Bi), image->matte != MagickFalse ?
+               QuantumScale*GetPixelOpacity(Bi) : OpaqueOpacity, 0 },
+        br = { QuantumScale*GetPixelRed(Br), QuantumScale*GetPixelGreen(Br),
+               QuantumScale*GetPixelBlue(Br), image->matte != MagickFalse ?
+               QuantumScale*GetPixelOpacity(Br) : OpaqueOpacity, 0 },
+        ci,
+        cr;
+
       switch (op)
       {
         case AddComplexOperator:
         {
-          Cr->red=Ar->red+Br->red;
-          Ci->red=Ai->red+Bi->red;
-          Cr->green=Ar->green+Br->green;
-          Ci->green=Ai->green+Bi->green;
-          Cr->blue=Ar->blue+Br->blue;
-          Ci->blue=Ai->blue+Bi->blue;
-          if (images->matte != MagickFalse)
-            {
-              Cr->opacity=Ar->opacity+Br->opacity;
-              Ci->opacity=Ai->opacity+Bi->opacity;
-            }
+          cr.red=ar.red+br.red;
+          ci.red=ai.red+bi.red;
+          cr.green=ar.green+br.green;
+          ci.green=ai.green+bi.green;
+          cr.blue=ar.blue+br.blue;
+          ci.blue=ai.blue+bi.blue;
+          cr.opacity=ar.opacity+br.opacity;
+          ci.opacity=ai.opacity+bi.opacity;
           break;
         }
         case ConjugateComplexOperator:
         default:
         {
-          Cr->red=Ar->red;
-          Ci->red=(-Ai->red);
-          Cr->green=Ar->green;
-          Ci->green=(-Ai->green);
-          Cr->blue=Ar->blue;
-          Ci->blue=(-Ai->blue);
-          if (images->matte != MagickFalse)
-            {
-              Cr->opacity=Ar->opacity;
-              Ci->opacity=(-Ai->opacity);
-            }
+          cr.red=ar.red;
+          ci.red=(-ai.red);
+          cr.green=ar.green;
+          ci.green=(-ai.green);
+          cr.blue=ar.blue;
+          ci.blue=(-ai.blue);
+          cr.opacity=ar.opacity;
+          ci.opacity=(-ai.opacity);
           break;
         }
         case DivideComplexOperator:
@@ -312,110 +322,83 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
           double
             gamma;
 
-          gamma=QuantumRange*PerceptibleReciprocal(QuantumScale*Br->red*Br->red+
-            QuantumScale*Bi->red*Bi->red+snr);
-          Cr->red=gamma*(QuantumScale*Ar->red*Br->red+QuantumScale*Ai->red*
-            Bi->red);
-          Ci->red=gamma*(QuantumScale*Ai->red*Br->red-QuantumScale*Ar->red*
-            Bi->red);
-          gamma=QuantumRange*PerceptibleReciprocal(QuantumScale*Br->green*
-            Br->green+QuantumScale*Bi->green*Bi->green+snr);
-          Cr->green=gamma*(QuantumScale*Ar->green*Br->green+QuantumScale*
-            Ai->green*Bi->green);
-          Ci->green=gamma*(QuantumScale*Ai->green*Br->green-QuantumScale*
-            Ar->green*Bi->green);
-          gamma=QuantumRange*PerceptibleReciprocal(QuantumScale*Br->blue*
-            Br->blue+QuantumScale*Bi->blue*Bi->blue+snr);
-          Cr->blue=gamma*(QuantumScale*Ar->blue*Br->blue+QuantumScale*
-            Ai->blue*Bi->blue);
-          Ci->blue=gamma*(QuantumScale*Ai->blue*Br->blue-QuantumScale*
-            Ar->blue*Bi->blue);
-          if (images->matte != MagickFalse)
-            {
-              gamma=QuantumRange*PerceptibleReciprocal(QuantumScale*Br->opacity*
-                Br->opacity+QuantumScale*Bi->opacity*Bi->opacity+snr);
-              Cr->opacity=gamma*(QuantumScale*Ar->opacity*Br->opacity+
-                QuantumScale*Ai->opacity*Bi->opacity);
-              Ci->opacity=gamma*(QuantumScale*Ai->opacity*Br->opacity-
-                QuantumScale*Ar->opacity*Bi->opacity);
-            }
+          gamma=PerceptibleReciprocal(br.red*br.red+bi.red*bi.red+snr);
+          cr.red=gamma*(ar.red*br.red+ai.red*bi.red);
+          ci.red=gamma*(ai.red*br.red-ar.red*bi.red);
+          gamma=PerceptibleReciprocal(br.green*br.green+bi.green*bi.green+snr);
+          cr.green=gamma*(ar.green*br.green+ai.green*bi.green);
+          ci.green=gamma*(ai.green*br.green-ar.green*bi.green);
+          gamma=PerceptibleReciprocal(br.blue*br.blue+bi.blue*bi.blue+snr);
+          cr.blue=gamma*(ar.blue*br.blue+ai.blue*bi.blue);
+          ci.blue=gamma*(ai.blue*br.blue-ar.blue*bi.blue);
+          gamma=PerceptibleReciprocal(br.opacity*br.opacity+bi.opacity*
+            bi.opacity+snr);
+          cr.opacity=gamma*(ar.opacity*br.opacity+ai.opacity*bi.opacity);
+          ci.opacity=gamma*(ai.opacity*br.opacity-ar.opacity*bi.opacity);
           break;
         }
         case MagnitudePhaseComplexOperator:
         {
-          Cr->red=sqrt(QuantumScale*Ar->red*Ar->red+QuantumScale*
-            Ai->red*Ai->red);
-          Ci->red=atan2((double) Ai->red,(double) Ar->red)/(2.0*MagickPI)+0.5;
-          Cr->green=sqrt(QuantumScale*Ar->green*Ar->green+QuantumScale*
-            Ai->green*Ai->green);
-          Ci->green=atan2((double) Ai->green,(double) Ar->green)/
+          cr.red=sqrt((double) ar.red*ar.red+ai.red*ai.red);
+          ci.red=atan2((double) ai.red,(double) ar.red)/(2.0*MagickPI)+0.5;
+          cr.green=sqrt((double) ar.green*ar.green+ai.green*ai.green);
+          ci.green=atan2((double) ai.green,(double) ar.green)/
             (2.0*MagickPI)+0.5;
-          Cr->blue=sqrt(QuantumScale*Ar->blue*Ar->blue+QuantumScale*
-            Ai->blue*Ai->blue);
-          Ci->blue=atan2(Ai->blue,Ar->blue)/(2.0*MagickPI)+0.5;
-          if (images->matte != MagickFalse)
-            {
-              Cr->opacity=sqrt(QuantumScale*Ar->opacity*Ar->opacity+
-                QuantumScale*Ai->opacity*Ai->opacity);
-              Ci->opacity=atan2((double) Ai->opacity,(double) Ar->opacity)/
-                (2.0*MagickPI)+0.5;
-            }
+          cr.blue=sqrt((double) ar.blue*ar.blue+ai.blue*ai.blue);
+          ci.blue=atan2((double) ai.blue,(double) ar.blue)/(2.0*MagickPI)+0.5;
+          cr.opacity=sqrt((double) ar.opacity*ar.opacity+ai.opacity*ai.opacity);
+          ci.opacity=atan2((double) ai.opacity,(double) ar.opacity)/
+            (2.0*MagickPI)+0.5;
           break;
         }
         case MultiplyComplexOperator:
         {
-          Cr->red=(QuantumScale*Ar->red*Br->red-(double)
-            Ai->red*Bi->red);
-          Ci->red=(QuantumScale*Ai->red*Br->red+(double)
-            Ar->red*Bi->red);
-          Cr->green=(QuantumScale*Ar->green*Br->green-(double)
-            Ai->green*Bi->green);
-          Ci->green=(QuantumScale*Ai->green*Br->green+(double)
-            Ar->green*Bi->green);
-          Cr->blue=(QuantumScale*Ar->blue*Br->blue-(double)
-            Ai->blue*Bi->blue);
-          Ci->blue=(QuantumScale*Ai->blue*Br->blue+(double)
-            Ar->blue*Bi->blue);
-          if (images->matte != MagickFalse)
-            {
-              Cr->opacity=(QuantumScale*Ar->opacity*Br->opacity-
-                QuantumScale*Ai->opacity*Bi->opacity);
-              Ci->opacity=(QuantumScale*Ai->opacity*Br->opacity+
-                QuantumScale*Ar->opacity*Bi->opacity);
-            }
+          cr.red=(ar.red*br.red-(double) ai.red*bi.red);
+          ci.red=(ai.red*br.red+(double) ar.red*bi.red);
+          cr.green=(ar.green*br.green-(double) ai.green*bi.green);
+          ci.green=(ai.green*br.green+(double) ar.green*bi.green);
+          cr.blue=(ar.blue*br.blue-(double) ai.blue*bi.blue);
+          ci.blue=(ai.blue*br.blue+(double) ar.blue*bi.blue);
+          cr.opacity=(ar.opacity*br.opacity-(double) ai.opacity*bi.opacity);
+          ci.opacity=(ai.opacity*br.opacity+(double) ar.opacity*bi.opacity);
           break;
         }
         case RealImaginaryComplexOperator:
         {
-          Cr->red=Ar->red*cos(2.0*MagickPI*(Ai->red-0.5));
-          Ci->red=Ar->red*sin(2.0*MagickPI*(Ai->red-0.5));
-          Cr->green=Ar->green*cos(2.0*MagickPI*(Ai->green-0.5));
-          Ci->green=Ar->green*sin(2.0*MagickPI*(Ai->green-0.5));
-          Cr->blue=Ar->blue*cos(2.0*MagickPI*(Ai->blue-0.5));
-          Ci->blue=Ar->blue*sin(2.0*MagickPI*(Ai->blue-0.5));
-          if (images->matte != MagickFalse)
-            {
-               Cr->opacity=Ar->opacity*cos(2.0*MagickPI*(Ai->opacity-0.5));
-               Ci->opacity=Ar->opacity*sin(2.0*MagickPI*(Ai->opacity-0.5));
-            }
+          cr.red=ar.red*cos(2.0*MagickPI*(ai.red-0.5));
+          ci.red=ar.red*sin(2.0*MagickPI*(ai.red-0.5));
+          cr.green=ar.green*cos(2.0*MagickPI*(ai.green-0.5));
+          ci.green=ar.green*sin(2.0*MagickPI*(ai.green-0.5));
+          cr.blue=ar.blue*cos(2.0*MagickPI*(ai.blue-0.5));
+          ci.blue=ar.blue*sin(2.0*MagickPI*(ai.blue-0.5));
+          cr.opacity=ar.opacity*cos(2.0*MagickPI*(ai.opacity-0.5));
+          ci.opacity=ar.opacity*sin(2.0*MagickPI*(ai.opacity-0.5));
           break;
         }
         case SubtractComplexOperator:
         {
-          Cr->red=Ar->red-Br->red;
-          Ci->red=Ai->red-Bi->red;
-          Cr->green=Ar->green-Br->green;
-          Ci->green=Ai->green-Bi->green;
-          Cr->blue=Ar->blue-Br->blue;
-          Ci->blue=Ai->blue-Bi->blue;
-          if (Cr_image->matte != MagickFalse)
-            {
-              Cr->opacity=Ar->opacity-Br->opacity;
-              Ci->opacity=Ai->opacity-Bi->opacity;
-            }
+          cr.red=ar.red-br.red;
+          ci.red=ai.red-bi.red;
+          cr.green=ar.green-br.green;
+          ci.green=ai.green-bi.green;
+          cr.blue=ar.blue-br.blue;
+          ci.blue=ai.blue-bi.blue;
+          cr.opacity=ar.opacity-br.opacity;
+          ci.opacity=ai.opacity-bi.opacity;
           break;
         }
       }
+      Cr->red=QuantumRange*cr.red;
+      Ci->red=QuantumRange*ci.red;
+      Cr->green=QuantumRange*cr.green;
+      Ci->green=QuantumRange*ci.green;
+      Cr->blue=QuantumRange*cr.blue;
+      Ci->blue=QuantumRange*ci.blue;
+      if (images->matte != MagickFalse)
+        {
+          Cr->opacity=QuantumRange*cr.opacity;
+          Ci->opacity=QuantumRange*ci.opacity;
+        }
       Ar++;
       Ai++;
       Br++;
