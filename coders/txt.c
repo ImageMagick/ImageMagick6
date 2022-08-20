@@ -561,14 +561,6 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
             break;
           }
         }
-        if (strchr(text,'%') != (char *) NULL)
-          {
-            red*=0.01*range;
-            green*=0.01*range;
-            blue*=0.01*range;
-            index*=0.01*range;
-            opacity*=0.01*range;
-          }
         if (image->colorspace == LabColorspace)
           {
             green+=(range+1)/2.0;
