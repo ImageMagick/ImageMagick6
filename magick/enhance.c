@@ -3881,6 +3881,12 @@ MagickExport MagickBooleanType ModulateImage(Image *image,const char *modulate)
             &red,&green,&blue);
           break;
         }
+        case HSIColorspace:
+        {
+          ModulateHSI(percent_hue,percent_saturation,percent_brightness,
+            &red,&green,&blue);
+          break;
+        }
         case HSLColorspace:
         default:
         {
