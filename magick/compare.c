@@ -1423,46 +1423,42 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
       if (fabs(distortion[RedChannel]) < MagickEpsilon)
         distortion[RedChannel]=INFINITY;
       else
-        distortion[RedChannel]=10.0*MagickLog10(1.0)-10.0*
-          MagickLog10(distortion[RedChannel]);
+        distortion[RedChannel]=(-10.0*MagickLog10(distortion[RedChannel]));
     }
   if ((channel & GreenChannel) != 0)
     {
       if (fabs(distortion[GreenChannel]) < MagickEpsilon)
         distortion[GreenChannel]=INFINITY;
       else
-        distortion[GreenChannel]=10.0*MagickLog10(1.0)-10.0*
-          MagickLog10(distortion[GreenChannel]);
+        distortion[GreenChannel]=(-10.0*MagickLog10(distortion[GreenChannel]));
     }
   if ((channel & BlueChannel) != 0)
     {
       if (fabs(distortion[BlueChannel]) < MagickEpsilon)
         distortion[BlueChannel]=INFINITY;
       else
-        distortion[BlueChannel]=10.0*MagickLog10(1.0)-10.0*
-          MagickLog10(distortion[BlueChannel]);
+        distortion[BlueChannel]=(-10.0*MagickLog10(distortion[BlueChannel]));
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
       if (fabs(distortion[OpacityChannel]) < MagickEpsilon)
         distortion[OpacityChannel]=INFINITY;
       else
-        distortion[OpacityChannel]=10.0*MagickLog10(1.0)-10.0*
-          MagickLog10(distortion[OpacityChannel]);
+        distortion[OpacityChannel]=(-10.0*
+          MagickLog10(distortion[OpacityChannel]));
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
       if (fabs(distortion[BlackChannel]) < MagickEpsilon)
         distortion[BlackChannel]=INFINITY;
       else
-        distortion[BlackChannel]=10.0*MagickLog10(1.0)-10.0*
-          MagickLog10(distortion[BlackChannel]);
+        distortion[BlackChannel]=(-10.0*MagickLog10(distortion[BlackChannel]));
     }
   if (fabs(distortion[CompositeChannels]) < MagickEpsilon)
     distortion[CompositeChannels]=INFINITY;
   else
-    distortion[CompositeChannels]=10.0*MagickLog10(1.0)-10.0*
-      MagickLog10(distortion[CompositeChannels]);
+    distortion[CompositeChannels]=(-10.0*
+      MagickLog10(distortion[CompositeChannels]));
   return(status);
 }
 
