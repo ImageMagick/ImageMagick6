@@ -2197,10 +2197,10 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       if (*similarity_metric <= similarity_threshold)
         break;
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
-      if (metric == PeakSignalToNoiseRatioErrorMetric) 
+      if (metric == PeakSignalToNoiseRatioMetric) 
         similarity*=0.01;
       if ((metric == NormalizedCrossCorrelationErrorMetric) ||
-          (metric == PeakSignalToNoiseRatioErrorMetric) ||
+          (metric == PeakSignalToNoiseRatioMetric) ||
           (metric == UndefinedErrorMetric))
         similarity=1.0-similarity;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
