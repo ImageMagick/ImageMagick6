@@ -1420,43 +1420,31 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     exception);
   if ((channel & RedChannel) != 0)
     {
-      if (fabs(distortion[RedChannel]) < MagickEpsilon)
-        distortion[RedChannel]=INFINITY;
-      else
+      if (fabs(distortion[RedChannel]) >= MagickEpsilon)
         distortion[RedChannel]=(-10.0*MagickLog10(distortion[RedChannel]));
     }
   if ((channel & GreenChannel) != 0)
     {
-      if (fabs(distortion[GreenChannel]) < MagickEpsilon)
-        distortion[GreenChannel]=INFINITY;
-      else
+      if (fabs(distortion[GreenChannel]) >= MagickEpsilon)
         distortion[GreenChannel]=(-10.0*MagickLog10(distortion[GreenChannel]));
     }
   if ((channel & BlueChannel) != 0)
     {
-      if (fabs(distortion[BlueChannel]) < MagickEpsilon)
-        distortion[BlueChannel]=INFINITY;
-      else
+      if (fabs(distortion[BlueChannel]) >= MagickEpsilon)
         distortion[BlueChannel]=(-10.0*MagickLog10(distortion[BlueChannel]));
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
-      if (fabs(distortion[OpacityChannel]) < MagickEpsilon)
-        distortion[OpacityChannel]=INFINITY;
-      else
+      if (fabs(distortion[OpacityChannel]) >= MagickEpsilon)
         distortion[OpacityChannel]=(-10.0*
           MagickLog10(distortion[OpacityChannel]));
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
-      if (fabs(distortion[BlackChannel]) < MagickEpsilon)
-        distortion[BlackChannel]=INFINITY;
-      else
+      if (fabs(distortion[BlackChannel]) >= MagickEpsilon)
         distortion[BlackChannel]=(-10.0*MagickLog10(distortion[BlackChannel]));
     }
-  if (fabs(distortion[CompositeChannels]) < MagickEpsilon)
-    distortion[CompositeChannels]=INFINITY;
-  else
+  if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
     distortion[CompositeChannels]=(-10.0*
       MagickLog10(distortion[CompositeChannels]));
   return(status);
@@ -2200,7 +2188,10 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       if (metric == PeakSignalToNoiseRatioMetric) 
         similarity*=0.01;
       if ((metric == NormalizedCrossCorrelationErrorMetric) ||
+<<<<<<< HEAD
           (metric == PeakSignalToNoiseRatioMetric) ||
+=======
+>>>>>>> 4fc9a66d7 (properly handle a PSNR of 0 (undefined))
           (metric == UndefinedErrorMetric))
         similarity=1.0-similarity;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
