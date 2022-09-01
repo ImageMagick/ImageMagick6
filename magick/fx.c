@@ -1415,6 +1415,13 @@ static const char *FxOperatorPrecedence(const char *expression,
   return(subexpression);
 }
 
+static inline double MagickLog10(const double x)
+{
+ if (fabs(x) < MagickEpsilon)
+   return(-INFINITY);
+ return(log10(fabs(x)));
+}
+
 static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
   const ssize_t x,const ssize_t y,const char *expression,const size_t depth,
   double *beta,ExceptionInfo *exception)
@@ -2385,13 +2392,13 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+6,
             depth+1,beta,exception);
-          FxReturn(log10(alpha)/log10(2.0));
+          FxReturn(MagickLog10(alpha)/log10(2.0));
         }
       if (IsFxFunction(expression,"log",3) != MagickFalse)
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
-          FxReturn(log10(alpha));
+          FxReturn(MagickLog10(alpha));
         }
       if (LocaleCompare(expression,"lightness") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
