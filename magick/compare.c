@@ -2186,10 +2186,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       if (metric == PeakSignalToNoiseRatioMetric) 
         similarity*=0.01;
       if ((metric == NormalizedCrossCorrelationErrorMetric) ||
-<<<<<<< HEAD
-          (metric == PeakSignalToNoiseRatioMetric) ||
-=======
->>>>>>> 4fc9a66d7 (properly handle a PSNR of 0 (undefined))
           (metric == UndefinedErrorMetric))
         similarity=1.0-similarity;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
