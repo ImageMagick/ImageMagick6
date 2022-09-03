@@ -3782,7 +3782,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
             if (graphic_context[n]->clip_path != MagickFalse)
               break;
             graphic_context[n]->stroke_width=GetDrawValue(token,&next_token);
-            if (token == next_token)
+            if ((token == next_token) || 
+                (graphic_context[n]->stroke_width < 0.0))
               ThrowPointExpectedException(image,token);
             break;
           }
