@@ -637,6 +637,9 @@
         <message name="InvalidGeometry">
           géométrie invalide
         </message>
+        <message name="LabelExpected">
+          label expected
+        </message>
         <message name="KernelWidthMustBeAnOddNumber">
           la largeur du grain doit être un nombre impair
         </message>

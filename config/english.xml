@@ -649,6 +649,9 @@
         <message name="InvalidGeometry">
           invalid geometry
         </message>
+        <message name="LabelExpected">
+          label expected
+        </message>
         <message name="KernelWidthMustBeAnOddNumber">
           kernel width must be an odd number
         </message>
