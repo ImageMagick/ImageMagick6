@@ -771,8 +771,8 @@ MagickExport MagickBooleanType GetMultilineTypeMetrics(Image *image,
   assert(draw_info->signature == MagickCoreSignature);
   if (*draw_info->text == '\0')
     {
-      (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
-        "LabelExpected","`%s'",image->filename);
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),
+        OptionError,"LabelExpected","`%s'",image->filename);
       return(MagickFalse);
     }
   annotate_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
