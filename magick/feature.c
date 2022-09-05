@@ -88,6 +88,7 @@
 #include "magick/segment.h"
 #include "magick/semaphore.h"
 #include "magick/signature-private.h"
+#include "magick/statistic-private.h"
 #include "magick/string_.h"
 #include "magick/thread-private.h"
 #include "magick/timer.h"
@@ -617,14 +618,6 @@ MagickExport Image *CannyEdgeImage(const Image *image,const double radius,
 %    o exception: return any errors or warnings in this structure.
 %
 */
-
-static inline double MagickLog10(const double x)
-{
- if (fabs(x) < MagickEpsilon)
-   return(-INFINITY);
- return(log10(fabs(x)));
-}
-
 MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
   const size_t distance,ExceptionInfo *exception)
 {

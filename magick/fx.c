@@ -89,6 +89,7 @@
 #include "magick/resource_.h"
 #include "magick/splay-tree.h"
 #include "magick/statistic.h"
+#include "magick/statistic-private.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/thread-private.h"
@@ -1413,13 +1414,6 @@ static const char *FxOperatorPrecedence(const char *expression,
     c=(int) (*expression++);
   }
   return(subexpression);
-}
-
-static inline double MagickLog10(const double x)
-{
- if (fabs(x) < MagickEpsilon)
-   return(-INFINITY);
- return(log10(fabs(x)));
 }
 
 static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,

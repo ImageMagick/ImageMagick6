@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -36,8 +36,7 @@
 %
 %
 */
-
-
+
 /*
   Include declarations.
 */
@@ -88,6 +87,7 @@
 #include "magick/semaphore.h"
 #include "magick/signature-private.h"
 #include "magick/statistic.h"
+#include "magick/statistic-private.h"
 #include "magick/string_.h"
 #include "magick/thread-private.h"
 #include "magick/timer.h"
@@ -2106,14 +2106,6 @@ MagickExport ChannelMoments *GetImageChannelMoments(const Image *image,
 %    o exception: return any errors or warnings in this structure.
 %
 */
-
-static inline double MagickLog10(const double x)
-{
- if (fabs(x) < MagickEpsilon)
-   return(-INFINITY);
- return(log10(fabs(x)));
-}
-
 MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
   const Image *image,ExceptionInfo *exception)
 {

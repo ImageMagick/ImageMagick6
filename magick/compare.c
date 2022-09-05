@@ -64,6 +64,7 @@
 #include "magick/pixel-private.h"
 #include "magick/property.h"
 #include "magick/resource_.h"
+#include "magick/statistic-private.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/statistic.h"
@@ -1398,13 +1399,6 @@ static MagickBooleanType GetPeakAbsoluteDistortion(const Image *image,
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
   return(status);
-}
-
-static inline double MagickLog10(const double x)
-{
- if (fabs(x) < MagickEpsilon)
-   return(-INFINITY);
- return(log10(fabs(x)));
 }
 
 static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
