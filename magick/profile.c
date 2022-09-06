@@ -1971,7 +1971,7 @@ static MagickBooleanType SyncExifProfile(const Image *image,unsigned char *exif,
   } DirectoryInfo;
 
   DirectoryInfo
-    directory_stack[MaxDirectoryStack] = { 0 };
+    directory_stack[MaxDirectoryStack] = {{ 0 }};
 
   EndianType
     endian;
