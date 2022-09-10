@@ -1178,7 +1178,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
             if (errno != EINTR)
               break;
           }
-        if (~((size_t) i) < (quantum+1))
+        if (~((size_t) i) < (count+quantum+1))
           {
             blob=(unsigned char *) RelinquishMagickMemory(blob);
             break;
