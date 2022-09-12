@@ -284,7 +284,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
     y;
 
   unsigned char
-    sans[4];
+    magick[16];
 
   /*
     Open image file.
@@ -306,19 +306,23 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Initialize JP2 codec.
   */
-  if (ReadBlob(image,4,sans) != 4)
+  if (ReadBlob(image,sizeof(magick),magick) != sizeof(magick))
     {
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
   (void) SeekBlob(image,SEEK_SET,0);
+  (void) SeekBlob(image,SEEK_SET,0);
   if (LocaleCompare(image_info->magick,"JPT") == 0)
     jp2_codec=opj_create_decompress(OPJ_CODEC_JPT);
   else
-    if (IsJ2K(sans,4) != MagickFalse)
+    if (IsJ2K(magick,sizeof(magick)) != MagickFalse)
       jp2_codec=opj_create_decompress(OPJ_CODEC_J2K);
     else
-      jp2_codec=opj_create_decompress(OPJ_CODEC_JP2);
+      if (IsJP2(magick,sizeof(magick)) != MagickFalse)
+        jp2_codec=opj_create_decompress(OPJ_CODEC_JP2);
+      else
+        ThrowReaderException(DelegateError,"UnableToManageJP2Stream");
   opj_set_warning_handler(jp2_codec,JP2WarningHandler,exception);
   opj_set_error_handler(jp2_codec,JP2ErrorHandler,exception);
   opj_set_default_decoder_parameters(&parameters);
