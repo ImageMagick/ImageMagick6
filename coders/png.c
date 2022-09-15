@@ -7296,8 +7296,6 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
           image->depth=16;
         }
 
-      if (LosslessReduceDepthOK(image) != MagickFalse)
-         image->depth = 8;
 #endif
 
       GetImageException(image,exception);
