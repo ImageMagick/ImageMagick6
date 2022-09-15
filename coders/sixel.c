@@ -184,7 +184,7 @@ static int hls_to_rgb(int hue, int lum, int sat)
         } else {
             Magic2 = (int) (lum + sat - (((ssize_t) lum * sat) + (HLSMAX / 2)) / HLSMAX);
         }
-        Magic1 = 2 * lum - Magic2;
+        Magic1 = (int) (2 * (ssize_t) lum) - Magic2;
 
         R = (hue_to_rgb(Magic1, Magic2, (ssize_t) hue + (HLSMAX / 3)) * RGBMAX + (HLSMAX / 2)) / HLSMAX;
         G = (hue_to_rgb(Magic1, Magic2, hue) * RGBMAX + (ssize_t) (HLSMAX / 2)) / HLSMAX;
