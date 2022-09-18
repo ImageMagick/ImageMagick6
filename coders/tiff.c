@@ -1246,7 +1246,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         TIFFClose(tiff);
         ThrowReaderException(CorruptImageError,"UnsupportedBitsPerPixel");
       }
-    if (samples_per_pixel > MaxPixelChannels)
+    tiff_status=TIFFGetFieldDefaulted(tiff,TIFFTAG_EXTRASAMPLES,&extra_samples,
+      &sample_info,sans);
+    if ((samples_per_pixel+extra_samples) > MaxPixelChannels)
       {
         TIFFClose(tiff);
         ThrowReaderException(CorruptImageError,"MaximumChannelsExceeded");
@@ -1595,7 +1597,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       default:
         break;
     }
-    extra_samples=0;
     tiff_status=TIFFGetFieldDefaulted(tiff,TIFFTAG_EXTRASAMPLES,&extra_samples,
       &sample_info,sans);
     if (tiff_status == 1)
