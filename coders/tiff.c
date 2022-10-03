@@ -1694,15 +1694,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           }
         if ((samples_per_pixel > 2) && (interlace != PLANARCONFIG_SEPARATE))
           {
-            quantum_type=RGBQuantum;
-            pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
-              extra_samples-3,0);
-            if (image->matte != MagickFalse)
-              {
-                quantum_type=RGBAQuantum;
-                pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
-                  extra_samples-4,0);
-              }
             if (image->colorspace == CMYKColorspace)
               {
                 quantum_type=CMYKQuantum;
@@ -1714,6 +1705,18 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                     pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
                       extra_samples-5,0);
                   }
+              }
+            else if (image->matte != MagickFalse)
+              {
+                quantum_type=RGBAQuantum;
+                pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
+                  extra_samples-4,0);
+              }
+            else
+              {
+                quantum_type=RGBQuantum;
+                pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
+                  extra_samples-3,0);
               }
             status=SetQuantumPad(image,quantum_info,pad*((bits_per_sample+7) >>
               3));
