@@ -73,7 +73,7 @@
 #include "magick/module.h"
 #include "magick/utility.h"
 #if defined(MAGICKCORE_HEIC_DELEGATE)
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__)
 #include <heif.h>
 #else
 #include <libheif/heif.h>
