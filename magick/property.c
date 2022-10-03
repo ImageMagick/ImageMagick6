@@ -2842,7 +2842,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       char
         *p;
 
-      static char
+      static const char
         allowlist[] =
           "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
           "$-_.+!*'(),{}|\\^~[]`\"><#%;/?:@&=";
