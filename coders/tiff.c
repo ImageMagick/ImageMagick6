@@ -1783,9 +1783,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
       case ReadStripMethod:
       {
-        unsigned char
-          *p;
-
         size_t
           extent;
 
@@ -1797,6 +1794,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           strip_size;
 
         unsigned char
+          *p,
           *strip_pixels;
 
         /*
