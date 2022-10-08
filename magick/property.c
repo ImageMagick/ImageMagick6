@@ -2743,6 +2743,8 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
         Base filename without directory or extension.
       */
       GetPathComponent(image->magick_filename,BasePath,value);
+      if (*value == '\0')
+        string="";
       break;
     }
     case 'u':
