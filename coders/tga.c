@@ -231,7 +231,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   tga_info.attributes=(unsigned char) ReadBlobByte(image);
   if (EOFBlob(image) != MagickFalse)
     ThrowReaderException(CorruptImageError,"UnableToReadImageData");
-  if ((((tga_info.bits_per_pixel <= 1) || (tga_info.bits_per_pixel >= 17)) &&
+  if ((((tga_info.bits_per_pixel < 1) || (tga_info.bits_per_pixel >= 17)) &&
        (tga_info.bits_per_pixel != 24) && (tga_info.bits_per_pixel != 32)))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   /*
@@ -448,6 +448,23 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (skip == MagickFalse)
         switch (tga_info.bits_per_pixel)
         {
+          case 1:
+          {
+            if ((x & 0x07) == 0)
+              index=(IndexPacket) ReadBlobByte(image);
+            else
+              index=(Quantum) ((int) index << 1);
+            if (tga_info.colormap_type != 0)
+              pixel=image->colormap[(ssize_t) ConstrainColormapIndex(image,
+                ((unsigned char) index) & 0x80 ? 1 : 0)];
+            else
+              {
+                pixel.red=(((unsigned char) index) & 0x80 ? QuantumRange : 0);
+                pixel.green=pixel.red;
+                pixel.blue=pixel.red;
+              }
+            break;
+          }
           case 8:
           default:
           {
