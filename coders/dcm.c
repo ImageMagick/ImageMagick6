@@ -3228,7 +3228,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         effectively undoing any parameter changes that happened inside the
         sequence.
       */
-      if ((group == 0xFFFE) && (element == 0xE0DD))
+      if ((group == 0xFFFE) && (element == 0xE0DD) && (sequence_depth != 0))
         {
           DCMInfo *info_copy = (DCMInfo *)
             RemoveLastElementFromLinkedList(stack);
