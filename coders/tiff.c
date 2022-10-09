@@ -1623,8 +1623,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                   (void) SetImageProperty(image,"tiff:alpha","unassociated");
                 }
           }
-          if (image->matte != MagickFalse)
-            extra_samples--;
+        if (image->matte != MagickFalse)
+          extra_samples--;
       }
     if (image->matte != MagickFalse)
       (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
