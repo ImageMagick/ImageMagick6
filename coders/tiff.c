@@ -2094,7 +2094,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
   } while ((status != MagickFalse) && (more_frames != MagickFalse));
   TIFFClose(tiff);
   if ((image_info->number_scenes != 0) &&
-      (image_info->scene >= GetImageListLength(image)))
+      (image->scene >= GetImageListLength(image)))
     status=MagickFalse;
   if (status == MagickFalse)
     return(DestroyImageList(image));
