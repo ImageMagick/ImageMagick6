@@ -794,15 +794,15 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
             else
               if (((flags & WidthValue) != 0) || ((flags & HeightValue) != 0))
                 {
-                  Image
-                    *size_image;
-
                   (void) ParseRegionGeometry(next,read_info->extract,&geometry,
                     exception);
-                  size_image=ResizeImage(next,geometry.width,geometry.height,
-                    next->filter,next->blur,exception);
-                  if (size_image != (Image *) NULL)
-                    ReplaceImageInList(&next,size_image);
+                  if ((geometry.width != 0) && (geometry.height != 0))
+                    {
+                      Image *resize_image=ResizeImage(next,geometry.width,
+                        geometry.height,next->filter,next->blur,exception);
+                      if (resize_image != (Image *) NULL)
+                        ReplaceImageInList(&next,resize_image);
+                    }
                 }
           }
       }

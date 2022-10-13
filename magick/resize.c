@@ -2950,9 +2950,10 @@ MagickExport Image *ResizeImage(const Image *image,const size_t columns,
   /*
     Acquire resize filter.
   */
-  x_factor=(MagickRealType) columns/(MagickRealType) image->columns;
-  y_factor=(MagickRealType) rows/(MagickRealType) image->rows;
-
+  x_factor=(MagickRealType) (columns*
+    PerceptibleReciprocal((double) image->columns));
+  y_factor=(MagickRealType) (rows*
+    PerceptibleReciprocal((double) image->rows));
   filter_type=LanczosFilter;
   if (filter != UndefinedFilter)
     filter_type=filter;
