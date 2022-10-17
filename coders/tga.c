@@ -108,6 +108,24 @@ typedef struct _TGAInfo
   unsigned char
     bits_per_pixel,
     attributes;
+
+  unsigned long
+    extension,
+    developer;
+
+  char
+    signature[18];
+
+  unsigned short
+    size;
+
+  char
+    author[42],
+    comment[325],
+    software[42];
+
+  unsigned char
+    attributes_type;
 } TGAInfo;
 
 /*
@@ -575,6 +593,42 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (EOFBlob(image) != MagickFalse)
     ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
       image->filename);
+  if (SeekBlob(image,-26,SEEK_END) > 0)
+    {
+      /*
+        Optional header.
+      */
+      tga_info.extension=(unsigned long) ReadBlobLSBLong(image);
+      tga_info.developer=(unsigned long) ReadBlobLSBLong(image);
+      count=ReadBlob(image,18,(unsigned char *) &tga_info.signature);
+      if ((count == 18) &&
+          (LocaleCompare(tga_info.signature,"TRUEVISION-XFILE.") == 0) &&
+          (tga_info.extension > 3) &&
+          (SeekBlob(image,tga_info.extension,SEEK_SET) == tga_info.extension))
+        {
+          tga_info.size=(unsigned long) ReadBlobLSBShort(image);
+          if (tga_info.size == 495)
+            {
+              /*
+                Optional extension.
+              */
+              count=ReadBlob(image,41,(unsigned char *) &tga_info.author);
+              tga_info.author[41]='\0';
+              (void) SetImageProperty(image,"tga:author",tga_info.author);
+              count=ReadBlob(image,324,(unsigned char *) &tga_info.comment);
+              tga_info.comment[324]='\0';
+              (void) SetImageProperty(image,"comment",tga_info.comment);
+              (void) DiscardBlobBytes(image,59);
+              count=ReadBlob(image,41,(unsigned char *) &tga_info.software);
+              tga_info.comment[41]='\0';
+              (void) SetImageProperty(image,"tga:software",tga_info.software);
+              (void) DiscardBlobBytes(image,27);
+              tga_info.attributes_type=(unsigned char) ReadBlobByte(image);
+              if ((image->matte != MagickFalse) && (tga_info.attributes_type != 3))
+                image->matte=MagickFalse;
+            }
+        }
+    }
   (void) CloseBlob(image);
   return(GetFirstImageInList(image));
 }
