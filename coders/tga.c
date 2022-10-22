@@ -593,7 +593,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (EOFBlob(image) != MagickFalse)
     ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
       image->filename);
-  if (SeekBlob(image,-26,SEEK_END) > 0)
+  if (SeekBlob(image,-26,SEEK_END) >= 18)
     {
       /*
         Optional header.
@@ -617,14 +617,15 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
               (void) SetImageProperty(image,"tga:author",tga_info.author);
               count=ReadBlob(image,324,(unsigned char *) &tga_info.comment);
               tga_info.comment[324]='\0';
-              (void) SetImageProperty(image,"comment",tga_info.comment);
+              (void) SetImageProperty(image,"tga:comment",tga_info.comment);
               (void) DiscardBlobBytes(image,59);
               count=ReadBlob(image,41,(unsigned char *) &tga_info.software);
               tga_info.comment[41]='\0';
               (void) SetImageProperty(image,"tga:software",tga_info.software);
               (void) DiscardBlobBytes(image,27);
               tga_info.attributes_type=(unsigned char) ReadBlobByte(image);
-              if ((image->matte != MagickFalse) && (tga_info.attributes_type != 3))
+              if ((image->matte != MagickFalse) &&
+                  (tga_info.attributes_type != 3))
                 image->matte=MagickFalse;
             }
         }
