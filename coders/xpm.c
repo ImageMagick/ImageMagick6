@@ -181,10 +181,10 @@ static char *NextXPMLine(char *p)
   return(p);
 }
 
-static char *ParseXPMColor(char *,MagickBooleanType)
+static char *ParseXPMColor(char *,const MagickBooleanType)
   magick_attribute((__pure__));
 
-static char *ParseXPMColor(char *color,MagickBooleanType search_start)
+static char *ParseXPMColor(char *color,const MagickBooleanType search_start)
 {
 #define NumberTargets  6
 
@@ -251,6 +251,9 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   char
     *grey,
     key[MaxTextExtent],
+    *next,
+    *p,
+    *q,
     target[MaxTextExtent],
     *xpm_buffer;
 
@@ -260,11 +263,6 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     active,
     status;
-
-  char
-    *next,
-    *p,
-    *q;
 
   IndexPacket
     *indexes;
@@ -320,6 +318,9 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   p=xpm_buffer;
   while (ReadBlobString(image,p) != (char *) NULL)
   {
+    ssize_t
+      offset;
+
     if ((*p == '#') && ((p == xpm_buffer) || (*(p-1) == '\n')))
       continue;
     if ((*p == '}') && (*(p+1) == ';'))
@@ -327,12 +328,13 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     p+=strlen(p);
     if ((size_t) (p-xpm_buffer+MaxTextExtent) < length)
       continue;
+    offset=p-xpm_buffer;
     length<<=1;
     xpm_buffer=(char *) ResizeQuantumMemory(xpm_buffer,length+MaxTextExtent,
       sizeof(*xpm_buffer));
     if (xpm_buffer == (char *) NULL)
       break;
-    p=xpm_buffer+strlen(xpm_buffer);
+    p=xpm_buffer+offset;
   }
   if (xpm_buffer == (char *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
@@ -681,15 +683,17 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
 
 #define MaxCixels  92
 
-  static const char
-    Cixel[MaxCixels+1] = " .XoO+@#$%&*=-;:>,<1234567890qwertyuipasdfghjk"
-                         "lzxcvbnmMNBVCZASDFGHJKLPIUYTREWQ!~^/()_`'][{}|";
-
   char
     buffer[MaxTextExtent],
     basename[MaxTextExtent],
     name[MaxTextExtent],
     symbol[MaxTextExtent];
+
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
 
   ExceptionInfo
     *exception;
@@ -711,24 +715,18 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
   MagickPixelPacket
     pixel;
 
+  PixelPacket
+    *q;
+
   QuantizeInfo
     *quantize_info;
 
   RectangleInfo
     geometry;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
   ssize_t
     i,
     x;
-
-  PixelPacket
-    *q;
 
   size_t
     characters_per_pixel,
@@ -738,6 +736,10 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
     j,
     k,
     y;
+
+  static const char
+    Cixel[MaxCixels+1] = " .XoO+@#$%&*=-;:>,<1234567890qwertyuipasdfghjk"
+                         "lzxcvbnmMNBVCZASDFGHJKLPIUYTREWQ!~^/()_`'][{}|";
 
   /*
     Open output image file.
