@@ -4580,6 +4580,11 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
             i++;
             if (i == (ssize_t) argc)
               ThrowMogrifyException(OptionError,"MissingArgument",option);
+            if (LocaleNCompare(argv[i],"registry:",9) == 0)
+              {
+                (void) DeleteImageRegistry(argv[i]+9);
+                break;
+              }
             if (IsGeometry(argv[i]) == MagickFalse)
               ThrowMogrifyInvalidArgumentException(option,argv[i]);
             break;
