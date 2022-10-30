@@ -4248,6 +4248,9 @@ MagickExport magick_hot_spot const void *ReadBlobStream(Image *image,
 */
 MagickExport char *ReadBlobString(Image *image,char *string)
 {
+  BlobInfo
+    *magick_restrict blob_info;
+
   int
     c;
 
@@ -4256,24 +4259,67 @@ MagickExport char *ReadBlobString(Image *image,char *string)
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  for (i=0; i < (MagickPathExtent-1L); i++)
+  assert(image->blob != (BlobInfo *) NULL);
+  assert(image->blob->type != UndefinedStream);
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  *string='\0';
+  blob_info=image->blob;
+  switch (blob_info->type)
   {
-    c=ReadBlobByte(image);
-    if (c == EOF)
-      {
-        if (i == 0)
+    case UndefinedStream:
+      break;
+    case StandardStream:
+    case FileStream:
+    {
+      char *p = fgets(string,MagickPathExtent,blob_info->file_info.file);
+      if (p == (char *) NULL)
+        {
+          ThrowBlobException(blob_info);
           return((char *) NULL);
-        break;
-      }
-    string[i]=c;
-    if (c == '\n')
+        }
+      break;
+    }
+    case ZipStream:
+    {
+#if defined(MAGICKCORE_ZLIB_DELEGATE)
+      char *p = gzgets(blob_info->file_info.gzfile,string,MagickPathExtent);
+      if (p == (char *) NULL)
+        { 
+          int status = Z_OK;
+          (void) gzerror(blob_info->file_info.gzfile,&status);
+          if (status != Z_OK)
+            {
+              ThrowBlobException(blob_info);
+              return((char *) NULL);
+            }
+        }
+      break;
+#endif
+    }
+    default:
+    {
+      for (i=0; i < (MagickPathExtent-1L); i++)
       {
-        if ((i > 0) && (string[i-1] == '\r'))
-          i--;
-        break;
+        c=ReadBlobByte(image);
+        if (c == EOF)
+          {
+            if (i == 0)
+              return((char *) NULL);
+            break;
+          }
+        string[i]=c;
+        if (c == '\n')
+          {
+            if ((i > 0) && (string[i-1] == '\r'))
+              i--;
+            break;
+          }
       }
+      string[i]='\0';
+      break;
+    }
   }
-  string[i]='\0';
   return(string);
 }
 
