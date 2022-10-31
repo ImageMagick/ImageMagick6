@@ -1060,7 +1060,7 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
     Decode SIXEL.
   */
   sixel_pixels=(unsigned char *) NULL;
-  sttaus=sixel_decode(image,(unsigned char *) sixel_buffer,&sixel_pixels,
+  status=sixel_decode(image,(unsigned char *) sixel_buffer,&sixel_pixels,
     &image->columns,&image->rows,&sixel_palette,&image->colors);
   if (status == MagickFalse)
     {
