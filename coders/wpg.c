@@ -1299,10 +1299,10 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
                 {
                   image->colormap[0].red=image->colormap[0].green=
                     image->colormap[0].blue=0;
-                  image->colormap[0].alpha=OpaqueAlpha;
+                  image->colormap[0].opacity=OpaqueOpacity;
                   image->colormap[1].red=image->colormap[1].green=
                     image->colormap[1].blue=QuantumRange;
-                  image->colormap[1].alpha=OpaqueAlpha;
+                  image->colormap[1].opacity=OpaqueOpacity;
                 }
 
               if(!image_info->ping)
