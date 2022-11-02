@@ -266,6 +266,7 @@ ModuleExport size_t RegisterWBMPImage(void)
   entry->adjoin=MagickFalse;
   entry->description=ConstantString("Wireless Bitmap (level 0) image");
   entry->magick_module=ConstantString("WBMP");
+  entry->mime_type=ConstantString("image/vnd.wap.wbmp");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
