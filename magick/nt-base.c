@@ -1922,7 +1922,7 @@ MagickPrivate struct dirent *NTReadDirectory(DIR *entry)
 MagickPrivate unsigned char *NTRegistryKeyLookup(const char *subkey)
 {
   char
-    package_key[MaxTextExtent];
+    package_key[MaxTextExtent] = "";
 
   unsigned char
     *value;
