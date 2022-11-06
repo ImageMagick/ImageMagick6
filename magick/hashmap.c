@@ -46,6 +46,7 @@
 #include "magick/exception.h"
 #include "magick/exception-private.h"
 #include "magick/hashmap.h"
+#include "magick/hashmap-private.h"
 #include "magick/locale_.h"
 #include "magick/memory_.h"
 #include "magick/semaphore.h"
@@ -55,15 +56,6 @@
 /*
   Typedef declarations.
 */
-typedef struct _ElementInfo
-{
-  void
-    *value;
-
-  struct _ElementInfo
-    *next;
-} ElementInfo;
-
 typedef struct _EntryInfo
 {
   size_t
@@ -420,6 +412,36 @@ MagickExport LinkedListInfo *DestroyLinkedList(LinkedListInfo *list_info,
   DestroySemaphoreInfo(&list_info->semaphore);
   list_info=(LinkedListInfo *) RelinquishMagickMemory(list_info);
   return(list_info);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%   G e t H e a d E l e m e n t I n L i n k e d L i s t                       %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  GetHeadElementInLinkedList() gets the head element in the linked-list.
+%
+%  The format of the GetHeadElementInLinkedList method is:
+%
+%      ElementInfo *GetHeadElementInLinkedList(LinkedListInfo *list_info)
+%
+%  A description of each parameter follows:
+%
+%    o list_info: the linked_list info.
+%
+*/
+MagickPrivate ElementInfo *GetHeadElementInLinkedList(
+  LinkedListInfo *list_info)
+{
+  assert(list_info != (LinkedListInfo *) NULL);
+  assert(list_info->signature == MagickCoreSignature);
+  return(list_info->head);
 }
 
 /*
@@ -1274,6 +1296,9 @@ MagickExport MagickBooleanType LinkedListToArray(LinkedListInfo *list_info,
 %  to default values.  The capacity is an initial estimate.  The hashmap will
 %  increase capacity dynamically as the demand requires.
 %
+%  Prefer a hashmap over a linked-list if you do not require duplicate keys and
+%  the capacity is large.
+%
 %  The format of the NewHashmap method is:
 %
 %      HashmapInfo *NewHashmap(const size_t capacity,
@@ -1925,4 +1950,56 @@ MagickExport void ResetLinkedListIterator(LinkedListInfo *list_info)
   LockSemaphoreInfo(list_info->semaphore);
   list_info->next=list_info->head;
   UnlockSemaphoreInfo(list_info->semaphore);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%   S e t H e a d E l e m e n t I n L i n k e d L i s t                       %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  SetHeadElementInLinkedList() sets the head element of the linked-list.
+%
+%  The format of the SetHeadElementInLinkedList method is:
+%
+%      SetHeadElementInLinkedList(LinkedListInfo *list_info,
+%        ElementInfo *element)
+%
+%  A description of each parameter follows:
+%
+%    o list_info: the linked-list info.
+%
+%    o element: the element to set as the head.
+%
+*/
+MagickPrivate void SetHeadElementInLinkedList(LinkedListInfo *list_info,
+  ElementInfo *element)
+{
+  ElementInfo
+    *prev;
+
+  assert(list_info != (LinkedListInfo *) NULL);
+  assert(list_info->signature == MagickCoreSignature);
+  assert(element != (ElementInfo *) NULL);
+  if (element == list_info->head)
+    return;
+  prev=list_info->head;
+  while (prev != (ElementInfo *) NULL)
+  {
+    if (prev->next == element)
+      {
+        prev->next=element->next;
+        element->next=list_info->head;
+        if (list_info->head == list_info->next)
+          list_info->next=element;
+        list_info->head=element;
+        break;
+      }
+    prev=prev->next;
+  }
 }

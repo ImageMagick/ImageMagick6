@@ -162,6 +162,7 @@ MAGICK_BASE_SRCS = \
   magick/geometry.h \
   magick/hashmap.c \
   magick/hashmap.h \
+  magick/hashmap-private.h \
   magick/histogram.c \
   magick/histogram.h \
   magick/identify.c \
