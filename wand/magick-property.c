@@ -2306,7 +2306,7 @@ WandExport MagickBooleanType MagickSetImageProfile(MagickWand *wand,
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
   profile_info=AcquireStringInfo((size_t) length);
-  SetStringInfoDatum(profile_info,(unsigned char *) profile);
+  SetStringInfoDatum(profile_info,(const unsigned char *) profile);
   status=SetImageProfile(wand->images,name,profile_info);
   profile_info=DestroyStringInfo(profile_info);
   if (status == MagickFalse)
