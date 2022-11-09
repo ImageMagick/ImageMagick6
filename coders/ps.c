@@ -1413,6 +1413,12 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
   const char
     *value;
 
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   const StringInfo
     *profile;
 
@@ -1447,39 +1453,29 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
     media_info,
     page_info;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  ssize_t
-    i,
-    x;
-
-  unsigned char
-    *q;
-
   SegmentInfo
     bounds;
 
   size_t
     bit,
     byte,
-    imageListLength,
     length,
+    number_scenes,
     page,
     text_size;
 
   ssize_t
+    i,
     j,
+    x,
     y;
 
   time_t
     timer;
 
   unsigned char
-    pixels[2048];
+    pixels[2048],
+    *q;
 
   /*
     Open output image file.
@@ -1499,7 +1495,7 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
     compression=image_info->compression;
   page=1;
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     ImageType
@@ -2208,7 +2204,7 @@ static MagickBooleanType WritePSImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

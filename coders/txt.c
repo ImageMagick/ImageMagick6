@@ -738,6 +738,12 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
     colorspace[MaxTextExtent],
     tuple[MaxTextExtent];
 
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   MagickBooleanType
     status;
 
@@ -747,19 +753,11 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
   MagickPixelPacket
     pixel;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  ssize_t
-    x;
-
   size_t
-    imageListLength;
+    number_scenes;
 
   ssize_t
+    x,
     y;
 
   /*
@@ -775,7 +773,7 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
   if (status == MagickFalse)
     return(status);
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     ComplianceType
@@ -872,7 +870,7 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

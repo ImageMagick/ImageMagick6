@@ -914,6 +914,9 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
   const char
     *value;
 
+  const PixelPacket
+    *p;
+
   MagickBooleanType
     status;
 
@@ -929,26 +932,19 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
   SGIInfo
     iris_info;
 
-  const PixelPacket
-    *p;
+  size_t
+    number_scenes;
 
   ssize_t
     i,
-    x;
-
-  unsigned char
-    *q;
-
-  size_t
-    imageListLength;
-
-  ssize_t
+    x,
     y,
     z;
 
   unsigned char
     *pixels,
-    *packets;
+    *packets,
+    *q;
 
   /*
     Open output image file.
@@ -963,7 +959,7 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
   if (status == MagickFalse)
     return(status);
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     /*
@@ -1190,7 +1186,7 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

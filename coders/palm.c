@@ -700,6 +700,9 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
   ExceptionInfo
     *exception;
 
+  IndexPacket
+    *indexes;
+
   MagickBooleanType
     status;
 
@@ -717,25 +720,20 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
   QuantizeInfo
     *quantize_info;
 
-  IndexPacket
-    *indexes;
-
-  ssize_t
-    x;
-
   PixelPacket
     *p;
-
-  ssize_t
-    y;
 
   size_t
     count,
     bits_per_pixel,
     bytes_per_row,
-    imageListLength,
     nextDepthOffset,
+    number_scenes,
     one;
+
+  ssize_t
+    x,
+    y;
 
   unsigned char
     byte,
@@ -776,7 +774,7 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
   one=1;
   version=0;
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
@@ -1032,7 +1030,7 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
     currentOffset=(MagickOffsetType) GetBlobSize(image);
     (void) SeekBlob(image,currentOffset,SEEK_SET);
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

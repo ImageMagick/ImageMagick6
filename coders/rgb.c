@@ -1120,8 +1120,8 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
     quantum_type;
 
   size_t
-    imageListLength,
-    length;
+    length,
+    number_scenes;
 
   ssize_t
     count,
@@ -1154,7 +1154,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
   if (LocaleCompare(image_info->magick,"RGBO") == 0)
     quantum_type=RGBOQuantum;
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     /*
@@ -1481,7 +1481,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

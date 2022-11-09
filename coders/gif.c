@@ -1531,11 +1531,11 @@ ModuleExport void UnregisterGIFImage(void)
 */
 static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
 {
-  int
-    c;
-
   ImageInfo
     *write_info;
+
+  int
+    c;
 
   MagickBooleanType
     status;
@@ -1546,26 +1546,22 @@ static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
   RectangleInfo
     page;
 
-  ssize_t
-    i;
-
-  unsigned char
-    *q;
-
   size_t
     bits_per_pixel,
     delay,
-    imageListLength,
     length,
+    number_scenes,
     one;
 
   ssize_t
+    i,
     j,
     opacity;
 
   unsigned char
     *colormap,
-    *global_colormap;
+    *global_colormap,
+    *q;
 
   /*
     Open output image file.
@@ -1626,7 +1622,7 @@ static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
   */
   scene=0;
   one=1;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
@@ -1961,7 +1957,7 @@ static MagickBooleanType WriteGIFImage(const ImageInfo *image_info,Image *image)
       break;
     image=SyncNextImageInList(image);
     scene++;
-    status=SetImageProgress(image,SaveImagesTag,scene,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene,number_scenes);
     if (status == MagickFalse)
       break;
   } while (write_info->adjoin != MagickFalse);

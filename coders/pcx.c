@@ -862,6 +862,12 @@ static MagickBooleanType PCXWritePixels(PCXInfo *pcx_info,
 
 static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
 {
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   MagickBooleanType
     status;
 
@@ -876,29 +882,19 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
   PCXInfo
     pcx_info;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  ssize_t
-    i,
-    x;
-
-  unsigned char
-    *q;
-
   size_t
-    imageListLength,
+    number_scenes,
     length;
 
   ssize_t
+    i,
+    x,
     y;
 
   unsigned char
     *pcx_colormap,
-    *pixels;
+    *pixels,
+    *q;
 
   /*
     Open output image file.
@@ -931,7 +927,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
         (void) WriteBlobLSBLong(image,0x00000000L);
     }
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     if (page_table != (MagickOffsetType *) NULL)
@@ -1184,7 +1180,7 @@ static MagickBooleanType WritePCXImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

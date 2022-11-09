@@ -858,20 +858,18 @@ static MagickBooleanType WritePS3Image(const ImageInfo *image_info,Image *image)
     media_info,
     page_info;
 
-  ssize_t
-    i;
-
   SegmentInfo
     bounds;
 
   size_t
-    imageListLength,
+    number_scenes,
     length,
     page,
     pixel,
     text_size;
 
   ssize_t
+    i,
     j;
 
   time_t
@@ -931,7 +929,7 @@ static MagickBooleanType WritePS3Image(const ImageInfo *image_info,Image *image)
   (void) memset(&bounds,0,sizeof(bounds));
   page=0;
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     /*
@@ -1596,7 +1594,7 @@ static MagickBooleanType WritePS3Image(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

@@ -1324,6 +1324,12 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     *option,
     *value;
 
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   const StringInfo
     *icc_profile;
 
@@ -1361,24 +1367,11 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     media_info,
     page_info;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  unsigned char
-    *q;
-
-  ssize_t
-    i,
-    x;
-
   size_t
     channels,
-    imageListLength,
     info_id,
     length,
+    number_scenes,
     object,
     pages_id,
     root_id,
@@ -1387,7 +1380,9 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
 
   ssize_t
     count,
+    i,
     page_count,
+    x,
     y;
 
   struct tm
@@ -1397,7 +1392,8 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     seconds;
 
   unsigned char
-    *pixels;
+    *pixels,
+    *q;
 
   /*
     Open output image file.
@@ -1572,7 +1568,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
   (void) WriteBlobString(image,">>\n");
   (void) WriteBlobString(image,"endobj\n");
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     icc_profile=GetCompatibleColorProfile(image);
@@ -2984,7 +2980,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

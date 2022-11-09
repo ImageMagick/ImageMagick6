@@ -1266,8 +1266,8 @@ static MagickBooleanType WriteCMYKImage(const ImageInfo *image_info,
     y;
 
   size_t
-    imageListLength,
-    length;
+    length,
+    number_scenes;
 
   unsigned char
     *pixels;
@@ -1297,7 +1297,7 @@ static MagickBooleanType WriteCMYKImage(const ImageInfo *image_info,
       image->matte=MagickTrue;
     }
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     /*
@@ -1667,7 +1667,7 @@ static MagickBooleanType WriteCMYKImage(const ImageInfo *image_info,
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

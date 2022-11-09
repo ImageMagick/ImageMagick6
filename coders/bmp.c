@@ -1666,6 +1666,12 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
   const char
     *option;
 
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   const StringInfo
     *profile;
 
@@ -1677,37 +1683,25 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
     *pixel_info;
 
   MagickOffsetType
+    profile_data,
+    profile_size,
+    profile_size_pad,
     scene;
-
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  ssize_t
-    i,
-    x;
-
-  unsigned char
-    *q;
 
   size_t
     bytes_per_line,
-    imageListLength,
+    number_scenes,
     type;
 
   ssize_t
+    i,
+    x,
     y;
 
   unsigned char
     *bmp_data,
-    *pixels;
-
-  MagickOffsetType
-    profile_data,
-    profile_size,
-    profile_size_pad;
+    *pixels,
+    *q;
 
   /*
     Open output image file.
@@ -1745,7 +1739,7 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
         type=4;
     }
   scene=0;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     /*
@@ -2450,7 +2444,7 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

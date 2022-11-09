@@ -3078,13 +3078,11 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
   QuantumType
     quantum_type;
 
-  ssize_t
-    i;
-
   size_t
-    imageListLength;
+    number_scenes;
 
   ssize_t
+    i,
     y;
 
   TIFF
@@ -3157,7 +3155,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
   scene=0;
   debug=IsEventLogging();
   (void) debug;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     /*
@@ -3690,12 +3688,12 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         (void) TIFFSetField(tiff,TIFFTAG_WHITEPOINT,chromaticity);
       }
     if ((LocaleCompare(image_info->magick,"PTIF") != 0) &&
-        (image_info->adjoin != MagickFalse) && (imageListLength > 1))
+        (image_info->adjoin != MagickFalse) && (number_scenes > 1))
       {
         (void) TIFFSetField(tiff,TIFFTAG_SUBFILETYPE,FILETYPE_PAGE);
         if (image->scene != 0)
           (void) TIFFSetField(tiff,TIFFTAG_PAGENUMBER,(uint16) image->scene,
-            imageListLength);
+            number_scenes);
       }
     if (image->orientation != UndefinedOrientation)
       (void) TIFFSetField(tiff,TIFFTAG_ORIENTATION,(uint16) image->orientation);
@@ -3708,7 +3706,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         pages;
 
       page=(uint16) scene;
-      pages=(uint16) imageListLength;
+      pages=(uint16) number_scenes;
       if ((LocaleCompare(image_info->magick,"PTIF") != 0) &&
           (image_info->adjoin != MagickFalse) && (pages > 1))
         (void) TIFFSetField(tiff,TIFFTAG_SUBFILETYPE,FILETYPE_PAGE);
@@ -3990,7 +3988,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
     image=SyncNextImageInList(image);
     if (image == (Image *) NULL)
       break;
-    status=SetImageProgress(image,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(image,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);

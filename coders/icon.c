@@ -863,6 +863,12 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
   const char
     *option;
 
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   IconFile
     icon_file;
 
@@ -880,31 +886,21 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
     offset,
     scene;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  ssize_t
-    i,
-    x;
-
-  unsigned char
-    *q;
-
   size_t
     bytes_per_line,
-    imageListLength,
+    number_scenes,
     scanline_pad;
 
   ssize_t
+    i,
+    x,
     y;
 
   unsigned char
     bit,
     byte,
-    *pixels;
+    *pixels,
+    *q;
 
   /*
     Open output image file.
@@ -965,7 +961,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
   } while ((next != (Image *) NULL) && (image_info->adjoin != MagickFalse));
   scene=0;
   next=(images != (Image *) NULL) ? images : image;
-  imageListLength=GetImageListLength(image);
+  number_scenes=GetImageListLength(image);
   do
   {
     if ((next->columns > 255L) && (next->rows > 255L) &&
@@ -1355,7 +1351,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
       }
     if (GetNextImageInList(next) == (Image *) NULL)
       break;
-    status=SetImageProgress(next,SaveImagesTag,scene++,imageListLength);
+    status=SetImageProgress(next,SaveImagesTag,scene++,number_scenes);
     if (status == MagickFalse)
       break;
     next=SyncNextImageInList(next);
