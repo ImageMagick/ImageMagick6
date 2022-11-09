@@ -1675,10 +1675,10 @@ dnl ===========================================================================
 # Check for Display Postscript delegate library.
 #
 AC_ARG_WITH([dps],
-    [AS_HELP_STRING([--without-dps],
-                    [disable Display Postscript support])],
+    [AS_HELP_STRING([--with-dps],
+                    [enable Display Postscript support])],
     [with_dps=$withval],
-    [with_dps='yes'])
+    [with_dps='no'])
 
 if test "$with_dps" != 'yes'; then
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-dps=$with_dps "

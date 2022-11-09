@@ -2051,7 +2051,7 @@ Optional Packages:
   --with-apple-font-dir=DIR
                           Apple font directory
   --with-autotrace        enable autotrace support
-  --without-dps           disable Display Postscript support
+  --with-dps              enable Display Postscript support
   --with-dejavu-font-dir=DIR
                           DejaVu font directory
   --with-fftw             enable FFTW support
@@ -5126,7 +5126,7 @@ MAGICK_PATCHLEVEL_VERSION=68
 
 MAGICK_VERSION=6.9.12-68
 
-MAGICK_GIT_REVISION=d8d018c02:20221106
+MAGICK_GIT_REVISION=9784c3e0b:20221109
 
 
 # Substitute library versioning
@@ -5160,7 +5160,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,68
 
-PACKAGE_RELEASE_DATE=2022-11-06
+PACKAGE_RELEASE_DATE=2022-11-09
 
 
 # Ensure that make can run correctly
@@ -30173,7 +30173,7 @@ if test ${with_dps+y}
 then :
   withval=$with_dps; with_dps=$withval
 else $as_nop
-  with_dps='yes'
+  with_dps='no'
 fi
 
 
