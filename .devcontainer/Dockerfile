@@ -34,6 +34,4 @@ ENV WORK=/ImageMagick6
 ENV PATH=$PATH:/ImageMagick6/bin
 ENV CXX=clang++
 ENV CC=clang
-ENV CFLAGS="-O1 -fno-omit-frame-pointer -fsanitize=address -fsanitize-address-use-after-scope"
-ENV CXXFLAGS="-O1 -fno-omit-frame-pointer -fsanitize=address -fsanitize-address-use-after-scope"
 RUN ./build_dependencies.sh
