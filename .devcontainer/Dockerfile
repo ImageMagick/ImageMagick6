@@ -26,7 +26,7 @@ RUN git clone --depth 1 https://github.com/freetype/freetype
 RUN git clone --depth 1 https://gitlab.com/federicomenaquintero/bzip2.git
 RUN git -c http.sslVerify=false clone https://www.cl.cam.ac.uk/~mgk25/git/jbigkit
 
-RUN curl https://raw.githubusercontent.com/ImageMagick/ImageMagick/main/.devcontainer/build_dependencies.sh -o build_dependencies.sh && \
+RUN curl https://raw.githubusercontent.com/ImageMagick/ImageMagick6/main/.devcontainer/build_dependencies.sh -o build_dependencies.sh && \
     chmod +x build_dependencies.sh
 
 ENV SRC=/ImageMagick6/dependencies
