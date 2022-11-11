@@ -17,7 +17,7 @@ popd
 
 # Build png
 pushd "$SRC/libpng"
-cmake . -DCMAKE_INSTALL_PREFIX=$WORK -DPNG_SHARED=off
+cmake . -DCMAKE_INSTALL_PREFIX=$WORK
 make -j$(nproc)
 make install
 popd
@@ -87,7 +87,7 @@ popd
 
 # Build openjpg
 pushd "$SRC/openjpeg"
-cmake . -DCMAKE_INSTALL_PREFIX=$WORK -DBUILD_SHARED_LIBS=off -DBUILD_CODEC=off -DCMAKE_BUILD_TYPE=Release
+cmake . -DCMAKE_INSTALL_PREFIX=$WORK -DBUILD_CODEC=off -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
 make install
 popd
