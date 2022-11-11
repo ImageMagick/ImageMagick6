@@ -32,6 +32,7 @@ RUN curl https://raw.githubusercontent.com/ImageMagick/ImageMagick6/main/.devcon
 ENV SRC=/ImageMagick6/dependencies
 ENV WORK=/ImageMagick6
 ENV PATH=$PATH:/ImageMagick6/bin
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/ImageMagick6/lib
 ENV CXX=clang++
 ENV CC=clang
 RUN ./build_dependencies.sh
