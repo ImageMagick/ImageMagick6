@@ -48,7 +48,7 @@ popd
 # build libraw
 pushd "$SRC/libraw"
 autoreconf -fiv
-./configure --prefix="$WORK" --with-pic=yes --disable-examples PKG_CONFIG_PATH="$WORK/lib/pkgconfig" CXXFLAGS="$CXXFLAGS -DLIBRAW_USE_CALLOC_INSTEAD_OF_MALLOC=on"
+./configure --prefix="$WORK" --with-pic=yes --disable-examples PKG_CONFIG_PATH="$WORK/lib/pkgconfig" CXXFLAGS="-DLIBRAW_USE_CALLOC_INSTEAD_OF_MALLOC=on"
 make -j$(nproc)
 make install
 popd
