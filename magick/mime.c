@@ -160,13 +160,9 @@ static LinkedListInfo *AcquireMimeCache(const char *filename,
   LinkedListInfo
     *cache;
 
-  MagickStatusType
-    status;
-
   cache=NewLinkedList(0);
   if (cache == (LinkedListInfo *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  status=MagickTrue;
 #if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
   {
     const StringInfo
@@ -179,15 +175,17 @@ static LinkedListInfo *AcquireMimeCache(const char *filename,
     option=(const StringInfo *) GetNextValueInLinkedList(options);
     while (option != (const StringInfo *) NULL)
     {
-      status&=LoadMimeCache(cache,(const char *)
+      (void) LoadMimeCache(cache, (const char *)
         GetStringInfoDatum(option),GetStringInfoPath(option),0,exception);
       option=(const StringInfo *) GetNextValueInLinkedList(options);
     }
     options=DestroyConfigureOptions(options);
   }
+#else
+  magick_unreferenced(filename);
 #endif
   if (IsLinkedListEmpty(cache) != MagickFalse)
-    status&=LoadMimeCache(cache,MimeMap,"built-in",0,exception);
+    (void) LoadMimeCache(cache,MimeMap,"built-in",0,exception);
   return(cache);
 }
 
