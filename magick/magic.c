@@ -140,6 +140,8 @@ static const MagicMapInfo
     { "J2K", 0, MagicPattern("\xff\x4f\xff\x51") },
     { "JPC", 0, MagicPattern("\x0d\x0a\x87\x0a") },
     { "JP2", 0, MagicPattern("\x00\x00\x00\x0c\x6a\x50\x20\x20\x0d\x0a\x87\x0a") },
+    { "JXL", 0, MagicPattern("\xff\x0a") },
+    { "JXL", 0, MagicPattern("\x00\x00\x00\x0c\x4a\x58\x4c\x20\x0d\x0a\x87\x0a") },
     { "MAT", 0, MagicPattern("MATLAB 5.0 MAT-file,") },
     { "MIFF", 0, MagicPattern("Id=ImageMagick") },
     { "MIFF", 0, MagicPattern("id=ImageMagick") },

@@ -2312,49 +2312,31 @@ AC_SUBST([JPEG_LIBS])
 dnl ===========================================================================
 
 #
-# Check for Jpegxl delegate library.
+# Check for JPEG-XL delegate library.
 #
 AC_ARG_WITH([jxl],
-    [AS_HELP_STRING([--without-jxl],
-                    [disable Jpegxl support])],
+    [AS_HELP_STRING([--with-jxl],
+                    [enable JPEG-XL support])],
     [with_jxl=$withval],
-    [with_jxl='yes'])
+    [with_jxl='no'])
 
-if test "$with_jxl" != 'yes'; then
-    DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-jxl=$with_jxl "
-fi
-
-# Check for the brunsli libraries, currently the only libraries used by the jxl coder.
-# Full jxl support will be added once the full libraries are released.
+# Check for the JPEG-XL library.
 have_jxl='no'
+JXL_CFLAGS=''
 JXL_LIBS=''
+JXL_PKG=''
 if test "$with_jxl" != 'no'; then
   AC_MSG_RESULT([-------------------------------------------------------------])
-  AC_MSG_CHECKING([for brunsli])
+  PKG_CHECK_MODULES([JXL],[libjxl >= 0.7.0 libjxl_threads],[have_jxl=yes],[have_jxl=no])
   AC_MSG_RESULT([])
-  failed=0
-  passed=0
-  AC_CHECK_HEADER([brunsli/decode.h],[passed=`expr $passed + 1`],[failed=`expr $failed + 1`])
-  AC_CHECK_HEADER([brunsli/encode.h],[passed=`expr $passed + 1`],[failed=`expr $failed + 1`])
-  AC_CHECK_LIB([brunslidec-c],[DecodeBrunsli],[passed=`expr $passed + 1`],[failed=`expr $failed + 1`],[])
-  AC_CHECK_LIB([brunslienc-c],[EncodeBrunsli],[passed=`expr $passed + 1`],[failed=`expr $failed + 1`],[])
-  AC_MSG_CHECKING([if brunsli package is complete])
-  if test $passed -gt 0; then
-      if test $failed -gt 0; then
-          AC_MSG_RESULT([no -- some components failed test])
-          have_jxl='no (failed tests)'
-      else
-          JXL_LIBS='-lbrunslidec-c -lbrunslienc-c'
-          LIBS="$JXL_LIBS $LIBS"
-          AC_DEFINE([JXL_DELEGATE],[1],[Define if you have brunsli library])
-          AC_MSG_RESULT([yes])
-          have_jxl='yes'
-      fi
-  else
-      AC_MSG_RESULT([no])
-  fi
 fi
+
+if test "$have_jxl" = 'yes'; then
+  AC_DEFINE([JXL_DELEGATE],[1],[Define if you have jpeg-xl library])
+fi
+
 AM_CONDITIONAL([JXL_DELEGATE],[test "$have_jxl" = 'yes'])
+AC_SUBST([JXL_CFLAGS])
 AC_SUBST([JXL_LIBS])
 
 dnl ===========================================================================

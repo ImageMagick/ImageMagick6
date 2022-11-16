@@ -844,9 +844,10 @@ LCMS_DELEGATE_FALSE
 LCMS_DELEGATE_TRUE
 LCMS2_LIBS
 LCMS2_CFLAGS
-JXL_LIBS
 JXL_DELEGATE_FALSE
 JXL_DELEGATE_TRUE
+JXL_LIBS
+JXL_CFLAGS
 JPEG_LIBS
 JPEG_DELEGATE_FALSE
 JPEG_DELEGATE_TRUE
@@ -1303,6 +1304,8 @@ GVC_CFLAGS
 GVC_LIBS
 HEIF_CFLAGS
 HEIF_LIBS
+JXL_CFLAGS
+JXL_LIBS
 LCMS2_CFLAGS
 LCMS2_LIBS
 LIBOPENJP2_CFLAGS
@@ -2069,7 +2072,7 @@ Optional Packages:
   --without-heic          disable HEIC support
   --without-jbig          disable JBIG support
   --without-jpeg          disable JPEG support
-  --without-jxl           disable Jpegxl support
+  --with-jxl              enable JPEG-XL support
   --without-lcms          disable lcms (v1.1X) support
   --without-openjp2       disable OpenJP2 support
   --without-lqr           disable Liquid Rescale support
@@ -2139,6 +2142,8 @@ Some influential environment variables:
   GVC_LIBS    linker flags for GVC, overriding pkg-config
   HEIF_CFLAGS C compiler flags for HEIF, overriding pkg-config
   HEIF_LIBS   linker flags for HEIF, overriding pkg-config
+  JXL_CFLAGS  C compiler flags for JXL, overriding pkg-config
+  JXL_LIBS    linker flags for JXL, overriding pkg-config
   LCMS2_CFLAGS
               C compiler flags for LCMS2, overriding pkg-config
   LCMS2_LIBS  linker flags for LCMS2, overriding pkg-config
@@ -5126,7 +5131,7 @@ MAGICK_PATCHLEVEL_VERSION=68
 
 MAGICK_VERSION=6.9.12-68
 
-MAGICK_GIT_REVISION=87cd27901:20221112
+MAGICK_GIT_REVISION=fd4f60b85:20221114
 
 
 # Substitute library versioning
@@ -5160,7 +5165,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,68
 
-PACKAGE_RELEASE_DATE=2022-11-12
+PACKAGE_RELEASE_DATE=2022-11-14
 
 
 # Ensure that make can run correctly
@@ -31999,7 +32004,7 @@ fi
 
 
 #
-# Check for Jpegxl delegate library.
+# Check for JPEG-XL delegate library.
 #
 
 # Check whether --with-jxl was given.
@@ -32007,149 +32012,99 @@ if test ${with_jxl+y}
 then :
   withval=$with_jxl; with_jxl=$withval
 else $as_nop
-  with_jxl='yes'
+  with_jxl='no'
 fi
 
 
-if test "$with_jxl" != 'yes'; then
-    DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-jxl=$with_jxl "
-fi
-
-# Check for the brunsli libraries, currently the only libraries used by the jxl coder.
-# Full jxl support will be added once the full libraries are released.
+# Check for the JPEG-XL library.
 have_jxl='no'
+JXL_CFLAGS=''
 JXL_LIBS=''
+JXL_PKG=''
 if test "$with_jxl" != 'no'; then
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: -------------------------------------------------------------" >&5
 printf "%s\n" "-------------------------------------------------------------" >&6; }
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for brunsli" >&5
-printf %s "checking for brunsli... " >&6; }
+
+pkg_failed=no
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libjxl >= 0.7.0 libjxl_threads" >&5
+printf %s "checking for libjxl >= 0.7.0 libjxl_threads... " >&6; }
+
+if test -n "$JXL_CFLAGS"; then
+    pkg_cv_JXL_CFLAGS="$JXL_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libjxl >= 0.7.0 libjxl_threads\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libjxl >= 0.7.0 libjxl_threads") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_JXL_CFLAGS=`$PKG_CONFIG --cflags "libjxl >= 0.7.0 libjxl_threads" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+if test -n "$JXL_LIBS"; then
+    pkg_cv_JXL_LIBS="$JXL_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libjxl >= 0.7.0 libjxl_threads\""; } >&5
+  ($PKG_CONFIG --exists --print-errors "libjxl >= 0.7.0 libjxl_threads") 2>&5
+  ac_status=$?
+  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+  test $ac_status = 0; }; then
+  pkg_cv_JXL_LIBS=`$PKG_CONFIG --libs "libjxl >= 0.7.0 libjxl_threads" 2>/dev/null`
+		      test "x$?" != "x0" && pkg_failed=yes
+else
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        JXL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libjxl >= 0.7.0 libjxl_threads" 2>&1`
+        else
+	        JXL_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libjxl >= 0.7.0 libjxl_threads" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$JXL_PKG_ERRORS" >&5
+
+	have_jxl=no
+elif test $pkg_failed = untried; then
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+	have_jxl=no
+else
+	JXL_CFLAGS=$pkg_cv_JXL_CFLAGS
+	JXL_LIBS=$pkg_cv_JXL_LIBS
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+	have_jxl=yes
+fi
   { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: " >&5
 printf "%s\n" "" >&6; }
-  failed=0
-  passed=0
-  ac_fn_c_check_header_compile "$LINENO" "brunsli/decode.h" "ac_cv_header_brunsli_decode_h" "$ac_includes_default"
-if test "x$ac_cv_header_brunsli_decode_h" = xyes
-then :
-  passed=`expr $passed + 1`
-else $as_nop
-  failed=`expr $failed + 1`
 fi
 
-  ac_fn_c_check_header_compile "$LINENO" "brunsli/encode.h" "ac_cv_header_brunsli_encode_h" "$ac_includes_default"
-if test "x$ac_cv_header_brunsli_encode_h" = xyes
-then :
-  passed=`expr $passed + 1`
-else $as_nop
-  failed=`expr $failed + 1`
-fi
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for DecodeBrunsli in -lbrunslidec-c" >&5
-printf %s "checking for DecodeBrunsli in -lbrunslidec-c... " >&6; }
-if test ${ac_cv_lib_brunslidec_c_DecodeBrunsli+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lbrunslidec-c  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-char DecodeBrunsli ();
-int
-main (void)
-{
-return DecodeBrunsli ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"
-then :
-  ac_cv_lib_brunslidec_c_DecodeBrunsli=yes
-else $as_nop
-  ac_cv_lib_brunslidec_c_DecodeBrunsli=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_brunslidec_c_DecodeBrunsli" >&5
-printf "%s\n" "$ac_cv_lib_brunslidec_c_DecodeBrunsli" >&6; }
-if test "x$ac_cv_lib_brunslidec_c_DecodeBrunsli" = xyes
-then :
-  passed=`expr $passed + 1`
-else $as_nop
-  failed=`expr $failed + 1`
-fi
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for EncodeBrunsli in -lbrunslienc-c" >&5
-printf %s "checking for EncodeBrunsli in -lbrunslienc-c... " >&6; }
-if test ${ac_cv_lib_brunslienc_c_EncodeBrunsli+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lbrunslienc-c  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-char EncodeBrunsli ();
-int
-main (void)
-{
-return EncodeBrunsli ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"
-then :
-  ac_cv_lib_brunslienc_c_EncodeBrunsli=yes
-else $as_nop
-  ac_cv_lib_brunslienc_c_EncodeBrunsli=no
-fi
-rm -f core conftest.err conftest.$ac_objext conftest.beam \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_brunslienc_c_EncodeBrunsli" >&5
-printf "%s\n" "$ac_cv_lib_brunslienc_c_EncodeBrunsli" >&6; }
-if test "x$ac_cv_lib_brunslienc_c_EncodeBrunsli" = xyes
-then :
-  passed=`expr $passed + 1`
-else $as_nop
-  failed=`expr $failed + 1`
-fi
-
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if brunsli package is complete" >&5
-printf %s "checking if brunsli package is complete... " >&6; }
-  if test $passed -gt 0; then
-      if test $failed -gt 0; then
-          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no -- some components failed test" >&5
-printf "%s\n" "no -- some components failed test" >&6; }
-          have_jxl='no (failed tests)'
-      else
-          JXL_LIBS='-lbrunslidec-c -lbrunslienc-c'
-          LIBS="$JXL_LIBS $LIBS"
+if test "$have_jxl" = 'yes'; then
 
 printf "%s\n" "#define JXL_DELEGATE 1" >>confdefs.h
 
-          { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-          have_jxl='yes'
-      fi
-  else
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-  fi
 fi
+
  if test "$have_jxl" = 'yes'; then
   JXL_DELEGATE_TRUE=
   JXL_DELEGATE_FALSE='#'
@@ -32157,6 +32112,7 @@ else
   JXL_DELEGATE_TRUE='#'
   JXL_DELEGATE_FALSE=
 fi
+
 
 
 
