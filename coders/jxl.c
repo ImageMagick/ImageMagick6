@@ -83,7 +83,7 @@ typedef struct MemoryManagerInfo
   Forward declarations.
 */
 static MagickBooleanType
-  WriteJXLImage(const ImageInfo *,Image *,ExceptionInfo *);
+  WriteJXLImage(const ImageInfo *,Image *);
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -640,8 +640,7 @@ static inline float JXLGetDistance(const ImageInfo *image_info)
   return(6.24f+(float) pow(2.5f,(30.0-image_info->quality)/5.0f)/6.25f);
 }
 
-static MagickBooleanType WriteJXLImage(const ImageInfo *image_info,Image *image,
-  ExceptionInfo *exception)
+static MagickBooleanType WriteJXLImage(const ImageInfo *image_info,Image *image)
 {
   const char
     *option;
@@ -689,14 +688,13 @@ static MagickBooleanType WriteJXLImage(const ImageInfo *image_info,Image *image,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  assert(exception != (ExceptionInfo *) NULL);
-  assert(exception->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  status=OpenBlob(image_info,image,WriteBinaryBlobMode,exception);
+  status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
-  JXLSetMemoryManager(&memory_manager,&memory_manager_info,image,exception);
+  JXLSetMemoryManager(&memory_manager,&memory_manager_info,image,
+    &image->exception);
   jxl_info=JxlEncoderCreate(&memory_manager);
   if (jxl_info == (JxlEncoder *) NULL)
     ThrowWriterException(CoderError,"MemoryAllocationFailed");
@@ -716,7 +714,7 @@ static MagickBooleanType WriteJXLImage(const ImageInfo *image_info,Image *image,
       return(MagickFalse);
     }
   (void) memset(&pixel_format,0,sizeof(pixel_format));
-  JXLSetFormat(image,&pixel_format,exception);
+  JXLSetFormat(image,&pixel_format,&image->exception);
   (void) memset(&basic_info,0,sizeof(basic_info));
   JxlEncoderInitBasicInfo(&basic_info);
   basic_info.xsize=(uint32_t) image->columns;
@@ -804,13 +802,13 @@ static MagickBooleanType WriteJXLImage(const ImageInfo *image_info,Image *image,
   if (IsGrayColorspace(image->colorspace) != MagickFalse)
     status=ExportImagePixels(image,0,0,image->columns,image->rows,
       image->matte != MagickFalse ? "IA" : "I",
-      JXLDataTypeToStorageType(image,pixel_format.data_type,exception),pixels,
-      exception);
+      JXLDataTypeToStorageType(image,pixel_format.data_type,&image->exception),
+      pixels,&image->exception);
   else
     status=ExportImagePixels(image,0,0,image->columns,image->rows,
       image->matte != MagickFalse ? "RGBA" : "RGB",
-      JXLDataTypeToStorageType(image,pixel_format.data_type,exception),pixels,
-      exception);
+      JXLDataTypeToStorageType(image,pixel_format.data_type,&image->exception),
+      pixels,&image->exception);
   if (status == MagickFalse)
     {
       pixel_info=RelinquishVirtualMemory(pixel_info);
