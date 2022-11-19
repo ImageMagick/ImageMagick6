@@ -5223,15 +5223,15 @@ int main(int argc,char **argv)
   {
     char
       *p,
-      path[MaxTextExtent];
+      path[MagickPathExtent];
 
     path[0]=0;
     p=getenv("SRCDIR");
     if (p != (char *) NULL)
       {
-        (void) strcpy(path,p);
+        (void) CopyMagickString(path,p,MagickPathExtent);
         if (path[strlen(path)-1] != '/')
-          (void) strcat(path,"/");
+          (void) ConcatenateMagickString(path,"/",MagickPathExtent);
       }
     (void) strcat(path,"sequence.miff");
     status=MagickReadImage(magick_wand,path);

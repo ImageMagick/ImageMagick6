@@ -580,6 +580,8 @@ static inline char *ReplaceSpaceWithNewline(char **caption,char *space)
   size_t
     octets;
 
+  if ((caption == (char **) NULL) || (space == (char *) NULL))
+    return((char *) NULL);
   octets=(size_t) GetUTFOctets(space);
   if (octets == 1)
     *space='\n';
@@ -608,23 +610,23 @@ static inline char *ReplaceSpaceWithNewline(char **caption,char *space)
 MagickExport ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
   const MagickBooleanType split,TypeMetric *metrics,char **caption)
 {
-  MagickBooleanType
-    status;
-
   char
     *p,
     *q,
     *s;
 
-  ssize_t
-    i;
+  MagickBooleanType
+    status;
 
   size_t
     width;
 
   ssize_t
+    i,
     n;
 
+  if ((caption == (char **) NULL) || (*caption == (char *) NULL))
+    return(-1);
   q=draw_info->text;
   s=(char *) NULL;
   width=0;
@@ -1490,7 +1492,8 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
           Extract face index, e.g. @msgothic[1].
         */
         ImageInfo *image_info=AcquireImageInfo();
-        (void) strcpy(image_info->filename,draw_info->font+1);
+        (void) CopyMagickString(image_info->filename,draw_info->font+1,
+          MagickPathExtent);
         (void) SetImageInfo(image_info,0,exception);
         face_index=(FT_Long) image_info->scene;
         args.pathname=ConstantString(image_info->filename);

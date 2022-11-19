@@ -50,6 +50,7 @@
 #include "magick/histogram.h"
 #include "magick/image.h"
 #include "magick/list.h"
+#include "magick/locale_.h"
 #include "magick/memory_.h"
 #include "magick/monitor-private.h"
 #include "magick/pixel-private.h"
@@ -1273,7 +1274,8 @@ MagickExport size_t GetNumberColors(const Image *image,FILE *file,
     (void) ConcatenateMagickString(tuple,")",MaxTextExtent);
     (void) QueryMagickColorname(image,&pixel,SVGCompliance,color,exception);
     GetColorTuple(&pixel,MagickTrue,hex);
-    (void) sprintf(count,"%10.20g:",(double) ((MagickOffsetType) p->count));
+    (void) FormatLocaleString(count,MagickPathExtent,"%10.20g:",(double)
+      ((MagickOffsetType) p->count));
     (void) FormatLocaleFile(file,"    %s %s %s %s\n",count,tuple,hex,color);
     if (image->progress_monitor != (MagickProgressMonitor) NULL)
       {

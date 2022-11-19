@@ -58,6 +58,7 @@
 #include "magick/image.h"
 #include "magick/image-private.h"
 #include "magick/layer.h"
+#include "magick/locale_.h"
 #include "magick/mime-private.h"
 #include "magick/memory_.h"
 #include "magick/memory-private.h"
@@ -250,9 +251,13 @@ void DumpProfileData()
   for (i = 0; i < KERNEL_COUNT; ++i) {
     char buf[4096];
     char indent[160];
-    strcpy(indent, "                              ");
+    (void) CopyMagickString(indent,"                              ",
+      sizeof(indent);
     strncpy(indent, kernelNames[i], min(strlen(kernelNames[i]), strlen(indent) - 1));
-    sprintf(buf, "%s%d\t(%d calls)   \t%d -> %d", indent, profileRecords[i].count > 0 ? (profileRecords[i].total / profileRecords[i].count) : 0, profileRecords[i].count, profileRecords[i].min, profileRecords[i].max);
+    (void) FormatLocaleString(buf,sizeof(buf),"%s%d\t(%d calls)   \t%d -> %d",
+      indent, profileRecords[i].count > 0 ? (profileRecords[i].total /
+      profileRecords[i].count) : 0, profileRecords[i].count,
+      profileRecords[i].min, profileRecords[i].max);
     /*
       printf("%s%d\t(%d calls)   \t%d -> %d\n", indent, profileRecords[i].count > 0 ? (profileRecords[i].total / profileRecords[i].count) : 0, profileRecords[i].count, profileRecords[i].min, profileRecords[i].max);
     */
@@ -1096,7 +1101,8 @@ static MagickBooleanType CompileOpenCLKernels(MagickCLEnv clEnv, ExceptionInfo* 
 
   /* get all the OpenCL program strings here */
   accelerateKernelsBuffer = (char*) AcquireQuantumMemory(1,strlen(accelerateKernels)+strlen(accelerateKernels2)+1);
-  sprintf(accelerateKernelsBuffer,"%s%s",accelerateKernels,accelerateKernels2);
+  FormatLocaleString(accelerateKernelsBuffer,strlen(accelerateKernels)+
+    strlen(accelerateKernels2)+1,"%s%s",accelerateKernels,accelerateKernels2);
   MagickOpenCLProgramStrings[MAGICK_OPENCL_ACCELERATE] = accelerateKernelsBuffer;
 
   for (i = 0; i < MAGICK_OPENCL_NUM_PROGRAMS; i++)
@@ -2035,12 +2041,14 @@ static ds_status writeProfileToFile(ds_profile* profile, ds_score_serializer ser
           fwrite(DS_TAG_DEVICE_DRIVER_VERSION_END, sizeof(char), strlen(DS_TAG_DEVICE_DRIVER_VERSION_END), profileFile);
 
           fwrite(DS_TAG_DEVICE_MAX_COMPUTE_UNITS, sizeof(char), strlen(DS_TAG_DEVICE_MAX_COMPUTE_UNITS), profileFile);
-          sprintf(tmp,"%d",profile->devices[i].oclMaxComputeUnits);
+          (void) FormatLocaleString(tmp,sizeof(tmp),"%d",
+            profile->devices[i].oclMaxComputeUnits);
           fwrite(tmp,sizeof(char),strlen(tmp), profileFile);
           fwrite(DS_TAG_DEVICE_MAX_COMPUTE_UNITS_END, sizeof(char), strlen(DS_TAG_DEVICE_MAX_COMPUTE_UNITS_END), profileFile);
 
           fwrite(DS_TAG_DEVICE_MAX_CLOCK_FREQ, sizeof(char), strlen(DS_TAG_DEVICE_MAX_CLOCK_FREQ), profileFile);
-          sprintf(tmp,"%d",profile->devices[i].oclMaxClockFrequency);
+          (void) FormatLocaleString(tmp,sizeof(tmp),"%d",
+            profile->devices[i].oclMaxClockFrequency);
           fwrite(tmp,sizeof(char),strlen(tmp), profileFile);
           fwrite(DS_TAG_DEVICE_MAX_CLOCK_FREQ_END, sizeof(char), strlen(DS_TAG_DEVICE_MAX_CLOCK_FREQ_END), profileFile);
         }
@@ -2521,7 +2529,8 @@ ds_status AccelerateScoreSerializer(ds_device* device, void** serializedScore, u
      && device->score) {
     /* generate a string from the score */
     char* s = (char*) AcquireQuantumMemory(256,sizeof(char));
-    sprintf(s,"%.4f",*((AccelerateScoreType*)device->score));
+    (void) FormatLocaleString(s,256,"%.4f",*((AccelerateScoreType*)
+      device->score));
     *serializedScore = (void*)s;
     *serializedScoreSize = (unsigned int) strlen(s);
     return DS_SUCCESS;

@@ -385,11 +385,13 @@ static ssize_t parse8BIM(Image *ifile, Image *ofile)
                 recnum = (unsigned int) StringToUnsignedLong(newstr);
                 break;
               case 2:
-                name=(char *) AcquireQuantumMemory(strlen(newstr)+MaxTextExtent,
-                  sizeof(*name));
-                if (name)
-                  (void) strcpy(name,newstr);
+              {
+                size_t extent = strlen(newstr)+MagickPathExtent;
+                name=(char *) AcquireQuantumMemory(extent,sizeof(*name));
+                if (name != (char *) NULL)
+                  (void) CopyMagickString(name,newstr,extent);
                 break;
+              }
             }
             state++;
           }

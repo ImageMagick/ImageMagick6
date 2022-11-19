@@ -341,7 +341,7 @@ MagickExport StringInfo *CloneStringInfo(const StringInfo *string_info)
   assert(string_info != (StringInfo *) NULL);
   assert(string_info->signature == MagickCoreSignature);
   clone_info=AcquireStringInfo(string_info->length);
-  (void) strcpy(clone_info->path,string_info->path);
+  (void) CopyMagickString(clone_info->path,string_info->path,MagickPathExtent);
   (void) CloneString(&clone_info->name,string_info->name);
   if (string_info->length != 0)
     (void) memcpy(clone_info->datum,string_info->datum,string_info->length+1);
