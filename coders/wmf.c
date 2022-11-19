@@ -1632,7 +1632,7 @@ static void ipa_draw_text(wmfAPI * API, wmfDrawText_t * draw_text)
   /* Apply rotation */
   /* ImageMagick's drawing rotation is clockwise from horizontal
      while WMF drawing rotation is counterclockwise from horizontal */
-  angle = fabs(RadiansToDegrees(2 * MagickPI - WMF_TEXT_ANGLE(font)));
+  angle=fabs(RadiansToDegrees(2.0*MagickPI-WMF_TEXT_ANGLE(font)));
   if (angle == 360)
     angle = 0;
   if (angle != 0)
@@ -1644,7 +1644,7 @@ static void ipa_draw_text(wmfAPI * API, wmfDrawText_t * draw_text)
    */
 
   /* Output string */
-  DrawAnnotation(WmfDrawingWand, 0, 0, (unsigned char*)draw_text->str);
+  DrawAnnotation(WmfDrawingWand,0,0,(unsigned char *) draw_text->str);
 
   /* Underline text the Windows way (at the bottom) */
   if (WMF_TEXT_UNDERLINE(font))
@@ -1801,7 +1801,7 @@ static void util_set_brush(wmfAPI *API, wmfDC *dc,const BrushApply brush_apply)
           }
 
         DrawSetStrokeAntialias(WmfDrawingWand, MagickFalse);
-        DrawSetStrokeWidth(WmfDrawingWand, 1);
+        DrawSetStrokeWidth(WmfDrawingWand, 1.0);
 
         draw_stroke_color_rgb(API,WMF_BRUSH_COLOR(brush));
 
@@ -2041,7 +2041,7 @@ static void util_set_pen(wmfAPI * API, wmfDC * dc)
     }
 
   DrawSetStrokeAntialias(WmfDrawingWand, MagickTrue );
-  DrawSetStrokeWidth(WmfDrawingWand, (unsigned long) MagickMax(0.0, pen_width));
+  DrawSetStrokeWidth(WmfDrawingWand, MagickMax(0.0, pen_width));
 
   {
     LineCap
