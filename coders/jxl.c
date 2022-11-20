@@ -488,6 +488,33 @@ static Image *ReadJXLImage(const ImageInfo *image_info,ExceptionInfo *exception)
           jxl_status=JXL_DEC_ERROR;
         break;
       }
+      case JXL_DEC_BOX:
+      {
+        JxlBoxType
+          type;
+
+        (void) JxlDecoderReleaseBoxBuffer(jxl_info);
+        jxl_status=JxlDecoderGetBoxType(jxl_info,type,JXL_FALSE);
+        if (jxl_status != JXL_DEC_SUCCESS)
+          break;
+        if (LocaleNCompare(type,"Exif",sizeof(type)) == 0)
+          {
+            uint64_t
+              size;
+
+            status=JxlDecoderGetBoxSizeRaw(jxl_info,&size);
+            if (size > 0)
+              {
+                exif_profile=AcquireStringInfo(size);
+                if (exif_profile != (StringInfo *) NULL)
+                  jxl_status=JxlDecoderSetBoxBuffer(jxl_info,
+                    GetStringInfoDatum(exif_profile),size);
+              }
+          }
+        if (jxl_status == JXL_DEC_SUCCESS)
+          jxl_status=JXL_DEC_BOX;
+        break;
+      }
       case JXL_DEC_SUCCESS:
       case JXL_DEC_ERROR:
         break;
