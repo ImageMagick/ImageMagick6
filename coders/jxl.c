@@ -549,6 +549,8 @@ ModuleExport size_t RegisterJXLImage(void)
   entry->decoder=(DecodeImageHandler *) ReadJXLImage;
   entry->encoder=(EncodeImageHandler *) WriteJXLImage;
   entry->magick=(IsImageFormatHandler *) IsJXL;
+  entry->description=ConstantString("JPEG XL (ISO/IEC 18181)");
+  entry->magick_module=ConstantString("JXL");
 #endif
   entry->adjoin=MagickFalse;
   if (*version != '\0')
