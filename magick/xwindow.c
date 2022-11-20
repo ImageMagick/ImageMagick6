@@ -3390,7 +3390,7 @@ MagickExport XrmDatabase XGetResourceDatabase(Display *display,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  XGetResourceInfo(image_info,) initializes the ResourceInfo structure.
+%  XGetResourceInfo() initializes the ResourceInfo structure.
 %
 %  The format of the XGetResourceInfo method is:
 %
@@ -8904,18 +8904,6 @@ MagickExport MagickBooleanType XRemoteCommand(Display *display,
 MagickPrivate MagickBooleanType XRenderImage(Image *image,
   const DrawInfo *draw_info,const PointInfo *offset,TypeMetric *metrics)
 {
-  const char
-    *client_name;
-
-  DrawInfo
-    cache_info;
-
-  Display
-    *display = (Display *) NULL;
-
-  ImageInfo
-    *image_info;
-
   MagickBooleanType
     status;
 
@@ -8923,92 +8911,109 @@ MagickPrivate MagickBooleanType XRenderImage(Image *image,
     height,
     width;
 
-  XAnnotateInfo
+  static Display
+    *display = (Display *) NULL;
+
+  static DrawInfo
+    cache_info;
+
+  static XAnnotateInfo
     annotate_info;
 
-  XFontStruct
+  static XFontStruct
     *font_info;
 
-  XPixelInfo
+  static XPixelInfo
     pixel;
 
-  XResourceInfo
+  static XResourceInfo
     resource_info;
 
-  XrmDatabase
+  static XrmDatabase
     resource_database;
 
-  XStandardColormap
+  static XStandardColormap
     *map_info;
 
-  XVisualInfo
+  static XVisualInfo
     *visual_info;
 
-  /*
-    Open X server connection.
-  */
-  display=XOpenDisplay(draw_info->server_name);
   if (display == (Display *) NULL)
-    {
-      ThrowXWindowException(XServerError,"UnableToOpenXServer",
-        draw_info->server_name);
-      return(MagickFalse);
+    {     
+      const char
+        *client_name;
+
+      ImageInfo
+        *image_info;
+
+      /*
+        Open X server connection.
+      */
+      display=XOpenDisplay(draw_info->server_name);
+      if (display == (Display *) NULL)
+        {
+          ThrowXWindowException(XServerError,"UnableToOpenXServer",
+            draw_info->server_name);
+          return(MagickFalse);
+        }
+      /*
+        Get user defaults from X resource database.
+      */
+      (void) XSetErrorHandler(XError);
+      image_info=AcquireImageInfo();
+      client_name=GetClientName();
+      resource_database=XGetResourceDatabase(display,client_name);
+      XGetResourceInfo(image_info,resource_database,client_name,&resource_info);
+      resource_info.close_server=MagickFalse;
+      resource_info.colormap=PrivateColormap;
+      resource_info.font=AcquireString(draw_info->font);
+      resource_info.background_color=AcquireString("#ffffffffffff");
+      resource_info.foreground_color=AcquireString("#000000000000");
+      map_info=XAllocStandardColormap();
+      visual_info=(XVisualInfo *) NULL;
+      font_info=(XFontStruct *) NULL;
+      pixel.pixels=(unsigned long *) NULL;
+      if (map_info == (XStandardColormap *) NULL)
+        {
+          ThrowXWindowException(ResourceLimitError,"MemoryAllocationFailed",
+            image->filename);
+          return(MagickFalse);
+        }
+      /*
+        Initialize visual info.
+      */
+      visual_info=XBestVisualInfo(display,map_info,&resource_info);
+      if (visual_info == (XVisualInfo *) NULL)
+        {
+          XFreeResources(display,visual_info,map_info,&pixel,font_info,
+            &resource_info,(XWindowInfo *) NULL);
+          ThrowXWindowException(XServerError,"UnableToGetVisual",
+            image->filename);
+          return(MagickFalse);
+        }
+      map_info->colormap=(Colormap) NULL;
+      /*
+        Initialize Standard Colormap info.
+      */
+      XGetMapInfo(visual_info,XDefaultColormap(display,visual_info->screen),
+        map_info);
+      XGetPixelPacket(display,visual_info,map_info,&resource_info,
+        (Image *) NULL,&pixel);
+      pixel.annotate_context=XDefaultGC(display,visual_info->screen);
+      /*
+        Initialize font info.
+      */
+      font_info=XBestFont(display,&resource_info,MagickFalse);
+      if (font_info == (XFontStruct *) NULL)
+        {
+          XFreeResources(display,visual_info,map_info,&pixel,font_info,
+            &resource_info,(XWindowInfo *) NULL);
+          ThrowXWindowException(XServerError,"UnableToLoadFont",
+            draw_info->font);
+          return(MagickFalse);
+        }
+      cache_info=(*draw_info);
     }
-  /*
-    Get user defaults from X resource database.
-  */
-  (void) XSetErrorHandler(XError);
-  image_info=AcquireImageInfo();
-  client_name=GetClientName();
-  resource_database=XGetResourceDatabase(display,client_name);
-  XGetResourceInfo(image_info,resource_database,client_name,&resource_info);
-  resource_info.close_server=MagickFalse;
-  resource_info.colormap=PrivateColormap;
-  resource_info.font=AcquireString(draw_info->font);
-  resource_info.background_color=AcquireString("#ffffffffffff");
-  resource_info.foreground_color=AcquireString("#000000000000");
-  map_info=XAllocStandardColormap();
-  visual_info=(XVisualInfo *) NULL;
-  font_info=(XFontStruct *) NULL;
-  pixel.pixels=(unsigned long *) NULL;
-  if (map_info == (XStandardColormap *) NULL)
-    {
-      ThrowXWindowException(ResourceLimitError,"MemoryAllocationFailed",
-        image->filename);
-      return(MagickFalse);
-    }
-  /*
-    Initialize visual info.
-  */
-  visual_info=XBestVisualInfo(display,map_info,&resource_info);
-  if (visual_info == (XVisualInfo *) NULL)
-    {
-      XFreeResources(display,visual_info,map_info,&pixel,font_info,
-        &resource_info,(XWindowInfo *) NULL);
-      ThrowXWindowException(XServerError,"UnableToGetVisual",image->filename);
-      return(MagickFalse);
-    }
-  map_info->colormap=(Colormap) NULL;
-  /*
-    Initialize Standard Colormap info.
-  */
-  XGetMapInfo(visual_info,XDefaultColormap(display,visual_info->screen),
-    map_info);
-  XGetPixelPacket(display,visual_info,map_info,&resource_info,(Image *) NULL,
-    &pixel);
-  pixel.annotate_context=XDefaultGC(display,visual_info->screen);
-  /*
-    Initialize font info.
-  */
-  font_info=XBestFont(display,&resource_info,MagickFalse);
-  if (font_info == (XFontStruct *) NULL)
-    {
-      XFreeResources(display,visual_info,map_info,&pixel,font_info,
-        &resource_info,(XWindowInfo *) NULL);
-      ThrowXWindowException(XServerError,"UnableToLoadFont",draw_info->font);
-      return(MagickFalse);
-    }
-  cache_info=(*draw_info);
   /*
     Initialize annotate info.
   */
