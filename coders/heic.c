@@ -44,36 +44,35 @@
 /*
   Include declarations.
 */
-#include "magick/studio.h"
-#include "magick/artifact.h"
-#include "magick/attribute.h"
-#include "magick/blob.h"
-#include "magick/blob-private.h"
-#include "magick/client.h"
-#include "magick/colorspace-private.h"
-#include "magick/property.h"
-#include "magick/display.h"
-#include "magick/exception.h"
-#include "magick/exception-private.h"
-#include "magick/image.h"
-#include "magick/image-private.h"
-#include "magick/list.h"
-#include "magick/magick.h"
-#include "magick/monitor.h"
-#include "magick/monitor-private.h"
-#include "magick/montage.h"
-#include "magick/transform.h"
-#include "magick/distort.h"
-#include "magick/memory_.h"
-#include "magick/memory-private.h"
-#include "magick/option.h"
-#include "magick/pixel-accessor.h"
-#include "magick/quantum-private.h"
-#include "magick/static.h"
-#include "magick/string_.h"
-#include "magick/string-private.h"
-#include "magick/module.h"
-#include "magick/utility.h"
+#include "MagickCore/studio.h"
+#include "MagickCore/artifact.h"
+#include "MagickCore/blob.h"
+#include "MagickCore/blob-private.h"
+#include "MagickCore/client.h"
+#include "MagickCore/colorspace-private.h"
+#include "MagickCore/property.h"
+#include "MagickCore/display.h"
+#include "MagickCore/exception.h"
+#include "MagickCore/exception-private.h"
+#include "MagickCore/image.h"
+#include "MagickCore/image-private.h"
+#include "MagickCore/list.h"
+#include "MagickCore/magick.h"
+#include "MagickCore/monitor.h"
+#include "MagickCore/monitor-private.h"
+#include "MagickCore/montage.h"
+#include "MagickCore/transform.h"
+#include "MagickCore/distort.h"
+#include "MagickCore/memory_.h"
+#include "MagickCore/memory-private.h"
+#include "MagickCore/option.h"
+#include "MagickCore/pixel-accessor.h"
+#include "MagickCore/quantum-private.h"
+#include "MagickCore/static.h"
+#include "MagickCore/string_.h"
+#include "MagickCore/string-private.h"
+#include "MagickCore/module.h"
+#include "MagickCore/utility.h"
 #if defined(MAGICKCORE_HEIC_DELEGATE)
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__)
 #include <heif.h>
@@ -185,7 +184,7 @@ static MagickBooleanType ReadHEICColorProfile(Image *image,
       profile=BlobToStringInfo(color_profile,length);
       if (profile != (StringInfo*) NULL)
         {
-          (void) SetImageProfile(image,"icc",profile);
+          (void) SetImageProfile(image,"icc",profile,exception);
           profile=DestroyStringInfo(profile);
         }
     }
@@ -244,10 +243,10 @@ static MagickBooleanType ReadHEICExifProfile(Image *image,
       if (offset < (length-4))
         {
           length-=offset;
-          profile=BlobToStringInfo(exif_profile+offset,(size_t) length);
+          profile=BlobToStringInfo(exif_profile+offset,length);
           if (profile != (StringInfo*) NULL)
             {
-              (void) SetImageProfile(image,"exif",profile);
+              (void) SetImageProfile(image,"exif",profile,exception);
               profile=DestroyStringInfo(profile);
             }
         }
@@ -301,7 +300,7 @@ static MagickBooleanType ReadHEICXMPProfile(Image *image,
       profile=BlobToStringInfo(xmp_profile+XmpNamespaceExtent+1,length);
       if (profile != (StringInfo*) NULL)
         {
-          (void) SetImageProfile(image,"xmp",profile);
+          (void) SetImageProfile(image,"xmp",profile,exception);
           profile=DestroyStringInfo(profile);
         }
     }
@@ -349,7 +348,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
   image->columns=(size_t) heif_image_handle_get_width(image_handle);
   image->rows=(size_t) heif_image_handle_get_height(image_handle);
   if (heif_image_handle_has_alpha_channel(image_handle) != 0)
-    image->matte=MagickTrue;
+    image->alpha_trait=BlendPixelTrait;
   image->depth=8;
   bits_per_pixel=heif_image_handle_get_luma_bits_per_pixel(image_handle);
   if (bits_per_pixel != -1)
@@ -357,7 +356,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
   preserve_orientation=IsStringTrue(GetImageOption(image_info,
     "heic:preserve-orientation"));
   if (preserve_orientation == MagickFalse)
-    (void) SetImageProperty(image,"exif:Orientation","1");
+    (void) SetImageProperty(image,"exif:Orientation","1",exception);
   if (ReadHEICColorProfile(image,image_handle,exception) == MagickFalse)
     return(MagickFalse);
   if (ReadHEICExifProfile(image,image_handle,exception) == MagickFalse)
@@ -368,7 +367,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
     return(MagickTrue);
   if (HEICSkipImage(image_info,image) != MagickFalse)
     return(MagickTrue);
-  status=SetImageExtent(image,image->columns,image->rows);
+  status=SetImageExtent(image,image->columns,image->rows,exception);
   if (status == MagickFalse)
     return(MagickFalse);
   decode_options=heif_decoding_options_alloc();
@@ -377,7 +376,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
   chroma=heif_chroma_interleaved_RGB;
   if (image->depth > 8)
     chroma=heif_chroma_interleaved_RRGGBB_LE;
-  if (image->matte != MagickFalse)
+  if (image->alpha_trait != UndefinedPixelTrait)
     {
       chroma=heif_chroma_interleaved_RGBA;
       if (image->depth > 8)
@@ -391,7 +390,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
   channel=heif_channel_interleaved;
   image->columns=(size_t) heif_image_get_width(heif_image,channel);
   image->rows=(size_t) heif_image_get_height(heif_image,channel);
-  status=SetImageExtent(image,image->columns,image->rows);
+  status=SetImageExtent(image,image->columns,image->rows,exception);
   if (status == MagickFalse)
     {
       heif_image_release(heif_image);
@@ -407,7 +406,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
   if (image->depth <= 8)
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      PixelPacket
+      Quantum
         *q;
 
       ssize_t
@@ -417,17 +416,17 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
         Transform 8-bit image.
       */
       q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
-      if (q == (PixelPacket *) NULL)
+      if (q == (Quantum *) NULL)
         break;
       p=pixels+(y*stride);
       for (x=0; x < (ssize_t) image->columns; x++)
       {
-        SetPixelRed(q,ScaleCharToQuantum((unsigned char) *(p++)));
-        SetPixelGreen(q,ScaleCharToQuantum((unsigned char) *(p++)));
-        SetPixelBlue(q,ScaleCharToQuantum((unsigned char) *(p++)));
-        if (image->matte != MagickFalse)
-          SetPixelAlpha(q,ScaleCharToQuantum((unsigned char) *(p++)));
-        q++;
+        SetPixelRed(image,ScaleCharToQuantum((unsigned char) *(p++)),q);
+        SetPixelGreen(image,ScaleCharToQuantum((unsigned char) *(p++)),q);
+        SetPixelBlue(image,ScaleCharToQuantum((unsigned char) *(p++)),q);
+        if (image->alpha_trait != UndefinedPixelTrait)
+          SetPixelAlpha(image,ScaleCharToQuantum((unsigned char) *(p++)),q);
+        q+=GetPixelChannels(image);
       }
       if (SyncAuthenticPixels(image,exception) == MagickFalse)
         break;
@@ -435,7 +434,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
   else
     for (y=0; y < (ssize_t) image->rows; y++)
     {
-      PixelPacket
+      Quantum
         *q;
 
       ssize_t
@@ -445,23 +444,23 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
         Transform 10-bit or 12-bit image.
       */
       q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
-      if (q == (PixelPacket *) NULL)
+      if (q == (Quantum *) NULL)
         break;
       p=pixels+(y*stride);
       for (x=0; x < (ssize_t) image->columns; x++)
       {
         unsigned short pixel = ((*(p+1) << 8) | (*(p+0))) << shift; p+=2;
-        SetPixelRed(q,ScaleShortToQuantum(pixel));
+        SetPixelRed(image,ScaleShortToQuantum(pixel),q);
         pixel=((*(p+1) << 8) | (*(p+0))) << shift; p+=2;
-        SetPixelGreen(q,ScaleShortToQuantum(pixel));
+        SetPixelGreen(image,ScaleShortToQuantum(pixel),q);
         pixel=((*(p+1) << 8) | (*(p+0))) << shift; p+=2;
-        SetPixelBlue(q,ScaleShortToQuantum(pixel));
-        if (image->matte != MagickFalse)
+        SetPixelBlue(image,ScaleShortToQuantum(pixel),q);
+        if (image->alpha_trait != UndefinedPixelTrait)
           {
             pixel=((*(p+1) << 8) | (*(p+0))) << shift; p+=2;
-            SetPixelAlpha(q,ScaleShortToQuantum(pixel));
+            SetPixelAlpha(image,ScaleShortToQuantum(pixel),q);
           }
-        q++;
+        q+=GetPixelChannels(image);
       }
       if (SyncAuthenticPixels(image,exception) == MagickFalse)
         break;
@@ -504,7 +503,7 @@ static void ReadHEICDepthImage(const ImageInfo *image_info,Image *image,
     &depth_handle);
   if (IsHEIFSuccess(image,&error,exception) == MagickFalse)
     return;
-  AcquireNextImage(image_info,image);
+  AcquireNextImage(image_info,image,exception);
   if (GetNextImageInList(image) != (Image *) NULL)
     {
       image=SyncNextImageInList(image);
@@ -553,7 +552,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
-  image=AcquireImage(image_info);
+  image=AcquireImage(image_info,exception);
   status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
   if (status == MagickFalse)
     return(DestroyImageList(image));
@@ -619,7 +618,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
         /*
           Allocate next image structure.
         */
-        AcquireNextImage(image_info,image);
+        AcquireNextImage(image_info,image,exception);
         if (GetNextImageInList(image) == (Image *) NULL)
           {
             status=MagickFalse;
@@ -725,41 +724,45 @@ ModuleExport size_t RegisterHEICImage(void)
   MagickInfo
     *entry;
 
+<<<<<<< HEAD
+#if defined(MAGICKCORE_HEIC_DELEGATE)
+#if LIBHEIF_NUMERIC_VERSION >= 0x010e0000
+=======
 #if defined(MAGICKCORE_HEIC_DELEGATE) && (LIBHEIF_NUMERIC_VERSION >= 0x010e0000)
+>>>>>>> 64e4bb856 (proper support for XMP profile)
   heif_init(NULL);
 #endif
-  entry=SetMagickInfo("HEIC");
+#endif
+  entry=AcquireMagickInfo("HEIC","HEIC","High Efficiency Image Format");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadHEICImage;
   if (heif_have_encoder_for_format(heif_compression_HEVC))
     entry->encoder=(EncodeImageHandler *) WriteHEICImage;
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
-  entry->description=ConstantString("Apple High efficiency Image Format");
   entry->mime_type=ConstantString("image/heic");
 #if defined(LIBHEIF_VERSION)
   entry->version=ConstantString(LIBHEIF_VERSION);
 #endif
-  entry->seekable_stream=MagickTrue;
-  entry->blob_support=MagickFalse;
+  entry->flags|=CoderDecoderSeekableStreamFlag;
+  entry->flags^=CoderBlobSupportFlag;
   (void) RegisterMagickInfo(entry);
-  entry=SetMagickInfo("HEIF");
+  entry=AcquireMagickInfo("HEIC","HEIF","High Efficiency Image Format");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadHEICImage;
   if (heif_have_encoder_for_format(heif_compression_HEVC))
     entry->encoder=(EncodeImageHandler *) WriteHEICImage;
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
-  entry->description=ConstantString("Apple High efficiency Image Format");
-  entry->mime_type=ConstantString("image/heic");
+  entry->mime_type=ConstantString("image/heif");
 #if defined(LIBHEIF_VERSION)
   entry->version=ConstantString(LIBHEIF_VERSION);
 #endif
-  entry->seekable_stream=MagickTrue;
-  entry->blob_support=MagickFalse;
+  entry->flags|=CoderDecoderSeekableStreamFlag;
+  entry->flags^=CoderBlobSupportFlag;
   (void) RegisterMagickInfo(entry);
 #if LIBHEIF_NUMERIC_VERSION > 0x01060200
-  entry=SetMagickInfo("AVIF");
+  entry=AcquireMagickInfo("HEIC","AVIF","AV1 Image File Format");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   if (heif_have_decoder_for_format(heif_compression_AV1))
     entry->decoder=(DecodeImageHandler *) ReadHEICImage;
@@ -767,13 +770,12 @@ ModuleExport size_t RegisterHEICImage(void)
     entry->encoder=(EncodeImageHandler *) WriteHEICImage;
 #endif
   entry->magick=(IsImageFormatHandler *) IsHEIC;
-  entry->description=ConstantString("AV1 Image File Format");
   entry->mime_type=ConstantString("image/avif");
 #if defined(LIBHEIF_VERSION)
   entry->version=ConstantString(LIBHEIF_VERSION);
 #endif
-  entry->seekable_stream=MagickTrue;
-  entry->blob_support=MagickFalse;
+  entry->flags|=CoderDecoderSeekableStreamFlag;
+  entry->flags^=CoderBlobSupportFlag;
   (void) RegisterMagickInfo(entry);
 #endif
   return(MagickImageCoderSignature);
@@ -805,8 +807,14 @@ ModuleExport void UnregisterHEICImage(void)
 #endif
   (void) UnregisterMagickInfo("HEIC");
   (void) UnregisterMagickInfo("HEIF");
+<<<<<<< HEAD
+#if defined(MAGICKCORE_HEIC_DELEGATE)
+#if LIBHEIF_NUMERIC_VERSION >= 0x010e0000
+=======
 #if defined(MAGICKCORE_HEIC_DELEGATE) && (LIBHEIF_NUMERIC_VERSION >= 0x010e0000)
+>>>>>>> 64e4bb856 (proper support for XMP profile)
   heif_deinit();
+#endif
 #endif
 }
 
@@ -982,14 +990,14 @@ static MagickBooleanType WriteHEICImageYCbCr(Image *image,
   q_cr=heif_image_get_plane(heif_image,heif_channel_Cr,&p_cr);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    const PixelPacket
+    const Quantum
       *p;
 
     ssize_t
       x;
 
     p=GetVirtualPixels(image,0,y,image->columns,1,exception);
-    if (p == (const PixelPacket *) NULL)
+    if (p == (const Quantum *) NULL)
       {
         status=MagickFalse;
         break;
@@ -997,20 +1005,20 @@ static MagickBooleanType WriteHEICImageYCbCr(Image *image,
     if ((y & 0x01) != 0)
       for (x=0; x < (ssize_t) image->columns; x++)
       {
-        q_y[y*p_y+x]=ScaleQuantumToChar(GetPixelRed(p));
-        p++;
+        q_y[y*p_y+x]=ScaleQuantumToChar(GetPixelRed(image,p));
+        p+=GetPixelChannels(image);
       }
     else
       for (x=0; x < (ssize_t) image->columns; x+=2)
       {
-        q_y[y*p_y+x]=ScaleQuantumToChar(GetPixelRed(p));
-        q_cb[y/2*p_cb+x/2]=ScaleQuantumToChar(GetPixelGreen(p));
-        q_cr[y/2*p_cr+x/2]=ScaleQuantumToChar(GetPixelBlue(p));
-        p++;
+        q_y[y*p_y+x]=ScaleQuantumToChar(GetPixelRed(image,p));
+        q_cb[y/2*p_cb+x/2]=ScaleQuantumToChar(GetPixelGreen(image,p));
+        q_cr[y/2*p_cr+x/2]=ScaleQuantumToChar(GetPixelBlue(image,p));
+        p+=GetPixelChannels(image);
         if ((x+1) < (ssize_t) image->columns)
           {
-            q_y[y*p_y+x+1]=ScaleQuantumToChar(GetPixelRed(p));
-            p++;
+            q_y[y*p_y+x+1]=ScaleQuantumToChar(GetPixelRed(image,p));
+            p+=GetPixelChannels(image);
           }
       }
     if (image->previous == (Image *) NULL)
@@ -1027,7 +1035,7 @@ static MagickBooleanType WriteHEICImageYCbCr(Image *image,
 static MagickBooleanType WriteHEICImageRGBA(Image *image,
   struct heif_image *heif_image,ExceptionInfo *exception)
 {
-  const PixelPacket
+  const Quantum
     *p;
 
   enum heif_channel
@@ -1054,7 +1062,7 @@ static MagickBooleanType WriteHEICImageRGBA(Image *image,
   */
   status=MagickTrue;
   channel=heif_channel_interleaved;
-  if (IsGrayImage(image,&image->exception) != MagickFalse)
+  if (GetPixelChannels(image) == 1)
     channel=heif_channel_Y;
   error=heif_image_add_plane(heif_image,channel,(int) image->columns,
     (int) image->rows,8);
@@ -1070,7 +1078,7 @@ static MagickBooleanType WriteHEICImageRGBA(Image *image,
       x;
 
     p=GetVirtualPixels(image,0,y,image->columns,1,exception);
-    if (p == (const PixelPacket *) NULL)
+    if (p == (const Quantum *) NULL)
       {
         status=MagickFalse;
         break;
@@ -1078,15 +1086,15 @@ static MagickBooleanType WriteHEICImageRGBA(Image *image,
     q=pixels+(y*stride);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      *(q++)=ScaleQuantumToChar(GetPixelRed(p));
-      if (IsGrayImage(image,&image->exception) == MagickFalse)
+      *(q++)=ScaleQuantumToChar(GetPixelRed(image,p));
+      if (GetPixelChannels(image) > 1)
         {
-          *(q++)=ScaleQuantumToChar(GetPixelGreen(p));
-          *(q++)=ScaleQuantumToChar(GetPixelBlue(p));
-          if (image->matte != MagickFalse)
-            *(q++)=ScaleQuantumToChar(GetPixelAlpha(p));
+          *(q++)=ScaleQuantumToChar(GetPixelGreen(image,p));
+          *(q++)=ScaleQuantumToChar(GetPixelBlue(image,p));
+          if (image->alpha_trait != UndefinedPixelTrait)
+            *(q++)=ScaleQuantumToChar(GetPixelAlpha(image,p));
         }
-      p++;
+      p+=GetPixelChannels(image);
     }
     if (image->previous == (Image *) NULL)
       {
@@ -1102,7 +1110,7 @@ static MagickBooleanType WriteHEICImageRGBA(Image *image,
 static MagickBooleanType WriteHEICImageRRGGBBAA(Image *image,
   struct heif_image *heif_image,ExceptionInfo *exception)
 {
-  const PixelPacket
+  const Quantum
     *p;
 
   enum heif_channel
@@ -1132,7 +1140,7 @@ static MagickBooleanType WriteHEICImageRRGGBBAA(Image *image,
   status=MagickTrue;
   depth=image->depth > 10 ? 12 : 10;
   channel=heif_channel_interleaved;
-  if (IsGrayImage(image,&image->exception) != MagickFalse)
+  if (GetPixelChannels(image) == 1)
     channel=heif_channel_Y;
   error=heif_image_add_plane(heif_image,channel,(int) image->columns,
     (int) image->rows,depth);
@@ -1151,7 +1159,7 @@ static MagickBooleanType WriteHEICImageRRGGBBAA(Image *image,
       x;
 
     p=GetVirtualPixels(image,0,y,image->columns,1,exception);
-    if (p == (const PixelPacket *) NULL)
+    if (p == (const Quantum *) NULL)
       {
         status=MagickFalse;
         break;
@@ -1159,25 +1167,25 @@ static MagickBooleanType WriteHEICImageRRGGBBAA(Image *image,
     q=pixels+(y*stride);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      int pixel=ScaleQuantumToShort(GetPixelRed(p)) >> shift;
+      int pixel=ScaleQuantumToShort(GetPixelRed(image,p)) >> shift;
       *(q++)=(uint8_t) (pixel & 0xff);
       *(q++)=(uint8_t) (pixel >> 8);
-      if (IsGrayImage(image,&image->exception) == MagickFalse)
+      if (GetPixelChannels(image) > 1)
         {
-          pixel=ScaleQuantumToShort(GetPixelGreen(p)) >> shift;
+          pixel=ScaleQuantumToShort(GetPixelGreen(image,p)) >> shift;
           *(q++)=(uint8_t) (pixel & 0xff);
           *(q++)=(uint8_t) (pixel >> 8);
-          pixel=ScaleQuantumToShort(GetPixelBlue(p)) >> shift;
+          pixel=ScaleQuantumToShort(GetPixelBlue(image,p)) >> shift;
           *(q++)=(uint8_t) (pixel & 0xff);
           *(q++)=(uint8_t) (pixel >> 8);
-          if (image->matte != MagickFalse)
+          if (image->alpha_trait != UndefinedPixelTrait)
             {
-              pixel=ScaleQuantumToShort(GetPixelAlpha(p)) >> shift;
+              pixel=ScaleQuantumToShort(GetPixelAlpha(image,p)) >> shift;
               *(q++)=(uint8_t) (pixel & 0xff);
               *(q++)=(uint8_t) (pixel >> 8);
             }
         }
-      p++;
+      p+=GetPixelChannels(image);
     }
     if (image->previous == (Image *) NULL)
       {
@@ -1263,10 +1271,10 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     if (status == MagickFalse)
       break;
     chroma=lossless != MagickFalse ? heif_chroma_444 : heif_chroma_420;
-    if (image->matte != MagickFalse)
+    if (image->alpha_trait == BlendPixelTrait)
       {
         if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
-          status=TransformImageColorspace(image,sRGBColorspace);
+          status=TransformImageColorspace(image,sRGBColorspace,exception);
         colorspace=heif_colorspace_RGB;
         chroma=heif_chroma_interleaved_RGBA;
         if (image->depth > 8)
@@ -1279,7 +1287,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
           chroma=heif_chroma_interleaved_RGB;
           if (image->depth > 8)
             chroma=heif_chroma_interleaved_RRGGBB_LE;
-          if (IsGrayImage(image,&image->exception) != MagickFalse)
+          if (GetPixelChannels(image) == 1)
             {
               colorspace=heif_colorspace_monochrome;
               chroma=heif_chroma_monochrome;
@@ -1287,7 +1295,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
         }
       else
         if (image->colorspace != YCbCrColorspace)
-          status=TransformImageColorspace(image,YCbCrColorspace);
+          status=TransformImageColorspace(image,YCbCrColorspace,exception);
     if (status == MagickFalse)
       break;
     /*
