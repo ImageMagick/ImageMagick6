@@ -2312,36 +2312,6 @@ AC_SUBST([JPEG_LIBS])
 dnl ===========================================================================
 
 #
-# Check for JPEG-XL delegate library.
-#
-AC_ARG_WITH([jxl],
-    [AS_HELP_STRING([--without-jxl],
-                    [disable JPEG-XL support])],
-    [with_jxl=$withval],
-    [with_jxl='yes'])
-
-# Check for the JPEG-XL library.
-have_jxl='no'
-JXL_CFLAGS=''
-JXL_LIBS=''
-JXL_PKG=''
-if test "$with_jxl" != 'no'; then
-  AC_MSG_RESULT([-------------------------------------------------------------])
-  PKG_CHECK_MODULES([JXL],[libjxl >= 0.7.0 libjxl_threads],[have_jxl=yes],[have_jxl=no])
-  AC_MSG_RESULT([])
-fi
-
-if test "$have_jxl" = 'yes'; then
-  AC_DEFINE([JXL_DELEGATE],[1],[Define if you have jpeg-xl library])
-fi
-
-AM_CONDITIONAL([JXL_DELEGATE],[test "$have_jxl" = 'yes'])
-AC_SUBST([JXL_CFLAGS])
-AC_SUBST([JXL_LIBS])
-
-dnl ===========================================================================
-
-#
 # Check for LCMS delegate library.
 #
 AC_ARG_WITH([lcms],

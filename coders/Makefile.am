@@ -57,11 +57,6 @@ MAGICK_JPEG_MODULES = coders/jpeg.la
 MAGICK_JPEG_SRCS = coders/jpeg.c
 endif
 
-if JXL_DELEGATE
-MAGICK_JXL_MODULES = coders/jxl.la
-MAGICK_JXL_SRCS = coders/jxl.c
-endif
-
 if LIBOPENJP2_DELEGATE
 MAGICK_JP2_MODULES = coders/jp2.la
 MAGICK_JP2_SRCS = coders/jp2.c
@@ -654,12 +649,6 @@ coders_json_la_SOURCES     = coders/json.c
 coders_json_la_CPPFLAGS    = $(MAGICK_CODER_CPPFLAGS)
 coders_json_la_LDFLAGS     = $(MODULECOMMONFLAGS)
 coders_json_la_LIBADD      = $(MAGICKCORE_LIBS) $(MATH_LIBS)
-
-# JXL coder module
-coders_jxl_la_SOURCES      = coders/jxl.c
-coders_jxl_la_CPPFLAGS     = $(MAGICK_CODER_CPPFLAGS)
-coders_jxl_la_LDFLAGS      = $(MODULECOMMONFLAGS)
-coders_jxl_la_LIBADD       = $(MAGICKCORE_LIBS) $(JXL_LIBS)
 
 # LABEL coder module
 coders_label_la_SOURCES    = coders/label.c

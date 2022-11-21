@@ -844,10 +844,6 @@ LCMS_DELEGATE_FALSE
 LCMS_DELEGATE_TRUE
 LCMS2_LIBS
 LCMS2_CFLAGS
-JXL_DELEGATE_FALSE
-JXL_DELEGATE_TRUE
-JXL_LIBS
-JXL_CFLAGS
 JPEG_LIBS
 JPEG_DELEGATE_FALSE
 JPEG_DELEGATE_TRUE
@@ -1248,7 +1244,6 @@ with_gvc
 with_heic
 with_jbig
 with_jpeg
-with_jxl
 with_lcms
 with_openjp2
 with_lqr
@@ -1304,8 +1299,6 @@ GVC_CFLAGS
 GVC_LIBS
 HEIF_CFLAGS
 HEIF_LIBS
-JXL_CFLAGS
-JXL_LIBS
 LCMS2_CFLAGS
 LCMS2_LIBS
 LIBOPENJP2_CFLAGS
@@ -2072,7 +2065,6 @@ Optional Packages:
   --without-heic          disable HEIC support
   --without-jbig          disable JBIG support
   --without-jpeg          disable JPEG support
-  --without-jxl           disable JPEG-XL support
   --without-lcms          disable lcms (v1.1X) support
   --without-openjp2       disable OpenJP2 support
   --without-lqr           disable Liquid Rescale support
@@ -2142,8 +2134,6 @@ Some influential environment variables:
   GVC_LIBS    linker flags for GVC, overriding pkg-config
   HEIF_CFLAGS C compiler flags for HEIF, overriding pkg-config
   HEIF_LIBS   linker flags for HEIF, overriding pkg-config
-  JXL_CFLAGS  C compiler flags for JXL, overriding pkg-config
-  JXL_LIBS    linker flags for JXL, overriding pkg-config
   LCMS2_CFLAGS
               C compiler flags for LCMS2, overriding pkg-config
   LCMS2_LIBS  linker flags for LCMS2, overriding pkg-config
@@ -5131,7 +5121,7 @@ MAGICK_PATCHLEVEL_VERSION=68
 
 MAGICK_VERSION=6.9.12-68
 
-MAGICK_GIT_REVISION=5117c49d5:20221115
+MAGICK_GIT_REVISION=603a2a961:20221120
 
 
 # Substitute library versioning
@@ -5165,7 +5155,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,68
 
-PACKAGE_RELEASE_DATE=2022-11-15
+PACKAGE_RELEASE_DATE=2022-11-20
 
 
 # Ensure that make can run correctly
@@ -32004,120 +31994,6 @@ fi
 
 
 #
-# Check for JPEG-XL delegate library.
-#
-
-# Check whether --with-jxl was given.
-if test ${with_jxl+y}
-then :
-  withval=$with_jxl; with_jxl=$withval
-else $as_nop
-  with_jxl='yes'
-fi
-
-
-# Check for the JPEG-XL library.
-have_jxl='no'
-JXL_CFLAGS=''
-JXL_LIBS=''
-JXL_PKG=''
-if test "$with_jxl" != 'no'; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: -------------------------------------------------------------" >&5
-printf "%s\n" "-------------------------------------------------------------" >&6; }
-
-pkg_failed=no
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for libjxl >= 0.7.0 libjxl_threads" >&5
-printf %s "checking for libjxl >= 0.7.0 libjxl_threads... " >&6; }
-
-if test -n "$JXL_CFLAGS"; then
-    pkg_cv_JXL_CFLAGS="$JXL_CFLAGS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libjxl >= 0.7.0 libjxl_threads\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libjxl >= 0.7.0 libjxl_threads") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_JXL_CFLAGS=`$PKG_CONFIG --cflags "libjxl >= 0.7.0 libjxl_threads" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-if test -n "$JXL_LIBS"; then
-    pkg_cv_JXL_LIBS="$JXL_LIBS"
- elif test -n "$PKG_CONFIG"; then
-    if test -n "$PKG_CONFIG" && \
-    { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$PKG_CONFIG --exists --print-errors \"libjxl >= 0.7.0 libjxl_threads\""; } >&5
-  ($PKG_CONFIG --exists --print-errors "libjxl >= 0.7.0 libjxl_threads") 2>&5
-  ac_status=$?
-  printf "%s\n" "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  pkg_cv_JXL_LIBS=`$PKG_CONFIG --libs "libjxl >= 0.7.0 libjxl_threads" 2>/dev/null`
-		      test "x$?" != "x0" && pkg_failed=yes
-else
-  pkg_failed=yes
-fi
- else
-    pkg_failed=untried
-fi
-
-
-
-if test $pkg_failed = yes; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-
-if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
-        _pkg_short_errors_supported=yes
-else
-        _pkg_short_errors_supported=no
-fi
-        if test $_pkg_short_errors_supported = yes; then
-	        JXL_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors --cflags --libs "libjxl >= 0.7.0 libjxl_threads" 2>&1`
-        else
-	        JXL_PKG_ERRORS=`$PKG_CONFIG --print-errors --cflags --libs "libjxl >= 0.7.0 libjxl_threads" 2>&1`
-        fi
-	# Put the nasty error message in config.log where it belongs
-	echo "$JXL_PKG_ERRORS" >&5
-
-	have_jxl=no
-elif test $pkg_failed = untried; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-	have_jxl=no
-else
-	JXL_CFLAGS=$pkg_cv_JXL_CFLAGS
-	JXL_LIBS=$pkg_cv_JXL_LIBS
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-printf "%s\n" "yes" >&6; }
-	have_jxl=yes
-fi
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: " >&5
-printf "%s\n" "" >&6; }
-fi
-
-if test "$have_jxl" = 'yes'; then
-
-printf "%s\n" "#define JXL_DELEGATE 1" >>confdefs.h
-
-fi
-
- if test "$have_jxl" = 'yes'; then
-  JXL_DELEGATE_TRUE=
-  JXL_DELEGATE_FALSE='#'
-else
-  JXL_DELEGATE_TRUE='#'
-  JXL_DELEGATE_FALSE=
-fi
-
-
-
-
-
-#
 # Check for LCMS delegate library.
 #
 
@@ -38464,10 +38340,6 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${JPEG_DELEGATE_TRUE}" && test -z "${JPEG_DELEGATE_FALSE}"; then
   as_fn_error $? "conditional \"JPEG_DELEGATE\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${JXL_DELEGATE_TRUE}" && test -z "${JXL_DELEGATE_FALSE}"; then
-  as_fn_error $? "conditional \"JXL_DELEGATE\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${LCMS_DELEGATE_TRUE}" && test -z "${LCMS_DELEGATE_FALSE}"; then
