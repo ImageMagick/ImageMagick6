@@ -531,7 +531,7 @@ static Image *ReadJXLImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) JxlDecoderReleaseBoxBuffer(jxl_info);
   if (exif_profile != (StringInfo *) NULL)
     {
-      (void) SetImageProfile(image,"exif",exif_profile,exception);
+      (void) SetImageProfile(image,"exif",exif_profile);
       DestroyStringInfo(exif_profile);
     }
   output_buffer=(unsigned char *) RelinquishMagickMemory(output_buffer);
