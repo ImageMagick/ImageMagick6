@@ -497,7 +497,7 @@ static int UnpackWPGRaster(Image *image,int bpp)
           }
         }
       else {
-        if(RunCount)   /* next runcount byte are readed directly */
+        if(RunCount)   /* next runcount byte are read directly */
           {
             for(i=0;i < (int) RunCount;i++)
               {

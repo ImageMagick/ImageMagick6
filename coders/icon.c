@@ -137,7 +137,7 @@ typedef struct _IconInfo
 } IconInfo;
 
 /*
-  Forward declaractions.
+  Forward declarations.
 */
 static Image
   *AutoResizeImage(const Image *,const char *,MagickOffsetType *,

@@ -110,7 +110,7 @@ int main( int /*argc*/, char ** argv)
     }
 
     //
-    // Draw pentogram.
+    // Draw pentagram.
     //
     {
       drawList.push_back(DrawableStrokeColor("red"));

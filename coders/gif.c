@@ -10,7 +10,7 @@
 %                             GGG   IIIII  F                                  %
 %                                                                             %
 %                                                                             %
-%            Read/Write Compuserv Graphics Interchange Format                 %
+%            Read/Write Compuserve Graphics Interchange Format                %
 %                                                                             %
 %                              Software Design                                %
 %                                   Cristy                                    %
@@ -78,7 +78,7 @@
 #define MaximumLZWCode  (1UL << MaximumLZWBits)
 
 /*
-  Typdef declarations.
+  Typedef declarations.
 */
 typedef struct _LZWCodeInfo
 {
@@ -1302,7 +1302,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if ((image->columns == 0) || (image->rows == 0))
       ThrowGIFException(CorruptImageError,"NegativeOrZeroImageSize");
     /*
-      Inititialize colormap.
+      Initialize colormap.
     */
     if (AcquireImageColormap(image,image->colors) == MagickFalse)
       ThrowGIFException(ResourceLimitError,"MemoryAllocationFailed");

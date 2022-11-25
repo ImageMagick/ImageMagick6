@@ -223,7 +223,7 @@ testMontage( q//,
   '108b50e6f8d5155f6c6f60dfe939e83ec465a917b3d8ec6fa1419d27ffa3cdb3',
   '1fdca151dfe00fdc106832696815eff00b7e32a5fb0af64b41cb08610661880e');
 #
-# 19) Test concatenated thumbnail Montage (concatentated by setting params to zero)
+# 19) Test concatenated thumbnail Montage (concatenated by setting params to zero)
 #     Thumbnails should be compacted tightly together in a grid
 #
 ++$test;

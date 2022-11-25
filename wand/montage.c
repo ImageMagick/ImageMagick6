@@ -128,7 +128,7 @@ static MagickBooleanType MontageUsage(void)
       "  -caption string      assign a caption to an image\n"
       "  -channel type        apply option to select image channels\n"
       "  -colors value        preferred number of colors in the image\n"
-      "  -colorspace type     alternate image colorsapce\n"
+      "  -colorspace type     alternate image colorspace\n"
       "  -comment string      annotate image with comment\n"
       "  -compose operator    composite operator\n"
       "  -compress type       type of pixel compression when writing the image\n"

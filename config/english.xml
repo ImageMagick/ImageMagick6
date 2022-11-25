@@ -1392,11 +1392,11 @@
         load images
       </message>
     </Load>
-    <Magnfiy>
+    <Magnify>
       <message name="Image">
-        magnfiy image
+        magnify image
       </message>
-    </Magnfiy>
+    </Magnify>
     <MedianFilter>
       <message name="Image">
         filter image with neighborhood ranking

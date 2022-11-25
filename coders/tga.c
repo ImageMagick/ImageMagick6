@@ -68,7 +68,7 @@
 #include "magick/module.h"
 
 /*
-  Enumerated declaractions.
+  Enumerated declarations.
 */
 typedef enum
 {
@@ -81,7 +81,7 @@ typedef enum
 } TGAImageType;
 
 /*
-  Typedef declaractions.
+  Typedef declarations.
 */
 typedef struct _TGAInfo
 {

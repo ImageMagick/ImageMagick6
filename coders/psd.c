@@ -84,13 +84,13 @@
 #include "psd-private.h"
 
 /*
-  Define declaractions.
+  Define declarations.
 */
 #define MaxPSDChannels  56
 #define PSDQuantum(x) (((ssize_t) (x)+1) & -2)
 
 /*
-  Enumerated declaractions.
+  Enumerated declarations.
 */
 typedef enum
 {
@@ -113,7 +113,7 @@ typedef enum
 } PSDImageType;
 
 /*
-  Typedef declaractions.
+  Typedef declarations.
 */
 typedef struct _ChannelInfo
 {

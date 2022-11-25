@@ -790,7 +790,7 @@ void Magick::Image::fillPattern(const Image &fillPattern_)
 
 Magick::Image Magick::Image::fillPattern(void) const
 {
-  // FIXME: This is inordinately innefficient
+  // FIXME: This is inordinately inefficient
   const MagickCore::Image
     *tmpTexture;
 

@@ -1064,9 +1064,9 @@ static double SiPrefixToDoubleInterval(const char *string,const double interval)
   return(value);
 }
 
-static inline double StringToDouble(const char *string,char **sentinal)
+static inline double StringToDouble(const char *string,char **sentinel)
 {
-  return(InterpretLocaleValue(string,sentinal));
+  return(InterpretLocaleValue(string,sentinel));
 }
 
 static double StringToDoubleInterval(const char *string,const double interval)
@@ -8690,7 +8690,7 @@ Mogrify(ref,...)
               break;
             }
           /*
-            Parameter Handling used used ONLY for normal composition.
+            Parameter Handling used ONLY for normal composition.
           */
           if (attribute_flag[5] != 0) /* gravity */
             image->gravity=(GravityType) argument_list[5].integer_reference;
@@ -9328,7 +9328,7 @@ Mogrify(ref,...)
           TextureImage(image,argument_list[0].image_reference);
           break;
         }
-        case 55:  /* Evalute */
+        case 55:  /* Evaluate */
         {
           MagickEvaluateOperator
             op;
@@ -10242,7 +10242,7 @@ Mogrify(ref,...)
           image=TransposeImage(image,exception);
           break;
         }
-        case 100:  /* Tranverse */
+        case 100:  /* Transverse */
         {
           image=TransverseImage(image,exception);
           break;

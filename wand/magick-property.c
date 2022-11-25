@@ -1803,7 +1803,7 @@ WandExport unsigned char *MagickRemoveImageProfile(MagickWand *wand,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  MagickSetAntialias() sets the antialias propery of the wand.
+%  MagickSetAntialias() sets the antialias property of the wand.
 %
 %  The format of the MagickSetAntialias method is:
 %
@@ -2448,7 +2448,7 @@ WandExport MagickBooleanType MagickSetInterpolateMethod(MagickWand *wand,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  MagickSetOption() associates one or options with the wand (.e.g
-%  MagickSetOption(wand,"jpeg:perserve","yes")).
+%  MagickSetOption(wand,"jpeg:preserve","yes")).
 %
 %  The format of the MagickSetOption method is:
 %
@@ -2781,7 +2781,7 @@ WandExport MagickBooleanType MagickSetResolution(MagickWand *wand,
 %
 %    o wand: the magick wand.
 %
-%    o number_factoes: the number of factors.
+%    o number_factors: the number of factors.
 %
 %    o sampling_factors: An array of doubles representing the sampling factor
 %      for each color component (in RGB order).

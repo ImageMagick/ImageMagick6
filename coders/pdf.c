@@ -97,7 +97,7 @@
 #endif
 
 /*
-  Typedef declaractions.
+  Typedef declarations.
 */
 typedef struct _PDFInfo
 {

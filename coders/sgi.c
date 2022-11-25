@@ -66,7 +66,7 @@
 #include "magick/module.h"
 
 /*
-  Typedef declaractions.
+  Typedef declarations.
 */
 typedef struct _SGIInfo
 {

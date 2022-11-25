@@ -1449,7 +1449,7 @@ WandExport FillRule DrawGetFillRule(const DrawingWand *wand)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DrawGetFont() returns a null-terminaged string specifying the font used
+%  DrawGetFont() returns a null-terminated string specifying the font used
 %  when annotating with text. The value returned must be freed by the user
 %  when no longer needed.
 %
@@ -4372,7 +4372,7 @@ WandExport void DrawRotate(DrawingWand *wand,const double degrees)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DrawRoundRectangle() draws a rounted rectangle given two coordinates,
+%  DrawRoundRectangle() draws a rounded rectangle given two coordinates,
 %  x & y corner radiuses and using the current stroke, stroke width,
 %  and fill settings.
 %
@@ -4989,7 +4989,7 @@ WandExport void DrawSetFillRule(DrawingWand *wand,const FillRule fill_rule)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DrawSetFont() sets the fully-sepecified font to use when annotating with
+%  DrawSetFont() sets the fully-specified font to use when annotating with
 %  text.
 %
 %  The format of the DrawSetFont method is:
