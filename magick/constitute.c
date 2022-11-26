@@ -681,7 +681,7 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       *source_date_epoch = (const char *) NULL;
 
     static MagickBooleanType
-      epoch_initalized = MagickFalse;
+      epoch_initialized = MagickFalse;
 
     next->taint=MagickFalse;
     GetPathComponent(magick_filename,MagickPath,magick_path);
@@ -822,10 +822,10 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
         next->iptc_profile.length=GetStringInfoLength(profile);
         next->iptc_profile.info=GetStringInfoDatum(profile);
       }
-    if (epoch_initalized == MagickFalse)
+    if (epoch_initialized == MagickFalse)
       {
         source_date_epoch=getenv("SOURCE_DATE_EPOCH");
-        epoch_initalized=MagickTrue;
+        epoch_initialized=MagickTrue;
       }
     if (source_date_epoch == (const char *) NULL)
       {

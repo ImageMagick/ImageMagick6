@@ -930,7 +930,7 @@ MagickExport Image *ConvolveImageChannel(const Image *image,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DespeckleImage() reduces the speckle noise in an image while perserving the
+%  DespeckleImage() reduces the speckle noise in an image while preserving the
 %  edges of the original image.  A speckle removing filter uses a complementary
 %  hulling technique (raising pixels that are darker than their surrounding
 %  neighbors, then complementarily lowering pixels that are brighter than their
@@ -1828,7 +1828,7 @@ MagickExport Image *FilterImageChannel(const Image *image,
 %
 %  The format of the GaussianBlurImage method is:
 %
-%      Image *GaussianBlurImage(const Image *image,onst double radius,
+%      Image *GaussianBlurImage(const Image *image,const double radius,
 %        const double sigma,ExceptionInfo *exception)
 %      Image *GaussianBlurImageChannel(const Image *image,
 %        const ChannelType channel,const double radius,const double sigma,
@@ -4567,7 +4567,7 @@ MagickExport Image *SpreadImage(const Image *image,const double radius,
 %    o gain: the percentage of the difference between the original and the
 %      blur image that is added back into the original.
 %
-%    o threshold: the threshold in pixels needed to apply the diffence gain.
+%    o threshold: the threshold in pixels needed to apply the difference gain.
 %
 %    o exception: return any errors or warnings in this structure.
 %

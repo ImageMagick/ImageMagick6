@@ -54,7 +54,7 @@
 #include "magick/utility.h"
 
 /*
-  Typedef declaractions.
+  Typedef declarations.
 */
 struct _TokenInfo
 {

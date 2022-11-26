@@ -965,7 +965,7 @@ static void XDrawTriangleSouth(Display *display,const XWindowInfo *window_info,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  XDrawWidgetText() first clears the widget and draws a text string justifed
+%  XDrawWidgetText() first clears the widget and draws a text string justified
 %  left (or center) in the x-direction and centered within the y-direction.
 %
 %  The format of the XDrawWidgetText function is:
@@ -2515,7 +2515,7 @@ MagickExport void XColorBrowserWidget(Display *display,XWindows *windows,
         if ((key_symbol == XK_Return) || (key_symbol == XK_KP_Enter))
           {
             /*
-              Read new color or glob patterm.
+              Read new color or glob pattern.
             */
             if (*reply_info.text == '\0')
               break;
@@ -5146,7 +5146,7 @@ MagickExport void XFileBrowserWidget(Display *display,XWindows *windows,
         if ((key_symbol == XK_Return) || (key_symbol == XK_KP_Enter))
           {
             /*
-              Read new directory or glob patterm.
+              Read new directory or glob pattern.
             */
             if (*reply_info.text == '\0')
               break;
@@ -6387,7 +6387,7 @@ MagickExport void XFontBrowserWidget(Display *display,XWindows *windows,
         if ((key_symbol == XK_Return) || (key_symbol == XK_KP_Enter))
           {
             /*
-              Read new font or glob patterm.
+              Read new font or glob pattern.
             */
             if (*reply_info.text == '\0')
               break;
@@ -8145,7 +8145,7 @@ MagickExport void XNoticeWidget(Display *display,XWindows *windows,
   assert(reason != (char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",reason);
-  XDelay(display,SuspendTime << 3);  /* avoid surpise with delay */
+  XDelay(display,SuspendTime << 3);  /* avoid surprise with delay */
   XSetCursorState(display,windows,MagickTrue);
   XCheckRefreshWindows(display,windows);
   font_info=windows->widget.font_info;

@@ -2259,7 +2259,7 @@ MagickExport MagickBooleanType ResetImagePage(Image *image,const char *page)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  ResetImagePixels() reset the image pixels, that is, all the pixel components
-%  are zereod.
+%  are zeroed.
 %
 %  The format of the SetImage method is:
 %
