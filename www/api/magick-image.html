@@ -445,7 +445,7 @@ MagickWand *MagickAppendImages(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickAutoGammaImage">MagickAutoGammaImage</a></h2>
 
-<p>MagickAutoGammaImage() extracts the 'mean' from the image and adjust the image to try make set its gamma appropriatally.</p>
+<p>MagickAutoGammaImage() extracts the 'mean' from the image and adjust the image to try make set its gamma appropriately.</p>
 
 <p>The format of the MagickAutoGammaImage method is:</p>
 
@@ -992,7 +992,7 @@ MagickBooleanType MagickColorMatrixImage(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickCombineImages">MagickCombineImages</a></h2>
 
-<p>MagickCombineImages() combines one or more images into a single image.  The grayscale value of the pixels of each image in the sequence is assigned in order to the specified  hannels of the combined image.   The typical ordering would be image 1 =&gt; Red, 2 =&gt; Green, 3 =&gt; Blue, etc.</p>
+<p>MagickCombineImages() combines one or more images into a single image.  The grayscale value of the pixels of each image in the sequence is assigned in order to the specified channels of the combined image.   The typical ordering would be image 1 =&gt; Red, 2 =&gt; Green, 3 =&gt; Blue, etc.</p>
 
 <p>The format of the MagickCombineImages method is:</p>
 
@@ -1219,7 +1219,7 @@ MagickBooleanType MagickCompositeImageGravity(MagickWand *wand,
 
 <dd> </dd>
 <dt>compose</dt>
-<dd>This operator affects how the composite is applied to the image.  The default is Over.  These are some of the compose methods availble. </dd>
+<dd>This operator affects how the composite is applied to the image.  The default is Over.  These are some of the compose methods available. </dd>
 
 <dd> OverCompositeOp       InCompositeOp         OutCompositeOp AtopCompositeOp       XorCompositeOp        PlusCompositeOp MinusCompositeOp      AddCompositeOp        SubtractCompositeOp DifferenceCompositeOp BumpmapCompositeOp    CopyCompositeOp DisplaceCompositeOp </dd>
 
@@ -1235,13 +1235,13 @@ MagickBooleanType MagickCompositeImageGravity(MagickWand *wand,
 
 <p>Each layer from the two image lists are composted together until the end of one of the image lists is reached.  The offset of each composition is also adjusted to match the virtual canvas offsets of each layer. As such the given offset is relative to the virtual canvas, and not the actual image.</p>
 
-<p>Composition uses given x and y offsets, as the 'origin' location of the source images virtual canvas (not the real image) allowing you to compose a list of 'layer images' into the destiantioni images.  This makes it well sutiable for directly composing 'Clears Frame Animations' or 'Coaleased Animations' onto a static or other 'Coaleased Animation' destination image list.  GIF disposal handling is not looked at.</p>
+<p>Composition uses given x and y offsets, as the 'origin' location of the source images virtual canvas (not the real image) allowing you to compose a list of 'layer images' into the destination images.  This makes it well suitable for directly composing 'Clears Frame Animations' or 'Coalesced Animations' onto a static or other 'Coalesced Animation' destination image list.  GIF disposal handling is not looked at.</p>
 
-<p>Special case:- If one of the image sequences is the last image (just a single image remaining), that image is repeatally composed with all the images in the other image list.  Either the source or destination lists may be the single image, for this situation.</p>
+<p>Special case:- If one of the image sequences is the last image (just a single image remaining), that image is repeatedly composed with all the images in the other image list.  Either the source or destination lists may be the single image, for this situation.</p>
 
 <p>In the case of a single destination image (or last image given), that image will ve cloned to match the number of images remaining in the source image list.</p>
 
-<p>This is equivelent to the "-layer Composite" Shell API operator.</p>
+<p>This is equivalent to the "-layer Composite" Shell API operator.</p>
 
 <p>The format of the MagickCompositeLayers method is:</p>
 
@@ -1259,7 +1259,7 @@ MagickBooleanType MagickCompositeLayers(MagickWand *wand,
 <dd> </dd>
 <dl class="dl-horizontal">
 <dt>wand</dt>
-<dd>the magick wand holding destaintion images </dd>
+<dd>the magick wand holding destination images </dd>
 
 <dd> </dd>
 <dt>source_wand</dt>
@@ -1566,7 +1566,7 @@ MagickBooleanType MagickDeskewImage(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDespeckleImage">MagickDespeckleImage</a></h2>
 
-<p>MagickDespeckleImage() reduces the speckle noise in an image while perserving the edges of the original image.</p>
+<p>MagickDespeckleImage() reduces the speckle noise in an image while preserving the edges of the original image.</p>
 
 <p>The format of the MagickDespeckleImage method is:</p>
 
@@ -1664,7 +1664,7 @@ MagickBooleanType MagickDisplayImages(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickDistortImage">MagickDistortImage</a></h2>
 
-<p>MagickDistortImage() distorts an image using various distortion methods, by mapping color lookups of the source image to a new destination image usally of the same size as the source image, unless 'bestfit' is set to true.</p>
+<p>MagickDistortImage() distorts an image using various distortion methods, by mapping color lookups of the source image to a new destination image usually of the same size as the source image, unless 'bestfit' is set to true.</p>
 
 <p>If 'bestfit' is enabled, and distortion allows it, the destination image is adjusted to ensure the whole source 'image' will just fit within the final destination image, which will be sized and offset accordingly.  Also in many cases the virtual offset of the source image will be taken into account in the mapping.</p>
 
@@ -1696,7 +1696,7 @@ MagickBooleanType MagickDistortImage(MagickWand *wand,
 
 <dd> Affine, Perspective, and Bilinear, do least squares fitting of the distortion when more than the minimum number of control point pairs are provided. </dd>
 
-<dd> Perspective, and Bilinear, falls back to a Affine distortion when less that 4 control point pairs are provided. While Affine distortions let you use any number of control point pairs, that is Zero pairs is a no-Op (viewport only) distrotion, one pair is a translation and two pairs of control points do a scale-rotate-translate, without any shearing. </dd>
+<dd> Perspective, and Bilinear, falls back to a Affine distortion when less that 4 control point pairs are provided. While Affine distortions let you use any number of control point pairs, that is Zero pairs is a no-Op (viewport only) distortion, one pair is a translation and two pairs of control points do a scale-rotate-translate, without any shearing. </dd>
 
 <dd> </dd>
 <dt>number_arguments</dt>
@@ -1875,7 +1875,7 @@ MagickBooleanType MagickEqualizeImageChannel(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickEvaluateImage">MagickEvaluateImage</a></h2>
 
-<p>MagickEvaluateImage() applys an arithmetic, relational, or logical expression to an image.  Use these operators to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
+<p>MagickEvaluateImage() applies an arithmetic, relational, or logical expression to an image.  Use these operators to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
 <p>The format of the MagickEvaluateImage method is:</p>
 
@@ -2199,7 +2199,7 @@ MagickBooleanType MagickFrameImage(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickFunctionImage">MagickFunctionImage</a></h2>
 
-<p>MagickFunctionImage() applys an arithmetic, relational, or logical expression to an image.  Use these operators to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
+<p>MagickFunctionImage() applies an arithmetic, relational, or logical expression to an image.  Use these operators to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
 <p>The format of the MagickFunctionImage method is:</p>
 
@@ -2496,7 +2496,7 @@ unsigned char *MagickGetImagesBlob(MagickWand *wand,size_t *length)
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageBluePrimary">MagickGetImageBluePrimary</a></h2>
 
-<p>MagickGetImageBluePrimary() returns the chromaticy blue primary point for the image.</p>
+<p>MagickGetImageBluePrimary() returns the chromaticity blue primary point for the image.</p>
 
 <p>The format of the MagickGetImageBluePrimary method is:</p>
 
@@ -2654,7 +2654,7 @@ double *MagickGetImageChannelDistortion(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageChannelFeatures">MagickGetImageChannelFeatures</a></h2>
 
-<p>MagickGetImageChannelFeatures() returns features for each channel in the image in each of four directions (horizontal, vertical, left and right diagonals) for the specified distance.  The features include the angular second moment, contrast, correlation, sum of squares: variance, inverse difference moment, sum average, sum varience, sum entropy, entropy, difference variance, difference entropy, information measures of correlation 1, information measures of correlation 2, and maximum correlation coefficient.  You can access the red channel contrast, for example, like this:</p>
+<p>MagickGetImageChannelFeatures() returns features for each channel in the image in each of four directions (horizontal, vertical, left and right diagonals) for the specified distance.  The features include the angular second moment, contrast, correlation, sum of squares: variance, inverse difference moment, sum average, sum variance, sum entropy, entropy, difference variance, difference entropy, information measures of correlation 1, information measures of correlation 2, and maximum correlation coefficient.  You can access the red channel contrast, for example, like this:</p>
 
 <pre class="text">
 channel_features=MagickGetImageChannelFeatures(wand,1);
@@ -3197,7 +3197,7 @@ GravityType MagickGetImageGravity(MagickWand *wand)
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageGreenPrimary">MagickGetImageGreenPrimary</a></h2>
 
-<p>MagickGetImageGreenPrimary() returns the chromaticy green primary point.</p>
+<p>MagickGetImageGreenPrimary() returns the chromaticity green primary point.</p>
 
 <p>The format of the MagickGetImageGreenPrimary method is:</p>
 
@@ -3299,7 +3299,7 @@ InterlaceType MagickGetImageInterlaceScheme(MagickWand *wand)
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageInterpolateMethod">MagickGetImageInterpolateMethod</a></h2>
 
-<p>MagickGetImageInterpolateMethod() returns the interpolation method for the sepcified image.</p>
+<p>MagickGetImageInterpolateMethod() returns the interpolation method for the specified image.</p>
 
 <p>The format of the MagickGetImageInterpolateMethod method is:</p>
 
@@ -3489,7 +3489,7 @@ MagickBooleanType MagickGetImagePixelColor(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageRedPrimary">MagickGetImageRedPrimary</a></h2>
 
-<p>MagickGetImageRedPrimary() returns the chromaticy red primary point.</p>
+<p>MagickGetImageRedPrimary() returns the chromaticity red primary point.</p>
 
 <p>The format of the MagickGetImageRedPrimary method is:</p>
 
@@ -3731,7 +3731,7 @@ ResolutionType MagickGetImageUnits(MagickWand *wand)
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageVirtualPixelMethod">MagickGetImageVirtualPixelMethod</a></h2>
 
-<p>MagickGetImageVirtualPixelMethod() returns the virtual pixel method for the sepcified image.</p>
+<p>MagickGetImageVirtualPixelMethod() returns the virtual pixel method for the specified image.</p>
 
 <p>The format of the MagickGetImageVirtualPixelMethod method is:</p>
 
@@ -3753,7 +3753,7 @@ VirtualPixelMethod MagickGetImageVirtualPixelMethod(MagickWand *wand)
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickGetImageWhitePoint">MagickGetImageWhitePoint</a></h2>
 
-<p>MagickGetImageWhitePoint() returns the chromaticy white point.</p>
+<p>MagickGetImageWhitePoint() returns the chromaticity white point.</p>
 
 <p>The format of the MagickGetImageWhitePoint method is:</p>
 
@@ -4321,7 +4321,7 @@ MagickBooleanType MagickMagnifyImage(MagickWand *wand)
 
 <p>MagickMergeImageLayers() composes all the image layers from the current given image onward to produce a single image of the merged layers.</p>
 
-<p>The inital canvas's size depends on the given ImageLayerMethod, and is initialized using the first images background color.  The images are then compositied onto that image in sequence using the given composition that has been assigned to each individual image.</p>
+<p>The inital canvas's size depends on the given ImageLayerMethod, and is initialized using the first images background color.  The images are then composited onto that image in sequence using the given composition that has been assigned to each individual image.</p>
 
 <p>The format of the MagickMergeImageLayers method is:</p>
 
@@ -4399,7 +4399,7 @@ MagickBooleanType MagickModulateImage(MagickWand *wand,
 
 <dd> </dd>
 <dt>brightness</dt>
-<dd>the percent change in brighness. </dd>
+<dd>the percent change in brightness. </dd>
 
 <dd> </dd>
 <dt>saturation</dt>
@@ -4485,7 +4485,7 @@ MagickWand *MagickMorphImages(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickMorphologyImage">MagickMorphologyImage</a></h2>
 
-<p>MagickMorphologyImage() applies a user supplied kernel to the image according to the given mophology method.</p>
+<p>MagickMorphologyImage() applies a user supplied kernel to the image according to the given morphology method.</p>
 
 <p>The format of the MagickMorphologyImage method is:</p>
 
@@ -4647,7 +4647,7 @@ MagickBooleanType MagickNewImage(MagickWand *wand,
 
 <p>It will return MagickFalse when no more images are left to be returned which happens when the wand is empty, or the current image is the last image.</p>
 
-<p>When the above condition (end of image list) is reached, the iterator is automaticall set so that you can start using MagickPreviousImage() to again iterate over the images in the reverse direction, starting with the last image (again).  You can jump to this condition immeditally using MagickSetLastIterator().</p>
+<p>When the above condition (end of image list) is reached, the iterator is automatically set so that you can start using MagickPreviousImage() to again iterate over the images in the reverse direction, starting with the last image (again).  You can jump to this condition immediately using MagickSetLastIterator().</p>
 
 <p>The format of the MagickNextImage method is:</p>
 
@@ -4850,7 +4850,7 @@ MagickBooleanType MagickOrderedPosterizeImageChannel(MagickWand *wand,
 
 <dd> No numbers also means a 2 level (bitmap) dither will be applied to all channels, while a single number is the number of levels applied to each channel in sequence.  More numbers will be applied in turn to each of the color channels. </dd>
 
-<dd> For example: "o3x3,6" generates a 6 level posterization of the image with a ordered 3x3 diffused pixel dither being applied between each level. While checker,8,8,4 will produce a 332 colormaped image with only a single checkerboard hash pattern (50 grey) between each color level, to basically double the number of color levels with a bare minimim of dithering. </dd>
+<dd> For example: "o3x3,6" generates a 6 level posterization of the image with a ordered 3x3 diffused pixel dither being applied between each level. While checker,8,8,4 will produce a 332 colormaped image with only a single checkerboard hash pattern (50 grey) between each color level, to basically double the number of color levels with a bare minimum of dithering. </dd>
 
 <dd>  </dd>
 </dl>
@@ -5428,7 +5428,7 @@ MagickBooleanType MagickResetImagePage(MagickWand *wand,
     Bessel   Blackman   Box
     Catrom   CubicGaussian
     Hanning  Hermite    Lanczos
-    Mitchell PointQuandratic
+    Mitchell PointQuadratic
     Sinc     Triangle
 </pre>
 
@@ -6221,7 +6221,7 @@ MagickBooleanType MagickSetImageDispose(MagickWand *wand,
 
 <dd> </dd>
 <dt>dispose</dt>
-<dd>the image disposeal type. </dd>
+<dd>the image disposal type. </dd>
 
 <dd>  </dd>
 </dl>
@@ -7295,7 +7295,7 @@ MagickBooleanType MagickSketchImage(MagickWand *wand,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/magick-image_8c.html" id="MagickSmushImages">MagickSmushImages</a></h2>
 
-<p>MagickSmushImages() takes all images from the current image pointer to the end of the image list and smushs them to each other top-to-bottom if the stack parameter is true, otherwise left-to-right.</p>
+<p>MagickSmushImages() takes all images from the current image pointer to the end of the image list and smushes them to each other top-to-bottom if the stack parameter is true, otherwise left-to-right.</p>
 
 <p>The format of the MagickSmushImages method is:</p>
 
@@ -7387,9 +7387,9 @@ MagickBooleanType MagickSparseColorImage(MagickWand *wand,
 
 <dd> Bilinear has no simple inverse mapping so will not allow 'bestfit' style of image sparseion. </dd>
 
-<dd> Affine, Perspective, and Bilinear, will do least squares fitting of the distrotion when more than the minimum number of control point pairs are provided. </dd>
+<dd> Affine, Perspective, and Bilinear, will do least squares fitting of the distortion when more than the minimum number of control point pairs are provided. </dd>
 
-<dd> Perspective, and Bilinear, will fall back to a Affine sparseion when less than 4 control point pairs are provided. While Affine sparseions will let you use any number of control point pairs, that is Zero pairs is a No-Op (viewport only) distrotion, one pair is a translation and two pairs of control points will do a scale-rotate-translate, without any shearing. </dd>
+<dd> Perspective, and Bilinear, will fall back to a Affine sparseion when less than 4 control point pairs are provided. While Affine sparseions will let you use any number of control point pairs, that is Zero pairs is a No-Op (viewport only) distortion, one pair is a translation and two pairs of control points will do a scale-rotate-translate, without any shearing. </dd>
 
 <dd> </dd>
 <dt>number_arguments</dt>

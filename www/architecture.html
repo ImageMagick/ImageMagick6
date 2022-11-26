@@ -170,7 +170,7 @@ if (image == (Image *) NULL)
 
 <p>When the pixel cache is initialized, pixels are scaled from whatever bit depth they originated from to that required by the pixel cache.  For example, a 1-channel 1-bit monochrome PBM image is scaled to a 4 channel 8-bit RGBA image, if you are using the Q8 version of ImageMagick, and 16-bit RGBA for the Q16 version.  You can determine which version you have with the <a class="text-nowrap" href="command-line-options.html#version">-version</a> option: </p>
 
-<ul><pre class="bg-light text-dark"><code><span class="crtprompt">$ </span><span class='crtin'>identify -version</span><span class='crtout'><br/></span><span class="crtprompt">$ </span><span class='crtin'>Version: ImageMagick 6.9.12-50 2022-05-07 Q16 https://imagemagick.org</span></code></pre></ul>
+<ul><pre class="bg-light text-dark"><code><span class="crtprompt">$ </span><span class='crtin'>identify -version</span><span class='crtout'><br/></span><span class="crtprompt">$ </span><span class='crtin'>Version: ImageMagick 6.9.12-67 2022-11-01 Q16 https://imagemagick.org</span></code></pre></ul>
 <p>As you can see, the convenience of the pixel cache sometimes comes with a trade-off in storage (e.g. storing a 1-bit monochrome image as 16-bit RGBA is wasteful) and speed (i.e. storing the entire image in memory is generally slower than accessing one scanline of pixels at a time).  In most cases, the benefits of the pixel cache typically outweigh any disadvantages.</p>
 
 <h2><a class="anchor" id="authentic-pixels"></a>Access the Pixel Cache</h2>
@@ -1194,7 +1194,7 @@ static MagickBooleanType WriteMGKImage(const ImageInfo *image_info,Image *image)
 display logo.mgk
 </code></pre>
 
-<p>We provide the <a href="https://download.imagemagick.org/ImageMagick/download/kits/">Magick Coder Kit</a> to help you get started writing your own custom coder.</p>
+<p>We provide the <a href="../archive//kits/">Magick Coder Kit</a> to help you get started writing your own custom coder.</p>
 
 <p>Before you build, set the <samp>PKG_CONFIG_PATH</samp> environment variable if ImageMagick is not in your default system path:</p>
 
@@ -1470,7 +1470,7 @@ Image: logo:
   filter:saturation:standard-deviation: 14484.7
 </samp></pre>
 
-<p>We provide the <a href="https://download.imagemagick.org/ImageMagick/download/kits/">Magick Filter Kit</a> to help you get started writing your own custom image filter.</p>
+<p>We provide the <a href="../archive//kits/">Magick Filter Kit</a> to help you get started writing your own custom image filter.</p>
 
 <p>Before you build, set the <samp>PKG_CONFIG_PATH</samp> environment variable if ImageMagick is not in your default system path:</p>
 
@@ -1505,4 +1505,3 @@ Image: logo:
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 30th May 2022 18:03 -->

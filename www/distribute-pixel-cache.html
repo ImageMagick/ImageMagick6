@@ -106,8 +106,8 @@ convert -limit memory 1GiB -limit map 2GiB -limit disk 4GiB \
   myhugeimage.jpg -sharpen 5x2 myhugeimage.png
 </code></pre>
 <p>For large image sequences, the servers are contacted in a round-robin fashion to distribute the load over multiple distributed pixel caches (assuming you have a host list rather than a single host).  In our example, some modest resources are available on the desktop as defined by the -limit option.  For smaller images, they are allocated on the desktop up to the specified limits.</p>
-<p>Your image processing tasks are likely to perform slower when utilizing a distributed pixel cache due to pixels shuffling between the client and the server over a network.  Algorithms that access virtual pixels (e.g. -sharpen) are noticeably slower, up to 3 times slower, than algorithms that only access authentic pixels (e.g. -negate) due to increased network traffic.</p>
-<p>A client can only contact a compatible distributed pixel cache server.  Compatibility requires the same ImageMagick library interface, quantum depth, HDRI status, OS word size, and endianness.  The distributed pixel cache checks these attributes and exits if these requirements are not met.</p>
+<p>Your image processing tasks are likely to perform slower when utilizing a distributed pixel cache due to shuffling pixels between the client and the server over a network.  Algorithms that access virtual pixels (e.g. -sharpen) are noticeably slower, up to 3 times slower, than algorithms that only access authentic pixels (e.g. -negate) due to increased network traffic.</p>
+<p>A client can only contact a compatible distributed pixel cache server.  Compatibility requires the same ImageMagick library interface, quantum depth, HDRI status, OS word size, endianness, and passphrase.  The distributed pixel cache checks these attributes and throws and exception if these requirements are not met.</p>
 </div>
   </div>
   </main><!-- /.container -->
@@ -137,4 +137,3 @@ convert -limit memory 1GiB -limit map 2GiB -limit disk 4GiB \
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 30th May 2022 18:03 -->

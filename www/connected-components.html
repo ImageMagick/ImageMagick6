@@ -133,6 +133,17 @@
 <p>Objects in your image may look homogeneous but have slightly different color values.  By default, only pixels that match exactly are considered as part of a particular object.  For slight variations of color in an object, use <code>-fuzz</code>.  For example,</p>
 <pre class="bg-light text-dark mx-4"><code>convert star-map.png -fuzz 5% -define connected-components:verbose=true \
   -define connected-components:mean-color=true -connected-components 4 stars.gif</code></pre>
+<h4>Connected Components</h4>
+<p>The algorithm walks through the pixels of a component, in the usual row-column order, looking for a component above or to the left.  For the component at top-left, there are no components above or to the left to merge into.  As a result, there are special cases where you need to rotate, repeat the connected components, then rotate back.  For example</p>
+<pre class="bg-light text-dark mx-4"><samp> magick  \
+  objects.gif  \
+  -define connected-components:verbose=true \
+  -define connected-components:area-threshold=6000 \
+  -virtual-pixel None \
+  -connected-components 4 -rotate 180 \
+  -connected-components 4 -rotate -180 \
+  objects.png
+</samp></pre>
 </div>
   </div>
   </main><!-- /.container -->
@@ -162,4 +173,3 @@
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 30th May 2022 18:03 -->

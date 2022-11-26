@@ -91,7 +91,7 @@
   <main class="container">
   <div class="magick-template">
 <div class="magick-header">
-<p class="text-center"><a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a> &#8226; <a href="memory.html#AcquireAlignedMemory">AcquireAlignedMemory</a> &#8226; <a href="memory.html#AcquireMagickMemory">AcquireMagickMemory</a> &#8226; <a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a> &#8226; <a href="memory.html#AcquireQuantumMemory">AcquireQuantumMemory</a> &#8226; <a href="memory.html#AcquireVirtualMemory">AcquireVirtualMemory</a> &#8226; <a href="memory.html#CopyMagickMemory">CopyMagickMemory</a> &#8226; <a href="memory.html#GetMagickMemoryMethods">GetMagickMemoryMethods</a> &#8226; <a href="memory.html#GetVirtualMemoryBlob">GetVirtualMemoryBlob</a> &#8226; <a href="memory.html#RelinquishAlignedMemory">RelinquishAlignedMemory</a> &#8226; <a href="memory.html#RelinquishMagickMemory">RelinquishMagickMemory</a> &#8226; <a href="memory.html#RelinquishVirtualMemory">RelinquishVirtualMemory</a> &#8226; <a href="memory.html#ResetMagickMemory">ResetMagickMemory</a> &#8226; <a href="memory.html#ResizeMagickMemory">ResizeMagickMemory</a> &#8226; <a href="memory.html#ResizeQuantumMemory">ResizeQuantumMemory</a> &#8226; <a href="memory.html#SetMagickAlignedMemoryMethods">SetMagickAlignedMemoryMethods</a> &#8226; <a href="memory.html#SetMagickMemoryMethods">SetMagickMemoryMethods</a></p>
+<p class="text-center"><a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a> &#8226; <a href="memory.html#AcquireAlignedMemory">AcquireAlignedMemory</a> &#8226; <a href="memory.html#AcquireMagickMemory">AcquireMagickMemory</a> &#8226; <a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a> &#8226; <a href="memory.html#AcquireQuantumMemory">AcquireQuantumMemory</a> &#8226; <a href="memory.html#AcquireVirtualMemory">AcquireVirtualMemory</a> &#8226; <a href="memory.html#CopyMagickMemory">CopyMagickMemory</a> &#8226; <a href="memory.html#GetMagickMemoryMethods">GetMagickMemoryMethods</a> &#8226; <a href="memory.html#GetVirtualMemoryBlob">GetVirtualMemoryBlob</a> &#8226; <a href="memory.html#RelinquishAlignedMemory">RelinquishAlignedMemory</a> &#8226; <a href="memory.html#RelinquishMagickMemory">RelinquishMagickMemory</a> &#8226; <a href="memory.html#RelinquishVirtualMemory">RelinquishVirtualMemory</a> &#8226; <a href="memory.html#ResetMagickMemory">ResetMagickMemory</a> &#8226; <a href="memory.html#ResizeMagickMemory">ResizeMagickMemory</a> &#8226; <a href="memory.html#ResizeQuantumMemory">ResizeQuantumMemory</a> &#8226; <a href="memory.html#SetMagickAlignedMemoryMethods">SetMagickAlignedMemoryMethods</a> &#8226; <a href="memory.html#SetMagickMemoryMethods">SetMagickMemoryMethods</a> &#8226; <a href="memory.html#ShredMagickMemory">ShredMagickMemory</a></p>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireCriticalMemory">AcquireCriticalMemory</a></h2>
 
@@ -525,6 +525,24 @@ SetMagickMemoryMethods(AcquireMemoryHandler acquire_memory_handler,
 
 <dd>  </dd>
 </dl>
+<h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="ShredMagickMemory">ShredMagickMemory</a></h2>
+
+<p>ShredMagickMemory() overwrites the specified memory buffer with random data. The overwrite is optional and is only required to help keep the contents of the memory buffer private.</p>
+
+<p>The format of the ShredMagickMemory method is:</p>
+
+<pre class="text">
+MagickBooleanType ShredMagickMemory(void *memory,const size_t length)
+</pre>
+
+<p>A description of each parameter follows.</p>
+
+<dt>memory</dt>
+<p>Specifies the memory buffer.</p>
+
+<dt>length</dt>
+<p>Specifies the length of the memory buffer.</p>
+
 </div>
   </div>
   </main><!-- /.container -->

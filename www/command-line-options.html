@@ -1313,7 +1313,7 @@ Undefined
 <p>For a more accurate color conversion to or from the linear RGB, CMYK, or grayscale colorspaces, use the <a href="command-line-options.html#profile">-profile</a> option.  Note, ImageMagick assumes the sRGB colorspace if the image format does not indicate otherwise.  For colorspace conversion, the gamma function is first removed to produce linear RGB.</p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
         <caption>Conversion of RGB to Other Color Spaces</caption>
         <tr><th valign="middle">CMY</th></tr>
         <tr><td valign="middle">C=<var>QuantumRange</var>−R</td></tr>
@@ -1907,6 +1907,9 @@ represents the last image of the sequence.  Specify a range of images with
 a dash (e.g. 0-4).  Separate indexes with a comma (e.g. 0,2).  Use
 <code>+delete</code> to delete the last image in the current image sequence. Use <code>-delete 0--1</code> to delete the entire image sequence.</p>
 
+<p>You can also delete images from the persistent registry, e.g., <samp>-delete
+registry:checkers</samp></p>
+
 
 <div style="margin: auto;">
   <h2><a class="anchor" id="density"></a>-density <var>width</var><br />-density <var>width</var>x<var>height</var></h2>
@@ -2117,7 +2120,7 @@ and meaning of the floating point values depends on the distortion <var>method</
 <p>Choose from these distortion types:</p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
   <tr>
     <th style="width: 8%">Method</th>
     <th>Description</th>
@@ -2897,7 +2900,7 @@ normalized pixels are used, they are restored, following the other
 calculations, to the full range by multiplying by <var>QuantumRange</var>.)</p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
   <col width="25%" />
   <col width="75%" />
   <thead>
@@ -3300,7 +3303,7 @@ use of these expert settings (see also <a href="command-line-options.html#define
 href="command-line-options.html#set" >-set</a>):-</p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
   <tr>
     <td>-define filter:blur=<var>factor</var></td>
     <td>Scale the X axis of the filter (and its window). Use &gt; 1.0 for
@@ -3650,7 +3653,7 @@ href="command-line-options.html#level">-level</a> operator also affects channels
 correspondences follow.</p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
   <tr>
         <td>-evaluate Set <var>value</var> </td>
         <td>-function Polynomial <var>value</var></td>
@@ -3713,7 +3716,7 @@ is 0.</p>
 varying amplitude, phase and bias. The correspondence is as follows.</p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
   <tr>
         <td>-evaluate Sin <var>freq</var> </td>
         <td>-function Sinusoid <var>freq</var>,0 </td>
@@ -4434,7 +4437,7 @@ which may represent either a set of overlaid 'image layers', a GIF disposal
 animation, or a fully-'coalesced' animation sequence. </p>
 
 <div class="pre-scrollable bg-light text-dark mx-4">
-<table class="table table-sm table-hover">
+<table class="table table-sm table-hover table-striped">
   <tbody>
   <tr>
     <th style="width: 8%">Method</th>
@@ -5255,7 +5258,7 @@ href="command-line-options.html#modulate">-modulate 120,90</a>.</p>
 
 <p>Use <a href="command-line-options.html#set">-set</a> attribute of '<code
 >option:modulate:colorspace</code>' to specify which colorspace to
-modulate.  Choose from <code>HCL</code>, <code>HCLp</code>, <code>HSB</code>, <code>HSI</code>, <code>HSL</code> (the default), <code>HSV</code>, <code>HWB</code>, or <code>LCH</code> (LCHuv).  For example,</p>
+modulate.  Choose from <code>HCL</code>, <code>HCLp</code>, <code>HSB</code>, <code>HSI</code>, <code>HSL</code> (the default), <code>HSV</code>, <code>HWB</code>, or <code>LCH</code> (LCHab).  For example,</p>
 
 <ul>< class="bg-light text-dark mx-4"><code>convert image.png -set option:modulate:colorspace hsb -modulate 120,90 modulate.png
 </code></pre></ul>
@@ -6061,7 +6064,7 @@ ignored, and the <a href="command-line-options.html#gravity">-gravity</a> option
 <p>If the <a href="command-line-options.html#filter">-filter</a> option
 or <code>-define filter:option=value</code> precedes the <a
 href="command-line-options.html#resize">-resize</a> option, the image is resized with the specified
-filter.</p>
+orthogonal filter.</p>
 
 <p>Many image processing algorithms assume your image is in a linear-light
 coding.  If your image is gamma-corrected, you can remove the nonlinear gamma
@@ -6312,9 +6315,10 @@ Properties</a> in the defined value.  For example:</p>
 Old size = 70x46  New size = 35x23
 </code></pre></ul>
 
-<p>Other well known 'properties' that are available include:
-'<code>date:create</code>' and '<code>date:modify</code>' and
-'<code>signature</code>'. </p>
+<p>Other well known 'properties' that are available include: 
+<samp>date:timestamp</samp>, <samp>date:create</samp>, 
+<samp>date:modify</samp>, and <samp>signature</samp>. </p>
+
 
 <p>The <a href="command-line-options.html#repage">-repage</a> operator will also allow you to modify
 the '<code>page</code>' attribute of an image for images already in memory (also
@@ -7473,4 +7477,4 @@ but with strict boolean masking. </p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 30th May 2022 16:18 -->
+<!-- Magick Cache 25th November 2022 21:53 -->
