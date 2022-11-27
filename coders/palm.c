@@ -232,6 +232,9 @@ static ssize_t FindColor(PixelPacket *pixel)
 static Image *ReadPALMImage(const ImageInfo *image_info,
   ExceptionInfo *exception)
 {
+  const size_t
+    one = 1;
+
   Image
     *image;
 
@@ -251,16 +254,12 @@ static Image *ReadPALMImage(const ImageInfo *image_info,
   IndexPacket
     *indexes;
 
-  ssize_t
-    i,
-    x;
-
   PixelPacket
     *q;
 
   size_t
-    bytes_per_row,
     bits_per_pixel,
+    bytes_per_row,
     extent,
     flags,
     version,
@@ -272,13 +271,14 @@ static Image *ReadPALMImage(const ImageInfo *image_info,
     redbits,
     greenbits,
     bluebits,
-    one,
     pad,
     size,
     bit;
 
   ssize_t
+    i,
     count,
+    x,
     y;
 
   unsigned char
@@ -344,7 +344,6 @@ static Image *ReadPALMImage(const ImageInfo *image_info,
     /*
       Initialize image colormap.
     */
-    one=1;
     if ((bits_per_pixel < 16) &&
         (AcquireImageColormap(image,one << bits_per_pixel) == MagickFalse))
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
@@ -780,7 +779,7 @@ static MagickBooleanType WritePALMImage(const ImageInfo *image_info,
     if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
       (void) TransformImageColorspace(image,sRGBColorspace);
     count=GetNumberColors(image,NULL,exception);
-    for (bits_per_pixel=1; (one << bits_per_pixel) < count; bits_per_pixel*=2) ;
+    for (bits_per_pixel=1; (bits_per_pixel < 64) && (one << bits_per_pixel) < count; bits_per_pixel*=2) ;
     if (bits_per_pixel > 16)
       bits_per_pixel=16;
     else
