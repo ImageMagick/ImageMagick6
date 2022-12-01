@@ -90,20 +90,27 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="segment.html#SegmentImage">SegmentImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/segment_8c.html" id="SegmentImage">SegmentImage</a></h2>
 
 <p>SegmentImage() segment an image by analyzing the histograms of the color components and identifying units that are homogeneous with the fuzzy C-means technique.</p>
 
 <p>The format of the SegmentImage method is:</p>
 
-<pre class="text">
-MagickBooleanType SegmentImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SegmentImage(Image *image,
   const ColorspaceType colorspace,const MagickBooleanType verbose,
   const double cluster_threshold,const double smooth_threshold)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 

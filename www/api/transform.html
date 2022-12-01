@@ -90,19 +90,42 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="transform.html#AutoOrientImage">AutoOrientImage</a></li>
+  <li><a href="transform.html#ChopImage">ChopImage</a></li>
+  <li><a href="transform.html#CropImage">CropImage</a></li>
+  <li><a href="transform.html#CropImageToTiles">CropImageToTiles</a></li>
+  <li><a href="transform.html#ExcerptImage">ExcerptImage</a></li>
+  <li><a href="transform.html#ExtentImage">ExtentImage</a></li>
+  <li><a href="transform.html#FlipImage">FlipImage</a></li>
+  <li><a href="transform.html#FlopImage">FlopImage</a></li>
+  <li><a href="transform.html#RollImage">RollImage</a></li>
+  <li><a href="transform.html#ShaveImage">ShaveImage</a></li>
+  <li><a href="transform.html#SpliceImage">SpliceImage</a></li>
+  <li><a href="transform.html#TransformImage">TransformImage</a></li>
+  <li><a href="transform.html#to CropImageToTiles">to CropImageToTiles</a></li>
+  <li><a href="transform.html#TransformImages">TransformImages</a></li>
+  <li><a href="transform.html#TransposeImage">TransposeImage</a></li>
+  <li><a href="transform.html#TransverseImage">TransverseImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="transform.html#AutoOrientImage">AutoOrientImage</a> &#8226; <a href="transform.html#ChopImage">ChopImage</a> &#8226; <a href="transform.html#CropImage">CropImage</a> &#8226; <a href="transform.html#CropImageToTiles">CropImageToTiles</a> &#8226; <a href="transform.html#ExcerptImage">ExcerptImage</a> &#8226; <a href="transform.html#ExtentImage">ExtentImage</a> &#8226; <a href="transform.html#FlipImage">FlipImage</a> &#8226; <a href="transform.html#FlopImage">FlopImage</a> &#8226; <a href="transform.html#RollImage">RollImage</a> &#8226; <a href="transform.html#ShaveImage">ShaveImage</a> &#8226; <a href="transform.html#SpliceImage">SpliceImage</a> &#8226; <a href="transform.html#TransformImage">TransformImage</a> &#8226; <a href="transform.html#to CropImageToTiles">to CropImageToTiles</a> &#8226; <a href="transform.html#TransformImages">TransformImages</a> &#8226; <a href="transform.html#TransposeImage">TransposeImage</a> &#8226; <a href="transform.html#TransverseImage">TransverseImage</a> &#8226; <a href="transform.html#TrimImage">TrimImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/transform_8c.html" id="AutoOrientImage">AutoOrientImage</a></h2>
 
 <p>AutoOrientImage() adjusts an image so that its orientation is suitable for viewing (i.e. top-left orientation).</p>
 
 <p>The format of the AutoOrientImage method is:</p>
 
-<pre class="text">
-Image *AutoOrientImage(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>Image *AutoOrientImage(const Image *image,
   const OrientationType orientation,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -130,10 +153,9 @@ Image *AutoOrientImage(const Image *image,
 
 <p>The format of the ChopImage method is:</p>
 
-<pre class="text">
-Image *ChopImage(const Image *image,const RectangleInfo *chop_info)
+<pre class="bg-light text-dark mx-4"><samp>Image *ChopImage(const Image *image,const RectangleInfo *chop_info)
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -161,10 +183,9 @@ Image *ChopImage(const Image *image,const RectangleInfo *chop_info)
 
 <p>The format of the CropImage method is:</p>
 
-<pre class="text">
-Image *CropImage(const Image *image,const RectangleInfo *geometry,
+<pre class="bg-light text-dark mx-4"><samp>Image *CropImage(const Image *image,const RectangleInfo *geometry,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -218,10 +239,9 @@ Image *CropImage(const Image *image,const RectangleInfo *geometry,
 
 <p>The format of the ExcerptImage method is:</p>
 
-<pre class="text">
-Image *ExcerptImage(const Image *image,const RectangleInfo *geometry,
+<pre class="bg-light text-dark mx-4"><samp>Image *ExcerptImage(const Image *image,const RectangleInfo *geometry,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -249,10 +269,9 @@ Image *ExcerptImage(const Image *image,const RectangleInfo *geometry,
 
 <p>The format of the ExtentImage method is:</p>
 
-<pre class="text">
-Image *ExtentImage(const Image *image,const RectangleInfo *geometry,
+<pre class="bg-light text-dark mx-4"><samp>Image *ExtentImage(const Image *image,const RectangleInfo *geometry,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -280,9 +299,8 @@ Image *ExtentImage(const Image *image,const RectangleInfo *geometry,
 
 <p>The format of the FlipImage method is:</p>
 
-<pre class="text">
-Image *FlipImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *FlipImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -306,9 +324,8 @@ Image *FlipImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the FlopImage method is:</p>
 
-<pre class="text">
-Image *FlopImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *FlopImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -332,10 +349,9 @@ Image *FlopImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the RollImage method is:</p>
 
-<pre class="text">
-Image *RollImage(const Image *image,const ssize_t x_offset,
+<pre class="bg-light text-dark mx-4"><samp>Image *RollImage(const Image *image,const ssize_t x_offset,
   const ssize_t y_offset,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -367,10 +383,9 @@ Image *RollImage(const Image *image,const ssize_t x_offset,
 
 <p>The format of the ShaveImage method is:</p>
 
-<pre class="text">
-Image *ShaveImage(const Image *image,const RectangleInfo *shave_info,
+<pre class="bg-light text-dark mx-4"><samp>Image *ShaveImage(const Image *image,const RectangleInfo *shave_info,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -402,10 +417,9 @@ Image *ShaveImage(const Image *image,const RectangleInfo *shave_info,
 
 <p>The format of the SpliceImage method is:</p>
 
-<pre class="text">
-Image *SpliceImage(const Image *image,const RectangleInfo *geometry,
+<pre class="bg-light text-dark mx-4"><samp>Image *SpliceImage(const Image *image,const RectangleInfo *geometry,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -435,10 +449,9 @@ Image *SpliceImage(const Image *image,const RectangleInfo *geometry,
 
 <p>The format of the TransformImage method is:</p>
 
-<pre class="text">
-MagickBooleanType TransformImage(Image **image,const char *crop_geometry,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType TransformImage(Image **image,const char *crop_geometry,
   const char *image_geometry)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -470,10 +483,9 @@ MagickBooleanType TransformImage(Image **image,const char *crop_geometry,
 
 <p>The format of the TransformImage method is:</p>
 
-<pre class="text">
-MagickBooleanType TransformImages(Image **image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType TransformImages(Image **image,
   const char *crop_geometry,const char *image_geometry)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -501,9 +513,8 @@ MagickBooleanType TransformImages(Image **image,
 
 <p>The format of the TransposeImage method is:</p>
 
-<pre class="text">
-Image *TransposeImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *TransposeImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -527,9 +538,8 @@ Image *TransposeImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the TransverseImage method is:</p>
 
-<pre class="text">
-Image *TransverseImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *TransverseImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -553,9 +563,8 @@ Image *TransverseImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the TrimImage method is:</p>
 
-<pre class="text">
-Image *TrimImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *TrimImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

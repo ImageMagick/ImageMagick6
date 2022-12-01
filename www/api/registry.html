@@ -90,19 +90,33 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="registry.html#DefineImageRegistry">DefineImageRegistry</a></li>
+  <li><a href="registry.html#DeleteImageRegistry">DeleteImageRegistry</a></li>
+  <li><a href="registry.html#GetImageRegistry">GetImageRegistry</a></li>
+  <li><a href="registry.html#GetNextImageRegistry">GetNextImageRegistry</a></li>
+  <li><a href="registry.html#RegistryComponentTerminus">RegistryComponentTerminus</a></li>
+  <li><a href="registry.html#RemoveImageRegistry">RemoveImageRegistry</a></li>
+  <li><a href="registry.html#ResetImageRegistryIterator">ResetImageRegistryIterator</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="registry.html#DefineImageRegistry">DefineImageRegistry</a> &#8226; <a href="registry.html#DeleteImageRegistry">DeleteImageRegistry</a> &#8226; <a href="registry.html#GetImageRegistry">GetImageRegistry</a> &#8226; <a href="registry.html#GetNextImageRegistry">GetNextImageRegistry</a> &#8226; <a href="registry.html#RegistryComponentTerminus">RegistryComponentTerminus</a> &#8226; <a href="registry.html#RemoveImageRegistry">RemoveImageRegistry</a> &#8226; <a href="registry.html#ResetImageRegistryIterator">ResetImageRegistryIterator</a> &#8226; <a href="registry.html#SetImageRegistry">SetImageRegistry</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/registry_8c.html" id="DefineImageRegistry">DefineImageRegistry</a></h2>
 
 <p>DefineImageRegistry() associates a key/value pair with the image registry.</p>
 
 <p>The format of the DefineImageRegistry method is:</p>
 
-<pre class="text">
-MagickBooleanType DefineImageRegistry(const RegistryType type,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DefineImageRegistry(const RegistryType type,
   const char *option,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -130,9 +144,8 @@ MagickBooleanType DefineImageRegistry(const RegistryType type,
 
 <p>The format of the DeleteImageRegistry method is:</p>
 
-<pre class="text">
-MagickBooleanType DeleteImageRegistry(const char *key)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DeleteImageRegistry(const char *key)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -152,10 +165,9 @@ MagickBooleanType DeleteImageRegistry(const char *key)
 
 <p>The format of the GetImageRegistry method is:</p>
 
-<pre class="text">
-void *GetImageRegistry(const RegistryType type,const char *key,
+<pre class="bg-light text-dark mx-4"><samp>void *GetImageRegistry(const RegistryType type,const char *key,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -183,9 +195,8 @@ void *GetImageRegistry(const RegistryType type,const char *key,
 
 <p>The format of the GetNextImageRegistry method is:</p>
 
-<pre class="text">
-char *GetNextImageRegistry(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>char *GetNextImageRegistry(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/registry_8c.html" id="RegistryComponentTerminus">RegistryComponentTerminus</a></h2>
 
@@ -193,9 +204,8 @@ char *GetNextImageRegistry(void)
 
 <p>The format of the DestroyDefines method is:</p>
 
-<pre class="text">
-void RegistryComponentTerminus(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void RegistryComponentTerminus(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/registry_8c.html" id="RemoveImageRegistry">RemoveImageRegistry</a></h2>
 
@@ -203,9 +213,8 @@ void RegistryComponentTerminus(void)
 
 <p>The format of the RemoveImageRegistry method is:</p>
 
-<pre class="text">
-void *RemoveImageRegistry(const char *key)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *RemoveImageRegistry(const char *key)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -225,9 +234,8 @@ void *RemoveImageRegistry(const char *key)
 
 <p>The format of the ResetImageRegistryIterator method is:</p>
 
-<pre class="text">
-ResetImageRegistryIterator(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ResetImageRegistryIterator(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/registry_8c.html" id="SetImageRegistry">SetImageRegistry</a></h2>
 
@@ -235,10 +243,9 @@ ResetImageRegistryIterator(void)
 
 <p>The format of the SetImageRegistry method is:</p>
 
-<pre class="text">
-MagickBooleanType SetImageRegistry(const RegistryType type,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetImageRegistry(const RegistryType type,
   const char *key,const void *value,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

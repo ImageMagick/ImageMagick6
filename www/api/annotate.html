@@ -90,18 +90,28 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="annotate.html#AnnotateImage">AnnotateImage</a></li>
+  <li><a href="annotate.html#FormatMagickCaption">FormatMagickCaption</a></li>
+  <li><a href="annotate.html#GetMultilineTypeMetrics">GetMultilineTypeMetrics</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="annotate.html#AnnotateImage">AnnotateImage</a> &#8226; <a href="annotate.html#FormatMagickCaption">FormatMagickCaption</a> &#8226; <a href="annotate.html#GetMultilineTypeMetrics">GetMultilineTypeMetrics</a> &#8226; <a href="annotate.html#GetTypeMetrics">GetTypeMetrics</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/annotate_8c.html" id="AnnotateImage">AnnotateImage</a></h2>
 
 <p>AnnotateImage() annotates an image with text.</p>
 
 <p>The format of the AnnotateImage method is:</p>
 
-<pre class="text">
-MagickBooleanType AnnotateImage(Image *image,DrawInfo *draw_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType AnnotateImage(Image *image,DrawInfo *draw_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -125,10 +135,9 @@ MagickBooleanType AnnotateImage(Image *image,DrawInfo *draw_info)
 
 <p>The format of the FormatMagickCaption method is:</p>
 
-<pre class="text">
-ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
   const MagickBooleanType split,TypeMetric *metrics,char **caption)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 
@@ -151,8 +160,7 @@ ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
 
 <p>GetMultilineTypeMetrics() returns the following information for the specified font and text:</p>
 
-<pre class="text">
-    character width
+<pre class="bg-light text-dark mx-4"><samp>    character width
     character height
     ascender
     descender
@@ -167,16 +175,15 @@ ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
     origin: y
     underline position
     underline thickness
-</pre>
+</samp></pre>
 
 <p>This method is like GetTypeMetrics() but it returns the maximum text width and height for multiple lines of text.</p>
 
 <p>The format of the GetMultilineTypeMetrics method is:</p>
 
-<pre class="text">
-MagickBooleanType GetMultilineTypeMetrics(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetMultilineTypeMetrics(Image *image,
   const DrawInfo *draw_info,TypeMetric *metrics)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -202,8 +209,7 @@ MagickBooleanType GetMultilineTypeMetrics(Image *image,
 
 <p>GetTypeMetrics() returns the following information for the specified font and text:</p>
 
-<pre class="text">
-    character width
+<pre class="bg-light text-dark mx-4"><samp>    character width
     character height
     ascender
     descender
@@ -218,14 +224,13 @@ MagickBooleanType GetMultilineTypeMetrics(Image *image,
     origin: y
     underline position
     underline thickness
-</pre>
+</samp></pre>
 
 <p>The format of the GetTypeMetrics method is:</p>
 
-<pre class="text">
-MagickBooleanType GetTypeMetrics(Image *image,const DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetTypeMetrics(Image *image,const DrawInfo *draw_info,
   TypeMetric *metrics)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

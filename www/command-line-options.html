@@ -1130,7 +1130,7 @@ operation. </p>
 
 <p class="magick-description">Clip along a named path from the 8BIM profile.</p>
 
-<p>This is identical to <a href="command-line-options.html#clip">-clip</a> except choose a specific clip path in the event the image has more than one path available. </p>
+<p>This is identical to <a href="command-line-options.html#clip">-clip</a> except choose a specific clip path in the event the image has more than one path available. ImageMagick supports UTF-8 encoding.  If your named path is in a different encoding, use `iconv` to convert the clip path name to that encoding otherwise the path name will not match.</p>
 
 <p>Use <a href="command-line-options.html#clip-path">+clip-path</a> to disable clipping for subsequent operations.</p>
 
@@ -2642,7 +2642,10 @@ a <code>rectangle</code> followed by the width and height of the rounded corners
 to be removed.</p>
 
 <p>The <code>circle</code> primitive makes a disk (filled) or circle (unfilled).
-Give the center and any point on the perimeter (boundary).</p>
+Give the center and any point on the perimeter (boundary). Note, by using a translation, you can remove the need to calculate the circles edge coordinate, but can just give the radius directly:</p>
+
+<pre class="bg-light text-dark mx-4"><samp>magick -size 100x60 xc: -stroke SeaGreen  -fill PaleGreen -strokewidth 2 -draw 'translate 50,30 circle 0,0 25,0' circle.gif</samp></pre>
+</p>
 
 <p>The <code>arc</code> primitive is used to inscribe an elliptical segment in
 to a given rectangle. An <code>arc</code> requires the two corners used for
@@ -7477,4 +7480,4 @@ but with strict boolean masking. </p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 25th November 2022 21:53 -->
+<!-- Magick Cache 1st December 2022 01:22 -->

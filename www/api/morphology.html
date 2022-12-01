@@ -90,9 +90,26 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="morphology.html#AcquireKernelInfo">AcquireKernelInfo</a></li>
+  <li><a href="morphology.html#CloneKernelInfo">CloneKernelInfo</a></li>
+  <li><a href="morphology.html#DestroyKernelInfo">DestroyKernelInfo</a></li>
+  <li><a href="morphology.html#MorphologyApply">MorphologyApply</a></li>
+  <li><a href="morphology.html#MorphologyImageChannel">MorphologyImageChannel</a></li>
+  <li><a href="morphology.html#ScaleGeometryKernelInfo">ScaleGeometryKernelInfo</a></li>
+  <li><a href="morphology.html#ScaleKernelInfo">ScaleKernelInfo</a></li>
+  <li><a href="morphology.html#ShowKernelInfo">ShowKernelInfo</a></li>
+  <li><a href="morphology.html#UnityAddKernelInfo">UnityAddKernelInfo</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="morphology.html#AcquireKernelInfo">AcquireKernelInfo</a> &#8226; <a href="morphology.html#CloneKernelInfo">CloneKernelInfo</a> &#8226; <a href="morphology.html#DestroyKernelInfo">DestroyKernelInfo</a> &#8226; <a href="morphology.html#MorphologyApply">MorphologyApply</a> &#8226; <a href="morphology.html#MorphologyImageChannel">MorphologyImageChannel</a> &#8226; <a href="morphology.html#ScaleGeometryKernelInfo">ScaleGeometryKernelInfo</a> &#8226; <a href="morphology.html#ScaleKernelInfo">ScaleKernelInfo</a> &#8226; <a href="morphology.html#ShowKernelInfo">ShowKernelInfo</a> &#8226; <a href="morphology.html#UnityAddKernelInfo">UnityAddKernelInfo</a> &#8226; <a href="morphology.html#ZeroKernelNans">ZeroKernelNans</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/morphology_8c.html" id="AcquireKernelInfo">AcquireKernelInfo</a></h2>
 
 <p>AcquireKernelInfo() takes the given string (generally supplied by the user) and converts it into a Morphology/Convolution Kernel.  This allows users to specify a kernel from a number of pre-defined kernels, or to fully specify their own kernel for a specific Convolution or Morphology Operation.</p>
@@ -105,7 +122,7 @@
 
 <p>The returned kernel should be freed using the DestroyKernelInfo method when you are finished with it.  Do not free this memory yourself.</p>
 
-<p>Input kernel defintion strings can consist of any of three types.</p>
+<p>Input kernel definition strings can consist of any of three types.</p>
 
 <p>"name:args[[@&gt;&lt;]" Select from one of the built in kernels, using the name and geometry arguments supplied.  See AcquireKernelBuiltIn()</p>
 
@@ -117,17 +134,16 @@
 
 <p>" kernel ; kernel ; kernel ; "</p>
 
-<p>Any extra ';' characters, at start, end or between kernel defintions are simply ignored.</p>
+<p>Any extra ';' characters, at start, end or between kernel definitions are simply ignored.</p>
 
-<p>The special flags will expand a single kernel, into a list of rotated kernels. A '@' flag will expand a 3x3 kernel into a list of 45-degree cyclic rotations, while a '&gt;' will generate a list of 90-degree rotations. The '&lt;' also exands using 90-degree rotates, but giving a 180-degree reflected kernel before the +/- 90-degree rotations, which can be important for Thinning operations.</p>
+<p>The special flags will expand a single kernel, into a list of rotated kernels. A '@' flag will expand a 3x3 kernel into a list of 45-degree cyclic rotations, while a '&gt;' will generate a list of 90-degree rotations. The '&lt;' also expands using 90-degree rotates, but giving a 180-degree reflected kernel before the +/- 90-degree rotations, which can be important for Thinning operations.</p>
 
 <p>Note that 'name' kernels will start with an alphabetic character while the new kernel specification has a ':' character in its specification string. If neither is the case, it is assumed an old style of a simple list of numbers generating a odd-sized square kernel has been given.</p>
 
-<p>The format of the AcquireKernal method is:</p>
+<p>The format of the AcquireKernel method is:</p>
 
-<pre class="text">
-KernelInfo *AcquireKernelInfo(const char *kernel_string)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>KernelInfo *AcquireKernelInfo(const char *kernel_string)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -143,13 +159,12 @@ KernelInfo *AcquireKernelInfo(const char *kernel_string)
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/morphology_8c.html" id="CloneKernelInfo">CloneKernelInfo</a></h2>
 
-<p>CloneKernelInfo() creates a new clone of the given Kernel List so that its can be modified without effecting the original.  The cloned kernel should be destroyed using DestoryKernelInfo() when no longer needed.</p>
+<p>CloneKernelInfo() creates a new clone of the given Kernel List so that its can be modified without effecting the original.  The cloned kernel should be destroyed using DestroyKernelInfo() when no longer needed.</p>
 
 <p>The format of the CloneKernelInfo method is:</p>
 
-<pre class="text">
-KernelInfo *CloneKernelInfo(const KernelInfo *kernel)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>KernelInfo *CloneKernelInfo(const KernelInfo *kernel)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -169,9 +184,8 @@ KernelInfo *CloneKernelInfo(const KernelInfo *kernel)
 
 <p>The format of the DestroyKernelInfo method is:</p>
 
-<pre class="text">
-KernelInfo *DestroyKernelInfo(KernelInfo *kernel)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>KernelInfo *DestroyKernelInfo(KernelInfo *kernel)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -193,16 +207,15 @@ KernelInfo *DestroyKernelInfo(KernelInfo *kernel)
 
 <p>It is MorphologyImage() task to extract any such user controls, and pass them to this function for processing.</p>
 
-<p>More specifically all given kernels should already be scaled, normalised, and blended appropriatally before being parred to this routine. The appropriate bias, and compose (typically 'UndefinedComposeOp') given.</p>
+<p>More specifically all given kernels should already be scaled, normalised, and blended appropriately before being parred to this routine. The appropriate bias, and compose (typically 'UndefinedComposeOp') given.</p>
 
 <p>The format of the MorphologyApply method is:</p>
 
-<pre class="text">
-Image *MorphologyApply(const Image *image,MorphologyMethod method,
+<pre class="bg-light text-dark mx-4"><samp>Image *MorphologyApply(const Image *image,MorphologyMethod method,
   const ChannelType channel, const ssize_t iterations,
   const KernelInfo *kernel, const CompositeMethod compose,
   const double bias, ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -258,10 +271,9 @@ Image *MorphologyApply(const Image *image,MorphologyMethod method,
 
 <p>The format of the MorphologyImage method is:</p>
 
-<pre class="text">
-Image *MorphologyImage(const Image *image,MorphologyMethod method,
+<pre class="bg-light text-dark mx-4"><samp>Image *MorphologyImage(const Image *image,MorphologyMethod method,
   const ssize_t iterations,KernelInfo *kernel,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>Image *MorphologyImageChannel(const Image *image, const ChannelType channel,MorphologyMethod method,const ssize_t iterations, KernelInfo *kernel,ExceptionInfo *exception)</p>
 
@@ -301,14 +313,13 @@ Image *MorphologyImage(const Image *image,MorphologyMethod method,
 
 <p>ScaleGeometryKernelInfo() takes a geometry argument string, typically provided as a  "-set option:convolve:scale {geometry}" user setting, and modifies the kernel according to the parsed arguments of that setting.</p>
 
-<p>The first argument (and any normalization flags) are passed to ScaleKernelInfo() to scale/normalize the kernel.  The second argument is then passed to UnityAddKernelInfo() to add a scled unity kernel into the scaled/normalized kernel.</p>
+<p>The first argument (and any normalization flags) are passed to ScaleKernelInfo() to scale/normalize the kernel.  The second argument is then passed to UnityAddKernelInfo() to add a scaled unity kernel into the scaled/normalized kernel.</p>
 
 <p>The format of the ScaleGeometryKernelInfo method is:</p>
 
-<pre class="text">
-void ScaleGeometryKernelInfo(KernelInfo *kernel,
+<pre class="bg-light text-dark mx-4"><samp>void ScaleGeometryKernelInfo(KernelInfo *kernel,
   const double scaling_factor,const MagickStatusType normalize_flags)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -322,9 +333,8 @@ void ScaleGeometryKernelInfo(KernelInfo *kernel,
 
 <dd> o geometry: </dd>
 
-<pre class="text">
-       "-set option:convolve:scale {geometry}" setting.
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>       "-set option:convolve:scale {geometry}" setting.
+</samp></pre>
 
 <p></dd>
 </dl>
@@ -342,9 +352,9 @@ void ScaleGeometryKernelInfo(KernelInfo *kernel,
 
 <p>For Kernels that contain some negative values, (such as 'Sharpen' kernels) the kernel will be scaled by the absolute of the sum of kernel values, so that it will generally fall within the +/- 1.0 range.</p>
 
-<p>For kernels whose values sum to zero, (such as 'Laplician' kernels) kernel will be scaled by just the sum of the postive values, so that its output range will again fall into the  +/- 1.0 range.</p>
+<p>For kernels whose values sum to zero, (such as 'Laplacian' kernels) kernel will be scaled by just the sum of the positive values, so that its output range will again fall into the  +/- 1.0 range.</p>
 
-<p>For special kernels designed for locating shapes using 'Correlate', (often only containing +1 and -1 values, representing foreground/brackground matching) a special normalization method is provided to scale the positive values separately to those of the negative values, so the kernel will be forced to become a zero-sum kernel better suited to such searches.</p>
+<p>For special kernels designed for locating shapes using 'Correlate', (often only containing +1 and -1 values, representing foreground/background matching) a special normalization method is provided to scale the positive values separately to those of the negative values, so the kernel will be forced to become a zero-sum kernel better suited to such searches.</p>
 
 <p>WARNING: Correct normalization of the kernel assumes that the '*_range' attributes within the kernel structure have been correctly set during the kernels creation.</p>
 
@@ -352,10 +362,9 @@ void ScaleGeometryKernelInfo(KernelInfo *kernel,
 
 <p>The format of the ScaleKernelInfo method is:</p>
 
-<pre class="text">
-void ScaleKernelInfo(KernelInfo *kernel, const double scaling_factor,
+<pre class="bg-light text-dark mx-4"><samp>void ScaleKernelInfo(KernelInfo *kernel, const double scaling_factor,
          const MagickStatusType normalize_flags )
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -369,16 +378,14 @@ void ScaleKernelInfo(KernelInfo *kernel, const double scaling_factor,
 
 <dd> o scaling_factor: </dd>
 
-<pre class="text">
-       zero.  If the kernel is normalized regardless of any flags.
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>       zero.  If the kernel is normalized regardless of any flags.
+</samp></pre>
 
 <p>o normalize_flags: </dd>
 
-<pre class="text">
-       specifically: NormalizeValue, CorrelateNormalizeValue,
+<pre class="bg-light text-dark mx-4"><samp>       specifically: NormalizeValue, CorrelateNormalizeValue,
                      and/or PercentValue
-</pre>
+</samp></pre>
 
 <p></dd>
 </dl>
@@ -388,9 +395,8 @@ void ScaleKernelInfo(KernelInfo *kernel, const double scaling_factor,
 
 <p>The format of the ShowKernelInfo method is:</p>
 
-<pre class="text">
-void ShowKernelInfo(const KernelInfo *kernel)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void ShowKernelInfo(const KernelInfo *kernel)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -412,9 +418,8 @@ void ShowKernelInfo(const KernelInfo *kernel)
 
 <p>The format of the UnityAdditionKernelInfo method is:</p>
 
-<pre class="text">
-void UnityAdditionKernelInfo(KernelInfo *kernel, const double scale )
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void UnityAdditionKernelInfo(KernelInfo *kernel, const double scale )
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -428,9 +433,8 @@ void UnityAdditionKernelInfo(KernelInfo *kernel, const double scale )
 
 <dd> o scale: </dd>
 
-<pre class="text">
-       the given kernel.
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>       the given kernel.
+</samp></pre>
 
 <p></dd>
 </dl>
@@ -440,9 +444,8 @@ void UnityAdditionKernelInfo(KernelInfo *kernel, const double scale )
 
 <p>The format of the ZeroKernelNans method is:</p>
 
-<pre class="text">
-void ZeroKernelNans (KernelInfo *kernel)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void ZeroKernelNans (KernelInfo *kernel)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

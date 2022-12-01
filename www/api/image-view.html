@@ -90,18 +90,43 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="image-view.html#CloneImageView">CloneImageView</a></li>
+  <li><a href="image-view.html#DestroyImageView">DestroyImageView</a></li>
+  <li><a href="image-view.html#DuplexTransferImageViewIterator">DuplexTransferImageViewIterator</a></li>
+  <li><a href="image-view.html#GetImageViewAuthenticIndexes">GetImageViewAuthenticIndexes</a></li>
+  <li><a href="image-view.html#GetImageViewAuthenticPixels">GetImageViewAuthenticPixels</a></li>
+  <li><a href="image-view.html#GetImageViewException">GetImageViewException</a></li>
+  <li><a href="image-view.html#GetImageViewExtent">GetImageViewExtent</a></li>
+  <li><a href="image-view.html#GetImageViewImage">GetImageViewImage</a></li>
+  <li><a href="image-view.html#GetImageViewIterator">GetImageViewIterator</a></li>
+  <li><a href="image-view.html#GetImageViewVirtualIndexes">GetImageViewVirtualIndexes</a></li>
+  <li><a href="image-view.html#GetImageViewVirtualPixels">GetImageViewVirtualPixels</a></li>
+  <li><a href="image-view.html#IsImageView">IsImageView</a></li>
+  <li><a href="image-view.html#NewImageView">NewImageView</a></li>
+  <li><a href="image-view.html#NewImageViewRegion">NewImageViewRegion</a></li>
+  <li><a href="image-view.html#SetImageViewDescription">SetImageViewDescription</a></li>
+  <li><a href="image-view.html#SetImageViewIterator">SetImageViewIterator</a></li>
+  <li><a href="image-view.html#SetImageViewThreads">SetImageViewThreads</a></li>
+  <li><a href="image-view.html#TransferImageViewIterator">TransferImageViewIterator</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="image-view.html#CloneImageView">CloneImageView</a> &#8226; <a href="image-view.html#DestroyImageView">DestroyImageView</a> &#8226; <a href="image-view.html#DuplexTransferImageViewIterator">DuplexTransferImageViewIterator</a> &#8226; <a href="image-view.html#GetImageViewAuthenticIndexes">GetImageViewAuthenticIndexes</a> &#8226; <a href="image-view.html#GetImageViewAuthenticPixels">GetImageViewAuthenticPixels</a> &#8226; <a href="image-view.html#GetImageViewException">GetImageViewException</a> &#8226; <a href="image-view.html#GetImageViewExtent">GetImageViewExtent</a> &#8226; <a href="image-view.html#GetImageViewImage">GetImageViewImage</a> &#8226; <a href="image-view.html#GetImageViewIterator">GetImageViewIterator</a> &#8226; <a href="image-view.html#GetImageViewVirtualIndexes">GetImageViewVirtualIndexes</a> &#8226; <a href="image-view.html#GetImageViewVirtualPixels">GetImageViewVirtualPixels</a> &#8226; <a href="image-view.html#IsImageView">IsImageView</a> &#8226; <a href="image-view.html#NewImageView">NewImageView</a> &#8226; <a href="image-view.html#NewImageViewRegion">NewImageViewRegion</a> &#8226; <a href="image-view.html#SetImageViewDescription">SetImageViewDescription</a> &#8226; <a href="image-view.html#SetImageViewIterator">SetImageViewIterator</a> &#8226; <a href="image-view.html#SetImageViewThreads">SetImageViewThreads</a> &#8226; <a href="image-view.html#TransferImageViewIterator">TransferImageViewIterator</a> &#8226; <a href="image-view.html#UpdateImageViewIterator">UpdateImageViewIterator</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="CloneImageView">CloneImageView</a></h2>
 
 <p>CloneImageView() makes a copy of the specified image view.</p>
 
 <p>The format of the CloneImageView method is:</p>
 
-<pre class="text">
-ImageView *CloneImageView(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ImageView *CloneImageView(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -121,9 +146,8 @@ ImageView *CloneImageView(const ImageView *image_view)
 
 <p>The format of the DestroyImageView method is:</p>
 
-<pre class="text">
-ImageView *DestroyImageView(ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ImageView *DestroyImageView(ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -143,27 +167,24 @@ ImageView *DestroyImageView(ImageView *image_view)
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType DuplexTransferImageViewMethod(const ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DuplexTransferImageViewMethod(const ImageView *source,
   const ImageView *duplex,ImageView *destination,const ssize_t y,
   const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback transfer method that must be executed by a single thread at a time.</p>
 
 <p>The format of the DuplexTransferImageViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType DuplexTransferImageViewIterator(ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DuplexTransferImageViewIterator(ImageView *source,
   ImageView *duplex,ImageView *destination,
   DuplexTransferImageViewMethod transfer,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -199,9 +220,8 @@ MagickBooleanType DuplexTransferImageViewIterator(ImageView *source,
 
 <p>The format of the GetImageViewAuthenticPixels method is:</p>
 
-<pre class="text">
-IndexPacket *GetImageViewAuthenticIndexes(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>IndexPacket *GetImageViewAuthenticIndexes(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -221,9 +241,8 @@ IndexPacket *GetImageViewAuthenticIndexes(const ImageView *image_view)
 
 <p>The format of the GetImageViewAuthenticPixels method is:</p>
 
-<pre class="text">
-PixelPacket *GetImageViewAuthenticPixels(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *GetImageViewAuthenticPixels(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -243,10 +262,9 @@ PixelPacket *GetImageViewAuthenticPixels(const ImageView *image_view)
 
 <p>The format of the GetImageViewException method is:</p>
 
-<pre class="text">
-char *GetImageViewException(const PixelImage *image_view,
+<pre class="bg-light text-dark mx-4"><samp>char *GetImageViewException(const PixelImage *image_view,
   ExceptionType *severity)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -270,9 +288,8 @@ char *GetImageViewException(const PixelImage *image_view,
 
 <p>The format of the GetImageViewExtent method is:</p>
 
-<pre class="text">
-RectangleInfo GetImageViewExtent(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>RectangleInfo GetImageViewExtent(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -292,9 +309,8 @@ RectangleInfo GetImageViewExtent(const ImageView *image_view)
 
 <p>The format of the GetImageViewImage method is:</p>
 
-<pre class="text">
-MagickCore *GetImageViewImage(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickCore *GetImageViewImage(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -314,25 +330,22 @@ MagickCore *GetImageViewImage(const ImageView *image_view)
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageViewMethod(const ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageViewMethod(const ImageView *source,
   const ssize_t y,const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback get method that must be executed by a single thread at a time.</p>
 
 <p>The format of the GetImageViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageViewIterator(ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageViewIterator(ImageView *source,
   GetImageViewMethod get,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -360,10 +373,9 @@ MagickBooleanType GetImageViewIterator(ImageView *source,
 
 <p>The format of the GetImageViewVirtualIndexes method is:</p>
 
-<pre class="text">
-const IndexPacket *GetImageViewVirtualIndexes(
+<pre class="bg-light text-dark mx-4"><samp>const IndexPacket *GetImageViewVirtualIndexes(
   const ImageView *image_view)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -383,9 +395,8 @@ const IndexPacket *GetImageViewVirtualIndexes(
 
 <p>The format of the GetImageViewVirtualPixels method is:</p>
 
-<pre class="text">
-const PixelPacket *GetImageViewVirtualPixels(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>const PixelPacket *GetImageViewVirtualPixels(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -405,9 +416,8 @@ const PixelPacket *GetImageViewVirtualPixels(const ImageView *image_view)
 
 <p>The format of the IsImageView method is:</p>
 
-<pre class="text">
-MagickBooleanType IsImageView(const ImageView *image_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IsImageView(const ImageView *image_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -427,9 +437,8 @@ MagickBooleanType IsImageView(const ImageView *image_view)
 
 <p>The format of the NewImageView method is:</p>
 
-<pre class="text">
-ImageView *NewImageView(MagickCore *wand)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ImageView *NewImageView(MagickCore *wand)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -449,10 +458,9 @@ ImageView *NewImageView(MagickCore *wand)
 
 <p>The format of the NewImageViewRegion method is:</p>
 
-<pre class="text">
-ImageView *NewImageViewRegion(MagickCore *wand,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>ImageView *NewImageViewRegion(MagickCore *wand,const ssize_t x,
   const ssize_t y,const size_t width,const size_t height)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -476,10 +484,9 @@ ImageView *NewImageViewRegion(MagickCore *wand,const ssize_t x,
 
 <p>The format of the SetImageViewDescription method is:</p>
 
-<pre class="text">
-void SetImageViewDescription(ImageView *image_view,
+<pre class="bg-light text-dark mx-4"><samp>void SetImageViewDescription(ImageView *image_view,
   const char *description)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -499,29 +506,26 @@ void SetImageViewDescription(ImageView *image_view,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/image-view_8c.html" id="SetImageViewIterator">SetImageViewIterator</a></h2>
 
-<p>SetImageViewIterator() iterates over the image view in parallel and calls your set method for each scanline of the view.  The pixel extent is confined to the image canvas-- that is no negative offsets or widths or heights that exceed the image dimension.  The pixels are initiallly undefined and any settings you make in the callback method are automagically synced back to your image.</p>
+<p>SetImageViewIterator() iterates over the image view in parallel and calls your set method for each scanline of the view.  The pixel extent is confined to the image canvas-- that is no negative offsets or widths or heights that exceed the image dimension.  The pixels are initially undefined and any settings you make in the callback method are automagically synced back to your image.</p>
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType SetImageViewMethod(ImageView *destination,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetImageViewMethod(ImageView *destination,
   const ssize_t y,const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback set method that must be executed by a single thread at a time.</p>
 
 <p>The format of the SetImageViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType SetImageViewIterator(ImageView *destination,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetImageViewIterator(ImageView *destination,
   SetImageViewMethod set,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -549,10 +553,9 @@ MagickBooleanType SetImageViewIterator(ImageView *destination,
 
 <p>The format of the SetImageViewDescription method is:</p>
 
-<pre class="text">
-void SetImageViewThreads(ImageView *image_view,
+<pre class="bg-light text-dark mx-4"><samp>void SetImageViewThreads(ImageView *image_view,
   const size_t number_threads)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -576,26 +579,23 @@ void SetImageViewThreads(ImageView *image_view,
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType TransferImageViewMethod(const ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType TransferImageViewMethod(const ImageView *source,
   ImageView *destination,const ssize_t y,const int thread_id,
   void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback transfer method that must be executed by a single thread at a time.</p>
 
 <p>The format of the TransferImageViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType TransferImageViewIterator(ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType TransferImageViewIterator(ImageView *source,
   ImageView *destination,TransferImageViewMethod transfer,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -627,25 +627,22 @@ MagickBooleanType TransferImageViewIterator(ImageView *source,
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType UpdateImageViewMethod(ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType UpdateImageViewMethod(ImageView *source,
   const ssize_t y,const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback update method that must be executed by a single thread at a time.</p>
 
 <p>The format of the UpdateImageViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType UpdateImageViewIterator(ImageView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType UpdateImageViewIterator(ImageView *source,
   UpdateImageViewMethod update,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

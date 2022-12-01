@@ -90,19 +90,35 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="color.html#AcquireColorCache">AcquireColorCache</a></li>
+  <li><a href="color.html#GetColorInfoList">GetColorInfoList</a></li>
+  <li><a href="color.html#GetColorList">GetColorList</a></li>
+  <li><a href="color.html#ListColorInfo">ListColorInfo</a></li>
+  <li><a href="color.html#QueryColorCompliance">QueryColorCompliance</a></li>
+  <li><a href="color.html#QueryColorDatabase">QueryColorDatabase</a></li>
+  <li><a href="color.html#QueryColorname">QueryColorname</a></li>
+  <li><a href="color.html#QueryMagickColorCompliance">QueryMagickColorCompliance</a></li>
+  <li><a href="color.html#QueryMagickColor">QueryMagickColor</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="color.html#AcquireColorCache">AcquireColorCache</a> &#8226; <a href="color.html#GetColorInfoList">GetColorInfoList</a> &#8226; <a href="color.html#GetColorList">GetColorList</a> &#8226; <a href="color.html#ListColorInfo">ListColorInfo</a> &#8226; <a href="color.html#QueryColorCompliance">QueryColorCompliance</a> &#8226; <a href="color.html#QueryColorDatabase">QueryColorDatabase</a> &#8226; <a href="color.html#QueryColorname">QueryColorname</a> &#8226; <a href="color.html#QueryMagickColorCompliance">QueryMagickColorCompliance</a> &#8226; <a href="color.html#QueryMagickColor">QueryMagickColor</a> &#8226; <a href="color.html#QueryMagickColorname">QueryMagickColorname</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/color_8c.html" id="AcquireColorCache">AcquireColorCache</a></h2>
 
 <p>AcquireColorCache() caches one or more color configurations which provides a mapping between color attributes and a color name.</p>
 
 <p>The format of the AcquireColorCache method is:</p>
 
-<pre class="text">
-LinkedListInfo *AcquireColorCache(const char *filename,
+<pre class="bg-light text-dark mx-4"><samp>LinkedListInfo *AcquireColorCache(const char *filename,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -126,10 +142,9 @@ LinkedListInfo *AcquireColorCache(const char *filename,
 
 <p>The format of the GetColorInfoList function is:</p>
 
-<pre class="text">
-const ColorInfo **GetColorInfoList(const char *pattern,
+<pre class="bg-light text-dark mx-4"><samp>const ColorInfo **GetColorInfoList(const char *pattern,
   size_t *number_colors,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -157,10 +172,9 @@ const ColorInfo **GetColorInfoList(const char *pattern,
 
 <p>The format of the GetColorList function is:</p>
 
-<pre class="text">
-char **GetColorList(const char *pattern,size_t *number_colors,
+<pre class="bg-light text-dark mx-4"><samp>char **GetColorList(const char *pattern,size_t *number_colors,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -188,9 +202,8 @@ char **GetColorList(const char *pattern,size_t *number_colors,
 
 <p>The format of the ListColorInfo method is:</p>
 
-<pre class="text">
-MagickBooleanType ListColorInfo(FILE *file,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ListColorInfo(FILE *file,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 
@@ -206,11 +219,10 @@ MagickBooleanType ListColorInfo(FILE *file,ExceptionInfo *exception)
 
 <p>The format of the QueryColorCompliance method is:</p>
 
-<pre class="text">
-MagickBooleanType QueryColorCompliance(const char *name,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QueryColorCompliance(const char *name,
   const ComplianceType compliance,PixelPacket *color,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -242,10 +254,9 @@ MagickBooleanType QueryColorCompliance(const char *name,
 
 <p>The format of the QueryColorDatabase method is:</p>
 
-<pre class="text">
-MagickBooleanType QueryColorDatabase(const char *name,PixelPacket *color,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QueryColorDatabase(const char *name,PixelPacket *color,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -273,11 +284,10 @@ MagickBooleanType QueryColorDatabase(const char *name,PixelPacket *color,
 
 <p>The format of the QueryColorname method is:</p>
 
-<pre class="text">
-MagickBooleanType QueryColorname(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QueryColorname(const Image *image,
   const PixelPacket *color,const ComplianceType compliance,char *name,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 
@@ -302,11 +312,10 @@ MagickBooleanType QueryColorname(const Image *image,
 
 <p>The format of the QueryMagickColor method is:</p>
 
-<pre class="text">
-MagickBooleanType QueryMagickColorCompiliance(const char *name,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QueryMagickColorCompiliance(const char *name,
   const ComplianceType compliance,MagickPixelPacket *color,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -338,10 +347,9 @@ MagickBooleanType QueryMagickColorCompiliance(const char *name,
 
 <p>The format of the QueryMagickColor method is:</p>
 
-<pre class="text">
-MagickBooleanType QueryMagickColor(const char *name,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QueryMagickColor(const char *name,
   MagickPixelPacket *color,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -369,11 +377,10 @@ MagickBooleanType QueryMagickColor(const char *name,
 
 <p>The format of the QueryMagickColorname method is:</p>
 
-<pre class="text">
-MagickBooleanType QueryMagickColorname(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QueryMagickColorname(const Image *image,
   const PixelPacket *color,const ComplianceType compliance,char *name,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 

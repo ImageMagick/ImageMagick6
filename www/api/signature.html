@@ -90,18 +90,25 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="signature.html#SignatureImage">SignatureImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/signature_8c.html" id="SignatureImage">SignatureImage</a></h2>
 
 <p>SignatureImage() computes a message digest from an image pixel stream with an implementation of the NIST SHA-256 Message Digest algorithm.  This signature uniquely identifies the image and is convenient for determining if an image has been modified or whether two images are identical.</p>
 
 <p>The format of the SignatureImage method is:</p>
 
-<pre class="text">
-MagickBooleanType SignatureImage(Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SignatureImage(Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

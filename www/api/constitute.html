@@ -90,24 +90,36 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="constitute.html#ConstituteImage">ConstituteImage</a></li>
+  <li><a href="constitute.html#PingImage">PingImage</a></li>
+  <li><a href="constitute.html#PingImages">PingImages</a></li>
+  <li><a href="constitute.html#ReadImage">ReadImage</a></li>
+  <li><a href="constitute.html#ReadImages">ReadImages</a></li>
+  <li><a href="constitute.html#WriteImage">WriteImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="constitute.html#ConstituteImage">ConstituteImage</a> &#8226; <a href="constitute.html#PingImage">PingImage</a> &#8226; <a href="constitute.html#PingImages">PingImages</a> &#8226; <a href="constitute.html#ReadImage">ReadImage</a> &#8226; <a href="constitute.html#ReadImages">ReadImages</a> &#8226; <a href="constitute.html#WriteImage">WriteImage</a> &#8226; <a href="constitute.html#WriteImages">WriteImages</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/constitute_8c.html" id="ConstituteImage">ConstituteImage</a></h2>
 
 <p>ConstituteImage() returns an image from the pixel data you supply. The pixel data must be in scanline order top-to-bottom.  The data can be char, short int, int, float, or double.  Float and double require the pixels to be normalized [0..1], otherwise [0..QuantumRange].  For example, to create a 640x480 image from unsigned red-green-blue character data, use:</p>
 
-<pre class="text">
-image = ConstituteImage(640,480,"RGB",CharPixel,pixels,&amp;exception);
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>image = ConstituteImage(640,480,"RGB",CharPixel,pixels,&amp;exception);
+</samp></pre>
 
 <p>The format of the ConstituteImage method is:</p>
 
-<pre class="text">
-Image *ConstituteImage(const size_t columns,const size_t rows,
+<pre class="bg-light text-dark mx-4"><samp>Image *ConstituteImage(const size_t columns,const size_t rows,
   const char *map,const StorageType storage,const void *pixels,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -147,9 +159,8 @@ Image *ConstituteImage(const size_t columns,const size_t rows,
 
 <p>The format of the PingImage method is:</p>
 
-<pre class="text">
-Image *PingImage(const ImageInfo *image_info,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *PingImage(const ImageInfo *image_info,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -173,9 +184,8 @@ Image *PingImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
 <p>The format of the PingImage method is:</p>
 
-<pre class="text">
-Image *PingImages(const ImageInfo *image_info,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *PingImages(const ImageInfo *image_info,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -199,9 +209,8 @@ Image *PingImages(const ImageInfo *image_info,ExceptionInfo *exception)
 
 <p>The format of the ReadImage method is:</p>
 
-<pre class="text">
-Image *ReadImage(const ImageInfo *image_info,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *ReadImage(const ImageInfo *image_info,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -225,9 +234,8 @@ Image *ReadImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
 <p>The format of the ReadImage method is:</p>
 
-<pre class="text">
-Image *ReadImages(const ImageInfo *image_info,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *ReadImages(const ImageInfo *image_info,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -251,9 +259,8 @@ Image *ReadImages(const ImageInfo *image_info,ExceptionInfo *exception)
 
 <p>The format of the WriteImage method is:</p>
 
-<pre class="text">
-MagickBooleanType WriteImage(const ImageInfo *image_info,Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType WriteImage(const ImageInfo *image_info,Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -277,10 +284,9 @@ MagickBooleanType WriteImage(const ImageInfo *image_info,Image *image)
 
 <p>The format of the WriteImages method is:</p>
 
-<pre class="text">
-MagickBooleanType WriteImages(const ImageInfo *image_info,Image *images,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType WriteImages(const ImageInfo *image_info,Image *images,
   const char *filename,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

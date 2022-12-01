@@ -90,20 +90,36 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="attribute.html#GetImageChannelDepth">GetImageChannelDepth</a></li>
+  <li><a href="attribute.html#GetImageQuantumDepth">GetImageQuantumDepth</a></li>
+  <li><a href="attribute.html#GetImageType">GetImageType</a></li>
+  <li><a href="attribute.html#IdentifyImageMonochrome">IdentifyImageMonochrome</a></li>
+  <li><a href="attribute.html#IdentifyImageType">IdentifyImageType</a></li>
+  <li><a href="attribute.html#IsGrayImage">IsGrayImage</a></li>
+  <li><a href="attribute.html#IsMonochromeImage">IsMonochromeImage</a></li>
+  <li><a href="attribute.html#IsOpaqueImage">IsOpaqueImage</a></li>
+  <li><a href="attribute.html#SetImageChannelDepth">SetImageChannelDepth</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="attribute.html#GetImageChannelDepth">GetImageChannelDepth</a> &#8226; <a href="attribute.html#GetImageQuantumDepth">GetImageQuantumDepth</a> &#8226; <a href="attribute.html#GetImageType">GetImageType</a> &#8226; <a href="attribute.html#IdentifyImageMonochrome">IdentifyImageMonochrome</a> &#8226; <a href="attribute.html#IdentifyImageType">IdentifyImageType</a> &#8226; <a href="attribute.html#IsGrayImage">IsGrayImage</a> &#8226; <a href="attribute.html#IsMonochromeImage">IsMonochromeImage</a> &#8226; <a href="attribute.html#IsOpaqueImage">IsOpaqueImage</a> &#8226; <a href="attribute.html#SetImageChannelDepth">SetImageChannelDepth</a> &#8226; <a href="attribute.html#SetImageType">SetImageType</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/attribute_8c.html" id="GetImageChannelDepth">GetImageChannelDepth</a></h2>
 
 <p>GetImageChannelDepth() returns the depth of a particular image channel.</p>
 
 <p>The format of the GetImageChannelDepth method is:</p>
 
-<pre class="text">
-size_t GetImageDepth(const Image *image,ExceptionInfo *exception)
+<pre class="bg-light text-dark mx-4"><samp>size_t GetImageDepth(const Image *image,ExceptionInfo *exception)
 size_t GetImageChannelDepth(const Image *image,
   const ChannelType channel,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -131,10 +147,9 @@ size_t GetImageChannelDepth(const Image *image,
 
 <p>The format of the GetImageQuantumDepth method is:</p>
 
-<pre class="text">
-size_t GetImageQuantumDepth(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>size_t GetImageQuantumDepth(const Image *image,
   const MagickBooleanType constrain)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -160,15 +175,13 @@ size_t GetImageQuantumDepth(const Image *image,
 
 <p>To ensure the image type matches its potential, use SetImageType():</p>
 
-<pre class="text">
-    (void) SetImageType(image,GetImageType(image));
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    (void) SetImageType(image,GetImageType(image));
+</samp></pre>
 
 <p>The format of the GetImageType method is:</p>
 
-<pre class="text">
-ImageType GetImageType(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ImageType GetImageType(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -192,10 +205,9 @@ ImageType GetImageType(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the IdentifyImageMonochrome method is:</p>
 
-<pre class="text">
-MagickBooleanType IdentifyImageMonochrome(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IdentifyImageMonochrome(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -221,15 +233,13 @@ MagickBooleanType IdentifyImageMonochrome(const Image *image,
 
 <p>To ensure the image type matches its potential, use SetImageType():</p>
 
-<pre class="text">
-    (void) SetImageType(image,IdentifyImageType(image,exception),exception);
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    (void) SetImageType(image,IdentifyImageType(image,exception),exception);
+</samp></pre>
 
 <p>The format of the IdentifyImageType method is:</p>
 
-<pre class="text">
-ImageType IdentifyImageType(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ImageType IdentifyImageType(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -253,10 +263,9 @@ ImageType IdentifyImageType(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the IsGrayImage method is:</p>
 
-<pre class="text">
-MagickBooleanType IsGrayImage(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IsGrayImage(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -280,10 +289,9 @@ MagickBooleanType IsGrayImage(const Image *image,
 
 <p>The format of the IsMonochromeImage method is:</p>
 
-<pre class="text">
-MagickBooleanType IsMonochromeImage(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IsMonochromeImage(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -307,10 +315,9 @@ MagickBooleanType IsMonochromeImage(const Image *image,
 
 <p>The format of the IsOpaqueImage method is:</p>
 
-<pre class="text">
-MagickBooleanType IsOpaqueImage(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IsOpaqueImage(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -334,11 +341,10 @@ MagickBooleanType IsOpaqueImage(const Image *image,
 
 <p>The format of the SetImageChannelDepth method is:</p>
 
-<pre class="text">
-MagickBooleanType SetImageDepth(Image *image,const size_t depth)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetImageDepth(Image *image,const size_t depth)
 MagickBooleanType SetImageChannelDepth(Image *image,
   const ChannelType channel,const size_t depth)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -368,9 +374,8 @@ MagickBooleanType SetImageChannelDepth(Image *image,
 
 <p>The format of the SetImageType method is:</p>
 
-<pre class="text">
-MagickBooleanType SetImageType(Image *image,const ImageType type)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetImageType(Image *image,const ImageType type)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

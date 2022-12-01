@@ -90,19 +90,26 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="stream.html#StreamImageCommand">StreamImageCommand</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/stream_8c.html" id="StreamImageCommand">StreamImageCommand</a></h2>
 
 <p>StreamImageCommand() is a lightweight method designed to extract pixels from large image files to a raw format using a minimum of system resources. The entire image or any regular portion of the image can be extracted.</p>
 
 <p>The format of the StreamImageCommand method is:</p>
 
-<pre class="text">
-MagickBooleanType StreamImageCommand(ImageInfo *image_info,int argc,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType StreamImageCommand(ImageInfo *image_info,int argc,
   char **argv,char **metadata,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

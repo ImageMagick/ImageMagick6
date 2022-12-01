@@ -90,19 +90,35 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="blob.html#BlobToImage">BlobToImage</a></li>
+  <li><a href="blob.html#FileToBlob">FileToBlob</a></li>
+  <li><a href="blob.html#FileToImage">FileToImage</a></li>
+  <li><a href="blob.html#GetBlobProperties">GetBlobProperties</a></li>
+  <li><a href="blob.html#ImageToBlob">ImageToBlob</a></li>
+  <li><a href="blob.html#ImageToFile">ImageToFile</a></li>
+  <li><a href="blob.html#ImagesToBlob">ImagesToBlob</a></li>
+  <li><a href="blob.html#InjectImageBlob">InjectImageBlob</a></li>
+  <li><a href="blob.html#IsBlobExempt">IsBlobExempt</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="blob.html#BlobToImage">BlobToImage</a> &#8226; <a href="blob.html#FileToBlob">FileToBlob</a> &#8226; <a href="blob.html#FileToImage">FileToImage</a> &#8226; <a href="blob.html#GetBlobProperties">GetBlobProperties</a> &#8226; <a href="blob.html#ImageToBlob">ImageToBlob</a> &#8226; <a href="blob.html#ImageToFile">ImageToFile</a> &#8226; <a href="blob.html#ImagesToBlob">ImagesToBlob</a> &#8226; <a href="blob.html#InjectImageBlob">InjectImageBlob</a> &#8226; <a href="blob.html#IsBlobExempt">IsBlobExempt</a> &#8226; <a href="blob.html#IsBlobTemporary">IsBlobTemporary</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/blob_8c.html" id="BlobToImage">BlobToImage</a></h2>
 
 <p>BlobToImage() implements direct to memory image formats.  It returns the blob as an image.</p>
 
 <p>The format of the BlobToImage method is:</p>
 
-<pre class="text">
-Image *BlobToImage(const ImageInfo *image_info,const void *blob,
+<pre class="bg-light text-dark mx-4"><samp>Image *BlobToImage(const ImageInfo *image_info,const void *blob,
   const size_t length,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -134,10 +150,9 @@ Image *BlobToImage(const ImageInfo *image_info,const void *blob,
 
 <p>The format of the FileToBlob method is:</p>
 
-<pre class="text">
-unsigned char *FileToBlob(const char *filename,const size_t extent,
+<pre class="bg-light text-dark mx-4"><samp>unsigned char *FileToBlob(const char *filename,const size_t extent,
   size_t *length,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -173,9 +188,8 @@ unsigned char *FileToBlob(const char *filename,const size_t extent,
 
 <p>The format of the FileToImage method is:</p>
 
-<pre class="text">
-MagickBooleanType FileToImage(Image *,const char *filename)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType FileToImage(Image *,const char *filename)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -199,9 +213,8 @@ MagickBooleanType FileToImage(Image *,const char *filename)
 
 <p>The format of the GetBlobProperties method is:</p>
 
-<pre class="text">
-const struct stat *GetBlobProperties(const Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>const struct stat *GetBlobProperties(const Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -221,10 +234,9 @@ const struct stat *GetBlobProperties(const Image *image)
 
 <p>The format of the ImageToBlob method is:</p>
 
-<pre class="text">
-unsigned char *ImageToBlob(const ImageInfo *image_info,Image *image,
+<pre class="bg-light text-dark mx-4"><samp>unsigned char *ImageToBlob(const ImageInfo *image_info,Image *image,
   size_t *length,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -256,10 +268,9 @@ unsigned char *ImageToBlob(const ImageInfo *image_info,Image *image,
 
 <p>The format of the ImageToFile method is:</p>
 
-<pre class="text">
- MagickBooleanType ImageToFile(Image *image,char *filename,
+<pre class="bg-light text-dark mx-4"><samp> MagickBooleanType ImageToFile(Image *image,char *filename,
    ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -289,10 +300,9 @@ unsigned char *ImageToBlob(const ImageInfo *image_info,Image *image,
 
 <p>The format of the ImagesToBlob method is:</p>
 
-<pre class="text">
-unsigned char *ImagesToBlob(const ImageInfo *image_info,Image *images,
+<pre class="bg-light text-dark mx-4"><samp>unsigned char *ImagesToBlob(const ImageInfo *image_info,Image *images,
   size_t *length,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -324,11 +334,10 @@ unsigned char *ImagesToBlob(const ImageInfo *image_info,Image *images,
 
 <p>The format of the InjectImageBlob method is:</p>
 
-<pre class="text">
-MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
   Image *image,Image *inject_image,const char *format,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -364,9 +373,8 @@ MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
 
 <p>The format of the IsBlobExempt method is:</p>
 
-<pre class="text">
- MagickBooleanType IsBlobExempt(const Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp> MagickBooleanType IsBlobExempt(const Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -386,9 +394,8 @@ MagickBooleanType InjectImageBlob(const ImageInfo *image_info,
 
 <p>The format of the IsBlobTemporary method is:</p>
 
-<pre class="text">
- MagickBooleanType IsBlobTemporary(const Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp> MagickBooleanType IsBlobTemporary(const Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

@@ -90,18 +90,35 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="layer.html#CoalesceImages">CoalesceImages</a></li>
+  <li><a href="layer.html#DisposeImages">DisposeImages</a></li>
+  <li><a href="layer.html#CompareImageLayers">CompareImageLayers</a></li>
+  <li><a href="layer.html#DeconstructImages">DeconstructImages</a></li>
+  <li><a href="layer.html#OptimizeImageLayers">OptimizeImageLayers</a></li>
+  <li><a href="layer.html#OptimizeImagePlusLayers">OptimizeImagePlusLayers</a></li>
+  <li><a href="layer.html#OptimizeImageTransparency">OptimizeImageTransparency</a></li>
+  <li><a href="layer.html#RemoveDuplicateLayers">RemoveDuplicateLayers</a></li>
+  <li><a href="layer.html#RemoveZeroDelayLayers">RemoveZeroDelayLayers</a></li>
+  <li><a href="layer.html#CompositeLayers">CompositeLayers</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="layer.html#CoalesceImages">CoalesceImages</a> &#8226; <a href="layer.html#DisposeImages">DisposeImages</a> &#8226; <a href="layer.html#CompareImageLayers">CompareImageLayers</a> &#8226; <a href="layer.html#DeconstructImages">DeconstructImages</a> &#8226; <a href="layer.html#OptimizeImageLayers">OptimizeImageLayers</a> &#8226; <a href="layer.html#OptimizeImagePlusLayers">OptimizeImagePlusLayers</a> &#8226; <a href="layer.html#OptimizeImageTransparency">OptimizeImageTransparency</a> &#8226; <a href="layer.html#RemoveDuplicateLayers">RemoveDuplicateLayers</a> &#8226; <a href="layer.html#RemoveZeroDelayLayers">RemoveZeroDelayLayers</a> &#8226; <a href="layer.html#CompositeLayers">CompositeLayers</a> &#8226; <a href="layer.html#MergeImageLayers">MergeImageLayers</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/layer_8c.html" id="CoalesceImages">CoalesceImages</a></h2>
 
 <p>CoalesceImages() composites a set of images while respecting any page offsets and disposal methods.  GIF, MIFF, and MNG animation sequences typically start with an image background and each subsequent image varies in size and offset.  A new image sequence is returned with all images the same size as the first images virtual canvas and composited with the next image in the sequence.</p>
 
 <p>The format of the CoalesceImages method is:</p>
 
-<pre class="text">
-Image *CoalesceImages(Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *CoalesceImages(Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -125,9 +142,8 @@ Image *CoalesceImages(Image *image,ExceptionInfo *exception)
 
 <p>The format of the DisposeImages method is:</p>
 
-<pre class="text">
-Image *DisposeImages(Image *images,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *DisposeImages(Image *images,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -155,10 +171,9 @@ Image *DisposeImages(Image *images,ExceptionInfo *exception)
 
 <p>The format of the CompareImageLayers method is:</p>
 
-<pre class="text">
-Image *CompareImageLayers(const Image *images,
+<pre class="bg-light text-dark mx-4"><samp>Image *CompareImageLayers(const Image *images,
   const ImageLayerMethod method,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -188,9 +203,8 @@ Image *CompareImageLayers(const Image *images,
 
 <p>The format of the DeconstructImages method is:</p>
 
-<pre class="text">
-Image *DeconstructImages(const Image *images,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *DeconstructImages(const Image *images,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -214,10 +228,9 @@ Image *DeconstructImages(const Image *images,ExceptionInfo *exception)
 
 <p>The format of the OptimizeImageLayers method is:</p>
 
-<pre class="text">
-Image *OptimizeImageLayers(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>Image *OptimizeImageLayers(const Image *image,
          ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -241,10 +254,9 @@ Image *OptimizeImageLayers(const Image *image,
 
 <p>The format of the OptimizePlusImageLayers method is:</p>
 
-<pre class="text">
-Image *OptimizePlusImageLayers(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>Image *OptimizePlusImageLayers(const Image *image,
          ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -268,11 +280,10 @@ Image *OptimizePlusImageLayers(const Image *image,
 
 <p>WARNING: This modifies the current images directly, rather than generate a new image sequence.</p>
 
-<p>The format of the OptimizeImageTransperency method is:</p>
+<p>The format of the OptimizeImageTransparency method is:</p>
 
-<pre class="text">
-void OptimizeImageTransperency(Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void OptimizeImageTransparency(Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -294,13 +305,12 @@ void OptimizeImageTransperency(Image *image,ExceptionInfo *exception)
 
 <p>RemoveDuplicateLayers() removes any image that is exactly the same as the next image in the given image list.  Image size and virtual canvas offset must also match, though not the virtual canvas size itself.</p>
 
-<p>No check is made with regards to image disposal setting, though it is the dispose setting of later image that is kept.  Also any time delays are also added together. As such coalesced image animations should still produce the same result, though with duplicte frames merged into a single frame.</p>
+<p>No check is made with regards to image disposal setting, though it is the dispose setting of later image that is kept.  Also any time delays are also added together. As such coalesced image animations should still produce the same result, though with duplicate frames merged into a single frame.</p>
 
 <p>The format of the RemoveDuplicateLayers method is:</p>
 
-<pre class="text">
-void RemoveDuplicateLayers(Image **image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void RemoveDuplicateLayers(Image **image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -330,9 +340,8 @@ void RemoveDuplicateLayers(Image **image,ExceptionInfo *exception)
 
 <p>The format of the RemoveZeroDelayLayers method is:</p>
 
-<pre class="text">
-void RemoveZeroDelayLayers(Image **image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void RemoveZeroDelayLayers(Image **image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -356,23 +365,22 @@ void RemoveZeroDelayLayers(Image **image,ExceptionInfo *exception)
 
 <p>Each layer from the two image lists are composted together until the end of one of the image lists is reached.  The offset of each composition is also adjusted to match the virtual canvas offsets of each layer. As such the given offset is relative to the virtual canvas, and not the actual image.</p>
 
-<p>Composition uses given x and y offsets, as the 'origin' location of the source images virtual canvas (not the real image) allowing you to compose a list of 'layer images' into the destiantioni images.  This makes it well sutiable for directly composing 'Clears Frame Animations' or 'Coaleased Animations' onto a static or other 'Coaleased Animation' destination image list.  GIF disposal handling is not looked at.</p>
+<p>Composition uses given x and y offsets, as the 'origin' location of the source images virtual canvas (not the real image) allowing you to compose a list of 'layer images' into the destination images.  This makes it well suitable for directly composing 'Clears Frame Animations' or 'Coalesced Animations' onto a static or other 'Coalesced Animation' destination image list.  GIF disposal handling is not looked at.</p>
 
-<p>Special case:- If one of the image sequences is the last image (just a single image remaining), that image is repeatally composed with all the images in the other image list.  Either the source or destination lists may be the single image, for this situation.</p>
+<p>Special case:- If one of the image sequences is the last image (just a single image remaining), that image is repeatedly composed with all the images in the other image list.  Either the source or destination lists may be the single image, for this situation.</p>
 
 <p>In the case of a single destination image (or last image given), that image will ve cloned to match the number of images remaining in the source image list.</p>
 
-<p>This is equivelent to the "-layer Composite" Shell API operator.</p>
+<p>This is equivalent to the "-layer Composite" Shell API operator.</p>
 
 
 <p>The format of the CompositeLayers method is:</p>
 
-<pre class="text">
-void CompositeLayers(Image *destination,
+<pre class="bg-light text-dark mx-4"><samp>void CompositeLayers(Image *destination,
     const CompositeOperator compose, Image *source,
     const ssize_t x_offset, const ssize_t y_offset,
     ExceptionInfo *exception);
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -402,14 +410,13 @@ void CompositeLayers(Image *destination,
 
 <p>MergeImageLayers() composes all the image layers from the current given image onward to produce a single image of the merged layers.</p>
 
-<p>The inital canvas's size depends on the given ImageLayerMethod, and is initialized using the first images background color.  The images are then compositied onto that image in sequence using the given composition that has been assigned to each individual image.</p>
+<p>The inital canvas's size depends on the given ImageLayerMethod, and is initialized using the first images background color.  The images are then composited onto that image in sequence using the given composition that has been assigned to each individual image.</p>
 
 <p>The format of the MergeImageLayers is:</p>
 
-<pre class="text">
-Image *MergeImageLayers(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>Image *MergeImageLayers(const Image *image,
   const ImageLayerMethod method,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

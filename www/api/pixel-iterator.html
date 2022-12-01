@@ -90,18 +90,42 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="pixel-iterator.html#ClearPixelIterator">ClearPixelIterator</a></li>
+  <li><a href="pixel-iterator.html#ClonePixelIterator">ClonePixelIterator</a></li>
+  <li><a href="pixel-iterator.html#DestroyPixelIterator">DestroyPixelIterator</a></li>
+  <li><a href="pixel-iterator.html#IsPixelIterator">IsPixelIterator</a></li>
+  <li><a href="pixel-iterator.html#NewPixelIterator">NewPixelIterator</a></li>
+  <li><a href="pixel-iterator.html#PixelClearIteratorException">PixelClearIteratorException</a></li>
+  <li><a href="pixel-iterator.html#NewPixelRegionIterator">NewPixelRegionIterator</a></li>
+  <li><a href="pixel-iterator.html#PixelGetCurrentIteratorRow">PixelGetCurrentIteratorRow</a></li>
+  <li><a href="pixel-iterator.html#PixelGetIteratorException">PixelGetIteratorException</a></li>
+  <li><a href="pixel-iterator.html#PixelGetIteratorExceptionType">PixelGetIteratorExceptionType</a></li>
+  <li><a href="pixel-iterator.html#PixelGetIteratorRow">PixelGetIteratorRow</a></li>
+  <li><a href="pixel-iterator.html#PixelGetNextIteratorRow">PixelGetNextIteratorRow</a></li>
+  <li><a href="pixel-iterator.html#PixelGetPreviousIteratorRow">PixelGetPreviousIteratorRow</a></li>
+  <li><a href="pixel-iterator.html#PixelResetIterator">PixelResetIterator</a></li>
+  <li><a href="pixel-iterator.html#PixelSetFirstIteratorRow">PixelSetFirstIteratorRow</a></li>
+  <li><a href="pixel-iterator.html#PixelSetIteratorRow">PixelSetIteratorRow</a></li>
+  <li><a href="pixel-iterator.html#PixelSetLastIteratorRow">PixelSetLastIteratorRow</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="pixel-iterator.html#ClearPixelIterator">ClearPixelIterator</a> &#8226; <a href="pixel-iterator.html#ClonePixelIterator">ClonePixelIterator</a> &#8226; <a href="pixel-iterator.html#DestroyPixelIterator">DestroyPixelIterator</a> &#8226; <a href="pixel-iterator.html#IsPixelIterator">IsPixelIterator</a> &#8226; <a href="pixel-iterator.html#NewPixelIterator">NewPixelIterator</a> &#8226; <a href="pixel-iterator.html#PixelClearIteratorException">PixelClearIteratorException</a> &#8226; <a href="pixel-iterator.html#NewPixelRegionIterator">NewPixelRegionIterator</a> &#8226; <a href="pixel-iterator.html#PixelGetCurrentIteratorRow">PixelGetCurrentIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelGetIteratorException">PixelGetIteratorException</a> &#8226; <a href="pixel-iterator.html#PixelGetIteratorExceptionType">PixelGetIteratorExceptionType</a> &#8226; <a href="pixel-iterator.html#PixelGetIteratorRow">PixelGetIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelGetNextIteratorRow">PixelGetNextIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelGetPreviousIteratorRow">PixelGetPreviousIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelResetIterator">PixelResetIterator</a> &#8226; <a href="pixel-iterator.html#PixelSetFirstIteratorRow">PixelSetFirstIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelSetIteratorRow">PixelSetIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelSetLastIteratorRow">PixelSetLastIteratorRow</a> &#8226; <a href="pixel-iterator.html#PixelSyncIterator">PixelSyncIterator</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/pixel-iterator_8c.html" id="ClearPixelIterator">ClearPixelIterator</a></h2>
 
 <p>ClearPixelIterator() clear resources associated with a PixelIterator.</p>
 
 <p>The format of the ClearPixelIterator method is:</p>
 
-<pre class="text">
-void ClearPixelIterator(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void ClearPixelIterator(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -121,9 +145,8 @@ void ClearPixelIterator(PixelIterator *iterator)
 
 <p>The format of the ClonePixelIterator method is:</p>
 
-<pre class="text">
-PixelIterator *ClonePixelIterator(const PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelIterator *ClonePixelIterator(const PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -143,9 +166,8 @@ PixelIterator *ClonePixelIterator(const PixelIterator *iterator)
 
 <p>The format of the DestroyPixelIterator method is:</p>
 
-<pre class="text">
-PixelIterator *DestroyPixelIterator(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelIterator *DestroyPixelIterator(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -165,9 +187,8 @@ PixelIterator *DestroyPixelIterator(PixelIterator *iterator)
 
 <p>The format of the IsPixelIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType IsPixelIterator(const PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IsPixelIterator(const PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -187,9 +208,8 @@ MagickBooleanType IsPixelIterator(const PixelIterator *iterator)
 
 <p>The format of the NewPixelIterator method is:</p>
 
-<pre class="text">
-PixelIterator *NewPixelIterator(MagickWand *wand)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelIterator *NewPixelIterator(MagickWand *wand)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -209,9 +229,8 @@ PixelIterator *NewPixelIterator(MagickWand *wand)
 
 <p>The format of the PixelClearIteratorException method is:</p>
 
-<pre class="text">
-MagickBooleanType PixelClearIteratorException(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PixelClearIteratorException(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -231,10 +250,9 @@ MagickBooleanType PixelClearIteratorException(PixelIterator *iterator)
 
 <p>The format of the NewPixelRegionIterator method is:</p>
 
-<pre class="text">
-PixelIterator *NewPixelRegionIterator(MagickWand *wand,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>PixelIterator *NewPixelRegionIterator(MagickWand *wand,const ssize_t x,
   const ssize_t y,const size_t width,const size_t height)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -258,10 +276,9 @@ PixelIterator *NewPixelRegionIterator(MagickWand *wand,const ssize_t x,
 
 <p>The format of the PixelGetCurrentIteratorRow method is:</p>
 
-<pre class="text">
-PixelWand **PixelGetCurrentIteratorRow(PixelIterator *iterator,
+<pre class="bg-light text-dark mx-4"><samp>PixelWand **PixelGetCurrentIteratorRow(PixelIterator *iterator,
   size_t *number_wands)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -285,10 +302,9 @@ PixelWand **PixelGetCurrentIteratorRow(PixelIterator *iterator,
 
 <p>The format of the PixelGetIteratorException method is:</p>
 
-<pre class="text">
-char *PixelGetIteratorException(const PixelIterator *iterator,
+<pre class="bg-light text-dark mx-4"><samp>char *PixelGetIteratorException(const PixelIterator *iterator,
   ExceptionType *severity)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -312,10 +328,9 @@ char *PixelGetIteratorException(const PixelIterator *iterator,
 
 <p>The format of the PixelGetIteratorExceptionType method is:</p>
 
-<pre class="text">
-ExceptionType PixelGetIteratorExceptionType(
+<pre class="bg-light text-dark mx-4"><samp>ExceptionType PixelGetIteratorExceptionType(
   const PixelIterator *iterator)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -335,9 +350,8 @@ ExceptionType PixelGetIteratorExceptionType(
 
 <p>The format of the PixelGetIteratorRow method is:</p>
 
-<pre class="text">
-MagickBooleanType PixelGetIteratorRow(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PixelGetIteratorRow(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -357,10 +371,9 @@ MagickBooleanType PixelGetIteratorRow(PixelIterator *iterator)
 
 <p>The format of the PixelGetNextIteratorRow method is:</p>
 
-<pre class="text">
-PixelWand **PixelGetNextIteratorRow(PixelIterator *iterator,
+<pre class="bg-light text-dark mx-4"><samp>PixelWand **PixelGetNextIteratorRow(PixelIterator *iterator,
   size_t *number_wands)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -384,10 +397,9 @@ PixelWand **PixelGetNextIteratorRow(PixelIterator *iterator,
 
 <p>The format of the PixelGetPreviousIteratorRow method is:</p>
 
-<pre class="text">
-PixelWand **PixelGetPreviousIteratorRow(PixelIterator *iterator,
+<pre class="bg-light text-dark mx-4"><samp>PixelWand **PixelGetPreviousIteratorRow(PixelIterator *iterator,
   size_t *number_wands)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -411,9 +423,8 @@ PixelWand **PixelGetPreviousIteratorRow(PixelIterator *iterator,
 
 <p>The format of the PixelResetIterator method is:</p>
 
-<pre class="text">
-void PixelResetIterator(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void PixelResetIterator(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -433,9 +444,8 @@ void PixelResetIterator(PixelIterator *iterator)
 
 <p>The format of the PixelSetFirstIteratorRow method is:</p>
 
-<pre class="text">
-void PixelSetFirstIteratorRow(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void PixelSetFirstIteratorRow(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -455,10 +465,9 @@ void PixelSetFirstIteratorRow(PixelIterator *iterator)
 
 <p>The format of the PixelSetIteratorRow method is:</p>
 
-<pre class="text">
-MagickBooleanType PixelSetIteratorRow(PixelIterator *iterator,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PixelSetIteratorRow(PixelIterator *iterator,
   const ssize_t row)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -478,9 +487,8 @@ MagickBooleanType PixelSetIteratorRow(PixelIterator *iterator,
 
 <p>The format of the PixelSetLastIteratorRow method is:</p>
 
-<pre class="text">
-void PixelSetLastIteratorRow(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void PixelSetLastIteratorRow(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -500,9 +508,8 @@ void PixelSetLastIteratorRow(PixelIterator *iterator)
 
 <p>The format of the PixelSyncIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType PixelSyncIterator(PixelIterator *iterator)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PixelSyncIterator(PixelIterator *iterator)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

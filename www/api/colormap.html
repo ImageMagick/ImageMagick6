@@ -90,18 +90,26 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="colormap.html#AcquireImageColormap">AcquireImageColormap</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="colormap.html#AcquireImageColormap">AcquireImageColormap</a> &#8226; <a href="colormap.html#CycleColormap">CycleColormap</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/colormap_8c.html" id="AcquireImageColormap">AcquireImageColormap</a></h2>
 
 <p>AcquireImageColormap() allocates an image colormap and initializes it to a linear gray colorspace.  If the image already has a colormap, it is replaced.  AcquireImageColormap() returns MagickTrue if successful, otherwise MagickFalse if there is not enough memory.</p>
 
 <p>The format of the AcquireImageColormap method is:</p>
 
-<pre class="text">
-MagickBooleanType AcquireImageColormap(Image *image,const size_t colors)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType AcquireImageColormap(Image *image,const size_t colors)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -125,9 +133,8 @@ MagickBooleanType AcquireImageColormap(Image *image,const size_t colors)
 
 <p>The format of the CycleColormapImage method is:</p>
 
-<pre class="text">
-MagickBooleanType CycleColormapImage(Image *image,const ssize_t displace)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType CycleColormapImage(Image *image,const ssize_t displace)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

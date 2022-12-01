@@ -90,19 +90,28 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="monitor.html#SetImageProgress">SetImageProgress</a></li>
+  <li><a href="monitor.html#SetImageProgressMonitor">SetImageProgressMonitor</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="monitor.html#SetImageProgress">SetImageProgress</a> &#8226; <a href="monitor.html#SetImageProgressMonitor">SetImageProgressMonitor</a> &#8226; <a href="monitor.html#SetImageInfoProgressMonitor">SetImageInfoProgressMonitor</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/monitor_8c.html" id="SetImageProgress">SetImageProgress</a></h2>
 
 <p>SetImageProgress() returns the progress of an image processing operation.</p>
 
 <p>The format of the SetImageProgress method is:</p>
 
-<pre class="text">
-    MagickBooleanType SetImageProgress(const char *text,
+<pre class="bg-light text-dark mx-4"><samp>    MagickBooleanType SetImageProgress(const char *text,
 const MagickOffsetType offset,const MagickSizeType extent)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -132,20 +141,18 @@ const MagickOffsetType offset,const MagickSizeType extent)
 
 <p>SetImageProgressMonitor() sets the image progress monitor to the specified method and returns the previous progress monitor if any.  The progress monitor method looks like this:</p>
 
-<pre class="text">
-    MagickBooleanType MagickProgressMonitor(const char *text,
+<pre class="bg-light text-dark mx-4"><samp>    MagickBooleanType MagickProgressMonitor(const char *text,
 const MagickOffsetType offset,const MagickSizeType extent,
 void *client_data)
-</pre>
+</samp></pre>
 
 <p>If the progress monitor returns MagickFalse, the current operation is interrupted.</p>
 
 <p>The format of the SetImageProgressMonitor method is:</p>
 
-<pre class="text">
-MagickProgressMonitor SetImageProgressMonitor(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickProgressMonitor SetImageProgressMonitor(Image *image,
   const MagickProgressMonitor progress_monitor,void *client_data)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -171,20 +178,18 @@ MagickProgressMonitor SetImageProgressMonitor(Image *image,
 
 <p>SetImageInfoProgressMonitor() sets the image_info progress monitor to the specified method and returns the previous progress monitor if any.  The progress monitor method looks like this:</p>
 
-<pre class="text">
-    MagickBooleanType MagickProgressMonitor(const char *text,
+<pre class="bg-light text-dark mx-4"><samp>    MagickBooleanType MagickProgressMonitor(const char *text,
 const MagickOffsetType offset,const MagickSizeType extent,
 void *client_data)
-</pre>
+</samp></pre>
 
 <p>If the progress monitor returns MagickFalse, the current operation is interrupted.</p>
 
 <p>The format of the SetImageInfoProgressMonitor method is:</p>
 
-<pre class="text">
-MagickProgressMonitor SetImageInfoProgressMonitor(ImageInfo *image_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickProgressMonitor SetImageInfoProgressMonitor(ImageInfo *image_info,
   const MagickProgressMonitor progress_monitor,void *client_data)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

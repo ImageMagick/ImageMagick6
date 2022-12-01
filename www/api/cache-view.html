@@ -90,19 +90,46 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="cache-view.html#AcquireAuthenticCacheView">AcquireAuthenticCacheView</a></li>
+  <li><a href="cache-view.html#AcquireVirtualCacheView">AcquireVirtualCacheView</a></li>
+  <li><a href="cache-view.html#CloneCacheView">CloneCacheView</a></li>
+  <li><a href="cache-view.html#DestroyCacheView">DestroyCacheView</a></li>
+  <li><a href="cache-view.html#GetCacheViewChannels">GetCacheViewChannels</a></li>
+  <li><a href="cache-view.html#GetCacheViewColorspace">GetCacheViewColorspace</a></li>
+  <li><a href="cache-view.html#GetCacheViewException">GetCacheViewException</a></li>
+  <li><a href="cache-view.html#GetCacheViewStorageClass">GetCacheViewStorageClass</a></li>
+  <li><a href="cache-view.html#GetCacheViewAuthenticPixels">GetCacheViewAuthenticPixels</a></li>
+  <li><a href="cache-view.html#GetOneCacheViewAuthenticPixel">GetOneCacheViewAuthenticPixel</a></li>
+  <li><a href="cache-view.html#GetCacheViewAuthenticIndexQueue">GetCacheViewAuthenticIndexQueue</a></li>
+  <li><a href="cache-view.html#GetCacheViewAuthenticPixelQueue">GetCacheViewAuthenticPixelQueue</a></li>
+  <li><a href="cache-view.html#GetCacheViewVirtualIndexQueue">GetCacheViewVirtualIndexQueue</a></li>
+  <li><a href="cache-view.html#GetCacheViewVirtualPixelQueue">GetCacheViewVirtualPixelQueue</a></li>
+  <li><a href="cache-view.html#GetCacheViewVirtualPixels">GetCacheViewVirtualPixels</a></li>
+  <li><a href="cache-view.html#GetOneCacheViewVirtualPixel">GetOneCacheViewVirtualPixel</a></li>
+  <li><a href="cache-view.html#GetOneCacheViewVirtualMethodPixel">GetOneCacheViewVirtualMethodPixel</a></li>
+  <li><a href="cache-view.html#QueueCacheViewAuthenticPixels">QueueCacheViewAuthenticPixels</a></li>
+  <li><a href="cache-view.html#SetCacheViewStorageClass">SetCacheViewStorageClass</a></li>
+  <li><a href="cache-view.html#SetCacheViewVirtualPixelMethod">SetCacheViewVirtualPixelMethod</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="cache-view.html#AcquireAuthenticCacheView">AcquireAuthenticCacheView</a> &#8226; <a href="cache-view.html#AcquireVirtualCacheView">AcquireVirtualCacheView</a> &#8226; <a href="cache-view.html#CloneCacheView">CloneCacheView</a> &#8226; <a href="cache-view.html#DestroyCacheView">DestroyCacheView</a> &#8226; <a href="cache-view.html#GetCacheViewChannels">GetCacheViewChannels</a> &#8226; <a href="cache-view.html#GetCacheViewColorspace">GetCacheViewColorspace</a> &#8226; <a href="cache-view.html#GetCacheViewException">GetCacheViewException</a> &#8226; <a href="cache-view.html#GetCacheViewStorageClass">GetCacheViewStorageClass</a> &#8226; <a href="cache-view.html#GetCacheViewAuthenticPixels">GetCacheViewAuthenticPixels</a> &#8226; <a href="cache-view.html#GetOneCacheViewAuthenticPixel">GetOneCacheViewAuthenticPixel</a> &#8226; <a href="cache-view.html#GetCacheViewAuthenticIndexQueue">GetCacheViewAuthenticIndexQueue</a> &#8226; <a href="cache-view.html#GetCacheViewAuthenticPixelQueue">GetCacheViewAuthenticPixelQueue</a> &#8226; <a href="cache-view.html#GetCacheViewVirtualIndexQueue">GetCacheViewVirtualIndexQueue</a> &#8226; <a href="cache-view.html#GetCacheViewVirtualPixelQueue">GetCacheViewVirtualPixelQueue</a> &#8226; <a href="cache-view.html#GetCacheViewVirtualPixels">GetCacheViewVirtualPixels</a> &#8226; <a href="cache-view.html#GetOneCacheViewVirtualPixel">GetOneCacheViewVirtualPixel</a> &#8226; <a href="cache-view.html#GetOneCacheViewVirtualMethodPixel">GetOneCacheViewVirtualMethodPixel</a> &#8226; <a href="cache-view.html#QueueCacheViewAuthenticPixels">QueueCacheViewAuthenticPixels</a> &#8226; <a href="cache-view.html#SetCacheViewStorageClass">SetCacheViewStorageClass</a> &#8226; <a href="cache-view.html#SetCacheViewVirtualPixelMethod">SetCacheViewVirtualPixelMethod</a> &#8226; <a href="cache-view.html#SyncCacheViewAuthenticPixels">SyncCacheViewAuthenticPixels</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/cache-view_8c.html" id="AcquireAuthenticCacheView">AcquireAuthenticCacheView</a></h2>
 
 <p>AcquireAuthenticCacheView() acquires an authentic view into the pixel cache.</p>
 
 <p>The format of the AcquireAuthenticCacheView method is:</p>
 
-<pre class="text">
-CacheView *AcquireAuthenticCacheView(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>CacheView *AcquireAuthenticCacheView(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -126,10 +153,9 @@ CacheView *AcquireAuthenticCacheView(const Image *image,
 
 <p>The format of the AcquireVirtualCacheView method is:</p>
 
-<pre class="text">
-CacheView *AcquireVirtualCacheView(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>CacheView *AcquireVirtualCacheView(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -153,9 +179,8 @@ CacheView *AcquireVirtualCacheView(const Image *image,
 
 <p>The format of the CloneCacheView method is:</p>
 
-<pre class="text">
-CacheView *CloneCacheView(const CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>CacheView *CloneCacheView(const CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -175,9 +200,8 @@ CacheView *CloneCacheView(const CacheView *cache_view)
 
 <p>The format of the DestroyCacheView method is:</p>
 
-<pre class="text">
-CacheView *DestroyCacheView(CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>CacheView *DestroyCacheView(CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -197,9 +221,8 @@ CacheView *DestroyCacheView(CacheView *cache_view)
 
 <p>The format of the GetCacheViewChannels method is:</p>
 
-<pre class="text">
-size_t GetCacheViewChannels(const CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>size_t GetCacheViewChannels(const CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -219,9 +242,8 @@ size_t GetCacheViewChannels(const CacheView *cache_view)
 
 <p>The format of the GetCacheViewColorspace method is:</p>
 
-<pre class="text">
-ColorspaceType GetCacheViewColorspace(const CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ColorspaceType GetCacheViewColorspace(const CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -241,9 +263,8 @@ ColorspaceType GetCacheViewColorspace(const CacheView *cache_view)
 
 <p>The format of the GetCacheViewException method is:</p>
 
-<pre class="text">
-ExceptionInfo GetCacheViewException(const CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ExceptionInfo GetCacheViewException(const CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -263,9 +284,8 @@ ExceptionInfo GetCacheViewException(const CacheView *cache_view)
 
 <p>The format of the GetCacheViewStorageClass method is:</p>
 
-<pre class="text">
-ClassType GetCacheViewStorageClass(const CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ClassType GetCacheViewStorageClass(const CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -285,11 +305,10 @@ ClassType GetCacheViewStorageClass(const CacheView *cache_view)
 
 <p>The format of the GetCacheViewAuthenticPixels method is:</p>
 
-<pre class="text">
-PixelPacket *GetCacheViewAuthenticPixels(CacheView *cache_view,
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *GetCacheViewAuthenticPixels(CacheView *cache_view,
   const ssize_t x,const ssize_t y,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -313,11 +332,10 @@ PixelPacket *GetCacheViewAuthenticPixels(CacheView *cache_view,
 
 <p>The format of the GetOneCacheViewAuthenticPixel method is:</p>
 
-<pre class="text">
-MagickBooleaNType GetOneCacheViewAuthenticPixel(
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneCacheViewAuthenticPixel(
   const CacheView *cache_view,const ssize_t x,const ssize_t y,
   PixelPacket *pixel,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -349,9 +367,8 @@ MagickBooleaNType GetOneCacheViewAuthenticPixel(
 
 <p>The format of the GetCacheViewAuthenticIndexQueue() method is:</p>
 
-<pre class="text">
-IndexPacket *GetCacheViewAuthenticIndexQueue(CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>IndexPacket *GetCacheViewAuthenticIndexQueue(CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -371,9 +388,8 @@ IndexPacket *GetCacheViewAuthenticIndexQueue(CacheView *cache_view)
 
 <p>The format of the GetCacheViewAuthenticPixelQueue() method is:</p>
 
-<pre class="text">
-PixelPacket *GetCacheViewAuthenticPixelQueue(CacheView *cache_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *GetCacheViewAuthenticPixelQueue(CacheView *cache_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -393,10 +409,9 @@ PixelPacket *GetCacheViewAuthenticPixelQueue(CacheView *cache_view)
 
 <p>The format of the GetCacheViewVirtualIndexQueue() method is:</p>
 
-<pre class="text">
-const IndexPacket *GetCacheViewVirtualIndexQueue(
+<pre class="bg-light text-dark mx-4"><samp>const IndexPacket *GetCacheViewVirtualIndexQueue(
   const CacheView *cache_view)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -416,10 +431,9 @@ const IndexPacket *GetCacheViewVirtualIndexQueue(
 
 <p>The format of the GetCacheViewVirtualPixelQueue() method is:</p>
 
-<pre class="text">
-const PixelPacket *GetCacheViewVirtualPixelQueue(
+<pre class="bg-light text-dark mx-4"><samp>const PixelPacket *GetCacheViewVirtualPixelQueue(
   const CacheView *cache_view)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -439,11 +453,10 @@ const PixelPacket *GetCacheViewVirtualPixelQueue(
 
 <p>The format of the GetCacheViewVirtualPixels method is:</p>
 
-<pre class="text">
-const PixelPacket *GetCacheViewVirtualPixels(
+<pre class="bg-light text-dark mx-4"><samp>const PixelPacket *GetCacheViewVirtualPixels(
   const CacheView *cache_view,const ssize_t x,const ssize_t y,
   const size_t columns,const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -471,11 +484,10 @@ const PixelPacket *GetCacheViewVirtualPixels(
 
 <p>The format of the GetOneCacheViewVirtualPixel method is:</p>
 
-<pre class="text">
-MagickBooleanType GetOneCacheViewVirtualPixel(
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneCacheViewVirtualPixel(
   const CacheView *cache_view,const ssize_t x,const ssize_t y,
   PixelPacket *pixel,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -507,12 +519,11 @@ MagickBooleanType GetOneCacheViewVirtualPixel(
 
 <p>The format of the GetOneCacheViewVirtualPixel method is:</p>
 
-<pre class="text">
-MagickBooleanType GetOneCacheViewVirtualMethodPixel(
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneCacheViewVirtualMethodPixel(
   const CacheView *cache_view,
   const VirtualPixelMethod virtual_pixel_method,const ssize_t x,
   const ssize_t y,PixelPacket *pixel,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -548,11 +559,10 @@ MagickBooleanType GetOneCacheViewVirtualMethodPixel(
 
 <p>The format of the QueueCacheViewAuthenticPixels method is:</p>
 
-<pre class="text">
-PixelPacket *QueueCacheViewAuthenticPixels(CacheView *cache_view,
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *QueueCacheViewAuthenticPixels(CacheView *cache_view,
   const ssize_t x,const ssize_t y,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -580,10 +590,9 @@ PixelPacket *QueueCacheViewAuthenticPixels(CacheView *cache_view,
 
 <p>The format of the SetCacheViewStorageClass method is:</p>
 
-<pre class="text">
-MagickBooleanType SetCacheViewStorageClass(CacheView *cache_view,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetCacheViewStorageClass(CacheView *cache_view,
   const ClassType storage_class)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -607,10 +616,9 @@ MagickBooleanType SetCacheViewStorageClass(CacheView *cache_view,
 
 <p>The format of the SetCacheViewVirtualPixelMethod method is:</p>
 
-<pre class="text">
-MagickBooleanType SetCacheViewVirtualPixelMethod(CacheView *cache_view,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetCacheViewVirtualPixelMethod(CacheView *cache_view,
   const VirtualPixelMethod virtual_pixel_method)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -634,10 +642,9 @@ MagickBooleanType SetCacheViewVirtualPixelMethod(CacheView *cache_view,
 
 <p>The format of the SyncCacheViewAuthenticPixels method is:</p>
 
-<pre class="text">
-MagickBooleanType SyncCacheViewAuthenticPixels(CacheView *cache_view,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SyncCacheViewAuthenticPixels(CacheView *cache_view,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

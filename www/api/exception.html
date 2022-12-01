@@ -90,18 +90,40 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="exception.html#AcquireExceptionInfo">AcquireExceptionInfo</a></li>
+  <li><a href="exception.html#ClearMagickException">ClearMagickException</a></li>
+  <li><a href="exception.html#CatchException">CatchException</a></li>
+  <li><a href="exception.html#CloneExceptionInfo">CloneExceptionInfo</a></li>
+  <li><a href="exception.html#DestroyExceptionInfo">DestroyExceptionInfo</a></li>
+  <li><a href="exception.html#GetExceptionMessage">GetExceptionMessage</a></li>
+  <li><a href="exception.html#GetLocaleExceptionMessage">GetLocaleExceptionMessage</a></li>
+  <li><a href="exception.html#InheritException">InheritException</a></li>
+  <li><a href="exception.html#InitializeExceptionInfo">InitializeExceptionInfo</a></li>
+  <li><a href="exception.html#MagickError">MagickError</a></li>
+  <li><a href="exception.html#MagickFatalError">MagickFatalError</a></li>
+  <li><a href="exception.html#MagickWarning">MagickWarning</a></li>
+  <li><a href="exception.html#SetErrorHandler">SetErrorHandler</a></li>
+  <li><a href="exception.html#SetFatalErrorHandler">SetFatalErrorHandler</a></li>
+  <li><a href="exception.html#SetWarningHandler">SetWarningHandler</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="exception.html#AcquireExceptionInfo">AcquireExceptionInfo</a> &#8226; <a href="exception.html#ClearMagickException">ClearMagickException</a> &#8226; <a href="exception.html#CatchException">CatchException</a> &#8226; <a href="exception.html#CloneExceptionInfo">CloneExceptionInfo</a> &#8226; <a href="exception.html#DestroyExceptionInfo">DestroyExceptionInfo</a> &#8226; <a href="exception.html#GetExceptionMessage">GetExceptionMessage</a> &#8226; <a href="exception.html#GetLocaleExceptionMessage">GetLocaleExceptionMessage</a> &#8226; <a href="exception.html#InheritException">InheritException</a> &#8226; <a href="exception.html#InitializeExceptionInfo">InitializeExceptionInfo</a> &#8226; <a href="exception.html#MagickError">MagickError</a> &#8226; <a href="exception.html#MagickFatalError">MagickFatalError</a> &#8226; <a href="exception.html#MagickWarning">MagickWarning</a> &#8226; <a href="exception.html#SetErrorHandler">SetErrorHandler</a> &#8226; <a href="exception.html#SetFatalErrorHandler">SetFatalErrorHandler</a> &#8226; <a href="exception.html#SetWarningHandler">SetWarningHandler</a> &#8226; <a href="exception.html#ThrowException">ThrowException</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/exception_8c.html" id="AcquireExceptionInfo">AcquireExceptionInfo</a></h2>
 
 <p>AcquireExceptionInfo() allocates the ExceptionInfo structure.</p>
 
 <p>The format of the AcquireExceptionInfo method is:</p>
 
-<pre class="text">
-ExceptionInfo *AcquireExceptionInfo(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ExceptionInfo *AcquireExceptionInfo(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/exception_8c.html" id="ClearMagickException">ClearMagickException</a></h2>
 
@@ -109,9 +131,8 @@ ExceptionInfo *AcquireExceptionInfo(void)
 
 <p>The format of the ClearMagickException method is:</p>
 
-<pre class="text">
-ClearMagickException(ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ClearMagickException(ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -131,9 +152,8 @@ ClearMagickException(ExceptionInfo *exception)
 
 <p>The format of the CatchException method is:</p>
 
-<pre class="text">
-CatchException(ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>CatchException(ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -153,9 +173,8 @@ CatchException(ExceptionInfo *exception)
 
 <p>The format of the CloneExceptionInfo method is:</p>
 
-<pre class="text">
-ExceptionInfo *CloneException(ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ExceptionInfo *CloneException(ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -175,9 +194,8 @@ ExceptionInfo *CloneException(ExceptionInfo *exception)
 
 <p>The format of the DestroyExceptionInfo method is:</p>
 
-<pre class="text">
-ExceptionInfo *DestroyExceptionInfo(ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ExceptionInfo *DestroyExceptionInfo(ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -197,9 +215,8 @@ ExceptionInfo *DestroyExceptionInfo(ExceptionInfo *exception)
 
 <p>The format of the GetExceptionMessage method is:</p>
 
-<pre class="text">
-char *GetExceptionMessage(const int error)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>char *GetExceptionMessage(const int error)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -219,10 +236,9 @@ char *GetExceptionMessage(const int error)
 
 <p>The format of the GetLocaleExceptionMessage method is:</p>
 
-<pre class="text">
-const char *GetLocaleExceptionMessage(const ExceptionType severity,
+<pre class="bg-light text-dark mx-4"><samp>const char *GetLocaleExceptionMessage(const ExceptionType severity,
   const char *tag)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -246,9 +262,8 @@ const char *GetLocaleExceptionMessage(const ExceptionType severity,
 
 <p>The format of the InheritException method is:</p>
 
-<pre class="text">
-InheritException(ExceptionInfo *exception,const ExceptionInfo *relative)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>InheritException(ExceptionInfo *exception,const ExceptionInfo *relative)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -272,9 +287,8 @@ InheritException(ExceptionInfo *exception,const ExceptionInfo *relative)
 
 <p>The format of the InitializeExceptionInfo method is:</p>
 
-<pre class="text">
-InitializeExceptionInfo(ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>InitializeExceptionInfo(ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -294,10 +308,9 @@ InitializeExceptionInfo(ExceptionInfo *exception)
 
 <p>The format of the MagickError method is:</p>
 
-<pre class="text">
-void MagickError(const ExceptionType error,const char *reason,
+<pre class="bg-light text-dark mx-4"><samp>void MagickError(const ExceptionType error,const char *reason,
   const char *description)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -325,10 +338,9 @@ void MagickError(const ExceptionType error,const char *reason,
 
 <p>The format of the MagickError method is:</p>
 
-<pre class="text">
-void MagickFatalError(const ExceptionType error,const char *reason,
+<pre class="bg-light text-dark mx-4"><samp>void MagickFatalError(const ExceptionType error,const char *reason,
   const char *description)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -356,10 +368,9 @@ void MagickFatalError(const ExceptionType error,const char *reason,
 
 <p>The format of the MagickWarning method is:</p>
 
-<pre class="text">
-void MagickWarning(const ExceptionType warning,const char *reason,
+<pre class="bg-light text-dark mx-4"><samp>void MagickWarning(const ExceptionType warning,const char *reason,
   const char *description)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -387,9 +398,8 @@ void MagickWarning(const ExceptionType warning,const char *reason,
 
 <p>The format of the SetErrorHandler method is:</p>
 
-<pre class="text">
-ErrorHandler SetErrorHandler(ErrorHandler handler)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ErrorHandler SetErrorHandler(ErrorHandler handler)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -409,9 +419,8 @@ ErrorHandler SetErrorHandler(ErrorHandler handler)
 
 <p>The format of the SetErrorHandler method is:</p>
 
-<pre class="text">
-ErrorHandler SetErrorHandler(ErrorHandler handler)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ErrorHandler SetErrorHandler(ErrorHandler handler)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -431,9 +440,8 @@ ErrorHandler SetErrorHandler(ErrorHandler handler)
 
 <p>The format of the SetWarningHandler method is:</p>
 
-<pre class="text">
-ErrorHandler SetWarningHandler(ErrorHandler handler)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ErrorHandler SetWarningHandler(ErrorHandler handler)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -453,11 +461,10 @@ ErrorHandler SetWarningHandler(ErrorHandler handler)
 
 <p>The format of the ThrowException method is:</p>
 
-<pre class="text">
-MagickBooleanType ThrowException(ExceptionInfo *exception,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ThrowException(ExceptionInfo *exception,
   const ExceptionType severity,const char *reason,
   const char *description)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

@@ -90,17 +90,34 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="statistic.html#EvaluateImage">EvaluateImage</a></li>
+  <li><a href="statistic.html#FunctionImage">FunctionImage</a></li>
+  <li><a href="statistic.html#GetImageChannelEntropy">GetImageChannelEntropy</a></li>
+  <li><a href="statistic.html#GetImageChannelKurtosis">GetImageChannelKurtosis</a></li>
+  <li><a href="statistic.html#GetImageChannelMean">GetImageChannelMean</a></li>
+  <li><a href="statistic.html#GetImageChannelMoments">GetImageChannelMoments</a></li>
+  <li><a href="statistic.html#GetImageChannelPerceptualHash">GetImageChannelPerceptualHash</a></li>
+  <li><a href="statistic.html#GetImageChannelRange">GetImageChannelRange</a></li>
+  <li><a href="statistic.html#GetImageChannelStatistics">GetImageChannelStatistics</a></li>
+  <li><a href="statistic.html#PolynomialImage">PolynomialImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="statistic.html#EvaluateImage">EvaluateImage</a> &#8226; <a href="statistic.html#FunctionImage">FunctionImage</a> &#8226; <a href="statistic.html#GetImageChannelEntropy">GetImageChannelEntropy</a> &#8226; <a href="statistic.html#GetImageChannelKurtosis">GetImageChannelKurtosis</a> &#8226; <a href="statistic.html#GetImageChannelMean">GetImageChannelMean</a> &#8226; <a href="statistic.html#GetImageChannelMoments">GetImageChannelMoments</a> &#8226; <a href="statistic.html#GetImageChannelPerceptualHash">GetImageChannelPerceptualHash</a> &#8226; <a href="statistic.html#GetImageChannelRange">GetImageChannelRange</a> &#8226; <a href="statistic.html#GetImageChannelStatistics">GetImageChannelStatistics</a> &#8226; <a href="statistic.html#PolynomialImage">PolynomialImage</a> &#8226; <a href="statistic.html#StatisticImage">StatisticImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/statistic_8c.html" id="EvaluateImage">EvaluateImage</a></h2>
 
 <p>EvaluateImage() applies a value to the image with an arithmetic, relational, or logical operator to an image. Use these operations to lighten or darken an image, to increase or decrease contrast in an image, or to produce the "negative" of an image.</p>
 
 <p>The format of the EvaluateImageChannel method is:</p>
 
-<pre class="text">
-MagickBooleanType EvaluateImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType EvaluateImage(Image *image,
   const MagickEvaluateOperator op,const double value,
   ExceptionInfo *exception)
 MagickBooleanType EvaluateImages(Image *images,
@@ -109,7 +126,7 @@ MagickBooleanType EvaluateImages(Image *images,
 MagickBooleanType EvaluateImageChannel(Image *image,
   const ChannelType channel,const MagickEvaluateOperator op,
   const double value,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -145,15 +162,14 @@ MagickBooleanType EvaluateImageChannel(Image *image,
 
 <p>The format of the FunctionImageChannel method is:</p>
 
-<pre class="text">
-MagickBooleanType FunctionImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType FunctionImage(Image *image,
   const MagickFunction function,const ssize_t number_parameters,
   const double *parameters,ExceptionInfo *exception)
 MagickBooleanType FunctionImageChannel(Image *image,
   const ChannelType channel,const MagickFunction function,
   const ssize_t number_parameters,const double *argument,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -189,10 +205,9 @@ MagickBooleanType FunctionImageChannel(Image *image,
 
 <p>The format of the GetImageChannelEntropy method is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageChannelEntropy(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageChannelEntropy(const Image *image,
   const ChannelType channel,double *entropy,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -224,11 +239,10 @@ MagickBooleanType GetImageChannelEntropy(const Image *image,
 
 <p>The format of the GetImageChannelKurtosis method is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageChannelKurtosis(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageChannelKurtosis(const Image *image,
   const ChannelType channel,double *kurtosis,double *skewness,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -264,11 +278,10 @@ MagickBooleanType GetImageChannelKurtosis(const Image *image,
 
 <p>The format of the GetImageChannelMean method is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageChannelMean(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageChannelMean(const Image *image,
   const ChannelType channel,double *mean,double *standard_deviation,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -304,10 +317,9 @@ MagickBooleanType GetImageChannelMean(const Image *image,
 
 <p>The format of the GetImageChannelMoments method is:</p>
 
-<pre class="text">
-ChannelMoments *GetImageChannelMoments(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>ChannelMoments *GetImageChannelMoments(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -331,10 +343,9 @@ ChannelMoments *GetImageChannelMoments(const Image *image,
 
 <p>The format of the GetImageChannelPerceptualHash method is:</p>
 
-<pre class="text">
-ChannelPerceptualHash *GetImageChannelPerceptualHash(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>ChannelPerceptualHash *GetImageChannelPerceptualHash(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -358,11 +369,10 @@ ChannelPerceptualHash *GetImageChannelPerceptualHash(const Image *image,
 
 <p>The format of the GetImageChannelRange method is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageChannelRange(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageChannelRange(const Image *image,
   const ChannelType channel,double *minima,double *maxima,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -396,19 +406,17 @@ MagickBooleanType GetImageChannelRange(const Image *image,
 
 <p>GetImageChannelStatistics() returns statistics for each channel in the image.  The statistics include the channel depth, its minima, maxima, mean, standard deviation, kurtosis and skewness.  You can access the red channel mean, for example, like this:</p>
 
-<pre class="text">
-channel_statistics=GetImageChannelStatistics(image,exception);
+<pre class="bg-light text-dark mx-4"><samp>channel_statistics=GetImageChannelStatistics(image,exception);
 red_mean=channel_statistics[RedChannel].mean;
-</pre>
+</samp></pre>
 
 <p>Use MagickRelinquishMemory() to free the statistics buffer.</p>
 
 <p>The format of the GetImageChannelStatistics method is:</p>
 
-<pre class="text">
-ChannelStatistics *GetImageChannelStatistics(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>ChannelStatistics *GetImageChannelStatistics(const Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -432,13 +440,12 @@ ChannelStatistics *GetImageChannelStatistics(const Image *image,
 
 <p>The format of the PolynomialImage method is:</p>
 
-<pre class="text">
-Image *PolynomialImage(const Image *images,const size_t number_terms,
+<pre class="bg-light text-dark mx-4"><samp>Image *PolynomialImage(const Image *images,const size_t number_terms,
   const double *terms,ExceptionInfo *exception)
 Image *PolynomialImageChannel(const Image *images,
   const size_t number_terms,const ChannelType channel,
   const double *terms,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -474,13 +481,12 @@ Image *PolynomialImageChannel(const Image *images,
 
 <p>The format of the StatisticImage method is:</p>
 
-<pre class="text">
-Image *StatisticImage(const Image *image,const StatisticType type,
+<pre class="bg-light text-dark mx-4"><samp>Image *StatisticImage(const Image *image,const StatisticType type,
   const size_t width,const size_t height,ExceptionInfo *exception)
 Image *StatisticImageChannel(const Image *image,
   const ChannelType channel,const StatisticType type,
   const size_t width,const size_t height,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

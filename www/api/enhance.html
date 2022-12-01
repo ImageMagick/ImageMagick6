@@ -90,20 +90,47 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="enhance.html#AutoGammaImage">AutoGammaImage</a></li>
+  <li><a href="enhance.html#AutoLevelImage">AutoLevelImage</a></li>
+  <li><a href="enhance.html#BrightnessContrastImage">BrightnessContrastImage</a></li>
+  <li><a href="enhance.html#ColorDecisionListImage">ColorDecisionListImage</a></li>
+  <li><a href="enhance.html#ClutImage">ClutImage</a></li>
+  <li><a href="enhance.html#ContrastImage">ContrastImage</a></li>
+  <li><a href="enhance.html#ContrastStretchImage">ContrastStretchImage</a></li>
+  <li><a href="enhance.html#EnhanceImage">EnhanceImage</a></li>
+  <li><a href="enhance.html#EqualizeImage">EqualizeImage</a></li>
+  <li><a href="enhance.html#GammaImage">GammaImage</a></li>
+  <li><a href="enhance.html#GrayscaleImage">GrayscaleImage</a></li>
+  <li><a href="enhance.html#HaldClutImage">HaldClutImage</a></li>
+  <li><a href="enhance.html#LevelImage">LevelImage</a></li>
+  <li><a href="enhance.html#LevelImage">LevelImage</a></li>
+  <li><a href="enhance.html#LevelizeImageChannel">LevelizeImageChannel</a></li>
+  <li><a href="enhance.html#LevelImageColor">LevelImageColor</a></li>
+  <li><a href="enhance.html#LinearStretchImage">LinearStretchImage</a></li>
+  <li><a href="enhance.html#ModulateImage">ModulateImage</a></li>
+  <li><a href="enhance.html#NegateImage">NegateImage</a></li>
+  <li><a href="enhance.html#The NormalizeImage">The NormalizeImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="enhance.html#AutoGammaImage">AutoGammaImage</a> &#8226; <a href="enhance.html#AutoLevelImage">AutoLevelImage</a> &#8226; <a href="enhance.html#BrightnessContrastImage">BrightnessContrastImage</a> &#8226; <a href="enhance.html#ColorDecisionListImage">ColorDecisionListImage</a> &#8226; <a href="enhance.html#ClutImage">ClutImage</a> &#8226; <a href="enhance.html#ContrastImage">ContrastImage</a> &#8226; <a href="enhance.html#ContrastStretchImage">ContrastStretchImage</a> &#8226; <a href="enhance.html#EnhanceImage">EnhanceImage</a> &#8226; <a href="enhance.html#EqualizeImage">EqualizeImage</a> &#8226; <a href="enhance.html#GammaImage">GammaImage</a> &#8226; <a href="enhance.html#GrayscaleImage">GrayscaleImage</a> &#8226; <a href="enhance.html#HaldClutImage">HaldClutImage</a> &#8226; <a href="enhance.html#LevelImage">LevelImage</a> &#8226; <a href="enhance.html#LevelImage">LevelImage</a> &#8226; <a href="enhance.html#LevelizeImageChannel">LevelizeImageChannel</a> &#8226; <a href="enhance.html#LevelImageColor">LevelImageColor</a> &#8226; <a href="enhance.html#LinearStretchImage">LinearStretchImage</a> &#8226; <a href="enhance.html#ModulateImage">ModulateImage</a> &#8226; <a href="enhance.html#NegateImage">NegateImage</a> &#8226; <a href="enhance.html#The NormalizeImage">The NormalizeImage</a> &#8226; <a href="enhance.html#SigmoidalContrastImage">SigmoidalContrastImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/enhance_8c.html" id="AutoGammaImage">AutoGammaImage</a></h2>
 
 <p>AutoGammaImage() extract the 'mean' from the image and adjust the image to try make set its gamma appropriatally.</p>
 
 <p>The format of the AutoGammaImage method is:</p>
 
-<pre class="text">
-MagickBooleanType AutoGammaImage(Image *image)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType AutoGammaImage(Image *image)
 MagickBooleanType AutoGammaImageChannel(Image *image,
   const ChannelType channel)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -127,11 +154,10 @@ MagickBooleanType AutoGammaImageChannel(Image *image,
 
 <p>The format of the LevelImage method is:</p>
 
-<pre class="text">
-MagickBooleanType AutoLevelImage(Image *image)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType AutoLevelImage(Image *image)
 MagickBooleanType AutoLevelImageChannel(Image *image,
   const ChannelType channel)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -151,17 +177,16 @@ MagickBooleanType AutoLevelImageChannel(Image *image,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/enhance_8c.html" id="BrightnessContrastImage">BrightnessContrastImage</a></h2>
 
-<p>BrightnessContrastImage() changes the brightness and/or contrast of an image.  It converts the brightness and contrast parameters into slope and intercept and calls a polynomical function to apply to the image.</p>
+<p>BrightnessContrastImage() changes the brightness and/or contrast of an image.  It converts the brightness and contrast parameters into slope and intercept and calls a polynomial function to apply to the image.</p>
 
 <p>The format of the BrightnessContrastImage method is:</p>
 
-<pre class="text">
-MagickBooleanType BrightnessContrastImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType BrightnessContrastImage(Image *image,
   const double brightness,const double contrast)
 MagickBooleanType BrightnessContrastImageChannel(Image *image,
   const ChannelType channel,const double brightness,
   const double contrast)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -191,8 +216,7 @@ MagickBooleanType BrightnessContrastImageChannel(Image *image,
 
 <p>ColorDecisionListImage() accepts a lightweight Color Correction Collection (CCC) file which solely contains one or more color corrections and applies the correction to the image.  Here is a sample CCC file:</p>
 
-<pre class="text">
-    &lt;ColorCorrectionCollection xmlns="urn:ASC:CDL:v1.2"&gt;
+<pre class="bg-light text-dark mx-4"><samp>    &lt;ColorCorrectionCollection xmlns="urn:ASC:CDL:v1.2"&gt;
     &lt;ColorCorrection id="cc03345"&gt;
           &lt;SOPNode&gt;
                &lt;Slope&gt; 0.9 1.2 0.5 &lt;/Slope&gt;
@@ -204,16 +228,15 @@ MagickBooleanType BrightnessContrastImageChannel(Image *image,
           &lt;/SATNode&gt;
     &lt;/ColorCorrection&gt;
     &lt;/ColorCorrectionCollection&gt;
-</pre>
+</samp></pre>
 
 <p>which includes the slop, offset, and power for each of the RGB channels as well as the saturation.</p>
 
 <p>The format of the ColorDecisionListImage method is:</p>
 
-<pre class="text">
-MagickBooleanType ColorDecisionListImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ColorDecisionListImage(Image *image,
   const char *color_correction_collection)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -233,19 +256,18 @@ MagickBooleanType ColorDecisionListImage(Image *image,
 </dl>
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/enhance_8c.html" id="ClutImage">ClutImage</a></h2>
 
-<p>ClutImage() replaces each color value in the given image, by using it as an index to lookup a replacement color value in a Color Look UP Table in the form of an image.  The values are extracted along a diagonal of the CLUT image so either a horizontal or vertial gradient image can be used.</p>
+<p>ClutImage() replaces each color value in the given image, by using it as an index to lookup a replacement color value in a Color Look UP Table in the form of an image.  The values are extracted along a diagonal of the CLUT image so either a horizontal or vertical gradient image can be used.</p>
 
 <p>Typically this is used to either re-color a gray-scale image according to a color gradient in the CLUT image, or to perform a freeform histogram (level) adjustment according to the (typically gray-scale) gradient in the CLUT image.</p>
 
-<p>When the 'channel' mask includes the matte/alpha transparency channel but one image has no such channel it is assumed that that image is a simple gray-scale image that will effect the alpha channel values, either for gray-scale coloring (with transparent or semi-transparent colors), or a histogram adjustment of existing alpha channel values.   If both images have matte channels, direct and normal indexing is applied, which is rarely used.</p>
+<p>When the 'channel' mask includes the matte/alpha transparency channel but one image has no such channel it is assumed that image is a simple gray-scale image that will effect the alpha channel values, either for gray-scale coloring (with transparent or semi-transparent colors), or a histogram adjustment of existing alpha channel values.   If both images have matte channels, direct and normal indexing is applied, which is rarely used.</p>
 
 <p>The format of the ClutImage method is:</p>
 
-<pre class="text">
-MagickBooleanType ClutImage(Image *image,Image *clut_image)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ClutImage(Image *image,Image *clut_image)
 MagickBooleanType ClutImageChannel(Image *image,
   const ChannelType channel,Image *clut_image)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -273,10 +295,9 @@ MagickBooleanType ClutImageChannel(Image *image,
 
 <p>The format of the ContrastImage method is:</p>
 
-<pre class="text">
-MagickBooleanType ContrastImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ContrastImage(Image *image,
   const MagickBooleanType sharpen)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -300,13 +321,12 @@ MagickBooleanType ContrastImage(Image *image,
 
 <p>The format of the ContrastStretchImage method is:</p>
 
-<pre class="text">
-MagickBooleanType ContrastStretchImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ContrastStretchImage(Image *image,
   const char *levels)
 MagickBooleanType ContrastStretchImageChannel(Image *image,
   const size_t channel,const double black_point,
   const double white_point)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -342,9 +362,8 @@ MagickBooleanType ContrastStretchImageChannel(Image *image,
 
 <p>The format of the EnhanceImage method is:</p>
 
-<pre class="text">
-Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -368,11 +387,10 @@ Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the EqualizeImage method is:</p>
 
-<pre class="text">
-MagickBooleanType EqualizeImage(Image *image)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType EqualizeImage(Image *image)
 MagickBooleanType EqualizeImageChannel(Image *image,
   const ChannelType channel)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -398,11 +416,10 @@ MagickBooleanType EqualizeImageChannel(Image *image,
 
 <p>The format of the GammaImage method is:</p>
 
-<pre class="text">
-MagickBooleanType GammaImage(Image *image,const char *level)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GammaImage(Image *image,const char *level)
 MagickBooleanType GammaImageChannel(Image *image,
   const ChannelType channel,const double gamma)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -434,10 +451,9 @@ MagickBooleanType GammaImageChannel(Image *image,
 
 <p>The format of the GrayscaleImageChannel method is:</p>
 
-<pre class="text">
-MagickBooleanType GrayscaleImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GrayscaleImage(Image *image,
   const PixelIntensityMethod method)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -461,11 +477,10 @@ MagickBooleanType GrayscaleImage(Image *image,
 
 <p>The format of the HaldClutImage method is:</p>
 
-<pre class="text">
-MagickBooleanType HaldClutImage(Image *image,Image *hald_image)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType HaldClutImage(Image *image,Image *hald_image)
 MagickBooleanType HaldClutImageChannel(Image *image,
   const ChannelType channel,Image *hald_image)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -499,9 +514,8 @@ MagickBooleanType HaldClutImageChannel(Image *image,
 
 <p>The format of the LevelImage method is:</p>
 
-<pre class="text">
-MagickBooleanType LevelImage(Image *image,const char *levels)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType LevelImage(Image *image,const char *levels)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -527,13 +541,12 @@ MagickBooleanType LevelImage(Image *image,const char *levels)
 
 <p>The format of the LevelImage method is:</p>
 
-<pre class="text">
-MagickBooleanType LevelImage(Image *image,const double black_point,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType LevelImage(Image *image,const double black_point,
   const double white_point,const double gamma)
 MagickBooleanType LevelImageChannel(Image *image,
   const ChannelType channel,const double black_point,
   const double white_point,const double gamma)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -573,10 +586,9 @@ MagickBooleanType LevelImageChannel(Image *image,
 
 <p>The format of the LevelizeImageChannel method is:</p>
 
-<pre class="text">
-MagickBooleanType LevelizeImageChannel(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType LevelizeImageChannel(Image *image,
   const ChannelType channel,const char *levels)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -610,18 +622,17 @@ MagickBooleanType LevelizeImageChannel(Image *image,
 
 <p>LevelImageColor() maps the given color to "black" and "white" values, linearly spreading out the colors, and level values on a channel by channel bases, as per LevelImage().  The given colors allows you to specify different level ranges for each of the color channels separately.</p>
 
-<p>If the boolean 'invert' is set true the image values will modifyed in the reverse direction. That is any existing "black" and "white" colors in the image will become the color values given, with all other values compressed appropriatally.  This effectivally maps a greyscale gradient into the given color gradient.</p>
+<p>If the boolean 'invert' is set true the image values will modified in the reverse direction. That is any existing "black" and "white" colors in the image will become the color values given, with all other values compressed appropriatally.  This effectivally maps a greyscale gradient into the given color gradient.</p>
 
 <p>The format of the LevelColorsImageChannel method is:</p>
 
-<pre class="text">
-    MagickBooleanType LevelColorsImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>    MagickBooleanType LevelColorsImage(Image *image,
 const MagickPixelPacket *black_color,
 const MagickPixelPacket *white_color,const MagickBooleanType invert)
     MagickBooleanType LevelColorsImageChannel(Image *image,
 const ChannelType channel,const MagickPixelPacket *black_color,
 const MagickPixelPacket *white_color,const MagickBooleanType invert)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -657,10 +668,9 @@ const MagickPixelPacket *white_color,const MagickBooleanType invert)
 
 <p>The format of the LinearStretchImage method is:</p>
 
-<pre class="text">
-MagickBooleanType LinearStretchImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType LinearStretchImage(Image *image,
   const double black_point,const double white_point)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -688,9 +698,8 @@ MagickBooleanType LinearStretchImage(Image *image,
 
 <p>The format of the ModulateImage method is:</p>
 
-<pre class="text">
-MagickBooleanType ModulateImage(Image *image,const char *modulate)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ModulateImage(Image *image,const char *modulate)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -714,12 +723,11 @@ MagickBooleanType ModulateImage(Image *image,const char *modulate)
 
 <p>The format of the NegateImageChannel method is:</p>
 
-<pre class="text">
-MagickBooleanType NegateImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType NegateImage(Image *image,
   const MagickBooleanType grayscale)
 MagickBooleanType NegateImageChannel(Image *image,
   const ChannelType channel,const MagickBooleanType grayscale)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -747,11 +755,10 @@ MagickBooleanType NegateImageChannel(Image *image,
 
 <p>The format of the NormalizeImage method is:</p>
 
-<pre class="text">
-MagickBooleanType NormalizeImage(Image *image)
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType NormalizeImage(Image *image)
 MagickBooleanType NormalizeImageChannel(Image *image,
   const ChannelType channel)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -775,13 +782,12 @@ MagickBooleanType NormalizeImageChannel(Image *image,
 
 <p>The format of the SigmoidalContrastImage method is:</p>
 
-<pre class="text">
-MagickBooleanType SigmoidalContrastImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SigmoidalContrastImage(Image *image,
   const MagickBooleanType sharpen,const char *levels)
 MagickBooleanType SigmoidalContrastImageChannel(Image *image,
   const ChannelType channel,const MagickBooleanType sharpen,
   const double contrast,const double midpoint)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

@@ -90,19 +90,33 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="resource.html#AcquireMagickResource">AcquireMagickResource</a></li>
+  <li><a href="resource.html#AcquireUniqueFileResource">AcquireUniqueFileResource</a></li>
+  <li><a href="resource.html#GetMagickResource">GetMagickResource</a></li>
+  <li><a href="resource.html#GetMagickResourceLimit">GetMagickResourceLimit</a></li>
+  <li><a href="resource.html#ListMagickResourceInfo">ListMagickResourceInfo</a></li>
+  <li><a href="resource.html#RelinquishMagickResource">RelinquishMagickResource</a></li>
+  <li><a href="resource.html#RelinquishUniqueFileResource">RelinquishUniqueFileResource</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="resource.html#AcquireMagickResource">AcquireMagickResource</a> &#8226; <a href="resource.html#AcquireUniqueFileResource">AcquireUniqueFileResource</a> &#8226; <a href="resource.html#GetMagickResource">GetMagickResource</a> &#8226; <a href="resource.html#GetMagickResourceLimit">GetMagickResourceLimit</a> &#8226; <a href="resource.html#ListMagickResourceInfo">ListMagickResourceInfo</a> &#8226; <a href="resource.html#RelinquishMagickResource">RelinquishMagickResource</a> &#8226; <a href="resource.html#RelinquishUniqueFileResource">RelinquishUniqueFileResource</a> &#8226; <a href="resource.html#SetMagickResourceLimit">SetMagickResourceLimit</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/resource_8c.html" id="AcquireMagickResource">AcquireMagickResource</a></h2>
 
 <p>AcquireMagickResource() acquires resources of the specified type. MagickFalse is returned if the specified resource is exhausted otherwise MagickTrue.</p>
 
 <p>The format of the AcquireMagickResource() method is:</p>
 
-<pre class="text">
-MagickBooleanType AcquireMagickResource(const ResourceType type,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType AcquireMagickResource(const ResourceType type,
   const MagickSizeType size)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -126,9 +140,8 @@ MagickBooleanType AcquireMagickResource(const ResourceType type,
 
 <p>The format of the AcquireUniqueFileResource() method is:</p>
 
-<pre class="text">
-int AcquireUniqueFileResource(char *path)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>int AcquireUniqueFileResource(char *path)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -148,9 +161,8 @@ int AcquireUniqueFileResource(char *path)
 
 <p>The format of the GetMagickResource() method is:</p>
 
-<pre class="text">
-MagickSizeType GetMagickResource(const ResourceType type)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickSizeType GetMagickResource(const ResourceType type)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -170,9 +182,8 @@ MagickSizeType GetMagickResource(const ResourceType type)
 
 <p>The format of the GetMagickResourceLimit() method is:</p>
 
-<pre class="text">
-MagickSizeType GetMagickResourceLimit(const ResourceType type)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickSizeType GetMagickResourceLimit(const ResourceType type)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -192,10 +203,9 @@ MagickSizeType GetMagickResourceLimit(const ResourceType type)
 
 <p>The format of the ListMagickResourceInfo method is:</p>
 
-<pre class="text">
-MagickBooleanType ListMagickResourceInfo(FILE *file,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ListMagickResourceInfo(FILE *file,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 
@@ -211,10 +221,9 @@ MagickBooleanType ListMagickResourceInfo(FILE *file,
 
 <p>The format of the RelinquishMagickResource() method is:</p>
 
-<pre class="text">
-void RelinquishMagickResource(const ResourceType type,
+<pre class="bg-light text-dark mx-4"><samp>void RelinquishMagickResource(const ResourceType type,
   const MagickSizeType size)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -238,9 +247,8 @@ void RelinquishMagickResource(const ResourceType type,
 
 <p>The format of the RelinquishUniqueFileResource() method is:</p>
 
-<pre class="text">
-MagickBooleanType RelinquishUniqueFileResource(const char *path)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType RelinquishUniqueFileResource(const char *path)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -260,10 +268,9 @@ MagickBooleanType RelinquishUniqueFileResource(const char *path)
 
 <p>The format of the SetMagickResourceLimit() method is:</p>
 
-<pre class="text">
-MagickBooleanType SetMagickResourceLimit(const ResourceType type,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetMagickResourceLimit(const ResourceType type,
   const MagickSizeType limit)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

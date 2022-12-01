@@ -90,19 +90,26 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="compare.html#CompareImageCommand">CompareImageCommand</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/compare_8c.html" id="CompareImageCommand">CompareImageCommand</a></h2>
 
 <p>CompareImageCommand() compares two images and returns the difference between them as a distortion metric and as a new image visually annotating their differences.</p>
 
 <p>The format of the CompareImageCommand method is:</p>
 
-<pre class="text">
-MagickBooleanType CompareImageCommand(ImageInfo *image_info,int argc,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType CompareImageCommand(ImageInfo *image_info,int argc,
   char **argv,char **metadata,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

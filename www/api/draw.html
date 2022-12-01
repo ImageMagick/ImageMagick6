@@ -90,18 +90,36 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="draw.html#AcquireDrawInfo">AcquireDrawInfo</a></li>
+  <li><a href="draw.html#CloneDrawInfo">CloneDrawInfo</a></li>
+  <li><a href="draw.html#DestroyDrawInfo">DestroyDrawInfo</a></li>
+  <li><a href="draw.html#DrawAffineImage">DrawAffineImage</a></li>
+  <li><a href="draw.html#DrawClipPath">DrawClipPath</a></li>
+  <li><a href="draw.html#DrawClippingMask">DrawClippingMask</a></li>
+  <li><a href="draw.html#DrawCompositeMask">DrawCompositeMask</a></li>
+  <li><a href="draw.html#DrawGradientImage">DrawGradientImage</a></li>
+  <li><a href="draw.html#DrawImage">DrawImage</a></li>
+  <li><a href="draw.html#DrawPatternPath">DrawPatternPath</a></li>
+  <li><a href="draw.html#DrawPrimitive">DrawPrimitive</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="draw.html#AcquireDrawInfo">AcquireDrawInfo</a> &#8226; <a href="draw.html#CloneDrawInfo">CloneDrawInfo</a> &#8226; <a href="draw.html#DestroyDrawInfo">DestroyDrawInfo</a> &#8226; <a href="draw.html#DrawAffineImage">DrawAffineImage</a> &#8226; <a href="draw.html#DrawClipPath">DrawClipPath</a> &#8226; <a href="draw.html#DrawClippingMask">DrawClippingMask</a> &#8226; <a href="draw.html#DrawCompositeMask">DrawCompositeMask</a> &#8226; <a href="draw.html#DrawGradientImage">DrawGradientImage</a> &#8226; <a href="draw.html#DrawImage">DrawImage</a> &#8226; <a href="draw.html#DrawPatternPath">DrawPatternPath</a> &#8226; <a href="draw.html#DrawPrimitive">DrawPrimitive</a> &#8226; <a href="draw.html#GetAffineMatrix">GetAffineMatrix</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="AcquireDrawInfo">AcquireDrawInfo</a></h2>
 
 <p>AcquireDrawInfo() returns a DrawInfo structure properly initialized.</p>
 
 <p>The format of the AcquireDrawInfo method is:</p>
 
-<pre class="text">
-DrawInfo *AcquireDrawInfo(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>DrawInfo *AcquireDrawInfo(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/draw_8c.html" id="CloneDrawInfo">CloneDrawInfo</a></h2>
 
@@ -109,10 +127,9 @@ DrawInfo *AcquireDrawInfo(void)
 
 <p>The format of the CloneDrawInfo method is:</p>
 
-<pre class="text">
-DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
+<pre class="bg-light text-dark mx-4"><samp>DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
   const DrawInfo *draw_info)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -136,9 +153,8 @@ DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
 
 <p>The format of the DestroyDrawInfo method is:</p>
 
-<pre class="text">
-DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -158,10 +174,9 @@ DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
 
 <p>The format of the DrawAffineImage method is:</p>
 
-<pre class="text">
-MagickBooleanType DrawAffineImage(Image *image,const Image *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DrawAffineImage(Image *image,const Image *source,
   const AffineMatrix *affine)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -189,10 +204,9 @@ MagickBooleanType DrawAffineImage(Image *image,const Image *source,
 
 <p>The format of the DrawClipPath method is:</p>
 
-<pre class="text">
-MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
   const char *id)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -220,10 +234,9 @@ MagickBooleanType DrawClipPath(Image *image,const DrawInfo *draw_info,
 
 <p>The format of the DrawClippingMask method is:</p>
 
-<pre class="text">
-Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   const char *id,const char *clip_path,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -259,10 +272,9 @@ Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
 
 <p>The format of the DrawCompositeMask method is:</p>
 
-<pre class="text">
-Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
   const char *id,const char *mask_path,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -298,10 +310,9 @@ Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
 
 <p>The format of the DrawGradientImage method is:</p>
 
-<pre class="text">
-MagickBooleanType DrawGradientImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DrawGradientImage(Image *image,
   const DrawInfo *draw_info)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -325,9 +336,8 @@ MagickBooleanType DrawGradientImage(Image *image,
 
 <p>The format of the DrawImage method is:</p>
 
-<pre class="text">
-MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -351,10 +361,9 @@ MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 
 <p>The format of the DrawPatternPath method is:</p>
 
-<pre class="text">
-MagickBooleanType DrawPatternPath(Image *image,const DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DrawPatternPath(Image *image,const DrawInfo *draw_info,
   const char *name,Image **pattern)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -386,10 +395,9 @@ MagickBooleanType DrawPatternPath(Image *image,const DrawInfo *draw_info,
 
 <p>The format of the DrawPrimitive method is:</p>
 
-<pre class="text">
-MagickBooleanType DrawPrimitive(Image *image,const DrawInfo *draw_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DrawPrimitive(Image *image,const DrawInfo *draw_info,
   PrimitiveInfo *primitive_info)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -417,9 +425,8 @@ MagickBooleanType DrawPrimitive(Image *image,const DrawInfo *draw_info,
 
 <p>The format of the GetAffineMatrix method is:</p>
 
-<pre class="text">
-void GetAffineMatrix(AffineMatrix *affine_matrix)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void GetAffineMatrix(AffineMatrix *affine_matrix)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

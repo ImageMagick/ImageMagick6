@@ -90,18 +90,39 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="cache.html#AcquirePixelCacheNexus">AcquirePixelCacheNexus</a></li>
+  <li><a href="cache.html#AcquirePixelCachePixels">AcquirePixelCachePixels</a></li>
+  <li><a href="cache.html#GetAuthenticIndexQueue">GetAuthenticIndexQueue</a></li>
+  <li><a href="cache.html#GetAuthenticPixelQueue">GetAuthenticPixelQueue</a></li>
+  <li><a href="cache.html#GetAuthenticPixels">GetAuthenticPixels</a></li>
+  <li><a href="cache.html#GetOneAuthenticPixel">GetOneAuthenticPixel</a></li>
+  <li><a href="cache.html#GetOneVirtualMagickPixel">GetOneVirtualMagickPixel</a></li>
+  <li><a href="cache.html#GetOneVirtualMethodPixel">GetOneVirtualMethodPixel</a></li>
+  <li><a href="cache.html#GetOneVirtualPixel">GetOneVirtualPixel</a></li>
+  <li><a href="cache.html#GetVirtualIndexQueue">GetVirtualIndexQueue</a></li>
+  <li><a href="cache.html#GetVirtualPixelQueue">GetVirtualPixelQueue</a></li>
+  <li><a href="cache.html#GetVirtualPixels">GetVirtualPixels</a></li>
+  <li><a href="cache.html#QueueAuthenticPixels">QueueAuthenticPixels</a></li>
+  <li><a href="cache.html#SetPixelCacheVirtualMethod">SetPixelCacheVirtualMethod</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="cache.html#AcquirePixelCacheNexus">AcquirePixelCacheNexus</a> &#8226; <a href="cache.html#AcquirePixelCachePixels">AcquirePixelCachePixels</a> &#8226; <a href="cache.html#GetAuthenticIndexQueue">GetAuthenticIndexQueue</a> &#8226; <a href="cache.html#GetAuthenticPixelQueue">GetAuthenticPixelQueue</a> &#8226; <a href="cache.html#GetAuthenticPixels">GetAuthenticPixels</a> &#8226; <a href="cache.html#GetOneAuthenticPixel">GetOneAuthenticPixel</a> &#8226; <a href="cache.html#GetOneVirtualMagickPixel">GetOneVirtualMagickPixel</a> &#8226; <a href="cache.html#GetOneVirtualMethodPixel">GetOneVirtualMethodPixel</a> &#8226; <a href="cache.html#GetOneVirtualPixel">GetOneVirtualPixel</a> &#8226; <a href="cache.html#GetVirtualIndexQueue">GetVirtualIndexQueue</a> &#8226; <a href="cache.html#GetVirtualPixelQueue">GetVirtualPixelQueue</a> &#8226; <a href="cache.html#GetVirtualPixels">GetVirtualPixels</a> &#8226; <a href="cache.html#QueueAuthenticPixels">QueueAuthenticPixels</a> &#8226; <a href="cache.html#SetPixelCacheVirtualMethod">SetPixelCacheVirtualMethod</a> &#8226; <a href="cache.html#SyncAuthenticPixels">SyncAuthenticPixels</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/cache_8c.html" id="AcquirePixelCacheNexus">AcquirePixelCacheNexus</a></h2>
 
 <p>AcquirePixelCacheNexus() allocates the NexusInfo structure.</p>
 
 <p>The format of the AcquirePixelCacheNexus method is:</p>
 
-<pre class="text">
-NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -121,10 +142,9 @@ NexusInfo **AcquirePixelCacheNexus(const size_t number_threads)
 
 <p>The format of the AcquirePixelCachePixels() method is:</p>
 
-<pre class="text">
-const void *AcquirePixelCachePixels(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>const void *AcquirePixelCachePixels(const Image *image,
   MagickSizeType *length,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -152,9 +172,8 @@ const void *AcquirePixelCachePixels(const Image *image,
 
 <p>The format of the GetAuthenticIndexQueue() method is:</p>
 
-<pre class="text">
-IndexPacket *GetAuthenticIndexQueue(const Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>IndexPacket *GetAuthenticIndexQueue(const Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -174,9 +193,8 @@ IndexPacket *GetAuthenticIndexQueue(const Image *image)
 
 <p>The format of the GetAuthenticPixelQueue() method is:</p>
 
-<pre class="text">
-PixelPacket *GetAuthenticPixelQueue(const Image image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *GetAuthenticPixelQueue(const Image image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -200,11 +218,10 @@ PixelPacket *GetAuthenticPixelQueue(const Image image)
 
 <p>The format of the GetAuthenticPixels() method is:</p>
 
-<pre class="text">
-PixelPacket *GetAuthenticPixels(Image *image,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *GetAuthenticPixels(Image *image,const ssize_t x,
   const ssize_t y,const size_t columns,const size_t rows,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -232,10 +249,9 @@ PixelPacket *GetAuthenticPixels(Image *image,const ssize_t x,
 
 <p>The format of the GetOneAuthenticPixel() method is:</p>
 
-<pre class="text">
-MagickBooleanType GetOneAuthenticPixel(const Image image,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneAuthenticPixel(const Image image,const ssize_t x,
   const ssize_t y,PixelPacket *pixel,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -267,11 +283,10 @@ MagickBooleanType GetOneAuthenticPixel(const Image image,const ssize_t x,
 
 <p>The format of the GetOneVirtualMagickPixel() method is:</p>
 
-<pre class="text">
-MagickBooleanType GetOneVirtualMagickPixel(const Image image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneVirtualMagickPixel(const Image image,
   const ssize_t x,const ssize_t y,MagickPixelPacket *pixel,
   ExceptionInfo exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -303,11 +318,10 @@ MagickBooleanType GetOneVirtualMagickPixel(const Image image,
 
 <p>The format of the GetOneVirtualMethodPixel() method is:</p>
 
-<pre class="text">
-MagickBooleanType GetOneVirtualMethodPixel(const Image image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneVirtualMethodPixel(const Image image,
   const VirtualPixelMethod virtual_pixel_method,const ssize_t x,
   const ssize_t y,Pixelpacket *pixel,ExceptionInfo exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -343,10 +357,9 @@ MagickBooleanType GetOneVirtualMethodPixel(const Image image,
 
 <p>The format of the GetOneVirtualPixel() method is:</p>
 
-<pre class="text">
-MagickBooleanType GetOneVirtualPixel(const Image image,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetOneVirtualPixel(const Image image,const ssize_t x,
   const ssize_t y,PixelPacket *pixel,ExceptionInfo exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -378,9 +391,8 @@ MagickBooleanType GetOneVirtualPixel(const Image image,const ssize_t x,
 
 <p>The format of the GetVirtualIndexQueue() method is:</p>
 
-<pre class="text">
-const IndexPacket *GetVirtualIndexQueue(const Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>const IndexPacket *GetVirtualIndexQueue(const Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -400,9 +412,8 @@ const IndexPacket *GetVirtualIndexQueue(const Image *image)
 
 <p>The format of the GetVirtualPixelQueue() method is:</p>
 
-<pre class="text">
-const PixelPacket *GetVirtualPixelQueue(const Image image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>const PixelPacket *GetVirtualPixelQueue(const Image image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -428,11 +439,10 @@ const PixelPacket *GetVirtualPixelQueue(const Image image)
 
 <p>The format of the GetVirtualPixels() method is:</p>
 
-<pre class="text">
-const PixelPacket *GetVirtualPixels(const Image *image,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>const PixelPacket *GetVirtualPixels(const Image *image,const ssize_t x,
   const ssize_t y,const size_t columns,const size_t rows,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -458,7 +468,7 @@ const PixelPacket *GetVirtualPixels(const Image *image,const ssize_t x,
 
 <p>QueueAuthenticPixels() queues a mutable pixel region.  If the region is successfully initialized a pointer to a PixelPacket array representing the region is returned, otherwise NULL is returned.  The returned pointer may point to a temporary working buffer for the pixels or it may point to the final location of the pixels in memory.</p>
 
-<p>Write-only access means that any existing pixel values corresponding to the region are ignored.  This is useful if the initial image is being created from scratch, or if the existing pixel values are to be completely replaced without need to refer to their pre-existing values. The application is free to read and write the pixel buffer returned by QueueAuthenticPixels() any way it pleases. QueueAuthenticPixels() does not initialize the pixel array values. Initializing pixel array values is the application's responsibility.</p>
+<p>Write-only access means that any existing pixel values corresponding to the region are ignored.  This is useful if the initial image is being created from scratch, or if the existing pixel values are to be completely replaced without need to refer to their preexisting values. The application is free to read and write the pixel buffer returned by QueueAuthenticPixels() any way it pleases. QueueAuthenticPixels() does not initialize the pixel array values. Initializing pixel array values is the application's responsibility.</p>
 
 <p>Performance is maximized if the selected region is part of one row, or one or more full rows, since then there is opportunity to access the pixels in-place (without a copy) if the image is in memory, or in a memory-mapped file. The returned pointer must *never* be deallocated by the user.</p>
 
@@ -466,11 +476,10 @@ const PixelPacket *GetVirtualPixels(const Image *image,const ssize_t x,
 
 <p>The format of the QueueAuthenticPixels() method is:</p>
 
-<pre class="text">
-PixelPacket *QueueAuthenticPixels(Image *image,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>PixelPacket *QueueAuthenticPixels(Image *image,const ssize_t x,
   const ssize_t y,const size_t columns,const size_t rows,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -498,10 +507,9 @@ PixelPacket *QueueAuthenticPixels(Image *image,const ssize_t x,
 
 <p>The format of the SetPixelCacheVirtualMethod() method is:</p>
 
-<pre class="text">
-VirtualPixelMethod SetPixelCacheVirtualMethod(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>VirtualPixelMethod SetPixelCacheVirtualMethod(const Image *image,
   const VirtualPixelMethod virtual_pixel_method)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -525,10 +533,9 @@ VirtualPixelMethod SetPixelCacheVirtualMethod(const Image *image,
 
 <p>The format of the SyncAuthenticPixels() method is:</p>
 
-<pre class="text">
-MagickBooleanType SyncAuthenticPixels(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SyncAuthenticPixels(Image *image,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

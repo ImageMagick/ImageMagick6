@@ -90,20 +90,30 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="feature.html#CannyEdgeImage">CannyEdgeImage</a></li>
+  <li><a href="feature.html#GetImageChannelFeatures">GetImageChannelFeatures</a></li>
+  <li><a href="feature.html#Use HoughLineImage">Use HoughLineImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="feature.html#CannyEdgeImage">CannyEdgeImage</a> &#8226; <a href="feature.html#GetImageChannelFeatures">GetImageChannelFeatures</a> &#8226; <a href="feature.html#Use HoughLineImage">Use HoughLineImage</a> &#8226; <a href="feature.html#MeanShiftImage">MeanShiftImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/feature_8c.html" id="CannyEdgeImage">CannyEdgeImage</a></h2>
 
 <p>CannyEdgeImage() uses a multi-stage algorithm to detect a wide range of edges in images.</p>
 
 <p>The format of the CannyEdgeImage method is:</p>
 
-<pre class="text">
-Image *CannyEdgeImage(const Image *image,const double radius,
+<pre class="bg-light text-dark mx-4"><samp>Image *CannyEdgeImage(const Image *image,const double radius,
   const double sigma,const double lower_percent,
   const double upper_percent,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -141,19 +151,17 @@ Image *CannyEdgeImage(const Image *image,const double radius,
 
 <p>GetImageChannelFeatures() returns features for each channel in the image in each of four directions (horizontal, vertical, left and right diagonals) for the specified distance.  The features include the angular second moment, contrast, correlation, sum of squares: variance, inverse difference moment, sum average, sum varience, sum entropy, entropy, difference variance,  difference entropy, information measures of correlation 1, information measures of correlation 2, and maximum correlation coefficient.  You can access the red channel contrast, for example, like this:</p>
 
-<pre class="text">
-channel_features=GetImageChannelFeatures(image,1,exception);
+<pre class="bg-light text-dark mx-4"><samp>channel_features=GetImageChannelFeatures(image,1,exception);
 contrast=channel_features[RedChannel].contrast[0];
-</pre>
+</samp></pre>
 
 <p>Use MagickRelinquishMemory() to free the features buffer.</p>
 
 <p>The format of the GetImageChannelFeatures method is:</p>
 
-<pre class="text">
-ChannelFeatures *GetImageChannelFeatures(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>ChannelFeatures *GetImageChannelFeatures(const Image *image,
   const size_t distance,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -181,10 +189,9 @@ ChannelFeatures *GetImageChannelFeatures(const Image *image,
 
 <p>The format of the HoughLineImage method is:</p>
 
-<pre class="text">
-Image *HoughLineImage(const Image *image,const size_t width,
+<pre class="bg-light text-dark mx-4"><samp>Image *HoughLineImage(const Image *image,const size_t width,
   const size_t height,const size_t threshold,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -216,11 +223,10 @@ Image *HoughLineImage(const Image *image,const size_t width,
 
 <p>The format of the MeanShiftImage method is:</p>
 
-<pre class="text">
-Image *MeanShiftImage(const Image *image,const size_t width,
+<pre class="bg-light text-dark mx-4"><samp>Image *MeanShiftImage(const Image *image,const size_t width,
   const size_t height,const double color_distance,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

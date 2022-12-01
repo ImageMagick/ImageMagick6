@@ -90,18 +90,40 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="wand-view.html#CloneWandView">CloneWandView</a></li>
+  <li><a href="wand-view.html#DestroyWandView">DestroyWandView</a></li>
+  <li><a href="wand-view.html#DuplexTransferWandViewIterator">DuplexTransferWandViewIterator</a></li>
+  <li><a href="wand-view.html#GetWandViewException">GetWandViewException</a></li>
+  <li><a href="wand-view.html#GetWandViewExtent">GetWandViewExtent</a></li>
+  <li><a href="wand-view.html#GetWandViewIterator">GetWandViewIterator</a></li>
+  <li><a href="wand-view.html#GetWandViewPixels">GetWandViewPixels</a></li>
+  <li><a href="wand-view.html#GetWandViewWand">GetWandViewWand</a></li>
+  <li><a href="wand-view.html#IsWandView">IsWandView</a></li>
+  <li><a href="wand-view.html#NewWandView">NewWandView</a></li>
+  <li><a href="wand-view.html#NewWandViewExtent">NewWandViewExtent</a></li>
+  <li><a href="wand-view.html#SetWandViewDescription">SetWandViewDescription</a></li>
+  <li><a href="wand-view.html#SetWandViewIterator">SetWandViewIterator</a></li>
+  <li><a href="wand-view.html#SetWandViewThreads">SetWandViewThreads</a></li>
+  <li><a href="wand-view.html#TransferWandViewIterator">TransferWandViewIterator</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="wand-view.html#CloneWandView">CloneWandView</a> &#8226; <a href="wand-view.html#DestroyWandView">DestroyWandView</a> &#8226; <a href="wand-view.html#DuplexTransferWandViewIterator">DuplexTransferWandViewIterator</a> &#8226; <a href="wand-view.html#GetWandViewException">GetWandViewException</a> &#8226; <a href="wand-view.html#GetWandViewExtent">GetWandViewExtent</a> &#8226; <a href="wand-view.html#GetWandViewIterator">GetWandViewIterator</a> &#8226; <a href="wand-view.html#GetWandViewPixels">GetWandViewPixels</a> &#8226; <a href="wand-view.html#GetWandViewWand">GetWandViewWand</a> &#8226; <a href="wand-view.html#IsWandView">IsWandView</a> &#8226; <a href="wand-view.html#NewWandView">NewWandView</a> &#8226; <a href="wand-view.html#NewWandViewExtent">NewWandViewExtent</a> &#8226; <a href="wand-view.html#SetWandViewDescription">SetWandViewDescription</a> &#8226; <a href="wand-view.html#SetWandViewIterator">SetWandViewIterator</a> &#8226; <a href="wand-view.html#SetWandViewThreads">SetWandViewThreads</a> &#8226; <a href="wand-view.html#TransferWandViewIterator">TransferWandViewIterator</a> &#8226; <a href="wand-view.html#UpdateWandViewIterator">UpdateWandViewIterator</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/wand-view_8c.html" id="CloneWandView">CloneWandView</a></h2>
 
 <p>CloneWandView() makes a copy of the specified wand view.</p>
 
 <p>The format of the CloneWandView method is:</p>
 
-<pre class="text">
-WandView *CloneWandView(const WandView *wand_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>WandView *CloneWandView(const WandView *wand_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -121,9 +143,8 @@ WandView *CloneWandView(const WandView *wand_view)
 
 <p>The format of the DestroyWandView method is:</p>
 
-<pre class="text">
-WandView *DestroyWandView(WandView *wand_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>WandView *DestroyWandView(WandView *wand_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -143,27 +164,24 @@ WandView *DestroyWandView(WandView *wand_view)
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType DuplexTransferImageViewMethod(const WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DuplexTransferImageViewMethod(const WandView *source,
   const WandView *duplex,WandView *destination,const ssize_t y,
   const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback transfer method that must be executed by a single thread at a time.</p>
 
 <p>The format of the DuplexTransferWandViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType DuplexTransferWandViewIterator(WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType DuplexTransferWandViewIterator(WandView *source,
   WandView *duplex,WandView *destination,
   DuplexTransferWandViewMethod transfer,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -199,10 +217,9 @@ MagickBooleanType DuplexTransferWandViewIterator(WandView *source,
 
 <p>The format of the GetWandViewException method is:</p>
 
-<pre class="text">
-char *GetWandViewException(const WandView *wand_view,
+<pre class="bg-light text-dark mx-4"><samp>char *GetWandViewException(const WandView *wand_view,
   ExceptionType *severity)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -226,9 +243,8 @@ char *GetWandViewException(const WandView *wand_view,
 
 <p>The format of the GetWandViewExtent method is:</p>
 
-<pre class="text">
-RectangleInfo GetWandViewExtent(const WandView *wand_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>RectangleInfo GetWandViewExtent(const WandView *wand_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -248,25 +264,22 @@ RectangleInfo GetWandViewExtent(const WandView *wand_view)
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageViewMethod(const WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageViewMethod(const WandView *source,
   const ssize_t y,const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback get method that must be executed by a single thread at a time.</p>
 
 <p>The format of the GetWandViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType GetWandViewIterator(WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetWandViewIterator(WandView *source,
   GetWandViewMethod get,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -294,9 +307,8 @@ MagickBooleanType GetWandViewIterator(WandView *source,
 
 <p>The format of the GetWandViewPixels method is:</p>
 
-<pre class="text">
-PixelWand *GetWandViewPixels(const WandView *wand_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PixelWand *GetWandViewPixels(const WandView *wand_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -316,9 +328,8 @@ PixelWand *GetWandViewPixels(const WandView *wand_view)
 
 <p>The format of the GetWandViewWand method is:</p>
 
-<pre class="text">
-MagickWand *GetWandViewWand(const WandView *wand_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickWand *GetWandViewWand(const WandView *wand_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -338,9 +349,8 @@ MagickWand *GetWandViewWand(const WandView *wand_view)
 
 <p>The format of the IsWandView method is:</p>
 
-<pre class="text">
-MagickBooleanType IsWandView(const WandView *wand_view)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType IsWandView(const WandView *wand_view)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -360,9 +370,8 @@ MagickBooleanType IsWandView(const WandView *wand_view)
 
 <p>The format of the NewWandView method is:</p>
 
-<pre class="text">
-WandView *NewWandView(MagickWand *wand)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>WandView *NewWandView(MagickWand *wand)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -382,10 +391,9 @@ WandView *NewWandView(MagickWand *wand)
 
 <p>The format of the NewWandViewExtent method is:</p>
 
-<pre class="text">
-WandView *NewWandViewExtent(MagickWand *wand,const ssize_t x,
+<pre class="bg-light text-dark mx-4"><samp>WandView *NewWandViewExtent(MagickWand *wand,const ssize_t x,
   const ssize_t y,const size_t width,const size_t height)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -409,9 +417,8 @@ WandView *NewWandViewExtent(MagickWand *wand,const ssize_t x,
 
 <p>The format of the SetWandViewDescription method is:</p>
 
-<pre class="text">
-void SetWandViewDescription(WandView *image_view,const char *description)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void SetWandViewDescription(WandView *image_view,const char *description)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -435,25 +442,22 @@ void SetWandViewDescription(WandView *image_view,const char *description)
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType SetImageViewMethod(ImageView *destination,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetImageViewMethod(ImageView *destination,
   const ssize_t y,const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback set method that must be executed by a single thread at a time.</p>
 
 <p>The format of the SetWandViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType SetWandViewIterator(WandView *destination,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetWandViewIterator(WandView *destination,
   SetWandViewMethod set,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -481,10 +485,9 @@ MagickBooleanType SetWandViewIterator(WandView *destination,
 
 <p>The format of the SetWandViewDescription method is:</p>
 
-<pre class="text">
-void SetWandViewThreads(WandView *image_view,
+<pre class="bg-light text-dark mx-4"><samp>void SetWandViewThreads(WandView *image_view,
   const size_t number_threads)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -508,26 +511,23 @@ void SetWandViewThreads(WandView *image_view,
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType TransferImageViewMethod(const WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType TransferImageViewMethod(const WandView *source,
   WandView *destination,const ssize_t y,const int thread_id,
   void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback transfer method that must be executed by a single thread at a time.</p>
 
 <p>The format of the TransferWandViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType TransferWandViewIterator(WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType TransferWandViewIterator(WandView *source,
   WandView *destination,TransferWandViewMethod transfer,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -559,25 +559,22 @@ MagickBooleanType TransferWandViewIterator(WandView *source,
 
 <p>The callback signature is:</p>
 
-<pre class="text">
-MagickBooleanType UpdateImageViewMethod(WandView *source,const ssize_t y,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType UpdateImageViewMethod(WandView *source,const ssize_t y,
   const int thread_id,void *context)
-</pre>
+</samp></pre>
 
 <p>Use this pragma if the view is not single threaded:</p>
 
-<pre class="text">
-    #pragma omp critical
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>    #pragma omp critical
+</samp></pre>
 
 <p>to define a section of code in your callback update method that must be executed by a single thread at a time.</p>
 
 <p>The format of the UpdateWandViewIterator method is:</p>
 
-<pre class="text">
-MagickBooleanType UpdateWandViewIterator(WandView *source,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType UpdateWandViewIterator(WandView *source,
   UpdateWandViewMethod update,void *context)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

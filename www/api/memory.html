@@ -90,9 +90,34 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a></li>
+  <li><a href="memory.html#AcquireAlignedMemory">AcquireAlignedMemory</a></li>
+  <li><a href="memory.html#AcquireMagickMemory">AcquireMagickMemory</a></li>
+  <li><a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a></li>
+  <li><a href="memory.html#AcquireQuantumMemory">AcquireQuantumMemory</a></li>
+  <li><a href="memory.html#AcquireVirtualMemory">AcquireVirtualMemory</a></li>
+  <li><a href="memory.html#CopyMagickMemory">CopyMagickMemory</a></li>
+  <li><a href="memory.html#GetMagickMemoryMethods">GetMagickMemoryMethods</a></li>
+  <li><a href="memory.html#GetVirtualMemoryBlob">GetVirtualMemoryBlob</a></li>
+  <li><a href="memory.html#RelinquishAlignedMemory">RelinquishAlignedMemory</a></li>
+  <li><a href="memory.html#RelinquishMagickMemory">RelinquishMagickMemory</a></li>
+  <li><a href="memory.html#RelinquishVirtualMemory">RelinquishVirtualMemory</a></li>
+  <li><a href="memory.html#ResetMagickMemory">ResetMagickMemory</a></li>
+  <li><a href="memory.html#ResizeMagickMemory">ResizeMagickMemory</a></li>
+  <li><a href="memory.html#ResizeQuantumMemory">ResizeQuantumMemory</a></li>
+  <li><a href="memory.html#SetMagickAlignedMemoryMethods">SetMagickAlignedMemoryMethods</a></li>
+  <li><a href="memory.html#SetMagickMemoryMethods">SetMagickMemoryMethods</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a> &#8226; <a href="memory.html#AcquireAlignedMemory">AcquireAlignedMemory</a> &#8226; <a href="memory.html#AcquireMagickMemory">AcquireMagickMemory</a> &#8226; <a href="memory.html#AcquireCriticalMemory">AcquireCriticalMemory</a> &#8226; <a href="memory.html#AcquireQuantumMemory">AcquireQuantumMemory</a> &#8226; <a href="memory.html#AcquireVirtualMemory">AcquireVirtualMemory</a> &#8226; <a href="memory.html#CopyMagickMemory">CopyMagickMemory</a> &#8226; <a href="memory.html#GetMagickMemoryMethods">GetMagickMemoryMethods</a> &#8226; <a href="memory.html#GetVirtualMemoryBlob">GetVirtualMemoryBlob</a> &#8226; <a href="memory.html#RelinquishAlignedMemory">RelinquishAlignedMemory</a> &#8226; <a href="memory.html#RelinquishMagickMemory">RelinquishMagickMemory</a> &#8226; <a href="memory.html#RelinquishVirtualMemory">RelinquishVirtualMemory</a> &#8226; <a href="memory.html#ResetMagickMemory">ResetMagickMemory</a> &#8226; <a href="memory.html#ResizeMagickMemory">ResizeMagickMemory</a> &#8226; <a href="memory.html#ResizeQuantumMemory">ResizeQuantumMemory</a> &#8226; <a href="memory.html#SetMagickAlignedMemoryMethods">SetMagickAlignedMemoryMethods</a> &#8226; <a href="memory.html#SetMagickMemoryMethods">SetMagickMemoryMethods</a> &#8226; <a href="memory.html#ShredMagickMemory">ShredMagickMemory</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/memory_8c.html" id="AcquireCriticalMemory">AcquireCriticalMemory</a></h2>
 
 <p>AcquireCriticalMemory(): allocate a small memory request with AcquireMagickMemory(), however, on fail throw a fatal exception and exit. Free the memory reserve with RelinquishMagickMemory(). AcquireAlignedMemory(): allocate a small memory request that is aligned on a cache line.  On fail, return NULL for possible recovery. Free the memory reserve with RelinquishMagickMemory(). AcquireMagickMemory()/ResizeMagickMemory(): allocate a small to medium memory request, typically with malloc()/realloc(). On fail, return NULL for possible recovery.  Free the memory reserve with RelinquishMagickMemory(). AcquireQuantumMemory()/ResizeQuantumMemory(): allocate a small to medium memory request.  This is a secure memory allocator as it accepts two parameters, count and quantum, to ensure the request does not overflow. It also check to ensure the request does not exceed the maximum memory per the security policy.  Free the memory reserve with RelinquishMagickMemory(). AcquireVirtualMemory(): allocate a large memory request either in heap, memory-mapped, or memory-mapped on disk depending on whether heap allocation fails or if the request exceeds the maximum memory policy. Free the memory reserve with RelinquishVirtualMemory(). ResetMagickMemory(): fills the bytes of the memory area with a constant byte.</p>
@@ -111,9 +136,8 @@
 
 <p>The format of the AcquireAlignedMemory method is:</p>
 
-<pre class="text">
-void *AcquireAlignedMemory(const size_t count,const size_t quantum)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *AcquireAlignedMemory(const size_t count,const size_t quantum)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -137,9 +161,8 @@ void *AcquireAlignedMemory(const size_t count,const size_t quantum)
 
 <p>The format of the AcquireMagickMemory method is:</p>
 
-<pre class="text">
-void *AcquireMagickMemory(const size_t size)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *AcquireMagickMemory(const size_t size)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -161,9 +184,8 @@ void *AcquireMagickMemory(const size_t size)
 
 <p>The format of the AcquireCriticalMemory method is:</p>
 
-<pre class="text">
-void *AcquireCriticalMemory(const size_t size)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *AcquireCriticalMemory(const size_t size)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -183,9 +205,8 @@ void *AcquireCriticalMemory(const size_t size)
 
 <p>The format of the AcquireQuantumMemory method is:</p>
 
-<pre class="text">
-void *AcquireQuantumMemory(const size_t count,const size_t quantum)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *AcquireQuantumMemory(const size_t count,const size_t quantum)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -209,9 +230,8 @@ void *AcquireQuantumMemory(const size_t count,const size_t quantum)
 
 <p>The format of the AcquireVirtualMemory method is:</p>
 
-<pre class="text">
-MemoryInfo *AcquireVirtualMemory(const size_t count,const size_t quantum)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MemoryInfo *AcquireVirtualMemory(const size_t count,const size_t quantum)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -235,10 +255,9 @@ MemoryInfo *AcquireVirtualMemory(const size_t count,const size_t quantum)
 
 <p>The format of the CopyMagickMemory method is:</p>
 
-<pre class="text">
-void *CopyMagickMemory(void *magick_restrict destination,
+<pre class="bg-light text-dark mx-4"><samp>void *CopyMagickMemory(void *magick_restrict destination,
   const void *magick_restrict source,const size_t size)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -266,11 +285,10 @@ void *CopyMagickMemory(void *magick_restrict destination,
 
 <p>The format of the GetMagickMemoryMethods() method is:</p>
 
-<pre class="text">
-void GetMagickMemoryMethods(AcquireMemoryHandler *acquire_memory_handler,
+<pre class="bg-light text-dark mx-4"><samp>void GetMagickMemoryMethods(AcquireMemoryHandler *acquire_memory_handler,
   ResizeMemoryHandler *resize_memory_handler,
   DestroyMemoryHandler *destroy_memory_handler)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -298,9 +316,8 @@ void GetMagickMemoryMethods(AcquireMemoryHandler *acquire_memory_handler,
 
 <p>The format of the GetVirtualMemoryBlob method is:</p>
 
-<pre class="text">
-void *GetVirtualMemoryBlob(const MemoryInfo *memory_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *GetVirtualMemoryBlob(const MemoryInfo *memory_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -318,9 +335,8 @@ void *GetVirtualMemoryBlob(const MemoryInfo *memory_info)
 
 <p>The format of the RelinquishAlignedMemory method is:</p>
 
-<pre class="text">
-void *RelinquishAlignedMemory(void *memory)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *RelinquishAlignedMemory(void *memory)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -340,9 +356,8 @@ void *RelinquishAlignedMemory(void *memory)
 
 <p>The format of the RelinquishMagickMemory method is:</p>
 
-<pre class="text">
-void *RelinquishMagickMemory(void *memory)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *RelinquishMagickMemory(void *memory)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -362,9 +377,8 @@ void *RelinquishMagickMemory(void *memory)
 
 <p>The format of the RelinquishVirtualMemory method is:</p>
 
-<pre class="text">
-MemoryInfo *RelinquishVirtualMemory(MemoryInfo *memory_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MemoryInfo *RelinquishVirtualMemory(MemoryInfo *memory_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -384,9 +398,8 @@ MemoryInfo *RelinquishVirtualMemory(MemoryInfo *memory_info)
 
 <p>The format of the ResetMagickMemory method is:</p>
 
-<pre class="text">
-void *ResetMagickMemory(void *memory,int c,const size_t size)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *ResetMagickMemory(void *memory,int c,const size_t size)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -414,9 +427,8 @@ void *ResetMagickMemory(void *memory,int c,const size_t size)
 
 <p>The format of the ResizeMagickMemory method is:</p>
 
-<pre class="text">
-void *ResizeMagickMemory(void *memory,const size_t size)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void *ResizeMagickMemory(void *memory,const size_t size)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -440,10 +452,9 @@ void *ResizeMagickMemory(void *memory,const size_t size)
 
 <p>The format of the ResizeQuantumMemory method is:</p>
 
-<pre class="text">
-void *ResizeQuantumMemory(void *memory,const size_t count,
+<pre class="bg-light text-dark mx-4"><samp>void *ResizeQuantumMemory(void *memory,const size_t count,
   const size_t quantum)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -471,11 +482,10 @@ void *ResizeQuantumMemory(void *memory,const size_t count,
 
 <p>The format of the SetMagickAlignedMemoryMethods() method is:</p>
 
-<pre class="text">
-SetMagickAlignedMemoryMethods(
+<pre class="bg-light text-dark mx-4"><samp>SetMagickAlignedMemoryMethods(
   AcquireAlignedMemoryHandler acquire_aligned_memory_handler,
   RelinquishAlignedMemoryHandler relinquish_aligned_memory_handler)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -499,11 +509,10 @@ SetMagickAlignedMemoryMethods(
 
 <p>The format of the SetMagickMemoryMethods() method is:</p>
 
-<pre class="text">
-SetMagickMemoryMethods(AcquireMemoryHandler acquire_memory_handler,
+<pre class="bg-light text-dark mx-4"><samp>SetMagickMemoryMethods(AcquireMemoryHandler acquire_memory_handler,
   ResizeMemoryHandler resize_memory_handler,
   DestroyMemoryHandler destroy_memory_handler)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -531,9 +540,8 @@ SetMagickMemoryMethods(AcquireMemoryHandler acquire_memory_handler,
 
 <p>The format of the ShredMagickMemory method is:</p>
 
-<pre class="text">
-MagickBooleanType ShredMagickMemory(void *memory,const size_t length)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType ShredMagickMemory(void *memory,const size_t length)
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 

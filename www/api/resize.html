@@ -90,9 +90,26 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="resize.html#AdaptiveResizeImage">AdaptiveResizeImage</a></li>
+  <li><a href="resize.html#InterpolativeResizeImage">InterpolativeResizeImage</a></li>
+  <li><a href="resize.html#LiquidRescaleImage">LiquidRescaleImage</a></li>
+  <li><a href="resize.html#MagnifyImage">MagnifyImage</a></li>
+  <li><a href="resize.html#MinifyImage">MinifyImage</a></li>
+  <li><a href="resize.html#ResampleImage">ResampleImage</a></li>
+  <li><a href="resize.html#ResizeImage">ResizeImage</a></li>
+  <li><a href="resize.html#SampleImage">SampleImage</a></li>
+  <li><a href="resize.html#ScaleImage">ScaleImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="resize.html#AdaptiveResizeImage">AdaptiveResizeImage</a> &#8226; <a href="resize.html#InterpolativeResizeImage">InterpolativeResizeImage</a> &#8226; <a href="resize.html#LiquidRescaleImage">LiquidRescaleImage</a> &#8226; <a href="resize.html#MagnifyImage">MagnifyImage</a> &#8226; <a href="resize.html#MinifyImage">MinifyImage</a> &#8226; <a href="resize.html#ResampleImage">ResampleImage</a> &#8226; <a href="resize.html#ResizeImage">ResizeImage</a> &#8226; <a href="resize.html#SampleImage">SampleImage</a> &#8226; <a href="resize.html#ScaleImage">ScaleImage</a> &#8226; <a href="resize.html#ThumbnailImage">ThumbnailImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/resize_8c.html" id="AdaptiveResizeImage">AdaptiveResizeImage</a></h2>
 
 <p>AdaptiveResizeImage() adaptively resize image with pixel resampling.</p>
@@ -101,10 +118,9 @@
 
 <p>The format of the AdaptiveResizeImage method is:</p>
 
-<pre class="text">
-Image *AdaptiveResizeImage(const Image *image,const size_t columns,
+<pre class="bg-light text-dark mx-4"><samp>Image *AdaptiveResizeImage(const Image *image,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -136,11 +152,10 @@ Image *AdaptiveResizeImage(const Image *image,const size_t columns,
 
 <p>The format of the InterpolativeResizeImage method is:</p>
 
-<pre class="text">
-Image *InterpolativeResizeImage(const Image *image,const size_t columns,
+<pre class="bg-light text-dark mx-4"><samp>Image *InterpolativeResizeImage(const Image *image,const size_t columns,
   const size_t rows,const InterpolatePixelMethod method,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -176,11 +191,10 @@ Image *InterpolativeResizeImage(const Image *image,const size_t columns,
 
 <p>The format of the LiquidRescaleImage method is:</p>
 
-<pre class="text">
-Image *LiquidRescaleImage(const Image *image,
+<pre class="bg-light text-dark mx-4"><samp>Image *LiquidRescaleImage(const Image *image,
   const size_t columns,const size_t rows,
   const double delta_x,const double rigidity,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -220,9 +234,8 @@ Image *LiquidRescaleImage(const Image *image,
 
 <p>The format of the MagnifyImage method is:</p>
 
-<pre class="text">
-Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -246,9 +259,8 @@ Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the MinifyImage method is:</p>
 
-<pre class="text">
-Image *MinifyImage(const Image *image,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *MinifyImage(const Image *image,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -272,11 +284,10 @@ Image *MinifyImage(const Image *image,ExceptionInfo *exception)
 
 <p>The format of the ResampleImage method is:</p>
 
-<pre class="text">
-Image *ResampleImage(Image *image,const double x_resolution,
+<pre class="bg-light text-dark mx-4"><samp>Image *ResampleImage(Image *image,const double x_resolution,
   const double y_resolution,const FilterTypes filter,const double blur,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -316,11 +327,10 @@ Image *ResampleImage(Image *image,const double x_resolution,
 
 <p>The format of the ResizeImage method is:</p>
 
-<pre class="text">
-Image *ResizeImage(Image *image,const size_t columns,
+<pre class="bg-light text-dark mx-4"><samp>Image *ResizeImage(Image *image,const size_t columns,
   const size_t rows,const FilterTypes filter,const double blur,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -360,10 +370,9 @@ Image *ResizeImage(Image *image,const size_t columns,
 
 <p>The format of the SampleImage method is:</p>
 
-<pre class="text">
-Image *SampleImage(const Image *image,const size_t columns,
+<pre class="bg-light text-dark mx-4"><samp>Image *SampleImage(const Image *image,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -395,10 +404,9 @@ Image *SampleImage(const Image *image,const size_t columns,
 
 <p>The format of the ScaleImage method is:</p>
 
-<pre class="text">
-Image *ScaleImage(const Image *image,const size_t columns,
+<pre class="bg-light text-dark mx-4"><samp>Image *ScaleImage(const Image *image,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -430,10 +438,9 @@ Image *ScaleImage(const Image *image,const size_t columns,
 
 <p>The format of the ThumbnailImage method is:</p>
 
-<pre class="text">
-Image *ThumbnailImage(const Image *image,const size_t columns,
+<pre class="bg-light text-dark mx-4"><samp>Image *ThumbnailImage(const Image *image,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

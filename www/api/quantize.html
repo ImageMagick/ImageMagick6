@@ -90,9 +90,29 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="quantize.html#QuantizeImage">QuantizeImage</a></li>
+  <li><a href="quantize.html#AcquireQuantizeInfo">AcquireQuantizeInfo</a></li>
+  <li><a href="quantize.html#CloneQuantizeInfo">CloneQuantizeInfo</a></li>
+  <li><a href="quantize.html#CompressImageColormap">CompressImageColormap</a></li>
+  <li><a href="quantize.html#DestroyQuantizeInfo">DestroyQuantizeInfo</a></li>
+  <li><a href="quantize.html#GetImageQuantizeError">GetImageQuantizeError</a></li>
+  <li><a href="quantize.html#GetQuantizeInfo">GetQuantizeInfo</a></li>
+  <li><a href="quantize.html#PosterizeImage">PosterizeImage</a></li>
+  <li><a href="quantize.html#QuantizeImage">QuantizeImage</a></li>
+  <li><a href="quantize.html#QuantizeImages">QuantizeImages</a></li>
+  <li><a href="quantize.html#RemapImage">RemapImage</a></li>
+  <li><a href="quantize.html#RemapImages">RemapImages</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="quantize.html#QuantizeImage">QuantizeImage</a> &#8226; <a href="quantize.html#AcquireQuantizeInfo">AcquireQuantizeInfo</a> &#8226; <a href="quantize.html#CloneQuantizeInfo">CloneQuantizeInfo</a> &#8226; <a href="quantize.html#CompressImageColormap">CompressImageColormap</a> &#8226; <a href="quantize.html#DestroyQuantizeInfo">DestroyQuantizeInfo</a> &#8226; <a href="quantize.html#GetImageQuantizeError">GetImageQuantizeError</a> &#8226; <a href="quantize.html#GetQuantizeInfo">GetQuantizeInfo</a> &#8226; <a href="quantize.html#PosterizeImage">PosterizeImage</a> &#8226; <a href="quantize.html#QuantizeImage">QuantizeImage</a> &#8226; <a href="quantize.html#QuantizeImages">QuantizeImages</a> &#8226; <a href="quantize.html#RemapImage">RemapImage</a> &#8226; <a href="quantize.html#RemapImages">RemapImages</a> &#8226; <a href="quantize.html#SetGrayscaleImage">SetGrayscaleImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/quantize_8c.html" id="QuantizeImage">QuantizeImage</a></h2>
 
 <p>QuantizeImage() takes a standard RGB or monochrome images and quantizes them down to some fixed number of colors.</p>
@@ -115,10 +135,9 @@
 
 <p>For each pixel in the input image, storage_class scans downward from the root of the color description tree.  At each level of the tree it identifies the single node which represents a cube in RGB space containing the pixel's color.  It updates the following data for each such node:</p>
 
-<pre class="text">
-    n1: Number of pixels whose color is contained in the RGB cube which
+<pre class="bg-light text-dark mx-4"><samp>    n1: Number of pixels whose color is contained in the RGB cube which
     this node represents;
-</pre>
+</samp></pre>
 
 <p>n2: Number of pixels whose color is not represented in a node at lower depth in the tree;  initially,  n2 = 0 for all nodes except leaves of the tree.</p>
 
@@ -160,9 +179,8 @@
 
 <p>The format of the AcquireQuantizeInfo method is:</p>
 
-<pre class="text">
-QuantizeInfo *AcquireQuantizeInfo(const ImageInfo *image_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>QuantizeInfo *AcquireQuantizeInfo(const ImageInfo *image_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -182,9 +200,8 @@ QuantizeInfo *AcquireQuantizeInfo(const ImageInfo *image_info)
 
 <p>The format of the CloneQuantizeInfo method is:</p>
 
-<pre class="text">
-QuantizeInfo *CloneQuantizeInfo(const QuantizeInfo *quantize_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>QuantizeInfo *CloneQuantizeInfo(const QuantizeInfo *quantize_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -208,9 +225,8 @@ QuantizeInfo *CloneQuantizeInfo(const QuantizeInfo *quantize_info)
 
 <p>The format of the CompressImageColormap method is:</p>
 
-<pre class="text">
-MagickBooleanType CompressImageColormap(Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType CompressImageColormap(Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -230,9 +246,8 @@ MagickBooleanType CompressImageColormap(Image *image)
 
 <p>The format of the DestroyQuantizeInfo method is:</p>
 
-<pre class="text">
-QuantizeInfo *DestroyQuantizeInfo(QuantizeInfo *quantize_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>QuantizeInfo *DestroyQuantizeInfo(QuantizeInfo *quantize_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -250,22 +265,20 @@ QuantizeInfo *DestroyQuantizeInfo(QuantizeInfo *quantize_info)
 
 <p>GetImageQuantizeError() measures the difference between the original and quantized images.  This difference is the total quantization error. The error is computed by summing over all pixels in an image the distance squared in RGB space between each reference pixel value and its quantized value.  These values are computed:</p>
 
-<pre class="text">
-    o mean_error_per_pixel:  This value is the mean error for any single
+<pre class="bg-light text-dark mx-4"><samp>    o mean_error_per_pixel:  This value is the mean error for any single
 pixel in the image.
-</pre>
+</samp></pre>
 
 <dt>normalized_mean_square_error</dt>
 <p>This value is the normalized mean quantization error for any single pixel in the image.  This distance measure is normalized to a range between 0 and 1.  It is independent of the range of red, green, and blue values in the image.</p>
 
 <dt>normalized_maximum_square_error</dt>
-<p>Thsi value is the normalized maximum quantization error for any single pixel in the image.  This distance measure is normalized to a range between 0 and 1.  It is independent of the range of red, green, and blue values in your image.</p>
+<p>This value is the normalized maximum quantization error for any single pixel in the image.  This distance measure is normalized to a range between 0 and 1.  It is independent of the range of red, green, and blue values in your image.</p>
 
 <p>The format of the GetImageQuantizeError method is:</p>
 
-<pre class="text">
-MagickBooleanType GetImageQuantizeError(Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType GetImageQuantizeError(Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows.</p>
 
@@ -278,9 +291,8 @@ MagickBooleanType GetImageQuantizeError(Image *image)
 
 <p>The format of the GetQuantizeInfo method is:</p>
 
-<pre class="text">
-GetQuantizeInfo(QuantizeInfo *quantize_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>GetQuantizeInfo(QuantizeInfo *quantize_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -300,13 +312,12 @@ GetQuantizeInfo(QuantizeInfo *quantize_info)
 
 <p>The format of the PosterizeImage method is:</p>
 
-<pre class="text">
-MagickBooleanType PosterizeImage(Image *image,const size_t levels,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PosterizeImage(Image *image,const size_t levels,
   const MagickBooleanType dither)
 MagickBooleanType PosterizeImageChannel(Image *image,
   const ChannelType channel,const size_t levels,
   const MagickBooleanType dither)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -334,10 +345,9 @@ MagickBooleanType PosterizeImageChannel(Image *image,
 
 <p>The format of the QuantizeImage method is:</p>
 
-<pre class="text">
-MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
   Image *image)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -361,10 +371,9 @@ MagickBooleanType QuantizeImage(const QuantizeInfo *quantize_info,
 
 <p>The format of the QuantizeImages method is:</p>
 
-<pre class="text">
-MagickBooleanType QuantizeImages(const QuantizeInfo *quantize_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType QuantizeImages(const QuantizeInfo *quantize_info,
   Image *images)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -388,10 +397,9 @@ MagickBooleanType QuantizeImages(const QuantizeInfo *quantize_info,
 
 <p>The format of the RemapImage method is:</p>
 
-<pre class="text">
-MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
   Image *image,const Image *remap_image)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -419,10 +427,9 @@ MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
 
 <p>The format of the RemapImage method is:</p>
 
-<pre class="text">
-MagickBooleanType RemapImages(const QuantizeInfo *quantize_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType RemapImages(const QuantizeInfo *quantize_info,
   Image *images,Image *remap_image)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -450,9 +457,8 @@ MagickBooleanType RemapImages(const QuantizeInfo *quantize_info,
 
 <p>The format of the SetGrayscaleImage method is:</p>
 
-<pre class="text">
-MagickBooleanType SetGrayscaleImage(Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType SetGrayscaleImage(Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

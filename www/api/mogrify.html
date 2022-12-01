@@ -90,20 +90,27 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="mogrify.html#MagickCommandGenesis">MagickCommandGenesis</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickWand/mogrify_8c.html" id="MagickCommandGenesis">MagickCommandGenesis</a></h2>
 
 <p>MagickCommandGenesis() applies image processing options to an image as prescribed by command line options.</p>
 
 <p>The format of the MagickCommandGenesis method is:</p>
 
-<pre class="text">
-MagickBooleanType MagickCommandGenesis(ImageInfo *image_info,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType MagickCommandGenesis(ImageInfo *image_info,
   MagickCommand command,int argc,char **argv,char **metadata,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

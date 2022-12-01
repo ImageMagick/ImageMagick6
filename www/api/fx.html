@@ -90,21 +90,28 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="fx.html#FxImage">FxImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/fx_8c.html" id="FxImage">FxImage</a></h2>
 
 <p>FxImage() applies a mathematical expression to the specified image.</p>
 
 <p>The format of the FxImage method is:</p>
 
-<pre class="text">
-Image *FxImage(const Image *image,const char *expression,
+<pre class="bg-light text-dark mx-4"><samp>Image *FxImage(const Image *image,const char *expression,
   ExceptionInfo *exception)
 Image *FxImageChannel(const Image *image,const ChannelType channel,
   const char *expression,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

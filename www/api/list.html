@@ -90,18 +90,50 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="list.html#AppendImageToList">AppendImageToList</a></li>
+  <li><a href="list.html#CloneImageList">CloneImageList</a></li>
+  <li><a href="list.html#CloneImages">CloneImages</a></li>
+  <li><a href="list.html#DeleteImageFromList">DeleteImageFromList</a></li>
+  <li><a href="list.html#DeleteImages">DeleteImages</a></li>
+  <li><a href="list.html#DestroyImageList">DestroyImageList</a></li>
+  <li><a href="list.html#DuplicateImages">DuplicateImages</a></li>
+  <li><a href="list.html#GetFirstImageInList">GetFirstImageInList</a></li>
+  <li><a href="list.html#GetImageFromList">GetImageFromList</a></li>
+  <li><a href="list.html#GetImageIndexInList">GetImageIndexInList</a></li>
+  <li><a href="list.html#GetImageListLength">GetImageListLength</a></li>
+  <li><a href="list.html#GetLastImageInList">GetLastImageInList</a></li>
+  <li><a href="list.html#GetNextImageInList">GetNextImageInList</a></li>
+  <li><a href="list.html#GetPreviousImageInList">GetPreviousImageInList</a></li>
+  <li><a href="list.html#ImageListToArray">ImageListToArray</a></li>
+  <li><a href="list.html#InsertImageInList">InsertImageInList</a></li>
+  <li><a href="list.html#NewImageList">NewImageList</a></li>
+  <li><a href="list.html#PrependImageToList">PrependImageToList</a></li>
+  <li><a href="list.html#RemoveImageFromList">RemoveImageFromList</a></li>
+  <li><a href="list.html#RemoveFirstImageFromList">RemoveFirstImageFromList</a></li>
+  <li><a href="list.html#RemoveLastImageFromList">RemoveLastImageFromList</a></li>
+  <li><a href="list.html#ReplaceImageInList">ReplaceImageInList</a></li>
+  <li><a href="list.html#ReplaceImageInListReturnLast">ReplaceImageInListReturnLast</a></li>
+  <li><a href="list.html#ReverseImageList">ReverseImageList</a></li>
+  <li><a href="list.html#SpliceImageIntoList">SpliceImageIntoList</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="list.html#AppendImageToList">AppendImageToList</a> &#8226; <a href="list.html#CloneImageList">CloneImageList</a> &#8226; <a href="list.html#CloneImages">CloneImages</a> &#8226; <a href="list.html#DeleteImageFromList">DeleteImageFromList</a> &#8226; <a href="list.html#DeleteImages">DeleteImages</a> &#8226; <a href="list.html#DestroyImageList">DestroyImageList</a> &#8226; <a href="list.html#DuplicateImages">DuplicateImages</a> &#8226; <a href="list.html#GetFirstImageInList">GetFirstImageInList</a> &#8226; <a href="list.html#GetImageFromList">GetImageFromList</a> &#8226; <a href="list.html#GetImageIndexInList">GetImageIndexInList</a> &#8226; <a href="list.html#GetImageListLength">GetImageListLength</a> &#8226; <a href="list.html#GetLastImageInList">GetLastImageInList</a> &#8226; <a href="list.html#GetNextImageInList">GetNextImageInList</a> &#8226; <a href="list.html#GetPreviousImageInList">GetPreviousImageInList</a> &#8226; <a href="list.html#ImageListToArray">ImageListToArray</a> &#8226; <a href="list.html#InsertImageInList">InsertImageInList</a> &#8226; <a href="list.html#NewImageList">NewImageList</a> &#8226; <a href="list.html#PrependImageToList">PrependImageToList</a> &#8226; <a href="list.html#RemoveImageFromList">RemoveImageFromList</a> &#8226; <a href="list.html#RemoveFirstImageFromList">RemoveFirstImageFromList</a> &#8226; <a href="list.html#RemoveLastImageFromList">RemoveLastImageFromList</a> &#8226; <a href="list.html#ReplaceImageInList">ReplaceImageInList</a> &#8226; <a href="list.html#ReplaceImageInListReturnLast">ReplaceImageInListReturnLast</a> &#8226; <a href="list.html#ReverseImageList">ReverseImageList</a> &#8226; <a href="list.html#SpliceImageIntoList">SpliceImageIntoList</a> &#8226; <a href="list.html#SplitImageList">SplitImageList</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="AppendImageToList">AppendImageToList</a></h2>
 
 <p>AppendImageToList() appends the second image list to the end of the first list.  The given image list pointer is left unchanged, unless it was empty.</p>
 
 <p>The format of the AppendImageToList method is:</p>
 
-<pre class="text">
-AppendImageToList(Image *images,const Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>AppendImageToList(Image *images,const Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -125,9 +157,8 @@ AppendImageToList(Image *images,const Image *image)
 
 <p>The format of the CloneImageList method is:</p>
 
-<pre class="text">
-Image *CloneImageList(const Image *images,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *CloneImageList(const Image *images,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -155,10 +186,9 @@ Image *CloneImageList(const Image *images,ExceptionInfo *exception)
 
 <p>The format of the CloneImages method is:</p>
 
-<pre class="text">
-Image *CloneImages(const Image *images,const char *scenes,
+<pre class="bg-light text-dark mx-4"><samp>Image *CloneImages(const Image *images,const char *scenes,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -186,9 +216,8 @@ Image *CloneImages(const Image *images,const char *scenes,
 
 <p>The format of the DeleteImageFromList method is:</p>
 
-<pre class="text">
-DeleteImageFromList(Image **images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>DeleteImageFromList(Image **images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -212,9 +241,8 @@ DeleteImageFromList(Image **images)
 
 <p>The format of the DeleteImages method is:</p>
 
-<pre class="text">
-DeleteImages(Image **images,const char *scenes,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>DeleteImages(Image **images,const char *scenes,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -242,9 +270,8 @@ DeleteImages(Image **images,const char *scenes,ExceptionInfo *exception)
 
 <p>The format of the DestroyImageList method is:</p>
 
-<pre class="text">
-Image *DestroyImageList(Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *DestroyImageList(Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -266,10 +293,9 @@ Image *DestroyImageList(Image *image)
 
 <p>The format of the DuplicateImages method is:</p>
 
-<pre class="text">
-Image *DuplicateImages(Image *images,const size_t number_duplicates,
+<pre class="bg-light text-dark mx-4"><samp>Image *DuplicateImages(Image *images,const size_t number_duplicates,
   const char *scenes,ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -301,9 +327,8 @@ Image *DuplicateImages(Image *images,const size_t number_duplicates,
 
 <p>The format of the GetFirstImageInList method is:</p>
 
-<pre class="text">
-Image *GetFirstImageInList(const Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *GetFirstImageInList(const Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -327,9 +352,8 @@ Image *GetFirstImageInList(const Image *images)
 
 <p>The format of the GetImageFromList method is:</p>
 
-<pre class="text">
-Image *GetImageFromList(const Image *images,const ssize_t index)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *GetImageFromList(const Image *images,const ssize_t index)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -353,9 +377,8 @@ Image *GetImageFromList(const Image *images,const ssize_t index)
 
 <p>The format of the GetImageIndexInList method is:</p>
 
-<pre class="text">
-ssize_t GetImageIndexInList(const Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ssize_t GetImageIndexInList(const Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -375,9 +398,8 @@ ssize_t GetImageIndexInList(const Image *images)
 
 <p>The format of the GetImageListLength method is:</p>
 
-<pre class="text">
-size_t GetImageListLength(const Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>size_t GetImageListLength(const Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -397,9 +419,8 @@ size_t GetImageListLength(const Image *images)
 
 <p>The format of the GetLastImageInList method is:</p>
 
-<pre class="text">
-Image *GetLastImageInList(const Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *GetLastImageInList(const Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -419,9 +440,8 @@ Image *GetLastImageInList(const Image *images)
 
 <p>The format of the GetNextImageInList method is:</p>
 
-<pre class="text">
-Image *GetNextImageInList(const Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *GetNextImageInList(const Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -441,9 +461,8 @@ Image *GetNextImageInList(const Image *images)
 
 <p>The format of the GetPreviousImageInList method is:</p>
 
-<pre class="text">
-Image *GetPreviousImageInList(const Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *GetPreviousImageInList(const Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -467,9 +486,8 @@ Image *GetPreviousImageInList(const Image *images)
 
 <p>The format of the ImageListToArray method is:</p>
 
-<pre class="text">
-Image **ImageListToArray(const Image *images,ExceptionInfo *exception)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image **ImageListToArray(const Image *images,ExceptionInfo *exception)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -493,9 +511,8 @@ Image **ImageListToArray(const Image *images,ExceptionInfo *exception)
 
 <p>The format of the InsertImageInList method is:</p>
 
-<pre class="text">
-InsertImageInList(Image **images,Image *insert)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>InsertImageInList(Image **images,Image *insert)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -519,9 +536,8 @@ InsertImageInList(Image **images,Image *insert)
 
 <p>The format of the NewImageList method is:</p>
 
-<pre class="text">
-Image *NewImageList(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *NewImageList(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/list_8c.html" id="PrependImageToList">PrependImageToList</a></h2>
 
@@ -529,9 +545,8 @@ Image *NewImageList(void)
 
 <p>The format of the PrependImageToList method is:</p>
 
-<pre class="text">
-PrependImageToList(Image *images,Image *image)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>PrependImageToList(Image *images,Image *image)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -557,9 +572,8 @@ PrependImageToList(Image *images,Image *image)
 
 <p>The format of the RemoveImageFromList method is:</p>
 
-<pre class="text">
-Image *RemoveImageFromList(Image **images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *RemoveImageFromList(Image **images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -581,9 +595,8 @@ Image *RemoveImageFromList(Image **images)
 
 <p>The format of the RemoveFirstImageFromList method is:</p>
 
-<pre class="text">
-Image *RemoveFirstImageFromList(Image **images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *RemoveFirstImageFromList(Image **images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -605,9 +618,8 @@ Image *RemoveFirstImageFromList(Image **images)
 
 <p>The format of the RemoveLastImageFromList method is:</p>
 
-<pre class="text">
-Image *RemoveLastImageFromList(Image **images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *RemoveLastImageFromList(Image **images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -629,9 +641,8 @@ Image *RemoveLastImageFromList(Image **images)
 
 <p>The format of the ReplaceImageInList method is:</p>
 
-<pre class="text">
-ReplaceImageInList(Image **images,Image *replace)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ReplaceImageInList(Image **images,Image *replace)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -657,9 +668,8 @@ ReplaceImageInList(Image **images,Image *replace)
 
 <p>The format of the ReplaceImageInList method is:</p>
 
-<pre class="text">
-ReplaceImageInListReturnLast(Image **images,Image *replace)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>ReplaceImageInListReturnLast(Image **images,Image *replace)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -683,9 +693,8 @@ ReplaceImageInListReturnLast(Image **images,Image *replace)
 
 <p>The format of the ReverseImageList method is:</p>
 
-<pre class="text">
-void ReverseImageList(Image **images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>void ReverseImageList(Image **images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -705,10 +714,9 @@ void ReverseImageList(Image **images)
 
 <p>The format of the SpliceImageIntoList method is:</p>
 
-<pre class="text">
-SpliceImageIntoList(Image **images,const size_t,
+<pre class="bg-light text-dark mx-4"><samp>SpliceImageIntoList(Image **images,const size_t,
   const Image *splice)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -736,9 +744,8 @@ SpliceImageIntoList(Image **images,const size_t,
 
 <p>The format of the SplitImageList method is:</p>
 
-<pre class="text">
-Image *SplitImageList(Image *images)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>Image *SplitImageList(Image *images)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 

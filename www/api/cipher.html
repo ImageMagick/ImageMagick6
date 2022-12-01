@@ -90,18 +90,32 @@
 
   <main class="container">
   <div class="magick-template">
+<br/>
+<div class="btn-group">
+<button class="btn btn-secondary dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+  Select API Method
+</button>
+<ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
+  <li><a href="cipher.html#AcquireAESInfo">AcquireAESInfo</a></li>
+  <li><a href="cipher.html#DestroyAESInfo">DestroyAESInfo</a></li>
+  <li><a href="cipher.html#EncipherAESBlock">EncipherAESBlock</a></li>
+  <li><a href="cipher.html#PasskeyDecipherImage">PasskeyDecipherImage</a></li>
+  <li><a href="cipher.html#PasskeyEncipherImage">PasskeyEncipherImage</a></li>
+  <li><a href="cipher.html#SetAESKey">SetAESKey</a></li>
+  <li><a href="cipher.html#PasskeyDecipherImage">PasskeyDecipherImage</a></li>
+</ul>
+</div>
+<br/>
+<br/>
 <div class="magick-header">
-<p class="text-center"><a href="cipher.html#AcquireAESInfo">AcquireAESInfo</a> &#8226; <a href="cipher.html#DestroyAESInfo">DestroyAESInfo</a> &#8226; <a href="cipher.html#EncipherAESBlock">EncipherAESBlock</a> &#8226; <a href="cipher.html#PasskeyDecipherImage">PasskeyDecipherImage</a> &#8226; <a href="cipher.html#PasskeyEncipherImage">PasskeyEncipherImage</a> &#8226; <a href="cipher.html#SetAESKey">SetAESKey</a> &#8226; <a href="cipher.html#PasskeyDecipherImage">PasskeyDecipherImage</a> &#8226; <a href="cipher.html#PasskeyEncipherImage">PasskeyEncipherImage</a></p>
-
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/cipher_8c.html" id="AcquireAESInfo">AcquireAESInfo</a></h2>
 
 <p>AcquireAESInfo() allocate the AESInfo structure.</p>
 
 <p>The format of the AcquireAESInfo method is:</p>
 
-<pre class="text">
-AESInfo *AcquireAESInfo(void)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>AESInfo *AcquireAESInfo(void)
+</samp></pre>
 
 <h2><a href="https://legacy.imagemagick.org/api/MagickCore/cipher_8c.html" id="DestroyAESInfo">DestroyAESInfo</a></h2>
 
@@ -109,9 +123,8 @@ AESInfo *AcquireAESInfo(void)
 
 <p>The format of the DestroyAESInfo method is:</p>
 
-<pre class="text">
-AESInfo *DestroyAESInfo(AESInfo *aes_info)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>AESInfo *DestroyAESInfo(AESInfo *aes_info)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -131,10 +144,9 @@ AESInfo *DestroyAESInfo(AESInfo *aes_info)
 
 <p>The format of the EncipherAESBlock method is:</p>
 
-<pre class="text">
-void EncipherAES(AESInfo *aes_info,const unsigned char *plaintext,
+<pre class="bg-light text-dark mx-4"><samp>void EncipherAES(AESInfo *aes_info,const unsigned char *plaintext,
   unsigned char *ciphertext)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -162,12 +174,11 @@ void EncipherAES(AESInfo *aes_info,const unsigned char *plaintext,
 
 <p>The format of the PasskeyDecipherImage method is:</p>
 
-<pre class="text">
-MagickBooleanType PasskeyDecipherImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PasskeyDecipherImage(Image *image,
   const StringInfo *passkey,ExceptionInfo *exception)
 MagickBooleanType DecipherImage(Image *image,const char *passphrase,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -199,12 +210,11 @@ MagickBooleanType DecipherImage(Image *image,const char *passphrase,
 
 <p>The format of the PasskeyEncipherImage method is:</p>
 
-<pre class="text">
-MagickBooleanType PasskeyEncipherImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PasskeyEncipherImage(Image *image,
   const StringInfo *passkey,ExceptionInfo *exception)
 MagickBooleanType EncipherImage(Image *image,const char *passphrase,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -236,9 +246,8 @@ MagickBooleanType EncipherImage(Image *image,const char *passphrase,
 
 <p>The format of the SetAESKey method is:</p>
 
-<pre class="text">
-SetAESKey(AESInfo *aes_info,const StringInfo *key)
-</pre>
+<pre class="bg-light text-dark mx-4"><samp>SetAESKey(AESInfo *aes_info,const StringInfo *key)
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -262,12 +271,11 @@ SetAESKey(AESInfo *aes_info,const StringInfo *key)
 
 <p>The format of the PasskeyDecipherImage method is:</p>
 
-<pre class="text">
-MagickBooleanType PasskeyDecipherImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PasskeyDecipherImage(Image *image,
   const StringInfo *passkey,ExceptionInfo *exception)
 MagickBooleanType DecipherImage(Image *image,const char *passphrase,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
@@ -299,12 +307,11 @@ MagickBooleanType DecipherImage(Image *image,const char *passphrase,
 
 <p>The format of the PasskeyEncipherImage method is:</p>
 
-<pre class="text">
-MagickBooleanType PasskeyEncipherImage(Image *image,
+<pre class="bg-light text-dark mx-4"><samp>MagickBooleanType PasskeyEncipherImage(Image *image,
   const StringInfo *passkey,ExceptionInfo *exception)
 MagickBooleanType EncipherImage(Image *image,const char *passphrase,
   ExceptionInfo *exception)
-</pre>
+</samp></pre>
 
 <p>A description of each parameter follows:</p>
 
