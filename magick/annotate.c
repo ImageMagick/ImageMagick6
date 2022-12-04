@@ -1516,7 +1516,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   if (ft_status != 0)
     {
       (void) FT_Done_FreeType(library);
-      stream=RelinquishMagickMemory(stream);
+      stream=(FT_StreamRec *) RelinquishMagickMemory(stream);
       ThrowFreetypeErrorException("UnableToReadFont",ft_status,args.pathname);
       args.pathname=DestroyString(args.pathname);
       return(MagickFalse);
@@ -1572,7 +1572,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         {
           (void) FT_Done_Face(face);
           (void) FT_Done_FreeType(library);
-          stream=RelinquishMagickMemory(stream);
+          stream=(FT_StreamRec *) RelinquishMagickMemory(stream);
           ThrowFreetypeErrorException("UnrecognizedFontEncoding",ft_status,
             encoding);
           return(MagickFalse);
@@ -1605,7 +1605,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
     {
       (void) FT_Done_Face(face);
       (void) FT_Done_FreeType(library);
-      stream=RelinquishMagickMemory(stream);
+      stream=(FT_StreamRec *) RelinquishMagickMemory(stream);
       ThrowFreetypeErrorException("UnableToReadFont",ft_status,
         draw_info->font);
       return(MagickFalse);

@@ -1772,9 +1772,10 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
           if (blob != (void *) NULL)
             {
               if (status == MagickFalse)
-                blob=RelinquishMagickMemory(blob);
+                blob=(unsigned char *) RelinquishMagickMemory(blob);
               else
-                blob=ResizeQuantumMemory(blob,*length+1,sizeof(unsigned char));
+                blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
+                  sizeof(unsigned char));
             }
         }
     }
@@ -2034,9 +2035,10 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
           if (blob != (void *) NULL)
             {
               if (status == MagickFalse)
-                blob=RelinquishMagickMemory(blob);
+                blob=(unsigned char *) RelinquishMagickMemory(blob);
               else
-                blob=ResizeQuantumMemory(blob,*length+1,sizeof(unsigned char));
+                blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
+                  sizeof(unsigned char));
             }
         }
     }

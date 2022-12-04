@@ -405,14 +405,13 @@ MagickExport const MagicInfo *GetMagicInfo(const unsigned char *magic,
     q=magic+p->offset;
     remaining=(MagickOffsetType) length-p->offset;
     if (LocaleCompare(p->name,"SVG") == 0)
+      while ((remaining > 0) && (isspace(*q) != 0))
       {
-        while ((remaining > 0) && (isspace(*q) != 0))
-          {
-            q++;
-            remaining--;
-          }
+        q++;
+        remaining--;
       }
-    if ((remaining >= p->length) && (memcmp(q,p->magic,p->length) == 0))
+    if ((remaining >= (MagickOffsetType) p->length) &&
+        (memcmp(q,p->magic,p->length) == 0))
       break;
     p=(const MagicInfo *) GetNextValueInLinkedList(magic_cache);
   }

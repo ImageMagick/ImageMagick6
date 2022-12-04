@@ -19,19 +19,20 @@
 #
 #    magick.sh convert -size 640x480 gradient:black-yellow gradient.png
 
-top_srcdir='/home/cristy/a'
-top_builddir='/home/cristy/a'
+top_srcdir='/home/cristy/ImageMagick-6'
+top_builddir='/home/cristy/ImageMagick-6'
 
-MAGICK_CODER_MODULE_PATH='/home/cristy/a/coders'
-MAGICK_CONFIGURE_SRC_PATH='/home/cristy/a/config'
-MAGICK_CONFIGURE_BUILD_PATH='/home/cristy/a/config'
-MAGICK_FILTER_MODULE_PATH='/home/cristy/a/filters'
+MAGICK_CODER_MODULE_PATH='/home/cristy/ImageMagick-6/coders'
+MAGICK_CONFIGURE_SRC_PATH='/home/cristy/ImageMagick-6/config'
+MAGICK_CONFIGURE_BUILD_PATH='/home/cristy/ImageMagick-6/config'
+MAGICK_FILTER_MODULE_PATH='/home/cristy/ImageMagick-6/filters'
 DIRSEP=':'
 
 PATH="${top_builddir}/utilities:${PATH}"
 
-if test -n "$VERBOSE"; then
-  printf "$@"
+if test -n "$VERBOSE"
+then
+  echo "$@"
 fi
 env \
   LD_LIBRARY_PATH="${top_builddir}/magick/.libs:${top_builddir}/wand/.libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
