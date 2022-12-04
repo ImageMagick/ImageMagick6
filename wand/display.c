@@ -1362,7 +1362,7 @@ WandExport MagickBooleanType DisplayImageCommand(ImageInfo *image_info,
             resource_info.map_type=(char *) NULL;
             if (*option == '+')
               break;
-            (void) CopyMagickString(argv[i]+1,"...",strlen(argv[i]+1)+1);
+            (void) CopyMagickString(argv[i]+1,"sans",strlen(argv[i]+1)+1);
             i++;
             if (i == (ssize_t) argc)
               ThrowDisplayException(OptionError,"MissingArgument",option);
