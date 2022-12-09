@@ -793,7 +793,7 @@ namespace Magick
 
     // Compare current image with another image
     // Sets meanErrorPerPixel, normalizedMaxError, and normalizedMeanError
-    // in the current image. False is returned if the images are identical.
+    // in the current image. True is returned if the images are identical.
     bool compare(const Image &reference_);
 
     // Compare current image with another image
