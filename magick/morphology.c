@@ -2837,7 +2837,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
           #pragma omp atomic
 #endif
           progress++;
-          proceed=SetImageProgress(image,MorphologyTag,progress,image->rows);
+          proceed=SetImageProgress(image,MorphologyTag,progress,image->columns);
           if (proceed == MagickFalse)
             status=MagickFalse;
         }
