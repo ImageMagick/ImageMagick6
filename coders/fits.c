@@ -541,8 +541,6 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
           image->filename);
         break;
       }
-    if (TellBlob(image) >= (MagickOffsetType) GetBlobSize(image))
-      break;
     /*
       Proceed to next image.
     */
