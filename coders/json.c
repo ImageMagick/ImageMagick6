@@ -1001,17 +1001,18 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
   ImageType
     type;
 
-  ssize_t
-    i,
-    x;
-
   size_t
     depth,
     distance,
     scale;
 
   ssize_t
+    i,
+    x,
     y;
+
+  struct stat
+    properties;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -1051,6 +1052,11 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
           JSONFormatLocaleFile(file,"    \"baseName\": %s,\n",filename);
         }
     }
+  properties=(*GetBlobProperties(image));
+  if (properties.st_mode != 0)
+    (void) FormatLocaleFile(file,"    \"permissions\": %d%d%d,\n",
+      (properties.st_mode >> 6) & 0x07,(properties.st_mode >> 3) & 0x07,
+      (properties.st_mode >> 0) & 0x07);
   magick_info=GetMagickInfo(image->magick,exception);
   JSONFormatLocaleFile(file,"    \"format\": %s,\n",image->magick);
   if ((magick_info != (const MagickInfo *) NULL) &&

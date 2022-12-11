@@ -48,6 +48,7 @@
 #include "magick/artifact.h"
 #include "magick/attribute.h"
 #include "magick/blob.h"
+#include "magick/blob-private.h"
 #include "magick/cache.h"
 #include "magick/client.h"
 #include "magick/coder.h"
@@ -524,16 +525,17 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
   MagickBooleanType
     ping;
 
-  ssize_t
-    i,
-    x;
-
   size_t
     depth,
     distance;
 
   ssize_t
+    i,
+    x,
     y;
+
+  struct stat
+    properties;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -722,6 +724,16 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
         GetPathComponent(image->magick_filename,TailPath,filename);
         (void) FormatLocaleFile(file,"  Base filename: %s\n",filename);
       }
+  properties=(*GetBlobProperties(image));
+  if (properties.st_mode != 0)
+    {
+      static const char *rwx[] =
+        { "---", "--x", "-w-", "-wx", "r--", "r-x", "rw-", "rwx"};
+      (void) FormatLocaleFile(file,"  Permissions: %s%s%s\n",
+        rwx[(properties.st_mode >> 6) & 0x07],
+        rwx[(properties.st_mode >> 3) & 0x07],
+        rwx[(properties.st_mode >> 0) & 0x07]);
+    }
   magick_info=GetMagickInfo(image->magick,exception);
   if ((magick_info == (const MagickInfo *) NULL) ||
       (GetMagickDescription(magick_info) == (const char *) NULL))
