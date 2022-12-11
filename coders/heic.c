@@ -220,7 +220,7 @@ static MagickBooleanType ReadHEICExifProfile(Image *image,
       (length > 4))
     {
       (void) DestroyStringInfo(SplitStringInfo(exif_profile,4));
-      (void) SetImageProfile(image,"exif",exif_profile,exception);
+      (void) SetImageProfile(image,"exif",exif_profile);
     }
   exif_profile=DestroyStringInfo(exif_profile);
   return(MagickTrue);
