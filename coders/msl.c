@@ -356,11 +356,17 @@ static xmlEntityPtr MSLGetParameterEntity(void *context,const xmlChar *name)
   return(xmlGetParameterEntity(msl_info->document,name));
 }
 
+static void MSLError(void *,const char *,...)
+  magick_attribute((__format__ (__printf__,2,3)));
+
 static void MSLEntityDeclaration(void *context,const xmlChar *name,int type,
   const xmlChar *public_id,const xmlChar *system_id,xmlChar *content)
 {
   MSLInfo
     *msl_info;
+
+  xmlEntityPtr
+    entity;
 
   /*
     An entity definition has been parsed.
@@ -372,12 +378,16 @@ static void MSLEntityDeclaration(void *context,const xmlChar *name,int type,
     content);
   msl_info=(MSLInfo *) context;
   if (msl_info->parser->inSubset == 1)
-    (void) xmlAddDocEntity(msl_info->document,name,type,public_id,system_id,
+    entity=xmlAddDocEntity(msl_info->document,name,type,public_id,system_id,
       content);
   else
     if (msl_info->parser->inSubset == 2)
-      (void) xmlAddDtdEntity(msl_info->document,name,type,public_id,system_id,
+      entity=xmlAddDtdEntity(msl_info->document,name,type,public_id,system_id,
         content);
+    else
+      return;
+  if (entity == (xmlEntityPtr) NULL)
+    MSLError(msl_info,"NULL entity");
 }
 
 static void MSLAttributeDeclaration(void *context,const xmlChar *element,
@@ -7880,9 +7890,13 @@ static MagickBooleanType ProcessMSLScript(const ImageInfo *image_info,
   */
   MSLEndDocument(&msl_info);
   if (msl_info.parser->myDoc != (xmlDocPtr) NULL)
-    xmlFreeDoc(msl_info.parser->myDoc);
+    {
+      xmlFreeDoc(msl_info.parser->myDoc);
+      msl_info.parser->myDoc=(xmlDocPtr) NULL;
+    }
   xmlFreeParserCtxt(msl_info.parser);
   xmlFreeDoc(msl_info.document);
+  msl_info.document=(xmlDocPtr) NULL;
   (void) LogMagickEvent(CoderEvent,GetMagickModule(),"end SAX");
   if (*image == (Image *) NULL)
     *image=CloneImage(*msl_info.image,0,0,MagickTrue,exception);
