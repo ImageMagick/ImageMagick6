@@ -225,6 +225,8 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if ((image->columns < 1) || (image->rows < 1) ||
       (width < MagickEpsilon) || (height < MagickEpsilon))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  if (EOFBlob(image) != MagickFalse)
+    ThrowReaderException(CorruptImageError,"UnexpectedEndOfFile");
   image->x_resolution=1.0*image->columns/width;
   image->y_resolution=1.0*image->rows/height;
   if (image_info->ping != MagickFalse)
