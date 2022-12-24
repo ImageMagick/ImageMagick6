@@ -1088,7 +1088,6 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
 
       MagickRealType
         alpha,
-        beta,
         distance;
 
       PixelPacket
@@ -1100,34 +1099,33 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
       p=image->colormap+node_info->color_number;
       q=(&cube_info->target);
       alpha=1.0;
-      beta=1.0;
       if (cube_info->associate_alpha != MagickFalse)
+        alpha=(MagickRealType) (QuantumScale*GetPixelAlpha(p)*
+          QuantumScale*GetPixelAlpha(q));
+      pixel=GetPixelRed(p)-GetPixelRed(q);
+      if (IsHueCompatibleColorspace(image->colorspace) != MagickFalse)
         {
-          alpha=(MagickRealType) (QuantumScale*GetPixelAlpha(p));
-          beta=(MagickRealType) (QuantumScale*GetPixelAlpha(q));
+          /*
+            Compute an arc distance for hue.  It should be a vector angle of
+            'S'/'W' length with 'L'/'B' forming appropriate cones.
+          */
+          if (fabs((double) pixel) > (QuantumRange/2))
+            pixel-=QuantumRange;
+          pixel*=2.0;
         }
-      pixel=alpha*GetPixelRed(p)-beta*GetPixelRed(q);
-      distance=pixel*pixel;
+      distance=alpha*pixel*pixel;
       if (distance <= cube_info->distance)
         {
-          pixel=alpha*GetPixelGreen(p)-beta*GetPixelGreen(q);
-          distance+=pixel*pixel;
+          pixel=GetPixelGreen(p)-GetPixelGreen(q);
+          distance+=alpha*pixel*pixel;
           if (distance <= cube_info->distance)
             {
-              pixel=alpha*GetPixelBlue(p)-beta*GetPixelBlue(q);
-              distance+=pixel*pixel;
+              pixel=GetPixelBlue(p)-GetPixelBlue(q);
+              distance+=alpha*pixel*pixel;
               if (distance <= cube_info->distance)
                 {
-                  if (cube_info->associate_alpha != MagickFalse)
-                    {
-                      pixel=GetPixelAlpha(p)-GetPixelAlpha(q);
-                      distance+=pixel*pixel;
-                    }
-                  if (distance <= cube_info->distance)
-                    {
-                      cube_info->distance=distance;
-                      cube_info->color_number=node_info->color_number;
-                    }
+                  cube_info->distance=distance;
+                  cube_info->color_number=node_info->color_number;
                 }
             }
         }
