@@ -914,22 +914,17 @@ MagickExport MagickBooleanType ClutImageChannel(Image *image,
 %
 */
 
-static void Contrast(const int sign,Quantum *red,Quantum *green,Quantum *blue)
+static void inline Contrast(const int sign,Quantum *red,Quantum *green,
+  Quantum *blue)
 {
   double
-    brightness,
-    hue,
-    saturation;
+    brightness = 0.0,
+    hue = 0.0,
+    saturation = 0.0;
 
   /*
     Enhance contrast: dark color become darker, light color become lighter.
   */
-  assert(red != (Quantum *) NULL);
-  assert(green != (Quantum *) NULL);
-  assert(blue != (Quantum *) NULL);
-  hue=0.0;
-  saturation=0.0;
-  brightness=0.0;
   ConvertRGBToHSB(*red,*green,*blue,&hue,&saturation,&brightness);
   brightness+=0.5*sign*(0.5*(sin((double) (MagickPI*(brightness-0.5)))+1.0)-
     brightness);
