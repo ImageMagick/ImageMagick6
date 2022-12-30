@@ -165,6 +165,15 @@ static inline MagickRealType GetPixelLuminance(
   return(intensity);
 }
 
+static inline void GetPixelPacketRGBA(const Quantum red,const Quantum green,
+  const Quantum blue,const Quantum opacity,PixelPacket *magick_restrict pixel)
+{
+  pixel->red=red;
+  pixel->green=green;
+  pixel->blue=blue;
+  pixel->opacity=opacity;
+}
+
 static inline MagickBooleanType IsPixelAtDepth(const Quantum pixel,
   const QuantumAny range)
 {

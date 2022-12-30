@@ -2651,6 +2651,9 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
   const ComplianceType compliance,MagickPixelPacket *color,
   ExceptionInfo *exception)
 {
+  const ColorInfo
+    *p;
+
   double
     scale;
 
@@ -2660,13 +2663,8 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
   MagickStatusType
     flags;
 
-  const ColorInfo
-    *p;
-
   ssize_t
-    i;
-
-  ssize_t
+    i,
     type;
 
   /*
@@ -2692,7 +2690,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
         c;
 
       LongPixelPacket
-        pixel;
+        pixel = { 0 };
 
       QuantumAny
         range;
@@ -2704,7 +2702,6 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
       /*
         Parse hex color.
       */
-      (void) memset(&pixel,0,sizeof(pixel));
       name++;
       for (n=0; isxdigit((int) ((unsigned char) name[n])) != 0; n++) ;
       if ((n == 3) || (n == 6) || (n == 9) || (n == 12) || (n == 24) ||
