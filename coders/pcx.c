@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -217,6 +217,9 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
   Image
     *image;
 
+  IndexPacket
+    *indexes;
+
   int
     bits,
     id,
@@ -235,21 +238,8 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PCXInfo
     pcx_info;
 
-  IndexPacket
-    *indexes;
-
-  ssize_t
-    x;
-
   PixelPacket
     *q;
-
-  ssize_t
-    i;
-
-  unsigned char
-    *p,
-    *r;
 
   size_t
     one,
@@ -257,12 +247,16 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
   ssize_t
     count,
+    i,
+    x,
     y;
 
   unsigned char
+    *p,
     packet,
     pcx_colormap[768],
     *pixels,
+    *r,
     *scanline;
 
   /*
