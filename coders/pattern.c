@@ -986,6 +986,7 @@ static Image *ReadPATTERNImage(const ImageInfo *image_info,
       */
       pattern_image=image;
       image=AcquireImage(image_info);
+      (void) SetImageBackgroundColor(image);
       (void) SetImageOpacity(pattern_image,OpaqueOpacity);
       (void) TextureImage(image,pattern_image);
       pattern_image=DestroyImage(pattern_image);
