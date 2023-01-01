@@ -5099,6 +5099,8 @@ MagickExport XWindows *XInitializeWindows(Display *display,
       (windows->icon_resources == (XResourceInfo *) NULL))
     ThrowXWindowFatalException(XServerFatalError,"MemoryAllocationFailed",
       "...");
+  (void) memset((void *) windows->pixel_info,0,sizeof(XPixelInfo));
+  (void) memset((void *) windows->icon_pixel,0,sizeof(XPixelInfo));
   /*
     Initialize windows structure.
   */
