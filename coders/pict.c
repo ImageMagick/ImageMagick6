@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -122,7 +122,7 @@ static const PICTCode
   codes[] =
   {
     /* 0x00 */ { "NOP", 0, "nop" },
-    /* 0x01 */ { "Clip", 0, "clip" },
+    /* 0x01 */ { "ClipRgn", 0, "clip" },
     /* 0x02 */ { "BkPat", 8, "background pattern" },
     /* 0x03 */ { "TxFont", 2, "text font (word)" },
     /* 0x04 */ { "TxFace", 1, "text face (byte)" },
@@ -1674,12 +1674,18 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
 #define PictPICTOp  0x98
 #define PictVersion  0x11
 
+  const IndexPacket
+    *indexes;
+
+  const PixelPacket
+    *p;
+
   const StringInfo
     *profile;
 
   double
-    x_resolution,
-    y_resolution;
+    x_resolution = 72.0,
+    y_resolution = 72.0;
 
   MagickBooleanType
     status;
@@ -1698,16 +1704,6 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
     size_rectangle,
     source_rectangle;
 
-  const IndexPacket
-    *indexes;
-
-  const PixelPacket
-    *p;
-
-  ssize_t
-    i,
-    x;
-
   size_t
     bytes_per_line,
     count,
@@ -1715,13 +1711,14 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
     storage_class;
 
   ssize_t
+    i,
+    x,
     y;
 
   unsigned char
     *buffer,
     *packed_scanline,
     *scanline;
-
 
   unsigned short
     base_address,
@@ -1771,8 +1768,6 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
   pixmap.table=0;
   pixmap.reserved=0;
   transfer_mode=0;
-  x_resolution=0.0;
-  y_resolution=0.0;
   if ((image->x_resolution > MagickEpsilon) &&
       (image->y_resolution > MagickEpsilon))
     {
