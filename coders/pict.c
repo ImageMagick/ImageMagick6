@@ -1684,8 +1684,8 @@ static MagickBooleanType WritePICTImage(const ImageInfo *image_info,
     *profile;
 
   double
-    x_resolution = 72.0,
-    y_resolution = 72.0;
+    x_resolution = DefaultResolution,
+    y_resolution = DefaultResolution;
 
   MagickBooleanType
     status;
