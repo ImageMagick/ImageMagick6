@@ -970,8 +970,8 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   {
     size_t FileId;
     MagickOffsetType DataOffset;
-    unsigned int ProductType;
-    unsigned int FileType;
+    unsigned char ProductType;
+    unsigned char FileType;
     unsigned char MajorVersion;
     unsigned char MinorVersion;
     unsigned int EncryptKey;
@@ -1110,14 +1110,14 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   */
   Header.FileId=ReadBlobLSBLong(image);
   Header.DataOffset=(MagickOffsetType) ReadBlobLSBLong(image);
-  Header.ProductType=ReadBlobLSBShort(image);
-  Header.FileType=ReadBlobLSBShort(image);
+  Header.ProductType=ReadBlobByte(image);
+  Header.FileType=ReadBlobByte(image);
   Header.MajorVersion=ReadBlobByte(image);
   Header.MinorVersion=ReadBlobByte(image);
   Header.EncryptKey=ReadBlobLSBShort(image);
   Header.Reserved=ReadBlobLSBShort(image);
 
-  if (Header.FileId!=0x435057FF || (Header.ProductType>>8)!=0x16)
+  if ((Header.FileId != 0x435057FF) || (Header.ProductType != 0x16))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   if (Header.EncryptKey!=0)
     ThrowReaderException(CoderError,"EncryptedWPGImageFileNotSupported");
@@ -1131,7 +1131,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   BitmapHeader2.RotAngle=0;
   Rec2.RecordLength = 0;
 
-  switch(Header.FileType)
+  switch (Header.MajorVersion)
     {
     case 1:     /* WPG level 1 */
       while(!EOFBlob(image)) /* object parser loop */
