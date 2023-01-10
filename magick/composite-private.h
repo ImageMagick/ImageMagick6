@@ -18,6 +18,7 @@
 #ifndef MAGICKCORE_COMPOSITE_PRIVATE_H
 #define MAGICKCORE_COMPOSITE_PRIVATE_H
 
+#include "magick/artifact.h"
 #include "magick/color.h"
 #include "magick/image.h"
 #include "magick/image-private.h"
