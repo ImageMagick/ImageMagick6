@@ -1172,8 +1172,8 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
               image->columns=BitmapHeader1.Width;
               image->rows=BitmapHeader1.Height;
               bpp=BitmapHeader1.Depth;
-              if (bpp == 1)
-                image->storage_class=DirectClass;
+              if ((bpp == 1) && (AcquireImageColormap(image,2) == MagickFalse))
+                goto NoMemory;
               goto UnpackRaster;
 
             case 0x0E:  /*Color palette */
