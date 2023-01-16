@@ -1677,6 +1677,7 @@ ModuleExport size_t RegisterWPGImage(void)
   entry->decoder=(DecodeImageHandler *) ReadWPGImage;
   entry->magick=(IsImageFormatHandler *) IsWPG;
   entry->description=AcquireString("Word Perfect Graphics");
+  entry->adjoin=MagickFalse;
   entry->magick_module=ConstantString("WPG");
   entry->seekable_stream=MagickTrue;
   (void) RegisterMagickInfo(entry);
