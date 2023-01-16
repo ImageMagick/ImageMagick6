@@ -184,6 +184,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
     base,
     flag,
     offset,
+    offset_stepsize,
     skip;
 
   ssize_t
@@ -435,6 +436,9 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
   index=(IndexPacket) 0;
   runlength=0;
   offset=0;
+  offset_stepsize=1;
+  if (((unsigned char) (tga_info.attributes & 0xc0) >> 6) == 2)
+    offset_stepsize=2;
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     q=QueueAuthenticPixels(image,0,offset,image->columns,1,exception);
@@ -566,15 +570,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
         SetPixelOpacity(q,pixel.opacity);
       q++;
     }
-    /*
-      if (((unsigned char) (tga_info.attributes & 0xc0) >> 6) == 4)
-        offset+=4;
-      else
-    */
-      if (((unsigned char) (tga_info.attributes & 0xc0) >> 6) == 2)
-        offset+=2;
-      else
-        offset++;
+    offset+=offset_stepsize;
     if (offset >= image->rows)
       {
         base++;
