@@ -695,10 +695,9 @@ static const PixelPacket *GetVirtualPixelStream(const Image *image,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  if ((x < 0) || (y < 0) ||
-      ((x+(ssize_t) columns) > (ssize_t) image->columns) ||
-      ((y+(ssize_t) rows) > (ssize_t) image->rows) ||
-      (columns == 0) || (rows == 0))
+  if ((image->columns == 0) || (image->rows == 0) || (x < 0) ||
+      (y < 0) || (x >= (ssize_t) image->columns) ||
+      (y >= (ssize_t) image->rows))
     {
       (void) ThrowMagickException(exception,GetMagickModule(),StreamError,
         "ImageDoesNotContainTheStreamGeometry","`%s'",image->filename);
