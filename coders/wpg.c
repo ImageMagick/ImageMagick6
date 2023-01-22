@@ -71,7 +71,7 @@
   Forward declarations.
 */
 static MagickBooleanType
-  WriteWPGImage(const ImageInfo *,Image *,ExceptionInfo *);
+  WriteWPGImage(const ImageInfo *,Image *);
 
 typedef struct
 {
@@ -1841,8 +1841,7 @@ static void WPGInitializeRLE(WPGRLEInfo *rle_info)
   rle_info->offset=0;
 }
 
-static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image,
-  ExceptionInfo *exception)
+static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
 {
   MagickBooleanType
     status;
@@ -1873,11 +1872,9 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image,
   assert(image_info->signature == MagickCoreSignature);
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  assert(exception != (ExceptionInfo *) NULL);
-  assert(exception->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  status=OpenBlob(image_info,image,WriteBinaryBlobMode,exception);
+  status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
   if ((image->columns > 65535UL) || (image->rows > 65535UL))
@@ -1979,11 +1976,11 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image,
     size_t
       length;
 
-    p=GetVirtualPixels(image,0,y,image->columns,1,exception);
+    p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
     if (p == (const PixelPacket *) NULL)
       break;
     length=ExportQuantumPixels(image,(CacheView *) NULL,quantum_info,
-      image->depth == 1 ? GrayQuantum : IndexQuantum,pixels,exception);
+      image->depth == 1 ? GrayQuantum : IndexQuantum,pixels,&image->exception);
     if (length == 0)
       break;
     WPGAddRLEBlock(&rle_info,image,pixels,extent);
