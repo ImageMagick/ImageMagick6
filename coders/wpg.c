@@ -1747,13 +1747,13 @@ ModuleExport void UnregisterWPGImage(void)
 
 typedef struct
 {
-	size_t
+  size_t
     count;
 
-	ssize_t
+  ssize_t
     offset;
 
-	unsigned char
+  unsigned char
     pixels[256];
 } WPGRLEInfo;
 
