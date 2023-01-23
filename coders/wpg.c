@@ -1125,7 +1125,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   Header.EncryptKey=ReadBlobLSBShort(image);
   Header.Reserved=ReadBlobLSBShort(image);
 
-  if ((Header.FileId != 0x435057FF) || (Header.ProductType != 0x16))
+  if ((Header.FileId != 0x435057FF) || (Header.FileType != 0x16))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   if (Header.EncryptKey!=0)
     ThrowReaderException(CoderError,"EncryptedWPGImageFileNotSupported");
@@ -1788,7 +1788,7 @@ static void WPGAddRLEByte(WPGRLEInfo *rle_info,Image *image,
             {
               rle_info->count++;
               WPGFlushRLE(rle_info,image,rle_info->offset-rle_info->count-1);
-              (void) WriteBlobByte(image,rle_info->count|0x80);
+              (void) WriteBlobByte(image,rle_info->count | 0x80);
               (void) WriteBlobByte(image,rle_info->pixels[0]);
               rle_info->offset=1;
               rle_info->pixels[0]=byte;
@@ -1854,9 +1854,6 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
   QuantumInfo
     *quantum_info;
 
-  size_t
-    extent;
-
   ssize_t
     y;
 
@@ -1888,8 +1885,8 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
   */
   (void) WriteBlobLSBLong(image,0x435057FF);  /* FileId */
   (void) WriteBlobLSBLong(image,16);  /* data offset */
-  (void) WriteBlobByte(image,0x16);  /* product type */
-  (void) WriteBlobByte(image,1);  /* file type */
+  (void) WriteBlobByte(image,1);  /* product type */
+  (void) WriteBlobByte(image,0x16);  /* file type */
   (void) WriteBlobByte(image,1);  /* major version */
   (void) WriteBlobByte(image,0);  /* minor version */
   (void) WriteBlobLSBShort(image,0);  /* encypt key */
@@ -1963,11 +1960,6 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
   if (quantum_info == (QuantumInfo *) NULL)
     ThrowWriterException(ImageError,"MemoryAllocationFailed");
   pixels=(unsigned char *) GetQuantumPixels(quantum_info);
-  extent=image->columns;
-  if (image->colors <= 16)
-    extent=(image->columns+1)/2;
-  if (image->colors <= 2)
-    extent=(image->columns+7)/8;
   WPGInitializeRLE(&rle_info);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -1984,7 +1976,7 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
       image->depth == 1 ? GrayQuantum : IndexQuantum,pixels,&image->exception);
     if (length == 0)
       break;
-    WPGAddRLEBlock(&rle_info,image,pixels,extent);
+    WPGAddRLEBlock(&rle_info,image,pixels,(unsigned short) length);
     WPGFlush(&rle_info,image);
     status=SetImageProgress(image,SaveImageTag,(MagickOffsetType) y,
       image->rows);
