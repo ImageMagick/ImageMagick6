@@ -867,27 +867,26 @@ static Image *ExtractPostscript(Image *image,const ImageInfo *image_info,
   if(exception->severity != UndefinedException) goto FINISH_UNL;
   if(magic_info->name == (char *) NULL) goto FINISH_UNL;
   (void) strncpy(clone_info->magick,magic_info->name,MaxTextExtent-1);
-  if (LocaleCompare(clone_info->magick,"PFB") != 0)
+  if ((LocaleCompare(clone_info->magick,"PFB") != 0) ||
+      (LocaleCompare(clone_info->magick,"8BIMTEXT") != 0))
     {
-      ThrowException(exception,CorruptImageError,"ImproperImageHeader",
-        image->filename);
+      ThrowException(exception,CorruptImageError,
+        "DataStorageTypeIsNotSupported",image->filename);
       goto FINISH_UNL;
     }
 
     /* Read nested image */
-  /*FormatString(clone_info->filename,"%s:%s",magic_info->name,postscript_file);*/
-  FormatLocaleString(clone_info->filename,MagickPathExtent,"%.1024s:%.1024s",
-    clone_info->magick,postscript_file);
+  FormatLocaleString(clone_info->filename,MagickPathExtent,"ps:%.1024s",
+    postscript_file);
   image2=ReadImage(clone_info,exception);
-
   if (!image2)
     goto FINISH_UNL;
-  if(exception->severity>=ErrorException)
-  {
-    CloseBlob(image2);
-    DestroyImageList(image2);
-    goto FINISH_UNL;
-  }
+  if (exception->severity >= ErrorException)
+    {
+      CloseBlob(image2);
+      DestroyImageList(image2);
+      goto FINISH_UNL;
+    }
 
   {
     Image
