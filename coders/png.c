@@ -464,7 +464,7 @@ const struct sRGB_info_struct sRGB_info[] =
   setjmp/longjmp is alleged to be unsafe on these platforms:
 */
 #ifdef PNG_SETJMP_SUPPORTED
-# ifndef IMPNG_SETJMP_IS_THREAD_SAFE
+# ifndef IMPNG_MAGICKCORE_SETJMP_IS_THREAD_SAFE
 #   define IMPNG_SETJMP_NOT_THREAD_SAFE
 # endif
 
