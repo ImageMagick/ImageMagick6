@@ -1129,11 +1129,8 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
   if (Header.EncryptKey!=0)
     ThrowReaderException(CoderError,"EncryptedWPGImageFileNotSupported");
 
-  image->columns = 1;
-  image->rows = 1;
   image->colors = 0;
   image->storage_class=DirectClass;
-  (void) ResetImagePixels(image,exception);
   bpp=0;
   BitmapHeader2.RotAngle=0;
   Rec2.RecordLength = 0;
@@ -1853,6 +1850,9 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
   QuantumInfo
     *quantum_info;
 
+  size_t
+    extent;
+
   ssize_t
     y;
 
@@ -1959,6 +1959,9 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
   if (quantum_info == (QuantumInfo *) NULL)
     ThrowWriterException(ImageError,"MemoryAllocationFailed");
   pixels=(unsigned char *) GetQuantumPixels(quantum_info);
+  extent=GetQuantumExtent(image,quantum_info,image->depth == 1 ? GrayQuantum :
+    IndexQuantum);
+  (void) memset(pixels,0,extent*sizeof(*pixels));
   WPGInitializeRLE(&rle_info);
   for (y=0; y < (ssize_t) image->rows; y++)
   {
