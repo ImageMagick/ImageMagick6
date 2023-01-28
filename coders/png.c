@@ -1818,11 +1818,90 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
 }
 
 #if defined(PNG_UNKNOWN_CHUNKS_SUPPORTED)
+static int PNGParseiTXt(Image *image,png_byte *data,png_size_t size,
+  ExceptionInfo *exception)
+{
+  char
+    compressed,
+    key[MagickPathExtent],
+    language[MagickPathExtent],
+    method;
+
+  ssize_t
+    offset;
+
+  StringInfo
+    *property;
+
+  if ((size > 19) && (LocaleNCompare((const char *) data,
+      "XML:com.adobe.xmp",17) == 0) && (data[18] == 0) && (data[19] == 0))
+    {
+      StringInfo
+        *profile;
+
+      /*
+        XMP profile.
+      */
+      offset=20;
+      while(offset < size)
+      {
+        if (data[offset++] == 0)
+          break;
+      }
+      while(offset < size)
+      {
+        if (data[offset++] == 0)
+          break;
+      }
+      if (size-offset < 1)
+        return(0);
+      profile=BlobToStringInfo((const void *) (data+offset),size-offset);
+      if (profile == (StringInfo *) NULL)
+        {
+          (void) ThrowMagickException(exception,GetMagickModule(),
+            ResourceLimitError,"MemoryAllocationFailed","`%s'",
+            image->filename);
+          return(-1);
+        }
+      (void) SetImageProfile(image,"xmp",profile);
+      profile=DestroyStringInfo(profile);
+      return(1);
+    }
+  /*
+    iTXt chunk.
+  */
+  (void) FormatLocaleString(key,MagickPathExtent,"%s",(const char *) data);
+  offset=strlen(key)+1;
+  (void) FormatLocaleString(key,MagickPathExtent,"png:%s",(const char *) data);
+  compressed=data[offset++];
+  if (compressed != 0)
+    return(0);
+  method=data[offset++];
+  if (method != 0)
+    return(0);
+  (void) FormatLocaleString(language,MagickPathExtent,"%s",(const char *)
+    data+offset++);
+  offset+=strlen(language)+1;
+  property=BlobToStringInfo((const void *) (data+offset),size-offset);
+  if (property == (StringInfo *) NULL)
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
+      return(-1);
+    }
+  (void) SetImageProperty(image,key,(const char *)
+    GetStringInfoDatum(property));
+  property=DestroyStringInfo(property);
+  return(1);
+}
+
 static int read_user_chunk_callback(png_struct *ping, png_unknown_chunkp chunk)
 {
   Image
     *image;
 
+  PNGErrorInfo
+    *error_info;
 
   /* The unknown chunk structure contains the chunk data:
      png_byte name[5];
@@ -1954,6 +2033,18 @@ static int read_user_chunk_callback(png_struct *ping, png_unknown_chunkp chunk)
         /* return(n);  success */
 
      return(1);
+    }
+
+  /* iTXt */
+  if ((chunk->name[0] == 105) && (chunk->name[1] ==  84) &&
+      (chunk->name[2] ==  88) && (chunk->name[3] == 116))
+    {     
+      image=(Image *) png_get_user_chunk_ptr(ping);
+ 
+      error_info=(PNGErrorInfo *) png_get_error_ptr(ping);
+  
+      return(PNGParseiTXt(image,chunk->data,chunk->size,
+        error_info->exception));
     }
 
   return(0); /* Did not recognize */
