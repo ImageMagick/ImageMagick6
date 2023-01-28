@@ -16,7 +16,7 @@
 ## -------------------- ##
 
 # Be more Bourne compatible
-DUALCASE=1; export DUALCASE # for MKS sh
+DUALCASE=1; export DUALCASE # for MKS sh 
 as_nop=:
 if test ${ZSH_VERSION+y} && (emulate sh) >/dev/null 2>&1
 then :
