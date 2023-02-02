@@ -1465,17 +1465,18 @@ am__magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES_D
 	magick/fourier.c magick/fourier.h magick/fx.c magick/fx.h \
 	magick/fx-private.h magick/gem.c magick/gem.h \
 	magick/gem-private.h magick/geometry.c magick/geometry.h \
-	magick/hashmap.c magick/hashmap.h magick/hashmap-private.h \
-	magick/histogram.c magick/histogram.h magick/identify.c \
-	magick/identify.h magick/image.c magick/image.h \
-	magick/image-private.h magick/image-view.c magick/image-view.h \
-	magick/layer.c magick/layer.h magick/list.c magick/list.h \
-	magick/locale.c magick/locale_.h magick/locale-private.h \
-	magick/log.c magick/log.h magick/mac.h magick/magic.c \
-	magick/magic.h magick/magick.c magick/magick-baseconfig.h \
-	magick/magick-config.h magick/magick-type.h magick/magick.h \
-	magick/matrix.c magick/matrix.h magick/memory.c \
-	magick/memory_.h magick/memory-private.h magick/methods.h \
+	magick/geometry-private.h magick/hashmap.c magick/hashmap.h \
+	magick/hashmap-private.h magick/histogram.c magick/histogram.h \
+	magick/identify.c magick/identify.h magick/image.c \
+	magick/image.h magick/image-private.h magick/image-view.c \
+	magick/image-view.h magick/layer.c magick/layer.h \
+	magick/list.c magick/list.h magick/locale.c magick/locale_.h \
+	magick/locale-private.h magick/log.c magick/log.h magick/mac.h \
+	magick/magic.c magick/magic.h magick/magick.c \
+	magick/magick-baseconfig.h magick/magick-config.h \
+	magick/magick-type.h magick/magick.h magick/matrix.c \
+	magick/matrix.h magick/memory.c magick/memory_.h \
+	magick/memory-private.h magick/methods.h \
 	magick/method-attribute.h magick/mime.c magick/mime.h \
 	magick/module.c magick/module.h magick/monitor.c \
 	magick/monitor.h magick/monitor-private.h magick/montage.c \
@@ -4754,6 +4755,7 @@ MAGICK_BASE_SRCS = \
   magick/gem-private.h \
   magick/geometry.c \
   magick/geometry.h \
+  magick/geometry-private.h \
   magick/hashmap.c \
   magick/hashmap.h \
   magick/hashmap-private.h \
@@ -5033,6 +5035,7 @@ MAGICK_NOINST_HDRS = \
   magick/exception-private.h \
   magick/fx-private.h \
   magick/gem-private.h \
+  magick/geometry-private.h \
   magick/image-private.h \
   magick/locale-private.h \
   magick/mac.h \

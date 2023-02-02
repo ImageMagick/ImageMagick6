@@ -99,7 +99,8 @@ typedef enum
   MagickGradientOptions,
   MagickWeightOptions,
   MagickComplianceOptions,
-  MagickAutoThresholdOptions
+  MagickAutoThresholdOptions,
+  MagickPagesizeOptions
 } CommandOption;
 
 typedef enum

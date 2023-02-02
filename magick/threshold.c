@@ -1316,7 +1316,7 @@ MagickExport ThresholdMap *DestroyThresholdMap(ThresholdMap *map)
 %  GetThresholdMapFile() look for a given threshold map name or alias in the
 %  given XML file data, and return the allocated the map when found.
 %
-%  The format of the ListThresholdMaps method is:
+%  The format of the GetThresholdMapFile method is:
 %
 %      ThresholdMap *GetThresholdMap(const char *xml,const char *filename,
 %         const char *map_id,ExceptionInfo *exception)

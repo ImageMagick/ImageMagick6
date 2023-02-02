@@ -50,6 +50,7 @@
 #include "wand/mogrify-private.h"
 #include "magick/blob-private.h"
 #include "magick/color-private.h"
+#include "magick/geometry-private.h"
 #include "magick/image-private.h"
 #include "magick/monitor-private.h"
 #include "magick/pixel-private.h"
@@ -7221,6 +7222,11 @@ WandExport MagickBooleanType MogrifyImageInfo(ImageInfo *image_info,
               case MagickModuleOptions:
               {
                 (void) ListModuleInfo((FILE *) NULL,exception);
+                break;
+              }
+              case MagickPagesizeOptions:
+              {
+                (void) ListPagesizes((FILE *) NULL,exception);
                 break;
               }
               case MagickPolicyOptions:

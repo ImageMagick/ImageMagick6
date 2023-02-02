@@ -160,6 +160,7 @@ MAGICK_BASE_SRCS = \
   magick/gem-private.h \
   magick/geometry.c \
   magick/geometry.h \
+  magick/geometry-private.h \
   magick/hashmap.c \
   magick/hashmap.h \
   magick/hashmap-private.h \
@@ -444,6 +445,7 @@ MAGICK_NOINST_HDRS = \
   magick/exception-private.h \
   magick/fx-private.h \
   magick/gem-private.h \
+  magick/geometry-private.h \
   magick/image-private.h \
   magick/locale-private.h \
   magick/mac.h \
