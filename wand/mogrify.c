@@ -2844,13 +2844,16 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
                     StringInfo
                       *profile = (StringInfo *) NULL;
 
-                    (void) CopyMagickString(image_info->filename,value,MaxTextExtent);
+                    (void) CopyMagickString(image_info->filename,value,
+                      MaxTextExtent);
                     (void) SetImageInfo(image_info,1,exception);
                     if (LocaleCompare(image_info->filename,"-") != 0)
-                      profile=FileToStringInfo(image_info->filename,~0UL,exception);
+                      profile=FileToStringInfo(image_info->filename,~0UL,
+                        exception);
                     if (profile != (StringInfo *) NULL)
                       {
-                        status=SetImageProfile(image,image_info->magick,profile);
+                        status=SetImageProfile(*image,image_info->magick,
+                          profile);
                         profile=DestroyStringInfo(profile);
                       }
                   }
