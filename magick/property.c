@@ -4449,29 +4449,6 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
           geometry=DestroyString(geometry);
           break;
         }
-#if 0  /* security risk -- disable for now */
-      if (LocaleCompare("profile",property) == 0)
-        {
-          ImageInfo
-            *image_info;
-
-          StringInfo
-            *profile = (StringInfo *) NULL;
-
-          image_info=AcquireImageInfo();
-          (void) CopyMagickString(image_info->filename,value,MaxTextExtent);
-          (void) SetImageInfo(image_info,1,exception);
-          if (LocaleCompare(image_info->filename,"-") != 0)
-            profile=FileToStringInfo(image_info->filename,~0UL,exception);
-          if (profile != (StringInfo *) NULL)
-            {
-              status=SetImageProfile(image,image_info->magick,profile);
-              profile=DestroyStringInfo(profile);
-            }
-          image_info=DestroyImageInfo(image_info);
-          break;
-        }
-#endif
       status=AddValueToSplayTree((SplayTreeInfo *) image->properties,
         ConstantString(property),ConstantString(value));
       break;
