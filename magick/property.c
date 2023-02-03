@@ -4449,6 +4449,7 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
           geometry=DestroyString(geometry);
           break;
         }
+#if defined(0)  /* security risk -- disable for now */
       if (LocaleCompare("profile",property) == 0)
         {
           ImageInfo
@@ -4470,6 +4471,7 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
           image_info=DestroyImageInfo(image_info);
           break;
         }
+#endif
       status=AddValueToSplayTree((SplayTreeInfo *) image->properties,
         ConstantString(property),ConstantString(value));
       break;
