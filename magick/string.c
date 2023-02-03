@@ -997,7 +997,7 @@ MagickExport char *EscapeString(const char *source,const char escape)
 MagickExport char *FileToString(const char *filename,const size_t extent,
   ExceptionInfo *exception)
 {
- const char
+  const char
     *p;
 
   size_t
