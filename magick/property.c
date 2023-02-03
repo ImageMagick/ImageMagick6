@@ -3745,7 +3745,7 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
             PolicyError,"NotAuthorized","`%s'",p);
           return(ConstantString(""));
         }
-      interpret_text=FileToString(p+1,~0UL,&image->exception);
+      interpret_text=FileToString(p,~0UL,&image->exception);
       if (interpret_text != (char *) NULL)
         return(interpret_text);
     }

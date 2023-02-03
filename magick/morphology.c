@@ -501,7 +501,7 @@ MagickExport KernelInfo *AcquireKernelInfo(const char *kernel_string)
   if (*kernel_string == '@')
     {
       ExceptionInfo *exception=AcquireExceptionInfo();
-      kernel_cache=FileToString(kernel_string+1,~0UL,exception);
+      kernel_cache=FileToString(kernel_string,~0UL,exception);
       exception=DestroyExceptionInfo(exception);
       if (kernel_cache == (char *) NULL)
         return((KernelInfo *) NULL);

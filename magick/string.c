@@ -51,6 +51,7 @@
 #include "magick/memory-private.h"
 #include "magick/nt-base.h"
 #include "magick/nt-base-private.h"
+#include "magick/policy.h"
 #include "magick/property.h"
 #include "magick/resource_.h"
 #include "magick/signature-private.h"
@@ -996,12 +997,33 @@ MagickExport char *EscapeString(const char *source,const char escape)
 MagickExport char *FileToString(const char *filename,const size_t extent,
   ExceptionInfo *exception)
 {
+ const char
+    *p;
+
   size_t
     length;
 
   assert(filename != (const char *) NULL);
   assert(exception != (ExceptionInfo *) NULL);
-  return((char *) FileToBlob(filename,extent,&length,exception));
+  if (IsEventLogging() != MagickFalse)
+    (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
+  p=filename;
+  if ((*filename == '@') && (strlen(filename) > 1))
+    {
+      MagickBooleanType
+        status;
+
+      status=IsRightsAuthorized(PathPolicyDomain,ReadPolicyRights,filename);
+      if (status == MagickFalse)
+        {
+          errno=EPERM;
+          (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
+            "NotAuthorized","`%s'",filename);
+          return((char *) NULL);
+        }
+      p=filename+1;
+    }
+  return((char *) FileToBlob(p,extent,&length,exception));
 }
 
 /*
