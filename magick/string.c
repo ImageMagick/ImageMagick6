@@ -1106,10 +1106,6 @@ MagickExport StringInfo *FileToStringInfo(const char *filename,
 MagickExport ssize_t FormatMagickSize(const MagickSizeType size,
   const MagickBooleanType bi,char *format)
 {
-  char
-    p[MaxTextExtent],
-    q[MaxTextExtent];
-
   const char
     **units;
 
@@ -1145,10 +1141,9 @@ MagickExport ssize_t FormatMagickSize(const MagickSizeType size,
 #else
   length=(double) size;
 #endif
-  (void) FormatLocaleString(p,MaxTextExtent,"%.*g",GetMagickPrecision(),
+  (void) FormatLocaleString(format,MaxTextExtent,"%.*g",GetMagickPrecision(),
     length);
-  (void) FormatLocaleString(q,MaxTextExtent,"%.20g",length);
-  if (strtod(p,(char **) NULL) == strtod(q,(char **) NULL))
+  if (strstr(format,"e+") == (char *) NULL)
     {
       count=FormatLocaleString(format,MaxTextExtent,"%.20g%sB",length,units[0]);
       return(count);
