@@ -1841,12 +1841,12 @@ static int PNGParseiTXt(Image *image,png_byte *data,png_size_t size,
         XMP profile.
       */
       offset=20;
-      while (offset < size)
+      while (offset < (ssize_t) size)
       {
         if (data[offset++] == 0)
           break;
       }
-      while (offset < size)
+      while (offset < (ssize_t) size)
       {
         if (data[offset++] == 0)
           break;

@@ -580,14 +580,10 @@ static int UnpackWPG2Raster(Image *image,int bpp)
     RunCount;
 
   ssize_t
-    i;
-
-  size_t
+    i,
+    ldblk,
     x,
     y;
-
-  ssize_t
-    ldblk;
 
   unsigned int
     SampleSize=1;
@@ -1923,7 +1919,7 @@ static MagickBooleanType WriteWPGImage(const ImageInfo *image_info,Image *image)
       (void) WriteBlobLSBShort(image,0); /* start index */
       (void) WriteBlobLSBShort(image,1U << image->depth);
       for ( ; i < (1U << image->depth); i++)
-        if (i >= image->colors)
+        if (i >= (ssize_t) image->colors)
           {
             (void) WriteBlobByte(image,i);
             (void) WriteBlobByte(image,i);
