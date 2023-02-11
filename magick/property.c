@@ -17,7 +17,7 @@
 %                                 March 2000                                  %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1466,7 +1466,6 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
           switch (format)
           {
             case EXIF_FMT_BYTE:
-            case EXIF_FMT_UNDEFINED:
             {
               value=(char *) NULL;
               if (~((size_t) number_bytes) >= 1)
@@ -1538,6 +1537,7 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
               break;
             }
             case EXIF_FMT_STRING:
+            case EXIF_FMT_UNDEFINED:
             default:
             {
               if ((p < exif) || (p > (exif+length-number_bytes)))
