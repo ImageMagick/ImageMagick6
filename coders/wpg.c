@@ -16,7 +16,7 @@
 %                                 June 2000                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999-2021 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -530,10 +530,7 @@ static int UnpackWPGRaster(Image *image,int bpp)
           }
           for(i=0;i < (int) RunCount;i++)
             {
-              x=0;
-              y++;    /* Here I need to duplicate previous row RUNCOUNT* */
-              if(y<2) continue;
-              if(y>(ssize_t) image->rows)
+              if(y > = (ssize_t) image->rows)
                 {
                   BImgBuff=(unsigned char *) RelinquishMagickMemory(BImgBuff);
                   return(-4);
@@ -541,8 +538,9 @@ static int UnpackWPGRaster(Image *image,int bpp)
               if (InsertRow(BImgBuff,y-1,image,bpp) == MagickFalse)
                 {
                   BImgBuff=(unsigned char *) RelinquishMagickMemory(BImgBuff);
-                  return(-5);
+                  return(-6);
                 }
+              y++;
             }
         }
       }
