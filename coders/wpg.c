@@ -530,7 +530,7 @@ static int UnpackWPGRaster(Image *image,int bpp)
           }
           for(i=0;i < (int) RunCount;i++)
             {
-              if(y > = (ssize_t) image->rows)
+              if(y >= (ssize_t) image->rows)
                 {
                   BImgBuff=(unsigned char *) RelinquishMagickMemory(BImgBuff);
                   return(-4);
