@@ -1616,15 +1616,16 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         else
           for (i=0; i < extra_samples; i++)
           {
-            image->matte=MagickTrue;
             if (sample_info[i] == EXTRASAMPLE_ASSOCALPHA)
               {
+                image->matte=MagickTrue;
                 SetQuantumAlphaType(quantum_info,AssociatedQuantumAlpha);
                 (void) SetImageProperty(image,"tiff:alpha","associated");
               }
             else
               if (sample_info[i] == EXTRASAMPLE_UNASSALPHA)
                 {
+                  image->matte=MagickTrue;
                   SetQuantumAlphaType(quantum_info,DisassociatedQuantumAlpha);
                   (void) SetImageProperty(image,"tiff:alpha","unassociated");
                 }
