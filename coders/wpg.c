@@ -535,7 +535,7 @@ static int UnpackWPGRaster(Image *image,int bpp)
                   BImgBuff=(unsigned char *) RelinquishMagickMemory(BImgBuff);
                   return(-4);
                 }
-              if (InsertRow(BImgBuff,y-1,image,bpp) == MagickFalse)
+              if (InsertRow(BImgBuff,y,image,bpp) == MagickFalse)
                 {
                   BImgBuff=(unsigned char *) RelinquishMagickMemory(BImgBuff);
                   return(-6);
