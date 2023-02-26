@@ -607,7 +607,7 @@ MagickExport MagickBooleanType ResamplePixelColor(
       weight = 0.0;
 #if FILTER_LUT
       /* Note that the ellipse has been pre-scaled so F = WLUT_WIDTH */
-      if ((Q >= 0.0) && ((int) Q < WLUT_WIDTH))
+      if ((Q >= 0.0) && ((int) Q < WLUT_WIDTH)) {
         weight = resample_filter->filter_lut[(int)Q];
 #else
       /* Note that the ellipse has been pre-scaled so F = support^2 */
