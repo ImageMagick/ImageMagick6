@@ -109,7 +109,7 @@ options, and more global use of 'image properties' (more commonly known as
 
 <p>ImageMagick version 7 is available now as a <a href="../archive//">production</a> release.</p>
 
-<p>Now that ImageMagick version 7 is released, we continue to support and enhance version 6 for a minimum of 10 years.</p>
+<p>Now that ImageMagick version 7 is released, we continue to support version 6 for a minimum of 10 years.  Support for version 6 is limited primarily to bug fixes and security patches with few enhancements.</p>
 
 <h2><a class="anchor" id="hdri"></a>High Dynamic Range Imaging</h2>
 <p>ImageMagick version 7 enables <a href="high-dynamic-range.html">high dynamic range imaging</a> (HDRI) by default.  HDRI accurately represents the wide range of intensity levels found in real scenes ranging from the brightest direct sunlight to the deepest darkest shadows.  In addition, image processing results are more accurate.  The disadvantage is it requires more memory and may result in slower processing times.  If you see differences in the results of your version 6 command-line with version 7, it is likely due to HDRI.  You may need to add <samp>-clamp</samp> to your command-line to constrain pixels to the 0 .. QuantumRange range, or disable HDRI when you build ImageMagick version 7.  To disable HDRI (recommended for smart phone builds such as iOS or production sites where performance is a premium), simply add <samp>--disable-hdri</samp> to the configure script command line when building ImageMagick.</p>
@@ -689,3 +689,4 @@ example "+annotate", "+resize", "+clut", and "+draw" .</p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
+<!-- Magick Cache 27th February 2023 03:10 -->

@@ -91,7 +91,7 @@
 <h1 class="text-center">Security Policy</h1>
 <p class="text-center"><a href="security-policy.html#policy">Security Policy </a> • <a href="security-policy.html#synchronize">Pixel Cache Synchronize Policy</a> • <a href="security-policy.html#zero-configuration">Zero Configuration Security Policy</a> • <a href="security-policy.html#other">Other Security Considerations</a></p>
 
-<p class="lead magick-description">ImageMagick reocmmended practices strongly encourage you to configure a security <a href="https://legacy.imagemagick.org/source/policy.xml">policy</a> that suits your local environment.  The policy is open by default.  This affords maximum utility for ImageMagick installations that run in a sandboxed environment, perhaps in a Docker instance, or behind a firewall where security risks are greatly diminished as compared to a public website.</p>
+<p class="lead magick-description">It is strongly recommended to establish a security policy suitable for your local environment before utilizing ImageMagick.  The policy is open by default.  This affords maximum utility for ImageMagick installations that run in a sandboxed environment, perhaps in a Docker instance, or behind a firewall where security risks are greatly diminished as compared to a public website.</p>
 
 <p>Security is a trade-off between a secure environment and convenience. If you want ImageMagick to be optimally secure, you could, for example, limit ImageMagick to only read or write web safe images (e.g. GIF, JPEG, PNG).   However, ImageMagick provides for a more secure option by adjusting the security policy per the requirements of your local environment or organizational policies. The security policy covers areas such as memory, which paths to read or write, how many images are permitted in an image sequence, how long a workflow can run, how much disk the image pixels can consume, a secret passphrase for remote connections, which coders are permitted or denied, and others. These policies should provide robust coverage to not only secure your environment per your requirements but also ensure ImageMagick remains a good citizen (e.g. prevent thrashing with large images) in your local environment.</p>
 
@@ -111,6 +111,8 @@
   &lt;policy domain="resource" name="thread" value="2"/>
   &lt;policy domain="resource" name="time" value="120"/>
   &lt;policy domain="filter" rights="none" pattern="*" />
+  &lt;policy domain="path" rights="none" pattern="-"/>  &lt;!-- don't read/write from/to stdin/stdout -->
+  &lt;policy domain="path" rights="none" pattern="/etc/*"/>  &lt;!-- don't read sensitive paths -->
   &lt;policy domain="path" rights="none" pattern="@*"/>  &lt;!-- indirect reads not permitted -->
   &lt;policy domain="module" rights="none" pattern="URL" />
   &lt;policy domain="coder" rights="write" pattern="{MSVG,MVG,PS,PDF,XPS}" />
@@ -120,9 +122,9 @@
   &lt;policy domain="system" name="shred" value="1"/>
 &lt;/policymap></code></pre>
 
-<p>Since we process multiple simultaneous sessions, we do not want any one session consuming all the available memory. With this policy, large images are cached to disk. If the image is too large and exceeds the pixel cache disk limit, the program exits. In addition, we place a time limit to prevent any run-away processing tasks. If any one image has a width or height that exceeds 8192 pixels or if an image sequence exceeds 32 frames, an exception is thrown and processing stops. As of ImageMagick 6.9.4-6, you can prevent the use of any delegate or all delegates (set the pattern to "*"). Note, prior to these releases, use a domain of <code>coder</code> to prevent delegate usage (e.g. <code>domain="coder" rights="none" pattern="HTTPS"</code>). We prevent users from executing any image filters.  The policy also prevents indirect reads. If you want to, for example, read text from a file (e.g. <code>caption:@myCaption.txt</code>), you'll need to disable the <code>path</code> policy.</p>
+<p>Since we process multiple simultaneous sessions, we do not want any one session consuming all the available memory. With this policy, large images are cached to disk. If the image is too large and exceeds the pixel cache disk limit, the program exits. In addition, we place a time limit to prevent any run-away processing tasks. If any one image has a width or height that exceeds 8192 pixels or if an image sequence exceeds 32 frames, an exception is thrown and processing stops. As of ImageMagick 6.9.4-6, you can prevent the use of any delegate or all delegates (set the <a href="https://en.wikipedia.org/wiki/Glob_(programming)">glob pattern</a> to "*"). Note, prior to these releases, use a domain of <code>coder</code> to prevent delegate usage (e.g. <code>domain="coder" rights="none" pattern="HTTPS"</code>). We prevent users from executing any image filters.  The policy also prevents indirect reads. If you want to, for example, read text from a file (e.g. <code>caption:@myCaption.txt</code>), you'll need to disable the <code>path</code> policy.</p>
 
-<p>Policy patterns are <em>case sensitive</em>.  To get expected behavior, coders and modules must be upper-case (e.g. "EPS" not "eps") or use a case-insensitive pattern such as <samp>[Pp][Nn][Gg]</samp>.</p>
+<p>Policy glob patterns are <em>case sensitive</em>.  To get expected behavior, coders and modules must be upper-case (e.g. "EPS" not "eps") or use a case-insensitive pattern such as <samp>[Pp][Nn][Gg]</samp>.</p>
 
 <p>Here is what you can expect when you restrict the HTTPS coder, for example:</p>
 
@@ -150,6 +152,8 @@ convert: no images defined `wizard.jpg'</code></pre>
 <p>As of ImageMagick version 6.9.9-35, you can limit the maximum number of images in a sequence.  For example, to limit an image sequence to at most 64 frames, use:</p>
 <pre class="bg-light text-dark mx-4"><code>&lt;policy domain="resource" name="list-length" value="64"/></code></pre>
 
+<p>Note, numeric values in policies are floating-point with an optional SI prefix (e.g., 10MiB).</p>
+
 <p>For additional details about resource limits and the policy configuration file, read <a href="resources.html">Resources</a> and <a href="architecture.html">Architecture</a>.</p>
 
 <p>As of ImageMagick 6.9.8-10, you can programmatically set the ImageMagick security policy with SetMagickSecurityPolicy() (MagickCore) or MagickSetSecurityPolicy() (MagickWand).</p>
@@ -159,6 +163,9 @@ convert: no images defined `wizard.jpg'</code></pre>
 
 <p>As of ImageMagick version 6.9-10-52, you can set a font policy.  Specify a path to a Unicode font that ImageMagick defaults to whenever the user does not specify a font preference:</p>
 <pre class="bg-light text-dark mx-4"><code>&lt;policy domain="system" name="font" value="/usr/share/fonts/arial-unicode.ttf"/></code></pre>
+
+<p>Note, in file path glob patterns, use the backslash character (\) to escape characters that would otherwise be interpreted as special characters. For example:</p>
+<pre class="bg-light text-dark mx-4"><samp>&lt;policy domain="path" rights="none" pattern="c:\\\\*"/></samp></pre>
 
 <p>You can verify your policy changes are in effect with this command:</p>
 
@@ -220,6 +227,9 @@ Path: [built-in]
   Policy: Undefined
     rights: None </code></pre>
 <p>Notice the <code>shared-secret</code> policy is not listed due to the <code>stealth</code> property.</p>
+
+<p>Doyensec provides a policy evaluator tool that can assist you in designing and auditing your security policy.  The tool is found at <a href="https://imagemagick-secevaluator.doyensec.com/">imagemagick-secevaluator.doyensec.com</a>.</p>
+
 
 <h2><a class="anchor" id="synchronize"></a>Pixel Cache Synchronize Policy</h2>
 
@@ -286,3 +296,4 @@ ion files.  To define your security policy, you must instead edit the <code>magi
   <script src="assets/magick.js" ></script>
   </body>
 </html>
+<!-- Magick Cache 27th February 2023 03:47 -->
