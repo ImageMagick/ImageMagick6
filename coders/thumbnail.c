@@ -156,6 +156,9 @@ static MagickBooleanType WriteTHUMBNAILImage(const ImageInfo *image_info,
   const char
     *property;
 
+  const MagickInfo
+    *magick_info;
+
   const StringInfo
     *profile;
 
@@ -211,8 +214,9 @@ static MagickBooleanType WriteTHUMBNAILImage(const ImageInfo *image_info,
   write_info=CloneImageInfo(image_info);
   (void) SetImageInfo(write_info,1,&image->exception);
   *write_info->magick='\0';
-  if ((*write_info->magick == '\0') ||
-      (LocaleCompare(write_info->magick,"THUMBNAIL") == 0))
+  magick_info=GetMagickInfo(write_info->magick,&image->exception);
+  if ((magick_info == (const MagickInfo*) NULL) ||
+      (LocaleCompare(magick_info->module,"THUMBNAIL") == 0))
     (void) FormatLocaleString(thumbnail_image->filename,MaxTextExtent,
       "miff:%s",write_info->filename);
   status=WriteImage(write_info,thumbnail_image);
