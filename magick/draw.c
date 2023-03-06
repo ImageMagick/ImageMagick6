@@ -1018,6 +1018,8 @@ MagickExport DrawInfo *DestroyDrawInfo(DrawInfo *draw_info)
     draw_info->clipping_mask=DestroyImage(draw_info->clipping_mask);
   if (draw_info->composite_mask != (Image *) NULL)
     draw_info->composite_mask=DestroyImage(draw_info->composite_mask);
+  if (draw_info->image_info != (ImageInfo *) NULL)
+    draw_info->image_info=DestroyImageInfo(draw_info->image_info);
   draw_info->signature=(~MagickCoreSignature);
   draw_info=(DrawInfo *) RelinquishMagickMemory(draw_info);
   return(draw_info);
