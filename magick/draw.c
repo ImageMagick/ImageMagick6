@@ -382,6 +382,7 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
     clone_info->composite_mask=CloneImage(draw_info->composite_mask,0,0,
       MagickTrue,&draw_info->composite_mask->exception);
   clone_info->render=draw_info->render;
+  clone_info->image_info=CloneImageInfo(draw_info->image_info);
   clone_info->debug=draw_info->debug;
   return(clone_info);
 }
@@ -5527,15 +5528,6 @@ MagickExport MagickBooleanType DrawPrimitive(Image *image,
             (void) CopyMagickString(clone_info->filename,primitive_info->text,
               MagickPathExtent);
             (void) SetImageInfo(clone_info,1,exception);
-            if ((LocaleCompare(clone_info->magick,"SVG") == 0) ||
-                (LocaleCompare(clone_info->magick,"MSVG") == 0))
-              {
-                (void) ThrowMagickException(exception,GetMagickModule(),
-                  CorruptImageError,"ImageTypeNotSupported","`%s'",
-                  clone_info->filename);
-                clone_info=DestroyImageInfo(clone_info);
-                break;
-              }
             (void) CopyMagickString(clone_info->filename,primitive_info->text,
               MagickPathExtent);
             if (clone_info->size != (char *) NULL)
@@ -5919,9 +5911,6 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
   ExceptionInfo
     *exception;
 
-  ImageInfo
-    *clone_info;
-
   /*
     Initialize draw attributes.
   */
@@ -5929,12 +5918,12 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   (void) memset(draw_info,0,sizeof(*draw_info));
-  clone_info=CloneImageInfo(image_info);
+  draw_info->image_info=CloneImageInfo(image_info);
   GetAffineMatrix(&draw_info->affine);
   exception=AcquireExceptionInfo();
   (void) QueryColorDatabase("#000F",&draw_info->fill,exception);
   (void) QueryColorDatabase("#FFF0",&draw_info->stroke,exception);
-  draw_info->stroke_antialias=clone_info->antialias;
+  draw_info->stroke_antialias=draw_info->image_info->antialias;
   draw_info->stroke_width=1.0;
   draw_info->fill_rule=EvenOddRule;
   draw_info->opacity=OpaqueOpacity;
@@ -5944,65 +5933,65 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
   draw_info->linejoin=MiterJoin;
   draw_info->miterlimit=10;
   draw_info->decorate=NoDecoration;
-  if (clone_info->font != (char *) NULL)
-    draw_info->font=AcquireString(clone_info->font);
-  if (clone_info->density != (char *) NULL)
-    draw_info->density=AcquireString(clone_info->density);
-  draw_info->text_antialias=clone_info->antialias;
+  if (draw_info->image_info->font != (char *) NULL)
+    draw_info->font=AcquireString(draw_info->image_info->font);
+  if (draw_info->image_info->density != (char *) NULL)
+    draw_info->density=AcquireString(draw_info->image_info->density);
+  draw_info->text_antialias=draw_info->image_info->antialias;
   draw_info->pointsize=12.0;
-  if (fabs(clone_info->pointsize) >= MagickEpsilon)
-    draw_info->pointsize=clone_info->pointsize;
+  if (fabs(draw_info->image_info->pointsize) >= MagickEpsilon)
+    draw_info->pointsize=draw_info->image_info->pointsize;
   draw_info->undercolor.opacity=(Quantum) TransparentOpacity;
-  draw_info->border_color=clone_info->border_color;
+  draw_info->border_color=draw_info->image_info->border_color;
   draw_info->compose=OverCompositeOp;
-  if (clone_info->server_name != (char *) NULL)
-    draw_info->server_name=AcquireString(clone_info->server_name);
+  if (draw_info->image_info->server_name != (char *) NULL)
+    draw_info->server_name=AcquireString(draw_info->image_info->server_name);
   draw_info->render=MagickTrue;
   draw_info->clip_path=MagickFalse;
   draw_info->debug=(GetLogEventMask() & (DrawEvent | AnnotateEvent)) != 0 ?
     MagickTrue : MagickFalse;
-  option=GetImageOption(clone_info,"direction");
+  option=GetImageOption(draw_info->image_info,"direction");
   if (option != (const char *) NULL)
     draw_info->direction=(DirectionType) ParseCommandOption(
       MagickDirectionOptions,MagickFalse,option);
   else
     draw_info->direction=UndefinedDirection;
-  option=GetImageOption(clone_info,"encoding");
+  option=GetImageOption(draw_info->image_info,"encoding");
   if (option != (const char *) NULL)
     (void) CloneString(&draw_info->encoding,option);
-  option=GetImageOption(clone_info,"family");
+  option=GetImageOption(draw_info->image_info,"family");
   if (option != (const char *) NULL)
     (void) CloneString(&draw_info->family,option);
-  option=GetImageOption(clone_info,"fill");
+  option=GetImageOption(draw_info->image_info,"fill");
   if (option != (const char *) NULL)
     (void) QueryColorDatabase(option,&draw_info->fill,exception);
-  option=GetImageOption(clone_info,"gravity");
+  option=GetImageOption(draw_info->image_info,"gravity");
   if (option != (const char *) NULL)
     draw_info->gravity=(GravityType) ParseCommandOption(MagickGravityOptions,
       MagickFalse,option);
-  option=GetImageOption(clone_info,"interline-spacing");
+  option=GetImageOption(draw_info->image_info,"interline-spacing");
   if (option != (const char *) NULL)
     draw_info->interline_spacing=GetDrawValue(option,&next_token);
-  option=GetImageOption(clone_info,"interword-spacing");
+  option=GetImageOption(draw_info->image_info,"interword-spacing");
   if (option != (const char *) NULL)
     draw_info->interword_spacing=GetDrawValue(option,&next_token);
-  option=GetImageOption(clone_info,"kerning");
+  option=GetImageOption(draw_info->image_info,"kerning");
   if (option != (const char *) NULL)
     draw_info->kerning=GetDrawValue(option,&next_token);
-  option=GetImageOption(clone_info,"stroke");
+  option=GetImageOption(draw_info->image_info,"stroke");
   if (option != (const char *) NULL)
     (void) QueryColorDatabase(option,&draw_info->stroke,exception);
-  option=GetImageOption(clone_info,"strokewidth");
+  option=GetImageOption(draw_info->image_info,"strokewidth");
   if (option != (const char *) NULL)
     draw_info->stroke_width=GetDrawValue(option,&next_token);
-  option=GetImageOption(clone_info,"style");
+  option=GetImageOption(draw_info->image_info,"style");
   if (option != (const char *) NULL)
     draw_info->style=(StyleType) ParseCommandOption(MagickStyleOptions,
       MagickFalse,option);
-  option=GetImageOption(clone_info,"undercolor");
+  option=GetImageOption(draw_info->image_info,"undercolor");
   if (option != (const char *) NULL)
     (void) QueryColorDatabase(option,&draw_info->undercolor,exception);
-  option=GetImageOption(clone_info,"weight");
+  option=GetImageOption(draw_info->image_info,"weight");
   if (option != (const char *) NULL)
     {
       ssize_t
@@ -6015,7 +6004,6 @@ MagickExport void GetDrawInfo(const ImageInfo *image_info,DrawInfo *draw_info)
     }
   exception=DestroyExceptionInfo(exception);
   draw_info->signature=MagickCoreSignature;
-  clone_info=DestroyImageInfo(clone_info);
 }
 
 /*

@@ -354,6 +354,9 @@ typedef struct _DrawInfo
 
   char
     *id;
+
+  ImageInfo
+    *image_info;
 } DrawInfo;
 
 typedef struct _PrimitiveInfo

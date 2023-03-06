@@ -1011,6 +1011,7 @@ MagickExport ImageInfo *CloneImageInfo(const ImageInfo *image_info)
   clone_info->subimage=image_info->scene;  /* deprecated */
   clone_info->subrange=image_info->number_scenes;  /* deprecated */
   clone_info->channel=image_info->channel;
+  clone_info->recursion_depth=image_info->recursion_depth;
   clone_info->debug=image_info->debug;
   clone_info->signature=image_info->signature;
   return(clone_info);
