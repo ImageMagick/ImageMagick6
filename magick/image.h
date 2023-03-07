@@ -499,9 +499,6 @@ struct _ImageInfo
 
   MagickBooleanType
     synchronize;
-
-  size_t
-    recursion_depth;  /* recursion detection */
 };
 
 extern MagickExport ExceptionType

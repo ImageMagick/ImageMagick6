@@ -564,16 +564,9 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
       if ((thread_support & DecoderThreadSupport) == 0)
         LockSemaphoreInfo(magick_info->semaphore);
       status=IsCoderAuthorized(read_info->magick,ReadPolicyRights,exception);
-      if (((ImageInfo *) image_info)->recursion_depth++ > MaxReadRecursionDepth)
-        {
-          (void) ThrowMagickException(exception,GetMagickModule(),CoderError,
-            "NumberOfImagesIsNotSupported","`%s'",read_info->magick);
-          status=MagickFalse;
-        }
       image=(Image *) NULL;
       if (status != MagickFalse)
         image=GetImageDecoder(magick_info)(read_info,exception);
-      ((ImageInfo *) image_info)->recursion_depth--;
       if ((thread_support & DecoderThreadSupport) == 0)
         UnlockSemaphoreInfo(magick_info->semaphore);
     }
