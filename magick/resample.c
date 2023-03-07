@@ -611,7 +611,7 @@ MagickExport MagickBooleanType ResamplePixelColor(
         weight = resample_filter->filter_lut[(int)Q];
 #else
       /* Note that the ellipse has been pre-scaled so F = support^2 */
-      if ((Q >= 0.0) && (Q < (double)resample_filter->F))
+      if ((Q >= 0.0) && (Q < (double)resample_filter->F)) {
         weight = GetResizeFilterWeight(resample_filter->filter_def,
              sqrt(Q));    /* a SquareRoot!  Arrggghhhhh... */
 #endif
