@@ -12397,7 +12397,7 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
        */
 
       mng_info->write_png_compression_filter = StringToUnsignedLong(value)+1;
-      if (mng_info->write_png_compression_filter > 10)
+      if (mng_info->write_png_compression_filter > 5)
         (void) ThrowMagickException(&image->exception,
              GetMagickModule(),CoderWarning,
              "ignoring invalid defined png:compression-filter",
