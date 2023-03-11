@@ -80,7 +80,6 @@ static int StreamMain(int argc,char **argv)
   image_info=DestroyImageInfo(image_info);
   exception=DestroyExceptionInfo(exception);
   MagickWandTerminus();
-  MagickCoreTerminus();
   return(status != MagickFalse ? 0 : 1);
 }
 

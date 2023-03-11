@@ -91,7 +91,6 @@ static int CompareMain(int argc,char **argv)
   image_info=DestroyImageInfo(image_info);
   exception=DestroyExceptionInfo(exception);
   MagickWandTerminus();
-  MagickCoreTerminus();
   if (dissimilar != MagickFalse)
     return(1);
   return(status != MagickFalse ? 0 : 2);
