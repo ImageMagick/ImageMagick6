@@ -128,7 +128,8 @@ typedef void
   (*ErrorHandler)(const ExceptionType,const char *,const char *);
 
 typedef void
-  (*FatalErrorHandler)(const ExceptionType,const char *,const char *);
+  (*FatalErrorHandler)(const ExceptionType,const char *,const char *)
+    magick_attribute((__noreturn__));
 
 typedef void
   (*WarningHandler)(const ExceptionType,const char *,const char *);
@@ -165,7 +166,8 @@ extern MagickExport void
   ClearMagickException(ExceptionInfo *),
   InheritException(ExceptionInfo *,const ExceptionInfo *),
   MagickError(const ExceptionType,const char *,const char *),
-  MagickFatalError(const ExceptionType,const char *,const char *),
+  MagickFatalError(const ExceptionType,const char *,const char *)
+    magick_attribute((__noreturn__)),
   MagickWarning(const ExceptionType,const char *,const char *);
 
 extern MagickExport WarningHandler
