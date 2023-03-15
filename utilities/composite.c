@@ -87,6 +87,13 @@ int main(int argc,char **argv)
   return(CompositeMain(argc,argv));
 }
 #else
+static LONG WINAPI NTUncaughtException(EXCEPTION_POINTERS *info)
+{ 
+  magick_unreferenced(info);
+  AsynchronousResourceComponentTerminus();
+  return(EXCEPTION_CONTINUE_SEARCH);
+}
+
 int wmain(int argc,wchar_t *argv[])
 {
   char
