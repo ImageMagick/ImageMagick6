@@ -2151,11 +2151,14 @@ static void TIFFIgnoreTags(TIFF *tiff)
   Image
    *image;
 
+  size_t
+    count;
+
   ssize_t
     i;
 
-  size_t
-    count;
+  static const
+    char *dummy_name = "";
 
   TIFFFieldInfo
     *ignore;
@@ -2200,6 +2203,7 @@ static void TIFFIgnoreTags(TIFF *tiff)
       p++;
 
     ignore[i].field_tag=(ttag_t) strtol(p,&q,10);
+    ignore[i].field_name=dummy_name;
 
     p=q;
     i++;
