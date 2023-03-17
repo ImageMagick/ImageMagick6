@@ -2157,7 +2157,7 @@ static void TIFFIgnoreTags(TIFF *tiff)
   ssize_t
     i;
 
-  static const
+  static
     char *dummy_name = "";
 
   TIFFFieldInfo
