@@ -2220,7 +2220,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
     *ping_pixels;
 
 #ifdef PNG_UNKNOWN_CHUNKS_SUPPORTED
-  png_byte unused_chunks[]=
+  static const png_byte unused_chunks[]=
   {
     104,  73,  83,  84, (png_byte) '\0',   /* hIST */
     105,  84,  88, 116, (png_byte) '\0',   /* iTXt */
