@@ -2158,7 +2158,7 @@ static void TIFFIgnoreTags(TIFF *tiff)
     i;
 
   static
-    char *dummy_name = "";
+    char *dummy_name = (char *) "";
 
   TIFFFieldInfo
     *ignore;

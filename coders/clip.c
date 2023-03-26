@@ -243,7 +243,7 @@ static MagickBooleanType WriteCLIPImage(const ImageInfo *image_info,
   (void) SetImageInfo(write_info,1,&image->exception);
   magick_info=GetMagickInfo(write_info->magick,&image->exception);
   if ((magick_info == (const MagickInfo*) NULL) ||
-      (LocaleCompare(magick_info->module,"CLIP") == 0))
+      (LocaleCompare(magick_info->magick_module,"CLIP") == 0))
     (void) FormatLocaleString(clip_image->filename,MaxTextExtent,"miff:%s",
       write_info->filename);
   status=WriteImage(write_info,clip_image);

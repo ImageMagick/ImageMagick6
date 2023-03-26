@@ -215,17 +215,11 @@ static void *DestroyLocaleNode(void *locale_info)
 static SplayTreeInfo *AcquireLocaleSplayTree(const char *filename,
   const char *locale,ExceptionInfo *exception)
 {
-  MagickStatusType
-    status;
-
   SplayTreeInfo
     *cache;
 
   cache=NewSplayTree(CompareSplayTreeString,(void *(*)(void *)) NULL,
     DestroyLocaleNode);
-  if (cache == (SplayTreeInfo *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  status=MagickTrue;
 #if !MAGICKCORE_ZERO_CONFIGURATION_SUPPORT
   {
     const StringInfo
@@ -238,7 +232,7 @@ static SplayTreeInfo *AcquireLocaleSplayTree(const char *filename,
     option=(const StringInfo *) GetNextValueInLinkedList(options);
     while (option != (const StringInfo *) NULL)
     {
-      status&=LoadLocaleCache(cache,(const char *) GetStringInfoDatum(option),
+      (void) LoadLocaleCache(cache,(const char *) GetStringInfoDatum(option),
         GetStringInfoPath(option),locale,0,exception);
       option=(const StringInfo *) GetNextValueInLinkedList(options);
     }
@@ -249,7 +243,7 @@ static SplayTreeInfo *AcquireLocaleSplayTree(const char *filename,
         option=(const StringInfo *) GetNextValueInLinkedList(options);
         while (option != (const StringInfo *) NULL)
         {
-          status&=LoadLocaleCache(cache,(const char *)
+          (void) LoadLocaleCache(cache,(const char *)
             GetStringInfoDatum(option),GetStringInfoPath(option),locale,0,
             exception);
           option=(const StringInfo *) GetNextValueInLinkedList(options);
@@ -259,8 +253,7 @@ static SplayTreeInfo *AcquireLocaleSplayTree(const char *filename,
   }
 #endif
   if (GetNumberOfNodesInSplayTree(cache) == 0)
-    status&=LoadLocaleCache(cache,LocaleMap,"built-in",locale,0,
-      exception);
+    (void) LoadLocaleCache(cache,LocaleMap,"built-in",locale,0,exception);
   return(cache);
 }
 
