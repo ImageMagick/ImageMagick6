@@ -2293,7 +2293,7 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
     *exception;
 
   Image
-    *jps_images = (Image *) NULL,
+    *jps_image = (Image *) NULL,
     *volatile volatile_image = (Image *) NULL;
 
   int
