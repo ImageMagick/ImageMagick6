@@ -3473,7 +3473,7 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
   /*
     Image resource block.
   */
-  length=28; /* 0x03EB */
+  length=0;
   bim_profile=(StringInfo *) GetImageProfile(image,"8bim");
   icc_profile=GetImageProfile(image,"icc");
   if (bim_profile != (StringInfo *) NULL)
