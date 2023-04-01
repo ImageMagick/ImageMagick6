@@ -3486,8 +3486,11 @@ static MagickBooleanType WritePSDImage(const ImageInfo *image_info,
     }
   if (icc_profile != (const StringInfo *) NULL)
     length+=PSDQuantum(GetStringInfoLength(icc_profile))+12;
+  if ((image->x_resolution > 0.0) && (image->y_resolution > 0.0))
+    length+=28; /* size of WriteResolutionResourceBlock */
   (void) WriteBlobMSBLong(image,(unsigned int) length);
-  WriteResolutionResourceBlock(image);
+  if ((image->x_resolution > 0.0) && (image->y_resolution > 0.0))
+    WriteResolutionResourceBlock(image);
   if (bim_profile != (StringInfo *) NULL)
     {
       (void) WriteBlob(image,GetStringInfoLength(bim_profile),
