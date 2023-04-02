@@ -1856,14 +1856,14 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
               break;
             if (rows_remaining == 0)
               {
-                strip_size=TIFFReadEncodedStrip(tiff,strip_id,strip_pixels,
-                  TIFFStripSize(tiff));
+                tmsize_t
+                  size;
+
+                size=TIFFReadEncodedStrip(tiff,strip_id,strip_pixels,
+                  strip_size);
                 if (strip_size == -1)
                   break;
                 rows_remaining=rows_per_strip;
-                if ((y+rows_per_strip) > (ssize_t) image->rows)
-                  rows_remaining=(rows_per_strip-(y+rows_per_strip-
-                    image->rows));
                 p=strip_pixels;
                 strip_id++;
               }
