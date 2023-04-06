@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization         %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -191,7 +191,8 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
           if (status == MagickFalse)
             break;
           width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
-          height=(size_t) floor(metrics.height+draw_info->stroke_width+0.5);
+          height=(size_t) floor(metrics.height-metrics.underline_position+
+            draw_info->stroke_width+0.5);
           if ((image->columns != 0) && (image->rows != 0))
             {
               if ((width >= image->columns) || (height >= image->rows))
@@ -222,7 +223,8 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
           if (status == MagickFalse)
             break;
           width=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
-          height=(size_t) floor(metrics.height+draw_info->stroke_width+0.5);
+          height=(size_t) floor(metrics.height-metrics.underline_position+
+            draw_info->stroke_width+0.5);
           if ((image->columns != 0) && (image->rows != 0))
             {
               if ((width < image->columns) && (height < image->rows))
