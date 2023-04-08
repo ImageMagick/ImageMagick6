@@ -646,15 +646,15 @@ static MagickBooleanType ClipPixelCacheNexus(Image *image,
       mask_alpha=QuantumScale*GetPixelIntensity(image,r);
       if (fabs(mask_alpha) >= MagickEpsilon)
         {
-          SetPixelRed(q,mask_alpha*MagickOver_((MagickRealType) p->red,
-            (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->red,
-            (MagickRealType) GetPixelOpacity(q)));
-          SetPixelGreen(q,mask_alpha*MagickOver_((MagickRealType) p->green,
-            (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->green,
-            (MagickRealType) GetPixelOpacity(q)));
-          SetPixelBlue(q,mask_alpha*MagickOver_((MagickRealType) p->blue,
-            (MagickRealType) GetPixelOpacity(p),(MagickRealType) q->blue,
-            (MagickRealType) GetPixelOpacity(q)));
+          SetPixelRed(q,MagickOver_((MagickRealType) p->red,(MagickRealType)
+            GetPixelOpacity(p),(MagickRealType) q->red,(MagickRealType)
+            GetPixelOpacity(q)));
+          SetPixelGreen(q,MagickOver_((MagickRealType) p->green,(MagickRealType)
+            GetPixelOpacity(p),(MagickRealType) q->green,(MagickRealType)
+            GetPixelOpacity(q)));
+          SetPixelBlue(q,MagickOver_((MagickRealType) p->blue,(MagickRealType)
+            GetPixelOpacity(p),(MagickRealType) q->blue,(MagickRealType)
+            GetPixelOpacity(q)));
           SetPixelOpacity(q,GetPixelOpacity(p));
           if (cache_info->active_index_channel != MagickFalse)
             SetPixelIndex(nexus_indexes+n,GetPixelIndex(indexes+n));
