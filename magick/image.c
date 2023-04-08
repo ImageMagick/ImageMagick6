@@ -2827,7 +2827,8 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
         }
     }
   *extension='\0';
-  GetPathComponent(image_info->filename,ExtensionPath,extension);
+  if (*image_info->magick == '\0')
+    GetPathComponent(image_info->filename,ExtensionPath,extension);
   if (*extension != '\0')
     {
       char
