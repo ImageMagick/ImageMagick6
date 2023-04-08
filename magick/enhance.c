@@ -300,8 +300,8 @@ MagickExport MagickBooleanType BrightnessContrastImageChannel(Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   slope=100.0*PerceptibleReciprocal(100.0-contrast);
   if (contrast < 0.0)
-    slope=contrast/100.0+1.0;
-  intercept=brightness/100.0+((100.0-brightness)/200.0)*(1.0-slope);
+    slope=0.01*contrast+1.0;
+  intercept=(0.01*brightness-0.5)+slope+0.5;
   coefficients[0]=slope;
   coefficients[1]=intercept;
   status=FunctionImageChannel(image,channel,PolynomialFunction,2,coefficients,
