@@ -364,7 +364,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case PowEvaluateOperator:
     {
-      if ((pixel < 0) && ((value-floor(value)) > MagickEpsilon))
+      if (((double) pixel < 0.0) && ((value-floor(value)) > MagickEpsilon))
         result=(double) -(QuantumRange*pow((double) -(QuantumScale*pixel),
           (double) value));
       else

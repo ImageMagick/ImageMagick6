@@ -2690,7 +2690,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
         c;
 
       LongPixelPacket
-        pixel = { 0 };
+        pixel = { 0, 0, 0, 0, 0 };
 
       QuantumAny
         range;

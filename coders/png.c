@@ -2939,7 +2939,7 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
                    png_get_valid(ping,ping_info,PNG_INFO_bKGD))
                     {
                       png_color_16
-                         background = { 0 };
+                         background = { 0, 0, 0, 0, 0 };
 
 #ifndef PNG_READ_EMPTY_PLTE_SUPPORTED
                       if (mng_info->have_saved_bkgd_index)
