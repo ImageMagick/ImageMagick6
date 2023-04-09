@@ -2827,7 +2827,7 @@ static void WriteFourCC(Image *image, const size_t compression,
 
       DDSVector4
         point,
-        points[16] = { 0, 0, 0, 0 };
+        points[16] = { { 0, 0, 0, 0 } };
 
       size_t
         count = 0,
