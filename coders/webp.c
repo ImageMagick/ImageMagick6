@@ -82,7 +82,7 @@
 */
 #if defined(MAGICKCORE_WEBP_DELEGATE)
 static MagickBooleanType
-  WriteWEBPImage(const ImageInfo *,Image *,ExceptionInfo *);
+  WriteWEBPImage(const ImageInfo *,Image *);
 #endif
 
 /*
@@ -1111,7 +1111,7 @@ static inline void SetIntegerOption(const ImageInfo *image_info,
 }
 
 static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
-  Image *image,ExceptionInfo * exception)
+  Image *image)
 {
   const char
     *value;
@@ -1134,7 +1134,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  status=OpenBlob(image_info,image,WriteBinaryBlobMode,exception);
+  status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
   if ((image->columns > 16383UL) || (image->rows > 16383UL))
@@ -1215,12 +1215,12 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
         (GetPreviousImageInList(image) == (Image *) NULL) &&
         (GetNextImageInList(image) != (Image *) NULL))
       status=WriteAnimatedWEBPImage(image_info,image,&configure,&webp_data,
-        exception);
+        &image->exception);
     else
       {
         WebPMemoryWriterInit(&writer);
         status=WriteSingleWEBPImage(image_info,image,&configure,&writer,
-          exception);
+          &image->exception);
         if (status == MagickFalse)
           WebPMemoryWriterClear(&writer);
         else
@@ -1230,14 +1230,15 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
           }
       }
     if (status != MagickFalse)
-      status=WriteWEBPImageProfile(image,&webp_data,exception);
+      status=WriteWEBPImageProfile(image,&webp_data,&image->exception);
     if (status != MagickFalse)
       (void) WriteBlob(image,webp_data.size,webp_data.bytes);
     WebPDataClear(&webp_data);
   }
 #else
   WebPMemoryWriterInit(&writer);
-  status=WriteSingleWEBPImage(image_info,image,&configure,&writer,exception);
+  status=WriteSingleWEBPImage(image_info,image,&configure,&writer,
+    &image->exception);
   if (status != MagickFalse)
     (void) WriteBlob(image,writer.size,writer.mem);
   WebPMemoryWriterClear(&writer);

@@ -87,7 +87,7 @@
   Forward declarations.
 */
 static MagickBooleanType
-  WriteHEICImage(const ImageInfo *,Image *,ExceptionInfo *);
+  WriteHEICImage(const ImageInfo *,Image *);
 
 /*x
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1168,7 +1168,7 @@ static MagickBooleanType WriteHEICImageRRGGBBAA(Image *image,
 }
 
 static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
-  Image *image,ExceptionInfo *exception)
+  Image *image)
 {
   MagickBooleanType
 #if LIBHEIF_NUMERIC_VERSION > 0x01060200
@@ -1200,7 +1200,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  status=OpenBlob(image_info,image,WriteBinaryBlobMode,exception);
+  status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
   scene=0;
@@ -1237,9 +1237,9 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
 #endif
       error=heif_context_get_encoder_for_format(heif_context,
         heif_compression_HEVC,&heif_encoder);
-    if (IsHEIFSuccess(image,&error,exception) == MagickFalse)
+    if (IsHEIFSuccess(image,&error,&image->exception) == MagickFalse)
       break;
-    status=IsHEIFSuccess(image,&error,exception);
+    status=IsHEIFSuccess(image,&error,&image->exception);
     if (status == MagickFalse)
       break;
     chroma=lossless != MagickFalse ? heif_chroma_444 : heif_chroma_420;
@@ -1275,9 +1275,9 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     */
     error=heif_image_create((int) image->columns,(int) image->rows,colorspace,
       chroma,&heif_image);
-    if (IsHEIFSuccess(image,&error,exception) == MagickFalse)
+    if (IsHEIFSuccess(image,&error,&image->exception) == MagickFalse)
       break;
-    status=IsHEIFSuccess(image,&error,exception);
+    status=IsHEIFSuccess(image,&error,&image->exception);
     if (status == MagickFalse)
       break;
     profile=GetImageProfile(image,"icc");
@@ -1285,12 +1285,12 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
       (void) heif_image_set_raw_color_profile(heif_image,"prof",
         GetStringInfoDatum(profile),GetStringInfoLength(profile));
     if (colorspace == heif_colorspace_YCbCr)
-      status=WriteHEICImageYCbCr(image,heif_image,exception);
+      status=WriteHEICImageYCbCr(image,heif_image,&image->exception);
     else
       if (image->depth > 8)
-        status=WriteHEICImageRRGGBBAA(image,heif_image,exception);
+        status=WriteHEICImageRRGGBBAA(image,heif_image,&image->exception);
       else
-        status=WriteHEICImageRGBA(image,heif_image,exception);
+        status=WriteHEICImageRGBA(image,heif_image,&image->exception);
     if (status == MagickFalse)
       break;
     /*
@@ -1301,7 +1301,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     else if (image_info->quality != UndefinedCompressionQuality)
       error=heif_encoder_set_lossy_quality(heif_encoder,(int)
         image_info->quality);
-    status=IsHEIFSuccess(image,&error,exception);
+    status=IsHEIFSuccess(image,&error,&image->exception);
     if (status == MagickFalse)
       break;
 #if LIBHEIF_NUMERIC_VERSION > 0x01060200
@@ -1314,7 +1314,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
         if (option != (char *) NULL)
           {
             error=heif_encoder_set_parameter(heif_encoder,"speed",option);
-            status=IsHEIFSuccess(image,&error,exception);
+            status=IsHEIFSuccess(image,&error,&image->exception);
             if (status == MagickFalse)
               break;
           }
@@ -1322,7 +1322,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
         if (option != (char *) NULL)
           {
             error=heif_encoder_set_parameter(heif_encoder,"chroma",option);
-            status=IsHEIFSuccess(image,&error,exception);
+            status=IsHEIFSuccess(image,&error,&image->exception);
             if (status == MagickFalse)
               break;
           }
@@ -1336,13 +1336,13 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     error=heif_context_encode_image(heif_context,heif_image,heif_encoder,
       options,(struct heif_image_handle **) NULL);
     heif_encoding_options_free(options);
-    if (IsHEIFSuccess(image,&error,exception) == MagickFalse)
+    if (IsHEIFSuccess(image,&error,&image->exception) == MagickFalse)
       break;
-    status=IsHEIFSuccess(image,&error,exception);
+    status=IsHEIFSuccess(image,&error,&image->exception);
     if (status == MagickFalse)
       break;
     if (image->profiles != (void *) NULL)
-      WriteProfile(heif_context,image,exception);
+      WriteProfile(heif_context,image,&image->exception);
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
     image=SyncNextImageInList(image);
@@ -1364,7 +1364,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
       writer.writer_api_version=1;
       writer.write=heif_write_func;
       error=heif_context_write(heif_context,&writer,image);
-      status=IsHEIFSuccess(image,&error,exception);
+      status=IsHEIFSuccess(image,&error,&image->exception);
     }
   if (heif_encoder != (struct heif_encoder*) NULL)
     heif_encoder_release(heif_encoder);
