@@ -1927,6 +1927,9 @@ MagickPrivate unsigned char *NTRegistryKeyLookup(const char *subkey)
   unsigned char
     *value;
 
+  (void) FormatLocaleString(package_key,MagickPathExtent,
+    "SOFTWARE\\%s\\%s\\Q:%d",MagickPackageName,MagickLibVersionText,
+    MAGICKCORE_QUANTUM_DEPTH);
   value=NTGetRegistryValue(HKEY_LOCAL_MACHINE,package_key,0,subkey);
   if (value == (unsigned char *) NULL)
     value=NTGetRegistryValue(HKEY_CURRENT_USER,package_key,0,subkey);
