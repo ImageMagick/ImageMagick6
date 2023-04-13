@@ -702,7 +702,7 @@ MagickExport void ConvertHWBToRGB(const double hue,const double whiteness,
       *blue=ClampToQuantum(QuantumRange*v);
       return;
     }
-  i=CastDoubleToLong(floor(6.0*hue));
+  i=CastDoubleToSSizeT(floor(6.0*hue));
   f=6.0*hue-i;
   if ((i & 0x01) != 0)
     f=1.0-f;

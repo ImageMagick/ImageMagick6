@@ -18,7 +18,7 @@
 %                               November 1997                                 %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -9924,17 +9924,19 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       if (image->units == PixelsPerInchResolution)
         {
           ping_pHYs_unit_type=PNG_RESOLUTION_METER;
-          ping_pHYs_x_resolution=
-             (png_uint_32) ((100.0*image->x_resolution+0.5)/2.54);
-          ping_pHYs_y_resolution=
-             (png_uint_32) ((100.0*image->y_resolution+0.5)/2.54);
+          ping_pHYs_x_resolution=(png_uint_32) CastDoubleToSizeT((100.0*
+            image->x_resolution)/2.54);
+          ping_pHYs_y_resolution=(png_uint_32) CastDoubleToSizeT((100.0*
+            image->y_resolution+0.5)/2.54);
         }
 
       else if (image->units == PixelsPerCentimeterResolution)
         {
           ping_pHYs_unit_type=PNG_RESOLUTION_METER;
-          ping_pHYs_x_resolution=(png_uint_32) (100.0*image->x_resolution+0.5);
-          ping_pHYs_y_resolution=(png_uint_32) (100.0*image->y_resolution+0.5);
+          ping_pHYs_x_resolution=(png_uint_32) CastDoubleToSizeT(100.0*
+            image->x_resolution);
+          ping_pHYs_y_resolution=(png_uint_32) CastDoubleToSizeT(100.0*
+            image->y_resolution);
         }
 
       else

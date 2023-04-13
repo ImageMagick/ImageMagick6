@@ -355,7 +355,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
               if (LocaleNCompare(p,"0x",2) == 0)
                 *width=(size_t) strtol(p,&p,10);
               else
-                *width=((size_t) floor(StringToDouble(p,&p)+0.5)) & 0x7fffffff;
+                *width=CastDoubleToSizeT(StringToDouble(p,&p));
             }
           if (p != q)
             flags|=WidthValue;
@@ -374,7 +374,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
               */
               q=p;
               if (height != (size_t *) NULL)
-                *height=((size_t) floor(StringToDouble(p,&p)+0.5)) & 0x7fffffff;
+                *height=CastDoubleToSizeT(StringToDouble(p,&p));
               if (p != q)
                 flags|=HeightValue;
             }
@@ -393,7 +393,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
       }
       q=p;
       if (x != (ssize_t *) NULL)
-        *x=((ssize_t) ceil(StringToDouble(p,&p)-0.5)) & 0x7fffffff;
+        *x=CastDoubleToSSizeT(StringToDouble(p,&p));
       if (p != q)
         {
           flags|=XValue;
@@ -414,7 +414,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
       }
       q=p;
       if (y != (ssize_t *) NULL)
-        *y=((ssize_t) ceil(StringToDouble(p,&p)-0.5)) & 0x7fffffff;
+        *y=CastDoubleToSSizeT(StringToDouble(p,&p));
       if (p != q)
         {
           flags|=YValue;
@@ -1334,8 +1334,8 @@ MagickExport MagickStatusType ParseGravityGeometry(const Image *image,
       scale.y=geometry_info.sigma;
       if ((status & SigmaValue) == 0)
         scale.y=scale.x;
-      region_info->width=(size_t) floor((scale.x*image->columns/100.0)+0.5);
-      region_info->height=(size_t) floor((scale.y*image->rows/100.0)+0.5);
+      region_info->width=CastDoubleToSizeT(scale.x*image->columns/100.0);
+      region_info->height=CastDoubleToSizeT(scale.y*image->rows/100.0);
     }
   if ((flags & AspectRatioValue) != 0)
     {
@@ -1357,13 +1357,13 @@ MagickExport MagickStatusType ParseGravityGeometry(const Image *image,
       if (geometry_ratio >= image_ratio)
         {
           region_info->width=image->columns;
-          region_info->height=(size_t) floor((double) (image->rows*image_ratio/
-            geometry_ratio)+0.5);
+          region_info->height=CastDoubleToSizeT((double) image->rows*
+            image_ratio/geometry_ratio);
         }
       else
         {
-          region_info->width=(size_t) floor((double) (image->columns*
-            geometry_ratio/image_ratio)+0.5);
+          region_info->width=CastDoubleToSizeT((double) image->columns*
+            geometry_ratio/image_ratio);
           region_info->height=image->rows;
         }
     }
@@ -1497,13 +1497,13 @@ MagickExport MagickStatusType ParseMetaGeometry(const char *geometry,ssize_t *x,
       if (geometry_ratio >= image_ratio)
         {
           *width=former_width;
-          *height=(size_t) floor((double) (PerceptibleReciprocal(
-            geometry_ratio)*former_height*image_ratio)+0.5);
+          *height=CastDoubleToSizeT(PerceptibleReciprocal(geometry_ratio)*
+            former_height*image_ratio);
         }
       else
         {
-          *width=(size_t) floor((double) (PerceptibleReciprocal(
-            image_ratio)*former_width*geometry_ratio)+0.5);
+          *width=CastDoubleToSizeT(PerceptibleReciprocal(
+            image_ratio)*former_width*geometry_ratio);
           *height=former_height;
         }
       former_width=(*width);
@@ -1593,9 +1593,9 @@ MagickExport MagickStatusType ParseMetaGeometry(const char *geometry,ssize_t *x,
         PerceptibleReciprocal(sqrt(area)));
       if ((scale.x < (double) *width) || (scale.y < (double) *height))
         {
-          *width=(unsigned long) (former_width*PerceptibleReciprocal(
+          *width=CastDoubleToSizeT(former_width*PerceptibleReciprocal(
             distance*PerceptibleReciprocal(sqrt(area))));
-          *height=(unsigned long) (former_height*PerceptibleReciprocal(
+          *height=CastDoubleToSizeT(former_height*PerceptibleReciprocal(
             distance*PerceptibleReciprocal(sqrt(area))));
         }
       former_width=(*width);
