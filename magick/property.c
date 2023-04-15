@@ -1680,8 +1680,7 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
   return(status);
 }
 
-static MagickBooleanType GetICCProperty(const Image *image,
-  const char *magick_unreferenced(property))
+static MagickBooleanType GetICCProperty(const Image *image)
 {
   const StringInfo
     *profile;
@@ -2371,7 +2370,7 @@ MagickExport const char *GetImageProperty(const Image *image,
       if ((LocaleNCompare("icc:",property,4) == 0) ||
           (LocaleNCompare("icm:",property,4) == 0))
         {
-          (void) GetICCProperty(image,property);
+          (void) GetICCProperty(image);
           break;
         }
       if (LocaleNCompare("iptc:",property,5) == 0)

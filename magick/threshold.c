@@ -577,8 +577,7 @@ static double OTSUThreshold(const Image *image,const double *histogram,
   return(100.0*threshold/MaxIntensity);
 }
 
-static double TriangleThreshold(const Image *magick_unreferenced(image),
-   const double *histogram)
+static double TriangleThreshold(const double *histogram)
 {
   double
     a,
@@ -757,7 +756,7 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
     }
     case TriangleThresholdMethod:
     {
-      threshold=TriangleThreshold(image,histogram);
+      threshold=TriangleThreshold(histogram);
       break;
     }
   }

@@ -722,7 +722,7 @@ MagickExport MagickBooleanType IsSceneGeometry(const char *geometry,
 %
 */
 MagickExport MagickBooleanType ListPagesizes(FILE *file,
-  ExceptionInfo *magick_unreferenced(exception))
+  ExceptionInfo *magick_unused(exception))
 {
 #define MaxMagickSpaces  ((int) sizeof(Pagesizes[0].name))
 
@@ -732,6 +732,7 @@ MagickExport MagickBooleanType ListPagesizes(FILE *file,
   ssize_t
     i;
 
+  magick_unreferenced(exception);
   if (file == (FILE *) NULL)
     file=stdout;
   (void) FormatLocaleFile(file,"\nPagesize    Geometry \n");

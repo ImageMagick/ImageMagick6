@@ -59,8 +59,8 @@ static double GhostscriptVersion(const GhostInfo *ghost_info)
 #endif
 
 static inline MagickBooleanType InvokeGhostscriptDelegate(
-  const MagickBooleanType verbose,const char *command,
-  char *magick_unreferenced(message),ExceptionInfo *exception)
+  const MagickBooleanType verbose,const char *command,char *message,
+  ExceptionInfo *exception)
 {
   int
     status;

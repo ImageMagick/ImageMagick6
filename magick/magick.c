@@ -848,8 +848,7 @@ static void *DestroyMagickNode(void *magick_info)
   return(RelinquishMagickMemory(p));
 }
 
-static MagickBooleanType IsMagickTreeInstantiated(
-  ExceptionInfo *magick_unreferenced(exception))
+static MagickBooleanType IsMagickTreeInstantiated(ExceptionInfo *exception)
 {
   if (magick_list_initialized == MagickFalse)
     {

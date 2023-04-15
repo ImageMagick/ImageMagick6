@@ -1012,7 +1012,7 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
 %
 */
 MagickExport MagickBooleanType IsPaletteImage(const Image *image,
-  ExceptionInfo *magick_unreferenced(exception))
+  ExceptionInfo *magick_unused(exception))
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
