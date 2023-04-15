@@ -427,16 +427,13 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
     SetImageColorspace(image,GRAYColorspace);
   else
     if (jp2_image->color_space == 2)
-      {
-        SetImageColorspace(image,GRAYColorspace);
-        if (jp2_image->numcomps > 1)
-          image->matte=MagickTrue;
-      }
+      SetImageColorspace(image,GRAYColorspace);
     else
       if (jp2_image->color_space == 3)
         SetImageColorspace(image,Rec601YCbCrColorspace);
-  if (jp2_image->numcomps > 3)
-    image->matte=MagickTrue;
+  for (i=0; i < (ssize_t) jp2_image->numcomps; i++)
+    if (jp2_image->comps[i].alpha != 0)
+      image->matte=MagickTrue;
   if (jp2_image->icc_profile_buf != (unsigned char *) NULL)
     {
       StringInfo
@@ -512,7 +509,8 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
              if (jp2_image->numcomps == 1)
                {
                  SetPixelGray(q,ClampToQuantum(pixel));
-                 SetPixelOpacity(q,OpaqueOpacity);
+                 if (image->matte != MagickFalse)
+                   SetPixelOpacity(q,OpaqueOpacity);
                  break;
                }
              q->red=ClampToQuantum(pixel);
@@ -523,7 +521,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
            }
            case 1:
            {
-             if (jp2_image->numcomps == 2)
+             if (image->matte != MagickFalse)
                {
                  q->opacity=ClampToQuantum(QuantumRange-pixel);
                  break;
@@ -538,7 +536,8 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
            }
            case 3:
            {
-             q->opacity=ClampToQuantum(QuantumRange-pixel);
+             if (image->matte != MagickFalse)
+               q->opacity=ClampToQuantum(QuantumRange-pixel);
              break;
            }
         }
