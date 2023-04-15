@@ -17,7 +17,7 @@
 %                                 July 1999                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -3194,6 +3194,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 3:
         {
@@ -3202,6 +3203,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 2:
         {
@@ -3210,6 +3212,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 1:
         {
@@ -3218,6 +3221,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 0:
           break;
@@ -3261,6 +3265,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 3:
         {
@@ -3269,6 +3274,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 2:
         {
@@ -3277,6 +3283,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 1:
         {
@@ -3285,6 +3292,7 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
             break;
           *q++=(unsigned char) c;
           count++;
+          magick_fallthrough;
         }
         case 0:
           break;
@@ -4944,6 +4952,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 3:
         {
@@ -4951,6 +4960,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 2:
         {
@@ -4958,6 +4968,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 1:
         {
@@ -4965,6 +4976,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 0:
           break;
@@ -5007,6 +5019,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 3:
         {
@@ -5014,6 +5027,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 2:
         {
@@ -5021,6 +5035,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 1:
         {
@@ -5028,6 +5043,7 @@ MagickExport ssize_t WriteBlob(Image *image,const size_t length,
           if (c == EOF)
             break;
           count++;
+          magick_fallthrough;
         }
         case 0:
           break;

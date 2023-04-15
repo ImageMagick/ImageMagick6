@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1864,9 +1864,11 @@ static unsigned char *PopRunlengthPacket(Image *image,unsigned char *pixels,
         {
           *pixels++=(unsigned char) (value >> 24);
           *pixels++=(unsigned char) (value >> 16);
+          magick_fallthrough;
         }
         case 16:
           *pixels++=(unsigned char) (value >> 8);
+          magick_fallthrough;
         case 8:
         {
           *pixels++=(unsigned char) value;

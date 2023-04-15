@@ -17,7 +17,7 @@
 %                                 July 1999                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -855,7 +855,7 @@ static MagickBooleanType ClonePixelCacheRepository(
   num_threads((multithreaded) == 0 ? 1 : \
     (((source)->type != MemoryCache) && ((source)->type != MapCache)) || \
     (((destination)->type != MemoryCache) && ((destination)->type != MapCache)) ? \
-    MagickMax(MagickMin(GetMagickResourceLimit(ThreadResource),2),1) : \
+    MagickMax(MagickMin((ssize_t) GetMagickResourceLimit(ThreadResource),2),1) : \
     MagickMax(MagickMin((ssize_t) GetMagickResourceLimit(ThreadResource),(ssize_t) (chunk)/256),1))
 
   MagickBooleanType
@@ -1141,6 +1141,7 @@ static inline void RelinquishPixelCachePixels(CacheInfo *cache_info)
         (void) RelinquishUniqueFileResource(cache_info->cache_filename);
       *cache_info->cache_filename='\0';
       RelinquishMagickResource(MapResource,cache_info->length);
+      magick_fallthrough;
     }
     case DiskCache:
     {

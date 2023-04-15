@@ -22,7 +22,7 @@
 %                               October 1998                                  %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -392,6 +392,7 @@ static void ImportAlphaQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -409,6 +410,7 @@ static void ImportAlphaQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -714,6 +716,7 @@ static void ImportBGRQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -735,6 +738,7 @@ static void ImportBGRQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -959,6 +963,7 @@ static void ImportBGRAQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -982,6 +987,7 @@ static void ImportBGRAQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1208,6 +1214,7 @@ static void ImportBGROQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -1231,6 +1238,7 @@ static void ImportBGROQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1349,6 +1357,7 @@ static void ImportBlackQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -1366,6 +1375,7 @@ static void ImportBlackQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1478,6 +1488,7 @@ static void ImportBlueQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -1495,6 +1506,7 @@ static void ImportBlueQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1586,6 +1598,7 @@ static void ImportCbYCrYQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1748,6 +1761,7 @@ static void ImportCMYKQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -1771,6 +1785,7 @@ static void ImportCMYKQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1947,6 +1962,7 @@ static void ImportCMYKAQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -1972,6 +1988,7 @@ static void ImportCMYKAQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2150,6 +2167,7 @@ static void ImportCMYKOQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -2175,6 +2193,7 @@ static void ImportCMYKOQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2550,6 +2569,7 @@ static void ImportGrayQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -2569,6 +2589,7 @@ static void ImportGrayQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2797,6 +2818,7 @@ static void ImportGrayAlphaQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -2818,6 +2840,7 @@ static void ImportGrayAlphaQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2934,6 +2957,7 @@ static void ImportGreenQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -2951,6 +2975,7 @@ static void ImportGreenQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3152,6 +3177,7 @@ static void ImportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -3171,6 +3197,7 @@ static void ImportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3384,6 +3411,7 @@ static void ImportIndexAlphaQuantum(const Image *image,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -3405,6 +3433,7 @@ static void ImportIndexAlphaQuantum(const Image *image,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3521,6 +3550,7 @@ static void ImportRedQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -3538,6 +3568,7 @@ static void ImportRedQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3843,6 +3874,7 @@ static void ImportRGBQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -3864,6 +3896,7 @@ static void ImportRGBQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -4088,6 +4121,7 @@ static void ImportRGBAQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -4111,6 +4145,7 @@ static void ImportRGBAQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -4337,6 +4372,7 @@ static void ImportRGBOQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     case 64:
     {
@@ -4360,6 +4396,7 @@ static void ImportRGBOQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {

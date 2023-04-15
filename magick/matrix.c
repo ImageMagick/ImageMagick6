@@ -17,7 +17,7 @@
 %                              August 2007                                    %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -120,7 +120,7 @@ struct _MatrixInfo
 */
 
 #if defined(SIGBUS)
-static void MatrixSignalHandler(int status)
+static void MatrixSignalHandler(int magick_unreferenced(status))
 {
   ThrowFatalException(CacheFatalError,"UnableToExtendMatrixCache");
 }
@@ -387,6 +387,7 @@ MagickExport MatrixInfo *DestroyMatrixInfo(MatrixInfo *matrix_info)
       (void) UnmapBlob(matrix_info->elements,(size_t) matrix_info->length);
       matrix_info->elements=NULL;
       RelinquishMagickResource(MapResource,matrix_info->length);
+      magick_fallthrough;
     }
     case DiskCache:
     {

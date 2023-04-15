@@ -722,7 +722,7 @@ MagickExport MagickBooleanType IsSceneGeometry(const char *geometry,
 %
 */
 MagickExport MagickBooleanType ListPagesizes(FILE *file,
-  ExceptionInfo *exception)
+  ExceptionInfo *magick_unreferenced(exception))
 {
 #define MaxMagickSpaces  ((int) sizeof(Pagesizes[0].name))
 

@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -364,7 +364,7 @@ static void JPEGProgressHandler(j_common_ptr jpeg_info)
   longjmp(client_info->error_recovery,1);
 }
 
-static MagickBooleanType JPEGWarningHandler(j_common_ptr jpeg_info,int level)
+static void JPEGWarningHandler(j_common_ptr jpeg_info,int level)
 {
 #define JPEGExcessiveWarnings  1000
 
@@ -387,8 +387,8 @@ static MagickBooleanType JPEGWarningHandler(j_common_ptr jpeg_info,int level)
       */
       (jpeg_info->err->format_message)(jpeg_info,message);
       if (jpeg_info->err->num_warnings++ < JPEGExcessiveWarnings)
-        ThrowBinaryImageException(CorruptImageWarning,(char *) message,
-          image->filename);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CorruptImageWarning,message,"`%s'",image->filename);
     }
   else
     if (level >= jpeg_info->err->trace_level)
@@ -401,7 +401,6 @@ static MagickBooleanType JPEGWarningHandler(j_common_ptr jpeg_info,int level)
           (void) LogMagickEvent(CoderEvent,GetMagickModule(),
             "[%s] JPEG Trace: \"%s\"",image->filename,message);
       }
-  return(MagickTrue);
 }
 
 static boolean ReadComment(j_decompress_ptr jpeg_info)

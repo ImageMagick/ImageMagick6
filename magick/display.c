@@ -17,7 +17,7 @@
 %                                July 1992                                    %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -2464,6 +2464,7 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
             p++;
             if ((x+font_info->max_bounds.width) < (int) windows->image.width)
               break;
+            magick_fallthrough;
           }
           case XK_Return:
           case XK_KP_Enter:
@@ -5032,6 +5033,7 @@ static MagickBooleanType XCropImage(Display *display,
               state|=UpdateConfigurationState;
               break;
             }
+          magick_fallthrough;
         }
         case ButtonRelease:
         {
@@ -5073,7 +5075,10 @@ static MagickBooleanType XCropImage(Display *display,
           {
             case XK_Escape:
             case XK_F20:
+            {
               state|=EscapeState;
+              magick_fallthrough;
+            }
             case XK_Return:
             {
               state|=ExitState;
@@ -11664,6 +11669,7 @@ static MagickBooleanType XROIImage(Display *display,
               state|=UpdateConfigurationState;
               break;
             }
+          magick_fallthrough;
         }
         case ButtonRelease:
         {
@@ -11711,7 +11717,10 @@ static MagickBooleanType XROIImage(Display *display,
               break;
             case XK_Escape:
             case XK_F20:
+            {
               state|=EscapeState;
+              magick_fallthrough;
+            }
             case XK_Return:
             {
               state|=ExitState;
@@ -13106,6 +13115,7 @@ static Image *XTileImage(Display *display,XResourceInfo *resource_info,
             filename);
           break;
         }
+      magick_fallthrough;
     }
     case TileUpdateCommand:
     {

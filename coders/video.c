@@ -17,7 +17,7 @@
 %                                 July 1999                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -599,6 +599,7 @@ static MagickBooleanType WriteVIDEOImage(const ImageInfo *image_info,
         {
           blob=(unsigned char *) FileToBlob(previous_image,~0UL,&length,
             &image->exception);
+          magick_fallthrough;
         }
         default:
         {

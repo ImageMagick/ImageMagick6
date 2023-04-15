@@ -1685,11 +1685,10 @@ static png_voidp Magick_png_malloc(png_structp png_ptr,png_size_t size)
 /*
   Free a pointer.  It is removed from the list at the same time.
 */
-static png_free_ptr Magick_png_free(png_structp png_ptr,png_voidp ptr)
+static void Magick_png_free(png_structp png_ptr,png_voidp ptr)
 {
   (void) png_ptr;
   ptr=RelinquishMagickMemory(ptr);
-  return((png_free_ptr) NULL);
 }
 #endif
 
@@ -2340,8 +2339,8 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
     Allocate the PNG structures
   */
 #ifdef PNG_USER_MEM_SUPPORTED
- ping=png_create_read_struct_2(PNG_LIBPNG_VER_STRING, image,
-   MagickPNGErrorHandler,MagickPNGWarningHandler, NULL,
+ ping=png_create_read_struct_2(PNG_LIBPNG_VER_STRING,image,
+   MagickPNGErrorHandler,MagickPNGWarningHandler,NULL,
    (png_malloc_ptr) Magick_png_malloc,(png_free_ptr) Magick_png_free);
 #else
   ping=png_create_read_struct(PNG_LIBPNG_VER_STRING,image,

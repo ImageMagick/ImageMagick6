@@ -17,7 +17,7 @@
 %                               January 2010                                  %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -3945,7 +3945,7 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
       break;
     case HitAndMissMorphology:
       rslt_compose = LightenCompositeOp;  /* Union of multi-kernel results */
-      /* FALL THUR */
+      magick_fallthrough;
     case ThinningMorphology:
     case ThickenMorphology:
       method_limit = kernel_limit;  /* iterate the whole method */

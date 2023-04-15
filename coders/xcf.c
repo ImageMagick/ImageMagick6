@@ -875,7 +875,8 @@ static MagickBooleanType load_hierarchy(Image *image,XCFDocInfo *inDocInfo,
   return(MagickTrue);
 }
 
-static void InitXCFImage(XCFLayerInfo *outLayer,ExceptionInfo *exception)
+static void InitXCFImage(XCFLayerInfo *outLayer,
+  ExceptionInfo *magick_unreferenced(exception))
 {
   outLayer->image->page.x=outLayer->offset_x;
   outLayer->image->page.y=outLayer->offset_y;

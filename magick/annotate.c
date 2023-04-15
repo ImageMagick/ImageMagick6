@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1112,7 +1112,7 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
 
 static size_t ComplexTextLayout(const Image *image,const DrawInfo *draw_info,
-  const char *text,const size_t length,const FT_Face face,const FT_Int32 flags,
+  const char *text,const size_t length,const FT_Face face,
   GraphemeInfo **grapheme)
 {
 #if defined(MAGICKCORE_RAQM_DELEGATE)
@@ -1131,7 +1131,6 @@ static size_t ComplexTextLayout(const Image *image,const DrawInfo *draw_info,
   size_t
     extent;
 
-  magick_unreferenced(flags);
   extent=0;
   rq=raqm_create();
   if (rq == (raqm_t *) NULL)
@@ -1722,7 +1721,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         p=(char *) utf8;
     }
   grapheme=(GraphemeInfo *) NULL;
-  length=ComplexTextLayout(image,draw_info,p,strlen(p),face,flags,&grapheme);
+  length=ComplexTextLayout(image,draw_info,p,strlen(p),face,&grapheme);
   missing_glyph_id=FT_Get_Char_Index(face,' ');
   code=0;
   last_character=(ssize_t) length-1;

@@ -18,7 +18,7 @@
 %                               March 2001                                    %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -824,8 +824,8 @@ static MagickBooleanType ValidateYUVToRGB()
   return(MagickTrue);
 }
 
-static size_t ValidateColorspaces(ImageInfo *image_info,size_t *fails,
-  ExceptionInfo *exception)
+static size_t ValidateColorspaces(ImageInfo *magick_unreferenced(image_info),
+  size_t *fails,ExceptionInfo *exception)
 {
   MagickBooleanType
     status;

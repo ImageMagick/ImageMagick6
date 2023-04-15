@@ -22,7 +22,7 @@
 %                               October 1998                                  %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -334,6 +334,7 @@ static void ExportAlphaQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -613,6 +614,7 @@ static void ExportBGRQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -853,6 +855,7 @@ static void ExportBGRAQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1093,6 +1096,7 @@ static void ExportBGROQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1207,6 +1211,7 @@ static void ExportBlackQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1313,6 +1318,7 @@ static void ExportBlueQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1573,6 +1579,7 @@ static void ExportCMYKQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1738,6 +1745,7 @@ static void ExportCMYKAQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -1905,6 +1913,7 @@ static void ExportCMYKOQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2167,6 +2176,7 @@ static void ExportGrayQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2369,6 +2379,7 @@ static void ExportGrayAlphaQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2474,6 +2485,7 @@ static void ExportGreenQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2627,6 +2639,7 @@ static void ExportIndexQuantum(const Image *image,QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2820,6 +2833,7 @@ static void ExportIndexAlphaQuantum(const Image *image,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -2927,6 +2941,7 @@ static void ExportOpacityQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3030,6 +3045,7 @@ static void ExportRedQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3312,6 +3328,7 @@ static void ExportRGBQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3552,6 +3569,7 @@ static void ExportRGBAQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {
@@ -3792,6 +3810,7 @@ static void ExportRGBOQuantum(QuantumInfo *quantum_info,
           }
           break;
         }
+      magick_fallthrough;
     }
     default:
     {

@@ -17,7 +17,7 @@
 %                                 October 1996                                %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -577,7 +577,8 @@ static double OTSUThreshold(const Image *image,const double *histogram,
   return(100.0*threshold/MaxIntensity);
 }
 
-static double TriangleThreshold(const Image *image,const double *histogram)
+static double TriangleThreshold(const Image *magick_unreferenced(image),
+   const double *histogram)
 {
   double
     a,

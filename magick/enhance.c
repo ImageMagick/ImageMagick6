@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -912,7 +912,7 @@ MagickExport MagickBooleanType ClutImageChannel(Image *image,
 %
 */
 
-static void inline Contrast(const int sign,Quantum *red,Quantum *green,
+static inline void Contrast(const int sign,Quantum *red,Quantum *green,
   Quantum *blue)
 {
   double

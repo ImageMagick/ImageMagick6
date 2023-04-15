@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -319,7 +319,7 @@ process_message(ddjvu_message_t *message)
  * we use the RGB format!
  */
 static void
-get_page_image(LoadContext *lc, ddjvu_page_t *page, int x, int y, int w, int h, const ImageInfo *image_info ) {
+get_page_image(LoadContext *lc, ddjvu_page_t *page, int x, int y, int w, int h, const ImageInfo *magick_unreferenced(image_info) ) {
   ddjvu_format_t
     *format;
 

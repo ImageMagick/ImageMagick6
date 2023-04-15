@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1815,8 +1815,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         strip_size=TIFFStripSize(tiff);
         stride=(ssize_t) TIFFVStripSize(tiff,1);
         length=GetQuantumExtent(image,quantum_info,quantum_type);
-        extent=MagickMax((size_t) strip_size,rows_per_strip*
-          (size_t) MagickMax(stride,length));
+        extent=MagickMax((size_t) strip_size,(size_t) rows_per_strip*
+          MagickMax((size_t) stride,(size_t) length));
         strip_pixels=(unsigned char *) AcquireQuantumMemory(extent,
           sizeof(*strip_pixels));
         if (strip_pixels == (unsigned char *) NULL)
@@ -1860,6 +1860,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
 
                 size=TIFFReadEncodedStrip(tiff,strip_id,strip_pixels,
                   strip_size);
+                (void) size;
                 if (strip_size == -1)
                   break;
                 rows_remaining=rows_per_strip;
@@ -3945,6 +3946,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         red=(uint16 *) RelinquishMagickMemory(red);
         green=(uint16 *) RelinquishMagickMemory(green);
         blue=(uint16 *) RelinquishMagickMemory(blue);
+        magick_fallthrough;
       }
       default:
       {

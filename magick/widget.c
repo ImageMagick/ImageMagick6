@@ -18,7 +18,7 @@
 %                              September 1993                                 %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1111,6 +1111,7 @@ static void XEditText(Display *display,XWidgetInfo *text_info,
           text_info->highlight=MagickFalse;
           break;
         }
+      magick_fallthrough;
     }
     case XK_Left:
     case XK_KP_Left:

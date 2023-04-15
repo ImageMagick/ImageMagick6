@@ -17,7 +17,7 @@
 %                                October 2002                                 %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization      %
+%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1194,11 +1194,10 @@ MagickExport ImageType IdentifyImageType(const Image *image,
 %
 */
 MagickExport MagickBooleanType IsGrayImage(const Image *image,
-  ExceptionInfo *exception)
+  ExceptionInfo *magick_unreferenced(exception))
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  magick_unreferenced(exception);
   if ((image->type == BilevelType) || (image->type == GrayscaleType) ||
       (image->type == GrayscaleMatteType))
     return(MagickTrue);
@@ -1231,11 +1230,10 @@ MagickExport MagickBooleanType IsGrayImage(const Image *image,
 %
 */
 MagickExport MagickBooleanType IsMonochromeImage(const Image *image,
-  ExceptionInfo *exception)
+  ExceptionInfo *magick_unreferenced(exception))
 {
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  magick_unreferenced(exception);
   if (image->type == BilevelType)
     return(MagickTrue);
   return(MagickFalse);
