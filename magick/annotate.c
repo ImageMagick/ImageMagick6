@@ -1111,11 +1111,11 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
 
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
 
-static size_t ComplexTextLayout(const Image *image,const DrawInfo *draw_info,
-  const char *text,const size_t length,const FT_Face face,const FT_Int32 flags,
-  GraphemeInfo **grapheme)
-{
 #if defined(MAGICKCORE_RAQM_DELEGATE)
+static size_t ComplexRaqmTextLayout(const Image *image,
+  const DrawInfo *draw_info,const char *text,const size_t length,
+  const FT_Face face,GraphemeInfo **grapheme,ExceptionInfo *exception)
+{
   const char
     *features;
 
@@ -1163,7 +1163,7 @@ static size_t ComplexTextLayout(const Image *image,const DrawInfo *draw_info,
         &breaker,&next,&quote);
       while (status_token == 0)
       {
-        raqm_add_font_feature(rq,token,strlen(token));
+        raqm_add_font_feature(rq,token,(int) strlen(token));
         status_token=Tokenizer(token_info,0,token,50,features,"",",","",'\0',
           &breaker,&next,&quote);
       }
@@ -1197,6 +1197,10 @@ cleanup:
   raqm_destroy(rq);
   return(extent);
 #else
+static size_t ComplexTextLayout(const DrawInfo *draw_info,const char *text,
+  const size_t length,const FT_Face face,const FT_Int32 flags,
+  GraphemeInfo **grapheme)
+{
   const char
     *p;
 
@@ -1209,7 +1213,6 @@ cleanup:
   /*
     Simple layout for bi-directional text (right-to-left or left-to-right).
   */
-  magick_unreferenced(image);
   *grapheme=(GraphemeInfo *) AcquireQuantumMemory(length+1,sizeof(**grapheme));
   if (*grapheme == (GraphemeInfo *) NULL)
     return(0);
@@ -1217,7 +1220,7 @@ cleanup:
   p=text;
   for (i=0; GetUTFCode(p) != 0; p+=GetUTFOctets(p), i++)
   {
-    (*grapheme)[i].index=FT_Get_Char_Index(face,GetUTFCode(p));
+    (*grapheme)[i].index=(ssize_t) FT_Get_Char_Index(face,GetUTFCode(p));
     (*grapheme)[i].x_offset=0;
     (*grapheme)[i].y_offset=0;
     if (((*grapheme)[i].index != 0) && (last_glyph != 0))
@@ -1237,7 +1240,7 @@ cleanup:
                 RightToLeftDirection ? -1.0 : 1.0)*kerning.x);
           }
       }
-    (void) FT_Load_Glyph(face,(*grapheme)[i].index,flags);
+    (void) FT_Load_Glyph(face,(FT_UInt) (*grapheme)[i].index,flags);
     (*grapheme)[i].x_advance=face->glyph->advance.x;
     (*grapheme)[i].cluster=p-text;
     last_glyph=(*grapheme)[i].index;
@@ -1721,7 +1724,12 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         p=(char *) utf8;
     }
   grapheme=(GraphemeInfo *) NULL;
-  length=ComplexTextLayout(image,draw_info,p,strlen(p),face,flags,&grapheme);
+#if defined(MAGICKCORE_RAQM_DELEGATE)
+  length=ComplexRaqmTextLayout(image,draw_info,p,strlen(p),face,&grapheme,
+    exception);
+#else
+  length=ComplexTextLayout(draw_info,p,strlen(p),face,flags,&grapheme);
+#endif
   missing_glyph_id=FT_Get_Char_Index(face,' ');
   code=0;
   last_character=(ssize_t) length-1;
