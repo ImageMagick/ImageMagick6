@@ -9923,18 +9923,18 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       if (image->units == PixelsPerInchResolution)
         {
           ping_pHYs_unit_type=PNG_RESOLUTION_METER;
-          ping_pHYs_x_resolution=(png_uint_32) CastDoubleToSizeT((100.0*
+          ping_pHYs_x_resolution=(png_uint_32) CastDoubleToUnsigned((100.0*
             image->x_resolution)/2.54);
-          ping_pHYs_y_resolution=(png_uint_32) CastDoubleToSizeT((100.0*
+          ping_pHYs_y_resolution=(png_uint_32) CastDoubleToUnsigned((100.0*
             image->y_resolution+0.5)/2.54);
         }
 
       else if (image->units == PixelsPerCentimeterResolution)
         {
           ping_pHYs_unit_type=PNG_RESOLUTION_METER;
-          ping_pHYs_x_resolution=(png_uint_32) CastDoubleToSizeT(100.0*
+          ping_pHYs_x_resolution=(png_uint_32) CastDoubleToUnsigned(100.0*
             image->x_resolution);
-          ping_pHYs_y_resolution=(png_uint_32) CastDoubleToSizeT(100.0*
+          ping_pHYs_y_resolution=(png_uint_32) CastDoubleToUnsigned(100.0*
             image->y_resolution);
         }
 
@@ -11132,14 +11132,11 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
               (void) LogMagickEvent(CoderEvent,GetMagickModule(),
                    "    Setting up pHYs chunk");
               (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                   "      x_resolution=%lu",
-                   (unsigned long) ping_pHYs_x_resolution);
+                   "      x_resolution=%g",(double) ping_pHYs_x_resolution);
               (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                   "      y_resolution=%lu",
-                   (unsigned long) ping_pHYs_y_resolution);
+                   "      y_resolution=%g",(double) ping_pHYs_y_resolution);
               (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                   "      unit_type=%lu",
-                   (unsigned long) ping_pHYs_unit_type);
+                   "      unit_type=%g",(double) ping_pHYs_unit_type);
             }
         }
     }

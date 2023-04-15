@@ -4328,13 +4328,13 @@ MagickExport MagickBooleanType SetImageProperty(Image *image,
             if ((flags & LessValue) != 0)
               {
                 if ((double) image->delay < floor(geometry_info.rho+0.5))
-                  image->ticks_per_second=CastDoubleToSSizeT(
+                  image->ticks_per_second=CastDoubleToLong(
                     floor(geometry_info.sigma+0.5));
               }
             else
               image->delay=(size_t) floor(geometry_info.rho+0.5);
           if ((flags & SigmaValue) != 0)
-            image->ticks_per_second=CastDoubleToSSizeT(floor(
+            image->ticks_per_second=CastDoubleToLong(floor(
               geometry_info.sigma+0.5));
           break;
         }

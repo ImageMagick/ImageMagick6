@@ -864,7 +864,7 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
           else
             next->delay=(size_t) floor(geometry_info.rho+0.5);
         if ((flags & SigmaValue) != 0)
-          next->ticks_per_second=CastDoubleToSSizeT(floor(
+          next->ticks_per_second=CastDoubleToLong(floor(
             geometry_info.sigma+0.5));
       }
     option=GetImageOption(image_info,"dispose");
