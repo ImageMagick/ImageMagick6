@@ -1112,7 +1112,7 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
 #if defined(MAGICKCORE_FREETYPE_DELEGATE)
 
 static size_t ComplexTextLayout(const Image *image,const DrawInfo *draw_info,
-  const char *text,const size_t length,const FT_Face face,
+  const char *text,const size_t length,const FT_Face face,const FT_Int32 flags,
   GraphemeInfo **grapheme)
 {
 #if defined(MAGICKCORE_RAQM_DELEGATE)
@@ -1721,7 +1721,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
         p=(char *) utf8;
     }
   grapheme=(GraphemeInfo *) NULL;
-  length=ComplexTextLayout(image,draw_info,p,strlen(p),face,&grapheme);
+  length=ComplexTextLayout(image,draw_info,p,strlen(p),face,flags,&grapheme);
   missing_glyph_id=FT_Get_Char_Index(face,' ');
   code=0;
   last_character=(ssize_t) length-1;
