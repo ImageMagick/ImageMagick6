@@ -82,18 +82,11 @@
 %
 %  The format of the ValidateColorspaces method is:
 %
-%      size_t ValidateColorspaces(ImageInfo *image_info,size_t *fails,
-%        ExceptionInfo *exception)
+%      size_t ValidateColorspaces(size_t *fails,ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
-%    o image_info: the image info.
-%
-%    o reference_filename: the reference image filename.
-%
-%    o output_filename: the output image filename.
-%
-%    o fail: return the number of validation tests that pass.
+%    o fails: return the number of validation tests that pass.
 %
 %    o exception: return any errors or warnings in this structure.
 %
@@ -824,8 +817,7 @@ static MagickBooleanType ValidateYUVToRGB()
   return(MagickTrue);
 }
 
-static size_t ValidateColorspaces(ImageInfo *magick_unreferenced(image_info),
-  size_t *fails,ExceptionInfo *exception)
+static size_t ValidateColorspaces(size_t *fails,ExceptionInfo *exception)
 {
   MagickBooleanType
     status;
@@ -2450,7 +2442,7 @@ int main(int argc,char **argv)
             "ImageMagick Validation Suite (%s)\n\n",CommandOptionToMnemonic(
             MagickValidateOptions,(ssize_t) type));
           if ((type & ColorspaceValidate) != 0)
-            tests+=ValidateColorspaces(image_info,&fail,exception);
+            tests+=ValidateColorspaces(&fail,exception);
           if ((type & CompareValidate) != 0)
             tests+=ValidateCompareCommand(image_info,reference_filename,
               output_filename,&fail,exception);
