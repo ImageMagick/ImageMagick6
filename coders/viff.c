@@ -420,15 +420,16 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
           default: bytes_per_pixel=1; break;
         }
         image->colors=viff_info.map_columns;
-        if ((MagickSizeType) (viff_info.map_rows*image->colors) > GetBlobSize(image))
+        count=(size_t) bytes_per_pixel*image->colors*viff_info.map_rows;
+        if ((MagickSizeType) count > GetBlobSize(image))
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         if (AcquireImageColormap(image,image->colors) == MagickFalse)
           ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-        if ((MagickSizeType) viff_info.map_rows > GetBlobSize(image))
-          ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         if ((MagickSizeType) viff_info.map_rows >
             (viff_info.map_rows*bytes_per_pixel*sizeof(*viff_colormap)))
           ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+        if ((MagickSizeType) viff_info.map_rows > GetBlobSize(image))
+          ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
         viff_colormap=(unsigned char *) AcquireQuantumMemory(image->colors,
           viff_info.map_rows*bytes_per_pixel*sizeof(*viff_colormap));
         if (viff_colormap == (unsigned char *) NULL)
@@ -436,8 +437,11 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
         /*
           Read VIFF raster colormap.
         */
-        (void) ReadBlob(image,bytes_per_pixel*image->colors*viff_info.map_rows,
-          viff_colormap);
+        if (ReadBlob(image,count,viff_colormap) != count)
+          {
+            viff_colormap=(unsigned char *) RelinquishMagickMemory(viff_colormap);
+            ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
+          }
         lsb_first=1;
         if (*(char *) &lsb_first &&
             ((viff_info.machine_dependency != VFF_DEP_DECORDER) &&
@@ -527,7 +531,8 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
           ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
         max_packets=(size_t) (number_pixels*viff_info.number_data_bands);
       }
-    if ((MagickSizeType) (bytes_per_pixel*max_packets) > GetBlobSize(image))
+    count=bytes_per_pixel*max_packets;
+    if ((MagickSizeType) count > GetBlobSize(image))
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     pixels=(unsigned char *) AcquireQuantumMemory((size_t) MagickMax(
       number_pixels,max_packets),bytes_per_pixel*sizeof(*pixels));
@@ -535,7 +540,11 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
       ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
     (void) memset(pixels,0,MagickMax(number_pixels,max_packets)*
       bytes_per_pixel*sizeof(*pixels));
-    (void) ReadBlob(image,bytes_per_pixel*max_packets,pixels);
+    if (ReadBlob(image,count,pixels) != count)
+      {
+        pixels=(unsigned char *) RelinquishMagickMemory(pixels);
+        ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+      }
     lsb_first=1;
     if (*(char *) &lsb_first &&
         ((viff_info.machine_dependency != VFF_DEP_DECORDER) &&
