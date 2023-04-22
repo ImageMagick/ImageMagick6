@@ -398,7 +398,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
         {
           flags|=XValue;
           if (((flags & XNegative) != 0) && (x != (ssize_t *) NULL))
-            *x=(-*x);
+            *x=CastDoubleToLong(-1.0**x);
         }
     }
   if ((*p == '+') || (*p == '-'))
@@ -419,7 +419,7 @@ MagickExport MagickStatusType GetGeometry(const char *geometry,ssize_t *x,
         {
           flags|=YValue;
           if (((flags & YNegative) != 0) && (y != (ssize_t *) NULL))
-            *y=(-*y);
+            *y=CastDoubleToLong(-1.0**y);
         }
     }
   if ((flags & PercentValue) != 0)
