@@ -976,6 +976,7 @@ LIPO
 NMEDIT
 DSYMUTIL
 MANIFEST_TOOL
+RANLIB
 FILECMD
 NM
 ac_ct_DUMPBIN
@@ -1006,7 +1007,6 @@ PKG_CONFIG_LIBDIR
 PKG_CONFIG_PATH
 PKG_CONFIG
 PRTDIAG
-RANLIB
 LN_S
 LD
 FGREP
@@ -5121,7 +5121,7 @@ MAGICK_PATCHLEVEL_VERSION=87
 
 MAGICK_VERSION=6.9.12-87
 
-MAGICK_GIT_REVISION=f9db3e392:20230422
+MAGICK_GIT_REVISION=ed8b9da26:20230423
 
 
 # Substitute library versioning
@@ -5155,7 +5155,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,87
 
-PACKAGE_RELEASE_DATE=2023-04-22
+PACKAGE_RELEASE_DATE=2023-04-23
 
 
 # Ensure that make can run correctly
@@ -8530,6 +8530,7 @@ else $as_nop
 		fujitsu:	__FUJITSU
 		sdcc:		SDCC,__SDCC
 		sx:		_SX
+		nvhpc:		__NVCOMPILER
 		portland:	__PGI
 		gnu:		__GNUC__
 		sun:		__SUNPRO_C,__SUNPRO_CC,__SUNPRO_F90,__SUNPRO_F95
@@ -8884,108 +8885,6 @@ fi
   test -n "$AWK" && break
 done
 
-
-if test -n "$ac_tool_prefix"; then
-  # Extract the first word of "${ac_tool_prefix}ranlib", so it can be a program name with args.
-set dummy ${ac_tool_prefix}ranlib; ac_word=$2
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-printf %s "checking for $ac_word... " >&6; }
-if test ${ac_cv_prog_RANLIB+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  if test -n "$RANLIB"; then
-  ac_cv_prog_RANLIB="$RANLIB" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  case $as_dir in #(((
-    '') as_dir=./ ;;
-    */) ;;
-    *) as_dir=$as_dir/ ;;
-  esac
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
-    ac_cv_prog_RANLIB="${ac_tool_prefix}ranlib"
-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-fi
-fi
-RANLIB=$ac_cv_prog_RANLIB
-if test -n "$RANLIB"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $RANLIB" >&5
-printf "%s\n" "$RANLIB" >&6; }
-else
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-fi
-
-
-fi
-if test -z "$ac_cv_prog_RANLIB"; then
-  ac_ct_RANLIB=$RANLIB
-  # Extract the first word of "ranlib", so it can be a program name with args.
-set dummy ranlib; ac_word=$2
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
-printf %s "checking for $ac_word... " >&6; }
-if test ${ac_cv_prog_ac_ct_RANLIB+y}
-then :
-  printf %s "(cached) " >&6
-else $as_nop
-  if test -n "$ac_ct_RANLIB"; then
-  ac_cv_prog_ac_ct_RANLIB="$ac_ct_RANLIB" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  case $as_dir in #(((
-    '') as_dir=./ ;;
-    */) ;;
-    *) as_dir=$as_dir/ ;;
-  esac
-    for ac_exec_ext in '' $ac_executable_extensions; do
-  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
-    ac_cv_prog_ac_ct_RANLIB="ranlib"
-    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-  done
-IFS=$as_save_IFS
-
-fi
-fi
-ac_ct_RANLIB=$ac_cv_prog_ac_ct_RANLIB
-if test -n "$ac_ct_RANLIB"; then
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_ct_RANLIB" >&5
-printf "%s\n" "$ac_ct_RANLIB" >&6; }
-else
-  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
-printf "%s\n" "no" >&6; }
-fi
-
-  if test "x$ac_ct_RANLIB" = x; then
-    RANLIB=":"
-  else
-    case $cross_compiling:$ac_tool_warned in
-yes:)
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: using cross tools not prefixed with host triplet" >&5
-printf "%s\n" "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
-ac_tool_warned=yes ;;
-esac
-    RANLIB=$ac_ct_RANLIB
-  fi
-else
-  RANLIB="$ac_cv_prog_RANLIB"
-fi
 
 { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking if malloc debugging is wanted" >&5
 printf %s "checking if malloc debugging is wanted... " >&6; }
@@ -9622,6 +9521,7 @@ else $as_nop
 		fujitsu:	__FUJITSU
 		sdcc:		SDCC,__SDCC
 		sx:		_SX
+		nvhpc:		__NVCOMPILER
 		portland:	__PGI
 		gnu:		__GNUC__
 		sun:		__SUNPRO_C,__SUNPRO_CC,__SUNPRO_F90,__SUNPRO_F95

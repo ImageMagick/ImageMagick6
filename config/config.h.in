@@ -396,6 +396,9 @@
 /* Have PTHREAD_PRIO_INHERIT. */
 #undef HAVE_PTHREAD_PRIO_INHERIT
 
+/* Define to 1 if you have the `putenv' function. */
+#undef HAVE_PUTENV
+
 /* Define to 1 if you have the `pwrite' function. */
 #undef HAVE_PWRITE
 
