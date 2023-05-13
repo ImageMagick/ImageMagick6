@@ -3134,7 +3134,9 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
   if (status == MagickFalse)
     return(status);
   (void) SetMagickThreadValue(tiff_exception,&image->exception);
-  endian_type=UndefinedEndian;
+  endian_type=LSBEndian;
+  if (image_info->endian != UndefinedEndian)
+    endian_type=image_info->endian;
   option=GetImageOption(image_info,"tiff:endian");
   if (option != (const char *) NULL)
     {
@@ -3143,21 +3145,12 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
       if (LocaleNCompare(option,"lsb",3) == 0)
         endian_type=LSBEndian;;
     }
-  switch (endian_type)
-  {
-    case LSBEndian: mode="wl"; break;
-    case MSBEndian: mode="wb"; break;
-    default: mode="w"; break;
-  }
 #if defined(TIFF_VERSION_BIG)
   if (LocaleCompare(image_info->magick,"TIFF64") == 0)
-    switch (endian_type)
-    {
-      case LSBEndian: mode="wl8"; break;
-      case MSBEndian: mode="wb8"; break;
-      default: mode="w8"; break;
-    }
+    mode=endian_type == LSBEndian ? "wl8" : "wb8";
+  else
 #endif
+    mode=endian_type == LSBEndian ? "wl" : "wb";
   tiff=TIFFClientOpen(image->filename,mode,(thandle_t) image,TIFFReadBlob,
     TIFFWriteBlob,TIFFSeekBlob,TIFFCloseBlob,TIFFGetBlobSize,TIFFMapBlob,
     TIFFUnmapBlob);
