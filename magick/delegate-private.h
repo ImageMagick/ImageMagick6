@@ -108,6 +108,20 @@ static inline char *SanitizeDelegateString(const char *source)
   return(sanitize_source);
 }
 
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+static inline void FormatSanitizedDelegateOption(char *string,
+  const size_t length,const char *windows_format,
+  const char *magick_unused(non_windows_format),const char *option)
+{
+  char
+    *sanitized_option;
+
+  magick_unreferenced(non_windows_format);
+  sanitized_option=SanitizeDelegateString(option);
+  (void) FormatLocaleString(string,length,windows_format,sanitized_option);
+  sanitized_option=DestroyString(sanitized_option);
+}
+#else
 static inline void FormatSanitizedDelegateOption(char *string,
   const size_t length,const char *magick_unused(windows_format),
   const char *non_windows_format,const char *option)
@@ -115,16 +129,12 @@ static inline void FormatSanitizedDelegateOption(char *string,
   char
     *sanitized_option;
 
-  sanitized_option=SanitizeDelegateString(option);
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
-  magick_unreferenced(non_windows_format);
-  (void) FormatLocaleString(string,length,windows_format,sanitized_option);
-#else
   magick_unreferenced(windows_format);
+  sanitized_option=SanitizeDelegateString(option);
   (void) FormatLocaleString(string,length,non_windows_format,sanitized_option);
-#endif
   sanitized_option=DestroyString(sanitized_option);
 }
+#endif
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
