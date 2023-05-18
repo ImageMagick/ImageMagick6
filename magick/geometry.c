@@ -1475,8 +1475,8 @@ MagickExport MagickStatusType ParseMetaGeometry(const char *geometry,ssize_t *x,
       scale.y=geometry_info.sigma;
       if ((flags & SigmaValue) == 0)
         scale.y=scale.x;
-      *width=(size_t) floor(scale.x*former_width/100.0+0.5);
-      *height=(size_t) floor(scale.y*former_height/100.0+0.5);
+      *width=CastDoubleToUnsigned(scale.x*former_width/100.0+0.5);
+      *height=CastDoubleToUnsigned(scale.y*former_height/100.0+0.5);
       former_width=(*width);
       former_height=(*height);
     }

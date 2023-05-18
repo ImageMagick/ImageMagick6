@@ -3486,14 +3486,14 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 (void) GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   (void) GetNextToken(q,&q,extent,token);
-                bounds.width=(size_t) floor(GetDrawValue(token,&next_token)+
+                bounds.width=CastDoubleToUnsigned(GetDrawValue(token,&next_token)+
                   0.5);
                 if (token == next_token)
                   ThrowPointExpectedException(image,token);
                 (void) GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   (void) GetNextToken(q,&q,extent,token);
-                bounds.height=(size_t) floor(GetDrawValue(token,&next_token)+
+                bounds.height=CastDoubleToUnsigned(GetDrawValue(token,&next_token)+
                   0.5);
                 if (token == next_token)
                   ThrowPointExpectedException(image,token);
@@ -3909,14 +3909,14 @@ static MagickBooleanType RenderMVGContent(Image *image,
             (void) GetNextToken(q,&q,extent,token);
             if (*token == ',')
               (void) GetNextToken(q,&q,extent,token);
-            graphic_context[n]->viewbox.width=(size_t) floor(GetDrawValue(
+            graphic_context[n]->viewbox.width=CastDoubleToUnsigned(GetDrawValue(
               token,&next_token)+0.5);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
             (void) GetNextToken(q,&q,extent,token);
             if (*token == ',')
               (void) GetNextToken(q,&q,extent,token);
-            graphic_context[n]->viewbox.height=(size_t) floor(GetDrawValue(
+            graphic_context[n]->viewbox.height=CastDoubleToUnsigned(GetDrawValue(
               token,&next_token)+0.5);
             if (token == next_token)
               ThrowPointExpectedException(image,token);

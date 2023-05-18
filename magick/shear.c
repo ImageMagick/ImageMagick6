@@ -166,8 +166,8 @@ static MagickBooleanType CropToFitImage(Image **image,
   }
   geometry.x=CastDoubleToLong(ceil(min.x-0.5));
   geometry.y=CastDoubleToLong(ceil(min.y-0.5));
-  geometry.width=(size_t) floor(max.x-min.x+0.5);
-  geometry.height=(size_t) floor(max.y-min.y+0.5);
+  geometry.width=CastDoubleToUnsigned(max.x-min.x+0.5);
+  geometry.height=CastDoubleToUnsigned(max.y-min.y+0.5);
   page=(*image)->page;
   (void) ParseAbsoluteGeometry("0x0+0+0",&(*image)->page);
   crop_image=CropImage(*image,&geometry,exception);
@@ -1787,9 +1787,9 @@ MagickExport Image *ShearRotateImage(const Image *image,const double degrees,
   */
   width=integral_image->columns;
   height=integral_image->rows;
-  bounds.width=(size_t) floor(fabs((double) height*shear.x)+width+0.5);
-  bounds.height=(size_t) floor(fabs((double) bounds.width*shear.y)+height+0.5);
-  shear_width=(size_t) floor(fabs((double) bounds.height*shear.x)+
+  bounds.width=CastDoubleToUnsigned(fabs((double) height*shear.x)+width+0.5);
+  bounds.height=CastDoubleToUnsigned(fabs((double) bounds.width*shear.y)+height+0.5);
+  shear_width=CastDoubleToUnsigned(fabs((double) bounds.height*shear.x)+
     bounds.width+0.5);
   bounds.x=CastDoubleToLong(floor((double) ((shear_width > bounds.width) ?
     width : bounds.width-shear_width+2)/2.0+0.5));
