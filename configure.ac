@@ -678,7 +678,7 @@ CPPFLAGS="$CPPFLAGS -DMAGICKCORE_HDRI_ENABLE=$magick_hdri_enable"
 # Enable pipes (|) in filenames.
 AC_ARG_ENABLE([pipes],
     [AS_HELP_STRING([--enable-pipes],
-                    [enable pipes (|) in filenames])],
+                    [enable pipes (|) in filenames. Be sure to properly validate and sanitize user input to prevent malicious behaviors.])],
     [enable_pipes=$enableval],
     [enable_pipes='no'])
 

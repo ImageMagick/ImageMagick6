@@ -1988,7 +1988,9 @@ Optional Features:
                           zero-configuration ImageMagick
   --enable-hdri           accurately represent the wide range of intensity
                           levels found in real scenes
-  --enable-pipes          enable pipes (|) in filenames
+  --enable-pipes          enable pipes (|) in filenames. Be sure to properly
+                          validate and sanitize user input to prevent
+                          malicious behaviors.
   --enable-maintainer-mode
                           enable make rules and dependencies not useful (and
                           sometimes confusing) to the casual installer
@@ -5121,7 +5123,7 @@ MAGICK_PATCHLEVEL_VERSION=87
 
 MAGICK_VERSION=6.9.12-87
 
-MAGICK_GIT_REVISION=53fdc5d38:20230514
+MAGICK_GIT_REVISION=133089f71:20230517
 
 
 # Substitute library versioning
@@ -5155,7 +5157,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,87
 
-PACKAGE_RELEASE_DATE=2023-05-14
+PACKAGE_RELEASE_DATE=2023-05-17
 
 
 # Ensure that make can run correctly
