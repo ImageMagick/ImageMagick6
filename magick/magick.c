@@ -1013,7 +1013,7 @@ MagickExport MagickBooleanType ListMagickInfo(FILE *file,
           {
             for (j=0; text[j] != (char *) NULL; j++)
             {
-              (void) FormatLocaleFile(file,"           %s\n",text[j]);
+              (void) FormatLocaleFile(file,"             %s\n",text[j]);
               text[j]=DestroyString(text[j]);
             }
             text=(char **) RelinquishMagickMemory(text);
