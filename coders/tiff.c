@@ -2153,7 +2153,7 @@ static void TIFFIgnoreTags(TIFF *tiff)
     *tags;
 
   Image
-   *image;
+    *image;
 
   size_t
     count;
@@ -2249,6 +2249,44 @@ ModuleExport size_t RegisterTIFFImage(void)
   MagickInfo
     *entry;
 
+  static const char
+    TIFFNote[] =
+      "Compression options: "
+#if defined(COMPRESSION_NONE)
+      "None"
+#endif
+#if defined(COMPRESSION_CCITTFAX3)
+      ", Fax/Group3"
+#endif
+#if defined(COMPRESSION_CCITTFAX4)
+      ", Group4"
+#endif
+#if defined(COMPRESSION_JBIG)
+      ", JBIG"
+#endif
+#if defined(COMPRESSION_JPEG)
+      ", JPEG"
+#endif
+#if defined(COMPRESSION_LZW)
+      ", LZW"
+#endif
+#if defined(COMPRESSION_LZMA)
+      ", LZMA"
+#endif
+#if defined(COMPRESSION_PACKBITS)
+      ", RLE"
+#endif
+#if defined(COMPRESSION_ADOBE_DEFLATE)
+      ", ZIP"
+#endif
+#if defined(COMPRESSION_ZSTD)
+      ", ZSTD"
+#endif
+#if defined(COMPRESSION_WEBP)
+      ", WEBP"
+#endif
+    ;
+
 #if defined(MAGICKCORE_TIFF_DELEGATE)
   if (tiff_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&tiff_semaphore);
@@ -2298,6 +2336,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Raw CCITT Group4");
   entry->mime_type=ConstantString("image/tiff");
+  entry->note=ConstantString(TIFFNote);
   entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("PTIF");
@@ -2309,6 +2348,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   entry->seekable_stream=MagickTrue;
   entry->description=ConstantString("Pyramid encoded TIFF");
   entry->mime_type=ConstantString("image/tiff");
+  entry->note=ConstantString(TIFFNote);
   entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TIF");
@@ -2323,6 +2363,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/tiff");
+  entry->note=ConstantString(TIFFNote);
   entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TIFF");
@@ -2337,6 +2378,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/tiff");
+  entry->note=ConstantString(TIFFNote);
   entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("TIFF64");
@@ -2350,6 +2392,7 @@ ModuleExport size_t RegisterTIFFImage(void)
   if (*version != '\0')
     entry->version=ConstantString(version);
   entry->mime_type=ConstantString("image/tiff");
+  entry->note=ConstantString(TIFFNote);
   entry->magick_module=ConstantString("TIFF");
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
