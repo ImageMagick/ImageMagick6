@@ -1,5 +1,5 @@
 /*
-  Copyright 1999 ImageMagick Studio LLC, a non-profit organization
+  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization
   dedicated to making software imaging solutions freely available.
 
   You may not use this file except in compliance with the License.  You may
@@ -33,7 +33,10 @@ extern "C" {
 #define MagickCachePrefetch(address,mode,locality) \
   __builtin_prefetch(address,mode,locality)
 #else
-#define MagickCachePrefetch(address,mode,locality)
+#define MagickCachePrefetch(address,mode,locality) \
+  magick_unreferenced(address); \
+  magick_unreferenced(mode); \
+  magick_unreferenced(locality);
 #endif
 
 #if defined(MAGICKCORE_THREAD_SUPPORT)
@@ -43,17 +46,6 @@ extern "C" {
 #else
   typedef size_t MagickMutexType;
 #endif
-
-static inline MagickThreadType GetMagickThreadId(void)
-{
-#if defined(MAGICKCORE_THREAD_SUPPORT)
-  return(pthread_self());
-#elif defined(MAGICKCORE_WINDOWS_SUPPORT)
-  return(GetCurrentThreadId());
-#else
-  return(getpid());
-#endif
-}
 
 static inline int GetMagickNumberThreads(const Image *source,
   const Image *destination,const size_t chunk,int multithreaded)
@@ -77,6 +69,17 @@ static inline int GetMagickNumberThreads(const Image *source,
     number_threads=(int) MagickMin((ssize_t)
       GetMagickResourceLimit(ThreadResource),(ssize_t) (chunk)/64);
   return(MagickMax(number_threads,1));
+}
+
+static inline MagickThreadType GetMagickThreadId(void)
+{
+#if defined(MAGICKCORE_THREAD_SUPPORT)
+  return(pthread_self());
+#elif defined(MAGICKCORE_WINDOWS_SUPPORT)
+  return(GetCurrentThreadId());
+#else
+  return(getpid());
+#endif
 }
 
 static inline size_t GetMagickThreadSignature(void)
@@ -139,21 +142,25 @@ static inline int GetOpenMPThreadId(void)
 #endif
 }
 
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
 static inline void SetOpenMPMaximumThreads(const int threads)
 {
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
   omp_set_num_threads(threads);
 #else
-  (void) threads;
+static inline void SetOpenMPMaximumThreads(const int magick_unused(threads))
+{
+  magick_unreferenced(threads);
 #endif
 }
 
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
 static inline void SetOpenMPNested(const int value)
 {
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
   omp_set_nested(value);
 #else
-  (void) value;
+static inline void SetOpenMPNested(const int magick_unused(value))
+{  
+  magick_unreferenced(value);
 #endif
 }
 
