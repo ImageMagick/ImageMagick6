@@ -560,7 +560,7 @@ MagickExport void GravityAdjustGeometry(const size_t width,
     case EastGravity:
     case SouthEastGravity:
     {
-      region->x=(ssize_t) (width-region->width-region->x);
+      region->x=CastDoubleToLong((double) width-region->width-region->x);
       break;
     }
     case NorthGravity:
@@ -568,7 +568,7 @@ MagickExport void GravityAdjustGeometry(const size_t width,
     case CenterGravity:
     case StaticGravity:
     {
-      region->x+=(ssize_t) (width/2-region->width/2);
+      region->x+=CastDoubleToLong(width/2.0-region->width/2.0);
       break;
     }
     case ForgetGravity:
@@ -584,7 +584,7 @@ MagickExport void GravityAdjustGeometry(const size_t width,
     case SouthGravity:
     case SouthEastGravity:
     {
-      region->y=(ssize_t) (height-region->height-region->y);
+      region->y=CastDoubleToLong((double) height-region->height-region->y);
       break;
     }
     case EastGravity:
@@ -592,7 +592,7 @@ MagickExport void GravityAdjustGeometry(const size_t width,
     case CenterGravity:
     case StaticGravity:
     {
-      region->y+=(ssize_t) (height/2-region->height/2);
+      region->y+=CastDoubleToLong(height/2.0-region->height/2.0);
       break;
     }
     case ForgetGravity:
