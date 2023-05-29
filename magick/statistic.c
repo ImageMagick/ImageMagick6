@@ -2128,13 +2128,13 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     channel;
 
   /*
-    Blur then transform to sRGB colorspace.
+    Blur then transform to xyY colorspace.
   */
   hash_image=BlurImage(image,0.0,1.0,exception);
   if (hash_image == (Image *) NULL)
     return((ChannelPerceptualHash *) NULL);
   hash_image->depth=8;
-  status=TransformImageColorspace(hash_image,sRGBColorspace);
+  status=TransformImageColorspace(hash_image,xyYColorspace);
   if (status == MagickFalse)
     return((ChannelPerceptualHash *) NULL);
   moments=GetImageChannelMoments(hash_image,exception);
@@ -2160,7 +2160,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       return((ChannelPerceptualHash *) NULL);
     }
   hash_image->depth=8;
-  status=TransformImageColorspace(hash_image,HCLpColorspace);
+  status=TransformImageColorspace(hash_image,HSBColorspace);
   if (status == MagickFalse)
     {
       perceptual_hash=(ChannelPerceptualHash *) RelinquishMagickMemory(
