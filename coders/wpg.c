@@ -523,8 +523,12 @@ static int UnpackWPGRaster(Image *image,int bpp)
               return(-7);
             }
           RunCount=(unsigned char) c;
-          if(x) {    /* attempt to duplicate row from x position: */
-            /* I do not know what to do here */
+          if(x != 0) {    /* attempt to duplicate row from x position: */
+            if (InsertRow(BImgBuff,y,image,bpp) == MagickFalse)
+              {
+                x=0;
+                y++;
+              }
             BImgBuff=(unsigned char *) RelinquishMagickMemory(BImgBuff);
             return(-3);
           }
