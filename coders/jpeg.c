@@ -1200,7 +1200,8 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
         client_info->profile=DestroyStringInfo(client_info->profile);
       client_info=(JPEGClientInfo *) RelinquishMagickMemory(client_info);
       (void) CloseBlob(image);
-      if (exception->severity < ErrorException)
+      if ((exception->severity < ErrorException) &&
+          (image->exception.severity < ErrorException))
         return(GetFirstImageInList(image));
       InheritException(exception,&image->exception);
       return(DestroyImage(image));
