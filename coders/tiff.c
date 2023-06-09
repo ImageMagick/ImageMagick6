@@ -578,7 +578,8 @@ static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
         *field;
 
       field=TIFFFieldWithTag(tiff,TIFFTAG_RICHTIFFIPTC);
-      if (TIFFFieldDataType(field) != TIFF_LONG)
+      if ((field != (const TIFFField *) NULL) &&
+          (TIFFFieldDataType(field) == TIFF_LONG))
         status=ReadProfile(image,"iptc",profile,length);
       else
         {
@@ -2648,6 +2649,9 @@ static MagickBooleanType WriteGROUP4Image(const ImageInfo *image_info,
 static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
   Image *image)
 {
+  const char
+    *option;
+
   ExceptionInfo
     *exception;
 
@@ -2667,17 +2671,38 @@ static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
 
   size_t
     columns,
+    min_base = 64,
+    max_levels = ~0UL,
     rows;
 
   /*
     Create pyramid-encoded TIFF image.
   */
   exception=(&image->exception);
+  option=GetImageOption(image_info,"ptif:pyramid");
+  if (option != (const char *) NULL)
+    {
+      /*
+        Property ptif:min-base[x][max-levels].
+      */
+      RectangleInfo
+        pyramid_geometry = { 0.0, 0.0, 0.0, 0.0 };
+
+      MagickStatusType flags =
+        ParseAbsoluteGeometry(option,&pyramid_geometry);
+      if ((flags & WidthValue) != 0)
+        min_base=pyramid_geometry.width;
+      if ((flags & HeightValue) != 0)
+        max_levels=pyramid_geometry.height;
+    }
   images=NewImageList();
   for (next=image; next != (Image *) NULL; next=GetNextImageInList(next))
   {
     Image
       *clone_image;
+
+    ssize_t
+      i;
 
     clone_image=CloneImage(next,0,0,MagickFalse,exception);
     if (clone_image == (Image *) NULL)
@@ -2690,8 +2715,10 @@ static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
     rows=next->rows;
     resolution.x=next->x_resolution;
     resolution.y=next->y_resolution;
-    while ((columns > 64) && (rows > 64))
+    for (i=0; (columns > min_base) && (rows > min_base); i++)
     {
+      if (i > (ssize_t) max_levels)
+        break;
       columns/=2;
       rows/=2;
       resolution.x/=2.0;
@@ -3016,7 +3043,8 @@ static void TIFFSetProfiles(TIFF *tiff,Image *image)
           0x03);
         SetStringInfoLength(iptc_profile,length);
         field=TIFFFieldWithTag(tiff,TIFFTAG_RICHTIFFIPTC);
-        if (TIFFFieldDataType(field) == TIFF_LONG)
+        if ((field != (const TIFFField *) NULL) &&
+            (TIFFFieldDataType(field) == TIFF_LONG))
           {
             if (TIFFIsByteSwapped(tiff))
               TIFFSwabArrayOfLong((uint32 *) GetStringInfoDatum(iptc_profile),
