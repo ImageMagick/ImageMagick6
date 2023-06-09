@@ -1135,7 +1135,7 @@ MagickExport ResizeFilter *AcquireResizeFilter(const Image *image,
     Expert Option Request for verbose details of the resulting filter.
   */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp master
+  #pragma omp single
   {
 #endif
     artifact=GetImageArtifact(image,"filter:verbose");
