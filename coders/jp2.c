@@ -402,7 +402,6 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
       opj_image_destroy(jp2_image);
       ThrowReaderException(DelegateError,"UnableToDecodeImageFile");
     }
-  opj_stream_destroy(jp2_stream);
   for (i=0; i < (ssize_t) jp2_image->numcomps; i++)
   {
     if ((jp2_image->comps[i].dx == 0) || (jp2_image->comps[i].dy == 0) ||
@@ -416,6 +415,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
         ThrowReaderException(CoderError,"IrregularChannelGeometryNotSupported")
       }
   }
+  opj_stream_destroy(jp2_stream);
   /*
     Convert JP2 image.
   */
