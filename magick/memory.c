@@ -1051,7 +1051,7 @@ MagickExport size_t GetMaxMemoryRequest(void)
       char
         *value;
 
-      max_memory_request=(size_t) MagickULLConstant(~0);
+      max_memory_request=(size_t) MAGICK_SSIZE_MAX;
       value=GetPolicyValue("system:max-memory-request");
       if (value != (char *) NULL)
         {
@@ -1063,7 +1063,7 @@ MagickExport size_t GetMaxMemoryRequest(void)
           value=DestroyString(value);
         }
     }
-  return(MagickMin(max_memory_request,MAGICK_SSIZE_MAX));
+  return(MagickMin(max_memory_request,(size_t) MAGICK_SSIZE_MAX));
 }
 
 /*

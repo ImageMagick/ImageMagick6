@@ -1208,7 +1208,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
     }
   jpeg_info->client_data=(void *) client_info;
   jpeg_create_decompress(jpeg_info);
-  if (GetMaxMemoryRequest() != ~0UL)
+  if (GetMaxMemoryRequest() != (size_t) MAGICK_SSIZE_MAX)
     jpeg_info->mem->max_memory_to_use=(long) GetMaxMemoryRequest();
   jpeg_progress.progress_monitor=(void (*)(j_common_ptr)) JPEGProgressHandler;
   jpeg_info->progress=(&jpeg_progress);
