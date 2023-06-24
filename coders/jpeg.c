@@ -84,6 +84,7 @@
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/xml-tree.h"
+#include <limits.h>
 #include <setjmp.h>
 #if defined(MAGICKCORE_JPEG_DELEGATE)
 #define JPEG_INTERNAL_OPTIONS
@@ -1150,6 +1151,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
     *p;
 
   size_t
+    max_memory_to_use,
     units;
 
   ssize_t
@@ -1208,8 +1210,9 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
     }
   jpeg_info->client_data=(void *) client_info;
   jpeg_create_decompress(jpeg_info);
-  if (GetMaxMemoryRequest() != (size_t) MAGICK_SSIZE_MAX)
-    jpeg_info->mem->max_memory_to_use=(long) GetMaxMemoryRequest();
+  max_memory_to_use=GetMaxMemoryRequest();
+  if (max_memory_to_use < (size_t) LONG_MAX)
+    jpeg_info->mem->max_memory_to_use=(long) max_memory_to_use;
   jpeg_progress.progress_monitor=(void (*)(j_common_ptr)) JPEGProgressHandler;
   jpeg_info->progress=(&jpeg_progress);
   JPEGSourceManager(jpeg_info,image);
