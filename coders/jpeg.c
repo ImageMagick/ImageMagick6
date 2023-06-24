@@ -84,6 +84,7 @@
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/xml-tree.h"
+#include <limits.h>
 #include <setjmp.h>
 #if defined(MAGICKCORE_JPEG_DELEGATE)
 #define JPEG_INTERNAL_OPTIONS
