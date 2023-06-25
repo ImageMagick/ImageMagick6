@@ -2375,6 +2375,8 @@ static MagickBooleanType WriteMETAImage(const ImageInfo *image_info,
       if (profile == (StringInfo *) NULL)
         ThrowWriterException(CoderError,"No8BIMDataIsAvailable");
       status=OpenBlob(image_info,image,WriteBinaryBlobMode,&image->exception);
+      if (status == MagickFalse)
+        return(status);
       info=GetStringInfoDatum(profile);
       length=GetStringInfoLength(profile);
       length=GetIPTCStream(&info,length);
