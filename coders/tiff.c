@@ -17,7 +17,7 @@
 %                                 July 1992                                   %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
+%  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization         %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -1835,6 +1835,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           size_t
             rows_remaining;
 
+          tmsize_t
+            size = 0;
+
           switch (i)
           {
             case 0: break;
@@ -1861,9 +1864,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
               break;
             if (rows_remaining == 0)
               {
-                tmsize_t
-                  size;
-
                 size=TIFFReadEncodedStrip(tiff,strip_id,strip_pixels,
                   strip_size);
                 (void) size;
@@ -1887,7 +1887,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                   break;
               }
           }
-         if ((samples_per_pixel > 1) && (interlace != PLANARCONFIG_SEPARATE))
+          if ((size == -1) || ((samples_per_pixel > 1) &&
+              (interlace != PLANARCONFIG_SEPARATE)))
             break;
         }
         strip_pixels=(unsigned char *) RelinquishMagickMemory(strip_pixels);
@@ -1895,17 +1896,22 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
       case ReadTileMethod:
       {
-        unsigned char
-          *p;
-
         size_t
-          extent;
+          extent,
+          length;
+
+        ssize_t
+          stride;
+
+        tmsize_t
+          tile_size;
 
         uint32
           columns,
           rows;
 
         unsigned char
+          *p,
           *tile_pixels;
 
         /*
@@ -1917,8 +1923,11 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         number_pixels=(MagickSizeType) columns*rows;
         if (HeapOverflowSanityCheck(rows,sizeof(*tile_pixels)) != MagickFalse)
           ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
-        extent=4*(samples_per_pixel+1)*MagickMax((rows+1)*TIFFTileRowSize(tiff),
-          TIFFTileSize(tiff));
+        tile_size=TIFFTileSize(tiff);
+        stride=(ssize_t) TIFFTileRowSize(tiff);
+        length=GetQuantumExtent(image,quantum_info,quantum_type);
+        extent=(size_t) MagickMax((size_t) tile_size,rows*
+          MagickMax((size_t) stride,length));
         tile_pixels=(unsigned char *) AcquireQuantumMemory(extent,
           sizeof(*tile_pixels));
         if (tile_pixels == (unsigned char *) NULL)
@@ -3172,6 +3181,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
     quantum_type;
 
   size_t
+    length,
     number_scenes;
 
   ssize_t
@@ -3834,7 +3844,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
               p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
               if (p == (const PixelPacket *) NULL)
                 break;
-              (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+              length=ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,quantum_type,pixels,&image->exception);
               tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
               if (tiff_status == -1)
@@ -3863,7 +3873,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
               p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
               if (p == (const PixelPacket *) NULL)
                 break;
-              (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+              length=ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,RedQuantum,pixels,&image->exception);
               tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
               if (tiff_status == -1)
@@ -3883,7 +3893,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
               p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
               if (p == (const PixelPacket *) NULL)
                 break;
-              (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+              length=ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,GreenQuantum,pixels,&image->exception);
               tiff_status=TIFFWritePixels(tiff,&tiff_info,y,1,image);
               if (tiff_status == -1)
@@ -3903,7 +3913,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
               p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
               if (p == (const PixelPacket *) NULL)
                 break;
-              (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+              length=ExportQuantumPixels(image,(const CacheView *) NULL,
                 quantum_info,BlueQuantum,pixels,&image->exception);
               tiff_status=TIFFWritePixels(tiff,&tiff_info,y,2,image);
               if (tiff_status == -1)
@@ -3925,7 +3935,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
                   &image->exception);
                 if (p == (const PixelPacket *) NULL)
                   break;
-                (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+                length=ExportQuantumPixels(image,(const CacheView *) NULL,
                   quantum_info,AlphaQuantum,pixels,&image->exception);
                 tiff_status=TIFFWritePixels(tiff,&tiff_info,y,3,image);
                 if (tiff_status == -1)
@@ -3960,8 +3970,9 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
           if (p == (const PixelPacket *) NULL)
             break;
-          (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+          length=ExportQuantumPixels(image,(const CacheView *) NULL,
             quantum_info,quantum_type,pixels,&image->exception);
+          (void) length;
           tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
           if (tiff_status == -1)
             break;
@@ -4041,7 +4052,7 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
           p=GetVirtualPixels(image,0,y,image->columns,1,&image->exception);
           if (p == (const PixelPacket *) NULL)
             break;
-          (void) ExportQuantumPixels(image,(const CacheView *) NULL,
+          length=ExportQuantumPixels(image,(const CacheView *) NULL,
             quantum_info,quantum_type,pixels,&image->exception);
           tiff_status=TIFFWritePixels(tiff,&tiff_info,y,0,image);
           if (tiff_status == -1)
