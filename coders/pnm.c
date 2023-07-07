@@ -632,12 +632,12 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           PixelPacket
             *magick_restrict q;
 
+          size_t
+            length;
+
           ssize_t
             count,
             offset;
-
-          size_t
-            length;
 
           stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
@@ -684,21 +684,19 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          MagickBooleanType
-            sync;
-
           const unsigned char
             *magick_restrict p;
+
+          MagickBooleanType
+            sync;
 
           PixelPacket
             *magick_restrict q;
 
           ssize_t
-            x;
-
-          ssize_t
             count,
-            offset;
+            offset,
+            x;
 
           stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
@@ -798,21 +796,19 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          MagickBooleanType
-            sync;
-
           const unsigned char
             *magick_restrict p;
+
+          MagickBooleanType
+            sync;
 
           PixelPacket
             *magick_restrict q;
 
           ssize_t
-            x;
-
-          ssize_t
             count,
-            offset;
+            offset,
+            x;
 
           stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
@@ -987,21 +983,19 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         pixels=GetQuantumPixels(quantum_info);
         for (y=0; y < (ssize_t) image->rows; y++)
         {
-          MagickBooleanType
-            sync;
-
           const unsigned char
             *magick_restrict p;
 
-          ssize_t
-            x;
+          MagickBooleanType
+            sync;
 
           PixelPacket
             *magick_restrict q;
 
           ssize_t
             count,
-            offset;
+            offset,
+            x;
 
           stream=ReadBlobStream(image,extent,pixels,&count);
           if (count != (ssize_t) extent)
@@ -1302,12 +1296,12 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           PixelPacket
             *magick_restrict q;
 
+          size_t
+            length;
+
           ssize_t
             count,
             offset;
-
-          size_t
-            length;
 
           stream=ReadBlobStream(image,extent,pixels,&count);
           if ((size_t) count != extent)
