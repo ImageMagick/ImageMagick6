@@ -1400,9 +1400,6 @@ MagickExport void MagickCoreTerminus(void)
     }
   MonitorComponentTerminus();
   RegistryComponentTerminus();
-#if defined(MAGICKCORE_X11_DELEGATE)
-  XComponentTerminus();
-#endif
 #if defined(MAGICKCORE_XML_DELEGATE)
   xmlCleanupParser();
 #endif
@@ -1424,6 +1421,9 @@ MagickExport void MagickCoreTerminus(void)
 #endif
 #if defined(MAGICKCORE_MODULES_SUPPORT)
   ModuleComponentTerminus();
+#endif
+#if defined(MAGICKCORE_X11_DELEGATE)
+  XComponentTerminus();
 #endif
   CoderComponentTerminus();
   AsynchronousResourceComponentTerminus();
