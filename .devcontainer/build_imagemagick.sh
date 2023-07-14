@@ -5,7 +5,7 @@ autoreconf -fiv
 make "-j$(nproc)"
 make install
 
-cat <<EOT >> /ImageMagick/etc/ImageMagick-6/policy.xml
+cat <<EOT >> /ImageMagick6/etc/ImageMagick-6/policy.xml
 <policymap>
   <policy domain="resource" name="memory" value="256MiB"/>
   <policy domain="resource" name="list-length" value="32"/>

@@ -2,7 +2,7 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "onCreateCommand": "cd /workspaces/ImageMagick6 && ./.devcontainer/build_imagemagick.sh",
+  "onCreateCommand": "bash .devcontainer/build_imagemagick.sh",
   "customizations": {
     "vscode": {
       "settings": {
