@@ -1,7 +1,8 @@
 FROM ubuntu:22.04
 
 RUN apt-get update && \
-    apt-get install -y autoconf autopoint binutils clang cmake gettext git gperf libc++-dev libc++abi-dev libtool make nasm pkg-config po4a
+    apt-get install -y autoconf autopoint binutils clang cmake gettext git gperf libc++-dev libc++abi-dev libtool locales make nasm pkg-config po4a && \
+    locale-gen en_US.UTF-8
 
 RUN mkdir -p mkdir /ImageMagick6/dependencies
 WORKDIR /ImageMagick6/dependencies
@@ -21,8 +22,7 @@ RUN git clone --depth 1 https://github.com/freetype/freetype
 RUN git clone --depth 1 https://gitlab.com/federicomenaquintero/bzip2.git
 RUN git -c http.sslVerify=false clone https://www.cl.cam.ac.uk/~mgk25/git/jbigkit
 
-RUN curl https://raw.githubusercontent.com/ImageMagick/ImageMagick6/main/.devcontainer/build_dependencies.sh -o build_dependencies.sh && \
-    chmod +x build_dependencies.sh
+ADD build_dependencies.sh build_dependencies.sh
 
 ENV SRC=/ImageMagick6/dependencies
 ENV WORK=/ImageMagick6
