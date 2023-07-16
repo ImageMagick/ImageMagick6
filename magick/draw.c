@@ -383,7 +383,6 @@ MagickExport DrawInfo *CloneDrawInfo(const ImageInfo *image_info,
     clone_info->composite_mask=CloneImage(draw_info->composite_mask,0,0,
       MagickTrue,&draw_info->composite_mask->exception);
   clone_info->render=draw_info->render;
-  clone_info->image_info=CloneImageInfo(draw_info->image_info);
   clone_info->debug=draw_info->debug;
   return(clone_info);
 }
