@@ -114,7 +114,8 @@ typedef struct _GraphemeInfo
     index,
     x_offset,
     x_advance,
-    y_offset;
+    y_offset,
+    y_advance;
 
   size_t
     cluster;
@@ -1128,11 +1129,11 @@ static size_t ComplexRaqmTextLayout(const Image *image,
   raqm_glyph_t
     *glyphs;
 
-  ssize_t
-    i;
-
   size_t
     extent;
+
+  ssize_t
+    i;
 
   extent=0;
   rq=raqm_create();
@@ -1193,6 +1194,7 @@ static size_t ComplexRaqmTextLayout(const Image *image,
     (*grapheme)[i].x_offset=glyphs[i].x_offset;
     (*grapheme)[i].x_advance=glyphs[i].x_advance;
     (*grapheme)[i].y_offset=glyphs[i].y_offset;
+    (*grapheme)[i].y_advance=glyphs[i].y_advance;
     (*grapheme)[i].cluster=glyphs[i].cluster;
   }
 
