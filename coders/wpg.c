@@ -435,6 +435,8 @@ static MagickBooleanType InsertRow(unsigned char *p,ssize_t y,Image *image,
           q++;
         }
       break;
+    default:
+      return(MagickFalse);
     }
   if (!SyncAuthenticPixels(image,exception))
     return(MagickFalse);
