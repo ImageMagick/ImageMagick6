@@ -1743,7 +1743,7 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
   if (magick_info == (const MagickInfo *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
-        MissingDelegateError,"NoDecodeDelegateForThisImageFormat","`%s'",
+        MissingDelegateError,"NoEncodeDelegateForThisImageFormat","`%s'",
         image->magick);
       blob_info=DestroyImageInfo(blob_info);
       return(blob);
@@ -2002,7 +2002,7 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
   if (magick_info == (const MagickInfo *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
-        MissingDelegateError,"NoDecodeDelegateForThisImageFormat","`%s'",
+        MissingDelegateError,"NoEncodeDelegateForThisImageFormat","`%s'",
         images->magick);
       blob_info=DestroyImageInfo(blob_info);
       return(blob);
