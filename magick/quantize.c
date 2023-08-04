@@ -1081,15 +1081,13 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
   if (node_info->number_unique != 0)
     {
       MagickRealType
+        alpha,
+        beta,
+        distance,
         pixel;
 
       DoublePixelPacket
         *magick_restrict q;
-
-      MagickRealType
-        alpha,
-        beta,
-        distance;
 
       PixelPacket
         *magick_restrict p;
@@ -1105,17 +1103,6 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
         {
           alpha=(MagickRealType) QuantumScale*GetPixelAlpha(p);
           beta=(MagickRealType) QuantumScale*GetPixelAlpha(q);
-        }
-      pixel=GetPixelRed(p)-GetPixelRed(q);
-      if (IsHueCompatibleColorspace(image->colorspace) != MagickFalse)
-        {
-          /*
-            Compute an arc distance for hue.  It should be a vector angle of
-            'S'/'W' length with 'L'/'B' forming appropriate cones.
-          */
-          if (fabs((double) pixel) > (QuantumRange/2))
-            pixel-=QuantumRange;
-          pixel*=2.0;
         }
       pixel=alpha*GetPixelRed(p)-beta*GetPixelRed(q);
       distance=pixel*pixel;
