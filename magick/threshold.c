@@ -279,18 +279,18 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
       {
         if (u == (ssize_t) (width-1))
           {
-            channel_bias.red+=r[u].red;
-            channel_bias.green+=r[u].green;
-            channel_bias.blue+=r[u].blue;
-            channel_bias.opacity+=r[u].opacity;
+            channel_bias.red+=(MagickRealType) r[u].red;
+            channel_bias.green+=(MagickRealType) r[u].green;
+            channel_bias.blue+=(MagickRealType) r[u].blue;
+            channel_bias.opacity+=(MagickRealType) r[u].opacity;
             if (image->colorspace == CMYKColorspace)
               channel_bias.index=(MagickRealType)
                 GetPixelIndex(indexes+(r-p)+u);
           }
-        channel_sum.red+=r[u].red;
-        channel_sum.green+=r[u].green;
-        channel_sum.blue+=r[u].blue;
-        channel_sum.opacity+=r[u].opacity;
+        channel_sum.red+=(MagickRealType) r[u].red;
+        channel_sum.green+=(MagickRealType) r[u].green;
+        channel_sum.blue+=(MagickRealType) r[u].blue;
+        channel_sum.opacity+=(MagickRealType) r[u].opacity;
         if (image->colorspace == CMYKColorspace)
           channel_sum.index=(MagickRealType) GetPixelIndex(indexes+(r-p)+u);
       }
@@ -311,16 +311,16 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
       channel_bias=zero;
       for (v=0; v < (ssize_t) height; v++)
       {
-        channel_bias.red+=r[0].red;
-        channel_bias.green+=r[0].green;
-        channel_bias.blue+=r[0].blue;
-        channel_bias.opacity+=r[0].opacity;
+        channel_bias.red+=(MagickRealType) r[0].red;
+        channel_bias.green+=(MagickRealType) r[0].green;
+        channel_bias.blue+=(MagickRealType) r[0].blue;
+        channel_bias.opacity+=(MagickRealType) r[0].opacity;
         if (image->colorspace == CMYKColorspace)
           channel_bias.index=(MagickRealType) GetPixelIndex(indexes+x+(r-p)+0);
-        channel_sum.red+=r[width-1].red;
-        channel_sum.green+=r[width-1].green;
-        channel_sum.blue+=r[width-1].blue;
-        channel_sum.opacity+=r[width-1].opacity;
+        channel_sum.red+=(MagickRealType) r[width-1].red;
+        channel_sum.green+=(MagickRealType) r[width-1].green;
+        channel_sum.blue+=(MagickRealType) r[width-1].blue;
+        channel_sum.opacity+=(MagickRealType) r[width-1].opacity;
         if (image->colorspace == CMYKColorspace)
           channel_sum.index=(MagickRealType) GetPixelIndex(indexes+x+(r-p)+
             width-1);
@@ -772,7 +772,7 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   artifact=GetImageArtifact(image,"threshold:verbose");
   if (IsStringTrue(artifact) != MagickFalse)
     (void) FormatLocaleFile(stdout,"%.*g%%\n",GetMagickPrecision(),threshold);
-  return(BilevelImage(image,QuantumRange*threshold/100.0));
+  return(BilevelImage(image,(MagickRealType) QuantumRange*threshold/100.0));
 }
 
 /*
@@ -1039,11 +1039,11 @@ MagickExport MagickBooleanType BlackThresholdImageChannel(Image *image,
     threshold.index=threshold.red;
   if ((flags & PercentValue) != 0)
     {
-      threshold.red*=(MagickRealType) (QuantumRange/100.0);
-      threshold.green*=(MagickRealType) (QuantumRange/100.0);
-      threshold.blue*=(MagickRealType) (QuantumRange/100.0);
-      threshold.opacity*=(MagickRealType) (QuantumRange/100.0);
-      threshold.index*=(MagickRealType) (QuantumRange/100.0);
+      threshold.red*=(MagickRealType) QuantumRange/100.0;
+      threshold.green*=(MagickRealType) QuantumRange/100.0;
+      threshold.blue*=(MagickRealType) QuantumRange/100.0;
+      threshold.opacity*=(MagickRealType) QuantumRange/100.0;
+      threshold.index*=(MagickRealType) QuantumRange/100.0;
     }
   if ((IsMagickGray(&threshold) == MagickFalse) &&
       (IsGrayColorspace(image->colorspace) != MagickFalse))
@@ -2018,27 +2018,28 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
               Opacity is inverted so 'off' represents transparent.
         */
         if (levels.red) {
-          t = (ssize_t) (QuantumScale*GetPixelRed(q)*(levels.red*d+1));
+          t = (ssize_t) (QuantumScale*(MagickRealType) GetPixelRed(q)*
+            (levels.red*d+1));
           l = t/d;  t = t-l*d;
           SetPixelRed(q,ClampToQuantum((MagickRealType)
             ((l+(t >= threshold))*(MagickRealType) QuantumRange/levels.red)));
         }
         if (levels.green) {
-          t = (ssize_t) (QuantumScale*GetPixelGreen(q)*
+          t = (ssize_t) (QuantumScale*(MagickRealType) GetPixelGreen(q)*
             (levels.green*d+1));
           l = t/d;  t = t-l*d;
           SetPixelGreen(q,ClampToQuantum((MagickRealType)
             ((l+(t >= threshold))*(MagickRealType) QuantumRange/levels.green)));
         }
         if (levels.blue) {
-          t = (ssize_t) (QuantumScale*GetPixelBlue(q)*
+          t = (ssize_t) (QuantumScale*(MagickRealType) GetPixelBlue(q)*
             (levels.blue*d+1));
           l = t/d;  t = t-l*d;
           SetPixelBlue(q,ClampToQuantum((MagickRealType)
             ((l+(t >= threshold))*(MagickRealType) QuantumRange/levels.blue)));
         }
         if (levels.opacity) {
-          t = (ssize_t) ((1.0-QuantumScale*GetPixelOpacity(q))*
+          t = (ssize_t) ((1.0-QuantumScale*(MagickRealType) GetPixelOpacity(q))*
             (levels.opacity*d+1));
           l = t/d;  t = t-l*d;
           SetPixelOpacity(q,ClampToQuantum((MagickRealType)
@@ -2046,7 +2047,7 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
             levels.opacity)));
         }
         if (levels.index) {
-          t = (ssize_t) (QuantumScale*GetPixelIndex(indexes+x)*
+          t = (ssize_t) (QuantumScale*(MagickRealType) GetPixelIndex(indexes+x)*
             (levels.index*d+1));
           l = t/d;  t = t-l*d;
           SetPixelIndex(indexes+x,ClampToQuantum((MagickRealType) ((l+
@@ -2114,7 +2115,7 @@ static inline Quantum PerceptibleThreshold(const Quantum quantum,
     sign;
 
   sign=(double) quantum < 0.0 ? -1.0 : 1.0;
-  if ((sign*quantum) >= epsilon)
+  if ((sign*(double) quantum) >= epsilon)
     return(quantum);
   return((Quantum) (sign*epsilon));
 }
@@ -2344,8 +2345,8 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
     max_threshold=min_threshold;
   if (strchr(thresholds,'%') != (char *) NULL)
     {
-      max_threshold*=(MagickRealType) (0.01*QuantumRange);
-      min_threshold*=(MagickRealType) (0.01*QuantumRange);
+      max_threshold*=0.01*(MagickRealType) QuantumRange;
+      min_threshold*=0.01*(MagickRealType) QuantumRange;
     }
   else
     if (((max_threshold == min_threshold) || (max_threshold == 1)) &&
@@ -2415,8 +2416,8 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
           else if (intensity > max_threshold)
             threshold.index=max_threshold;
           else
-            threshold.index=(MagickRealType)(QuantumRange*
-              GetPseudoRandomValue(random_info[id]));
+            threshold.index=(MagickRealType) QuantumRange*
+              (MagickRealType) GetPseudoRandomValue(random_info[id]);
           index=(IndexPacket) (intensity <= threshold.index ? 0 : 1);
           SetPixelIndex(indexes+x,index);
           SetPixelRGBO(q,image->colormap+(ssize_t) index);
@@ -2489,7 +2490,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
             if ((MagickRealType) GetPixelRed(q) > max_threshold)
               threshold.red=max_threshold;
             else
-              threshold.red=(MagickRealType) (QuantumRange*
+              threshold.red=(MagickRealType) ((MagickRealType) QuantumRange*
                 GetPseudoRandomValue(random_info[id]));
         }
       if ((channel & GreenChannel) != 0)
@@ -2500,7 +2501,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
             if ((MagickRealType) GetPixelGreen(q) > max_threshold)
               threshold.green=max_threshold;
             else
-              threshold.green=(MagickRealType) (QuantumRange*
+              threshold.green=(MagickRealType) ((MagickRealType) QuantumRange*
                 GetPseudoRandomValue(random_info[id]));
         }
       if ((channel & BlueChannel) != 0)
@@ -2511,7 +2512,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
             if ((MagickRealType) GetPixelBlue(q) > max_threshold)
               threshold.blue=max_threshold;
             else
-              threshold.blue=(MagickRealType) (QuantumRange*
+              threshold.blue=(MagickRealType) ((MagickRealType) QuantumRange*
                 GetPseudoRandomValue(random_info[id]));
         }
       if ((channel & OpacityChannel) != 0)
@@ -2522,7 +2523,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
             if ((MagickRealType) GetPixelOpacity(q) > max_threshold)
               threshold.opacity=max_threshold;
             else
-              threshold.opacity=(MagickRealType) (QuantumRange*
+              threshold.opacity=(MagickRealType) ((MagickRealType) QuantumRange*
                 GetPseudoRandomValue(random_info[id]));
         }
       if (((channel & IndexChannel) != 0) &&
@@ -2534,7 +2535,7 @@ MagickExport MagickBooleanType RandomThresholdImageChannel(Image *image,
             if ((MagickRealType) GetPixelIndex(indexes+x) > max_threshold)
               threshold.index=max_threshold;
             else
-              threshold.index=(MagickRealType) (QuantumRange*
+              threshold.index=(MagickRealType) ((MagickRealType) QuantumRange*
                 GetPseudoRandomValue(random_info[id]));
         }
       if ((channel & RedChannel) != 0)
@@ -2671,11 +2672,11 @@ MagickExport MagickBooleanType WhiteThresholdImageChannel(Image *image,
     threshold.index=threshold.red;
   if ((flags & PercentValue) != 0)
     {
-      threshold.red*=(MagickRealType) (QuantumRange/100.0);
-      threshold.green*=(MagickRealType) (QuantumRange/100.0);
-      threshold.blue*=(MagickRealType) (QuantumRange/100.0);
-      threshold.opacity*=(MagickRealType) (QuantumRange/100.0);
-      threshold.index*=(MagickRealType) (QuantumRange/100.0);
+      threshold.red*=(MagickRealType) QuantumRange/100.0;
+      threshold.green*=(MagickRealType) QuantumRange/100.0;
+      threshold.blue*=(MagickRealType) QuantumRange/100.0;
+      threshold.opacity*=(MagickRealType) QuantumRange/100.0;
+      threshold.index*=(MagickRealType) QuantumRange/100.0;
     }
   if ((IsMagickGray(&threshold) == MagickFalse) &&
       (IsGrayColorspace(image->colorspace) != MagickFalse))

@@ -2090,25 +2090,22 @@ static double GetSimilarityMetric(const Image *image,const Image *reference,
       MagickRealType
         pixel;
 
-      pixel=QuantumScale*(GetPixelRed(p)-(double)
-        GetPixelRed(q));
+      pixel=QuantumScale*((double) GetPixelRed(p)-(double) GetPixelRed(q));
       similarity+=pixel*pixel;
-      pixel=QuantumScale*(GetPixelGreen(p)-(double)
-        GetPixelGreen(q));
+      pixel=QuantumScale*((double) GetPixelGreen(p)-(double) GetPixelGreen(q));
       similarity+=pixel*pixel;
-      pixel=QuantumScale*(GetPixelBlue(p)-(double)
-        GetPixelBlue(q));
+      pixel=QuantumScale*((double) GetPixelBlue(p)-(double) GetPixelBlue(q));
       similarity+=pixel*pixel;
       if ((image->matte != MagickFalse) && (reference->matte != MagickFalse))
         {
-          pixel=QuantumScale*(GetPixelOpacity(p)-(double)
+          pixel=QuantumScale*((double) GetPixelOpacity(p)-(double)
             GetPixelOpacity(q));
           similarity+=pixel*pixel;
         }
       if ((image->colorspace == CMYKColorspace) &&
           (reference->colorspace == CMYKColorspace))
         {
-          pixel=QuantumScale*(GetPixelIndex(indexes+x)-(double)
+          pixel=QuantumScale*((double) GetPixelIndex(indexes+x)-(double)
             GetPixelIndex(reference_indexes+x));
           similarity+=pixel*pixel;
         }
@@ -2451,16 +2448,16 @@ MagickExport unsigned int FuzzyColorMatch(const PixelPacket *p,
       (GetPixelGreen(p) == GetPixelGreen(q)) &&
       (GetPixelBlue(p) == GetPixelBlue(q)))
     return(MagickTrue);
-  pixel.red=GetPixelRed(p)-(MagickRealType) GetPixelRed(q);
+  pixel.red=(MagickRealType) GetPixelRed(p)-(MagickRealType) GetPixelRed(q);
   distance=pixel.red*pixel.red;
   if (distance > (fuzz*fuzz))
     return(MagickFalse);
-  pixel.green=GetPixelGreen(p)-(MagickRealType)
+  pixel.green=(MagickRealType) GetPixelGreen(p)-(MagickRealType)
     GetPixelGreen(q);
   distance+=pixel.green*pixel.green;
   if (distance > (fuzz*fuzz))
     return(MagickFalse);
-  pixel.blue=GetPixelBlue(p)-(MagickRealType) GetPixelBlue(q);
+  pixel.blue=(MagickRealType) GetPixelBlue(p)-(MagickRealType) GetPixelBlue(q);
   distance+=pixel.blue*pixel.blue;
   if (distance > (fuzz*fuzz))
     return(MagickFalse);
@@ -4447,9 +4444,10 @@ MagickExport char *InterpretImageAttributes(const ImageInfo *image_info,
 */
 MagickExport MagickRealType InversesRGBCompandor(const MagickRealType pixel)
 {
-  if (pixel <= (0.0404482362771076*QuantumRange))
+  if (pixel <= (0.0404482362771076*(double) QuantumRange))
     return(pixel/12.92);
-  return(QuantumRange*pow((QuantumScale*pixel+0.055)/1.055,2.4));
+  return((MagickRealType) QuantumRange*pow((QuantumScale*pixel+0.055)/1.055,
+    2.4));
 }
 
 /*
@@ -6263,8 +6261,8 @@ MagickExport unsigned int RandomChannelThresholdImage(Image *image,
             &upper_threshold);
           if (strchr(thresholds,'%') != (char *) NULL)
             {
-              upper_threshold*=(.01*QuantumRange);
-              lower_threshold*=(.01*QuantumRange);
+              upper_threshold*=(.01*(MagickRealType) QuantumRange);
+              lower_threshold*=(.01*(MagickRealType) QuantumRange);
             }
           if (count == 1)
             upper_threshold=(MagickRealType) QuantumRange-lower_threshold;
@@ -6313,8 +6311,8 @@ MagickExport unsigned int RandomChannelThresholdImage(Image *image,
               else if (intensity > upper_threshold)
                 threshold=upper_threshold;
               else
-                threshold=(MagickRealType) (QuantumRange*
-                  GetPseudoRandomValue(random_info));
+                threshold=(MagickRealType) QuantumRange*
+                  GetPseudoRandomValue(random_info);
             }
           else if (order == 2)
             threshold=(MagickRealType) QuantumRange*o2[(x%2)+2*(y%2)];
@@ -6342,8 +6340,8 @@ MagickExport unsigned int RandomChannelThresholdImage(Image *image,
                   else if ((MagickRealType) q->opacity > upper_threshold)
                     threshold=upper_threshold;
                   else
-                    threshold=(MagickRealType) (QuantumRange*
-                      GetPseudoRandomValue(random_info));
+                    threshold=(MagickRealType) QuantumRange*
+                      GetPseudoRandomValue(random_info);
                 }
               else if (order == 2)
                 threshold=(MagickRealType) QuantumRange*o2[(x%2)+2*(y%2)];
@@ -7186,9 +7184,10 @@ MagickExport Image *SpliceImageList(Image *images,const ssize_t offset,
 */
 MagickExport MagickRealType sRGBCompandor(const MagickRealType pixel)
 {
-  if (pixel <= (0.0031306684425005883*QuantumRange))
+  if (pixel <= (0.0031306684425005883*(double) QuantumRange))
     return(12.92*pixel);
-  return(QuantumRange*(1.055*pow(QuantumScale*pixel,1.0/2.4)-0.055));
+  return((MagickRealType) QuantumRange*(1.055*pow(QuantumScale*pixel,1.0/2.4)-
+    0.055));
 }
 
 /*
@@ -7576,10 +7575,10 @@ MagickExport unsigned int ThresholdImageChannel(Image *image,
     pixel.opacity=(MagickRealType) OpaqueOpacity;
   if (flags & PercentValue)
     {
-      pixel.red*=QuantumRange/100.0f;
-      pixel.green*=QuantumRange/100.0f;
-      pixel.blue*=QuantumRange/100.0f;
-      pixel.opacity*=QuantumRange/100.0f;
+      pixel.red*=(MagickRealType) QuantumRange/100.0;
+      pixel.green*=(MagickRealType) QuantumRange/100.0;
+      pixel.blue*=(MagickRealType) QuantumRange/100.0;
+      pixel.opacity*=(MagickRealType) QuantumRange/100.0;
     }
   if (!(flags & SigmaValue))
     {
@@ -7722,9 +7721,9 @@ MagickExport void TransformHSL(const Quantum red,const Quantum green,
   assert(hue != (double *) NULL);
   assert(saturation != (double *) NULL);
   assert(lightness != (double *) NULL);
-  r=QuantumScale*red;
-  g=QuantumScale*green;
-  b=QuantumScale*blue;
+  r=QuantumScale*(MagickRealType) red;
+  g=QuantumScale*(MagickRealType) green;
+  b=QuantumScale*(MagickRealType) blue;
   max=MagickMax(r,MagickMax(g,b));
   min=MagickMin(r,MagickMin(g,b));
   *hue=0.0;

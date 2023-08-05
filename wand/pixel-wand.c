@@ -505,7 +505,7 @@ WandExport double PixelGetAlpha(const PixelWand *wand)
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  return((double) QuantumScale*(QuantumRange-wand->pixel.opacity));
+  return(QuantumScale*((double) QuantumRange-(double) wand->pixel.opacity));
 }
 
 /*
@@ -1284,13 +1284,15 @@ WandExport void PixelGetQuantumColor(const PixelWand *wand,PixelPacket *color)
   color->opacity=ClampToQuantum(wand->pixel.opacity);
   if (wand->pixel.colorspace == CMYKColorspace)
     {
-      color->red=ClampToQuantum((MagickRealType) QuantumRange-
-        (wand->pixel.red*(QuantumRange-wand->pixel.index)+wand->pixel.index));
-      color->green=ClampToQuantum((MagickRealType) QuantumRange-
-        (wand->pixel.green*(QuantumRange-wand->pixel.index)+
+      color->red=ClampToQuantum((double) QuantumRange-
+        (wand->pixel.red*((double) QuantumRange-wand->pixel.index)+
         wand->pixel.index));
-      color->blue=ClampToQuantum((MagickRealType) QuantumRange-
-        (wand->pixel.blue*(QuantumRange-wand->pixel.index)+wand->pixel.index));
+      color->green=ClampToQuantum((double) QuantumRange-
+        (wand->pixel.green*((double) QuantumRange-wand->pixel.index)+
+        wand->pixel.index));
+      color->blue=ClampToQuantum((double) QuantumRange-
+        (wand->pixel.blue*((double) QuantumRange-wand->pixel.index)+
+        wand->pixel.index));
       return;
     }
   color->red=ClampToQuantum(wand->pixel.red);

@@ -456,9 +456,9 @@ static KernelInfo *ParseKernelName(const char *kernel_string)
       if ( (flags & HeightValue) == 0 )           /* no distance scale */
         args.sigma = 100.0;                       /* default distance scaling */
       else if ( (flags & AspectValue ) != 0 )     /* '!' flag */
-        args.sigma = QuantumRange/(args.sigma+1); /* maximum pixel distance */
+        args.sigma = (double) QuantumRange/(args.sigma+1); /* maximum pixel distance */
       else if ( (flags & PercentValue ) != 0 )    /* '%' flag */
-        args.sigma *= QuantumRange/100.0;         /* percentage of color range */
+        args.sigma *= (double) QuantumRange/100.0;         /* percentage of color range */
       break;
     default:
       break;
@@ -2747,12 +2747,12 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
             */
             for (v=0; v < (ssize_t) kernel->height; v++) {
               if ( IsNaN(*k) ) continue;
-              result.red     += (*k)*GetPixelRed(k_pixels);
-              result.green   += (*k)*GetPixelGreen(k_pixels);
-              result.blue    += (*k)*GetPixelBlue(k_pixels);
-              result.opacity += (*k)*GetPixelOpacity(k_pixels);
+              result.red     += (*k)*(double) GetPixelRed(k_pixels);
+              result.green   += (*k)*(double) GetPixelGreen(k_pixels);
+              result.blue    += (*k)*(double) GetPixelBlue(k_pixels);
+              result.opacity += (*k)*(double) GetPixelOpacity(k_pixels);
               if ( image->colorspace == CMYKColorspace)
-                result.index += (*k)*(*k_indexes);
+                result.index += (*k)*(double) (*k_indexes);
               k--;
               k_pixels++;
               k_indexes++;
@@ -2788,16 +2788,17 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
             gamma=0.0;
             for (v=0; v < (ssize_t) kernel->height; v++) {
               if ( IsNaN(*k) ) continue;
-              alpha=QuantumScale*(QuantumRange-GetPixelOpacity(k_pixels));
+              alpha=QuantumScale*((double) QuantumRange-(double)
+                GetPixelOpacity(k_pixels));
               count++;        /* number of alpha values collected */
               alpha*=(*k);    /* include kernel weighting now */
               gamma += alpha; /* normalize alpha weights only */
-              result.red     += alpha*GetPixelRed(k_pixels);
-              result.green   += alpha*GetPixelGreen(k_pixels);
-              result.blue    += alpha*GetPixelBlue(k_pixels);
-              result.opacity += (*k)*GetPixelOpacity(k_pixels);
+              result.red     += alpha*(double) GetPixelRed(k_pixels);
+              result.green   += alpha*(double) GetPixelGreen(k_pixels);
+              result.blue    += alpha*(double) GetPixelBlue(k_pixels);
+              result.opacity += (*k)*(double) GetPixelOpacity(k_pixels);
               if ( image->colorspace == CMYKColorspace)
-                result.index += alpha*(*k_indexes);
+                result.index += alpha*(double) (*k_indexes);
               k--;
               k_pixels++;
               k_indexes++;
@@ -2942,7 +2943,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
       result.red     = (double) p[r].red;
       result.green   = (double) p[r].green;
       result.blue    = (double) p[r].blue;
-      result.opacity = QuantumRange - (double) p[r].opacity;
+      result.opacity = (double) QuantumRange - (double) p[r].opacity;
       result.index   = 0.0;
       if ( image->colorspace == CMYKColorspace)
          result.index   = (double) GetPixelIndex(p_indexes+x+r);
@@ -2996,12 +2997,12 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                 for (v=0; v < (ssize_t) kernel->height; v++) {
                   for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                     if ( IsNaN(*k) ) continue;
-                    result.red     += (*k)*k_pixels[u].red;
-                    result.green   += (*k)*k_pixels[u].green;
-                    result.blue    += (*k)*k_pixels[u].blue;
-                    result.opacity += (*k)*k_pixels[u].opacity;
+                    result.red     += (*k)*(double) k_pixels[u].red;
+                    result.green   += (*k)*(double) k_pixels[u].green;
+                    result.blue    += (*k)*(double) k_pixels[u].blue;
+                    result.opacity += (*k)*(double) k_pixels[u].opacity;
                     if ( image->colorspace == CMYKColorspace)
-                      result.index += (*k)*GetPixelIndex(k_indexes+u);
+                      result.index += (*k)*(double) GetPixelIndex(k_indexes+u);
                   }
                   k_pixels += virt_width;
                   k_indexes += virt_width;
@@ -3036,16 +3037,17 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                 for (v=0; v < (ssize_t) kernel->height; v++) {
                   for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                     if ( IsNaN(*k) ) continue;
-                    alpha=QuantumScale*(QuantumRange-k_pixels[u].opacity);
+                    alpha=QuantumScale*((double) QuantumRange-(double)
+                      k_pixels[u].opacity);
                     count++;           /* number of alpha values collected */
                     alpha*=(*k);  /* include kernel weighting now */
                     gamma += alpha;    /* normalize alpha weights only */
-                    result.red     += alpha*k_pixels[u].red;
-                    result.green   += alpha*k_pixels[u].green;
-                    result.blue    += alpha*k_pixels[u].blue;
-                    result.opacity += (*k)*k_pixels[u].opacity;
+                    result.red     += alpha*(double) k_pixels[u].red;
+                    result.green   += alpha*(double) k_pixels[u].green;
+                    result.blue    += alpha*(double) k_pixels[u].blue;
+                    result.opacity += (*k)*(double) k_pixels[u].opacity;
                     if ( image->colorspace == CMYKColorspace)
-                      result.index+=alpha*GetPixelIndex(k_indexes+u);
+                      result.index+=alpha*(double) GetPixelIndex(k_indexes+u);
                   }
                   k_pixels += virt_width;
                   k_indexes += virt_width;
@@ -3082,8 +3084,8 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                 Minimize(min.red,     (double) k_pixels[u].red);
                 Minimize(min.green,   (double) k_pixels[u].green);
                 Minimize(min.blue,    (double) k_pixels[u].blue);
-                Minimize(min.opacity,
-                            QuantumRange-(double) k_pixels[u].opacity);
+                Minimize(min.opacity,(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
                   Minimize(min.index,(double) GetPixelIndex(k_indexes+u));
               }
@@ -3113,8 +3115,8 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                 Maximize(max.red,     (double) k_pixels[u].red);
                 Maximize(max.green,   (double) k_pixels[u].green);
                 Maximize(max.blue,    (double) k_pixels[u].blue);
-                Maximize(max.opacity,
-                            QuantumRange-(double) k_pixels[u].opacity);
+                Maximize(max.opacity,(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
                   Maximize(max.index,   (double) GetPixelIndex(
                     k_indexes+u));
@@ -3149,8 +3151,8 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                   Minimize(min.red,     (double) k_pixels[u].red);
                   Minimize(min.green,   (double) k_pixels[u].green);
                   Minimize(min.blue,    (double) k_pixels[u].blue);
-                  Minimize(min.opacity,
-                              QuantumRange-(double) k_pixels[u].opacity);
+                  Minimize(min.opacity, (double) QuantumRange-(double)
+                    k_pixels[u].opacity);
                   if ( image->colorspace == CMYKColorspace)
                     Minimize(min.index,(double) GetPixelIndex(
                       k_indexes+u));
@@ -3160,8 +3162,8 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                   Maximize(max.red,     (double) k_pixels[u].red);
                   Maximize(max.green,   (double) k_pixels[u].green);
                   Maximize(max.blue,    (double) k_pixels[u].blue);
-                  Maximize(max.opacity,
-                              QuantumRange-(double) k_pixels[u].opacity);
+                  Maximize(max.opacity,(double) QuantumRange-(double)
+                    k_pixels[u].opacity);
                   if ( image->colorspace == CMYKColorspace)
                     Maximize(max.index,   (double) GetPixelIndex(
                       k_indexes+u));
@@ -3267,12 +3269,13 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
             for (v=0; v < (ssize_t) kernel->height; v++) {
               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                 if ( IsNaN(*k) ) continue;
-                Minimize(result.red,     (*k)+k_pixels[u].red);
-                Minimize(result.green,   (*k)+k_pixels[u].green);
-                Minimize(result.blue,    (*k)+k_pixels[u].blue);
-                Minimize(result.opacity, (*k)+QuantumRange-k_pixels[u].opacity);
+                Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+                Minimize(result.opacity, (*k)+(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
-                  Minimize(result.index,(*k)+GetPixelIndex(k_indexes+u));
+                  Minimize(result.index,(*k)+(double) GetPixelIndex(k_indexes+u));
               }
               k_pixels += virt_width;
               k_indexes += virt_width;
@@ -3389,8 +3392,8 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
 ** of multi-threaded, parellel processing.
 */
 static ssize_t MorphologyPrimitiveDirect(Image *image,
-     const MorphologyMethod method, const ChannelType channel,
-     const KernelInfo *kernel,ExceptionInfo *exception)
+  const MorphologyMethod method, const ChannelType channel,
+  const KernelInfo *kernel,ExceptionInfo *exception)
 {
   CacheView
     *auth_view,
@@ -3515,7 +3518,8 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
       GetMagickPixelPacket(image,&result);
       SetMagickPixelPacket(image,q,q_indexes,&result);
       if ( method != VoronoiMorphology )
-        result.opacity = QuantumRange - result.opacity;
+        result.opacity = (MagickRealType) QuantumRange - (MagickRealType)
+          result.opacity;
 
       switch ( method ) {
         case DistanceMorphology:
@@ -3526,12 +3530,14 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
             for (v=0; v <= (ssize_t) offy; v++) {
               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                 if ( IsNaN(*k) ) continue;
-                Minimize(result.red,     (*k)+k_pixels[u].red);
-                Minimize(result.green,   (*k)+k_pixels[u].green);
-                Minimize(result.blue,    (*k)+k_pixels[u].blue);
-                Minimize(result.opacity, (*k)+QuantumRange-k_pixels[u].opacity);
+                Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+                Minimize(result.opacity, (*k)+(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
-                  Minimize(result.index,   (*k)+GetPixelIndex(k_indexes+u));
+                  Minimize(result.index,   (*k)+(double)
+                    GetPixelIndex(k_indexes+u));
               }
               k_pixels += virt_width;
               k_indexes += virt_width;
@@ -3543,12 +3549,14 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
               for (u=0; u < (ssize_t) offx; u++, k--) {
                 if ( x+u-offx < 0 ) continue;  /* off the edge! */
                 if ( IsNaN(*k) ) continue;
-                Minimize(result.red,     (*k)+k_pixels[u].red);
-                Minimize(result.green,   (*k)+k_pixels[u].green);
-                Minimize(result.blue,    (*k)+k_pixels[u].blue);
-                Minimize(result.opacity, (*k)+QuantumRange-k_pixels[u].opacity);
+                Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+                Minimize(result.opacity, (*k)+(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
-                  Minimize(result.index,   (*k)+GetPixelIndex(k_indexes+u));
+                  Minimize(result.index,   (*k)+(double)
+                    GetPixelIndex(k_indexes+u));
               }
             break;
         case VoronoiMorphology:
@@ -3565,7 +3573,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
             for (v=0; v <= (ssize_t) offy; v++) {
               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                 if ( IsNaN(*k) ) continue;
-                if( result.opacity > (*k)+k_pixels[u].opacity )
+                if( result.opacity > (*k)+(double) k_pixels[u].opacity )
                   {
                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
                       &result);
@@ -3582,7 +3590,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
               for (u=0; u < (ssize_t) offx; u++, k--) {
                 if ( x+u-offx < 0 ) continue;  /* off the edge! */
                 if ( IsNaN(*k) ) continue;
-                if( result.opacity > (*k)+k_pixels[u].opacity )
+                if( result.opacity > (*k)+(double) k_pixels[u].opacity )
                   {
                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
                       &result);
@@ -3691,12 +3699,6 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
 
     for (x=(ssize_t)image->columns-1; x >= 0; x--)
     {
-      ssize_t
-        v;
-
-      ssize_t
-        u;
-
       const double
         *magick_restrict k;
 
@@ -3709,11 +3711,15 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
       MagickPixelPacket
         result;
 
+      ssize_t
+        u,
+        v;
+
       /* Default - previously modified pixel */
       GetMagickPixelPacket(image,&result);
       SetMagickPixelPacket(image,q,q_indexes,&result);
       if ( method != VoronoiMorphology )
-        result.opacity = QuantumRange - result.opacity;
+        result.opacity = (double) QuantumRange - (double) result.opacity;
 
       switch ( method ) {
         case DistanceMorphology:
@@ -3724,12 +3730,14 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
             for (v=offy; v < (ssize_t) kernel->height; v++) {
               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                 if ( IsNaN(*k) ) continue;
-                Minimize(result.red,     (*k)+k_pixels[u].red);
-                Minimize(result.green,   (*k)+k_pixels[u].green);
-                Minimize(result.blue,    (*k)+k_pixels[u].blue);
-                Minimize(result.opacity, (*k)+QuantumRange-k_pixels[u].opacity);
+                Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+                Minimize(result.opacity, (*k)+(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
-                  Minimize(result.index,(*k)+GetPixelIndex(k_indexes+u));
+                  Minimize(result.index,(*k)+(double)
+                    GetPixelIndex(k_indexes+u));
               }
               k_pixels += virt_width;
               k_indexes += virt_width;
@@ -3741,12 +3749,14 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
               for (u=offx+1; u < (ssize_t) kernel->width; u++, k--) {
                 if ( (x+u-offx) >= (ssize_t)image->columns ) continue;
                 if ( IsNaN(*k) ) continue;
-                Minimize(result.red,     (*k)+k_pixels[u].red);
-                Minimize(result.green,   (*k)+k_pixels[u].green);
-                Minimize(result.blue,    (*k)+k_pixels[u].blue);
-                Minimize(result.opacity, (*k)+QuantumRange-k_pixels[u].opacity);
+                Minimize(result.red,     (*k)+(double) k_pixels[u].red);
+                Minimize(result.green,   (*k)+(double) k_pixels[u].green);
+                Minimize(result.blue,    (*k)+(double) k_pixels[u].blue);
+                Minimize(result.opacity, (*k)+(double) QuantumRange-(double)
+                  k_pixels[u].opacity);
                 if ( image->colorspace == CMYKColorspace)
-                  Minimize(result.index,   (*k)+GetPixelIndex(k_indexes+u));
+                  Minimize(result.index,   (*k)+(double)
+                    GetPixelIndex(k_indexes+u));
               }
             break;
         case VoronoiMorphology:
@@ -3761,7 +3771,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
             for (v=offy; v < (ssize_t) kernel->height; v++) {
               for (u=0; u < (ssize_t) kernel->width; u++, k--) {
                 if ( IsNaN(*k) ) continue;
-                if( result.opacity > (*k)+k_pixels[u].opacity )
+                if( result.opacity > (*k)+(double) k_pixels[u].opacity )
                   {
                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
                       &result);
@@ -3778,7 +3788,7 @@ static ssize_t MorphologyPrimitiveDirect(Image *image,
               for (u=offx+1; u < (ssize_t) kernel->width; u++, k--) {
                 if ( (x+u-offx) >= (ssize_t)image->columns ) continue;
                 if ( IsNaN(*k) ) continue;
-                if( result.opacity > (*k)+k_pixels[u].opacity )
+                if( result.opacity > (*k)+(double) k_pixels[u].opacity )
                   {
                     SetMagickPixelPacket(image,&k_pixels[u],&k_indexes[u],
                       &result);

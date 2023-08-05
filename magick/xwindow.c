@@ -106,8 +106,8 @@
   X defines.
 */
 #define XBlueGamma(color) ClampToQuantum(blue_gamma == 1.0 ? (double) \
-  (color) : ((pow(((double) QuantumScale*(color)),1.0* \
-  PerceptibleReciprocal((double) blue_gamma))*QuantumRange)))
+  (color) : ((pow((QuantumScale*(double) (color)),1.0* \
+  PerceptibleReciprocal((double) blue_gamma))*(double) QuantumRange)))
 #define XGammaPixel(map,color)  (size_t) (map->base_pixel+ \
   ((ScaleQuantumToShort(XRedGamma((color)->red))*map->red_max/65535L)* \
     map->red_mult)+ \
@@ -116,11 +116,11 @@
   ((ScaleQuantumToShort(XBlueGamma((color)->blue))*map->blue_max/65535L)* \
     map->blue_mult))
 #define XGreenGamma(color) ClampToQuantum(green_gamma == 1.0 ? (double) \
-  (color) : ((pow(((double) QuantumScale*(color)),1.0* \
-  PerceptibleReciprocal((double) green_gamma))*QuantumRange)))
+  (color) : ((pow((QuantumScale*(double) (color)),1.0* \
+  PerceptibleReciprocal((double) green_gamma))*(double) QuantumRange)))
 #define XRedGamma(color) ClampToQuantum(red_gamma == 1.0 ? (double) \
-  (color) : ((pow(((double) QuantumScale*(color)),1.0* \
-  PerceptibleReciprocal((double) red_gamma))*QuantumRange)))
+  (color) : ((pow(((double) QuantumScale*(double) (color)),1.0* \
+  PerceptibleReciprocal((double) red_gamma))*(double) QuantumRange)))
 #define XStandardPixel(map,color)  (size_t) (map->base_pixel+ \
   (((color)->red*map->red_max/65535L)*map->red_mult)+ \
   (((color)->green*map->green_max/65535L)*map->green_mult)+ \
@@ -5899,7 +5899,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         (XPixelIntensity(&window->pixel_info->background_color) <
          XPixelIntensity(&window->pixel_info->foreground_color) ? 0x80 : 0x00);
       polarity=(unsigned short) ((GetPixelIntensity(image,
-        &canvas->colormap[0])) < (QuantumRange/2.0) ? 1 : 0);
+        &canvas->colormap[0])) < ((double) QuantumRange/2.0) ? 1 : 0);
       if (canvas->colors == 2)
         polarity=GetPixelIntensity(canvas,&canvas->colormap[0]) <
           GetPixelIntensity(canvas,&canvas->colormap[1]);
@@ -6508,7 +6508,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         (XPixelIntensity(&window->pixel_info->background_color) <
          XPixelIntensity(&window->pixel_info->foreground_color) ?  0x01 : 0x00);
       polarity=(unsigned short) ((GetPixelIntensity(image,
-        &canvas->colormap[0])) < (QuantumRange/2.0) ? 1 : 0);
+        &canvas->colormap[0])) < ((double) QuantumRange/2.0) ? 1 : 0);
       if (canvas->colors == 2)
         polarity=GetPixelIntensity(canvas,&canvas->colormap[0]) <
           GetPixelIntensity(canvas,&canvas->colormap[1]);
@@ -7598,7 +7598,8 @@ static inline MagickRealType DiversityPixelIntensity(
   MagickRealType
     intensity;
 
-  intensity=0.298839*pixel->red+0.586811*pixel->green+0.114350*pixel->blue;
+  intensity=0.298839*(double) pixel->red+0.586811*(double) pixel->green+
+    0.114350*(double) pixel->blue;
   return(intensity);
 }
 

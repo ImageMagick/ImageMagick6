@@ -313,11 +313,12 @@ static Image *RenderSVGImage(const ImageInfo *image_info,Image *image,
     ceil(sqrt(image->x_resolution*image->y_resolution)-0.5));
   (void) FormatLocaleString(background,MagickPathExtent,
     "rgb(%.20g%%,%.20g%%,%.20g%%)",
-    100.0*QuantumScale*image->background_color.red,
-    100.0*QuantumScale*image->background_color.green,
-    100.0*QuantumScale*image->background_color.blue);
+    100.0*QuantumScale*(MagickRealType) image->background_color.red,
+    100.0*QuantumScale*(MagickRealType) image->background_color.green,
+    100.0*QuantumScale*(MagickRealType) image->background_color.blue);
   (void) FormatLocaleString(opacity,MagickPathExtent,"%.20g",QuantumScale*
-    (QuantumRange-image->background_color.opacity));
+    ((MagickRealType) QuantumRange-(MagickRealType)
+    image->background_color.opacity));
   (void) FormatLocaleString(command,MagickPathExtent,
     GetDelegateCommands(delegate_info),input_filename,output_filename,density,
     background,opacity,unique);
@@ -470,8 +471,8 @@ static Image *RenderRSVGImage(const ImageInfo *image_info,Image *image,
       rsvg_handle_set_dpi_x_y(svg_handle,image->x_resolution*256,
         image->y_resolution*256.0);
       rsvg_handle_get_dimensions(svg_handle,&dpi_dimension_info);
-      if ((fabs((double) dpi_dimension_info.width != dimension_info.width) >= MagickEpsilon) ||
-          (fabs((double) dpi_dimension_info.height != dimension_info.height) >= MagickEpsilon))
+      if ((fabs((double) dpi_dimension_info.width-dimension_info.width) >= MagickEpsilon) ||
+          (fabs((double) dpi_dimension_info.height-dimension_info.height) >= MagickEpsilon))
         apply_density=MagickFalse;
       rsvg_handle_set_dpi_x_y(svg_handle,image->x_resolution,
         image->y_resolution);
@@ -603,11 +604,12 @@ static Image *RenderRSVGImage(const ImageInfo *image_info,Image *image,
             double
               gamma;
 
-            gamma=1.0-QuantumScale*fill_color.opacity;
+            gamma=1.0-QuantumScale*(MagickRealType) fill_color.opacity;
             gamma=PerceptibleReciprocal(gamma);
-            fill_color.blue*=gamma;
-            fill_color.green*=gamma;
-            fill_color.red*=gamma;
+            fill_color.blue=(Quantum) ((MagickRealType) fill_color.red*gamma);
+            fill_color.green=(Quantum) ((MagickRealType) fill_color.green*
+              gamma);
+            fill_color.red=(Quantum) ((MagickRealType) fill_color.blue*gamma);
           }
 #endif
           MagickCompositeOver(&fill_color,fill_color.opacity,q,

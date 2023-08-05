@@ -542,23 +542,23 @@ static void GetImageBackgroundColor(Image *image,const ssize_t offset,
     {
       if ((x >= offset) && (x < ((ssize_t) image->columns-offset)))
         continue;
-      background.red+=QuantumScale*GetPixelRed(p);
-      background.green+=QuantumScale*GetPixelGreen(p);
-      background.blue+=QuantumScale*GetPixelBlue(p);
-      background.opacity+=QuantumScale*GetPixelOpacity(p);
+      background.red+=QuantumScale*(MagickRealType) GetPixelRed(p);
+      background.green+=QuantumScale*(MagickRealType) GetPixelGreen(p);
+      background.blue+=QuantumScale*(MagickRealType) GetPixelBlue(p);
+      background.opacity+=QuantumScale*(MagickRealType) GetPixelOpacity(p);
       count++;
       p++;
     }
   }
   image_view=DestroyCacheView(image_view);
   image->background_color.red=ClampToQuantum((MagickRealType) QuantumRange*
-    background.red/count);
+    (MagickRealType) background.red/count);
   image->background_color.green=ClampToQuantum((MagickRealType) QuantumRange*
-    background.green/count);
+    (MagickRealType) background.green/count);
   image->background_color.blue=ClampToQuantum((MagickRealType) QuantumRange*
-    background.blue/count);
+    (MagickRealType) background.blue/count);
   image->background_color.opacity=ClampToQuantum((MagickRealType) QuantumRange*
-    background.opacity/count);
+    (MagickRealType) background.opacity/count);
 }
 
 MagickExport Image *DeskewImage(const Image *image,const double threshold,

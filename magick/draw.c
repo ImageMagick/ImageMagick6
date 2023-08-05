@@ -2933,7 +2933,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
               }
             status&=QueryColorDatabase(token,&graphic_context[n]->fill,
               &image->exception);
-            if (graphic_context[n]->fill_opacity != OpaqueOpacity)
+            if (graphic_context[n]->fill_opacity != (double) OpaqueOpacity)
               graphic_context[n]->fill.opacity=ClampToQuantum(
                 graphic_context[n]->fill_opacity);
             break;
@@ -2954,14 +2954,14 @@ static MagickBooleanType RenderMVGContent(Image *image,
             if (graphic_context[n]->compliance == SVGCompliance)
               graphic_context[n]->fill_opacity*=(1.0-opacity);
             else
-              graphic_context[n]->fill_opacity=(QuantumRange-
+              graphic_context[n]->fill_opacity=((MagickRealType) QuantumRange-
                 graphic_context[n]->fill_opacity)*(1.0-opacity);
             if (graphic_context[n]->fill.opacity != TransparentOpacity)
               graphic_context[n]->fill.opacity=(Quantum)
                 graphic_context[n]->fill_opacity;
             else
-              graphic_context[n]->fill.opacity=ClampToQuantum(QuantumRange*
-                (1.0-opacity));
+              graphic_context[n]->fill.opacity=ClampToQuantum((MagickRealType)
+                QuantumRange*(1.0-opacity));
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
@@ -3215,10 +3215,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
               }
             else
               {
-                graphic_context[n]->fill_opacity=(QuantumRange-
+                graphic_context[n]->fill_opacity=((MagickRealType) QuantumRange-
                   graphic_context[n]->fill_opacity)*(1.0-opacity);
-                graphic_context[n]->stroke_opacity=(QuantumRange-
-                  graphic_context[n]->stroke_opacity)*(1.0-opacity);
+                graphic_context[n]->stroke_opacity=((MagickRealType)
+                  QuantumRange-graphic_context[n]->stroke_opacity)*
+                  (1.0-opacity);
               }
             break;
           }
@@ -3641,7 +3642,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
               }
             status&=QueryColorDatabase(token,&graphic_context[n]->stroke,
               &image->exception);
-            if (graphic_context[n]->stroke_opacity != OpaqueOpacity)
+            if (graphic_context[n]->stroke_opacity != (MagickRealType) OpaqueOpacity)
               graphic_context[n]->stroke.opacity=ClampToQuantum(
                 graphic_context[n]->stroke_opacity);
             break;
@@ -3769,14 +3770,14 @@ static MagickBooleanType RenderMVGContent(Image *image,
             if (graphic_context[n]->compliance == SVGCompliance)
               graphic_context[n]->stroke_opacity*=(1.0-opacity);
             else
-              graphic_context[n]->stroke_opacity=(QuantumRange-
+              graphic_context[n]->stroke_opacity=((MagickRealType) QuantumRange-
                 graphic_context[n]->stroke_opacity)*(1.0-opacity);
             if (graphic_context[n]->stroke.opacity != TransparentOpacity)
               graphic_context[n]->stroke.opacity=(Quantum)
                 graphic_context[n]->stroke_opacity;
             else
-              graphic_context[n]->stroke.opacity=ClampToQuantum(QuantumRange*
-                opacity);
+              graphic_context[n]->stroke.opacity=ClampToQuantum(
+                (MagickRealType) QuantumRange*opacity);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
@@ -5088,14 +5089,14 @@ static MagickBooleanType DrawPolygonPrimitive(Image *image,
         }
       (void) GetFillColor(draw_info,x-poly_extent.x1,y-poly_extent.y1,
         &fill_color);
-      fill_opacity=(double) (QuantumRange-fill_opacity*(QuantumRange-
-        fill_color.opacity));
+      fill_opacity=(double) ((MagickRealType) QuantumRange-fill_opacity*
+        ((MagickRealType) QuantumRange-(MagickRealType) fill_color.opacity));
       MagickCompositeOver(&fill_color,(MagickRealType) fill_opacity,q,
         (MagickRealType) q->opacity,q);
       (void) GetStrokeColor(draw_info,x-poly_extent.x1,y-poly_extent.y1,
         &stroke_color);
-      stroke_opacity=(double) (QuantumRange-stroke_opacity*(QuantumRange-
-        stroke_color.opacity));
+      stroke_opacity=(double) ((MagickRealType) QuantumRange-stroke_opacity*
+        ((MagickRealType) QuantumRange-(MagickRealType) stroke_color.opacity));
       MagickCompositeOver(&stroke_color,(MagickRealType) stroke_opacity,q,
         (MagickRealType) q->opacity,q);
       q++;

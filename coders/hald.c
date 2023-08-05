@@ -167,11 +167,11 @@ static Image *ReadHALDImage(const ImageInfo *image_info,
       for (red=0; red < (ssize_t) cube_size; red++)
       {
         SetPixelRed(q,ClampToQuantum((MagickRealType)
-          (QuantumRange*red/(cube_size-1.0))));
+          QuantumRange*red/(cube_size-1.0)));
         SetPixelGreen(q,ClampToQuantum((MagickRealType)
-          (QuantumRange*green/(cube_size-1.0))));
+          QuantumRange*green/(cube_size-1.0)));
         SetPixelBlue(q,ClampToQuantum((MagickRealType)
-          (QuantumRange*blue/(cube_size-1.0))));
+          QuantumRange*blue/(cube_size-1.0)));
         SetPixelOpacity(q,OpaqueOpacity);
         if (indexes != (IndexPacket *) NULL)
           {

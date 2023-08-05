@@ -469,14 +469,14 @@ static MagickBooleanType DecodeLabImage(Image *image,ExceptionInfo *exception)
         a,
         b;
 
-      a=QuantumScale*GetPixela(q)+0.5;
+      a=QuantumScale*(MagickRealType) GetPixela(q)+0.5;
       if (a > 1.0)
         a-=1.0;
-      b=QuantumScale*GetPixelb(q)+0.5;
+      b=QuantumScale*(MagickRealType) GetPixelb(q)+0.5;
       if (b > 1.0)
         b-=1.0;
-      SetPixela(q,QuantumRange*a);
-      SetPixelb(q,QuantumRange*b);
+      SetPixela(q,(MagickRealType) QuantumRange*a);
+      SetPixelb(q,(MagickRealType) QuantumRange*b);
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -1412,16 +1412,16 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     if ((TIFFGetFieldDefaulted(tiff,TIFFTAG_XPOSITION,&x_position,sans) == 1) &&
         (TIFFGetFieldDefaulted(tiff,TIFFTAG_YPOSITION,&y_position,sans) == 1))
       {
-        image->page.x=CastDoubleToLong(ceil(x_position*
+        image->page.x=CastDoubleToLong(ceil((double) x_position*
           image->x_resolution-0.5));
-        image->page.y=CastDoubleToLong(ceil(y_position*
+        image->page.y=CastDoubleToLong(ceil((double) y_position*
           image->y_resolution-0.5));
       }
     if (TIFFGetFieldDefaulted(tiff,TIFFTAG_ORIENTATION,&orientation,sans) == 1)
       image->orientation=(OrientationType) orientation;
     if (TIFFGetField(tiff,TIFFTAG_WHITEPOINT,&chromaticity) == 1)
       {
-        if ((chromaticity != (float *) NULL) && (*chromaticity != 0.0))
+        if ((chromaticity != (float *) NULL) && (*chromaticity != 0.0f))
           {
             image->chromaticity.white_point.x=chromaticity[0];
             image->chromaticity.white_point.y=chromaticity[1];
@@ -1429,7 +1429,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
     if (TIFFGetField(tiff,TIFFTAG_PRIMARYCHROMATICITIES,&chromaticity) == 1)
       {
-        if ((chromaticity != (float *) NULL) && (*chromaticity != 0.0))
+        if ((chromaticity != (float *) NULL) && (*chromaticity != 0.0f))
           {
             image->chromaticity.red_primary.x=chromaticity[0];
             image->chromaticity.red_primary.y=chromaticity[1];
@@ -2842,14 +2842,14 @@ static MagickBooleanType EncodeLabImage(Image *image,ExceptionInfo *exception)
         a,
         b;
 
-      a=QuantumScale*GetPixela(q)-0.5;
+      a=QuantumScale*(MagickRealType) GetPixela(q)-0.5;
       if (a < 0.0)
         a+=1.0;
-      b=QuantumScale*GetPixelb(q)-0.5;
+      b=QuantumScale*(MagickRealType) GetPixelb(q)-0.5;
       if (b < 0.0)
         b+=1.0;
-      SetPixela(q,QuantumRange*a);
-      SetPixelb(q,QuantumRange*b);
+      SetPixela(q,(MagickRealType) QuantumRange*a);
+      SetPixelb(q,(MagickRealType) QuantumRange*b);
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -3752,16 +3752,16 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
             /*
               Set horizontal image position.
             */
-            (void) TIFFSetField(tiff,TIFFTAG_XPOSITION,(float) image->page.x/
-              image->x_resolution);
+            (void) TIFFSetField(tiff,TIFFTAG_XPOSITION,(double)
+              ((MagickRealType) image->page.x/image->x_resolution));
           }
         if ((image->page.y > 0) && (image->y_resolution > 0.0))
           {
             /*
               Set vertical image position.
             */
-            (void) TIFFSetField(tiff,TIFFTAG_YPOSITION,(float) image->page.y/
-              image->y_resolution);
+            (void) TIFFSetField(tiff,TIFFTAG_YPOSITION,(double) (
+              (MagickRealType) image->page.y/image->y_resolution));
           }
       }
     if (image->chromaticity.white_point.x != 0.0)

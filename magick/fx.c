@@ -2905,8 +2905,8 @@ MagickExport Image *FxImageChannel(const Image *image,const ChannelType channel,
             SetPixelOpacity(q,ClampToQuantum((MagickRealType) QuantumRange*
               alpha));
           else
-            SetPixelOpacity(q,ClampToQuantum((MagickRealType) (QuantumRange-
-              QuantumRange*alpha)));
+            SetPixelOpacity(q,ClampToQuantum((MagickRealType) QuantumRange-
+              (MagickRealType) QuantumRange*alpha));
         }
       if (((channel & IndexChannel) != 0) &&
           (fx_image->colorspace == CMYKColorspace))

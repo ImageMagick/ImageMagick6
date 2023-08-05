@@ -631,24 +631,24 @@ static ssize_t PrintChannelLocations(FILE *file,const Image *image,
       {
         case RedChannel:
         {
-          match=fabs((double) (p->red-target)) < 0.5 ? MagickTrue : MagickFalse;
+          match=fabs((double) p->red-target) < 0.5 ? MagickTrue : MagickFalse;
           break;
         }
         case GreenChannel:
         {
-          match=fabs((double) (p->green-target)) < 0.5 ? MagickTrue :
+          match=fabs((double) p->green-target) < 0.5 ? MagickTrue :
             MagickFalse;
           break;
         }
         case BlueChannel:
         {
-          match=fabs((double) (p->blue-target)) < 0.5 ? MagickTrue :
+          match=fabs((double) p->blue-target) < 0.5 ? MagickTrue :
             MagickFalse;
           break;
         }
         case AlphaChannel:
         {
-          match=fabs((double) (p->opacity-target)) < 0.5 ? MagickTrue :
+          match=fabs((double) p->opacity-target) < 0.5 ? MagickTrue :
             MagickFalse;
           break;
         }
@@ -758,16 +758,16 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
 
   if (channel == AlphaChannel)
     n=FormatLocaleFile(file,StatisticsFormat,name,GetMagickPrecision(),
-      (double) ClampToQuantum(scale*(QuantumRange-
+      (double) ClampToQuantum(scale*((MagickRealType) QuantumRange-
       channel_statistics[channel].minima)),GetMagickPrecision(),(double)
-      ClampToQuantum(scale*(QuantumRange-channel_statistics[channel].maxima)),
-      GetMagickPrecision(),scale*(QuantumRange-
-      channel_statistics[channel].mean),GetMagickPrecision(),
-      IsNaN(channel_statistics[channel].standard_deviation) != 0 ? MagickEpsilon :
-      scale*channel_statistics[channel].standard_deviation,GetMagickPrecision(),
-      channel_statistics[channel].kurtosis,GetMagickPrecision(),
-      channel_statistics[channel].skewness,GetMagickPrecision(),
-      channel_statistics[channel].entropy);
+      ClampToQuantum(scale*((MagickRealType) QuantumRange-
+      channel_statistics[channel].maxima)),GetMagickPrecision(),scale*
+      ((MagickRealType) QuantumRange-channel_statistics[channel].mean),
+      GetMagickPrecision(),IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
+      MagickEpsilon : scale*channel_statistics[channel].standard_deviation,
+      GetMagickPrecision(),channel_statistics[channel].kurtosis,
+      GetMagickPrecision(),channel_statistics[channel].skewness,
+      GetMagickPrecision(),channel_statistics[channel].entropy);
   else
     n=FormatLocaleFile(file,StatisticsFormat,name,GetMagickPrecision(),
       (double) ClampToQuantum(scale*channel_statistics[channel].minima),

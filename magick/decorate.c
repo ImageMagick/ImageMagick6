@@ -63,11 +63,11 @@
 /*
   Define declarations.
 */
-#define AccentuateModulate  ScaleCharToQuantum(80)
-#define HighlightModulate  ScaleCharToQuantum(125)
-#define ShadowModulate  ScaleCharToQuantum(135)
-#define DepthModulate  ScaleCharToQuantum(185)
-#define TroughModulate  ScaleCharToQuantum(110)
+#define AccentuateModulate  ((MagickRealType) ScaleCharToQuantum(80))
+#define HighlightModulate  ((MagickRealType) ScaleCharToQuantum(125))
+#define ShadowModulate  ((MagickRealType) ScaleCharToQuantum(135))
+#define DepthModulate  ((MagickRealType) ScaleCharToQuantum(185))
+#define TroughModulate  ((MagickRealType) ScaleCharToQuantum(110))
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -251,30 +251,36 @@ MagickExport Image *FrameImage(const Image *image,const FrameInfo *frame_info,
   SetMagickPixelPacket(frame_image,&image->border_color,(IndexPacket *) NULL,
     &border);
   GetMagickPixelPacket(frame_image,&accentuate);
-  accentuate.red=(MagickRealType) (QuantumScale*((QuantumRange-
-    AccentuateModulate)*matte.red+(QuantumRange*AccentuateModulate)));
-  accentuate.green=(MagickRealType) (QuantumScale*((QuantumRange-
-    AccentuateModulate)*matte.green+(QuantumRange*AccentuateModulate)));
-  accentuate.blue=(MagickRealType) (QuantumScale*((QuantumRange-
-    AccentuateModulate)*matte.blue+(QuantumRange*AccentuateModulate)));
+  accentuate.red=(MagickRealType) (QuantumScale*(((MagickRealType)
+    QuantumRange-(MagickRealType) AccentuateModulate)*matte.red+
+    ((MagickRealType) QuantumRange*(MagickRealType) AccentuateModulate)));
+  accentuate.green=(MagickRealType) (QuantumScale*(((MagickRealType)
+    QuantumRange-(MagickRealType) AccentuateModulate)*matte.green+
+    ((MagickRealType) QuantumRange*(MagickRealType) AccentuateModulate)));
+  accentuate.blue=(MagickRealType) (QuantumScale*(((MagickRealType)
+    QuantumRange-(MagickRealType) AccentuateModulate)*matte.blue+
+    ((MagickRealType) QuantumRange*(MagickRealType) AccentuateModulate)));
   accentuate.opacity=matte.opacity;
   GetMagickPixelPacket(frame_image,&highlight);
-  highlight.red=(MagickRealType) (QuantumScale*((QuantumRange-
-    HighlightModulate)*matte.red+(QuantumRange*HighlightModulate)));
-  highlight.green=(MagickRealType) (QuantumScale*((QuantumRange-
-    HighlightModulate)*matte.green+(QuantumRange*HighlightModulate)));
-  highlight.blue=(MagickRealType) (QuantumScale*((QuantumRange-
-    HighlightModulate)*matte.blue+(QuantumRange*HighlightModulate)));
+  highlight.red=(MagickRealType) (QuantumScale*(((MagickRealType)
+    QuantumRange-(MagickRealType) HighlightModulate)*matte.red+
+    ((MagickRealType) QuantumRange*(MagickRealType) HighlightModulate)));
+  highlight.green=(MagickRealType) (QuantumScale*(((MagickRealType)
+    QuantumRange-(MagickRealType) HighlightModulate)*matte.green+
+    ((MagickRealType) QuantumRange*(MagickRealType) HighlightModulate)));
+  highlight.blue=(MagickRealType) (QuantumScale*(((MagickRealType)
+    QuantumRange-(MagickRealType) HighlightModulate)*matte.blue+
+    ((MagickRealType) QuantumRange*(MagickRealType) HighlightModulate)));
   highlight.opacity=matte.opacity;
   GetMagickPixelPacket(frame_image,&shadow);
-  shadow.red=QuantumScale*matte.red*ShadowModulate;
-  shadow.green=QuantumScale*matte.green*ShadowModulate;
-  shadow.blue=QuantumScale*matte.blue*ShadowModulate;
+  shadow.red=QuantumScale*matte.red*(MagickRealType) ShadowModulate;
+  shadow.green=QuantumScale*matte.green*(MagickRealType) ShadowModulate;
+  shadow.blue=QuantumScale*matte.blue*(MagickRealType) ShadowModulate;
   shadow.opacity=matte.opacity;
   GetMagickPixelPacket(frame_image,&trough);
-  trough.red=QuantumScale*matte.red*TroughModulate;
-  trough.green=QuantumScale*matte.green*TroughModulate;
-  trough.blue=QuantumScale*matte.blue*TroughModulate;
+  trough.red=QuantumScale*matte.red*(MagickRealType) TroughModulate;
+  trough.green=QuantumScale*matte.green*(MagickRealType) TroughModulate;
+  trough.blue=QuantumScale*matte.blue*(MagickRealType) TroughModulate;
   trough.opacity=matte.opacity;
   if (image->colorspace == CMYKColorspace)
     {
@@ -652,11 +658,11 @@ MagickExport Image *FrameImage(const Image *image,const FrameInfo *frame_info,
 MagickExport MagickBooleanType RaiseImage(Image *image,
   const RectangleInfo *raise_info,const MagickBooleanType raise)
 {
-#define AccentuateFactor  ScaleCharToQuantum(135)
-#define HighlightFactor  ScaleCharToQuantum(190)
-#define ShadowFactor  ScaleCharToQuantum(190)
+#define AccentuateFactor  ((MagickRealType) ScaleCharToQuantum(135))
+#define HighlightFactor  ((MagickRealType) ScaleCharToQuantum(190))
+#define ShadowFactor  ((MagickRealType) ScaleCharToQuantum(190))
 #define RaiseImageTag  "Raise/Image"
-#define TroughFactor  ScaleCharToQuantum(135)
+#define TroughFactor  ((MagickRealType) ScaleCharToQuantum(135))
 
   CacheView
     *image_view;
@@ -726,39 +732,39 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       q++;
     }
     for ( ; x < (ssize_t) (image->columns-y); x++)
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*AccentuateFactor+(MagickRealType) foreground*
-        (QuantumRange-AccentuateFactor))));
+        ((MagickRealType) QuantumRange-AccentuateFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*AccentuateFactor+(MagickRealType) foreground*
-        (QuantumRange-AccentuateFactor))));
+        ((MagickRealType) QuantumRange-AccentuateFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*AccentuateFactor+(MagickRealType) foreground*
-        (QuantumRange-AccentuateFactor))));
+        ((MagickRealType) QuantumRange-AccentuateFactor))));
       q++;
     }
     for ( ; x < (ssize_t) image->columns; x++)
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -801,13 +807,13 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       q++;
     }
     for ( ; x < (ssize_t) (image->columns-raise_info->width); x++)
@@ -816,13 +822,13 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -865,39 +871,39 @@ MagickExport MagickBooleanType RaiseImage(Image *image,
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*HighlightFactor+(MagickRealType) foreground*
-        (QuantumRange-HighlightFactor))));
+        ((MagickRealType) QuantumRange-HighlightFactor))));
       q++;
     }
     for ( ; x < (ssize_t) (image->columns-(image->rows-y)); x++)
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*TroughFactor+(MagickRealType) background*
-        (QuantumRange-TroughFactor))));
+        ((MagickRealType) QuantumRange-TroughFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*TroughFactor+(MagickRealType) background*
-        (QuantumRange-TroughFactor))));
+        ((MagickRealType) QuantumRange-TroughFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*TroughFactor+(MagickRealType) background*
-        (QuantumRange-TroughFactor))));
+        ((MagickRealType) QuantumRange-TroughFactor))));
       q++;
     }
     for ( ; x < (ssize_t) image->columns; x++)
     {
       SetPixelRed(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelRed(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       SetPixelGreen(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelGreen(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       SetPixelBlue(q,ClampToQuantum(QuantumScale*((MagickRealType)
         GetPixelBlue(q)*ShadowFactor+(MagickRealType) background*
-        (QuantumRange-ShadowFactor))));
+        ((MagickRealType) QuantumRange-ShadowFactor))));
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)

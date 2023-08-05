@@ -466,7 +466,8 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
         break;
       for (x=0; x < (ssize_t) images->columns; x++)
       {
-        SetPixelRed(q,ClampToQuantum(QuantumRange-GetPixelIntensity(images,p)));
+        SetPixelRed(q,ClampToQuantum((MagickRealType) QuantumRange-
+          GetPixelIntensity(images,p)));
         p++;
         q++;
       }
@@ -498,7 +499,8 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
         break;
       for (x=0; x < (ssize_t) images->columns; x++)
       {
-        q->green=ClampToQuantum(QuantumRange-GetPixelIntensity(images,p));
+        q->green=ClampToQuantum((MagickRealType) QuantumRange-(MagickRealType)
+          GetPixelIntensity(images,p));
         p++;
         q++;
       }
@@ -530,7 +532,8 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
         break;
       for (x=0; x < (ssize_t) images->columns; x++)
       {
-        q->blue=ClampToQuantum(QuantumRange-GetPixelIntensity(images,p));
+        q->blue=ClampToQuantum((MagickRealType) QuantumRange-(MagickRealType)
+          GetPixelIntensity(images,p));
         p++;
         q++;
       }
@@ -566,7 +569,7 @@ MagickExport Image *ConsolidateCMYKImages(const Image *images,
       indexes=GetCacheViewAuthenticIndexQueue(cmyk_view);
       for (x=0; x < (ssize_t) images->columns; x++)
       {
-        SetPixelIndex(indexes+x,ClampToQuantum(QuantumRange-
+        SetPixelIndex(indexes+x,ClampToQuantum((MagickRealType) QuantumRange-
           GetPixelIntensity(images,p)));
         p++;
       }

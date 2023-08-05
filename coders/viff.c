@@ -629,7 +629,7 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
       if (viff_info.map_scheme == VFF_MS_NONE)
         {
           value=(value-min_value)*scale_factor;
-          if (value > QuantumRange)
+          if (value > (MagickRealType) QuantumRange)
             value=QuantumRange;
           else
             if (value < 0)
@@ -1217,7 +1217,7 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
               for (x=0; x < (ssize_t) image->columns; x++)
               {
                 byte>>=1;
-                if (GetPixelLuma(image,p) < (QuantumRange/2.0))
+                if (GetPixelLuma(image,p) < ((MagickRealType) QuantumRange/2.0))
                   byte|=0x80;
                 bit++;
                 if (bit == 8)

@@ -1940,7 +1940,7 @@ MagickExport Image *HoughLineImage(const Image *image,const size_t width,
       }
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      if (GetPixelIntensity(image,p) > (QuantumRange/2.0))
+      if (GetPixelIntensity(image,p) > ((MagickRealType) QuantumRange/2.0))
         {
           ssize_t
             i;
@@ -2298,17 +2298,22 @@ MagickExport Image *MeanShiftImage(const Image *image,const size_t width,
                 status=GetOneCacheViewVirtualPixel(pixel_view,(ssize_t)
                   MagickRound(mean_location.x+u),(ssize_t) MagickRound(
                   mean_location.y+v),&pixel,exception);
-                distance=(mean_pixel.red-pixel.red)*(mean_pixel.red-pixel.red)+
-                  (mean_pixel.green-pixel.green)*(mean_pixel.green-pixel.green)+
-                  (mean_pixel.blue-pixel.blue)*(mean_pixel.blue-pixel.blue);
+                distance=((MagickRealType) mean_pixel.red-(MagickRealType)
+                  pixel.red)*((MagickRealType) mean_pixel.red-(MagickRealType)
+                  pixel.red)+((MagickRealType) mean_pixel.green-
+                  (MagickRealType) pixel.green)*((MagickRealType)
+                  mean_pixel.green-(MagickRealType) pixel.green)+
+                  ((MagickRealType) mean_pixel.blue-(MagickRealType)
+                  pixel.blue)*((MagickRealType) mean_pixel.blue-
+                  (MagickRealType) pixel.blue);
                 if (distance <= (color_distance*color_distance))
                   {
                     sum_location.x+=mean_location.x+u;
                     sum_location.y+=mean_location.y+v;
-                    sum_pixel.red+=pixel.red;
-                    sum_pixel.green+=pixel.green;
-                    sum_pixel.blue+=pixel.blue;
-                    sum_pixel.opacity+=pixel.opacity;
+                    sum_pixel.red+=(MagickRealType) pixel.red;
+                    sum_pixel.green+=(MagickRealType) pixel.green;
+                    sum_pixel.blue+=(MagickRealType) pixel.blue;
+                    sum_pixel.opacity+=(MagickRealType) pixel.opacity;
                     count++;
                   }
               }

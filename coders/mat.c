@@ -207,12 +207,14 @@ static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
   {
     if (*p > 0)
       {
-        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelRed(q));
-        if ((f+GetPixelRed(q)) >= QuantumRange)
+        f=(*p/MaxVal)*((MagickRealType) QuantumRange-(MagickRealType)
+          GetPixelRed(q));
+        if ((f+(MagickRealType) GetPixelRed(q)) >= (MagickRealType) QuantumRange)
           SetPixelRed(q,QuantumRange);
         else
-          SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
-        f=GetPixelGreen(q)-f/2.0;
+          SetPixelRed(q,(MagickRealType) GetPixelRed(q)+(MagickRealType)
+            ClampToQuantum(f));
+        f=(MagickRealType) GetPixelGreen(q)-f/2.0;
         if (f <= 0.0)
           {
             SetPixelGreen(q,0);
@@ -226,12 +228,14 @@ static void InsertComplexDoubleRow(double *p,int y,Image *image,double MinVal,
       }
     if (*p < 0)
       {
-        f=(*p/MinVal)*(Quantum) (QuantumRange-GetPixelBlue(q));
-        if ((f+GetPixelBlue(q)) >= QuantumRange)
+        f=(*p/MinVal)*((MagickRealType) QuantumRange-(MagickRealType)
+          GetPixelBlue(q));
+        if ((f+(MagickRealType) GetPixelBlue(q)) >= (MagickRealType) QuantumRange)
           SetPixelBlue(q,QuantumRange);
         else
-          SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
-        f=GetPixelGreen(q)-f/2.0;
+          SetPixelBlue(q,(MagickRealType) GetPixelBlue(q)+(MagickRealType)
+            ClampToQuantum(f));
+        f=(MagickRealType) GetPixelGreen(q)-f/2.0;
         if (f <= 0.0)
           {
             SetPixelRed(q,0);
@@ -275,13 +279,14 @@ static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
   {
     if (*p > 0)
       {
-        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelRed(q));
-        if ((f+GetPixelRed(q)) < QuantumRange)
+        f=((MagickRealType) *p/MaxVal)*((MagickRealType) QuantumRange-
+          (MagickRealType) GetPixelRed(q));
+        if ((f+(MagickRealType) GetPixelRed(q)) < (MagickRealType) QuantumRange)
           SetPixelRed(q,GetPixelRed(q)+ClampToQuantum(f));
         else
           SetPixelRed(q,QuantumRange);
         f/=2.0;
-        if (f < GetPixelGreen(q))
+        if (f < (MagickRealType) GetPixelGreen(q))
           {
             SetPixelBlue(q,GetPixelBlue(q)-ClampToQuantum(f));
             SetPixelGreen(q,GetPixelBlue(q));
@@ -294,13 +299,14 @@ static void InsertComplexFloatRow(float *p,int y,Image *image,double MinVal,
       }
     if (*p < 0)
       {
-        f=(*p/MaxVal)*(Quantum) (QuantumRange-GetPixelBlue(q));
-        if ((f+GetPixelBlue(q)) < QuantumRange)
+        f=((MagickRealType) *p/MaxVal)*((MagickRealType) QuantumRange-
+          (MagickRealType) GetPixelBlue(q));
+        if ((f+(MagickRealType) GetPixelBlue(q)) < (MagickRealType) QuantumRange)
           SetPixelBlue(q,GetPixelBlue(q)+ClampToQuantum(f));
         else
           SetPixelBlue(q,QuantumRange);
         f/=2.0;
-        if (f < GetPixelGreen(q))
+        if (f < (MagickRealType) GetPixelGreen(q))
           {
             SetPixelRed(q,GetPixelRed(q)-ClampToQuantum(f));
             SetPixelGreen(q,GetPixelRed(q));
@@ -419,9 +425,9 @@ float *fltrow;
       }
     for (x = 0; x < (ssize_t) SizeX; x++)
       {
-        if (*Min > *fltrow)
+        if (*Min > (MagickRealType) *fltrow)
           *Min = *fltrow;
-        if (*Max < *fltrow)
+        if (*Max < (MagickRealType) *fltrow)
           *Max = *fltrow;
         fltrow++;
       }

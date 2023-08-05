@@ -511,24 +511,25 @@ MagickExport MagickBooleanType ResamplePixelColor(
                  color and the current background color */
 
               /* image's average pixel color */
-              weight = QuantumScale*((MagickRealType)(QuantumRange-
-                          resample_filter->average_pixel.opacity));
+              weight = QuantumScale*((MagickRealType) QuantumRange-
+                (MagickRealType) resample_filter->average_pixel.opacity);
               resample_filter->average_pixel.red *= weight;
               resample_filter->average_pixel.green *= weight;
               resample_filter->average_pixel.blue *= weight;
               divisor_c = weight;
 
               /* background color */
-              weight = QuantumScale*((MagickRealType)(QuantumRange-
-                          resample_filter->image->background_color.opacity));
-              resample_filter->average_pixel.red +=
-                      weight*resample_filter->image->background_color.red;
-              resample_filter->average_pixel.green +=
-                      weight*resample_filter->image->background_color.green;
-              resample_filter->average_pixel.blue +=
-                      weight*resample_filter->image->background_color.blue;
-              resample_filter->average_pixel.opacity +=
-                      resample_filter->image->background_color.opacity;
+              weight = QuantumScale*((MagickRealType) QuantumRange-
+                (MagickRealType)
+                 resample_filter->image->background_color.opacity);
+              resample_filter->average_pixel.red += weight*(MagickRealType)
+                resample_filter->image->background_color.red;
+              resample_filter->average_pixel.green += weight*(MagickRealType)
+                resample_filter->image->background_color.green;
+              resample_filter->average_pixel.blue += weight*(MagickRealType)
+                resample_filter->image->background_color.blue;
+              resample_filter->average_pixel.opacity += (MagickRealType)
+                resample_filter->image->background_color.opacity;
               divisor_c += weight;
 
               /* alpha blend */
@@ -617,16 +618,16 @@ MagickExport MagickBooleanType ResamplePixelColor(
 #endif
 
         if (pixel->matte != MagickFalse)
-          pixel->opacity  += weight*pixels->opacity;
+          pixel->opacity  += weight*(MagickRealType) pixels->opacity;
         divisor_m += weight;
 
         if (pixel->matte != MagickFalse)
           weight *= QuantumScale*((MagickRealType)(QuantumRange-pixels->opacity));
-        pixel->red   += weight*pixels->red;
-        pixel->green += weight*pixels->green;
-        pixel->blue  += weight*pixels->blue;
+        pixel->red   += weight*(MagickRealType) pixels->red;
+        pixel->green += weight*(MagickRealType) pixels->green;
+        pixel->blue  += weight*(MagickRealType) pixels->blue;
         if (pixel->colorspace == CMYKColorspace)
-          pixel->index += weight*(*indexes);
+          pixel->index += weight*(MagickRealType) (*indexes);
         divisor_c += weight;
 
         hit++;

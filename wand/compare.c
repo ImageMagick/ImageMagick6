@@ -1242,7 +1242,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case RootMeanSquaredErrorMetric:
             {
               (void) FormatLocaleFile(stderr,"%.*g (%.*g)",GetMagickPrecision(),
-                QuantumRange*distortion,GetMagickPrecision(),distortion);
+                (double) QuantumRange*distortion,GetMagickPrecision(),
+                distortion);
               break;
             }
             case PeakSignalToNoiseRatioMetric:
@@ -1302,20 +1303,20 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 default:
                 {
                   (void) FormatLocaleFile(stderr,"    red: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[RedChannel],GetMagickPrecision(),
                     channel_distortion[RedChannel]);
                   (void) FormatLocaleFile(stderr,"    green: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[GreenChannel],GetMagickPrecision(),
                     channel_distortion[GreenChannel]);
                   (void) FormatLocaleFile(stderr,"    blue: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[BlueChannel],GetMagickPrecision(),
                     channel_distortion[BlueChannel]);
                   if (image->matte != MagickFalse)
                     (void) FormatLocaleFile(stderr,"    alpha: %.*g (%.*g)\n",
-                      GetMagickPrecision(),QuantumRange*
+                      GetMagickPrecision(),(double) QuantumRange*
                       channel_distortion[OpacityChannel],GetMagickPrecision(),
                       channel_distortion[OpacityChannel]);
                   break;
@@ -1323,24 +1324,24 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 case CMYKColorspace:
                 {
                   (void) FormatLocaleFile(stderr,"    cyan: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[CyanChannel],GetMagickPrecision(),
                     channel_distortion[CyanChannel]);
                   (void) FormatLocaleFile(stderr,"    magenta: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[MagentaChannel],GetMagickPrecision(),
                     channel_distortion[MagentaChannel]);
                   (void) FormatLocaleFile(stderr,"    yellow: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[YellowChannel],GetMagickPrecision(),
                     channel_distortion[YellowChannel]);
                   (void) FormatLocaleFile(stderr,"    black: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[BlackChannel],GetMagickPrecision(),
                     channel_distortion[BlackChannel]);
                   if (image->matte != MagickFalse)
                     (void) FormatLocaleFile(stderr,"    alpha: %.*g (%.*g)\n",
-                      GetMagickPrecision(),QuantumRange*
+                      GetMagickPrecision(),(double) QuantumRange*
                       channel_distortion[OpacityChannel],GetMagickPrecision(),
                       channel_distortion[OpacityChannel]);
                   break;
@@ -1349,19 +1350,19 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 case GRAYColorspace:
                 {
                   (void) FormatLocaleFile(stderr,"    gray: %.*g (%.*g)\n",
-                    GetMagickPrecision(),QuantumRange*
+                    GetMagickPrecision(),(double) QuantumRange*
                     channel_distortion[GrayChannel],GetMagickPrecision(),
                     channel_distortion[GrayChannel]);
                   if (image->matte != MagickFalse)
                     (void) FormatLocaleFile(stderr,"    alpha: %.*g (%.*g)\n",
-                      GetMagickPrecision(),QuantumRange*
+                      GetMagickPrecision(),(double) QuantumRange*
                       channel_distortion[OpacityChannel],GetMagickPrecision(),
                       channel_distortion[OpacityChannel]);
                   break;
                 }
               }
               (void) FormatLocaleFile(stderr,"    all: %.*g (%.*g)\n",
-                GetMagickPrecision(),QuantumRange*
+                GetMagickPrecision(),(double) QuantumRange*
                 channel_distortion[CompositeChannels],GetMagickPrecision(),
                 channel_distortion[CompositeChannels]);
               break;
