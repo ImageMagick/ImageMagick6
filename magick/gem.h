@@ -26,7 +26,7 @@ extern "C" {
 #endif
 
 extern MagickExport double
-  ExpandAffine(const AffineMatrix *),
+  ExpandAffine(const AffineMatrix *) magick_attribute((__pure__)),
   GenerateDifferentialNoise(RandomInfo *,const Quantum,const NoiseType,
     const MagickRealType);
 

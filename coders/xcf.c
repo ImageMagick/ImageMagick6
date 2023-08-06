@@ -1405,13 +1405,17 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   else
     {
-      int
-        current_layer = 0,
-        foundAllLayers = MagickFalse,
+      MagickBooleanType
+        foundAllLayers = MagickFalse;
+        
+      MagickOffsetType
+        oldPos = TellBlob(image);
+    
+      size_t
         number_layers = 0;
 
-      MagickOffsetType
-        oldPos=TellBlob(image);
+      ssize_t
+        current_layer = 0;
 
       XCFLayerInfo
         *layer_info;
@@ -1425,7 +1429,12 @@ static Image *ReadXCFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         if (offset == 0)
           foundAllLayers=MagickTrue;
         else
-          number_layers++;
+          {
+            number_layers++;
+            if ((ssize_t) number_layers == SSIZE_MAX)
+              ThrowReaderException(ResourceLimitError,
+                "ListLengthExceedsLimit");
+          }
         if (EOFBlob(image) != MagickFalse)
           {
             ThrowFileException(exception,CorruptImageError,
