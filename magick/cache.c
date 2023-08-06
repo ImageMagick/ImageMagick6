@@ -4701,8 +4701,9 @@ static MagickBooleanType ReadPixelCacheIndexes(
       extent=(MagickSizeType) cache_info->columns*cache_info->rows;
       for (y=0; y < (ssize_t) rows; y++)
       {
-        count=ReadPixelCacheRegion(cache_info,cache_info->offset+extent*
-          sizeof(PixelPacket)+offset*sizeof(*q),length,(unsigned char *) q);
+        count=ReadPixelCacheRegion(cache_info,cache_info->offset+
+          (MagickOffsetType) extent*(MagickOffsetType) sizeof(PixelPacket)+
+          offset*(MagickOffsetType) sizeof(*q),length,(unsigned char *) q);
         if (count < (MagickOffsetType) length)
           break;
         offset+=(MagickOffsetType) cache_info->columns;
@@ -4804,16 +4805,16 @@ static MagickBooleanType ReadPixelCachePixels(
   PixelPacket
     *magick_restrict q;
 
-  ssize_t
-    y;
-
   size_t
     rows;
 
+  ssize_t
+    y;
+
   if (nexus_info->authentic_pixel_cache != MagickFalse)
     return(MagickTrue);
-  offset=(MagickOffsetType) nexus_info->region.y*cache_info->columns;
-  if ((ssize_t) (offset/cache_info->columns) != nexus_info->region.y)
+  offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns;
+  if ((offset/(MagickOffsetType) cache_info->columns) != nexus_info->region.y)
     return(MagickFalse);
   offset+=nexus_info->region.x;
   length=(MagickSizeType) nexus_info->region.width*sizeof(PixelPacket);
@@ -4873,7 +4874,7 @@ static MagickBooleanType ReadPixelCachePixels(
       for (y=0; y < (ssize_t) rows; y++)
       {
         count=ReadPixelCacheRegion(cache_info,cache_info->offset+offset*
-          sizeof(*q),length,(unsigned char *) q);
+          (MagickOffsetType) sizeof(*q),length,(unsigned char *) q);
         if (count < (MagickOffsetType) length)
           break;
         offset+=(MagickOffsetType) cache_info->columns;
@@ -5175,7 +5176,7 @@ static inline MagickBooleanType ValidatePixelOffset(const ssize_t x,
 {
   if ((x >= 0) && (x >= ((ssize_t) (MAGICK_SSIZE_MAX-5*a))))
     return(MagickFalse);
-  if (x <= ((ssize_t) (MAGICK_SSIZE_MIN+5*a)))
+  if (x <= ((ssize_t) (MAGICK_SSIZE_MIN+5*(MagickOffsetType) a)))
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -5228,7 +5229,7 @@ static PixelPacket *SetPixelCacheNexusPixels(
           /*
             Pixels are accessed directly from memory.
           */
-          offset=(MagickOffsetType) y*cache_info->columns+x;
+          offset=y*(MagickOffsetType) cache_info->columns+x;
           nexus_info->pixels=cache_info->pixels+offset;
           nexus_info->indexes=(IndexPacket *) NULL;
           if (cache_info->active_index_channel != MagickFalse)
@@ -5756,7 +5757,7 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
     return(MagickTrue);
   if (nexus_info->indexes == (IndexPacket *) NULL)
     return(MagickFalse);
-  offset=(MagickOffsetType) nexus_info->region.y*cache_info->columns+
+  offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns+
     nexus_info->region.x;
   length=(MagickSizeType) nexus_info->region.width*sizeof(IndexPacket);
   rows=nexus_info->region.height;
@@ -5811,8 +5812,9 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
       extent=(MagickSizeType) cache_info->columns*cache_info->rows;
       for (y=0; y < (ssize_t) rows; y++)
       {
-        count=WritePixelCacheRegion(cache_info,cache_info->offset+extent*
-          sizeof(PixelPacket)+offset*sizeof(*p),length,(const unsigned char *)
+        count=WritePixelCacheRegion(cache_info,cache_info->offset+
+          (MagickOffsetType) extent*(MagickOffsetType) sizeof(PixelPacket)+
+          offset*(MagickOffsetType) sizeof(*p),length,(const unsigned char *)
           p);
         if (count < (MagickOffsetType) length)
           break;
@@ -5922,7 +5924,7 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
 
   if (nexus_info->authentic_pixel_cache != MagickFalse)
     return(MagickTrue);
-  offset=(MagickOffsetType) nexus_info->region.y*cache_info->columns+
+  offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns+
     nexus_info->region.x;
   length=(MagickSizeType) nexus_info->region.width*sizeof(PixelPacket);
   rows=nexus_info->region.height;
@@ -5977,7 +5979,7 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
       for (y=0; y < (ssize_t) rows; y++)
       {
         count=WritePixelCacheRegion(cache_info,cache_info->offset+offset*
-          sizeof(*p),length,(const unsigned char *) p);
+          (MagickOffsetType) sizeof(*p),length,(const unsigned char *) p);
         if (count < (MagickOffsetType) length)
           break;
         p+=nexus_info->region.width;
