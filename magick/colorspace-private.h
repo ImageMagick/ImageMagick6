@@ -29,12 +29,12 @@ extern "C" {
 
 static inline void ConvertCMYKToRGB(MagickPixelPacket *pixel)
 {
-  pixel->red=((QuantumRange-(QuantumScale*pixel->red*(QuantumRange-
-    pixel->index)+pixel->index)));
-  pixel->green=((QuantumRange-(QuantumScale*pixel->green*(QuantumRange-
-    pixel->index)+pixel->index)));
-  pixel->blue=((QuantumRange-(QuantumScale*pixel->blue*(QuantumRange-
-    pixel->index)+pixel->index)));
+  pixel->red=(((double) QuantumRange-(QuantumScale*pixel->red*((double)
+    QuantumRange-pixel->index)+pixel->index)));
+  pixel->green=(((double) QuantumRange-(QuantumScale*pixel->green*((double)
+    QuantumRange-pixel->index)+pixel->index)));
+  pixel->blue=(((double) QuantumRange-(QuantumScale*pixel->blue*((double)
+    QuantumRange-pixel->index)+pixel->index)));
 }
 
 static inline void ConvertRGBToCMYK(MagickPixelPacket *pixel)
@@ -79,10 +79,10 @@ static inline void ConvertRGBToCMYK(MagickPixelPacket *pixel)
   magenta=(MagickRealType) (PerceptibleReciprocal(1.0-black)*(magenta-black));
   yellow=(MagickRealType) (PerceptibleReciprocal(1.0-black)*(yellow-black));
   pixel->colorspace=CMYKColorspace;
-  pixel->red=QuantumRange*cyan;
-  pixel->green=QuantumRange*magenta;
-  pixel->blue=QuantumRange*yellow;
-  pixel->index=QuantumRange*black;
+  pixel->red=(double) QuantumRange*cyan;
+  pixel->green=(double) QuantumRange*magenta;
+  pixel->blue=(double) QuantumRange*yellow;
+  pixel->index=(double) QuantumRange*black;
 }
 
 static inline MagickBooleanType IsCMYKColorspace(

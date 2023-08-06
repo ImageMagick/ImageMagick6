@@ -1868,24 +1868,26 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       SetMagickPixelPacket(image,p,indexes+x,&pixel);
-      if ((pixel.red < 0.0) || (pixel.red > QuantumRange) ||
+      if ((pixel.red < 0.0) || (pixel.red > (MagickRealType) QuantumRange) ||
           (pixel.red != (QuantumAny) pixel.red))
         break;
-      if ((pixel.green < 0.0) || (pixel.green > QuantumRange) ||
+      if ((pixel.green < 0.0) ||
+          (pixel.green > (MagickRealType) QuantumRange) ||
           (pixel.green != (QuantumAny) pixel.green))
         break;
-      if ((pixel.blue < 0.0) || (pixel.blue > QuantumRange) ||
+      if ((pixel.blue < 0.0) || (pixel.blue > (MagickRealType) QuantumRange) ||
           (pixel.blue != (QuantumAny) pixel.blue))
         break;
       if (pixel.matte != MagickFalse)
         {
-          if ((pixel.opacity < 0.0) || (pixel.opacity > QuantumRange) ||
+          if ((pixel.opacity < 0.0) || (pixel.opacity > (MagickRealType) QuantumRange) ||
               (pixel.opacity != (QuantumAny) pixel.opacity))
             break;
         }
       if (pixel.colorspace == CMYKColorspace)
         {
-          if ((pixel.index < 0.0) || (pixel.index > QuantumRange) ||
+          if ((pixel.index < 0.0) ||
+              (pixel.index > (MagickRealType) QuantumRange) ||
               (pixel.index != (QuantumAny) pixel.index))
             break;
         }

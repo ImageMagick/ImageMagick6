@@ -165,46 +165,47 @@ static void SetDNGProperties(Image *image,const libraw_data_t *raw_info)
   (void) FormatMagickTime(raw_info->other.timestamp,MagickPathExtent,timestamp);
   (void) SetImageProperty(image,"dng:create.date",timestamp);
   (void) SetImageProperty(image,"dng:f.number",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f",
-    raw_info->other.iso_speed);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g",
+    (double) raw_info->other.iso_speed);
 #if LIBRAW_COMPILE_CHECK_VERSION_NOTLESS(0,18)
   (void) SetImageProperty(image,"dng:software",raw_info->idata.software);
   if (*raw_info->shootinginfo.BodySerial != '\0')
     (void) SetImageProperty(image,"dng:serial.number",
       raw_info->shootinginfo.BodySerial);
-  (void) FormatLocaleString(property,MagickPathExtent,"1/%0.1f",
+  (void) FormatLocaleString(property,MagickPathExtent,"1/%0.1g",
     PerceptibleReciprocal(raw_info->other.shutter));
   (void) SetImageProperty(image,"dng:exposure.time",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f",
-    raw_info->other.aperture);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g",
+    (double) raw_info->other.aperture);
   (void) SetImageProperty(image,"dng:iso.setting",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f",
-    raw_info->lens.EXIF_MaxAp);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g",
+    (double) raw_info->lens.EXIF_MaxAp);
   (void) SetImageProperty(image,"dng:max.aperture.value",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f",
-    raw_info->other.focal_len);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g",
+    (double) raw_info->other.focal_len);
   (void) SetImageProperty(image,"dng:focal.length",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%f %f %f %f",
-    raw_info->color.cam_mul[0],raw_info->color.cam_mul[2],
-    raw_info->color.cam_mul[1],raw_info->color.cam_mul[3]);
+  (void) FormatLocaleString(property,MagickPathExtent,"%g %g %g %g",
+    (double) raw_info->color.cam_mul[0],(double) raw_info->color.cam_mul[2],
+    (double) raw_info->color.cam_mul[1],(double) raw_info->color.cam_mul[3]);
   (void) SetImageProperty(image,"dng:wb.rb.levels",property);
   (void) FormatLocaleString(property,MagickPathExtent,
-    "%0.1f-%0.1fmm f/%0.1f-%0.1f",raw_info->lens.makernotes.MinFocal,
-    raw_info->lens.makernotes.MaxFocal,raw_info->lens.makernotes.MaxAp4MinFocal,
+    "%0.1g-%0.1gmm f/%0.1g-%0.1g",(double) raw_info->lens.makernotes.MinFocal,
+    (double) raw_info->lens.makernotes.MaxFocal,(double)
+    raw_info->lens.makernotes.MaxAp4MinFocal,(double)
     raw_info->lens.makernotes.MaxAp4MaxFocal);
   (void) SetImageProperty(image,"dng:lens",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.2f",
-    raw_info->lens.makernotes.LensFStops);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.2g",
+    (double) raw_info->lens.makernotes.LensFStops);
   (void) SetImageProperty(image,"dng:lens.f.stops",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f mm",
-    raw_info->lens.makernotes.MinFocal);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g mm",
+    (double) raw_info->lens.makernotes.MinFocal);
   (void) SetImageProperty(image,"dng:min.focal.length",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f mm",
-    raw_info->lens.makernotes.MaxFocal);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g mm",
+    (double) raw_info->lens.makernotes.MaxFocal);
   (void) SetImageProperty(image,"dng:max.focal.length",property);
   (void) SetImageProperty(image,"dng:max.aperture.at.min.focal",property);
-  (void) FormatLocaleString(property,MagickPathExtent,"%0.1f",
-    raw_info->lens.makernotes.MaxAp4MaxFocal);
+  (void) FormatLocaleString(property,MagickPathExtent,"%0.1g",
+    (double) raw_info->lens.makernotes.MaxAp4MaxFocal);
   (void) SetImageProperty(image,"dng:max.aperture.at.max.focal",property);
   (void) FormatLocaleString(property,MagickPathExtent,"%d mm",
     raw_info->lens.FocalLengthIn35mmFormat);

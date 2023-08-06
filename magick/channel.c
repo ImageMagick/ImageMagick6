@@ -714,10 +714,10 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
           double
             gamma;
 
-          gamma=QuantumScale*GetPixelAlpha(q);
-          SetPixelRed(q,ClampToQuantum(gamma*GetPixelRed(q)));
-          SetPixelGreen(q,ClampToQuantum(gamma*GetPixelGreen(q)));
-          SetPixelBlue(q,ClampToQuantum(gamma*GetPixelBlue(q)));
+          gamma=QuantumScale*(double) GetPixelAlpha(q);
+          SetPixelRed(q,ClampToQuantum(gamma*(double) GetPixelRed(q)));
+          SetPixelGreen(q,ClampToQuantum(gamma*(double) GetPixelGreen(q)));
+          SetPixelBlue(q,ClampToQuantum(gamma*(double) GetPixelBlue(q)));
           q++;
         }
         if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -870,11 +870,11 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
             alpha,
             gamma;
 
-          alpha=QuantumScale*GetPixelAlpha(q);
+          alpha=QuantumScale*(double) GetPixelAlpha(q);
           gamma=PerceptibleReciprocal(alpha);
-          SetPixelRed(q,ClampToQuantum(gamma*GetPixelRed(q)));
-          SetPixelGreen(q,ClampToQuantum(gamma*GetPixelGreen(q)));
-          SetPixelBlue(q,ClampToQuantum(gamma*GetPixelBlue(q)));
+          SetPixelRed(q,ClampToQuantum(gamma*(double) GetPixelRed(q)));
+          SetPixelGreen(q,ClampToQuantum(gamma*(double) GetPixelGreen(q)));
+          SetPixelBlue(q,ClampToQuantum(gamma*(double) GetPixelBlue(q)));
           q++;
         }
         if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -948,7 +948,8 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
             gamma,
             opacity;
 
-          gamma=1.0-QuantumScale*QuantumScale*q->opacity*pixel.opacity;
+          gamma=1.0-QuantumScale*QuantumScale*(double) q->opacity*(double)
+            pixel.opacity;
           opacity=(double) QuantumRange*(1.0-gamma);
           gamma=PerceptibleReciprocal(gamma);
           q->red=ClampToQuantum(gamma*MagickOver_((MagickRealType) q->red,

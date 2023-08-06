@@ -104,11 +104,11 @@ static inline MagickBooleanType PlasmaPixel(Image *image,
     exception);
   if (q == (PixelPacket *) NULL)
     return(MagickFalse);
-  SetPixelRed(q,(Quantum) (QuantumRange*
+  SetPixelRed(q,(Quantum) ((MagickRealType) QuantumRange*
     GetPseudoRandomValue(random_info)+0.5));
-  SetPixelGreen(q,(Quantum) (QuantumRange*
+  SetPixelGreen(q,(Quantum) ((MagickRealType) QuantumRange*
     GetPseudoRandomValue(random_info)+0.5));
-  SetPixelBlue(q,(Quantum) (QuantumRange*
+  SetPixelBlue(q,(Quantum) ((MagickRealType) QuantumRange*
     GetPseudoRandomValue(random_info)+0.5));
   return(SyncAuthenticPixels(image,exception));
 }

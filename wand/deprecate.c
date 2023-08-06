@@ -1666,7 +1666,7 @@ WandExport MagickBooleanType MagickMatteFloodfillImage(MagickWand *wand,
     PixelGetQuantumColor(bordercolor,&target);
   wand->images->fuzz=fuzz;
   status=MatteFloodfillImage(wand->images,target,ClampToQuantum(
-    (MagickRealType) QuantumRange-QuantumRange*alpha),x,y,bordercolor !=
+    (double) QuantumRange-(double) QuantumRange*alpha),x,y,bordercolor !=
     (PixelWand *) NULL ? FillToBorderMethod : FloodfillMethod);
   if (status == MagickFalse)
     InheritException(wand->exception,&wand->images->exception);

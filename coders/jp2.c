@@ -498,7 +498,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
             ThrowReaderException(CoderError,
               "IrregularChannelGeometryNotSupported")
           }
-        scale=QuantumRange/(double) ((MagickULLConstant(1) <<
+        scale=(double) QuantumRange/(double) ((MagickULLConstant(1) <<
           jp2_image->comps[i].prec)-1);
         pixel=scale*(jp2_image->comps[i].data[index]+(jp2_image->comps[i].sgnd ?
           MagickULLConstant(1) << (jp2_image->comps[i].prec-1) : 0));
@@ -523,7 +523,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
            {
              if (image->matte != MagickFalse)
                {
-                 q->opacity=ClampToQuantum(QuantumRange-pixel);
+                 q->opacity=ClampToQuantum((double) QuantumRange-pixel);
                  break;
                }
              q->green=ClampToQuantum(pixel);
@@ -537,7 +537,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
            case 3:
            {
              if (image->matte != MagickFalse)
-               q->opacity=ClampToQuantum(QuantumRange-pixel);
+               q->opacity=ClampToQuantum((double) QuantumRange-pixel);
              break;
            }
         }
@@ -1080,7 +1080,7 @@ static MagickBooleanType WriteJP2Image(const ImageInfo *image_info,Image *image)
           *q;
 
         scale=(double) (((size_t) MagickULLConstant(1) <<
-          jp2_image->comps[i].prec)-1)/QuantumRange;
+          jp2_image->comps[i].prec)-1)/(MagickRealType) QuantumRange;
         q=jp2_image->comps[i].data+(ssize_t) (y*PerceptibleReciprocal(
           jp2_image->comps[i].dy)*image->columns*PerceptibleReciprocal(
           jp2_image->comps[i].dx)+x*PerceptibleReciprocal(
@@ -1091,30 +1091,30 @@ static MagickBooleanType WriteJP2Image(const ImageInfo *image_info,Image *image)
           {
             if (jp2_colorspace == OPJ_CLRSPC_GRAY)
               {
-                *q=(int) (scale*GetPixelGray(p));
+                *q=(int) (scale*(double) GetPixelGray(p));
                 break;
               }
-            *q=(int) (scale*p->red);
+            *q=(int) (scale*(double) p->red);
             break;
           }
           case 1:
           {
             if (jp2_colorspace == OPJ_CLRSPC_GRAY)
               {
-                *q=(int) (scale*(QuantumRange-p->opacity));
+                *q=(int) (scale*((double) QuantumRange-(double) p->opacity));
                 break;
               }
-            *q=(int) (scale*p->green);
+            *q=(int) (scale*(double) p->green);
             break;
           }
           case 2:
           {
-            *q=(int) (scale*p->blue);
+            *q=(int) (scale*(double) p->blue);
             break;
           }
           case 3:
           {
-            *q=(int) (scale*(QuantumRange-p->opacity));
+            *q=(int) (scale*((double) QuantumRange-(double) p->opacity));
             break;
           }
         }

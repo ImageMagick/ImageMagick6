@@ -1771,8 +1771,8 @@ static MagickBooleanType WritePNMImage(const ImageInfo *image_info,Image *image)
             break;
           for (x=0; x < (ssize_t) image->columns; x++)
           {
-            *q++=(unsigned char) (GetPixelLuma(image,p) >= (QuantumRange/2.0) ?
-              '0' : '1');
+            *q++=(unsigned char) (GetPixelLuma(image,p) >= ((MagickRealType)
+              QuantumRange/2.0) ? '0' : '1');
             if ((q-pixels+2) >= (ssize_t) sizeof(pixels))
               {
                 *q++='\n';

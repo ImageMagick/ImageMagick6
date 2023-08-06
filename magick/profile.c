@@ -798,11 +798,12 @@ MagickExport MagickBooleanType ProfileImage(Image *image,const char *name,
   const void *datum,const size_t length,
   const MagickBooleanType magick_unused(clone))
 {
-#define GetLCMSPixel(source_info,pixel,index) \
-  (source_info.scale[index]*((QuantumScale*pixel)+source_info.translate[index]))
+#define GetLCMSPixel(source_info,pixel,index)  (source_info.scale[index]* \
+  ((QuantumScale*(MagickRealType) (pixel))+source_info.translate[index]))
 #define ProfileImageTag  "Profile/Image"
-#define SetLCMSPixel(target_info,pixel,index) \
-  ClampToQuantum(target_info.scale[index]*((QuantumRange*pixel)+target_info.translate[index]))
+#define SetLCMSPixel(target_info,pixel,index) ClampToQuantum( \
+  target_info.scale[index]*(((MagickRealType) QuantumRange*pixel)+ \
+  target_info.translate[index]))
 #define ThrowProfileException(severity,tag,context) \
 { \
   if (profile != (StringInfo *) NULL) \

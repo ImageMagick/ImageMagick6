@@ -346,12 +346,12 @@ static MagickBooleanType CorrectPSDAlphaBlend(const ImageInfo *image_info,
       gamma=QuantumScale*GetPixelAlpha(q);
       if (gamma != 0.0 && gamma != 1.0)
         {
-          SetPixelRed(q,ClampToQuantum((GetPixelRed(q)-((1.0-gamma)*
-            QuantumRange))/gamma));
-          SetPixelGreen(q,ClampToQuantum((GetPixelGreen(q)-((1.0-gamma)*
-            QuantumRange))/gamma));
-          SetPixelBlue(q,ClampToQuantum((GetPixelBlue(q)-((1.0-gamma)*
-            QuantumRange))/gamma));
+          SetPixelRed(q,ClampToQuantum(((MagickRealType) GetPixelRed(q)-
+            ((1.0-gamma)*(MagickRealType) QuantumRange))/gamma));
+          SetPixelGreen(q,ClampToQuantum(((MagickRealType) GetPixelGreen(q)-
+            ((1.0-gamma)*(MagickRealType) QuantumRange))/gamma));
+          SetPixelBlue(q,ClampToQuantum(((MagickRealType) GetPixelBlue(q)-
+            ((1.0-gamma)*(MagickRealType) QuantumRange))/gamma));
         }
       q++;
     }
@@ -417,10 +417,11 @@ static MagickBooleanType ApplyPSDLayerOpacity(Image *image,Quantum opacity,
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       if (revert == MagickFalse)
-        SetPixelAlpha(q,ClampToQuantum(QuantumScale*GetPixelAlpha(q)*opacity));
+        SetPixelAlpha(q,ClampToQuantum(QuantumScale*(MagickRealType)
+          GetPixelAlpha(q)*(MagickRealType) opacity));
       else if (opacity > 0)
-        SetPixelAlpha(q,ClampToQuantum((double) QuantumRange*GetPixelAlpha(q)/
-          (MagickRealType) opacity));
+        SetPixelAlpha(q,ClampToQuantum((MagickRealType) QuantumRange*
+          (MagickRealType) GetPixelAlpha(q)/(MagickRealType) opacity));
       q++;
     }
     if (SyncAuthenticPixels(image,exception) == MagickFalse)
@@ -498,7 +499,8 @@ static MagickBooleanType ApplyPSDOpacityMask(Image *image,const Image *mask,
       if (revert == MagickFalse)
         SetPixelAlpha(q,ClampToQuantum(intensity*(QuantumScale*alpha)));
       else if (intensity > 0)
-        SetPixelAlpha(q,ClampToQuantum((alpha/intensity)*QuantumRange));
+        SetPixelAlpha(q,ClampToQuantum((alpha/intensity)*(MagickRealType)
+          QuantumRange));
       q++;
       p++;
     }
@@ -1030,7 +1032,8 @@ static MagickBooleanType ReadPSDChannelPixels(Image *image,
             nibble;
 
           p=PushFloatPixel(MSBEndian,p,&nibble);
-          pixel=ClampToQuantum((MagickRealType)QuantumRange*nibble);
+          pixel=ClampToQuantum((MagickRealType) QuantumRange*
+            (MagickRealType) nibble);
         }
     if (image->depth > 1)
       {

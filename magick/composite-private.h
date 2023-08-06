@@ -74,7 +74,8 @@ static inline void MagickCompositeOver(const PixelPacket *p,
   SetPixelBlue(composite,ClampToQuantum(gamma*MagickOver_((MagickRealType)
     GetPixelBlue(p),alpha,(MagickRealType) GetPixelBlue(q),beta)));
 #else
-  SetPixelOpacity(composite,QuantumRange*(1.0-RoundToUnity(gamma)));
+  SetPixelOpacity(composite,(MagickRealType) QuantumRange*(1.0-
+    RoundToUnity(gamma)));
   gamma=PerceptibleReciprocal(gamma);
   SetPixelRed(composite,gamma*MagickOver_((MagickRealType)
     GetPixelRed(p),alpha,(MagickRealType) GetPixelRed(q),beta));
@@ -100,7 +101,7 @@ static inline void MagickPixelCompositeOver(const MagickPixelPacket *p,
   Sa=1.0-QuantumScale*alpha;
   Da=1.0-QuantumScale*beta;
   gamma=Sa+Da-Sa*Da;
-  composite->opacity=(MagickRealType) (QuantumRange*(1.0-RoundToUnity(gamma)));
+  composite->opacity=(MagickRealType) QuantumRange*(1.0-RoundToUnity(gamma));
   gamma=PerceptibleReciprocal(gamma);
   composite->red=gamma*MagickOver_(p->red,alpha,q->red,beta);
   composite->green=gamma*MagickOver_(p->green,alpha,q->green,beta);
@@ -140,9 +141,9 @@ static inline void MagickPixelCompositeBlend(const MagickPixelPacket *p,
   const MagickRealType alpha,const MagickPixelPacket *q,
   const MagickRealType beta,MagickPixelPacket *composite)
 {
-  MagickPixelCompositePlus(p,(MagickRealType) (QuantumRange-alpha*
-    (QuantumRange-p->opacity)),q,(MagickRealType) (QuantumRange-beta*
-    (QuantumRange-q->opacity)),composite);
+  MagickPixelCompositePlus(p,(MagickRealType) QuantumRange-alpha*
+    ((MagickRealType) QuantumRange-p->opacity),q,(MagickRealType)
+    QuantumRange-beta*((MagickRealType) QuantumRange-q->opacity),composite);
 }
 
 /*
@@ -154,8 +155,8 @@ static inline void MagickPixelCompositeAreaBlend(const MagickPixelPacket *p,
   MagickPixelPacket *composite)
 {
   MagickPixelCompositePlus(p,(MagickRealType) QuantumRange-(1.0-area)*
-    (QuantumRange-alpha),q,(MagickRealType) (QuantumRange-area*(QuantumRange-
-    beta)),composite);
+    ((MagickRealType) QuantumRange-alpha),q,(MagickRealType) QuantumRange-
+    area*((MagickRealType) QuantumRange-beta),composite);
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)

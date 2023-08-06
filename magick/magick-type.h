@@ -70,7 +70,7 @@ typedef long double MagickDoubleType;
 typedef ssize_t SignedQuantum;
 #if defined(MAGICKCORE_HDRI_SUPPORT)
 typedef MagickFloatType Quantum;
-#define QuantumRange  255.0
+#define QuantumRange  ((Quantum) 255.0)
 #define QuantumFormat  "%g"
 #else
 typedef unsigned char Quantum;
@@ -83,7 +83,7 @@ typedef unsigned char Quantum;
 typedef ssize_t SignedQuantum;
 #if defined(MAGICKCORE_HDRI_SUPPORT)
 typedef MagickFloatType Quantum;
-#define QuantumRange  65535.0
+#define QuantumRange  ((Quantum) 65535.0)
 #define QuantumFormat  "%g"
 #else
 typedef unsigned short Quantum;
@@ -96,7 +96,7 @@ typedef unsigned short Quantum;
 typedef MagickDoubleType SignedQuantum;
 #if defined(MAGICKCORE_HDRI_SUPPORT)
 typedef MagickDoubleType Quantum;
-#define QuantumRange  4294967295.0
+#define QuantumRange  ((Quantum) 4294967295.0)
 #define QuantumFormat  "%g"
 #else
 typedef unsigned int Quantum;
@@ -109,7 +109,7 @@ typedef unsigned int Quantum;
 #define MaxMap  65535UL
 typedef MagickDoubleType SignedQuantum;
 typedef MagickDoubleType Quantum;
-#define QuantumRange  18446744073709551615.0
+#define QuantumRange  ((Quantum) 18446744073709551615.0)
 #define QuantumFormat  "%g"
 #else
 #if !defined(_CH_)

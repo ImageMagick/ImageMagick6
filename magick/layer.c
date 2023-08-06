@@ -537,8 +537,10 @@ static MagickBooleanType ComparePixels(const ImageLayerMethod method,
   if (method == CompareAnyLayer)
     return((MagickBooleanType)(IsMagickColorSimilar(p,q) == MagickFalse));
 
-  o1 = (p->matte != MagickFalse) ? GetPixelOpacity(p) : OpaqueOpacity;
-  o2 = (q->matte != MagickFalse) ? q->opacity : OpaqueOpacity;
+  o1 = (p->matte != MagickFalse) ? (MagickRealType) GetPixelOpacity(p) :
+    (MagickRealType) OpaqueOpacity;
+  o2 = (q->matte != MagickFalse) ? (MagickRealType) q->opacity :
+    (MagickRealType) OpaqueOpacity;
 
   /*
     Pixel goes from opaque to transprency

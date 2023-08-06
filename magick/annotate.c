@@ -1135,6 +1135,7 @@ static size_t ComplexRaqmTextLayout(const Image *image,
   ssize_t
     i;
 
+  (void) exception;
   extent=0;
   rq=raqm_create();
   if (rq == (raqm_t *) NULL)
@@ -1899,8 +1900,8 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
             if (transparent_fill == MagickFalse)
               {
                 (void) GetFillColor(draw_info,x_offset,y_offset,&fill_color);
-                fill_opacity=QuantumRange-fill_opacity*(QuantumRange-
-                  fill_color.opacity);
+                fill_opacity=(double) QuantumRange-(double) fill_opacity*
+                  ((double) QuantumRange-(double) fill_color.opacity);
                 MagickCompositeOver(&fill_color,fill_opacity,q,q->opacity,q);
               }
             else
@@ -1909,9 +1910,11 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
                   Sa,
                   Da;
 
-                Da=1.0-(QuantumScale*(QuantumRange-q->opacity));
+                Da=1.0-(QuantumScale*((double) QuantumRange-(double)
+                  q->opacity));
                 Sa=fill_opacity;
-                fill_opacity=(1.0-RoundToUnity(Sa+Da-Sa*Da))*QuantumRange;
+                fill_opacity=(1.0-RoundToUnity(Sa+Da-Sa*Da))*(double)
+                  QuantumRange;
                 SetPixelAlpha(q,fill_opacity);
               }
             if (active == MagickFalse)
@@ -2289,9 +2292,9 @@ static MagickBooleanType RenderPostscript(Image *image,
         for (x=0; x < (ssize_t) annotate_image->columns; x++)
         {
           (void) GetFillColor(draw_info,x,y,&fill_color);
-          SetPixelAlpha(q,ClampToQuantum((((QuantumRange-GetPixelIntensity(
-            annotate_image,q))*(QuantumRange-fill_color.opacity))/
-            QuantumRange)));
+          SetPixelAlpha(q,ClampToQuantum(((((double) QuantumRange-
+            GetPixelIntensity(annotate_image,q))*((double) QuantumRange-
+            (double) fill_color.opacity))/(double) QuantumRange)));
           SetPixelRed(q,fill_color.red);
           SetPixelGreen(q,fill_color.green);
           SetPixelBlue(q,fill_color.blue);

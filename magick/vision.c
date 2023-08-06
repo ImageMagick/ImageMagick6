@@ -404,13 +404,13 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         object[id].bounding_box.y=y;
       if (y >= (ssize_t) object[id].bounding_box.height)
         object[id].bounding_box.height=(size_t) y;
-      object[id].color.red+=QuantumScale*p->red;
-      object[id].color.green+=QuantumScale*p->green;
-      object[id].color.blue+=QuantumScale*p->blue;
+      object[id].color.red+=QuantumScale*(MagickRealType) p->red;
+      object[id].color.green+=QuantumScale*(MagickRealType) p->green;
+      object[id].color.blue+=QuantumScale*(MagickRealType) p->blue;
       if (image->matte != MagickFalse)
-        object[id].color.opacity+=QuantumScale*p->opacity;
+        object[id].color.opacity+=QuantumScale*(MagickRealType) p->opacity;
       if (image->colorspace == CMYKColorspace)
-        object[id].color.index+=QuantumScale*indexes[x];
+        object[id].color.index+=QuantumScale*(MagickRealType) indexes[x];
       object[id].centroid.x+=x;
       object[id].centroid.y+=y;
       object[id].area++;

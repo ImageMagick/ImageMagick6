@@ -290,10 +290,11 @@ static inline Quantum ReadVIPSPixelNONE(Image *image,
         case VIPSBandFormatINT:
           return(ScaleLongToQuantum(ReadBlobLong(image)));
         case VIPSBandFormatFLOAT:
-          return((Quantum) ((float) QuantumRange*(ReadBlobFloat(image)/1.0)));
+          return((Quantum) ((MagickRealType) QuantumRange*
+            ((MagickRealType) ReadBlobFloat(image)/1.0)));
         case VIPSBandFormatDOUBLE:
-          return((Quantum) ((double) QuantumRange*(ReadBlobDouble(
-            image)/1.0)));
+          return((Quantum) ((MagickRealType) QuantumRange*
+            (ReadBlobDouble(image)/1.0)));
         default:
           return((Quantum) 0);
       }

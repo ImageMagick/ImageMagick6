@@ -241,8 +241,8 @@ static Image *ReadWMFImage(const ImageInfo *image_info,ExceptionInfo *exception)
 #elif defined(MAGICKCORE_WMF_DELEGATE)
 
 #define ERR(API)  ((API)->err != wmf_E_None)
-#define XC(x) ((double) x)
-#define YC(y) ((double) y)
+#define XC(x) ((double) (x))
+#define YC(y) ((double) (y))
 
 #if !defined(M_PI)
 #  define M_PI  MagickPI
@@ -452,6 +452,7 @@ int magick_progress_callback(void *context,float quantum)
   MagickBooleanType
     status;
 
+  (void) quantum;
   image=(Image *) context;
   assert(image->signature == MagickCoreSignature);
   status=SetImageProgress(image,LoadImagesTag,TellBlob(image),
@@ -1011,8 +1012,8 @@ static void ipa_draw_pixel(wmfAPI * API, wmfDrawPixel_t * draw_pixel)
   DrawRectangle(WmfDrawingWand,
                  XC(draw_pixel->pt.x),
                  YC(draw_pixel->pt.y),
-                 XC(draw_pixel->pt.x + draw_pixel->pixel_width),
-                 YC(draw_pixel->pt.y + draw_pixel->pixel_height));
+                 XC((double) draw_pixel->pt.x + (double) draw_pixel->pixel_width),
+                 YC((double) draw_pixel->pt.y + (double) draw_pixel->pixel_height));
 
   /* Restore graphic wand */
   (void) PopDrawingWand(WmfDrawingWand);
@@ -1562,9 +1563,12 @@ static void ipa_draw_text(wmfAPI * API, wmfDrawText_t * draw_text)
                 text_width = metrics.width * (ddata->scale_y / ddata->scale_x);
 
 #if defined(MAGICKCORE_WMF_DELEGATE)
-              point.x -= text_width / 2;
+              point.x=(MagickRealType) ((MagickRealType) point.x-
+                (MagickRealType) text_width/2.0);
 #else
-              point.x += bbox_width / 2 - text_width / 2;
+              point.x=(MagickRealType) ((MagickRealType) point.x+
+                (MagickRealType) bbox_width/2.0-(MagickRealType) text_width/
+                2.0);
 #endif
             }
         }
@@ -2793,15 +2797,16 @@ static Image *ReadWMFImage(const ImageInfo *image_info,ExceptionInfo *exception)
          (API)->File->placeable ? "Yes" : "No");
 
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-        "  Size in metafile units:      %gx%g",wmf_width,wmf_height);
+        "  Size in metafile units:      %gx%g",(double) wmf_width,
+        (double) wmf_height);
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "  Metafile units/inch:         %g",units_per_inch);
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "  Size in inches:              %gx%g",
         image_width_inch,image_height_inch);
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-        "  Bounding Box:                %g,%g %g,%g",
-        bbox.TL.x, bbox.TL.y, bbox.BR.x, bbox.BR.y);
+        "  Bounding Box:                %g,%g %g,%g", (double) bbox.TL.x,
+        (double) bbox.TL.y, (double) bbox.BR.x, (double) bbox.BR.y);
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "  Bounding width x height:     %gx%g",bounding_width,
         bounding_height);

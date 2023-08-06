@@ -37,7 +37,7 @@ static inline double GetFuzzyColorDistance(const Image *p,const Image *q)
   double
     fuzz;
 
-  fuzz=(double) MagickMax(MagickMax(p->fuzz,q->fuzz),(MagickRealType)
+  fuzz=(double) MagickMax(MagickMax(p->fuzz,q->fuzz),(double)
     MagickSQ1_2);
   return(fuzz*fuzz);
 }
@@ -45,17 +45,17 @@ static inline double GetFuzzyColorDistance(const Image *p,const Image *q)
 static inline MagickBooleanType IsColorEqual(const PixelPacket *p,
   const PixelPacket *q)
 {
-  MagickRealType
+  double
     blue,
     green,
     red;
 
-  red=(MagickRealType) p->red;
-  green=(MagickRealType) p->green;
-  blue=(MagickRealType) p->blue;
-  if ((AbsolutePixelValue(red-q->red) < MagickEpsilon) &&
-      (AbsolutePixelValue(green-q->green) < MagickEpsilon) &&
-      (AbsolutePixelValue(blue-q->blue) < MagickEpsilon))
+  red=(double) p->red;
+  green=(double) p->green;
+  blue=(double) p->blue;
+  if ((AbsolutePixelValue(red-(double) q->red) < MagickEpsilon) &&
+      (AbsolutePixelValue(green-(double) q->green) < MagickEpsilon) &&
+      (AbsolutePixelValue(blue-(double) q->blue) < MagickEpsilon))
     return(MagickTrue);
   return(MagickFalse);
 }
@@ -63,16 +63,16 @@ static inline MagickBooleanType IsColorEqual(const PixelPacket *p,
 static inline MagickBooleanType IsMagickColorEqual(const MagickPixelPacket *p,
   const MagickPixelPacket *q)
 {
-  MagickRealType
+  double
     alpha,
     beta;
 
-  alpha=p->matte == MagickFalse ? OpaqueOpacity : p->opacity;
-  beta=q->matte == MagickFalse ? OpaqueOpacity : q->opacity;
+  alpha=p->matte == MagickFalse ? (double) OpaqueOpacity : (double) p->opacity;
+  beta=q->matte == MagickFalse ? (double) OpaqueOpacity : (double) q->opacity;
   if (AbsolutePixelValue(alpha-beta) >= MagickEpsilon)
     return(MagickFalse);
-  if ((AbsolutePixelValue(alpha-TransparentOpacity) < MagickEpsilon) ||
-      (AbsolutePixelValue(beta-TransparentOpacity) < MagickEpsilon))
+  if ((AbsolutePixelValue(alpha-(double) TransparentOpacity) < MagickEpsilon) ||
+      (AbsolutePixelValue(beta-(double) TransparentOpacity) < MagickEpsilon))
     return(MagickTrue);  /* no color component if pixel is transparent */
   if (AbsolutePixelValue(p->red-q->red) >= MagickEpsilon)
     return(MagickFalse);
@@ -117,7 +117,7 @@ static inline Quantum MagickPixelIntensityToQuantum(
 
 static inline MagickRealType MagickPixelLuma(const MagickPixelPacket *pixel)
 {
-  MagickRealType
+  double
     blue,
     green,
     red;
@@ -135,7 +135,7 @@ static inline MagickRealType MagickPixelLuma(const MagickPixelPacket *pixel)
 static inline MagickRealType MagickPixelLuminance(
   const MagickPixelPacket *pixel)
 {
-  MagickRealType
+  double
     blue,
     green,
     red;

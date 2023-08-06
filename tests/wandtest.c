@@ -5300,7 +5300,7 @@ int main(int argc,char **argv)
   (void) PixelSetColor(background,"green");
   (void) PixelSetColor(border,"black");
   status=MagickFloodfillPaintImage(magick_wand,CompositeChannels,background,
-    0.01*QuantumRange,border,0,0,MagickFalse);
+    0.01*(MagickRealType) QuantumRange,border,0,0,MagickFalse);
   if (status == MagickFalse)
     ThrowAPIException(magick_wand);
   background=DestroyPixelWand(background);

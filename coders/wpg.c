@@ -1155,7 +1155,7 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
             break;
 
           Header.DataOffset=TellBlob(image)+Rec.RecordLength;
-          if (Header.DataOffset > GetBlobSize(image))
+          if (Header.DataOffset > (MagickOffsetType) GetBlobSize(image))
             ThrowReaderException(CorruptImageError, 
               "InsufficientImageDataInFile");
 

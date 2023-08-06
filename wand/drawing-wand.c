@@ -1403,7 +1403,8 @@ WandExport double DrawGetFillOpacity(const DrawingWand *wand)
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  alpha=(double) QuantumScale*(QuantumRange-CurrentContext->fill.opacity);
+  alpha=QuantumScale*((double) QuantumRange-(double)
+    CurrentContext->fill.opacity);
   return(alpha);
 }
 
@@ -1748,7 +1749,7 @@ WandExport double DrawGetOpacity(const DrawingWand *wand)
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  alpha=(double) QuantumScale*(QuantumRange-CurrentContext->opacity);
+  alpha=QuantumScale*((double) QuantumRange-(double) CurrentContext->opacity);
   return(alpha);
 }
 
@@ -2060,7 +2061,8 @@ WandExport double DrawGetStrokeOpacity(const DrawingWand *wand)
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  alpha=(double) QuantumScale*(QuantumRange-CurrentContext->stroke.opacity);
+  alpha=QuantumScale*((double) QuantumRange-(double)
+    CurrentContext->stroke.opacity);
   return(alpha);
 }
 
@@ -2455,7 +2457,8 @@ WandExport char *DrawGetVectorGraphics(DrawingWand *wand)
   if (child != (XMLTreeInfo *) NULL)
     {
       (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
-        (double) (QuantumScale*(QuantumRange-CurrentContext->fill.opacity)));
+        QuantumScale*((double) QuantumRange-(double)
+        CurrentContext->fill.opacity));
       (void) SetXMLTreeContent(child,value);
     }
   child=AddChildToXMLTree(xml_info,"fill-rule",0);
@@ -2576,8 +2579,8 @@ WandExport char *DrawGetVectorGraphics(DrawingWand *wand)
   child=AddChildToXMLTree(xml_info,"stroke-opacity",0);
   if (child != (XMLTreeInfo *) NULL)
     {
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
-        (double) (QuantumScale*(QuantumRange-CurrentContext->stroke.opacity)));
+      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",QuantumScale*
+        ((double) QuantumRange-(double) CurrentContext->stroke.opacity));
       (void) SetXMLTreeContent(child,value);
     }
   child=AddChildToXMLTree(xml_info,"stroke-width",0);

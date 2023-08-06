@@ -615,15 +615,16 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
         double
           luma;
 
-        luma=0.212656*image->colormap[i].red+0.715158*image->colormap[i].green+
-          0.072186*image->colormap[i].blue;
+        luma=0.212656*(double) image->colormap[i].red+0.715158*(double)
+          image->colormap[i].green+0.072186*(double) image->colormap[i].blue;
         image->colormap[i].red=ClampToQuantum(luma+color_correction.saturation*
-          cdl_map[ScaleQuantumToMap(image->colormap[i].red)].red-luma);
+          (double) cdl_map[ScaleQuantumToMap(image->colormap[i].red)].red-luma);
         image->colormap[i].green=ClampToQuantum(luma+
-          color_correction.saturation*cdl_map[ScaleQuantumToMap(
+          color_correction.saturation*(double) cdl_map[ScaleQuantumToMap(
           image->colormap[i].green)].green-luma);
         image->colormap[i].blue=ClampToQuantum(luma+color_correction.saturation*
-          cdl_map[ScaleQuantumToMap(image->colormap[i].blue)].blue-luma);
+          (double) cdl_map[ScaleQuantumToMap(image->colormap[i].blue)].blue-
+          luma);
       }
     }
   /*
@@ -657,14 +658,14 @@ MagickExport MagickBooleanType ColorDecisionListImage(Image *image,
       }
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      luma=0.212656*GetPixelRed(q)+0.715158*GetPixelGreen(q)+
-        0.072186*GetPixelBlue(q);
+      luma=0.212656*(double) GetPixelRed(q)+0.715158*(double) GetPixelGreen(q)+
+        0.072186*(double) GetPixelBlue(q);
       SetPixelRed(q,ClampToQuantum(luma+color_correction.saturation*
-        (cdl_map[ScaleQuantumToMap(GetPixelRed(q))].red-luma)));
+        ((double) cdl_map[ScaleQuantumToMap(GetPixelRed(q))].red-luma)));
       SetPixelGreen(q,ClampToQuantum(luma+color_correction.saturation*
-        (cdl_map[ScaleQuantumToMap(GetPixelGreen(q))].green-luma)));
+        ((double) cdl_map[ScaleQuantumToMap(GetPixelGreen(q))].green-luma)));
       SetPixelBlue(q,ClampToQuantum(luma+color_correction.saturation*
-        (cdl_map[ScaleQuantumToMap(GetPixelBlue(q))].blue-luma)));
+        ((double) cdl_map[ScaleQuantumToMap(GetPixelBlue(q))].blue-luma)));
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
@@ -1573,24 +1574,24 @@ MagickExport MagickBooleanType ContrastStretchImageChannel(Image *image,
 MagickExport Image *EnhanceImage(const Image *image,ExceptionInfo *exception)
 {
 #define EnhancePixel(weight) \
-  mean=QuantumScale*((double) GetPixelRed(r)+pixel.red)/2.0; \
-  distance=QuantumScale*((double) GetPixelRed(r)-pixel.red); \
+  mean=QuantumScale*((double) GetPixelRed(r)+(double) pixel.red)/2.0; \
+  distance=QuantumScale*((double) GetPixelRed(r)-(double) pixel.red); \
   distance_squared=(4.0+mean)*distance*distance; \
-  mean=QuantumScale*((double) GetPixelGreen(r)+pixel.green)/2.0; \
-  distance=QuantumScale*((double) GetPixelGreen(r)-pixel.green); \
+  mean=QuantumScale*((double) GetPixelGreen(r)+(double) pixel.green)/2.0; \
+  distance=QuantumScale*((double) GetPixelGreen(r)-(double) pixel.green); \
   distance_squared+=(7.0-mean)*distance*distance; \
-  mean=QuantumScale*((double) GetPixelBlue(r)+pixel.blue)/2.0; \
-  distance=QuantumScale*((double) GetPixelBlue(r)-pixel.blue); \
+  mean=QuantumScale*((double) GetPixelBlue(r)+(double) pixel.blue)/2.0; \
+  distance=QuantumScale*((double) GetPixelBlue(r)-(double) pixel.blue); \
   distance_squared+=(5.0-mean)*distance*distance; \
-  mean=QuantumScale*((double) GetPixelOpacity(r)+pixel.opacity)/2.0; \
-  distance=QuantumScale*((double) GetPixelOpacity(r)-pixel.opacity); \
+  mean=QuantumScale*((double) GetPixelOpacity(r)+(double) pixel.opacity)/2.0; \
+  distance=QuantumScale*((double) GetPixelOpacity(r)-(double) pixel.opacity); \
   distance_squared+=(5.0-mean)*distance*distance; \
   if (distance_squared < 0.069) \
     { \
-      aggregate.red+=(weight)*GetPixelRed(r); \
-      aggregate.green+=(weight)*GetPixelGreen(r); \
-      aggregate.blue+=(weight)*GetPixelBlue(r); \
-      aggregate.opacity+=(weight)*GetPixelOpacity(r); \
+      aggregate.red+=(weight)*(double) GetPixelRed(r); \
+      aggregate.green+=(weight)*(double) GetPixelGreen(r); \
+      aggregate.blue+=(weight)*(double) GetPixelBlue(r); \
+      aggregate.opacity+=(weight)*(double) GetPixelOpacity(r); \
       total_weight+=(weight); \
     } \
   r++;
@@ -2233,23 +2234,24 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
           }
 #else
         if ((channel & RedChannel) != 0)
-          image->colormap[i].red=QuantumRange*gamma_pow(QuantumScale*
-            image->colormap[i].red,PerceptibleReciprocal(gamma));
+          image->colormap[i].red=(double) QuantumRange*gamma_pow(QuantumScale*
+            (double) image->colormap[i].red,PerceptibleReciprocal(gamma));
         if ((channel & GreenChannel) != 0)
-          image->colormap[i].green=QuantumRange*gamma_pow(QuantumScale*
-            image->colormap[i].green,PerceptibleReciprocal(gamma));
+          image->colormap[i].green=(double) QuantumRange*gamma_pow(QuantumScale*
+            (double) image->colormap[i].green,PerceptibleReciprocal(gamma));
         if ((channel & BlueChannel) != 0)
-          image->colormap[i].blue=QuantumRange*gamma_pow(QuantumScale*
-            image->colormap[i].blue,PerceptibleReciprocal(gamma));
+          image->colormap[i].blue=(double) QuantumRange*gamma_pow(QuantumScale*
+            (double) image->colormap[i].blue,PerceptibleReciprocal(gamma));
         if ((channel & OpacityChannel) != 0)
           {
             if (image->matte == MagickFalse)
-              image->colormap[i].opacity=QuantumRange*gamma_pow(QuantumScale*
-                image->colormap[i].opacity,PerceptibleReciprocal(gamma));
+              image->colormap[i].opacity=(double) QuantumRange*
+                gamma_pow(QuantumScale*(double) image->colormap[i].opacity,
+                PerceptibleReciprocal(gamma));
             else
-              image->colormap[i].opacity=QuantumRange-QuantumRange*gamma_pow(
-                QuantumScale*(QuantumRange-image->colormap[i].opacity),1.0/
-                gamma);
+              image->colormap[i].opacity=(double) QuantumRange-(double)
+                QuantumRange*gamma_pow(QuantumScale*((double) QuantumRange-
+                (double) image->colormap[i].opacity),1.0/gamma);
           }
 #endif
       }
@@ -2314,32 +2316,32 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
 #else
       if ((channel & SyncChannels) != 0)
         {
-          SetPixelRed(q,QuantumRange*gamma_pow(QuantumScale*GetPixelRed(q),
-            PerceptibleReciprocal(gamma)));
-          SetPixelGreen(q,QuantumRange*gamma_pow(QuantumScale*GetPixelGreen(q),
-            PerceptibleReciprocal(gamma)));
-          SetPixelBlue(q,QuantumRange*gamma_pow(QuantumScale*GetPixelBlue(q),
-            PerceptibleReciprocal(gamma)));
+          SetPixelRed(q,(double) QuantumRange*gamma_pow(QuantumScale*(double)
+            GetPixelRed(q),PerceptibleReciprocal(gamma)));
+          SetPixelGreen(q,(double) QuantumRange*gamma_pow(QuantumScale*(double)
+            GetPixelGreen(q),PerceptibleReciprocal(gamma)));
+          SetPixelBlue(q,(double) QuantumRange*gamma_pow(QuantumScale*(double)
+            GetPixelBlue(q),PerceptibleReciprocal(gamma)));
         }
       else
         {
           if ((channel & RedChannel) != 0)
-            SetPixelRed(q,QuantumRange*gamma_pow(QuantumScale*GetPixelRed(q),
-            PerceptibleReciprocal(gamma)));
+            SetPixelRed(q,(double) QuantumRange*gamma_pow(QuantumScale*
+              (double) GetPixelRed(q),PerceptibleReciprocal(gamma)));
           if ((channel & GreenChannel) != 0)
-            SetPixelGreen(q,QuantumRange*gamma_pow(QuantumScale*
-              GetPixelGreen(q),PerceptibleReciprocal(gamma)));
+            SetPixelGreen(q,(double) QuantumRange*gamma_pow(QuantumScale*
+              (double) GetPixelGreen(q),PerceptibleReciprocal(gamma)));
           if ((channel & BlueChannel) != 0)
-            SetPixelBlue(q,QuantumRange*gamma_pow(QuantumScale*GetPixelBlue(q),
-              PerceptibleReciprocal(gamma)));
+            SetPixelBlue(q,(double) QuantumRange*gamma_pow(QuantumScale*
+              (double) GetPixelBlue(q),PerceptibleReciprocal(gamma)));
           if ((channel & OpacityChannel) != 0)
             {
               if (image->matte == MagickFalse)
-                SetPixelOpacity(q,QuantumRange*gamma_pow(QuantumScale*
-                  GetPixelOpacity(q),PerceptibleReciprocal(gamma)));
+                SetPixelOpacity(q,(double) QuantumRange*gamma_pow(QuantumScale*
+                  (double) GetPixelOpacity(q),PerceptibleReciprocal(gamma)));
               else
-                SetPixelAlpha(q,QuantumRange*gamma_pow(QuantumScale*
-                  GetPixelAlpha(q),PerceptibleReciprocal(gamma)));
+                SetPixelAlpha(q,(double) QuantumRange*gamma_pow(QuantumScale*
+                  (double) GetPixelAlpha(q),PerceptibleReciprocal(gamma)));
             }
         }
 #endif
@@ -2502,8 +2504,9 @@ MagickExport MagickBooleanType GrayscaleImage(Image *image,
         }
         case MSPixelIntensityMethod:
         {
-          intensity=(MagickRealType) (((double) red*red+green*green+
-            blue*blue)/(3.0*QuantumRange));
+          intensity=(MagickRealType) (((double) red*(double) red+(double)
+            green*(double) green+(double) blue*(double) blue)/
+            (3.0*(double) QuantumRange));
           break;
         }
         case Rec601LumaPixelIntensityMethod:
@@ -2737,9 +2740,9 @@ MagickExport MagickBooleanType HaldClutImageChannel(Image *image,
     pixel4=zero;
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      point.x=QuantumScale*(level-1.0)*GetPixelRed(q);
-      point.y=QuantumScale*(level-1.0)*GetPixelGreen(q);
-      point.z=QuantumScale*(level-1.0)*GetPixelBlue(q);
+      point.x=QuantumScale*(level-1.0)*(double) GetPixelRed(q);
+      point.y=QuantumScale*(level-1.0)*(double) GetPixelGreen(q);
+      point.z=QuantumScale*(level-1.0)*(double) GetPixelBlue(q);
       offset=(double) (point.x+level*floor(point.y)+cube_size*floor(point.z));
       point.x-=floor(point.x);
       point.y-=floor(point.y);
@@ -2946,8 +2949,8 @@ static inline double LevelPixel(const double black_point,
     scale;
 
   scale=PerceptibleReciprocal(white_point-black_point);
-  level_pixel=QuantumRange*gamma_pow(scale*((double) pixel-black_point),
-    PerceptibleReciprocal(gamma));
+  level_pixel=(double) QuantumRange*gamma_pow(scale*((double) pixel-
+    black_point),PerceptibleReciprocal(gamma));
   return(level_pixel);
 }
 
@@ -3136,7 +3139,8 @@ MagickExport MagickBooleanType LevelizeImageChannel(Image *image,
 {
 #define LevelizeImageTag  "Levelize/Image"
 #define LevelizeValue(x) ClampToQuantum(((MagickRealType) gamma_pow((double) \
-  (QuantumScale*(x)),gamma))*(white_point-black_point)+black_point)
+  (QuantumScale*(double) (x)),gamma))*((double) white_point-(double) \
+  black_point)+(double) black_point)
 
   CacheView
     *image_view;
@@ -4364,9 +4368,9 @@ MagickExport MagickBooleanType SigmoidalContrastImage(Image *image,
 
   flags=ParseGeometry(levels,&geometry_info);
   if ((flags & SigmaValue) == 0)
-    geometry_info.sigma=1.0*QuantumRange/2.0;
+    geometry_info.sigma=1.0*(double) QuantumRange/2.0;
   if ((flags & PercentValue) != 0)
-    geometry_info.sigma=1.0*QuantumRange*geometry_info.sigma/100.0;
+    geometry_info.sigma=1.0*(double) QuantumRange*geometry_info.sigma/100.0;
   status=SigmoidalContrastImageChannel(image,DefaultChannels,sharpen,
     geometry_info.rho,geometry_info.sigma);
   return(status);

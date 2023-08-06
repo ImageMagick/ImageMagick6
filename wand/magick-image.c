@@ -957,10 +957,10 @@ WandExport MagickBooleanType MagickBlackThresholdImage(MagickWand *wand,
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
-  (void) FormatLocaleString(thresholds,MaxTextExtent,QuantumFormat ","
-    QuantumFormat "," QuantumFormat "," QuantumFormat,PixelGetRedQuantum(
-    threshold),PixelGetGreenQuantum(threshold),PixelGetBlueQuantum(threshold),
-    PixelGetOpacityQuantum(threshold));
+  (void) FormatLocaleString(thresholds,MaxTextExtent,"%g" ","
+    "%g" "," "%g" "," "%g",(double) PixelGetRedQuantum(threshold),(double)
+    PixelGetGreenQuantum(threshold),(double) PixelGetBlueQuantum(threshold),
+    (double) PixelGetOpacityQuantum(threshold));
   status=BlackThresholdImage(wand->images,thresholds);
   if (status == MagickFalse)
     InheritException(wand->exception,&wand->images->exception);
@@ -1657,11 +1657,11 @@ WandExport MagickBooleanType MagickColorizeImage(MagickWand *wand,
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
-  (void) FormatLocaleString(percent_opaque,MaxTextExtent,"%g,%g,%g,%g",(double)
-    (100.0*QuantumScale*PixelGetRedQuantum(opacity)),(double) (100.0*
-    QuantumScale*PixelGetGreenQuantum(opacity)),(double) (100.0*QuantumScale*
-    PixelGetBlueQuantum(opacity)),(double) (100.0*QuantumScale*
-    PixelGetOpacityQuantum(opacity)));
+  (void) FormatLocaleString(percent_opaque,MaxTextExtent,"%g,%g,%g,%g",
+    100.0*QuantumScale*(double) PixelGetRedQuantum(opacity),100.0*
+    QuantumScale*(double) PixelGetGreenQuantum(opacity),100.0*QuantumScale*
+    (double) PixelGetBlueQuantum(opacity),100.0*QuantumScale*
+    (double) PixelGetOpacityQuantum(opacity));
   PixelGetQuantumColor(colorize,&target);
   colorize_image=ColorizeImage(wand->images,percent_opaque,target,
     wand->exception);
@@ -10964,8 +10964,8 @@ WandExport MagickBooleanType MagickSetImageOpacity(MagickWand *wand,
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
-  status=SetImageOpacity(wand->images,ClampToQuantum((MagickRealType)
-    QuantumRange-QuantumRange*alpha));
+  status=SetImageOpacity(wand->images,ClampToQuantum((double) QuantumRange-
+    (double) QuantumRange*alpha));
   if (status == MagickFalse)
     InheritException(wand->exception,&wand->images->exception);
   return(status);
@@ -12743,11 +12743,10 @@ WandExport MagickBooleanType MagickTintImage(MagickWand *wand,
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
   (void) FormatLocaleString(percent_opaque,MaxTextExtent,
-    "%g,%g,%g,%g",(double) (100.0*QuantumScale*
-    PixelGetRedQuantum(opacity)),(double) (100.0*QuantumScale*
-    PixelGetGreenQuantum(opacity)),(double) (100.0*QuantumScale*
-    PixelGetBlueQuantum(opacity)),(double) (100.0*QuantumScale*
-    PixelGetOpacityQuantum(opacity)));
+    "%g,%g,%g,%g",100.0*QuantumScale*(double) PixelGetRedQuantum(opacity),
+    100.0*QuantumScale*(double) PixelGetGreenQuantum(opacity),100.0*
+    QuantumScale*(double) PixelGetBlueQuantum(opacity),100.0*QuantumScale*
+    (double) PixelGetOpacityQuantum(opacity));
   PixelGetQuantumColor(tint,&target);
   tint_image=TintImage(wand->images,percent_opaque,target,wand->exception);
   if (tint_image == (Image *) NULL)
@@ -12919,7 +12918,7 @@ WandExport MagickBooleanType MagickTransparentPaintImage(MagickWand *wand,
   PixelGetMagickColor(target,&target_pixel);
   wand->images->fuzz=fuzz;
   status=TransparentPaintImage(wand->images,&target_pixel,ClampToQuantum(
-    (MagickRealType) QuantumRange-QuantumRange*alpha),invert);
+    (double) QuantumRange-(double) QuantumRange*alpha),invert);
   if (status == MagickFalse)
     InheritException(wand->exception,&wand->images->exception);
   return(status);
@@ -13312,9 +13311,9 @@ WandExport MagickBooleanType MagickWhiteThresholdImage(MagickWand *wand,
   if (wand->images == (Image *) NULL)
     ThrowWandException(WandError,"ContainsNoImages",wand->name);
   (void) FormatLocaleString(thresholds,MaxTextExtent,
-    QuantumFormat "," QuantumFormat "," QuantumFormat "," QuantumFormat,
-    PixelGetRedQuantum(threshold),PixelGetGreenQuantum(threshold),
-    PixelGetBlueQuantum(threshold),PixelGetOpacityQuantum(threshold));
+    "%g" "," "%g" "," "%g" "," "%g",(double) PixelGetRedQuantum(threshold),
+    (double) PixelGetGreenQuantum(threshold),(double)
+    PixelGetBlueQuantum(threshold),(double) PixelGetOpacityQuantum(threshold));
   status=WhiteThresholdImage(wand->images,thresholds);
   if (status == MagickFalse)
     InheritException(wand->exception,&wand->images->exception);

@@ -1057,9 +1057,9 @@ static MagickBooleanType WriteXPMImage(const ImageInfo *image_info,Image *image)
                 opacity=i;
                 continue;
               }
-            alpha=(Quantum) TransparentOpacity-(MagickRealType)
+            alpha=(MagickRealType) TransparentOpacity-(MagickRealType)
               image->colormap[i].opacity;
-            beta=(Quantum) TransparentOpacity-(MagickRealType)
+            beta=(MagickRealType) TransparentOpacity-(MagickRealType)
               image->colormap[opacity].opacity;
             if (alpha < beta)
               opacity=i;
@@ -1075,9 +1075,9 @@ static MagickBooleanType WriteXPMImage(const ImageInfo *image_info,Image *image)
                     opacity=i;
                     continue;
                   }
-                alpha=(Quantum) TransparentOpacity-(MagickRealType)
+                alpha=(MagickRealType) TransparentOpacity-(MagickRealType)
                   image->colormap[i].opacity;
-                beta=(Quantum) TransparentOpacity-(MagickRealType)
+                beta=(MagickRealType) TransparentOpacity-(MagickRealType)
                   image->colormap[opacity].opacity;
                 if (alpha < beta)
                   opacity=i;

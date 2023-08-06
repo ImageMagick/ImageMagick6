@@ -1777,6 +1777,8 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
                 blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
                   sizeof(unsigned char));
             }
+          else if (status == MagickFalse)
+            blob_info->blob=RelinquishMagickMemory(blob_info->blob);
         }
     }
   else
@@ -2040,6 +2042,8 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
                 blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
                   sizeof(unsigned char));
             }
+          else if (status == MagickFalse)
+            blob_info->blob=RelinquishMagickMemory(blob_info->blob);
         }
     }
   else

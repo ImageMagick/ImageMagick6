@@ -345,8 +345,8 @@ static MagickBooleanType WriteUYVYImage(const ImageInfo *image_info,
     {
       if (full != MagickFalse)
         {
-          pixel.green=(pixel.green+GetPixelGreen(p))/2;
-          pixel.blue=(pixel.blue+GetPixelBlue(p))/2;
+          pixel.green=(pixel.green+(MagickRealType) GetPixelGreen(p))/2;
+          pixel.blue=(pixel.blue+(MagickRealType) GetPixelBlue(p))/2;
           (void) WriteBlobByte(image,ScaleQuantumToChar((Quantum) pixel.green));
           (void) WriteBlobByte(image,ScaleQuantumToChar((Quantum) pixel.red));
           (void) WriteBlobByte(image,ScaleQuantumToChar((Quantum) pixel.blue));
