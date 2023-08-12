@@ -950,6 +950,7 @@ MODULE_EXTRA_CPPFLAGS
 LIBSTDCLDFLAGS
 PERL_MAKE_OPTIONS
 MAGICK_LT_RELEASE_OPTS
+MAGICK_SECURITY_POLICY
 MAGICK_ABI_SUFFIX
 QUANTUM_DEPTH
 LEGACY_SUPPORT_FALSE
@@ -1214,6 +1215,7 @@ with_method_prefix
 enable_legacy_support
 with_quantum_depth
 with_cache
+with_security_policy
 with_frozenpaths
 with_magick_plus_plus
 with_package_release_name
@@ -2033,6 +2035,8 @@ Optional Packages:
                           number of bits in a pixel quantum (default 16)
   --with-cache=THRESHOLD  set pixel cache memory threshold (default available
                           memory)
+  --with-security-policy=open|limited|secure|websafe
+                          security policy variant to enforce, [default=open].
   --with-frozenpaths      freeze delegate paths
   --without-magick-plus-plus
                           disable build/install of Magick++
@@ -5128,7 +5132,7 @@ MAGICK_PATCHLEVEL_VERSION=94
 
 MAGICK_VERSION=6.9.12-94
 
-MAGICK_GIT_REVISION=2624ce39f:20230803
+MAGICK_GIT_REVISION=6bc911e1d:20230811
 
 
 # Substitute library versioning
@@ -5162,7 +5166,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,12,94
 
-PACKAGE_RELEASE_DATE=2023-08-03
+PACKAGE_RELEASE_DATE=2023-08-11
 
 
 # Ensure that make can run correctly
@@ -23454,6 +23458,42 @@ printf "%s\n" "#define PixelCacheThreshold \"$with_cache\"" >>confdefs.h
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-cache=$with_cache "
 fi
 
+# Set security policy
+ # MAGICK_SECURITY_POLICY
+
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking which variant of security policy to enforce" >&5
+printf %s "checking which variant of security policy to enforce... " >&6; }
+
+# Check whether --with-security-policy was given.
+if test ${with_security_policy+y}
+then :
+  withval=$with_security_policy; case $withval in
+    open|limited|secure|websafe)
+      ;;
+    *)
+      as_fn_error $? "Unknown argument to --with-security-policy" "$LINENO" 5
+      ;;
+    esac
+    magick_cv_with_security_policy=$with_security_policy
+else $as_nop
+  if test ${magick_cv_with_security_policy+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  magick_cv_with_security_policy=open
+fi
+
+    MAGICK_SECURITY_POLICY=$magick_cv_with_security_policy
+fi
+
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $with_security_policy" >&5
+printf "%s\n" "$with_security_policy" >&6; }
+
+
+
+printf "%s\n" "#define MAGICK_SECURITY_POLICY \"$MAGICK_SECURITY_POLICY\"" >>confdefs.h
+
+
 # Disable/Enable support for full delegate paths
 
 # Check whether --with-frozenpaths was given.
@@ -38208,7 +38248,7 @@ fi
 # ==============================================================================
 # Generate build environment
 # ==============================================================================
-ac_config_files="$ac_config_files common.shi config/configure.xml config/delegates.xml config/ImageMagick.rdf config/MagickCore.dox config/MagickWand.dox config/Magick++.dox config/type-apple.xml config/type-dejavu.xml config/type-ghostscript.xml config/type-urw-base35.xml config/type-windows.xml config/type.xml ImageMagick.spec Magick++/bin/Magick++-config magick/ImageMagick.pc Magick++/lib/ImageMagick++.pc Magick++/lib/Magick++.pc magick/Magick-config magick/MagickCore-config magick/MagickCore.pc magick/version.h Makefile magick.sh PerlMagick/check.sh PerlMagick/default/Magick.pm PerlMagick/Makefile.PL PerlMagick/default/Makefile.PL PerlMagick/quantum/Makefile.PL PerlMagick/quantum/quantum.pm PerlMagick/quantum/quantum.xs PerlMagick/quantum/typemap utilities/animate.1 utilities/compare.1 utilities/composite.1 utilities/conjure.1 utilities/convert.1 utilities/display.1 utilities/identify.1 utilities/ImageMagick.1 utilities/import.1 utilities/mogrify.1 utilities/montage.1 utilities/stream.1 wand/MagickWand-config wand/MagickWand.pc wand/Wand-config wand/Wand.pc"
+ac_config_files="$ac_config_files common.shi config/configure.xml config/delegates.xml config/ImageMagick.rdf config/MagickCore.dox config/MagickWand.dox config/Magick++.dox config/policy.xml:config/"$MAGICK_SECURITY_POLICY"-policy.xml config/type-apple.xml config/type-dejavu.xml config/type-ghostscript.xml config/type-urw-base35.xml config/type-windows.xml config/type.xml ImageMagick.spec Magick++/bin/Magick++-config magick/ImageMagick.pc Magick++/lib/ImageMagick++.pc Magick++/lib/Magick++.pc magick/Magick-config magick/MagickCore-config magick/MagickCore.pc magick/version.h Makefile magick.sh PerlMagick/check.sh PerlMagick/default/Magick.pm PerlMagick/Makefile.PL PerlMagick/default/Makefile.PL PerlMagick/quantum/Makefile.PL PerlMagick/quantum/quantum.pm PerlMagick/quantum/quantum.xs PerlMagick/quantum/typemap utilities/animate.1 utilities/compare.1 utilities/composite.1 utilities/conjure.1 utilities/convert.1 utilities/display.1 utilities/identify.1 utilities/ImageMagick.1 utilities/import.1 utilities/mogrify.1 utilities/montage.1 utilities/stream.1 wand/MagickWand-config wand/MagickWand.pc wand/Wand-config wand/Wand.pc"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -39577,6 +39617,7 @@ do
     "config/MagickCore.dox") CONFIG_FILES="$CONFIG_FILES config/MagickCore.dox" ;;
     "config/MagickWand.dox") CONFIG_FILES="$CONFIG_FILES config/MagickWand.dox" ;;
     "config/Magick++.dox") CONFIG_FILES="$CONFIG_FILES config/Magick++.dox" ;;
+    "config/policy.xml") CONFIG_FILES="$CONFIG_FILES config/policy.xml:config/"$MAGICK_SECURITY_POLICY"-policy.xml" ;;
     "config/type-apple.xml") CONFIG_FILES="$CONFIG_FILES config/type-apple.xml" ;;
     "config/type-dejavu.xml") CONFIG_FILES="$CONFIG_FILES config/type-dejavu.xml" ;;
     "config/type-ghostscript.xml") CONFIG_FILES="$CONFIG_FILES config/type-ghostscript.xml" ;;
@@ -41181,6 +41222,7 @@ Shared libraries  --enable-shared=$enable_shared  $libtool_build_shared_libs
 Static libraries  --enable-static=$enable_static  $libtool_build_static_libs
 Module support    --with-modules=$build_modules   $build_modules
 GNU ld            --with-gnu-ld=$with_gnu_ld      $lt_cv_prog_gnu_ld
+Security policy   --with-security-policy=$with_security_policy  $with_security_policy
 Quantum depth     --with-quantum-depth=$with_quantum_depth	$with_quantum_depth
 High Dynamic Range Imagery
                   --enable-hdri=$enable_hdri		$enable_hdri
@@ -41279,6 +41321,7 @@ Shared libraries  --enable-shared=$enable_shared  $libtool_build_shared_libs
 Static libraries  --enable-static=$enable_static  $libtool_build_static_libs
 Module support    --with-modules=$build_modules   $build_modules
 GNU ld            --with-gnu-ld=$with_gnu_ld      $lt_cv_prog_gnu_ld
+Security policy   --with-security-policy=$with_security_policy  $with_security_policy
 Quantum depth     --with-quantum-depth=$with_quantum_depth	$with_quantum_depth
 High Dynamic Range Imagery
                   --enable-hdri=$enable_hdri		$enable_hdri

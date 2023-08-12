@@ -629,6 +629,10 @@ MagickExport void ListMagickVersion(FILE *file)
     GetMagickVersion((size_t *) NULL));
   (void) FormatLocaleFile(file,"Copyright: %s\n",GetMagickCopyright());
   (void) FormatLocaleFile(file,"License: %s\n",GetMagickLicense());
+#if defined(MAGICKCORE_MAGICK_SECURITY_POLICY)
+  (void) FormatLocaleFile(file,"Security policy: %s\n",
+    MAGICKCORE_MAGICK_SECURITY_POLICY);
+#endif
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && defined(_MSC_FULL_VER)
   (void) FormatLocaleFile(file,"Visual C++: %d\n",_MSC_FULL_VER);
 #endif

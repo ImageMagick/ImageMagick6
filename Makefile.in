@@ -303,7 +303,7 @@ CONFIG_HEADER = $(top_builddir)/config/config.h
 CONFIG_CLEAN_FILES = common.shi config/configure.xml \
 	config/delegates.xml config/ImageMagick.rdf \
 	config/MagickCore.dox config/MagickWand.dox \
-	config/Magick++.dox config/type-apple.xml \
+	config/Magick++.dox config/policy.xml config/type-apple.xml \
 	config/type-dejavu.xml config/type-ghostscript.xml \
 	config/type-urw-base35.xml config/type-windows.xml \
 	config/type.xml ImageMagick.spec Magick++/bin/Magick++-config \
@@ -3177,6 +3177,7 @@ MAGICK_MICRO_VERSION = @MAGICK_MICRO_VERSION@
 MAGICK_MINOR_VERSION = @MAGICK_MINOR_VERSION@
 MAGICK_PATCHLEVEL_VERSION = @MAGICK_PATCHLEVEL_VERSION@
 MAGICK_PCFLAGS = @MAGICK_PCFLAGS@
+MAGICK_SECURITY_POLICY = @MAGICK_SECURITY_POLICY@
 MAGICK_TARGET_CPU = @MAGICK_TARGET_CPU@
 MAGICK_TARGET_OS = @MAGICK_TARGET_OS@
 MAGICK_TARGET_VENDOR = @MAGICK_TARGET_VENDOR@
@@ -3544,14 +3545,17 @@ CONFIG_EXTRA_DIST = \
 	config/ImageMagick.rc \
 	config/ImageMagick.rdf.in \
 	config/install-sh \
+  config/limited-policy.xml \
 	config/lndir.sh \
 	config/locale.md \
 	config/locale.xml \
 	config/log.xml \
 	config/magic.xml \
 	config/mime.xml \
+  config/open-policy.xml \
 	config/policy.xml \
 	config/quantization-table.xml \
+  config/secure-policy.xml \
 	config/sRGB.icm \
 	config/thresholds.xml \
 	config/type-apple.xml.in \
@@ -3559,7 +3563,8 @@ CONFIG_EXTRA_DIST = \
 	config/type-ghostscript.xml.in \
 	config/type-urw-base35.xml.in \
 	config/type-windows.xml.in \
-	config/type.xml.in
+	config/type.xml.in \
+  config/websafe-policy.xml
 
 
 # Where coder modules get installed
@@ -5749,6 +5754,8 @@ config/MagickCore.dox: $(top_builddir)/config.status $(top_srcdir)/config/Magick
 config/MagickWand.dox: $(top_builddir)/config.status $(top_srcdir)/config/MagickWand.dox.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 config/Magick++.dox: $(top_builddir)/config.status $(top_srcdir)/config/Magick++.dox.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+config/policy.xml: $(top_builddir)/config.status 
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 config/type-apple.xml: $(top_builddir)/config.status $(top_srcdir)/config/type-apple.xml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@

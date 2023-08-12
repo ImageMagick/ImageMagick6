@@ -804,6 +804,32 @@ if test "$with_cache" != ''; then
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-cache=$with_cache "
 fi
 
+# Set security policy
+m4_define([_MAGICK_SECURITY_POLICY],
+[m4_define([MAGICK_SECURITY_POLICY_DEFAULT], [m4_if($1, limited, limited, m4_if($1, secure, secure, open))])dnl
+  AC_MSG_CHECKING([which variant of security policy to enforce])
+  AC_ARG_WITH([security-policy],
+    [AS_HELP_STRING([--with-security-policy=open|limited|secure|websafe],
+      [security policy variant to enforce, @<:@default=]MAGICK_SECURITY_POLICY_DEFAULT[@:>@.])],
+    [case $withval in
+    open|limited|secure|websafe)
+      ;;
+    *)
+      AC_MSG_ERROR([Unknown argument to --with-security-policy])
+      ;;
+    esac
+    magick_cv_with_security_policy=$with_security_policy],
+    [AC_CACHE_VAL([magick_cv_with_security_policy],
+      [magick_cv_with_security_policy=]MAGICK_SECURITY_POLICY_DEFAULT)
+    MAGICK_SECURITY_POLICY=$magick_cv_with_security_policy])
+  AC_MSG_RESULT([$with_security_policy])
+]) # MAGICK_SECURITY_POLICY
+
+_MAGICK_SECURITY_POLICY([open])
+AC_SUBST([MAGICK_SECURITY_POLICY])
+AC_DEFINE_UNQUOTED([MAGICK_SECURITY_POLICY],["$MAGICK_SECURITY_POLICY"],
+  [Security Policy])
+
 # Disable/Enable support for full delegate paths
 AC_ARG_WITH([frozenpaths],
     [AS_HELP_STRING([--with-frozenpaths],
@@ -3925,6 +3951,7 @@ AC_CONFIG_FILES([\
     config/MagickCore.dox \
     config/MagickWand.dox \
     config/Magick++.dox \
+    config/policy.xml:config/"$MAGICK_SECURITY_POLICY"-policy.xml \
     config/type-apple.xml \
     config/type-dejavu.xml \
     config/type-ghostscript.xml \
@@ -3985,6 +4012,7 @@ Shared libraries  --enable-shared=$enable_shared  $libtool_build_shared_libs
 Static libraries  --enable-static=$enable_static  $libtool_build_static_libs
 Module support    --with-modules=$build_modules   $build_modules
 GNU ld            --with-gnu-ld=$with_gnu_ld      $lt_cv_prog_gnu_ld
+Security policy   --with-security-policy=$with_security_policy  $with_security_policy
 Quantum depth     --with-quantum-depth=$with_quantum_depth	$with_quantum_depth
 High Dynamic Range Imagery
                   --enable-hdri=$enable_hdri		$enable_hdri

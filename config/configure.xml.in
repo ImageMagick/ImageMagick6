@@ -40,6 +40,7 @@
   <configure name="PREFIX" value="@PREFIX_DIR@"/>
   <configure name="QuantumDepth" value="@QUANTUM_DEPTH@"/>
   <configure name="RELEASE_DATE" value="@PACKAGE_RELEASE_DATE@"/>
+  <configure name="SECURITY_POLICY" value="@MAGICK_SECURITY_POLICY@"/>
   <configure name="SHAREARCH_PATH" value="@SHAREARCH_PATH@"/>
   <configure name="SHARE_PATH" value="@SHARE_PATH@"/>
   <configure name="TARGET_CPU" value="@MAGICK_TARGET_CPU@"/>
