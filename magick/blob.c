@@ -274,7 +274,7 @@ MagickExport MagickBooleanType BlobToFile(char *filename,const void *blob,
       ThrowFileException(exception,BlobError,"UnableToWriteBlob",filename);
       return(MagickFalse);
     }
-  for (i=0; i < length; i+=count)
+  for (i=0; i < length; i+=(size_t) count)
   {
     count=write(file,(const char *) blob+i,MagickMin(length-i,(size_t)
       MAGICK_SSIZE_MAX));
@@ -842,7 +842,7 @@ MagickPrivate void DisassociateBlob(Image *image)
 MagickExport MagickBooleanType DiscardBlobBytes(Image *image,
   const MagickSizeType length)
 {
-  MagickOffsetType
+  MagickSizeType
     i;
 
   size_t

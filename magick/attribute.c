@@ -535,8 +535,8 @@ MagickExport RectangleInfo GetImageBoundingBox(const Image *image,
       "GeometryDoesNotContainImage","`%s'",image->filename);
   else
     {
-      bounds.width-=(bounds.x-1);
-      bounds.height-=(bounds.y-1);
+      bounds.width-=(size_t) (bounds.x-1);
+      bounds.height-=(size_t) (bounds.y-1);
     }
   return(bounds);
 }
