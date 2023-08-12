@@ -1088,14 +1088,13 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
   if (node_info->number_unique != 0)
     {
       MagickRealType
+        alpha,
+        beta,
+        distance,
         pixel;
 
       DoublePixelPacket
         *magick_restrict q;
-
-      MagickRealType
-        alpha,
-        distance;
 
       PixelPacket
         *magick_restrict p;
@@ -1106,35 +1105,34 @@ static void ClosestColor(const Image *image,CubeInfo *cube_info,
       p=image->colormap+node_info->color_number;
       q=(&cube_info->target);
       alpha=1.0;
+      beta=1.0;
       if (cube_info->associate_alpha != MagickFalse)
-        alpha=(MagickRealType) (QuantumScale*(MagickRealType) GetPixelAlpha(p)*
-          QuantumScale*(MagickRealType) GetPixelAlpha(q));
-      pixel=(MagickRealType) GetPixelRed(p)-(MagickRealType) GetPixelRed(q);
-      if (IsHueCompatibleColorspace(image->colorspace) != MagickFalse)
         {
-          /*
-            Compute an arc distance for hue.  It should be a vector angle of
-            'S'/'W' length with 'L'/'B' forming appropriate cones.
-          */
-          if (fabs((double) pixel) > ((MagickRealType) QuantumRange/2.0))
-            pixel-=(MagickRealType) QuantumRange;
-          pixel*=2.0;
+          alpha=(MagickRealType) QuantumScale*GetPixelAlpha(p);
+          beta=(MagickRealType) QuantumScale*GetPixelAlpha(q);
         }
-      distance=alpha*pixel*pixel;
+      pixel=alpha*GetPixelRed(p)-beta*GetPixelRed(q);
+      distance=pixel*pixel;
       if (distance <= cube_info->distance)
         {
-          pixel=(MagickRealType) GetPixelGreen(p)-(MagickRealType)
-            GetPixelGreen(q);
-          distance+=alpha*pixel*pixel;
+          pixel=(MagickRealType) alpha*GetPixelGreen(p)-beta*GetPixelGreen(q);
+          distance+=pixel*pixel;
           if (distance <= cube_info->distance)
             {
-              pixel=(MagickRealType) GetPixelBlue(p)-(MagickRealType)
-            GetPixelBlue(q);
-              distance+=alpha*pixel*pixel;
+              pixel=(MagickRealType) alpha*GetPixelBlue(p)-beta*GetPixelBlue(q);
+              distance+=pixel*pixel;
               if (distance <= cube_info->distance)
                 {
-                  cube_info->distance=distance;
-                  cube_info->color_number=node_info->color_number;
+                  if (cube_info->associate_alpha != MagickFalse)
+                    {
+                      pixel=(MagickRealType) GetPixelAlpha(p)-GetPixelAlpha(q);
+                      distance+=pixel*pixel;
+                    }
+                  if (distance <= cube_info->distance)
+                    {
+                      cube_info->distance=distance;
+                      cube_info->color_number=node_info->color_number;
+                    }
                 }
             }
         }
