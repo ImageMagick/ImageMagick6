@@ -67,7 +67,6 @@ CONFIG_EXTRA_DIST = \
 	config/magic.xml \
 	config/mime.xml \
   config/open-policy.xml \
-	config/policy.xml \
 	config/quantization-table.xml \
   config/secure-policy.xml \
 	config/sRGB.icm \
