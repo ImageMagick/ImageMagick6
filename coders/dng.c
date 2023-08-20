@@ -292,6 +292,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
         libraw_close(raw_info);
         return(DestroyImageList(image));
       }
+    raw_info->params.use_camera_wb=1;
     libraw_set_dataerror_handler(raw_info,LibRawDataError,exception);
     raw_info->params.use_camera_wb=IsStringTrue(GetImageOption(image_info,
       "dng:use-camera-wb"));
