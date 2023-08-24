@@ -232,9 +232,9 @@ static int FillBasicWEBPInfo(Image *image,const uint8_t *stream,size_t length,
   return(webp_status);
 }
 
-static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
-  size_t length,WebPDecoderConfig *configure,ExceptionInfo *exception,
-  MagickBooleanType is_first)
+static int ReadSingleWEBPImage(const ImageInfo *image_info,Image *image,
+  const uint8_t *stream,size_t length,WebPDecoderConfig *configure,
+  ExceptionInfo *exception,MagickBooleanType is_first)
 {
   int
     webp_status;
@@ -290,6 +290,9 @@ static int ReadSingleWEBPImage(Image *image,const uint8_t *stream,
 
   if (IsWEBPImageLossless((unsigned char *) stream,length) != MagickFalse)
     image->quality=100;
+
+  if (image_info->ping != MagickFalse)
+    return(webp_status);
 
   webp_status=WebPDecode(stream,length,configure);
   if (webp_status != VP8_STATUS_OK)
@@ -461,15 +464,17 @@ static int ReadAnimatedWEBPImage(const ImageInfo *image_info,Image *image,
             CloneImageProperties(image,original_image);
             image->page.x=(ssize_t) iter.x_offset;
             image->page.y=(ssize_t) iter.y_offset;
-            webp_status=ReadSingleWEBPImage(image,iter.fragment.bytes,
-              iter.fragment.size,configure,exception,MagickFalse);
+            webp_status=ReadSingleWEBPImage(image_info,image,
+              iter.fragment.bytes,iter.fragment.size,configure,exception,
+              MagickFalse);
           }
         else
           {
             image->page.x=(ssize_t) iter.x_offset;
             image->page.y=(ssize_t) iter.y_offset;
-            webp_status=ReadSingleWEBPImage(image,iter.fragment.bytes,
-              iter.fragment.size,configure,exception,MagickTrue);
+            webp_status=ReadSingleWEBPImage(image_info,image,
+              iter.fragment.bytes,iter.fragment.size,configure,exception,
+              MagickTrue);
           }
         if (webp_status != VP8_STATUS_OK)
           break;
@@ -581,7 +586,8 @@ static Image *ReadWEBPImage(const ImageInfo *image_info,
       webp_status=VP8_STATUS_UNSUPPORTED_FEATURE;
 #endif
     } else {
-      webp_status=ReadSingleWEBPImage(image,stream,length,&configure,exception,MagickFalse);
+      webp_status=ReadSingleWEBPImage(image_info,image,stream,length,
+        &configure,exception,MagickFalse);
     }
   }
 
