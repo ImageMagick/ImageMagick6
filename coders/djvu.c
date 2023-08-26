@@ -658,16 +658,7 @@ static Image *ReadOneDJVUImage(LoadContext* lc,const int pagenum,
                 image->storage_class = DirectClass;
                 /* fixme:  MAGICKCORE_QUANTUM_DEPTH ?*/
                 image->depth =  8UL;    /* i only support that? */
-
-                image->matte = MagickTrue;
-                /* is this useful? */
         }
-        status=SetImageExtent(image,image->columns,image->rows);
-        if (status == MagickFalse)
-          {
-            InheritException(exception,&image->exception);
-            return(DestroyImageList(image));
-          }
 #if DEBUG
         printf("now filling %.20g x %.20g\n",(double) image->columns,(double)
           image->rows);
@@ -677,7 +668,18 @@ static Image *ReadOneDJVUImage(LoadContext* lc,const int pagenum,
 #if 1                           /* per_line */
 
         /* q = QueueAuthenticPixels(image,0,0,image->columns,image->rows); */
-        get_page_image(lc, lc->page, 0, 0, info.width, info.height, image_info);
+       
+        if (image->ping == MagickFalse)
+          {
+            status=SetImageExtent(image,image->columns,image->rows);
+            if (status == MagickFalse)
+              {
+                InheritException(exception,&image->exception);
+                return(DestroyImageList(image));
+              }
+            get_page_image(lc, lc->page, 0, 0, image->columns, image->rows,
+              image_info);
+          }
 #else
         int i;
         for (i = 0;i< image->rows; i++)
