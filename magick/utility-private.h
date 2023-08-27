@@ -63,16 +63,18 @@ static inline wchar_t *create_wchar_path(const char *utf8)
 
       (void) FormatLocaleString(buffer,MaxTextExtent,"\\\\?\\%s",utf8);
       count+=4;
-      longPath=(wchar_t *) NTAcquireQuantumMemory(count,sizeof(*longPath));
+      longPath=(wchar_t *) NTAcquireQuantumMemory((size_t) count,
+        sizeof(*longPath));
       if (longPath == (wchar_t *) NULL)
         return((wchar_t *) NULL);
       count=MultiByteToWideChar(CP_UTF8,0,buffer,-1,longPath,count);
       if (count != 0)
-        count=GetShortPathNameW(longPath,shortPath,MAX_PATH);
+        count=(int) GetShortPathNameW(longPath,shortPath,MAX_PATH);
       longPath=(wchar_t *) RelinquishMagickMemory(longPath);
       if ((count < 5) || (count >= MAX_PATH))
         return((wchar_t *) NULL);
-      wideChar=(wchar_t *) NTAcquireQuantumMemory(count-3,sizeof(*wideChar));
+      wideChar=(wchar_t *) NTAcquireQuantumMemory((size_t) count-3,
+        sizeof(*wideChar));
       wcscpy(wideChar,shortPath+4);
       return(wideChar);
     }
@@ -203,7 +205,8 @@ static inline FILE *popen_utf8(const char *command,const char *type)
   length=MultiByteToWideChar(CP_UTF8,0,command,-1,NULL,0);
   if (length == 0)
     return(file);
-  command_wide=(wchar_t *) AcquireQuantumMemory(length,sizeof(*command_wide));
+  command_wide=(wchar_t *) AcquireQuantumMemory((size_t) length,
+    sizeof(*command_wide));
   if (command_wide == (wchar_t *) NULL)
     return(file);
   length=MultiByteToWideChar(CP_UTF8,0,command,-1,command_wide,length);
