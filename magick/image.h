@@ -289,7 +289,7 @@ struct _Image
   MagickBooleanType
     debug;            /* debug output attribute */
 
-  volatile ssize_t
+  ssize_t
     reference_count;
 
   SemaphoreInfo
