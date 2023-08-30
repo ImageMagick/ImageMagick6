@@ -3949,7 +3949,7 @@ AC_CONFIG_FILES([\
     config/MagickCore.dox \
     config/MagickWand.dox \
     config/Magick++.dox \
-    config/policy.xml:config/"$magick_cv_with_security_policy"-policy.xml \
+    config/policy.xml:config/policy-"$magick_cv_with_security_policy".xml \
     config/type-apple.xml \
     config/type-dejavu.xml \
     config/type-ghostscript.xml \
