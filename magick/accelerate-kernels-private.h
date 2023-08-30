@@ -2274,6 +2274,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
     switch ((int) floor(h) % 6)
     {
       case 0:
+      default:
         {
           r=tmin+c;
           g=tmin+x;
@@ -2314,12 +2315,6 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
           g=tmin;
           b=tmin+x;
           break;
-        }
-      default:
-        {
-          r=0.0;
-          g=0.0;
-          b=0.0;
         }
     }
     *red=ClampToQuantum(QuantumRange*r);
