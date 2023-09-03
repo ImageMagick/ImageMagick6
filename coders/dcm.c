@@ -3159,7 +3159,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   use_explicit=MagickFalse;
   explicit_retry = MagickFalse;
 
-  while (TellBlob(image) < (MagickOffsetType) GetBlobSize(image))
+  while (TellBlob(image) < (MagickOffsetType) (GetBlobSize(image)-10))
   {
     for (group=0; (group != 0x7FE0) || (element != 0x0010) ; )
     {
@@ -4104,8 +4104,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if ((image->colormap == (PixelPacket *) NULL) &&
           (info.samples_per_pixel == 1))
         {
-          int
-            index;
+          Quantum
+            color;
 
           size_t
             one;
@@ -4118,40 +4118,28 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (redmap != (int *) NULL)
             for (i=0; i < (ssize_t) colors; i++)
             {
-              index=redmap[i];
-              if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index < (int) info.scale_size))
-                index=(int) info.scale[index];
-              image->colormap[i].red=(Quantum) index;
+              color=ScaleShortToQuantum(redmap[i]);
+              image->colormap[i].red=color;
             }
           if (greenmap != (int *) NULL)
             for (i=0; i < (ssize_t) colors; i++)
             {
-              index=greenmap[i];
-              if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index < (int) info.scale_size))
-                index=(int) info.scale[index];
-              image->colormap[i].green=(Quantum) index;
+              color=ScaleShortToQuantum(greenmap[i]);
+              image->colormap[i].green=color;
             }
           if (bluemap != (int *) NULL)
             for (i=0; i < (ssize_t) colors; i++)
             {
-              index=bluemap[i];
-              if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index < (int) info.scale_size))
-                index=(int) info.scale[index];
-              image->colormap[i].blue=(Quantum) index;
+              color=ScaleShortToQuantum(bluemap[i]);
+              image->colormap[i].blue=color;
             }
           if (graymap != (int *) NULL)
             for (i=0; i < (ssize_t) colors; i++)
             {
-              index=graymap[i];
-              if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
-                  (index < (int) info.scale_size))
-                index=(int) info.scale[index];
-              image->colormap[i].red=(Quantum) index;
-              image->colormap[i].green=(Quantum) index;
-              image->colormap[i].blue=(Quantum) index;
+              color=ScaleShortToQuantum(graymap[i]);
+              image->colormap[i].red=color;
+              image->colormap[i].green=color;
+              image->colormap[i].blue=color;
             }
         }
       if (image->compression == RLECompression)
@@ -4339,7 +4327,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             break;
         }
     }
-    if (TellBlob(image) < (MagickOffsetType) GetBlobSize(image))
+    if (TellBlob(image) < ((MagickOffsetType) GetBlobSize(image)-10))
       {
         /*
           Allocate next image structure.
