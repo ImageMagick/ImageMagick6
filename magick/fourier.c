@@ -516,11 +516,9 @@ static MagickBooleanType RollFourier(const size_t width,const size_t height,
 
   ssize_t
     i,
-    x;
-
-  ssize_t
     u,
     v,
+    x,
     y;
 
   /*
@@ -560,10 +558,8 @@ static MagickBooleanType ForwardQuadrantSwap(const size_t width,
     status;
 
   ssize_t
-    x;
-
-  ssize_t
     center,
+    x,
     y;
 
   /*
@@ -590,9 +586,7 @@ static void CorrectPhaseLHS(const size_t width,const size_t height,
   double *fourier_pixels)
 {
   ssize_t
-    x;
-
-  ssize_t
+    x,
     y;
 
   for (y=0L; y < (ssize_t) height; y++)
@@ -629,10 +623,8 @@ static MagickBooleanType ForwardFourier(const FourierInfo *fourier_info,
     *q;
 
   ssize_t
-    x;
-
-  ssize_t
     i,
+    x,
     y;
 
   magnitude_image=GetFirstImageInList(image);
@@ -828,9 +820,7 @@ static MagickBooleanType ForwardFourierTransform(FourierInfo *fourier_info,
 
   ssize_t
     i,
-    x;
-
-  ssize_t
+    x,
     y;
 
   /*
@@ -1208,10 +1198,8 @@ static MagickBooleanType InverseQuadrantSwap(const size_t width,
   const size_t height,const double *source,double *destination)
 {
   ssize_t
-    x;
-
-  ssize_t
     center,
+    x,
     y;
 
   /*
@@ -1257,9 +1245,7 @@ static MagickBooleanType InverseFourier(FourierInfo *fourier_info,
 
   ssize_t
     i,
-    x;
-
-  ssize_t
+    x,
     y;
 
   /*
@@ -1474,9 +1460,7 @@ static MagickBooleanType InverseFourierTransform(FourierInfo *fourier_info,
 
   ssize_t
     i,
-    x;
-
-  ssize_t
+    x,
     y;
 
   /*
