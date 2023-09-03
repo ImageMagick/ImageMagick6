@@ -62,7 +62,7 @@
 #include "magick/resource_.h"
 #include "magick/string-private.h"
 #include "magick/thread-private.h"
-#if defined(MAGICKCORE_FFTW_DELEGATE)
+#if defined(MAGICKCORE_FFTW_DELEGATE) && !defined(__cplusplus) && !defined(c_plusplus)
 #if defined(MAGICKCORE_HAVE_COMPLEX_H)
 #include <complex.h>
 #endif
@@ -503,7 +503,7 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
 %
 */
 
-#if defined(MAGICKCORE_FFTW_DELEGATE)
+#if defined(MAGICKCORE_FFTW_DELEGATE) && !defined(__cplusplus) && !defined(c_plusplus)
 
 static MagickBooleanType RollFourier(const size_t width,const size_t height,
   const ssize_t x_offset,const ssize_t y_offset,double *roll_pixels)
@@ -1035,7 +1035,7 @@ MagickExport Image *ForwardFourierTransformImage(const Image *image,
     *fourier_image;
 
   fourier_image=NewImageList();
-#if !defined(MAGICKCORE_FFTW_DELEGATE)
+#if !defined(MAGICKCORE_FFTW_DELEGATE) || defined(__cplusplus) || defined(c_plusplus)
   (void) modulus;
   (void) ThrowMagickException(exception,GetMagickModule(),
     MissingDelegateWarning,"DelegateLibrarySupportNotBuiltIn","`%s' (FFTW)",
@@ -1203,7 +1203,7 @@ MagickExport Image *ForwardFourierTransformImage(const Image *image,
 %
 */
 
-#if defined(MAGICKCORE_FFTW_DELEGATE)
+#if defined(MAGICKCORE_FFTW_DELEGATE) && !defined(__cplusplus) && !defined(c_plusplus)
 static MagickBooleanType InverseQuadrantSwap(const size_t width,
   const size_t height,const double *source,double *destination)
 {
@@ -1662,7 +1662,7 @@ MagickExport Image *InverseFourierTransformImage(const Image *magnitude_image,
         "ImageSequenceRequired","`%s'",magnitude_image->filename);
       return((Image *) NULL);
     }
-#if !defined(MAGICKCORE_FFTW_DELEGATE)
+#if !defined(MAGICKCORE_FFTW_DELEGATE) || defined(__cplusplus) || defined(c_plusplus)
   fourier_image=(Image *) NULL;
   (void) modulus;
   (void) ThrowMagickException(exception,GetMagickModule(),
