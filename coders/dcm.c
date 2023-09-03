@@ -3159,7 +3159,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   use_explicit=MagickFalse;
   explicit_retry = MagickFalse;
 
-  while (TellBlob(image) < (MagickOffsetType) (GetBlobSize(image)-10))
+  while (TellBlob(image) < ((MagickOffsetType) GetBlobSize(image)-10))
   {
     for (group=0; (group != 0x7FE0) || (element != 0x0010) ; )
     {
