@@ -419,7 +419,6 @@ MagickExport void DestroyXResources(void)
       XFree(windows->icon_visual);
       windows->icon_visual=(XVisualInfo *) NULL;
     }
-  (void) XSetWindows((XWindows *) NULL);
 }
 
 /*
