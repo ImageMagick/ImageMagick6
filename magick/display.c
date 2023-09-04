@@ -1611,11 +1611,11 @@ MagickExport MagickBooleanType DisplayImages(const ImageInfo *image_info,
   Image
     *image;
 
-  ssize_t
-    i;
-
   size_t
     state;
+
+  ssize_t
+    i;
 
   XrmDatabase
     resource_database;
@@ -1803,6 +1803,7 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
 
   char
     command[MaxTextExtent],
+    *p,
     text[MaxTextExtent];
 
   const char
@@ -1824,8 +1825,8 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
   KeySym
     key_symbol;
 
-  char
-    *p;
+  size_t
+    state;
 
   ssize_t
     i;
@@ -1833,9 +1834,6 @@ static MagickBooleanType XAnnotateEditImage(Display *display,
   unsigned int
     height,
     width;
-
-  size_t
-    state;
 
   XAnnotateInfo
     *annotate_info,
@@ -3275,15 +3273,15 @@ static MagickBooleanType XColorEditImage(Display *display,
   PixelPacket
     *q;
 
+  size_t
+    state;
+
   ssize_t
     i;
 
   unsigned int
     height,
     width;
-
-  size_t
-    state;
 
   XColor
     color;
