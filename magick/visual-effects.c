@@ -1111,13 +1111,13 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
             Implode the pixel.
           */
           factor=1.0;
-          if (distance > 0.0)
+          if (distance > 1.0)
             factor=pow(sin((double) (MagickPI*sqrt((double) distance)*
               PerceptibleReciprocal(radius)/2)),-amount);
           status=InterpolateMagickPixelPacket(image,image_view,
-            UndefinedInterpolatePixel,(double) (factor*delta.x*PerceptibleReciprocal(scale.x)+
-            center.x),(double) (factor*delta.y*PerceptibleReciprocal(scale.y)+center.y),&pixel,
-            exception);
+            UndefinedInterpolatePixel,(double) (factor*delta.x*
+            PerceptibleReciprocal(scale.x)+center.x),(double) (factor*delta.y*
+            PerceptibleReciprocal(scale.y)+center.y),&pixel,exception);
           if (status == MagickFalse)
             break;
           SetPixelPacket(implode_image,&pixel,q,implode_indexes+x);
