@@ -2938,6 +2938,16 @@ static inline ssize_t EdgeY(const ssize_t y,const size_t rows)
   return(y);
 }
 
+static inline MagickBooleanType IsOffsetOverflow(const ssize_t y,
+  const size_t columns)
+{
+  if ((y == 0) || (columns == 0))
+    return(MagickFalse);
+  if (y > (MAGICK_SSIZE_MAX/columns))
+    return(MagickTrue);
+  return(MagickFalse);
+} 
+
 static inline ssize_t RandomX(RandomInfo *random_info,const size_t columns)
 {
   return((ssize_t) (columns*GetPseudoRandomValue(random_info)));
@@ -3023,6 +3033,8 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
     (image->clip_mask != (Image *) NULL) || (image->mask != (Image *) NULL) ?
     MagickTrue : MagickFalse,nexus_info,exception);
   if (pixels == (PixelPacket *) NULL)
+    return((const PixelPacket *) NULL);
+  if (IsOffsetOverflow(nexus_info->region.y,cache_info->columns) != MagickFalse)
     return((const PixelPacket *) NULL);
   offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns+
     nexus_info->region.x;
@@ -4409,6 +4421,8 @@ MagickExport PixelPacket *QueueAuthenticPixelCacheNexus(Image *image,
         "PixelsAreNotAuthentic","`%s'",image->filename);
       return((PixelPacket *) NULL);
     }
+  if (IsOffsetOverflow(y,cache_info->columns) != MagickFalse)
+    return((PixelPacket *) NULL);
   offset=y*(MagickOffsetType) cache_info->columns+x;
   if (offset < 0)
     return((PixelPacket *) NULL);
@@ -4646,7 +4660,9 @@ static MagickBooleanType ReadPixelCacheIndexes(
     return(MagickFalse);
   if (nexus_info->authentic_pixel_cache != MagickFalse)
     return(MagickTrue);
-  offset=nexus_info->region.y*(MagickOffsetType)cache_info->columns+
+  if (IsOffsetOverflow(nexus_info->region.y,cache_info->columns) != MagickFalse)
+    return(MagickFalse);
+  offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns+
     nexus_info->region.x;
   length=(MagickSizeType) nexus_info->region.width*sizeof(IndexPacket);
   rows=nexus_info->region.height;
@@ -4813,6 +4829,8 @@ static MagickBooleanType ReadPixelCachePixels(
 
   if (nexus_info->authentic_pixel_cache != MagickFalse)
     return(MagickTrue);
+  if (IsOffsetOverflow(nexus_info->region.y,cache_info->columns) != MagickFalse)
+    return(MagickFalse);
   offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns;
   if ((offset/(MagickOffsetType) cache_info->columns) != nexus_info->region.y)
     return(MagickFalse);
@@ -5229,6 +5247,8 @@ static PixelPacket *SetPixelCacheNexusPixels(
           /*
             Pixels are accessed directly from memory.
           */
+          if (IsOffsetOverflow(y,cache_info->columns) != MagickFalse)
+            return((PixelPacket *) NULL);
           offset=y*(MagickOffsetType) cache_info->columns+x;
           nexus_info->pixels=cache_info->pixels+offset;
           nexus_info->indexes=(IndexPacket *) NULL;
@@ -5757,6 +5777,8 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
     return(MagickTrue);
   if (nexus_info->indexes == (IndexPacket *) NULL)
     return(MagickFalse);
+  if (IsOffsetOverflow(nexus_info->region.y,cache_info->columns) != MagickFalse)
+    return(MagickFalse);
   offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns+
     nexus_info->region.x;
   length=(MagickSizeType) nexus_info->region.width*sizeof(IndexPacket);
@@ -5924,6 +5946,8 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
 
   if (nexus_info->authentic_pixel_cache != MagickFalse)
     return(MagickTrue);
+  if (IsOffsetOverflow(nexus_info->region.y,cache_info->columns) != MagickFalse)
+    return(MagickFalse);
   offset=nexus_info->region.y*(MagickOffsetType) cache_info->columns+
     nexus_info->region.x;
   length=(MagickSizeType) nexus_info->region.width*sizeof(PixelPacket);
