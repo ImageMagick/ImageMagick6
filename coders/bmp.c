@@ -822,7 +822,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
             bmp_info.red_mask=ReadBlobLSBLong(image);
             bmp_info.green_mask=ReadBlobLSBLong(image);
             bmp_info.blue_mask=ReadBlobLSBLong(image);
-            if (bmp_info.compression == BI_ALPHABITFIELDS))
+            if (bmp_info.compression == BI_ALPHABITFIELDS)
               bmp_info.alpha_mask=ReadBlobLSBLong(image);
           }
         if (bmp_info.size > 40)
