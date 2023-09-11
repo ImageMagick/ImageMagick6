@@ -22,7 +22,7 @@ jobs:
         compiler: [ gcc, clang ]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
@@ -47,7 +47,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Install dependencies
       run: |
@@ -71,11 +71,11 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         path: ImageMagick
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         repository: ImageMagick/ImageMagick6-Windows
         path: ImageMagick6-Windows
@@ -115,9 +115,9 @@ jobs:
     - name: Prepare git
       run: git config --global core.autocrlf false
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         repository: ImageMagick/ImageMagick6-Windows
         path: ImageMagick6-Windows
