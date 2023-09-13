@@ -4094,10 +4094,21 @@ handle negative offsets.</p>
 
 <p class="magick-description">Identify the format and characteristics of the image.</p>
 
-<p>This information is printed: image scene number; image name; image size;
-the image class (<var>DirectClass</var> or <var>PseudoClass</var>); the total number of unique colors; and the
-number of seconds to read and transform the image. Refer to <a href="miff.html">MIFF</a> for
-a description of the image class.</p>
+<p>This information is printed by default:
+<ul>
+<li>image scene number (if its not zero)</li>
+<li>image name</li>
+<li>image format</li>
+<li>image size</li>
+<li>virtual page offset</li>
+<li>color depth</li>
+<li>colorspace</li>
+<li>file size in bytes</li>
+<li>consumed user time identifying the image</li>
+<li>elapsed time identifying the image</li>
+</ul></p>
+
+<p>To customize the attributes you want to identify, use <a href="command-line-options.html#format_identify_">-format</a>.</p>
 
 <p>If <a href="command-line-options.html#colors">-colors</a> is also specified, the total unique colors
 in the image and color reduction error values are printed. Refer to <a
@@ -4888,7 +4899,7 @@ environment variables <code>MAGICK_AREA_LIMIT</code>,
 <code>MAGICK_THREAD_LIMIT</code>, <code>MAGICK_TIME_LIMIT</code> for limits of
 image area, disk space, open files, heap memory, memory map, number of threads
 of execution, and maximum elapsed time in seconds respectively.</p>
-<p>Note, you can restrict limits relative to any <a href="https://legacy.imagemagick.org/www/security-policy.xml">security policies</a>, but you cannot relax them.</p>
+<p>Note, you can restrict limits relative to any <a href="https://legacy.imagemagick.org/www/policy-open.xml">security policies</a>, but you cannot relax them.</p>
 
 <p> Inquisitive users can try adding <a href="command-line-options.html#debug">-debug cache</a> to
 their commands and then scouring the generated output for references to the
@@ -7525,4 +7536,3 @@ but with strict boolean masking. </p>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 12th August 2023 18:22 -->
