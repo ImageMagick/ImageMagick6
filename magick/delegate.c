@@ -1890,6 +1890,7 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
       {
         (void) FormatLocaleString(p->filename,MaxTextExtent,"%s:%s",
           delegate_info->decode,clone_info->filename);
+        (void) SetImageOption(clone_info,"quantum:format","floating-point");
         status=WriteImage(clone_info,p);
         if (status == MagickFalse)
           {
