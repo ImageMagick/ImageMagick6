@@ -77,7 +77,7 @@
           unable to acquire cache view
         </message>
         <message name="UnableToExtendPixelCache">
-          unable to extent pixel cache
+          unable to extend pixel cache
         </message>
       </fatalerror>
     </cache>
@@ -113,8 +113,11 @@
         <message name="ImageDoesNotHaveAClipMask">
           image does not have a clip mask
         </message>
-        <message name="ImageDoesNotHaveAAlphaChannel">
-          image does not have a alpha channel
+        <message name="ImageDoesNotHaveAnAlphaChannel">
+          image does not have an alpha channel
+        </message>
+        <message name="ImageDoesNotHaveAMaskChannel">
+          image does not have an mask channel
         </message>
         <message name="ImageDoesNotHaveAThumbnail">
           image does not have a EXIF thumbnail
@@ -217,6 +220,9 @@
       <error>
         <message name="IncludeElementNestedTooDeeply">
           include element nested too deeply
+        </message>
+        <message name="PolicyValidationException">
+          security policy failed to validate
         </message>
       </error>
       <warning>
@@ -321,8 +327,8 @@
           <message name="UnknownPatternType">
             unknown pattern type
           </message>
-          <message name="UnrecognizedAlphaChannelType">
-            unrecognized alpha channel tpe
+          <message name="UnrecognizedAlphaChannelOption">
+            unrecognized alpha channel option
           </message>
           <message name="UnrecognizedImageCompression">
             unrecognized compression
@@ -503,11 +509,14 @@
         <message name="ImageDepthNotSupported">
           image depth not supported
         </message>
+        <message name="ImageSequenceRequired">
+          image sequence is required
+        </message>
         <message name="ImageMorphologyDiffers">
           image morphology differs
         </message>
-        <message name="ImageSequenceRequired">
-          image sequence is required
+        <message name="ImageListRequired">
+          image list is required
         </message>
         <message name="ImageSizeDiffers">
           image size differs
@@ -616,6 +625,12 @@
         <message name="CompositeImageRequired">
           composite image required
         </message>
+        <message name="CurlyBracesNestedTooDeeply">
+          curly braces nested too deeply
+        </message>
+        <message name="DeprecatedOptionNoCode">
+          option deprecated, unable to execute
+        </message>
         <message name="DivideByZero">
           divide by zero
         </message>
@@ -628,14 +643,35 @@
         <message name="GeometryDoesNotContainImage">
           geometry does not contain image
         </message>
+        <message name="ImageSequenceRequired">
+          image sequence is required
+        </message>
+        <message name="InterpretPropertyFailure">
+          failure to interpret image property escapes
+        </message>
+        <message name="InvalidArgument">
+          invalid argument for option
+        </message>
+        <message name="InvalidUseOfOption">
+          invalid use of option
+        </message>
+        <message name="InvalidGeometry">
+          invalid geometry
+        </message>
+        <message name="InvalidImageIndex">
+          invalid image index
+        </message>
+        <message name="InvalidNumberList">
+          invalid list of numbers
+        </message>
+        <message name="InvalidSetting">
+          invalid setting
+        </message>
         <message name="ImagesAreNotTheSameSize">
           images are not the same size
         </message>
         <message name="ImagePagesAreNotCoalesced">
           image pages are not coalesced
-        </message>
-        <message name="ImageSequenceRequired">
-          image sequence is required
         </message>
         <message name="ImageSizeMustExceedBevelWidth">
           size must exceed bevel width
@@ -643,25 +679,20 @@
         <message name="ImageWidthsOrHeightsDiffer">
           image widths or heights differ
         </message>
-        <message name="InvalidArgument">
-          invalid argument for option
-        </message>
-        <message name="InvalidGeometry">
-          invalid geometry
+        <message name="KernelWidthMustBeAnOddNumber">
+          kernel width must be an odd number
         </message>
         <message name="LabelExpected">
           label expected
-        </message>
-        <message name="KernelWidthMustBeAnOddNumber">
-          kernel width must be an odd number
         </message>
         <message name="MapImageRequired">
           map image required
         </message>
         <message name="MissingArgument">
-          option requires an argument
+          missing required argument
         </message>
         <message name="MissingAnImageFilename">
+        <!-- FUTURE: Depreciate using MissingOutputFilename -->
           missing an image filename
         </message>
         <message name="MissingExpression">
@@ -670,8 +701,14 @@
         <message name="MissingNullSeparator">
           missing Null Image List Separator
         </message>
+        <message name="MissingOutputFilename">
+          missing output filename
+        </message>
         <message name="MustSpecifyAnImageName">
           must specify an image name
+        </message>
+        <message name="MustSpecifyImageDepth">
+          must specify image depth
         </message>
         <message name="MustSpecifyImageSize">
           must specify image size
@@ -682,6 +719,12 @@
         <message name="NoClipPathDefined">
           no clip path defined
         </message>
+        <message name="NoImagesForWrite">
+          no images for write
+        </message>
+        <message name="NoImagesFound">
+          no images found for operation
+        </message>
         <message name="NoImagesDefined">
           no images defined
         </message>
@@ -690,6 +733,9 @@
         </message>
         <message name="NoSuchImage">
           no such image
+        </message>
+        <message name="NoSuchImageChannel">
+          no such image channel
         </message>
         <message name="NoSuchOption">
           no such option
@@ -709,6 +755,9 @@
         <message name="ReferenceIsNotMyType">
           reference is not my type
         </message>
+        <message name="SetReadOnlyProperty">
+          attempt to set read-only property
+        </message>
         <message name="SteganoImageRequired">
           stegano image required
         </message>
@@ -717,6 +766,9 @@
         </message>
         <message name="SubimageSpecificationReturnsNoImages">
           subimage specification returns no images
+        </message>
+        <message name="TwoOrMoreImagesRequired">
+          two or more images required
         </message>
         <message name="UnableToAccessPath">
           unable to access file path
@@ -749,7 +801,7 @@
           unrecognized color
         </message>
         <message name="UnrecognizedColorspace">
-          unrecognized image colorspace
+          unrecognized colorspace
         </message>
         <message name="UnrecognizedComposeOperator">
           unrecognized compose operator
@@ -805,9 +857,6 @@
         <message name="UnrecognizedImageType">
           unrecognized image type
         </message>
-        <message name="UnrecognizedIntensityMethod">
-          unrecognized intensity method
-        </message>
         <message name="UnrecognizedIntentType">
           unrecognized intent type
         </message>
@@ -856,6 +905,9 @@
         <message name="UnrecognizedStretchType">
           unrecognized stretch type
         </message>
+        <message name="UnrecognizedStyleType">
+          unrecognized style type
+        </message>
         <message name="UnrecognizedType">
           unrecognized type
         </message>
@@ -890,6 +942,18 @@
         </message>
         <message name="MissingAnImageFilename">
           missing an image filename
+        </message>
+        <message name="ScriptIsBinary">
+          script is binary
+        </message>
+        <message name="ScriptTokenMemoryFailed">
+          script token too big
+        </message>
+        <message name="ScriptUnbalancedQuotes">
+          script token with unbalanced quotes
+        </message>
+        <message name="UnableToOpenScript">
+          unable to open script
         </message>
         <message name="UnrecognizedColormapType">
           unrecognized colormap type
@@ -926,11 +990,29 @@
         </message>
       </fatalerror>
       <warning>
+        <message name="ReplacedOption">
+          option has been replaced
+        </message>
         <message name="GeometryDoesNotContainImage">
           geometry does not contain image
         </message>
+        <message name="InterpretPropertyFailure">
+          failure in interpret image property escapes
+        </message>
+        <message name="InvalidSetting">
+          invalid setting
+        </message>
+        <message name="NoImageForProperty">
+          no image to apply a property
+        </message>
+        <message name="NoImageInfoForProperty">
+          no image info (wand) to apply a property
+        </message>
         <message name="NoSuchElement">
           no such element in list
+        </message>
+        <message name="SetReadOnlyProperty">
+          attempt to set read-only property
         </message>
         <message name="UnknownImageProperty">
           unknown image property
@@ -963,11 +1045,11 @@
     <resource>
       <limit>
         <error>
-          <message name="MemoryAllocationFailed">
-            memory allocation failed
-          </message>
           <message name="ListLengthExceedsLimit">
             list length exceeds limit
+          </message>
+          <message name="MemoryAllocationFailed">
+            memory allocation failed
           </message>
           <message name="PixelCacheAllocationFailed">
             pixel cache allocation failed
@@ -1269,6 +1351,11 @@
         average image sequence
       </message>
     </Average>
+    <Blur>
+      <message name="Image">
+        blur image
+      </message>
+    </Blur>
     <Chop>
       <message name="Image">
         chop image
