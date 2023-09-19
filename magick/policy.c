@@ -801,34 +801,6 @@ MagickExport MagickBooleanType ListPolicyInfo(FILE *file,
 %    o exception: return any errors or warnings in this structure.
 %
 */
-
-static MagickBooleanType ValidateSecurityPolicy(const char *policy,
-  const char *filename,ExceptionInfo *exception)
-{
-#if defined(MAGICKCORE_XML_DELEGATE)
-  xmlDocPtr
-    document;
-
-  /*
-    Parse security policy.
-  */
-  document=xmlReadMemory(policy,(int) strlen(policy),filename,NULL,
-    XML_PARSE_NOERROR | XML_PARSE_NOWARNING);
-  if (document == (xmlDocPtr) NULL)
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),ConfigureError,
-        "PolicyValidationException","'%s'",filename);
-      return(MagickFalse);
-    }
-  xmlFreeDoc(document);
-#else
-  (void) policy;
-  (void) filename;
-  (void) exception;
-#endif
-  return(MagickTrue);
-}
-
 static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
   const char *filename,const size_t depth,ExceptionInfo *exception)
 {
@@ -854,8 +826,6 @@ static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
   (void) LogMagickEvent(ConfigureEvent,GetMagickModule(),
     "Loading policy file \"%s\" ...",filename);
   if (xml == (char *) NULL)
-    return(MagickFalse);
-  if (ValidateSecurityPolicy(xml,filename,exception) == MagickFalse)
     return(MagickFalse);
   status=MagickTrue;
   policy_info=(PolicyInfo *) NULL;
@@ -1139,6 +1109,34 @@ MagickExport void PolicyComponentTerminus(void)
 %    o exception: return any errors or warnings in this structure.
 %
 */
+
+static MagickBooleanType ValidateSecurityPolicy(const char *policy,
+  const char *url,ExceptionInfo *exception)
+{
+#if defined(MAGICKCORE_XML_DELEGATE)
+  xmlDocPtr
+    document;
+
+  /*
+    Parse security policy.
+  */
+  document=xmlReadMemory(policy,(int) strlen(policy),url,NULL,
+    XML_PARSE_NOERROR | XML_PARSE_NOWARNING);
+  if (document == (xmlDocPtr) NULL)
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),ConfigureError,
+        "PolicyValidationException","'%s'",url);
+      return(MagickFalse);
+    }
+  xmlFreeDoc(document);
+#else
+  (void) policy;
+  (void) url;
+  (void) exception;
+#endif
+  return(MagickTrue);
+}
+
 MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
   ExceptionInfo *exception)
 {
@@ -1150,6 +1148,8 @@ MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
 
   assert(exception != (ExceptionInfo *) NULL);
   if (policy == (const char *) NULL)
+    return(MagickFalse);
+  if (ValidateSecurityPolicy(policy,PolicyFilename,exception) == MagickFalse)
     return(MagickFalse);
   if (IsPolicyCacheInstantiated(exception) == MagickFalse)
     return(MagickFalse);
