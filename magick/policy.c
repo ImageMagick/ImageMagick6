@@ -821,6 +821,10 @@ static MagickBooleanType ValidateSecurityPolicy(const char *policy,
       return(MagickFalse);
     }
   xmlFreeDoc(document);
+#else
+  magick_unreferenced(policy);
+  magick_unreferenced(filename);
+  magick_unreferenced(exception);
 #endif
   return(MagickTrue);
 }
