@@ -1403,7 +1403,7 @@ static char *ParseEntities(char *xml,char **entities,int state)
   for (xml=p; ; )
   {
     while ((*xml != '\0') && (*xml != '&') && ((*xml != '%') ||
-           (state != '%')) && (isspace((int) ((unsigned char) *xml) == 0)))
+           (state != '%')) && (isspace((int) ((unsigned char) *xml)) == 0))
       xml++;
     if (*xml == '\0')
       break;

@@ -241,7 +241,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
 
   Image
     *difference_image,
-    *image,
+    *image = (Image *) NULL,
     *reconstruct_image,
     *similarity_image;
 

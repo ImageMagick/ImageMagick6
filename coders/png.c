@@ -4436,7 +4436,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
   for (;;)
   {
     char
-      type[MaxTextExtent];
+      type[MaxTextExtent] = "\0";
 
     unsigned char
       *chunk;

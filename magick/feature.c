@@ -1704,17 +1704,17 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       Future: return second largest eigenvalue of Q.
     */
     channel_features[RedChannel].maximum_correlation_coefficient[i]=
-      sqrt((double) -1.0);
+      sqrt(-1.0);
     channel_features[GreenChannel].maximum_correlation_coefficient[i]=
-      sqrt((double) -1.0);
+      sqrt(-1.0);
     channel_features[BlueChannel].maximum_correlation_coefficient[i]=
-      sqrt((double) -1.0);
+      sqrt(-1.0);
     if (image->colorspace == CMYKColorspace)
       channel_features[IndexChannel].maximum_correlation_coefficient[i]=
-        sqrt((double) -1.0);
+        sqrt(-1.0);
     if (image->matte != MagickFalse)
       channel_features[OpacityChannel].maximum_correlation_coefficient[i]=
-        sqrt((double) -1.0);
+        sqrt(-1.0);
   }
   /*
     Relinquish resources.
