@@ -3030,6 +3030,7 @@ MagickExport const char *GetMagickProperty(const ImageInfo *image_info,
   const char
     *string;
 
+  assert(property != (const char *) NULL);
   assert(property[0] != '\0');
   if (property[1] == '\0')  /* single letter property request */
     return(GetMagickPropertyLetter(image_info,image,*property));
@@ -3865,7 +3866,7 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
       }
     {
       char
-        pattern[2*MaxTextExtent];
+        pattern[2*MaxTextExtent] = "\0";
 
       const char
         *key,
