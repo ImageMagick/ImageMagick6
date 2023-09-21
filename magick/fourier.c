@@ -1408,8 +1408,8 @@ static MagickBooleanType InverseFourier(FourierInfo *fourier_info,
        for (x=0L; x < (ssize_t) fourier_info->center; x++)
        {
 #if defined(MAGICKCORE_HAVE_COMPLEX_H)
-         fourier_pixels[i]=magnitude_pixels[i]*cos(phase_pixels[i])+
-           (MagickRealType) I*magnitude_pixels[i]*sin(phase_pixels[i]);
+         fourier_pixels[i]=magnitude_pixels[i]*cos(phase_pixels[i])+I*
+           magnitude_pixels[i]*sin(phase_pixels[i]);
 #else
          fourier_pixels[i][0]=magnitude_pixels[i]*cos(phase_pixels[i]);
          fourier_pixels[i][1]=magnitude_pixels[i]*sin(phase_pixels[i]);
@@ -1421,8 +1421,7 @@ static MagickBooleanType InverseFourier(FourierInfo *fourier_info,
       for (x=0L; x < (ssize_t) fourier_info->center; x++)
       {
 #if defined(MAGICKCORE_HAVE_COMPLEX_H)
-        fourier_pixels[i]=magnitude_pixels[i]+(MagickRealType) I*
-          phase_pixels[i];
+        fourier_pixels[i]=magnitude_pixels[i]+I*phase_pixels[i];
 #else
         fourier_pixels[i][0]=magnitude_pixels[i];
         fourier_pixels[i][1]=phase_pixels[i];
