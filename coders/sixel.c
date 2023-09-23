@@ -117,7 +117,7 @@ typedef struct sixel_output {
 
     Image *image;
     int pos;
-    unsigned char buffer[SIXEL_OUTPUT_PACKET_SIZE*2];
+    unsigned char buffer[MagickMax(SIXEL_OUTPUT_PACKET_SIZE*2,MagickPathExtent)];
 
 } sixel_output_t;
 

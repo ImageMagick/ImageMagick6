@@ -2436,8 +2436,8 @@ static Image *ReadOnePNGImage(MngInfo *mng_info,
 #if (PNG_LIBPNG_VER >= 10401)
     option=GetImageOption(image_info,"png:chunk-malloc-max");
     if (option != (const char *) NULL)
-      png_set_chunk_malloc_max(ping,(png_alloc_size_t) MagickMin((ssize_t)
-        PNG_SIZE_MAX,StringToLong(option)));
+      png_set_chunk_malloc_max(ping,(png_alloc_size_t) MagickMin(
+        MAGICK_SSIZE_MAX,StringToLong(option)));
     else
       png_set_chunk_malloc_max(ping,(png_alloc_size_t) GetMaxMemoryRequest());
 #endif
