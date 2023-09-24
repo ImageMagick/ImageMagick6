@@ -219,13 +219,11 @@ MagickExport XMLTreeInfo *AddPathToXMLTree(XMLTreeInfo *xml_info,
     subnode[MaxTextExtent],
     tag[MaxTextExtent];
 
-  ssize_t
-    i;
-
   size_t
     number_components;
 
   ssize_t
+    i,
     j;
 
   XMLTreeInfo
@@ -305,12 +303,12 @@ MagickExport char *CanonicalXMLContent(const char *content,
   const unsigned char
     *p;
 
-  ssize_t
-    i;
-
   size_t
     extent,
     length;
+
+  ssize_t
+    i;
 
   unsigned char
     *utf8;
@@ -496,9 +494,7 @@ static void DestroyXMLTreeRoot(XMLTreeInfo *xml_info)
     **attributes;
 
   ssize_t
-    i;
-
-  ssize_t
+    i,
     j;
 
   XMLTreeRoot
@@ -606,13 +602,11 @@ MagickPrivate char *FileToXML(const char *filename,const size_t extent)
     offset;
 
   size_t
-    i;
-
-  size_t
     length;
 
   ssize_t
-    count;
+    count,
+    i;
 
   void
     *map;
@@ -778,9 +772,7 @@ MagickExport const char *GetXMLTreeAttribute(XMLTreeInfo *xml_info,
   const char *tag)
 {
   ssize_t
-    i;
-
-  ssize_t
+    i,
     j;
 
   XMLTreeRoot
@@ -1005,13 +997,11 @@ MagickExport XMLTreeInfo *GetXMLTreePath(XMLTreeInfo *xml_info,const char *path)
     subnode[MaxTextExtent],
     tag[MaxTextExtent];
 
-  ssize_t
-    i;
-
   size_t
     number_components;
 
   ssize_t
+    i,
     j;
 
   XMLTreeInfo
@@ -1295,13 +1285,11 @@ static char *ConvertUTF16ToUTF8(const char *content,size_t *length)
     c,
     encoding;
 
-  ssize_t
-    i;
-
   size_t
     extent;
 
   ssize_t
+    i,
     j;
 
   utf8=(char *) AcquireQuantumMemory(*length+1,sizeof(*utf8));
@@ -1368,24 +1356,20 @@ static char *ConvertUTF16ToUTF8(const char *content,size_t *length)
 static char *ParseEntities(char *xml,char **entities,int state)
 {
   char
-    *entity;
+    *entity,
+    *p,
+    *q;
 
   int
     byte,
     c;
-
-  char
-    *p,
-    *q;
-
-  ssize_t
-    i;
 
   size_t
     extent,
     length;
 
   ssize_t
+    i,
     offset;
 
   /*
@@ -1619,9 +1603,7 @@ static void ParseProcessingInstructions(XMLTreeRoot *root,char *xml,
     *target;
 
   ssize_t
-    i;
-
-  ssize_t
+    i,
     j;
 
   target=xml;
@@ -1702,9 +1684,7 @@ static MagickBooleanType ParseInternalDoctype(XMLTreeRoot *root,char *xml,
     *v;
 
   ssize_t
-    i;
-
-  ssize_t
+    i,
     j;
 
   n=(char *) NULL;
@@ -1958,6 +1938,7 @@ MagickExport XMLTreeInfo *NewXMLTree(const char *xml,ExceptionInfo *exception)
   char
     **attribute,
     **attributes,
+    *p,
     *tag,
     *utf8;
 
@@ -1968,17 +1949,12 @@ MagickExport XMLTreeInfo *NewXMLTree(const char *xml,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
-  char
-    *p;
-
-  ssize_t
-    i;
-
   size_t
     ignore_depth,
     length;
 
   ssize_t
+    i,
     j,
     l;
 
@@ -2493,9 +2469,7 @@ MagickExport XMLTreeInfo *SetXMLTreeAttribute(XMLTreeInfo *xml_info,
   const char *tag,const char *value)
 {
   ssize_t
-    i;
-
-  ssize_t
+    i,
     j;
 
   assert(xml_info != (XMLTreeInfo *) NULL);
@@ -2661,13 +2635,11 @@ static char *XMLTreeTagToXML(XMLTreeInfo *xml_info,char **source,size_t *length,
   const char
     *attribute;
 
-  ssize_t
-    i;
-
   size_t
     offset;
 
   ssize_t
+    i,
     j;
 
   content=(char *) "";
@@ -2761,20 +2733,16 @@ static char *XMLTreeTagToXML(XMLTreeInfo *xml_info,char **source,size_t *length,
 MagickExport char *XMLTreeInfoToXML(XMLTreeInfo *xml_info)
 {
   char
-    *xml;
-
-  char
     *p,
-    *q;
-
-  ssize_t
-    i;
+    *q,
+    *xml;
 
   size_t
     extent,
     length;
 
   ssize_t
+    i,
     j,
     k;
 
