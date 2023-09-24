@@ -1811,7 +1811,7 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
               if (status == MagickFalse)
                 InheritException(exception,&image->exception);
               else
-                blob=FileToBlob(unique,~0UL,length,exception);
+                blob=FileToBlob(unique,SIZE_MAX,length,exception);
             }
           (void) RelinquishUniqueFileResource(unique);
         }
@@ -2077,7 +2077,7 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
               if (status == MagickFalse)
                 InheritException(exception,&images->exception);
               else
-                blob=FileToBlob(unique,~0UL,length,exception);
+                blob=FileToBlob(unique,SIZE_MAX,length,exception);
             }
           (void) RelinquishUniqueFileResource(unique);
         }
