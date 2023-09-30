@@ -68,6 +68,7 @@
 #include "magick/module.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
+#include "magick/utility-private.h"
 #include "magick/xml-tree.h"
 #if defined(MAGICKCORE_RAW_R_DELEGATE)
 #include <libraw.h>
