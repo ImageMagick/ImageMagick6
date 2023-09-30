@@ -8597,13 +8597,11 @@ Mogrify(ref,...)
                   MagickBooleanType
                     sync;
 
-                  ssize_t
-                    x;
-
                   PixelPacket
                     *q;
 
                   ssize_t
+                    x,
                     y;
 
                   /*
@@ -8642,10 +8640,10 @@ Mogrify(ref,...)
             image->interpolate=(InterpolatePixelMethod)
               argument_list[12].integer_reference;
           if (attribute_flag[13] != 0)   /* "args=>" */
-            (void) SetImageArtifact(composite_image,"compose:args",
+            (void) SetImageArtifact(image,"compose:args",
               argument_list[13].string_reference);
           if (attribute_flag[14] != 0)   /* "blend=>"  depreciated */
-            (void) SetImageArtifact(composite_image,"compose:args",
+            (void) SetImageArtifact(image,"compose:args",
               argument_list[14].string_reference);
           /*
             Tiling Composition (with orthogonal rotate).
