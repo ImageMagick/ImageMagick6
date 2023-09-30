@@ -88,6 +88,7 @@ extern "C" {
 #if !defined(MaxTextExtent)
 #  define MaxTextExtent  4096  /* always >= max(4096,PATH_MAX) */
 #endif
+#define MagickTimeExtent  26
 
 #if defined(MAGICKCORE_HAVE___ATTRIBUTE__)
 #  define magick_aligned(x,y)  x __attribute__((aligned(y)))
