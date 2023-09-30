@@ -104,45 +104,43 @@
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && defined(MAGICKCORE_OPENCL_SUPPORT)
 static void InitializeDcrawOpenCL(ExceptionInfo *exception)
 {
-  MagickCLDevice
-    *devices;
-
-  size_t
-    length;
-
-  ssize_t
-    i;
+  MagickCLEnv
+    clEnv;
 
   (void) SetEnvironmentVariable("DCR_CL_PLATFORM",NULL);
   (void) SetEnvironmentVariable("DCR_CL_DEVICE",NULL);
   (void) SetEnvironmentVariable("DCR_CL_DISABLED",NULL);
-  if (GetOpenCLEnabled() == MagickFalse)
+  clEnv=GetDefaultOpenCLEnv();
+  if (InitOpenCLEnv(clEnv,exception) != MagickFalse)
     {
-      (void) SetEnvironmentVariable("DCR_CL_DISABLED","1");
-      return;
+      char
+        *name;
+
+      MagickBooleanType
+        opencl_disabled;
+
+      GetMagickOpenCLEnvParam(clEnv,MAGICK_OPENCL_ENV_PARAM_OPENCL_DISABLED,
+        sizeof(MagickBooleanType),&opencl_disabled,exception);
+      if (opencl_disabled != MagickFalse)
+        {
+          (void)SetEnvironmentVariable("DCR_CL_DISABLED","1");
+          return;
+        }
+      GetMagickOpenCLEnvParam(clEnv,MAGICK_OPENCL_ENV_PARAM_PLATFORM_VENDOR,
+        sizeof(char *),&name,exception);
+      if (name != (char *) NULL)
+      {
+        (void) SetEnvironmentVariable("DCR_CL_PLATFORM",name);
+        name=RelinquishMagickMemory(name);
+      }
+      GetMagickOpenCLEnvParam(clEnv,MAGICK_OPENCL_ENV_PARAM_DEVICE_NAME,
+        sizeof(char *),&name,exception);
+      if (name != (char *) NULL)
+      {
+        (void) SetEnvironmentVariable("DCR_CL_DEVICE",name);
+        name=RelinquishMagickMemory(name);
+      }
     }
-  devices=GetOpenCLDevices(&length,exception);
-  if (devices == (MagickCLDevice *) NULL)
-    return;
-  for (i=0; i < (ssize_t) length; i++)
-  {
-    const char
-      *name;
-
-    MagickCLDevice
-      device;
-
-    device=devices[i];
-    if (GetOpenCLDeviceEnabled(device) == MagickFalse)
-      continue;
-    name=GetOpenCLDeviceVendorName(device);
-    if (name != (const char *) NULL)
-      (void) SetEnvironmentVariable("DCR_CL_PLATFORM",name);
-    name=GetOpenCLDeviceName(device);
-    if (name != (const char *) NULL)
-      (void) SetEnvironmentVariable("DCR_CL_DEVICE",name);
-    return;
-  }
 }
 #else
 static void InitializeDcrawOpenCL(ExceptionInfo *magick_unused(exception))
