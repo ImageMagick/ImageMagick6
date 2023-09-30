@@ -1573,7 +1573,6 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
         /*
           Convert DirectColor scanline.
         */
-        bytes_per_line=4*((image->columns*64+31)/32);
         for (y=(ssize_t) image->rows-1; y >= 0; y--)
         {
           unsigned short
@@ -1585,10 +1584,10 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
             break;
           for (x=0; x < (ssize_t) image->columns; x++)
           {
-            SetPixelBlue(q,ScaleCharToQuantum(*p16++));
-            SetPixelGreen(q,ScaleCharToQuantum(*p16++));
-            SetPixelRed(q,ScaleCharToQuantum(*p16++));
-            SetPixelAlpha(q,ScaleCharToQuantum(*p16++));
+            SetPixelBlue(q,ScaleShortToQuantum(*p16++));
+            SetPixelGreen(q,ScaleShortToQuantum(*p16++));
+            SetPixelRed(q,ScaleShortToQuantum(*p16++));
+            SetPixelAlpha(q,ScaleShortToQuantum(*p16++));
             q++;
           }
           if (SyncAuthenticPixels(image,exception) == MagickFalse)
