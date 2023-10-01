@@ -161,11 +161,11 @@ Image *AutoResizeImage(const Image *image,const char *option,
     *resized,
     *images;
 
+  size_t
+    sizes[MAX_SIZES]={256, 192, 128, 96, 64, 48, 40, 32, 24, 16};
+
   ssize_t
     i;
-
-  size_t
-    sizes[MAX_SIZES]={256,192,128,96,64,48,40,32,24,16};
 
   images=NULL;
   *count=0;
@@ -178,19 +178,15 @@ Image *AutoResizeImage(const Image *image,const char *option,
 
     while ((isspace((int) ((unsigned char) *p)) != 0))
       p++;
-
     size=(size_t)strtol(p,&q,10);
     if ((p == q) || (size < 16) || (size > 256))
         return((Image *) NULL);
-
     p=q;
     sizes[i++]=size;
-
     while ((isspace((int) ((unsigned char) *p)) != 0) || (*p == ','))
       p++;
   }
-
-  if (i==0)
+  if (i == 0)
     i=10;
   *count=i;
   for (i=0; i < *count; i++)
@@ -199,7 +195,6 @@ Image *AutoResizeImage(const Image *image,const char *option,
       exception);
     if (resized == (Image *) NULL)
       return(DestroyImageList(images));
-
     if (images == (Image *) NULL)
       images=resized;
     else
@@ -207,7 +202,7 @@ Image *AutoResizeImage(const Image *image,const char *option,
   }
   return(images);
 }
-
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -235,6 +230,101 @@ Image *AutoResizeImage(const Image *image,const char *option,
 %    o exception: return any errors or warnings in this structure.
 %
 */
+
+static Image *Read1XImage(const ImageInfo *image_info,Image *image,
+  ExceptionInfo *exception)
+{
+  MagickBooleanType
+    status;
+
+  size_t
+    columns,
+    rows;
+
+  ssize_t
+    i,
+    y;
+
+  /*
+    Read Windows 1.0 Icon.
+  */
+  (void) ReadBlobLSBLong(image);  /* hot spot X/Y */
+  columns=(size_t) ReadBlobLSBShort(image);
+  rows=(size_t) (ReadBlobLSBShort(image));
+  (void) ReadBlobLSBShort(image);  /* width of bitmap in bytes */
+  (void) ReadBlobLSBShort(image);  /* cursor color */
+  /*
+    Convert bitmap scanline.
+  */
+  status=MagickTrue;
+  for (i=0; ; i++)
+  {
+    status=SetImageExtent(image,columns,rows);
+    if (status == MagickFalse)
+      break;
+    if (AcquireImageColormap(image,2) == MagickFalse)
+      {
+        status=MagickFalse;
+        break;
+      }
+    for (y=0; y < (ssize_t) image->columns; y++)
+    {
+      IndexPacket
+        *indexes;
+
+      PixelPacket
+        *q;
+
+      size_t
+        bit,
+        byte;
+
+      ssize_t
+        x;
+
+      q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
+      if (q == (PixelPacket *) NULL)
+        break;
+      indexes=GetAuthenticIndexQueue(image);
+      for (x=0; x < (ssize_t) (image->columns-7); x+=8)
+      {
+        byte=(size_t) ReadBlobByte(image);
+        for (bit=0; bit < 8; bit++)
+          SetPixelIndex(indexes+x+bit,((byte & (0x80 >> bit)) != 0 ?
+            0x01 : 0x00));
+      }
+      if ((image->columns % 8) != 0)
+        {
+          byte=(size_t) ReadBlobByte(image);
+          for (bit=0; bit < (image->columns % 8); bit++)
+            SetPixelIndex(indexes+x+bit,((byte & (0x80 >> bit)) != 0 ?
+              0x01 : 0x00));
+        }
+      if (SyncAuthenticPixels(image,exception) == MagickFalse)
+        break;
+      if (image->previous == (Image *) NULL)
+        {
+          status=SetImageProgress(image,LoadImageTag,y,image->rows);
+          if (status == MagickFalse)
+            break;
+        }
+    }
+    if (i > 0)
+      break;
+    AcquireNextImage(image_info,image);
+    if (GetNextImageInList(image) == (Image *) NULL)
+      {
+        status=MagickFalse;
+        break;
+      }
+    image=SyncNextImageInList(image);
+  }
+  (void) CloseBlob(image);
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
+  return(GetFirstImageInList(image));
+}
+
 static Image *ReadICONImage(const ImageInfo *image_info,
   ExceptionInfo *exception)
 {
@@ -295,6 +385,9 @@ static Image *ReadICONImage(const ImageInfo *image_info,
     }
   (void) memset(&icon_file,0,sizeof(icon_file));
   icon_file.reserved=(short) ReadBlobLSBShort(image);
+  if ((icon_file.reserved == 0x0001) || (icon_file.reserved == 0x0101) ||
+      (icon_file.reserved == 0x0201))
+    return(Read1XImage(image_info,image,exception));
   icon_file.resource_type=(short) ReadBlobLSBShort(image);
   icon_file.count=(short) ReadBlobLSBShort(image);
   if ((icon_file.reserved != 0) ||
