@@ -86,16 +86,15 @@
 #include "magick/utility.h"
 #include "magick/utility-private.h"
 
-#if defined(MAGICKCORE_OPENCL_SUPPORT)
-#if defined(MAGICKCORE_LTDL_DELEGATE)
-#include "ltdl.h"
-#endif
-
 #ifdef MAGICKCORE_CLPERFMARKER
 #include "CLPerfMarker.h"
 #endif
 
 #if defined(MAGICKCORE_OPENCL_SUPPORT)
+
+#if defined(MAGICKCORE_LTDL_DELEGATE)
+#include "ltdl.h"
+#endif
 
 #define NUM_CL_RAND_GENERATORS 1024  /* number of random number generators running in parallel */
 #define PROFILE_OCL_KERNELS 0
