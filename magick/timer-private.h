@@ -60,6 +60,9 @@ extern MagickPrivate MagickOffsetType
 extern MagickExport time_t
   GetMagickTime(void);
 
+extern MagickPrivate void
+  SetMagickTTL(void);
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif

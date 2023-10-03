@@ -68,6 +68,12 @@ static double
 
 static void
   StopTimer(TimerInfo *);
+^L
+/*
+  Static declarations.
+*/
+static time_t
+  magick_epoch = (time_t) 0;
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -374,18 +380,17 @@ MagickExport time_t GetMagickTime(void)
 %      MagickSizeType GetMagickTTL(void)
 %
 */
+
+MagickPrivate void SetMagickTTL(void)
+{
+  if (magick_epoch == 0)
+    magick_epoch=time((time_t *) NULL);
+}
+
 MagickPrivate MagickOffsetType GetMagickTTL(void)
 {
-  static time_t
-    epoch = (time_t) 0;
-
-  if (epoch == 0)
-    {
-      epoch=time((time_t *) NULL);
-      return(0);
-    }
   return((MagickOffsetType) GetMagickResourceLimit(TimeResource)-
-    (GetMagickTime()-epoch));
+    (GetMagickTime()-magick_epoch));
 }
 
 /*
