@@ -302,9 +302,6 @@ extern MagickExport void
   GetPixelCacheMethods(CacheMethods *),
   SetPixelCacheMethods(Cache,CacheMethods *);
 
-extern MagickPrivate void
-  ResetPixelCacheEpoch(void);
-
 extern MagickPrivate MagickBooleanType
   SyncImagePixelCache(Image *,ExceptionInfo *);
 

@@ -161,9 +161,6 @@ static SemaphoreInfo
 static ssize_t
   cache_anonymous_memory = (-1);
 
-static time_t
-  cache_epoch = 0;
-
 #if defined(MAGICKCORE_OPENCL_SUPPORT)
 static inline OpenCLCacheInfo *RelinquishOpenCLCacheInfo(MagickCLEnv clEnv,
   OpenCLCacheInfo *info)
@@ -1854,7 +1851,6 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
     status;
 
   static MagickSizeType
-    cache_timelimit = MagickResourceInfinity,
     cpu_throttle = MagickResourceInfinity,
     cycles = 0;
 
@@ -1863,16 +1859,7 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
     cpu_throttle=GetMagickResourceLimit(ThrottleResource);
   if ((cpu_throttle != 0) && ((cycles++ % 4096) == 0))
     MagickDelay(cpu_throttle);
-  if (cache_epoch == 0)
-    {
-      /*
-        Set the expire time in seconds.
-      */
-      cache_epoch=GetMagickTime();
-      cache_timelimit=GetMagickResourceLimit(TimeResource);
-    }
-  if ((cache_timelimit != MagickResourceInfinity) &&
-      ((MagickSizeType) (GetMagickTime()-cache_epoch) >= cache_timelimit))
+  if (GetMagickTTL() < 0)
     {
 #if defined(ECANCELED)
       errno=ECANCELED;
@@ -4988,29 +4975,6 @@ MagickExport Cache ReferencePixelCache(Cache cache)
   cache_info->reference_count++;
   UnlockSemaphoreInfo(cache_info->semaphore);
   return(cache_info);
-}
-
-/*
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                                                             %
-%                                                                             %
-%                                                                             %
-+   R e s e t P i x e l C a c h e E p o c h e                                 %
-%                                                                             %
-%                                                                             %
-%                                                                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  ResetPixelCacheEpoch() resets the pixel cache epoch.
-%
-%  The format of the ResetPixelCacheEpoch method is:
-%
-%      void ResetPixelCacheEpoch(void)
-%
-*/
-MagickPrivate void ResetPixelCacheEpoch(void)
-{
-  cache_epoch=0;
 }
 
 /*

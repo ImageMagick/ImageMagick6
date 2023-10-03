@@ -63,6 +63,7 @@
 #include "magick/splay-tree.h"
 #include "magick/thread-private.h"
 #include "magick/token.h"
+#include "magick/timer-private.h"
 #include "magick/utility.h"
 #include "magick/utility-private.h"
 
@@ -125,8 +126,8 @@ static ResourceInfo
     MagickULLConstant(0),                 /* initial thread */
     MagickULLConstant(0),                 /* initial throttle */
     MagickULLConstant(0),                 /* initial time */
-    (MagickSizeType) (SSIZE_MAX/sizeof(PixelPacket)/5), /* width limit */
-    (MagickSizeType) (SSIZE_MAX/sizeof(PixelPacket)/5), /* height limit */
+    (MagickSizeType) (MAGICK_SSIZE_MAX/sizeof(PixelPacket)/5), /* width limit */
+    (MagickSizeType) (MAGICK_SSIZE_MAX/sizeof(PixelPacket)/5), /* height limit */
     MagickResourceInfinity,               /* list length limit */
     MagickULLConstant(3072)*1024*1024,    /* area limit */
     MagickULLConstant(1536)*1024*1024,    /* memory limit */
@@ -135,7 +136,7 @@ static ResourceInfo
     MagickULLConstant(768),               /* file limit */
     MagickULLConstant(1),                 /* thread limit */
     MagickULLConstant(0),                 /* throttle limit */
-    MagickResourceInfinity                /* time limit */
+    (MagickSizeType) MAGICK_SSIZE_MAX     /* time limit */
   };
 
 static SemaphoreInfo
@@ -1660,7 +1661,9 @@ MagickExport MagickBooleanType SetMagickResourceLimit(const ResourceType type,
         resource_info.time_limit=limit;
       else
         resource_info.time_limit=MagickMin(limit,StringToSizeType(value,100.0));
-      ResetPixelCacheEpoch();
+      resource_info.time_limit=MagickMin(resource_info.time_limit,
+        (MagickSizeType) MAGICK_SSIZE_MAX);
+      (void) GetMagickTTL();
       break;
     }
     case WidthResource:
