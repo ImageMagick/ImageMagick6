@@ -93,6 +93,7 @@
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/thread-private.h"
+#include "magick/timer-private.h"
 #include "magick/threshold.h"
 #include "magick/token.h"
 #include "magick/transform.h"
@@ -146,6 +147,9 @@ struct _FxInfo
 
   RandomInfo
     *random_info;
+
+  MagickSizeType
+    cycles;
 
   ExceptionInfo
     *exception;
@@ -2162,6 +2166,10 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
+            if (((fx_info->cycles++ % 8192) == 0) && (GetMagickTTL() <= 0))
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                ResourceLimitFatalError,"TimeLimitExceeded","`%s'",
+                fx_info->images->filename);
             alpha=FxEvaluateSubexpression(fx_info,channel,x,y,q+1,depth+1,beta,
               exception);
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
@@ -2233,6 +2241,10 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
+            if (((fx_info->cycles++ % 8192) == 0) && (GetMagickTTL() <= 0))
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                ResourceLimitFatalError,"TimeLimitExceeded","`%s'",
+                fx_info->images->filename);
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,&sans,
               exception);
             if (fabs(gamma) < MagickEpsilon)
@@ -2611,6 +2623,10 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
+            if (((fx_info->cycles++ % 8192) == 0) && (GetMagickTTL() <= 0))
+              (void) ThrowMagickException(exception,GetMagickModule(),
+                ResourceLimitFatalError,"TimeLimitExceeded","`%s'",
+                fx_info->images->filename);
             gamma=FxEvaluateSubexpression(fx_info,channel,x,y,p,depth+1,beta,
               exception);
             if (fabs(gamma) < MagickEpsilon)
