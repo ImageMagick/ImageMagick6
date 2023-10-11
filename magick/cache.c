@@ -1859,7 +1859,7 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
     cpu_throttle=GetMagickResourceLimit(ThrottleResource);
   if ((cycles++ % 4096) == 0)
     {
-      if (GetMagickTTL() < 0)
+      if (GetMagickTTL() <= 0)
         {
           cache_info=(CacheInfo *) image->cache;
           if (cache_info->file != -1)
