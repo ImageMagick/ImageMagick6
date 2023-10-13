@@ -1010,8 +1010,7 @@ static int NTLocateGhostscript(DWORD flags,int *root_index,
       "GPL Ghostscript",
       "GNU Ghostscript",
       "AFPL Ghostscript",
-      "Aladdin Ghostscript",
-      "Artiflex Ghostscript"
+      "Aladdin Ghostscript"
     };
 
   /*
