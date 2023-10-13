@@ -181,6 +181,7 @@ MagickExport Image *AcquireImage(const ImageInfo *image_info)
   image->blob=CloneBlobInfo((BlobInfo *) NULL);
   InitializeExceptionInfo(&image->exception);
   image->timestamp=GetMagickTime();
+  image->ttl=(time_t) GetMagickResourceLimit(TimeResource);
   image->debug=(GetLogEventMask() & (ImageEvent | TransformEvent | CoderEvent))
     != 0 ? MagickTrue : MagickFalse;
   image->reference_count=1;
@@ -839,6 +840,8 @@ MagickExport Image *CloneImage(const Image *image,const size_t columns,
       clone_image->blob=CloneBlobInfo((BlobInfo *) NULL);
     }
   clone_image->ping=image->ping;
+  clone_image->timestamp=image->timestamp;
+  clone_image->ttl=image->ttl;
   clone_image->debug=image->debug;
   clone_image->semaphore=AllocateSemaphoreInfo();
   if (image->colormap != (PixelPacket *) NULL)

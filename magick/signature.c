@@ -138,7 +138,7 @@ MagickExport SignatureInfo *AcquireSignatureInfo(void)
   lsb_first=1;
   signature_info->lsb_first=(int) (*(char *) &lsb_first) == 1 ? MagickTrue :
     MagickFalse;
-  signature_info->timestamp=(ssize_t) time(0);
+  signature_info->timestamp=(ssize_t) GetMagickTime();
   signature_info->signature=MagickCoreSignature;
   InitializeSignature(signature_info);
   return(signature_info);

@@ -60,6 +60,7 @@
 #include "magick/string_.h"
 #include "magick/thread_.h"
 #include "magick/thread-private.h"
+#include "magick/timer-private.h"
 #include "magick/utility-private.h"
 #if defined(MAGICKCORE_HAVE_GETENTROPY)
 #include <sys/random.h>
@@ -192,7 +193,7 @@ MagickExport RandomInfo *AcquireRandomInfo(void)
   random_info->protocol_major=RandomProtocolMajorVersion;
   random_info->protocol_minor=RandomProtocolMinorVersion;
   random_info->semaphore=AllocateSemaphoreInfo();
-  random_info->timestamp=(ssize_t) time(0);
+  random_info->timestamp=(ssize_t) GetMagickTime();
   random_info->signature=MagickCoreSignature;
   /*
     Seed random nonce.

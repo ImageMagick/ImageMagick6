@@ -62,6 +62,7 @@
 #include "magick/string-private.h"
 #include "magick/splay-tree.h"
 #include "magick/thread-private.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/timer-private.h"
 #include "magick/utility.h"
@@ -1465,11 +1466,11 @@ MagickExport MagickBooleanType ResourceComponentGenesis(void)
         100.0));
       limit=DestroyString(limit);
     }
-  (void) SetMagickResourceLimit(TimeResource,MagickResourceInfinity);
+  (void) SetMagickResourceLimit(TimeResource,(MagickSizeType) MAGICK_SSIZE_MAX);
   limit=GetEnvironmentValue("MAGICK_TIME_LIMIT");
   if (limit != (char *) NULL)
     {
-      (void) SetMagickResourceLimit(TimeResource,StringToSizeType(limit,100.0));
+      (void) SetMagickResourceLimit(TimeResource,ParseMagickTimeToLive(limit));
       limit=DestroyString(limit);
     }
   (void) SetMagickResourceLimit(ListLengthResource,MagickResourceInfinity);
@@ -1660,7 +1661,8 @@ MagickExport MagickBooleanType SetMagickResourceLimit(const ResourceType type,
       if (value == (char *) NULL)
         resource_info.time_limit=limit;
       else
-        resource_info.time_limit=MagickMin(limit,StringToSizeType(value,100.0));
+        resource_info.time_limit=MagickMin(limit,(MagickSizeType)
+          ParseMagickTimeToLive(value));
       resource_info.time_limit=MagickMin(resource_info.time_limit,
         (MagickSizeType) MAGICK_SSIZE_MAX);
       break;

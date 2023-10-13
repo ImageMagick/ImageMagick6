@@ -58,6 +58,7 @@
 #include "magick/splay-tree.h"
 #include "magick/statistic.h"
 #include "magick/string_.h"
+#include "magick/timer-private.h"
 
 #if defined(MAGICKCORE_CIPHER_SUPPORT)
 /*
@@ -204,7 +205,7 @@ static AESInfo *AcquireAESInfo(void)
       (aes_info->encipher_key == (unsigned int *) NULL) ||
       (aes_info->decipher_key == (unsigned int *) NULL))
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  aes_info->timestamp=(ssize_t) time(0);
+  aes_info->timestamp=(ssize_t) GetMagickTime();
   aes_info->signature=MagickCoreSignature;
   return(aes_info);
 }

@@ -60,6 +60,7 @@
 #include "magick/splay-tree.h"
 #include "magick/static.h"
 #include "magick/string_.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/utility-private.h"
@@ -147,7 +148,7 @@ MagickExport ModuleInfo *AcquireModuleInfo(const char *path,const char *tag)
     module_info->path=ConstantString(path);
   if (tag != (const char *) NULL)
     module_info->tag=ConstantString(tag);
-  module_info->timestamp=time(0);
+  module_info->timestamp=GetMagickTime();
   module_info->signature=MagickCoreSignature;
   return(module_info);
 }

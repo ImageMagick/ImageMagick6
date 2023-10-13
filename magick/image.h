@@ -356,6 +356,9 @@ struct _Image
 
   long
     tietz_offset;
+
+  time_t
+    ttl;
 };
 
 struct _ImageInfo
