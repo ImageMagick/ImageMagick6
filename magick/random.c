@@ -106,7 +106,7 @@ struct _RandomInfo
   SemaphoreInfo
     *semaphore;
 
-  ssize_t
+  time_t
     timestamp;
 
   size_t
@@ -193,7 +193,7 @@ MagickExport RandomInfo *AcquireRandomInfo(void)
   random_info->protocol_major=RandomProtocolMajorVersion;
   random_info->protocol_minor=RandomProtocolMinorVersion;
   random_info->semaphore=AllocateSemaphoreInfo();
-  random_info->timestamp=(ssize_t) GetMagickTime();
+  random_info->timestamp=GetMagickTime();
   random_info->signature=MagickCoreSignature;
   /*
     Seed random nonce.
