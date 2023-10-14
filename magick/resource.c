@@ -955,11 +955,9 @@ static ssize_t FormatPixelSize(const MagickSizeType size,
     length;
 
   ssize_t
+    count,
     i,
     j;
-
-  ssize_t
-    count;
 
   static const char
     *bi_units[] =
@@ -996,6 +994,64 @@ static ssize_t FormatPixelSize(const MagickSizeType size,
   return(count);
 }
 
+static void FormatTimeToLive(const MagickSizeType ttl,char *timeString)
+{
+  MagickSizeType
+    days,
+    hours,
+    minutes,
+    months,
+    seconds,
+    weeks,
+    years;
+
+  years=ttl/31536000;
+  seconds=ttl % 31536000;
+  if (seconds == 0)
+    {
+      (void) FormatLocaleString(timeString,MagickPathExtent,"%lld years",years);
+      return;
+    }
+  months=seconds/2592000;
+  seconds=seconds % 2592000;
+  if (seconds == 0)
+    {
+      (void) FormatLocaleString(timeString,MagickPathExtent,"%lld months",
+        months);
+      return;
+    }
+  weeks=seconds/604800;
+  seconds=seconds % 604800;
+  if (seconds == 0)
+    {
+      (void) FormatLocaleString(timeString,MagickPathExtent,"%lld weeks",weeks);
+      return;
+    }
+  days=seconds/86400;
+  seconds=seconds % 86400;
+  if (seconds == 0)
+    {
+      (void) FormatLocaleString(timeString,MagickPathExtent,"%lld days",days);
+      return;
+    }
+  hours=seconds/3600;
+  seconds=seconds % 3600;
+  if (seconds == 0)
+    {
+      (void) FormatLocaleString(timeString,MagickPathExtent,"%lld hours",hours);
+      return;
+    }
+  minutes=seconds/60;
+  seconds=seconds % 60;
+  if (seconds == 0)
+    {
+      (void) FormatLocaleString(timeString,MagickPathExtent,"%lld minutes",
+        minutes);
+      return;
+    }
+  (void) FormatLocaleString(timeString,MagickPathExtent,"%lld seconds",seconds);
+}
+
 MagickExport MagickBooleanType ListMagickResourceInfo(FILE *file,
   ExceptionInfo *magick_unused(exception))
 {
@@ -1030,8 +1086,7 @@ MagickExport MagickBooleanType ListMagickResourceInfo(FILE *file,
     (void) FormatMagickSize(resource_info.disk_limit,MagickTrue,disk_limit);
   (void) CopyMagickString(time_limit,"unlimited",MaxTextExtent);
   if (resource_info.time_limit != MagickResourceInfinity)
-    (void) FormatLocaleString(time_limit,MaxTextExtent,"%.20g",(double)
-      ((MagickOffsetType) resource_info.time_limit));
+    FormatTimeToLive(resource_info.time_limit,time_limit);
   (void) FormatLocaleFile(file,"Resource limits:\n");
   (void) FormatLocaleFile(file,"  Width: %s\n",width_limit);
   (void) FormatLocaleFile(file,"  Height: %s\n",height_limit);
