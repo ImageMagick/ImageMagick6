@@ -1851,7 +1851,8 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
     status;
 
   static MagickSizeType
-    cpu_throttle = MagickResourceInfinity;
+    cpu_throttle = MagickResourceInfinity,
+    cycles = 0;
 
   status=MagickTrue;
   if (cpu_throttle == MagickResourceInfinity)
@@ -1865,7 +1866,7 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
         ResourceLimitFatalError,"TimeLimitExceeded","`%s'",image->filename);
       return((Cache) NULL);
     }
-  if (cpu_throttle != 0)
+  if ((cpu_throttle != 0) && ((cycles++ % 4096) == 0))
     MagickDelay(cpu_throttle);
   LockSemaphoreInfo(image->semaphore);
   assert(image->cache != (Cache) NULL);
