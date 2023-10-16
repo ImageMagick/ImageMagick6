@@ -2312,7 +2312,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
       {
         if (y < y_offset)
           continue;
-        if ((y-y_offset) >= (ssize_t) source_image->rows)
+        if ((y-(double) y_offset) >= (double) source_image->rows)
           continue;
       }
     /*
@@ -2320,10 +2320,12 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
     */
     pixels=(PixelPacket *) NULL;
     p=(PixelPacket *) NULL;
-    if ((y >= y_offset) && ((y-y_offset) < (ssize_t) source_image->rows))
+    if ((y >= y_offset) &&
+        ((y-(double) y_offset) < (double) source_image->rows))
       {
-        p=GetCacheViewVirtualPixels(source_view,0,y-y_offset,
-          source_image->columns,1,exception);
+        p=GetCacheViewVirtualPixels(source_view,0,
+          CastDoubleToLong(y-(double) y_offset),source_image->columns,1,
+          exception);
         if (p == (const PixelPacket *) NULL)
           {
             status=MagickFalse;
@@ -2355,7 +2357,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
               q++;
               continue;
             }
-          if ((x-x_offset) >= (ssize_t) source_image->columns)
+          if ((x-(double) x_offset) >= (double) source_image->columns)
             break;
         }
       canvas.red=(MagickRealType) GetPixelRed(q);
@@ -2377,7 +2379,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
       */
       composite=canvas;
       if ((pixels == (PixelPacket *) NULL) || (x < x_offset) ||
-          ((x-x_offset) >= (ssize_t) source_image->columns))
+          ((x-(double) x_offset) >= (double) source_image->columns))
         {
           switch (compose)
           {
@@ -2409,8 +2411,9 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
             }
             default:
             {
-              (void) GetOneVirtualMagickPixel(source_image,x-x_offset,
-                y-y_offset,&composite,exception);
+              (void) GetOneVirtualMagickPixel(source_image,
+                CastDoubleToLong(x-(double) x_offset),
+                CastDoubleToLong(y-(double) y_offset),&composite,exception);
               break;
             }
           }
@@ -2447,7 +2450,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
         source.opacity=(MagickRealType) GetPixelOpacity(p);
       if (source_image->colorspace == CMYKColorspace)
         source.index=(MagickRealType) GetPixelIndex(source_indexes+
-          x-x_offset);
+          CastDoubleToLong(x-(double) x_offset));
       if (source_image->colorspace == CMYKColorspace)
         {
           source.red=(MagickRealType) QuantumRange-source.red;
