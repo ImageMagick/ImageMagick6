@@ -1308,7 +1308,7 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
           if (LocaleCompare("unlimited",value) != 0)
             limit=StringToMagickSizeType(value,100.0);
           if ((ResourceType) type == TimeResource)
-            limit=ParseMagickTimeToLive(value);
+            limit=ParseMagickTimeToLive((time_t) value);
           return(SetMagickResourceLimit((ResourceType) type,limit));
         }
       break;
