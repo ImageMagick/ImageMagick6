@@ -1366,5 +1366,5 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
     default:
       break;
   }
-  return(MagickFalse);
+  return(MagickTrue);
 }
