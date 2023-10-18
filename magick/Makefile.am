@@ -194,6 +194,7 @@ MAGICK_BASE_SRCS = \
   magick/magick-config.h \
   magick/magick-type.h \
   magick/magick.h \
+  magick/magick-private.h \
   magick/matrix.c \
   magick/matrix.h \
   magick/memory.c \
@@ -453,6 +454,7 @@ MAGICK_NOINST_HDRS = \
   magick/image-private.h \
   magick/locale-private.h \
   magick/mac.h \
+  magick/magick-private.h \
   magick/memory-private.h \
   magick/mime-private.h \
   magick/monitor-private.h \

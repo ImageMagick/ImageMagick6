@@ -521,7 +521,7 @@ static MagickBooleanType GetOneVirtualPixelFromStream(const Image *image,
 %
 %  GetStreamInfoClientData() gets the stream info client data.
 %
-%  The format of the SetStreamInfoClientData method is:
+%  The format of the GetStreamInfoClientData method is:
 %
 %      const void *GetStreamInfoClientData(StreamInfo *stream_info)
 %
@@ -997,6 +997,28 @@ MagickExport Image *ReadStream(const ImageInfo *image_info,StreamHandler stream,
   image=ReadImage(read_info,exception);
   read_info=DestroyImageInfo(read_info);
   return(image);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
++   R e s e t S t r e a m A n o n y m o u s M e m o r y                       %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     
+%  ResetStreamAnonymousMemory() resets the anonymous_memory value.
+%
+%  The format of the ResetStreamAnonymousMemory method is:
+%
+%      void ResetStreamAnonymousMemory(void)
+%
+*/
+MagickPrivate void ResetStreamAnonymousMemory(void)
+{
 }
 
 /*

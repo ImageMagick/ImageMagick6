@@ -38,12 +38,15 @@
   Include declarations.
 */
 #include "magick/studio.h"
+#include "magick/cache-private.h"
 #include "magick/client.h"
 #include "magick/configure.h"
 #include "magick/exception.h"
 #include "magick/exception-private.h"
 #include "magick/locale_.h"
+#include "magick/magick-private.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/monitor.h"
 #include "magick/monitor-private.h"
 #include "magick/option.h"
@@ -51,7 +54,10 @@
 #include "magick/policy-private.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
+#include "magick/stream-private.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/xml-tree.h"
@@ -133,6 +139,8 @@ static SemaphoreInfo
 static MagickBooleanType
   IsPolicyCacheInstantiated(ExceptionInfo *),
   LoadPolicyCache(LinkedListInfo *,const char *,const char *,const size_t,
+    ExceptionInfo *),
+  SetMagickSecurityPolicyValue(const PolicyDomain,const char *,const char *,
     ExceptionInfo *);
 
 /*
@@ -1140,30 +1148,223 @@ static MagickBooleanType ValidateSecurityPolicy(const char *policy,
 MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
   ExceptionInfo *exception)
 {
-  PolicyInfo
-    *p;
-
   MagickBooleanType
     status;
+
+  LinkedListInfo
+    *user_policies;
+
+  PolicyInfo
+    *p;
 
   assert(exception != (ExceptionInfo *) NULL);
   if (policy == (const char *) NULL)
     return(MagickFalse);
   if (ValidateSecurityPolicy(policy,PolicyFilename,exception) == MagickFalse)
     return(MagickFalse);
-  if (IsPolicyCacheInstantiated(exception) == MagickFalse)
-    return(MagickFalse);
-  LockSemaphoreInfo(policy_semaphore);
-  ResetLinkedListIterator(policy_cache);
-  p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
-  if ((p != (PolicyInfo *) NULL) && (p->domain != UndefinedPolicyDomain))
-    {
-      UnlockSemaphoreInfo(policy_semaphore);
-      return(MagickFalse);
-    }
-  UnlockSemaphoreInfo(policy_semaphore);
   status=LoadPolicyCache(policy_cache,policy,"[user-policy]",0,exception);
   if (status == MagickFalse)
     return(MagickFalse);
-  return(ResourceComponentGenesis());
+  user_policies=NewLinkedList(0);
+  status=LoadPolicyCache(user_policies,policy,"[user-policy]",0,exception);
+  if (status == MagickFalse)
+    {
+      user_policies=DestroyLinkedList(user_policies,DestroyPolicyElement);
+      return(MagickFalse);
+    }
+  ResetLinkedListIterator(user_policies);
+  p=(PolicyInfo *) GetNextValueInLinkedList(user_policies);
+  while (p != (PolicyInfo *) NULL)
+  {
+    if ((p->domain != (PolicyDomain) NULL) && (p->name != (char *) NULL) &&
+        (p->value != (char *) NULL))
+      {
+        status=SetMagickSecurityPolicyValue(p->domain,p->name,p->value,
+          exception);
+        if (status == MagickFalse)
+          break;
+      }
+    p=(PolicyInfo *) GetNextValueInLinkedList(user_policies);
+  }
+  user_policies=DestroyLinkedList(user_policies,DestroyPolicyElement);
+  return(status);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
++  S e t M a g i c k S e c u r i t y P o l i c y V a l u e                    %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  SetMagickSecurityPolicyValue() sets a value associated with an ImageMagick
+%  security policy.  For most policies, the value must be less than any value
+%  set by the security policy configuration file (i.e. policy.xml).  It returns
+%  MagickFalse if the policy cannot be modified or if the policy does not parse.
+%
+%  The format of the SetMagickSecurityPolicyValue method is:
+%
+%      MagickBooleanType SetMagickSecurityPolicyValue(
+%        const PolicyDomain domain,const char *name,const char *value,
+%        ExceptionInfo *exception)
+%
+%  A description of each parameter follows:
+%
+%    o domain: the domain of the policy (e.g. system, resource).
+%
+%    o name: the name of the policy.
+%
+%    o value: the value to set the policy to.
+%
+%    o exception: return any errors or warnings in this structure.
+%
+*/
+
+static MagickBooleanType SetPolicyValue(const PolicyDomain domain,
+  const char *name,const char *value)
+{
+  MagickBooleanType
+    status;
+
+  PolicyInfo
+    *p;
+
+  status=MagickTrue;
+  LockSemaphoreInfo(policy_semaphore);
+  ResetLinkedListIterator(policy_cache);
+  p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
+  while (p != (PolicyInfo *) NULL)
+  {
+    if ((p->domain == domain) && (LocaleCompare(name,p->name) == 0))
+      break;
+    p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
+  }
+  if (p != (PolicyInfo *) NULL)
+    {
+      if (p->value != (char *) NULL)
+        p->value=DestroyString(p->value);
+    }
+  else
+    {
+      p=(PolicyInfo *) AcquireCriticalMemory(sizeof(*p));
+      (void) memset(p,0,sizeof(*p));
+      p->exempt=MagickFalse;
+      p->signature=MagickCoreSignature;
+      p->domain=domain;
+      p->name=AcquirePolicyString(name,1);
+      status=AppendValueToLinkedList(policy_cache,p);
+    }
+  p->value=AcquirePolicyString(value,1);
+  UnlockSemaphoreInfo(policy_semaphore);
+  if (status == MagickFalse)
+    p=(PolicyInfo *) RelinquishMagickMemory(p);
+  return(status);
+}
+
+static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
+  const char *name,const char *value,ExceptionInfo *exception)
+{
+  char
+    *current_value;
+
+  magick_unreferenced(exception);
+  assert(exception != (ExceptionInfo *) NULL);
+  if ((name == (const char *) NULL) || (value == (const char *) NULL))
+    return(MagickFalse);
+  switch (domain)
+  {
+    case CachePolicyDomain:
+    {
+      if (LocaleCompare(name,"memory-map") == 0)
+        {
+          if (LocaleCompare(value,"anonymous") != 0)
+            return(MagickFalse);
+          ResetCacheAnonymousMemory();
+          ResetStreamAnonymousMemory();
+          return(SetPolicyValue(domain,name,value));
+        }
+      if (LocaleCompare(name,"synchronize") == 0)
+        return(SetPolicyValue(domain,name,value));
+      break;
+    }
+    case ResourcePolicyDomain:
+    {
+      ssize_t
+        type;
+
+      if (LocaleCompare(name,"temporary-path") == 0)
+        return(SetPolicyValue(domain,name,value));
+      type=ParseCommandOption(MagickResourceOptions,MagickFalse,name);
+      if (type >= 0)
+        {
+          MagickSizeType
+            limit;
+
+          limit=MagickResourceInfinity;
+          if (LocaleCompare("unlimited",value) != 0)
+            limit=StringToMagickSizeType(value,100.0);
+          if ((ResourceType) type == TimeResource)
+            limit=ParseMagickTimeToLive(value);
+          return(SetMagickResourceLimit((ResourceType) type,limit));
+        }
+      break;
+    }
+    case SystemPolicyDomain:
+    {
+      if (LocaleCompare(name,"font") == 0)
+        return(SetPolicyValue(domain,name,value));
+      if (LocaleCompare(name,"max-memory-request") == 0)
+        {
+          current_value=GetPolicyValue("system:max-memory-request");
+          if ((current_value == (char *) NULL) ||
+              (StringToSizeType(value,100.0) < StringToSizeType(current_value,100.0)))
+            {
+              if (current_value != (char *) NULL)
+                current_value=DestroyString(current_value);
+              ResetMaxMemoryRequest();
+              return(SetPolicyValue(domain,name,value));
+            }
+          if (current_value != (char *) NULL)
+            current_value=DestroyString(current_value);
+        }
+      if (LocaleCompare(name,"memory-map") == 0)
+        {
+          if (LocaleCompare(value,"anonymous") != 0)
+            return(MagickFalse);
+          ResetVirtualAnonymousMemory();
+          return(SetPolicyValue(domain,name,value));
+        }
+      if (LocaleCompare(name,"precision") == 0)
+        {
+          ResetMagickPrecision();
+          return(SetPolicyValue(domain,name,value));
+        }
+      if (LocaleCompare(name,"shred") == 0)
+        {
+          current_value=GetPolicyValue("system:shred");
+          if ((current_value == (char *) NULL) ||
+              (StringToInteger(value) > StringToInteger(current_value)))
+            {
+              if (current_value != (char *) NULL)
+                current_value=DestroyString(current_value);
+              return(SetPolicyValue(domain,name,value));
+            }
+          if (current_value != (char *) NULL)
+            current_value=DestroyString(current_value);
+        }
+      break;
+    }
+    case CoderPolicyDomain:
+    case DelegatePolicyDomain:
+    case FilterPolicyDomain:
+    case ModulePolicyDomain:
+    case PathPolicyDomain:
+    default:
+      break;
+  }
+  return(MagickFalse);
 }

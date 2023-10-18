@@ -43,6 +43,9 @@ extern MagickExport void
   SetStreamInfoMap(StreamInfo *,const char *),
   SetStreamInfoStorageType(StreamInfo *,const StorageType);
 
+extern MagickPrivate void
+  ResetStreamAnonymousMemory(void);
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif

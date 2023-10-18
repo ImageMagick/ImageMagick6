@@ -4988,6 +4988,29 @@ MagickExport Cache ReferencePixelCache(Cache cache)
 %                                                                             %
 %                                                                             %
 %                                                                             %
++   R e s e t C a c h e A n o n y m o u s M e m o r y                         %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ResetCacheAnonymousMemory() resets the anonymous_memory value.
+%
+%  The format of the ResetCacheAnonymousMemory method is:
+%
+%      void ResetCacheAnonymousMemory(void)
+%
+*/
+MagickPrivate void ResetCacheAnonymousMemory(void)
+{
+  cache_anonymous_memory=0;
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 +   S e t P i x e l C a c h e M e t h o d s                                   %
 %                                                                             %
 %                                                                             %

@@ -1475,9 +1475,9 @@ am__magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES_D
 	magick/locale-private.h magick/log.c magick/log.h magick/mac.h \
 	magick/magic.c magick/magic.h magick/magick.c \
 	magick/magick-baseconfig.h magick/magick-config.h \
-	magick/magick-type.h magick/magick.h magick/matrix.c \
-	magick/matrix.h magick/memory.c magick/memory_.h \
-	magick/memory-private.h magick/methods.h \
+	magick/magick-type.h magick/magick.h magick/magick-private.h \
+	magick/matrix.c magick/matrix.h magick/memory.c \
+	magick/memory_.h magick/memory-private.h magick/methods.h \
 	magick/method-attribute.h magick/mime.c magick/mime.h \
 	magick/module.c magick/module.h magick/monitor.c \
 	magick/monitor.h magick/monitor-private.h magick/montage.c \
@@ -3000,6 +3000,7 @@ AWK = @AWK@
 BIN_DIR = @BIN_DIR@
 BPGDecodeDelegate = @BPGDecodeDelegate@
 BPGEncodeDelegate = @BPGEncodeDelegate@
+BZLIB_CFLAGS = @BZLIB_CFLAGS@
 BZLIB_LIBS = @BZLIB_LIBS@
 BlenderDecodeDelegate = @BlenderDecodeDelegate@
 BrowseDelegate = @BrowseDelegate@
@@ -4794,6 +4795,7 @@ MAGICK_BASE_SRCS = \
   magick/magick-config.h \
   magick/magick-type.h \
   magick/magick.h \
+  magick/magick-private.h \
   magick/matrix.c \
   magick/matrix.h \
   magick/memory.c \
@@ -5048,6 +5050,7 @@ MAGICK_NOINST_HDRS = \
   magick/image-private.h \
   magick/locale-private.h \
   magick/mac.h \
+  magick/magick-private.h \
   magick/memory-private.h \
   magick/mime-private.h \
   magick/monitor-private.h \

@@ -130,6 +130,9 @@ static volatile MagickBooleanType
   instantiate_magickcore = MagickFalse,
   magickcore_signal_in_progress = MagickFalse,
   magick_list_initialized = MagickFalse;
+
+static int
+  magick_precision = 0;
 
 /*
   Forward declarations.
@@ -1517,6 +1520,29 @@ MagickExport MagickInfo *RegisterMagickInfo(MagickInfo *magick_info)
 %                                                                             %
 %                                                                             %
 %                                                                             %
++   R e s e t M a g i c k P r e c i s i o n                                   %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  ResetMagickPrecision() resets the magick_precision value.
+%
+%  The format of the ResetMagickPrecision method is:
+%
+%      void ResetMagickPrecision(void)
+%
+*/
+MagickPrivate void ResetMagickPrecision(void)
+{
+  magick_precision=0;
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 +   S e t M a g i c k I n f o                                                 %
 %                                                                             %
 %                                                                             %
@@ -1592,9 +1618,6 @@ MagickExport MagickInfo *SetMagickInfo(const char *name)
 MagickExport int SetMagickPrecision(const int precision)
 {
 #define MagickPrecision  (4+MAGICKCORE_QUANTUM_DEPTH/8)
-
-  static int
-    magick_precision = 0;
 
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
