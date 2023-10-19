@@ -1157,6 +1157,9 @@ MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
   PolicyInfo
     *p;
 
+  /*
+    Load user policies.
+  */
   assert(exception != (ExceptionInfo *) NULL);
   if (policy == (const char *) NULL)
     return(MagickFalse);
@@ -1164,7 +1167,10 @@ MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
     return(MagickFalse);
   status=LoadPolicyCache(policy_cache,policy,"[user-policy]",0,exception);
   if (status == MagickFalse)
-    return(MagickFalse);
+    return(status);
+  /*
+    Synchronize user policies.
+  */
   user_policies=NewLinkedList(0);
   status=LoadPolicyCache(user_policies,policy,"[user-policy]",0,exception);
   if (status == MagickFalse)
@@ -1176,8 +1182,7 @@ MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
   p=(PolicyInfo *) GetNextValueInLinkedList(user_policies);
   while (p != (PolicyInfo *) NULL)
   {
-    if ((p->domain != (PolicyDomain) NULL) && (p->name != (char *) NULL) &&
-        (p->value != (char *) NULL))
+    if ((p->name != (char *) NULL) && (p->value != (char *) NULL))
       {
         status=SetMagickSecurityPolicyValue(p->domain,p->name,p->value,
           exception);
@@ -1195,7 +1200,7 @@ MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
 %                                                                             %
 %                                                                             %
 %                                                                             %
-+  S e t M a g i c k S e c u r i t y P o l i c y V a l u e                    %
+%  S e t M a g i c k S e c u r i t y P o l i c y V a l u e                    %
 %                                                                             %
 %                                                                             %
 %                                                                             %
@@ -1223,48 +1228,6 @@ MagickExport MagickBooleanType SetMagickSecurityPolicy(const char *policy,
 %    o exception: return any errors or warnings in this structure.
 %
 */
-
-static MagickBooleanType SetPolicyValue(const PolicyDomain domain,
-  const char *name,const char *value)
-{
-  MagickBooleanType
-    status;
-
-  PolicyInfo
-    *p;
-
-  status=MagickTrue;
-  LockSemaphoreInfo(policy_semaphore);
-  ResetLinkedListIterator(policy_cache);
-  p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
-  while (p != (PolicyInfo *) NULL)
-  {
-    if ((p->domain == domain) && (LocaleCompare(name,p->name) == 0))
-      break;
-    p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
-  }
-  if (p != (PolicyInfo *) NULL)
-    {
-      if (p->value != (char *) NULL)
-        p->value=DestroyString(p->value);
-    }
-  else
-    {
-      p=(PolicyInfo *) AcquireCriticalMemory(sizeof(*p));
-      (void) memset(p,0,sizeof(*p));
-      p->exempt=MagickFalse;
-      p->signature=MagickCoreSignature;
-      p->domain=domain;
-      p->name=AcquirePolicyString(name,1);
-      status=AppendValueToLinkedList(policy_cache,p);
-    }
-  p->value=AcquirePolicyString(value,1);
-  UnlockSemaphoreInfo(policy_semaphore);
-  if (status == MagickFalse)
-    p=(PolicyInfo *) RelinquishMagickMemory(p);
-  return(status);
-}
-
 static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
   const char *name,const char *value,ExceptionInfo *exception)
 {
@@ -1285,10 +1248,10 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
             return(MagickFalse);
           ResetCacheAnonymousMemory();
           ResetStreamAnonymousMemory();
-          return(SetPolicyValue(domain,name,value));
+          return(MagickTrue);
         }
       if (LocaleCompare(name,"synchronize") == 0)
-        return(SetPolicyValue(domain,name,value));
+        return(MagickTrue);
       break;
     }
     case ResourcePolicyDomain:
@@ -1297,7 +1260,7 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
         type;
 
       if (LocaleCompare(name,"temporary-path") == 0)
-        return(SetPolicyValue(domain,name,value));
+        return(MagickTrue);
       type=ParseCommandOption(MagickResourceOptions,MagickFalse,name);
       if (type >= 0)
         {
@@ -1316,7 +1279,7 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
     case SystemPolicyDomain:
     {
       if (LocaleCompare(name,"font") == 0)
-        return(SetPolicyValue(domain,name,value));
+        return(MagickTrue);
       if (LocaleCompare(name,"max-memory-request") == 0)
         {
           current_value=GetPolicyValue("system:max-memory-request");
@@ -1326,7 +1289,7 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
               if (current_value != (char *) NULL)
                 current_value=DestroyString(current_value);
               ResetMaxMemoryRequest();
-              return(SetPolicyValue(domain,name,value));
+              return(MagickTrue);
             }
           if (current_value != (char *) NULL)
             current_value=DestroyString(current_value);
@@ -1336,12 +1299,12 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
           if (LocaleCompare(value,"anonymous") != 0)
             return(MagickFalse);
           ResetVirtualAnonymousMemory();
-          return(SetPolicyValue(domain,name,value));
+          return(MagickTrue);
         }
       if (LocaleCompare(name,"precision") == 0)
         {
           ResetMagickPrecision();
-          return(SetPolicyValue(domain,name,value));
+          return(MagickTrue);
         }
       if (LocaleCompare(name,"shred") == 0)
         {
@@ -1351,7 +1314,7 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
             {
               if (current_value != (char *) NULL)
                 current_value=DestroyString(current_value);
-              return(SetPolicyValue(domain,name,value));
+              return(MagickTrue);
             }
           if (current_value != (char *) NULL)
             current_value=DestroyString(current_value);
@@ -1366,5 +1329,5 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
     default:
       break;
   }
-  return(MagickTrue);
+  return(MagickFalse);
 }
