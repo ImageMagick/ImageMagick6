@@ -1122,7 +1122,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
         (bmp_info.compression == BI_ALPHABITFIELDS))
       {
         pixel_info=AcquireVirtualMemory(image->rows,MagickMax(bytes_per_line,
-          image->columns+256UL)*sizeof(*pixels));
+          image->columns+512UL)*sizeof(*pixels));
         if (pixel_info == (MemoryInfo *) NULL)
           ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
         pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
