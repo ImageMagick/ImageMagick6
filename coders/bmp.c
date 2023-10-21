@@ -1573,7 +1573,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
           unsigned short
             *p16;
 
-          p16=(unsigned short *) pixels+(image->rows-y-1)*bytes_per_line;
+          p16=(unsigned short *) (pixels+(image->rows-y-1)*bytes_per_line);
           q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
           if (q == (PixelPacket *) NULL)
             break;
