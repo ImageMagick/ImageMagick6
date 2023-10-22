@@ -1113,7 +1113,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     if (bmp_info.compression == BI_RLE4)
       bmp_info.bits_per_pixel<<=1;
-    bytes_per_line=image->columns*(4*(bmp_info.bits_per_pixel+31)/32);
+    bytes_per_line=4*((image->columns*bmp_info.bits_per_pixel+31)/32);
     length=(size_t) bytes_per_line*image->rows;
     if ((MagickSizeType) (length/256) > blob_size)
       ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
