@@ -917,8 +917,8 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         I and Q, normally -0.5 through 0.5, are normalized to the range 0
         through QuantumRange.
       */
-      primary_info.y=(double) (MaxMap+1.0)/2.0;
-      primary_info.z=(double) (MaxMap+1.0)/2.0;
+      primary_info.y=((double) MaxMap+1.0)/2.0;
+      primary_info.z=((double) MaxMap+1.0)/2.0;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static)
 #endif
@@ -972,8 +972,8 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         Cb and Cr, normally -0.5 through 0.5, are normalized to the range 0
         through QuantumRange.
       */
-      primary_info.y=(double) (MaxMap+1.0)/2.0;
-      primary_info.z=(double) (MaxMap+1.0)/2.0;
+      primary_info.y=((double) MaxMap+1.0)/2.0;
+      primary_info.z=((double) MaxMap+1.0)/2.0;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static)
 #endif
@@ -1027,8 +1027,8 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         Cb and Cr, normally -0.5 through 0.5, are normalized to the range 0
         through QuantumRange.
       */
-      primary_info.y=(double) (MaxMap+1.0)/2.0;
-      primary_info.z=(double) (MaxMap+1.0)/2.0;
+      primary_info.y=((double) MaxMap+1.0)/2.0;
+      primary_info.z=((double) MaxMap+1.0)/2.0;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static)
 #endif

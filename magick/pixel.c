@@ -4502,6 +4502,9 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
   status=MagickTrue;
   x_offset=CastDoubleToLong(floor(x));
   y_offset=CastDoubleToLong(floor(y));
+  if ((ValidatePixelOffset(x_offset,source->columns) == MagickFalse) ||
+      (ValidatePixelOffset(y_offset,source->rows) == MagickFalse))
+    return(MagickFalse);
   interpolate = method;
   if (interpolate == UndefinedInterpolatePixel)
     interpolate=image->interpolate;

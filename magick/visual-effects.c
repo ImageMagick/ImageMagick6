@@ -1068,20 +1068,20 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
     double
       distance;
 
+    IndexPacket
+      *magick_restrict implode_indexes;
+
     MagickPixelPacket
       pixel;
+
+    PixelPacket
+      *magick_restrict q;
 
     PointInfo
       delta;
 
-    IndexPacket
-      *magick_restrict implode_indexes;
-
     ssize_t
       x;
-
-    PixelPacket
-      *magick_restrict q;
 
     if (status == MagickFalse)
       continue;
@@ -1093,31 +1093,34 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
         continue;
       }
     implode_indexes=GetCacheViewAuthenticIndexQueue(implode_view);
-    delta.y=scale.y*(double) (y-center.y);
+    delta.y=scale.y*((double) y-center.y);
     pixel=zero;
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       /*
         Determine if the pixel is within an ellipse.
       */
-      delta.x=scale.x*(double) (x-center.x);
+      delta.x=scale.x*((double) x-center.x);
       distance=delta.x*delta.x+delta.y*delta.y;
       if (distance < (radius*radius))
         {
           double
             factor;
 
+          PointInfo
+            offset;
+
           /*
             Implode the pixel.
           */
           factor=1.0;
           if (distance > 0.0)
-            factor=pow(sin((double) (MagickPI*sqrt((double) distance)*
-              PerceptibleReciprocal(radius)/2)),-amount);
+            factor=pow(sin((double) (MagickPI*sqrt(distance)*
+              PerceptibleReciprocal(radius)/2.0)),-amount);
+          offset.x=factor*delta.x*PerceptibleReciprocal(scale.x)+center.x;
+          offset.y=actor*delta.y*PerceptibleReciprocal(scale.y)+center.y:
           status=InterpolateMagickPixelPacket(image,image_view,
-            UndefinedInterpolatePixel,(double) (factor*delta.x*
-            PerceptibleReciprocal(scale.x)+center.x),(double) (factor*delta.y*
-            PerceptibleReciprocal(scale.y)+center.y),&pixel,exception);
+            UndefinedInterpolatePixel,offset.x,offset.y,&pixel,exception);
           if (status == MagickFalse)
             break;
           SetPixelPacket(implode_image,&pixel,q,implode_indexes+x);
