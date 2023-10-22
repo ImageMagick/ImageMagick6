@@ -39,9 +39,9 @@
   Include declarations.
 */
 #include "magick/studio.h"
-#include "magick/property.h"
 #include "magick/blob.h"
 #include "magick/blob-private.h"
+#include "magick/cache-private.h"
 #include "magick/color-private.h"
 #include "magick/draw.h"
 #include "magick/exception.h"
@@ -59,6 +59,7 @@
 #include "magick/option.h"
 #include "magick/pixel.h"
 #include "magick/pixel-private.h"
+#include "magick/property.h"
 #include "magick/quantum.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
@@ -4502,8 +4503,8 @@ MagickExport MagickBooleanType InterpolateMagickPixelPacket(
   status=MagickTrue;
   x_offset=CastDoubleToLong(floor(x));
   y_offset=CastDoubleToLong(floor(y));
-  if ((ValidatePixelOffset(x_offset,source->columns) == MagickFalse) ||
-      (ValidatePixelOffset(y_offset,source->rows) == MagickFalse))
+  if ((IsValidPixelOffset(x_offset,image->columns) == MagickFalse) ||
+      (IsValidPixelOffset(y_offset,image->rows) == MagickFalse))
     return(MagickFalse);
   interpolate = method;
   if (interpolate == UndefinedInterpolatePixel)
