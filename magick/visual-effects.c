@@ -53,6 +53,7 @@
 #include "magick/attribute.h"
 #include "magick/cache.h"
 #include "magick/cache-view.h"
+#include "magick/cache-private.h"
 #include "magick/channel.h"
 #include "magick/color.h"
 #include "magick/color-private.h"
@@ -1118,9 +1119,11 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
             factor=pow(sin((double) (MagickPI*sqrt(distance)*
               PerceptibleReciprocal(radius)/2.0)),-amount);
           offset.x=factor*delta.x*PerceptibleReciprocal(scale.x)+center.x;
-          offset.y=actor*delta.y*PerceptibleReciprocal(scale.y)+center.y:
-          status=InterpolateMagickPixelPacket(image,image_view,
-            UndefinedInterpolatePixel,offset.x,offset.y,&pixel,exception);
+          offset.y=factor*delta.y*PerceptibleReciprocal(scale.y)+center.y;
+          if ((IsValidPixelOffset(offset.x,image->columns) != MagickFalse) &&
+              (IsValidPixelOffset(offset.y,image->rows) != MagickFalse))
+            status=InterpolateMagickPixelPacket(image,image_view,
+              UndefinedInterpolatePixel,offset.x,offset.y,&pixel,exception);
           if (status == MagickFalse)
             break;
           SetPixelPacket(implode_image,&pixel,q,implode_indexes+x);
