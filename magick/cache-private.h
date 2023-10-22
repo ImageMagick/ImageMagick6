@@ -249,13 +249,17 @@ typedef struct _CacheInfo
     height_limit;
 } CacheInfo;
 
-static inline MagickBooleanType IsValidPixelOffset(const ssize_t y,
-  const size_t columns)
+static inline MagickBooleanType IsValidPixelOffset(const ssize_t x,
+  const size_t a)
 {
-  if (columns == 0)
+  if ((x >= 0) && (x >= ((ssize_t) (MAGICK_SSIZE_MAX-a))))
+    return(MagickFalse);
+  if (x <= ((ssize_t) (MAGICK_SSIZE_MIN+(MagickOffsetType) a)))
+    return(MagickFalse);
+  if (a == 0)
     return(MagickTrue);
-  if ((y >= (MAGICK_SSIZE_MAX/(ssize_t) columns)) ||
-      (y <= (MAGICK_SSIZE_MIN/(ssize_t) columns)))
+  if ((x >= (MAGICK_SSIZE_MAX/(ssize_t) a)) ||
+      (x <= (MAGICK_SSIZE_MIN/(ssize_t) a)))
     return(MagickFalse);
   return(MagickTrue);
 }
