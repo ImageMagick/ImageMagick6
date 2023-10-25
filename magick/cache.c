@@ -2822,7 +2822,14 @@ MagickExport const IndexPacket *GetVirtualIndexQueue(const Image *image)
   assert(cache_info->signature == MagickCoreSignature);
   if (cache_info->methods.get_virtual_indexes_from_handler !=
        (GetVirtualIndexesFromHandler) NULL)
-    return(cache_info->methods.get_virtual_indexes_from_handler(image));
+    {
+      const IndexPacket
+        *indexes;
+
+      indexes=cache_info->methods.get_virtual_indexes_from_handler(image);
+      if (indexes != (IndexPacket *) NULL)
+        return(indexes);
+    }
   assert(id < (int) cache_info->number_threads);
   return(GetVirtualIndexesFromNexus(cache_info,cache_info->nexus_info[id]));
 }
