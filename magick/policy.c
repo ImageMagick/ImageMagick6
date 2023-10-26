@@ -1293,7 +1293,11 @@ static MagickBooleanType SetMagickSecurityPolicyValue(const PolicyDomain domain,
         }
       if (LocaleCompare(name,"precision") == 0)
         {
-          ResetMagickPrecision();
+          int
+            limit;
+
+          limit=StringToInteger(value);
+          SetMagickPrecision(limit);
           return(MagickTrue);
         }
       break;
