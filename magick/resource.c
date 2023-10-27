@@ -137,7 +137,7 @@ static ResourceInfo
     MagickULLConstant(768),               /* file limit */
     MagickULLConstant(1),                 /* thread limit */
     MagickULLConstant(0),                 /* throttle limit */
-    MagickResourceInfinity                /* time limit */
+    INT_MAX                               /* time limit */
   };
 
 static SemaphoreInfo
@@ -387,8 +387,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case TimeResource:
     {
       limit=resource_info.time_limit;
-      if (((MagickSizeType) resource_info.time+request) >
-          (MagickSizeType) resource_info.time)
+      if (((MagickSizeType) resource_info.time+request) > (MagickSizeType) resource_info.time)
         {
           resource_info.time+=request;
           if ((limit == MagickResourceInfinity) ||
@@ -1521,7 +1520,7 @@ MagickExport MagickBooleanType ResourceComponentGenesis(void)
         100.0));
       limit=DestroyString(limit);
     }
-  (void) SetMagickResourceLimit(TimeResource,MagickResourceInfinity);
+  (void) SetMagickResourceLimit(TimeResource,INT_MAX);
   limit=GetEnvironmentValue("MAGICK_TIME_LIMIT");
   if (limit != (char *) NULL)
     {
