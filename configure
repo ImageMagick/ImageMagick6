@@ -5137,7 +5137,7 @@ MAGICK_PATCHLEVEL_VERSION=0
 
 MAGICK_VERSION=6.9.13-0
 
-MAGICK_GIT_REVISION=2d175da8a:20231021
+MAGICK_GIT_REVISION=ca1aca5ca:20231027
 
 
 # Substitute library versioning
@@ -5161,7 +5161,7 @@ PACKAGE_BASE_VERSION=6.9.13
 
 PACKAGE_PATCHLEVEL_VERSION=0
 
-if test "y" = 'y'; then
+if test "n" = 'y'; then
   PACKAGE_VERSION_ADDENDUM='-0 (Beta)'
 else
   PACKAGE_VERSION_ADDENDUM=-0
@@ -5171,7 +5171,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,0
 
-PACKAGE_RELEASE_DATE=2023-10-21
+PACKAGE_RELEASE_DATE=2023-10-27
 
 
 # Ensure that make can run correctly
@@ -25745,6 +25745,39 @@ printf "%s\n" "$ac_cv_sizeof_unsigned_long_long" >&6; }
 
 
 printf "%s\n" "#define SIZEOF_UNSIGNED_LONG_LONG $ac_cv_sizeof_unsigned_long_long" >>confdefs.h
+
+
+# The cast to long int works around a bug in the HP C Compiler
+# version HP92453-01 B.11.11.23709.GP, which incorrectly rejects
+# declarations like `int a3[[(sizeof (unsigned char)) >= 0]];'.
+# This bug is HP SR number 8606223364.
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking size of size_t" >&5
+printf %s "checking size of size_t... " >&6; }
+if test ${ac_cv_sizeof_size_t+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  if ac_fn_c_compute_int "$LINENO" "(long int) (sizeof (size_t))" "ac_cv_sizeof_size_t"        "$ac_includes_default"
+then :
+
+else $as_nop
+  if test "$ac_cv_type_size_t" = yes; then
+     { { printf "%s\n" "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
+printf "%s\n" "$as_me: error: in \`$ac_pwd':" >&2;}
+as_fn_error 77 "cannot compute sizeof (size_t)
+See \`config.log' for more details" "$LINENO" 5; }
+   else
+     ac_cv_sizeof_size_t=0
+   fi
+fi
+
+fi
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_sizeof_size_t" >&5
+printf "%s\n" "$ac_cv_sizeof_size_t" >&6; }
+
+
+
+printf "%s\n" "#define SIZEOF_SIZE_T $ac_cv_sizeof_size_t" >>confdefs.h
 
 
 

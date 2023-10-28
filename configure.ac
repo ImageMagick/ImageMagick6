@@ -1026,6 +1026,7 @@ AC_CHECK_SIZEOF([long double])
 # SIZEOF_UNSIGNED_LONG_LONG.  If 'unsigned long long' is not
 # supported then the value defined is zero.
 AC_CHECK_SIZEOF([unsigned long long])
+AC_CHECK_SIZEOF([size_t])
 
 AC_CHECK_SIZEOF([void *])
 
