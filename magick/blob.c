@@ -859,7 +859,7 @@ MagickExport MagickBooleanType DiscardBlobBytes(Image *image,
   if (length != (MagickSizeType) ((MagickOffsetType) length))
     return(MagickFalse);
   count=0;
-  for (i=0; i < (MagickOffsetType) length; i+=count)
+  for (i=0; i < length; i+=(MagickSizeType) count)
   {
     quantum=(size_t) MagickMin(length-i,sizeof(buffer));
     (void) ReadBlobStream(image,quantum,buffer,&count);
@@ -870,7 +870,7 @@ MagickExport MagickBooleanType DiscardBlobBytes(Image *image,
           break;
       }
   }
-  return(i < (MagickOffsetType) length ? MagickFalse : MagickTrue);
+  return(i < (MagickSizeType) length ? MagickFalse : MagickTrue);
 }
 
 /*
