@@ -602,11 +602,11 @@ MagickPrivate char *FileToXML(const char *filename,const size_t extent)
     offset;
 
   size_t
+    i,
     length;
 
   ssize_t
-    count,
-    i;
+    count;
 
   void
     *map;
