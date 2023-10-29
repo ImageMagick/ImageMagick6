@@ -176,7 +176,7 @@ static LinkedListInfo *AcquirePolicyCache(const char *filename,
   LinkedListInfo
     *cache;
 
-  MagickBooleanType
+  MagickStatusType
     status;
 
   ssize_t
