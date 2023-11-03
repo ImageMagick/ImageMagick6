@@ -1148,10 +1148,13 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
   if (WebPConfigInit(&configure) == 0)
     ThrowWriterException(ResourceLimitError,"UnableToEncodeImageFile");
   if (image->quality != UndefinedCompressionQuality)
+    {
+      configure.quality=(float) image->quality;
 #if WEBP_ENCODER_ABI_VERSION >= 0x020e
       configure.near_lossless=(float) image->quality;
 #endif
-  if (image->quality >= 100)
+    }
+ if (image->quality >= 100)
     configure.lossless=1;
   SetBooleanOption(image_info,"webp:lossless",&configure.lossless);
   value=GetImageOption(image_info,"webp:image-hint");
@@ -1176,8 +1179,7 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
     &configure.alpha_compression);
   SetIntegerOption(image_info,"webp:alpha-filtering",
     &configure.alpha_filtering);
-  SetIntegerOption(image_info,"webp:alpha-quality",
-    &configure.alpha_quality);
+  SetIntegerOption(image_info,"webp:alpha-quality",&configure.alpha_quality);
   SetIntegerOption(image_info,"webp:filter-strength",
     &configure.filter_strength);
   SetIntegerOption(image_info,"webp:filter-sharpness",
