@@ -314,7 +314,7 @@ jobs:
 
     - name: Copy Files
       id: package
-      shell: powershell
+      shell: pwsh
       run: |
         [void](New-Item -Name "portable" -ItemType directory)
         Copy-Item "ImageMagick-Windows6\VisualMagick\bin\*.exe" "portable"
@@ -342,7 +342,7 @@ jobs:
         $version = ($version | Select-String '".*"' -AllMatches |  Select -Expand Matches | Select -Expand Value | Out-String)
         $version = $version -Replace "`n|`r|""",""
         $version = $version -Replace " ","-"
-        Write-Host "::set-output name=version::$version"
+        echo "version=$version" >> $env:GITHUB_OUTPUT
 
     - uses: actions/upload-artifact@v3
       with:
