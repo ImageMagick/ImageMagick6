@@ -157,7 +157,7 @@ jobs:
         endpoint: https://eus.codesigning.azure.net/
         code-signing-account-name: ImageMagick
         certificate-profile-name: ImageMagick
-        files-folder: 'ImageMagick-Windows\VisualMagick\bin'
+        files-folder: 'ImageMagick-Windows6\VisualMagick\bin'
         files-folder-filter: dll,exe
         file-digest: SHA256
         timestamp-rfc3161: http://timestamp.acs.microsoft.com
@@ -179,7 +179,7 @@ jobs:
         endpoint: https://eus.codesigning.azure.net/
         code-signing-account-name: ImageMagick
         certificate-profile-name: ImageMagick
-        files-folder: 'ImageMagick-Windows\VisualMagick\installer\output'
+        files-folder: 'ImageMagick-Windows6\VisualMagick\installer\output'
         files-folder-filter: dll,exe
         file-digest: SHA256
         timestamp-rfc3161: http://timestamp.acs.microsoft.com
@@ -305,7 +305,7 @@ jobs:
         endpoint: https://eus.codesigning.azure.net/
         code-signing-account-name: ImageMagick
         certificate-profile-name: ImageMagick
-        files-folder: 'ImageMagick-Windows\VisualMagick\bin'
+        files-folder: 'ImageMagick-Windows6\VisualMagick\bin'
         files-folder-filter: exe
         file-digest: SHA256
         timestamp-rfc3161: http://timestamp.acs.microsoft.com
