@@ -40,7 +40,7 @@ jobs:
   build_linux:
     name: 'Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})'
     container:
-      image: ubuntu:bionic
+      image: ubuntu:20.04
     runs-on: ubuntu-latest
 
     strategy:
@@ -57,8 +57,9 @@ jobs:
     - name: Install dependencies
       run: |
         set -e
+        export DEBIAN_FRONTEND=noninteractive
         apt update
-        apt-get install -y autoconf pkg-config gcc libfontconfig1-dev libfreetype6-dev libltdl-dev
+        apt-get install -y autoconf gcc g++ libfontconfig1-dev libfreetype6-dev libltdl-dev make pkg-config
 
     - name: Clone msttcorefonts
       uses: actions/checkout@v3

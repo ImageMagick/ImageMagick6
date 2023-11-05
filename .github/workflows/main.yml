@@ -13,13 +13,18 @@ jobs:
   build_linux:
     name: Build Linux
     container:
-      image: ubuntu:bionic
+      image: ubuntu:20.04
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         compiler: [ gcc, clang ]
+        include:
+          - compiler: gcc
+            packages: gcc g++
+          - compiler: clang
+            packages: clang
 
     steps:
     - uses: actions/checkout@v3
@@ -27,8 +32,9 @@ jobs:
     - name: Install dependencies
       run: |
         set -e
+        export DEBIAN_FRONTEND=noninteractive
         apt-get update -y
-        apt-get install -y autoconf pkg-config ${{matrix.compiler}}
+        apt-get install -y autoconf make pkg-config ${{matrix.packages}}
 
     - name: Configure ImageMagick
       run: |
@@ -53,7 +59,7 @@ jobs:
       run: |
         set -e
         export HOMEBREW_NO_AUTO_UPDATE=1
-        brew install autoconf libtool pkg-config libxml2
+        brew install autoconf libtool libxml2 pkg-config
 
     - name: Configure ImageMagick
       run: |
