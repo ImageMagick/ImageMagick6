@@ -1180,6 +1180,9 @@ MagickExport ssize_t FormatMagickSize(const MagickSizeType size,
 */
 MagickExport char *GetEnvironmentValue(const char *name)
 {
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+  return(NTGetEnvironmentValue(name));
+#else
   const char
     *environment;
 
@@ -1187,6 +1190,7 @@ MagickExport char *GetEnvironmentValue(const char *name)
   if (environment == (const char *) NULL)
     return((char *) NULL);
   return(ConstantString(environment));
+#endif
 }
 
 /*

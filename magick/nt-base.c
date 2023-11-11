@@ -71,18 +71,19 @@
 #if !defined(MAP_FAILED)
 #define MAP_FAILED      ((void *)(LONG_PTR) -1)
 #endif
+#define MaxWideByteExtent  100
 
 /*
-Typdef declarations.
+  Typdef declarations.
 */
 
 /*
-We need to make sure only one instance is created for each process and that
-is why we wrap the new/delete instance methods.
+  We need to make sure only one instance is created for each process and that
+  is why we wrap the new/delete instance methods.
 
-From: http://www.ghostscript.com/doc/current/API.htm
-"The Win32 DLL gsdll32.dll can be used by multiple programs simultaneously,
-but only once within each process"
+  From: http://www.ghostscript.com/doc/current/API.htm
+    "The Win32 DLL gsdll32.dll can be used by multiple programs simultaneously,
+     but only once within each process"
 */
 typedef struct _NTGhostInfo
 {
@@ -213,13 +214,13 @@ static unsigned char *NTGetRegistryValue(HKEY root,const char *key,DWORD flags,
     status;
 
   wchar_t
-    wide_name[100];
+    wide_name[MaxWideByteExtent];
 
   value=(unsigned char *) NULL;
   status=RegOpenKeyExA(root,key,0,(KEY_READ | flags),&registry_key);
   if (status != ERROR_SUCCESS)
     return(value);
-  if (MultiByteToWideChar(CP_UTF8,0,name,-1,wide_name,100) == 0)
+  if (MultiByteToWideChar(CP_UTF8,0,name,-1,wide_name,MaxWideByteExtent) == 0)
     {
       RegCloseKey(registry_key);
       return(value);
@@ -776,6 +777,57 @@ MagickPrivate MagickBooleanType NTGatherRandomData(const size_t length,
   (void) length;
 #endif
   return(MagickTrue);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%   N T G e t E n v i r o n m e n t V a l u e                                 %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  NTGetEnvironmentValue() returns the environment string that matches the
+%  specified name.
+%
+%  The format of the NTGetEnvironmentValue method is:
+%
+%      char *GetEnvironmentValue(const char *name)
+%
+%  A description of each parameter follows:
+%
+%    o name: the environment name.
+%
+*/
+extern MagickPrivate char *NTGetEnvironmentValue(const char *name)
+{
+  char
+    *environment = (char *) NULL;
+
+  DWORD
+    size;
+
+  LPWSTR
+    wide;
+
+  wchar_t
+    wide_name[MaxWideByteExtent];
+
+  if (MultiByteToWideChar(CP_UTF8,0,name,-1,wide_name,MaxWideByteExtent) == 0)
+    return(environment);
+  size=GetEnvironmentVariableW(wide_name,(LPWSTR) NULL,0);
+  if (size == 0)
+    return(environment);
+  wide=(LPWSTR) NTAcquireQuantumMemory((const size_t) size,sizeof(*wide));
+  if (wide == (LPWSTR) NULL)
+    return(environment);
+  if (GetEnvironmentVariableW(wide_name,wide,size) != 0)
+    environment=create_utf8_string(wide);
+  wide=(LPWSTR) RelinquishMagickMemory(wide);
+  return(environment);
 }
 
 /*
