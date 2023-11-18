@@ -575,8 +575,8 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,
         if (DiscardBlobBytes(image,(MagickSizeType) image->offset) == MagickFalse)
           {
             status=MagickFalse;
-            ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
-              image->filename);
+            ThrowFileException(exception,CorruptImageError,
+              "UnexpectedEndOfFile",image->filename);
             break;
           }
         length=GetQuantumExtent(canvas_image,quantum_info,RedQuantum);
@@ -649,7 +649,8 @@ static Image *ReadGRAYImage(const ImageInfo *image_info,
         (void) CloseBlob(image);
         if (image->matte != MagickFalse)
           {
-            (void) CloseBlob(image);
+            if (CloseBlob(image) == MagickFalse)
+              break;
             AppendImageFormat("A",image->filename);
             status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
             if (status == MagickFalse)
@@ -872,7 +873,7 @@ static MagickBooleanType WriteGRAYImage(const ImageInfo *image_info,
   Image *image)
 {
   MagickBooleanType
-    status;
+    status = MagickTrue;
 
   MagickOffsetType
     scene;
@@ -1089,7 +1090,8 @@ static MagickBooleanType WriteGRAYImage(const ImageInfo *image_info,
         (void) CloseBlob(image);
         if (quantum_type == GrayAlphaQuantum)
           {
-            (void) CloseBlob(image);
+            if (CloseBlob(image) == MagickFalse)
+              break;
             AppendImageFormat("A",image->filename);
             status=OpenBlob(image_info,image,scene == 0 ? WriteBinaryBlobMode :
               AppendBinaryBlobMode,&image->exception);

@@ -1251,7 +1251,8 @@ static MagickBooleanType WriteWEBPImage(const ImageInfo *image_info,
     (void) WriteBlob(image,writer.size,writer.mem);
   WebPMemoryWriterClear(&writer);
 #endif
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   return(status);
 }
 #endif

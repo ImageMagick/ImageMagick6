@@ -2624,7 +2624,8 @@ static MagickBooleanType WriteGROUP4Image(const ImageInfo *image_info,
   huffman_image=DestroyImage(huffman_image);
   (void) fclose(file);
   (void) RelinquishUniqueFileResource(filename);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   return(status);
 }
 #endif

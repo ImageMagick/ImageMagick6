@@ -761,6 +761,7 @@ static MagickBooleanType WriteVIPSImage(const ImageInfo *image_info,
   metadata=GetImageProperty(image,"vips:metadata");
   if (metadata != (const char*) NULL)
     WriteBlobString(image,metadata);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   return(status);
 }

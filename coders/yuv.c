@@ -351,7 +351,8 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
     if (interlace == PartitionInterlace)
       {
-        (void) CloseBlob(image);
+        if (CloseBlob(image) == MagickFalse)
+          break;
         AppendImageFormat("U",image->filename);
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
@@ -396,7 +397,8 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
         }
       if (interlace == PartitionInterlace)
         {
-          (void) CloseBlob(image);
+          if (CloseBlob(image) == MagickFalse)
+            break;
           AppendImageFormat("V",image->filename);
           status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
           if (status == MagickFalse)
@@ -796,7 +798,8 @@ static MagickBooleanType WriteYUVImage(const ImageInfo *image_info,Image *image)
         */
         if (interlace == PartitionInterlace)
           {
-            (void) CloseBlob(image);
+            if (CloseBlob(image) == MagickFalse)
+              break;
             AppendImageFormat("U",image->filename);
             status=OpenBlob(image_info,image,WriteBinaryBlobMode,
               &image->exception);
@@ -830,7 +833,8 @@ static MagickBooleanType WriteYUVImage(const ImageInfo *image_info,Image *image)
         */
         if (interlace == PartitionInterlace)
           {
-            (void) CloseBlob(image);
+            if (CloseBlob(image) == MagickFalse)
+              break;
             AppendImageFormat("V",image->filename);
             status=OpenBlob(image_info,image,WriteBinaryBlobMode,
               &image->exception);
