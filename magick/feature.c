@@ -1841,7 +1841,8 @@ static Image *RenderHoughLines(const ImageInfo *image_info,const size_t columns,
      }
   (void) DrawImage(image,draw_info);
   draw_info=DestroyDrawInfo(draw_info);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    image=DestroyImageList(image);
   return(GetFirstImageInList(image));
 }
 

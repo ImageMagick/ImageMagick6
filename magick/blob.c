@@ -1806,7 +1806,6 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
               (void) FormatLocaleString(image->filename,MagickPathExtent,
                 "%s:%s",image->magick,unique);
               status=WriteImage(blob_info,image);
-              (void) CloseBlob(image);
               (void) fclose(blob_info->file);
               if (status == MagickFalse)
                 InheritException(exception,&image->exception);
@@ -2042,8 +2041,9 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
                 blob=(unsigned char *) ResizeQuantumMemory(blob,*length+1,
                   sizeof(unsigned char));
             }
-          else if (status == MagickFalse)
-            blob_info->blob=RelinquishMagickMemory(blob_info->blob);
+          else
+            if (status == MagickFalse)
+              blob_info->blob=RelinquishMagickMemory(blob_info->blob);
         }
     }
   else
@@ -2072,7 +2072,6 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
               (void) FormatLocaleString(filename,MagickPathExtent,"%s:%s",
                 images->magick,unique);
               status=WriteImages(blob_info,images,filename,exception);
-              (void) CloseBlob(images);
               (void) fclose(blob_info->file);
               if (status == MagickFalse)
                 InheritException(exception,&images->exception);

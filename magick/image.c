@@ -3000,7 +3000,8 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
           */
           *filename='\0';
           status=ImageToFile(image,filename,exception);
-          (void) CloseBlob(image);
+          if (CloseBlob(image) == MagickFalse)
+            status=MagickFalse;
           if (status == MagickFalse)
             {
               (void) RelinquishUniqueFileResource(filename);
