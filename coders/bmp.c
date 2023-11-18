@@ -647,6 +647,8 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   image=AcquireImage(image_info);
+  image->columns=0;
+  image->rows=0;
   status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
   if (status == MagickFalse)
     {

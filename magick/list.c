@@ -719,7 +719,7 @@ MagickExport ssize_t GetImageIndexInList(const Image *images)
 */
 MagickExport size_t GetImageListLength(const Image *images)
 {
-  ssize_t
+  size_t
     i;
 
   if (images == (Image *) NULL)
@@ -733,7 +733,7 @@ MagickExport size_t GetImageListLength(const Image *images)
     assert(images != images->previous);
     i++;
   }
-  return((size_t) i);
+  return(i);
 }
 
 /*
