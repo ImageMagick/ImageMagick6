@@ -658,7 +658,10 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
             }
         }
     }
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 
@@ -1112,6 +1115,7 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
           break;
       }
   }
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

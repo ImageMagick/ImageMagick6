@@ -1624,7 +1624,10 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   jpeg_destroy_decompress(jpeg_info);
   client_info=(JPEGClientInfo *) RelinquishMagickMemory(client_info);
   memory_info=RelinquishVirtualMemory(memory_info);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 

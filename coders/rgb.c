@@ -992,7 +992,8 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   quantum_info=DestroyQuantumInfo(quantum_info);
   InheritException(&image->exception,&canvas_image->exception);
   canvas_image=DestroyImage(canvas_image);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   if (status == MagickFalse)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
@@ -1485,6 +1486,7 @@ static MagickBooleanType WriteRGBImage(const ImageInfo *image_info,Image *image)
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

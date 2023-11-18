@@ -353,7 +353,8 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
   if (texture != (Image *) NULL)
     texture=DestroyImageList(texture);
   draw_info=DestroyDrawInfo(draw_info);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   if (status == MagickFalse)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
@@ -874,6 +875,7 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

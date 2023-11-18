@@ -243,7 +243,10 @@ static Image *ReadMVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) DrawImage(image,draw_info);
   (void) SetImageArtifact(image,"mvg:vector-graphics",draw_info->primitive);
   draw_info=DestroyDrawInfo(draw_info);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 
@@ -360,6 +363,7 @@ static MagickBooleanType WriteMVGImage(const ImageInfo *image_info,Image *image)
   if (status == MagickFalse)
     return(status);
   (void) WriteBlob(image,strlen(value),(const unsigned char *) value);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

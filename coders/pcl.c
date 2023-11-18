@@ -995,6 +995,7 @@ static MagickBooleanType WritePCLImage(const ImageInfo *image_info,Image *image)
       break;
   } while (image_info->adjoin != MagickFalse);
   (void) WriteBlobString(image,"\033E");
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

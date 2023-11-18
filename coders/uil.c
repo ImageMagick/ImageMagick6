@@ -380,6 +380,7 @@ static MagickBooleanType WriteUILImage(const ImageInfo *image_info,Image *image)
       break;
   }
   symbol=DestroyString(symbol);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

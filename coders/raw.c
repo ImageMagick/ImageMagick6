@@ -292,7 +292,8 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
   InheritException(exception,&canvas_image->exception);
   InheritException(exception,&image->exception);
   canvas_image=DestroyImage(canvas_image);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   if (status == MagickFalse)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
@@ -618,6 +619,7 @@ static MagickBooleanType WriteRAWImage(const ImageInfo *image_info,Image *image)
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

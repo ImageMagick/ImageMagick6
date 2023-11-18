@@ -1330,7 +1330,8 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
           break;
       }
   }
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   if (status == MagickFalse)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));

@@ -1166,7 +1166,8 @@ static MagickBooleanType WriteJP2Image(const ImageInfo *image_info,Image *image)
   opj_destroy_codec(jp2_codec);
   opj_image_destroy(jp2_image);
   parameters=(opj_cparameters_t *) RelinquishMagickMemory(parameters);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }
 #endif

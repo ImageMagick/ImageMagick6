@@ -1133,7 +1133,10 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
   */
   sixel_pixels=(unsigned char *) RelinquishMagickMemory(sixel_pixels);
   sixel_palette=(unsigned char *) RelinquishMagickMemory(sixel_palette);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 

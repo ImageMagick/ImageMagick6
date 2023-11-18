@@ -789,7 +789,8 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
           break;
       }
   } while ((count != 0) && (viff_info.identifier == 0xab));
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
   if (status == MagickFalse)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
@@ -1271,6 +1272,7 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

@@ -379,6 +379,7 @@ static MagickBooleanType WriteBRAILLEImage(const ImageInfo *image_info,
     if (status == MagickFalse)
       break;
   }
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }

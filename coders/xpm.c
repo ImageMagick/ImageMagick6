@@ -531,7 +531,10 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   */
   xpm_colors=DestroySplayTree(xpm_colors);
   xpm_buffer=DestroyString(xpm_buffer);
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 
@@ -946,8 +949,9 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
   }
   picon=DestroyImage(picon);
   (void) WriteBlobString(image,"};\n");
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }
 
 /*

@@ -1818,7 +1818,10 @@ static Image *ReadDDSImage(const ImageInfo *image_info,ExceptionInfo *exception)
       }
   }
 
-  (void) CloseBlob(image);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  if (status == MagickFalse)
+    return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
 
@@ -2699,8 +2702,9 @@ static MagickBooleanType WriteDDSImage(const ImageInfo *image_info,
   if (mipmaps > 0 && WriteMipmaps(image,pixelFormat,compression,mipmaps,
         clusterFit,weightByAlpha,&image->exception) == MagickFalse)
     return(MagickFalse);
-  (void) CloseBlob(image);
-  return(MagickTrue);
+  if (CloseBlob(image) == MagickFalse)
+    status=MagickFalse;
+  return(status);
 }
 
 static void WriteDDSInfo(Image *image, const size_t pixelFormat,
