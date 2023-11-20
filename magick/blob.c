@@ -752,6 +752,7 @@ MagickExport unsigned char *DetachBlob(BlobInfo *blob_info)
   blob_info->mapped=MagickFalse;
   blob_info->length=0;
   blob_info->offset=0;
+  blob_info->mode=UndefinedBlobMode;
   blob_info->eof=MagickFalse;
   blob_info->error=0;
   blob_info->exempt=MagickFalse;
