@@ -2614,12 +2614,14 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
           {
             (void) AcquireUniqueFilename(jpeg_image->filename);
             jpeg_image->quality=minimum+(maximum-minimum+1)/2;
-            (void) WriteJPEGImage(jpeg_info,jpeg_image);
+            status=WriteJPEGImage(jpeg_info,jpeg_image);
+            (void) RelinquishUniqueFileResource(jpeg_image->filename);
+            if (status == MagickFalse)
+              continue;
             if (GetBlobSize(jpeg_image) <= extent)
               minimum=jpeg_image->quality+1;
             else
               maximum=jpeg_image->quality-1;
-            (void) RelinquishUniqueFileResource(jpeg_image->filename);
           }
           while (minimum > 2)
           {
@@ -2627,6 +2629,8 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
             jpeg_image->quality=minimum--;
             status=WriteJPEGImage(jpeg_info,jpeg_image);
             (void) RelinquishUniqueFileResource(jpeg_image->filename);
+            if (status == MagickFalse)
+              continue;
             if (GetBlobSize(jpeg_image) <= extent)
               break;
           }
