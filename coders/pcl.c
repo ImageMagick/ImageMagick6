@@ -169,7 +169,8 @@ static Image *ReadPCLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     *read_info;
 
   int
-    c;
+    c,
+    exit_code;
 
   MagickBooleanType
     cmyk,
@@ -334,10 +335,10 @@ static Image *ReadPCLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     image->x_resolution,image->y_resolution);
   if (image_info->ping != MagickFalse)
     (void) FormatLocaleString(density,MagickPathExtent,"2.0x2.0");
-  page.width=CastDoubleToUnsigned((double) page.width*image->x_resolution/delta.x+
-    0.5);
-  page.height=CastDoubleToUnsigned((double) page.height*image->y_resolution/delta.y+
-    0.5);
+  page.width=CastDoubleToUnsigned((double) page.width*image->x_resolution/
+    delta.x+0.5);
+  page.height=CastDoubleToUnsigned((double) page.height*image->y_resolution/
+    delta.y+0.5);
   (void) FormatLocaleString(options,MaxTextExtent,"-g%.20gx%.20g ",(double)
      page.width,(double) page.height);
   image=DestroyImage(image);
@@ -365,8 +366,13 @@ static Image *ReadPCLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     read_info->filename,input_filename);
   options=DestroyString(options);
   density=DestroyString(density);
-  status=ExternalDelegateCommand(MagickFalse,read_info->verbose,command,
-    (char *) NULL,exception) != 0 ? MagickTrue : MagickFalse;
+  exit_code=ExternalDelegateCommand(MagickFalse,read_info->verbose,command,
+    (char *) NULL,exception);
+  if (exit_code != 0)
+    {
+      read_info=DestroyImageInfo(read_info);
+      ThrowReaderException(DelegateError,"PCLDelegateFailed");
+    }
   image=ReadImage(read_info,exception);
   (void) RelinquishUniqueFileResource(read_info->filename);
   (void) RelinquishUniqueFileResource(input_filename);
