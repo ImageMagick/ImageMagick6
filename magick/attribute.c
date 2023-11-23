@@ -124,14 +124,14 @@
 %
 */
 
-typedef struct _EdgeInfo
+typedef struct _CensusInfo
 {
   double
     left,
     right,
     top,
     bottom;
-} EdgeInfo;
+} CensusInfo;
 
 static double GetEdgeBackgroundCensus(const Image *image,
   const CacheView *image_view,const GravityType gravity,const size_t width,
@@ -240,7 +240,7 @@ static double GetEdgeBackgroundCensus(const Image *image,
   return(census);
 }
 
-static inline double GetMinEdgeBackgroundCensus(const EdgeInfo *edge)
+static inline double GetMinEdgeBackgroundCensus(const CensusInfo *edge)
 {
   double
     census;
@@ -256,16 +256,16 @@ static RectangleInfo GetEdgeBoundingBox(const Image *image,
   CacheView
     *edge_view;
 
+  CensusInfo
+    edge,
+    vertex;
+
   const char
     *artifact;
 
   double
     background_census,
     percent_background;
-
-  EdgeInfo
-    edge,
-    vertex;
 
   Image
     *edge_image;

@@ -98,7 +98,7 @@ typedef struct _Nodes
     *next;
 } Nodes;
 
-typedef struct _CubeInfo
+typedef struct _HistogramInfo
 {
   NodeInfo
     *root;
@@ -118,16 +118,16 @@ typedef struct _CubeInfo
 
   Nodes
     *node_queue;
-} CubeInfo;
+} HistogramInfo;
 
 /*
   Forward declarations.
 */
-static CubeInfo
-  *GetCubeInfo(void);
+static HistogramInfo
+  *GetHistogramInfo(void);
 
 static NodeInfo
-  *GetNodeInfo(CubeInfo *,const size_t);
+  *GetNodeInfo(HistogramInfo *,const size_t);
 
 static void
   DestroyColorCube(const Image *,NodeInfo *);
@@ -143,13 +143,13 @@ static void
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  ClassifyImageColors() builds a populated CubeInfo tree for the specified
-%  image.  The returned tree should be deallocated using DestroyCubeInfo()
+%  ClassifyImageColors() builds a populated HistogramInfo tree for the specified
+%  image.  The returned tree should be deallocated using DestroyHistogramInfo()
 %  once it is no longer needed.
 %
 %  The format of the ClassifyImageColors() method is:
 %
-%      CubeInfo *ClassifyImageColors(const Image *image,
+%      HistogramInfo *ClassifyImageColors(const Image *image,
 %        ExceptionInfo *exception)
 %
 %  A description of each parameter follows.
@@ -205,7 +205,7 @@ static inline MagickBooleanType IsMagickColorMatch(const MagickPixelPacket *p,
 }
 
 
-static CubeInfo *ClassifyImageColors(const Image *image,
+static HistogramInfo *ClassifyImageColors(const Image *image,
   ExceptionInfo *exception)
 {
 #define EvaluateImageTag  "  Compute image colors...  "
@@ -213,8 +213,8 @@ static CubeInfo *ClassifyImageColors(const Image *image,
   CacheView
     *image_view;
 
-  CubeInfo
-    *cube_info;
+  HistogramInfo
+    *histogram_info;
 
   MagickBooleanType
     proceed;
@@ -251,12 +251,12 @@ static CubeInfo *ClassifyImageColors(const Image *image,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  cube_info=GetCubeInfo();
-  if (cube_info == (CubeInfo *) NULL)
+  histogram_info=GetHistogramInfo();
+  if (histogram_info == (HistogramInfo *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
-      return(cube_info);
+      return(histogram_info);
     }
   GetMagickPixelPacket(image,&pixel);
   GetMagickPixelPacket(image,&target);
@@ -272,7 +272,7 @@ static CubeInfo *ClassifyImageColors(const Image *image,
       /*
         Start at the root and proceed level by level.
       */
-      node_info=cube_info->root;
+      node_info=histogram_info->root;
       index=MaxTreeDepth-1;
       for (level=1; level < MaxTreeDepth; level++)
       {
@@ -280,7 +280,7 @@ static CubeInfo *ClassifyImageColors(const Image *image,
         id=ColorToNodeId(image,&pixel,index);
         if (node_info->child[id] == (NodeInfo *) NULL)
           {
-            node_info->child[id]=GetNodeInfo(cube_info,level);
+            node_info->child[id]=GetNodeInfo(histogram_info,level);
             if (node_info->child[id] == (NodeInfo *) NULL)
               {
                 (void) ThrowMagickException(exception,GetMagickModule(),
@@ -329,7 +329,7 @@ static CubeInfo *ClassifyImageColors(const Image *image,
             node_info->list[i].index=GetPixelIndex(indexes+x);
           node_info->list[i].count=1;
           node_info->number_unique++;
-          cube_info->colors++;
+          histogram_info->colors++;
         }
       p++;
     }
@@ -339,7 +339,7 @@ static CubeInfo *ClassifyImageColors(const Image *image,
       break;
   }
   image_view=DestroyCacheView(image_view);
-  return(cube_info);
+  return(histogram_info);
 }
 
 /*
@@ -416,20 +416,21 @@ static void DefineImageHistogram(const Image *image,NodeInfo *node_info,
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  DestroyCubeInfo() deallocates memory associated with a CubeInfo structure.
+%  DestroyHistogramInfo() deallocates memory associated with a HistogramInfo structure.
 %
-%  The format of the DestroyCubeInfo method is:
+%  The format of the DestroyHistogramInfo method is:
 %
-%      DestroyCubeInfo(const Image *image,CubeInfo *cube_info)
+%      DestroyHistogramInfo(const Image *image,HistogramInfo *histogram_info)
 %
 %  A description of each parameter follows:
 %
 %    o image: the image.
 %
-%    o cube_info: the address of a structure of type CubeInfo.
+%    o histogram_info: the address of a structure of type HistogramInfo.
 %
 */
-static CubeInfo *DestroyCubeInfo(const Image *image,CubeInfo *cube_info)
+static HistogramInfo *DestroyHistogramInfo(const Image *image,
+  HistogramInfo *histogram_info)
 {
   Nodes
     *nodes;
@@ -437,15 +438,15 @@ static CubeInfo *DestroyCubeInfo(const Image *image,CubeInfo *cube_info)
   /*
     Release color cube tree storage.
   */
-  DestroyColorCube(image,cube_info->root);
+  DestroyColorCube(image,histogram_info->root);
   do
   {
-    nodes=cube_info->node_queue->next;
-    cube_info->node_queue=(Nodes *)
-      RelinquishMagickMemory(cube_info->node_queue);
-    cube_info->node_queue=nodes;
-  } while (cube_info->node_queue != (Nodes *) NULL);
-  return((CubeInfo *) RelinquishMagickMemory(cube_info));
+    nodes=histogram_info->node_queue->next;
+    histogram_info->node_queue=(Nodes *)
+      RelinquishMagickMemory(histogram_info->node_queue);
+    histogram_info->node_queue=nodes;
+  } while (histogram_info->node_queue != (Nodes *) NULL);
+  return((HistogramInfo *) RelinquishMagickMemory(histogram_info));
 }
 
 /*
@@ -504,36 +505,36 @@ static void DestroyColorCube(const Image *image,NodeInfo *node_info)
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%  GetCubeInfo() initializes the CubeInfo data structure.
+%  GetHistogramInfo() initializes the HistogramInfo data structure.
 %
-%  The format of the GetCubeInfo method is:
+%  The format of the GetHistogramInfo method is:
 %
-%      cube_info=GetCubeInfo()
+%      histogram_info=GetHistogramInfo()
 %
 %  A description of each parameter follows.
 %
-%    o cube_info: A pointer to the Cube structure.
+%    o histogram_info: A pointer to the Cube structure.
 %
 */
-static CubeInfo *GetCubeInfo(void)
+static HistogramInfo *GetHistogramInfo(void)
 {
-  CubeInfo
-    *cube_info;
+  HistogramInfo
+    *histogram_info;
 
   /*
     Initialize tree to describe color cube.
   */
-  cube_info=(CubeInfo *) AcquireMagickMemory(sizeof(*cube_info));
-  if (cube_info == (CubeInfo *) NULL)
-    return((CubeInfo *) NULL);
-  (void) memset(cube_info,0,sizeof(*cube_info));
+  histogram_info=(HistogramInfo *) AcquireMagickMemory(sizeof(*histogram_info));
+  if (histogram_info == (HistogramInfo *) NULL)
+    return((HistogramInfo *) NULL);
+  (void) memset(histogram_info,0,sizeof(*histogram_info));
   /*
     Initialize root node.
   */
-  cube_info->root=GetNodeInfo(cube_info,0);
-  if (cube_info->root == (NodeInfo *) NULL)
-    return((CubeInfo *) NULL);
-  return(cube_info);
+  histogram_info->root=GetNodeInfo(histogram_info,0);
+  if (histogram_info->root == (NodeInfo *) NULL)
+    return((HistogramInfo *) NULL);
+  return(histogram_info);
 }
 
 /*
@@ -569,16 +570,16 @@ MagickExport ColorPacket *GetImageHistogram(const Image *image,
   ColorPacket
     *histogram;
 
-  CubeInfo
-    *cube_info;
+  HistogramInfo
+    *histogram_info;
 
   *number_colors=0;
   histogram=(ColorPacket *) NULL;
-  cube_info=ClassifyImageColors(image,exception);
-  if (cube_info != (CubeInfo *) NULL)
+  histogram_info=ClassifyImageColors(image,exception);
+  if (histogram_info != (HistogramInfo *) NULL)
     {
       histogram=(ColorPacket *) AcquireQuantumMemory((size_t)
-        cube_info->colors+1,sizeof(*histogram));
+        histogram_info->colors+1,sizeof(*histogram));
       if (histogram == (ColorPacket *) NULL)
         (void) ThrowMagickException(exception,GetMagickModule(),
           ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
@@ -587,11 +588,11 @@ MagickExport ColorPacket *GetImageHistogram(const Image *image,
           ColorPacket
             *root;
 
-          *number_colors=cube_info->colors;
+          *number_colors=histogram_info->colors;
           root=histogram;
-          DefineImageHistogram(image,cube_info->root,&root);
+          DefineImageHistogram(image,histogram_info->root,&root);
         }
-      cube_info=DestroyCubeInfo(image,cube_info);
+      histogram_info=DestroyHistogramInfo(image,histogram_info);
     }
   return(histogram);
 }
@@ -612,21 +613,21 @@ MagickExport ColorPacket *GetImageHistogram(const Image *image,
 %
 %  The format of the GetNodeInfo method is:
 %
-%      NodeInfo *GetNodeInfo(CubeInfo *cube_info,const size_t level)
+%      NodeInfo *GetNodeInfo(HistogramInfo *histogram_info,const size_t level)
 %
 %  A description of each parameter follows.
 %
-%    o cube_info: A pointer to the CubeInfo structure.
+%    o histogram_info: A pointer to the HistogramInfo structure.
 %
 %    o level: Specifies the level in the storage_class the node resides.
 %
 */
-static NodeInfo *GetNodeInfo(CubeInfo *cube_info,const size_t level)
+static NodeInfo *GetNodeInfo(HistogramInfo *histogram_info,const size_t level)
 {
   NodeInfo
     *node_info;
 
-  if (cube_info->free_nodes == 0)
+  if (histogram_info->free_nodes == 0)
     {
       Nodes
         *nodes;
@@ -637,13 +638,13 @@ static NodeInfo *GetNodeInfo(CubeInfo *cube_info,const size_t level)
       nodes=(Nodes *) AcquireMagickMemory(sizeof(*nodes));
       if (nodes == (Nodes *) NULL)
         return((NodeInfo *) NULL);
-      nodes->next=cube_info->node_queue;
-      cube_info->node_queue=nodes;
-      cube_info->node_info=nodes->nodes;
-      cube_info->free_nodes=NodesInAList;
+      nodes->next=histogram_info->node_queue;
+      histogram_info->node_queue=nodes;
+      histogram_info->node_info=nodes->nodes;
+      histogram_info->free_nodes=NodesInAList;
     }
-  cube_info->free_nodes--;
-  node_info=cube_info->node_info++;
+  histogram_info->free_nodes--;
+  node_info=histogram_info->node_info++;
   (void) memset(node_info,0,sizeof(*node_info));
   node_info->level=level;
   return(node_info);
@@ -682,8 +683,8 @@ static MagickBooleanType CheckImageColors(const Image *image,
   CacheView
     *image_view;
 
-  CubeInfo
-    *cube_info;
+  HistogramInfo
+    *histogram_info;
 
   MagickPixelPacket
     pixel,
@@ -717,8 +718,8 @@ static MagickBooleanType CheckImageColors(const Image *image,
   /*
     Initialize color description tree.
   */
-  cube_info=GetCubeInfo();
-  if (cube_info == (CubeInfo *) NULL)
+  histogram_info=GetHistogramInfo();
+  if (histogram_info == (HistogramInfo *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
@@ -740,7 +741,7 @@ static MagickBooleanType CheckImageColors(const Image *image,
       /*
         Start at the root and proceed level by level.
       */
-      node_info=cube_info->root;
+      node_info=histogram_info->root;
       index=MaxTreeDepth-1;
       for (level=1; level < MaxTreeDepth; level++)
       {
@@ -748,7 +749,7 @@ static MagickBooleanType CheckImageColors(const Image *image,
         id=ColorToNodeId(image,&pixel,index);
         if (node_info->child[id] == (NodeInfo *) NULL)
           {
-            node_info->child[id]=GetNodeInfo(cube_info,level);
+            node_info->child[id]=GetNodeInfo(histogram_info,level);
             if (node_info->child[id] == (NodeInfo *) NULL)
               {
                 (void) ThrowMagickException(exception,GetMagickModule(),
@@ -795,8 +796,8 @@ static MagickBooleanType CheckImageColors(const Image *image,
             node_info->list[i].index=GetPixelIndex(indexes+x);
           node_info->list[i].count=1;
           node_info->number_unique++;
-          cube_info->colors++;
-          if (cube_info->colors > max_colors)
+          histogram_info->colors++;
+          if (histogram_info->colors > max_colors)
             break;
         }
       p++;
@@ -805,7 +806,7 @@ static MagickBooleanType CheckImageColors(const Image *image,
       break;
   }
   image_view=DestroyCacheView(image_view);
-  cube_info=DestroyCubeInfo(image,cube_info);
+  histogram_info=DestroyHistogramInfo(image,histogram_info);
   return(y < (ssize_t) image->rows ? MagickFalse : MagickTrue);
 }
 
@@ -853,8 +854,8 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
   CacheView
     *image_view;
 
-  CubeInfo
-    *cube_info;
+  HistogramInfo
+    *histogram_info;
 
   MagickPixelPacket
     pixel,
@@ -895,8 +896,8 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
   /*
     Initialize color description tree.
   */
-  cube_info=GetCubeInfo();
-  if (cube_info == (CubeInfo *) NULL)
+  histogram_info=GetHistogramInfo();
+  if (histogram_info == (HistogramInfo *) NULL)
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
@@ -916,7 +917,7 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
       /*
         Start at the root and proceed level by level.
       */
-      node_info=cube_info->root;
+      node_info=histogram_info->root;
       index=MaxTreeDepth-1;
       for (level=1; level < MaxTreeDepth; level++)
       {
@@ -924,7 +925,7 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
         id=ColorToNodeId(image,&pixel,index);
         if (node_info->child[id] == (NodeInfo *) NULL)
           {
-            node_info->child[id]=GetNodeInfo(cube_info,level);
+            node_info->child[id]=GetNodeInfo(histogram_info,level);
             if (node_info->child[id] == (NodeInfo *) NULL)
               {
                 (void) ThrowMagickException(exception,GetMagickModule(),
@@ -971,8 +972,8 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
             node_info->list[i].index=GetPixelIndex(indexes+x);
           node_info->list[i].count=1;
           node_info->number_unique++;
-          cube_info->colors++;
-          if (cube_info->colors > MaximumUniqueColors)
+          histogram_info->colors++;
+          if (histogram_info->colors > MaximumUniqueColors)
             break;
         }
       p++;
@@ -981,7 +982,7 @@ MagickExport MagickBooleanType IsHistogramImage(const Image *image,
       break;
   }
   image_view=DestroyCacheView(image_view);
-  cube_info=DestroyCubeInfo(image,cube_info);
+  histogram_info=DestroyHistogramInfo(image,histogram_info);
   return(y < (ssize_t) image->rows ? MagickFalse : MagickTrue);
 }
 
@@ -1233,14 +1234,14 @@ MagickExport size_t GetNumberColors(const Image *image,FILE *file,
   number_colors=0;
   if (file == (FILE *) NULL)
     {
-      CubeInfo
-        *cube_info;
+      HistogramInfo
+        *histogram_info;
 
-      cube_info=ClassifyImageColors(image,exception);
-      if (cube_info != (CubeInfo *) NULL)
+      histogram_info=ClassifyImageColors(image,exception);
+      if (histogram_info != (HistogramInfo *) NULL)
         {
-          number_colors=cube_info->colors;
-          cube_info=DestroyCubeInfo(image,cube_info);
+          number_colors=histogram_info->colors;
+          histogram_info=DestroyHistogramInfo(image,histogram_info);
         }
       return(number_colors);
     }
@@ -1322,7 +1323,7 @@ MagickExport size_t GetNumberColors(const Image *image,FILE *file,
 */
 
 static void UniqueColorsToImage(Image *unique_image,CacheView *unique_view,
-  CubeInfo *cube_info,const NodeInfo *node_info,ExceptionInfo *exception)
+  HistogramInfo *histogram_info,const NodeInfo *node_info,ExceptionInfo *exception)
 {
 #define UniqueColorsImageTag  "UniqueColors/Image"
 
@@ -1341,7 +1342,7 @@ static void UniqueColorsToImage(Image *unique_image,CacheView *unique_view,
   number_children=unique_image->matte == MagickFalse ? 8UL : 16UL;
   for (i=0; i < (ssize_t) number_children; i++)
     if (node_info->child[i] != (NodeInfo *) NULL)
-      UniqueColorsToImage(unique_image,unique_view,cube_info,
+      UniqueColorsToImage(unique_image,unique_view,histogram_info,
         node_info->child[i],exception);
   if (node_info->level == (MaxTreeDepth-1))
     {
@@ -1358,7 +1359,7 @@ static void UniqueColorsToImage(Image *unique_image,CacheView *unique_view,
       p=node_info->list;
       for (i=0; i < (ssize_t) node_info->number_unique; i++)
       {
-        q=QueueCacheViewAuthenticPixels(unique_view,cube_info->x,0,1,1,
+        q=QueueCacheViewAuthenticPixels(unique_view,histogram_info->x,0,1,1,
           exception);
         if (q == (PixelPacket *) NULL)
           continue;
@@ -1368,7 +1369,7 @@ static void UniqueColorsToImage(Image *unique_image,CacheView *unique_view,
           *indexes=p->index;
         if (SyncCacheViewAuthenticPixels(unique_view,exception) == MagickFalse)
           break;
-        cube_info->x++;
+        histogram_info->x++;
         p++;
       }
       if (unique_image->progress_monitor != (MagickProgressMonitor) NULL)
@@ -1377,11 +1378,11 @@ static void UniqueColorsToImage(Image *unique_image,CacheView *unique_view,
             proceed;
 
           proceed=SetImageProgress(unique_image,UniqueColorsImageTag,
-            cube_info->progress,cube_info->colors);
+            histogram_info->progress,histogram_info->colors);
           if (proceed == MagickFalse)
             status=MagickFalse;
         }
-      cube_info->progress++;
+      histogram_info->progress++;
       if (status == MagickFalse)
         return;
     }
@@ -1393,16 +1394,16 @@ MagickExport Image *UniqueImageColors(const Image *image,
   CacheView
     *unique_view;
 
-  CubeInfo
-    *cube_info;
+  HistogramInfo
+    *histogram_info;
 
   Image
     *unique_image;
 
-  cube_info=ClassifyImageColors(image,exception);
-  if (cube_info == (CubeInfo *) NULL)
+  histogram_info=ClassifyImageColors(image,exception);
+  if (histogram_info == (HistogramInfo *) NULL)
     return((Image *) NULL);
-  unique_image=CloneImage(image,cube_info->colors,1,MagickTrue,exception);
+  unique_image=CloneImage(image,histogram_info->colors,1,MagickTrue,exception);
   if (unique_image == (Image *) NULL)
     return(unique_image);
   if (SetImageStorageClass(unique_image,DirectClass) == MagickFalse)
@@ -1412,9 +1413,9 @@ MagickExport Image *UniqueImageColors(const Image *image,
       return((Image *) NULL);
     }
   unique_view=AcquireVirtualCacheView(unique_image,exception);
-  UniqueColorsToImage(unique_image,unique_view,cube_info,cube_info->root,
+  UniqueColorsToImage(unique_image,unique_view,histogram_info,histogram_info->root,
     exception);
   unique_view=DestroyCacheView(unique_view);
-  cube_info=DestroyCubeInfo(image,cube_info);
+  histogram_info=DestroyHistogramInfo(image,histogram_info);
   return(unique_image);
 }

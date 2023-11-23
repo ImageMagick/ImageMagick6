@@ -1403,7 +1403,7 @@ typedef enum
   SaveToUndoBufferCommand,
   FreeBuffersCommand,
   NullCommand
-} CommandType;
+} DisplayCommands;
 
 typedef enum
 {
@@ -1532,12 +1532,12 @@ static const unsigned char
 /*
   Function prototypes.
 */
-static CommandType
+static DisplayCommands
   XImageWindowCommand(Display *,XResourceInfo *,XWindows *,
     const MagickStatusType,KeySym,Image **);
 
 static Image
-  *XMagickCommand(Display *,XResourceInfo *,XWindows *,const CommandType,
+  *XMagickCommand(Display *,XResourceInfo *,XWindows *,const DisplayCommands,
     Image **),
   *XOpenImage(Display *,XResourceInfo *,XWindows *,const MagickBooleanType),
   *XTileImage(Display *,XResourceInfo *,XWindows *,Image *,XEvent *),
@@ -1562,7 +1562,7 @@ static MagickBooleanType
 
 static void
   XDrawPanRectangle(Display *,XWindows *),
-  XImageCache(Display *,XResourceInfo *,XWindows *,const CommandType,Image **),
+  XImageCache(Display *,XResourceInfo *,XWindows *,const DisplayCommands,Image **),
   XMagnifyImage(Display *,XWindows *,XEvent *),
   XMakePanImage(Display *,XResourceInfo *,XWindows *,Image *),
   XPanImage(Display *,XWindows *,XEvent *),
@@ -6333,7 +6333,7 @@ static void XDrawPanRectangle(Display *display,XWindows *windows)
 %  The format of the XImageCache method is:
 %
 %      void XImageCache(Display *display,XResourceInfo *resource_info,
-%        XWindows *windows,const CommandType command,Image **image)
+%        XWindows *windows,const DisplayCommands command,Image **image)
 %
 %  A description of each parameter follows:
 %
@@ -6351,7 +6351,7 @@ static void XDrawPanRectangle(Display *display,XWindows *windows)
 %
 */
 static void XImageCache(Display *display,XResourceInfo *resource_info,
-  XWindows *windows,const CommandType command,Image **image)
+  XWindows *windows,const DisplayCommands command,Image **image)
 {
   Image
     *cache_image;
@@ -6608,7 +6608,7 @@ static void XImageCache(Display *display,XResourceInfo *resource_info,
 %
 %  The format of the XMagickCommand method is:
 %
-%      CommandType XImageWindowCommand(Display *display,
+%      DisplayCommands XImageWindowCommand(Display *display,
 %        XResourceInfo *resource_info,XWindows *windows,
 %        const MagickStatusType state,KeySym key_symbol,Image **image)
 %
@@ -6633,7 +6633,7 @@ static void XImageCache(Display *display,XResourceInfo *resource_info,
 %      may transform the image and return a new image pointer.
 %
 */
-static CommandType XImageWindowCommand(Display *display,
+static DisplayCommands XImageWindowCommand(Display *display,
   XResourceInfo *resource_info,XWindows *windows,const MagickStatusType state,
   KeySym key_symbol,Image **image)
 {
@@ -7002,7 +7002,7 @@ static CommandType XImageWindowCommand(Display *display,
 %  The format of the XMagickCommand method is:
 %
 %      Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
-%        XWindows *windows,const CommandType command,Image **image)
+%        XWindows *windows,const DisplayCommands command,Image **image)
 %
 %  A description of each parameter follows:
 %
@@ -7024,7 +7024,7 @@ static CommandType XImageWindowCommand(Display *display,
 %
 */
 static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
-  XWindows *windows,const CommandType command,Image **image)
+  XWindows *windows,const DisplayCommands command,Image **image)
 {
   char
     filename[MaxTextExtent],
@@ -11049,7 +11049,7 @@ static MagickBooleanType XROIImage(Display *display,
       MiscellanyMenu
     };
 
-  static const CommandType
+  static const DisplayCommands
     ApplyCommands[] =
     {
       NullCommand,
@@ -11135,7 +11135,7 @@ static MagickBooleanType XROIImage(Display *display,
       ROIDismissCommand
     };
 
-  static const CommandType
+  static const DisplayCommands
     *Commands[ApplyMenus] =
     {
       FileCommands,
@@ -11151,8 +11151,8 @@ static MagickBooleanType XROIImage(Display *display,
     command[MaxTextExtent],
     text[MaxTextExtent];
 
-  CommandType
-    command_type;
+  DisplayCommands
+    display_command;
 
   Cursor
     cursor;
@@ -11464,7 +11464,7 @@ static MagickBooleanType XROIImage(Display *display,
       Wait for user to grab a corner of the rectangle or press return.
     */
     state=DefaultState;
-    command_type=NullCommand;
+    display_command=NullCommand;
     (void) XMapWindow(display,windows->info.id);
     do
     {
@@ -11490,13 +11490,13 @@ static MagickBooleanType XROIImage(Display *display,
       if ((state & UpdateRegionState) != 0)
         {
           (void) XSetFunction(display,windows->image.highlight_context,GXcopy);
-          switch (command_type)
+          switch (display_command)
           {
             case UndoCommand:
             case RedoCommand:
             {
-              (void) XMagickCommand(display,resource_info,windows,command_type,
-                image);
+              (void) XMagickCommand(display,resource_info,windows,
+                display_command,image);
               break;
             }
             default:
@@ -11533,8 +11533,8 @@ static MagickBooleanType XROIImage(Display *display,
                 Apply image processing technique to the region of interest.
               */
               windows->image.orphan=MagickTrue;
-              (void) XMagickCommand(display,resource_info,windows,command_type,
-                &roi_image);
+              (void) XMagickCommand(display,resource_info,windows,
+                display_command,&roi_image);
               progress_monitor=SetImageProgressMonitor(*image,
                 (MagickProgressMonitor) NULL,(*image)->client_data);
               (void) XMagickCommand(display,resource_info,windows,
@@ -11548,7 +11548,7 @@ static MagickBooleanType XROIImage(Display *display,
               break;
             }
           }
-          if (command_type != InfoCommand)
+          if (display_command != InfoCommand)
             {
               XConfigureImageColormap(display,resource_info,windows,*image);
               (void) XConfigureImage(display,resource_info,windows,*image);
@@ -11568,12 +11568,12 @@ static MagickBooleanType XROIImage(Display *display,
             Select a command from the Command widget.
           */
           (void) XSetFunction(display,windows->image.highlight_context,GXcopy);
-          command_type=NullCommand;
+          display_command=NullCommand;
           id=XCommandWidget(display,windows,ApplyMenu,&event);
           if (id >= 0)
             {
               (void) CopyMagickString(command,ApplyMenu[id],MaxTextExtent);
-              command_type=ApplyCommands[id];
+              display_command=ApplyCommands[id];
               if (id < ApplyMenus)
                 {
                   /*
@@ -11585,7 +11585,7 @@ static MagickBooleanType XROIImage(Display *display,
                     {
                       (void) CopyMagickString(command,Menus[id][entry],
                         MaxTextExtent);
-                      command_type=Commands[id][entry];
+                      display_command=Commands[id][entry];
                     }
                 }
             }
@@ -11593,7 +11593,7 @@ static MagickBooleanType XROIImage(Display *display,
             GXinvert);
           XHighlightRectangle(display,windows->image.id,
             windows->image.highlight_context,&highlight_info);
-          if (command_type == HelpCommand)
+          if (display_command == HelpCommand)
             {
               (void) XSetFunction(display,windows->image.highlight_context,
                 GXcopy);
@@ -11603,7 +11603,7 @@ static MagickBooleanType XROIImage(Display *display,
                 GXinvert);
               continue;
             }
-          if (command_type == QuitCommand)
+          if (display_command == QuitCommand)
             {
               /*
                 exit.
@@ -11612,7 +11612,7 @@ static MagickBooleanType XROIImage(Display *display,
               state|=ExitState;
               continue;
             }
-          if (command_type != NullCommand)
+          if (display_command != NullCommand)
             state|=UpdateRegionState;
           continue;
         }
@@ -11770,9 +11770,9 @@ static MagickBooleanType XROIImage(Display *display,
             }
             default:
             {
-              command_type=XImageWindowCommand(display,resource_info,windows,
+              display_command=XImageWindowCommand(display,resource_info,windows,
                 event.xkey.state,key_symbol,image);
-              if (command_type != NullCommand)
+              if (display_command != NullCommand)
                 state|=UpdateRegionState;
               break;
             }
@@ -14135,7 +14135,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
       HelpMenu
     };
 
-  static CommandType
+  static DisplayCommands
     CommandMenus[] =
     {
       NullCommand,
@@ -14286,7 +14286,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
       QuitCommand
     };
 
-  static CommandType
+  static DisplayCommands
     *Commands[MagickMenus] =
     {
       FileCommands,
@@ -14307,8 +14307,8 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
     geometry[MaxTextExtent],
     resource_name[MaxTextExtent];
 
-  CommandType
-    command_type;
+  DisplayCommands
+    display_command;
 
   Image
     *display_image,
@@ -15028,7 +15028,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
         if (id < 0)
           continue;
         (void) CopyMagickString(command,CommandMenu[id],MaxTextExtent);
-        command_type=CommandMenus[id];
+        display_command=CommandMenus[id];
         if (id < MagickMenus)
           {
             /*
@@ -15039,10 +15039,10 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
             if (entry < 0)
               continue;
             (void) CopyMagickString(command,Menus[id][entry],MaxTextExtent);
-            command_type=Commands[id][entry];
+            display_command=Commands[id][entry];
           }
-        if (command_type != NullCommand)
-          nexus=XMagickCommand(display,resource_info,windows,command_type,
+        if (display_command != NullCommand)
+          nexus=XMagickCommand(display,resource_info,windows,display_command,
             &display_image);
         continue;
       }
@@ -15669,10 +15669,10 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
             key_symbol,command);
         if (event.xkey.window == windows->image.id)
           {
-            command_type=XImageWindowCommand(display,resource_info,windows,
+            display_command=XImageWindowCommand(display,resource_info,windows,
               event.xkey.state,key_symbol,&display_image);
-            if (command_type != NullCommand)
-              nexus=XMagickCommand(display,resource_info,windows,command_type,
+            if (display_command != NullCommand)
+              nexus=XMagickCommand(display,resource_info,windows,display_command,
                 &display_image);
           }
         if (event.xkey.window == windows->magnify.id)

@@ -225,7 +225,7 @@ typedef enum
   StepBackwardCommand,
   StepForwardCommand,
   NullCommand
-} CommandType;
+} AnimateCommands;
 
 /*
   Stipples.
@@ -239,7 +239,7 @@ typedef enum
   Forward declarations.
 */
 static Image
-  *XMagickCommand(Display *,XResourceInfo *,XWindows *,const CommandType,
+  *XMagickCommand(Display *,XResourceInfo *,XWindows *,const AnimateCommands,
     Image **,MagickStatusType *);
 
 static MagickBooleanType
@@ -342,7 +342,7 @@ MagickExport MagickBooleanType AnimateImages(const ImageInfo *image_info,
 %  The format of the XMagickCommand method is:
 %
 %      Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
-%        XWindows *windows,const CommandType command_type,Image **image,
+%        XWindows *windows,const AnimateCommands animate_command,Image **image,
 %        MagickStatusType *state)
 %
 %  A description of each parameter follows:
@@ -363,7 +363,7 @@ MagickExport MagickBooleanType AnimateImages(const ImageInfo *image_info,
 %
 */
 static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
-  XWindows *windows,const CommandType command_type,Image **image,
+  XWindows *windows,const AnimateCommands animate_command,Image **image,
   MagickStatusType *state)
 {
   Image
@@ -382,7 +382,7 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
     Process user command.
   */
   nexus=NewImageList();
-  switch (command_type)
+  switch (animate_command)
   {
     case OpenCommand:
     {
@@ -518,9 +518,9 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
     {
       *state|=StepAnimationState;
       *state&=(~PlayAnimationState);
-      if (command_type == StepBackwardCommand)
+      if (animate_command == StepBackwardCommand)
         *state&=(~ForwardAnimationState);
-      if (command_type == StepForwardCommand)
+      if (animate_command == StepForwardCommand)
         *state|=ForwardAnimationState;
       if (resource_info->title != (char *) NULL)
         break;
@@ -1257,7 +1257,7 @@ MagickExport Image *XAnimateImages(Display *display,
       HelpMenu
     };
 
-  static const CommandType
+  static const AnimateCommands
     CommandMenus[]=
     {
       NullCommand,
@@ -1267,7 +1267,7 @@ MagickExport Image *XAnimateImages(Display *display,
       InfoCommand,
       QuitCommand
     },
-    CommandTypes[]=
+    AnimateCommandss[]=
     {
       OpenCommand,
       PlayCommand,
@@ -1293,23 +1293,23 @@ MagickExport Image *XAnimateImages(Display *display,
       VersionCommand
     };
 
-  static const CommandType
+  static const AnimateCommands
     *Commands[MagickMenus]=
     {
-      CommandTypes,
+      AnimateCommandss,
       SpeedCommands,
       DirectionCommands,
       HelpCommands
     };
+
+  AnimateCommands
+    animate_command;
 
   char
     command[MaxTextExtent],
     *directory,
     geometry[MaxTextExtent],
     resource_name[MaxTextExtent];
-
-  CommandType
-    command_type;
 
   Image
     *coalesce_image,
@@ -2195,7 +2195,7 @@ MagickExport Image *XAnimateImages(Display *display,
         if (id < 0)
           continue;
         (void) CopyMagickString(command,CommandMenu[id],MaxTextExtent);
-        command_type=CommandMenus[id];
+        animate_command=CommandMenus[id];
         if (id < MagickMenus)
           {
             int
@@ -2209,11 +2209,11 @@ MagickExport Image *XAnimateImages(Display *display,
             if (entry < 0)
               continue;
             (void) CopyMagickString(command,Menus[id][entry],MaxTextExtent);
-            command_type=Commands[id][entry];
+            animate_command=Commands[id][entry];
           }
-        if (command_type != NullCommand)
+        if (animate_command != NullCommand)
           nexus=XMagickCommand(display,resource_info,windows,
-            command_type,&image,&state);
+            animate_command,&image,&state);
         continue;
       }
     switch (event.type)
@@ -2525,63 +2525,63 @@ MagickExport Image *XAnimateImages(Display *display,
         if (resource_info->debug != MagickFalse)
           (void) LogMagickEvent(X11Event,GetMagickModule(),
             "Key press: 0x%lx (%c)",(unsigned long) key_symbol,*command);
-        command_type=NullCommand;
+        animate_command=NullCommand;
         switch (key_symbol)
         {
           case XK_o:
           {
             if ((event.xkey.state & ControlMask) == MagickFalse)
               break;
-            command_type=OpenCommand;
+            animate_command=OpenCommand;
             break;
           }
           case XK_BackSpace:
           {
-            command_type=StepBackwardCommand;
+            animate_command=StepBackwardCommand;
             break;
           }
           case XK_space:
           {
-            command_type=StepForwardCommand;
+            animate_command=StepForwardCommand;
             break;
           }
           case XK_less:
           {
-            command_type=FasterCommand;
+            animate_command=FasterCommand;
             break;
           }
           case XK_greater:
           {
-            command_type=SlowerCommand;
+            animate_command=SlowerCommand;
             break;
           }
           case XK_F1:
           {
-            command_type=HelpCommand;
+            animate_command=HelpCommand;
             break;
           }
           case XK_Find:
           {
-            command_type=BrowseDocumentationCommand;
+            animate_command=BrowseDocumentationCommand;
             break;
           }
           case XK_question:
           {
-            command_type=InfoCommand;
+            animate_command=InfoCommand;
             break;
           }
           case XK_q:
           case XK_Escape:
           {
-            command_type=QuitCommand;
+            animate_command=QuitCommand;
             break;
           }
           default:
             break;
         }
-        if (command_type != NullCommand)
-          nexus=XMagickCommand(display,resource_info,windows,
-            command_type,&image,&state);
+        if (animate_command != NullCommand)
+          nexus=XMagickCommand(display,resource_info,windows,animate_command,
+            &image,&state);
         break;
       }
       case KeyRelease:
