@@ -1403,7 +1403,7 @@ typedef enum
   SaveToUndoBufferCommand,
   FreeBuffersCommand,
   NullCommand
-} DisplayCommands;
+} DisplayCommand;
 
 typedef enum
 {
@@ -1532,12 +1532,12 @@ static const unsigned char
 /*
   Function prototypes.
 */
-static DisplayCommands
+static DisplayCommand
   XImageWindowCommand(Display *,XResourceInfo *,XWindows *,
     const MagickStatusType,KeySym,Image **);
 
 static Image
-  *XMagickCommand(Display *,XResourceInfo *,XWindows *,const DisplayCommands,
+  *XMagickCommand(Display *,XResourceInfo *,XWindows *,const DisplayCommand,
     Image **),
   *XOpenImage(Display *,XResourceInfo *,XWindows *,const MagickBooleanType),
   *XTileImage(Display *,XResourceInfo *,XWindows *,Image *,XEvent *),
@@ -1562,7 +1562,7 @@ static MagickBooleanType
 
 static void
   XDrawPanRectangle(Display *,XWindows *),
-  XImageCache(Display *,XResourceInfo *,XWindows *,const DisplayCommands,Image **),
+  XImageCache(Display *,XResourceInfo *,XWindows *,const DisplayCommand,Image **),
   XMagnifyImage(Display *,XWindows *,XEvent *),
   XMakePanImage(Display *,XResourceInfo *,XWindows *,Image *),
   XPanImage(Display *,XWindows *,XEvent *),
@@ -6333,7 +6333,7 @@ static void XDrawPanRectangle(Display *display,XWindows *windows)
 %  The format of the XImageCache method is:
 %
 %      void XImageCache(Display *display,XResourceInfo *resource_info,
-%        XWindows *windows,const DisplayCommands command,Image **image)
+%        XWindows *windows,const DisplayCommand command,Image **image)
 %
 %  A description of each parameter follows:
 %
@@ -6351,7 +6351,7 @@ static void XDrawPanRectangle(Display *display,XWindows *windows)
 %
 */
 static void XImageCache(Display *display,XResourceInfo *resource_info,
-  XWindows *windows,const DisplayCommands command,Image **image)
+  XWindows *windows,const DisplayCommand command,Image **image)
 {
   Image
     *cache_image;
@@ -6608,7 +6608,7 @@ static void XImageCache(Display *display,XResourceInfo *resource_info,
 %
 %  The format of the XMagickCommand method is:
 %
-%      DisplayCommands XImageWindowCommand(Display *display,
+%      DisplayCommand XImageWindowCommand(Display *display,
 %        XResourceInfo *resource_info,XWindows *windows,
 %        const MagickStatusType state,KeySym key_symbol,Image **image)
 %
@@ -6633,7 +6633,7 @@ static void XImageCache(Display *display,XResourceInfo *resource_info,
 %      may transform the image and return a new image pointer.
 %
 */
-static DisplayCommands XImageWindowCommand(Display *display,
+static DisplayCommand XImageWindowCommand(Display *display,
   XResourceInfo *resource_info,XWindows *windows,const MagickStatusType state,
   KeySym key_symbol,Image **image)
 {
@@ -7002,7 +7002,7 @@ static DisplayCommands XImageWindowCommand(Display *display,
 %  The format of the XMagickCommand method is:
 %
 %      Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
-%        XWindows *windows,const DisplayCommands command,Image **image)
+%        XWindows *windows,const DisplayCommand command,Image **image)
 %
 %  A description of each parameter follows:
 %
@@ -7024,7 +7024,7 @@ static DisplayCommands XImageWindowCommand(Display *display,
 %
 */
 static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
-  XWindows *windows,const DisplayCommands command,Image **image)
+  XWindows *windows,const DisplayCommand command,Image **image)
 {
   char
     filename[MaxTextExtent],
@@ -11049,7 +11049,7 @@ static MagickBooleanType XROIImage(Display *display,
       MiscellanyMenu
     };
 
-  static const DisplayCommands
+  static const DisplayCommand
     ApplyCommands[] =
     {
       NullCommand,
@@ -11135,7 +11135,7 @@ static MagickBooleanType XROIImage(Display *display,
       ROIDismissCommand
     };
 
-  static const DisplayCommands
+  static const DisplayCommand
     *Commands[ApplyMenus] =
     {
       FileCommands,
@@ -11151,7 +11151,7 @@ static MagickBooleanType XROIImage(Display *display,
     command[MaxTextExtent],
     text[MaxTextExtent];
 
-  DisplayCommands
+  DisplayCommand
     display_command;
 
   Cursor
@@ -14135,7 +14135,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
       HelpMenu
     };
 
-  static DisplayCommands
+  static DisplayCommand
     CommandMenus[] =
     {
       NullCommand,
@@ -14286,7 +14286,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
       QuitCommand
     };
 
-  static DisplayCommands
+  static DisplayCommand
     *Commands[MagickMenus] =
     {
       FileCommands,
@@ -14307,7 +14307,7 @@ MagickExport Image *XDisplayImage(Display *display,XResourceInfo *resource_info,
     geometry[MaxTextExtent],
     resource_name[MaxTextExtent];
 
-  DisplayCommands
+  DisplayCommand
     display_command;
 
   Image
