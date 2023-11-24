@@ -5137,7 +5137,7 @@ MAGICK_PATCHLEVEL_VERSION=0
 
 MAGICK_VERSION=6.9.13-0
 
-MAGICK_GIT_REVISION=db2f5fbdc:20231123
+MAGICK_GIT_REVISION=2b6a3cce1:20231124
 
 
 # Substitute library versioning
@@ -5171,7 +5171,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,0
 
-PACKAGE_RELEASE_DATE=2023-11-23
+PACKAGE_RELEASE_DATE=2023-11-24
 
 
 # Ensure that make can run correctly
@@ -27439,7 +27439,7 @@ printf "%s\n" "#define X11_CONFIGURE_PATH \"$X11ConfigurePath\"" >>confdefs.h
 # Find OpenMP library
 #
 GOMP_LIBS=''
-if test "${OPENMP_ENABLED}" == 'yes'; then
+if test "${OPENMP_ENABLED}" = 'yes'; then
   if test "${GCC}" = "yes"; then
     # Open64 (passes for GCC but uses different OpenMP implementation)
     if test "x$GOMP_LIBS" = x ; then
@@ -27620,7 +27620,7 @@ fi
     fi
     # AIX xlc
     if test "x$GOMP_LIBS" = x ; then
-    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for _xlsmpFlush in -lxlsmp" >&5
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for _xlsmpFlush in -lxlsmp" >&5
 printf %s "checking for _xlsmpFlush in -lxlsmp... " >&6; }
 if test ${ac_cv_lib_xlsmp__xlsmpFlush+y}
 then :
@@ -27663,7 +27663,7 @@ fi
     fi
     # SGI IRIX 6.5 MIPSpro C/C++
     if test "x$GOMP_LIBS" = x ; then
-    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mp_destroy in -lmp" >&5
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mp_destroy in -lmp" >&5
 printf %s "checking for mp_destroy in -lmp... " >&6; }
 if test ${ac_cv_lib_mp_mp_destroy+y}
 then :
@@ -27706,6 +27706,15 @@ fi
     fi
   fi
   LIBS="$GOMP_LIBS $LIBS"
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for OpenMP library " >&5
+printf %s "checking for OpenMP library ... " >&6; }
+  if test "x$GOMP_LIBS" = x ; then
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: not found!" >&5
+printf "%s\n" "not found!" >&6; }
+  else
+    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: ${GOMP_LIBS}" >&5
+printf "%s\n" "${GOMP_LIBS}" >&6; }
+  fi
 fi
 
 
