@@ -3370,28 +3370,6 @@ AC_SUBST([windows_font_dir])
 
 AC_SUBST([type_include_files])
 
-# 
-# Need C++ for { FPX, JXL}.
-# 
-if test "$have_jxl" != 'no' || test "$with_fpx" != 'no'; then
-  AC_MSG_CHECKING([whether the compiler supports -x option])
-  AC_COMPILE_IFELSE([
-    AC_LANG_PROGRAM([
-      #include <stdio.h>
-    ],
-    [
-      int main() {
-        return 0;
-      }
-    ])
-  ], [
-    AC_MSG_RESULT([yes])
-    CFLAGS="$CFLAGS -x c++"
-  ], [
-    AC_MSG_RESULT([no])
-  ])
-fi
-
 #
 # Handle case where user doesn't want frozen paths
 #
