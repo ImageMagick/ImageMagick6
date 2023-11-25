@@ -469,8 +469,11 @@ AC_SUBST([THREAD_LIBS])
 if test "$have_threads" != 'yes'; then
   ac_cv_prog_c_openmp=unsupported
 fi
+AC_OPENMP([C++])
+CXXFLAGS="$OPENMP_CXXFLAGS $CXXFLAGS"
 AC_OPENMP([C])
 CFLAGS="$OPENMP_CFLAGS $CFLAGS"
+CPPFLAGS="$OPENMP_CFLAGS $CPPFLAGS"
 MAGICK_PCFLAGS="$MAGICK_PCFLAGS $OPENMP_CFLAGS"
 AC_SUBST([OPENMP_CFLAGS])
 AC_CHECK_DECL([_OPENMP],[OPENMP_ENABLED='yes'],[OPENMP_ENABLED='yes'],[])
@@ -1266,31 +1269,37 @@ if test "${OPENMP_ENABLED}" = 'yes'; then
     # Open64 (passes for GCC but uses different OpenMP implementation)
     if test "x$GOMP_LIBS" = x ; then
       if $CC --version 2>&1 | grep Open64 > /dev/null ; then
-        AC_CHECK_LIB([openmp],[omp_get_num_threads],[GOMP_LIBS="-lopenmp"],[],[])
+        AC_COMPILE_IFELSE([ AC_LANG_PROGRAM([#include <omp.h>], [
+          omp_set_num_threads(1);])],[GOMP_LIBS="-lopenmp"],[])
       fi
     fi
     # Clang (passes for GCC but uses different OpenMP implementation)
     if test "x$GOMP_LIBS" = x ; then
       if $CC --version 2>&1 | grep clang > /dev/null ; then
-        AC_CHECK_LIB([omp],[omp_get_num_threads],[GOMP_LIBS="-lomp"],[],[])
+        AC_COMPILE_IFELSE([ AC_LANG_PROGRAM([#include <omp.h>], [
+          omp_set_num_threads(1);])],[GOMP_LIBS="-lomp"],[])
       fi
     fi
     # GCC
     if test "x$GOMP_LIBS" = x ; then
-      AC_CHECK_LIB([gomp],[omp_get_num_threads],[GOMP_LIBS="-lgomp"],[],[])
+      AC_COMPILE_IFELSE([ AC_LANG_PROGRAM([#include <omp.h>], [
+        omp_set_num_threads(1);])],[GOMP_LIBS="-lgomp"],[])
     fi
   else
     # Sun CC
     if test "x$GOMP_LIBS" = x ; then
-      AC_CHECK_LIB([mtsk],[omp_get_num_threads],[GOMP_LIBS="-lmtsk"],[],[])
+      AC_COMPILE_IFELSE([ AC_LANG_PROGRAM([#include <omp.h>], [
+        omp_set_num_threads(1);])],[GOMP_LIBS="-lmtsk"],[])
     fi
     # AIX xlc
     if test "x$GOMP_LIBS" = x ; then
-      AC_CHECK_LIB([xlsmp],[omp_get_num_threads],[GOMP_LIBS="-lxlsmp"],[],[])
+      AC_COMPILE_IFELSE([ AC_LANG_PROGRAM([#include <omp.h>], [
+        omp_set_num_threads(1);])],[GOMP_LIBS="-lxmlsmp"],[])
     fi
     # SGI IRIX 6.5 MIPSpro C/C++
     if test "x$GOMP_LIBS" = x ; then
-      AC_CHECK_LIB([mp],[omp_get_num_threads],[GOMP_LIBS="-lmp"],[],[])
+      AC_COMPILE_IFELSE([ AC_LANG_PROGRAM([#include <omp.h>], [
+        omp_set_num_threads(1);])],[GOMP_LIBS="-lmp"],[])
     fi
   fi
   LIBS="$GOMP_LIBS $LIBS"
