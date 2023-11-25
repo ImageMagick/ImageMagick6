@@ -5137,7 +5137,7 @@ MAGICK_PATCHLEVEL_VERSION=0
 
 MAGICK_VERSION=6.9.13-0
 
-MAGICK_GIT_REVISION=2b6a3cce1:20231124
+MAGICK_GIT_REVISION=75d1cb7ea:20231124
 
 
 # Substitute library versioning
@@ -27440,13 +27440,21 @@ printf "%s\n" "#define X11_CONFIGURE_PATH \"$X11ConfigurePath\"" >>confdefs.h
 #
 GOMP_LIBS=''
 if test "${OPENMP_ENABLED}" = 'yes'; then
+  ac_fn_c_check_header_compile "$LINENO" "omp.h" "ac_cv_header_omp_h" "$ac_includes_default"
+if test "x$ac_cv_header_omp_h" = xyes
+then :
+
+else $as_nop
+  as_fn_error $? "OpenMP header file not found" "$LINENO" 5
+fi
+
   if test "${GCC}" = "yes"; then
     # Open64 (passes for GCC but uses different OpenMP implementation)
     if test "x$GOMP_LIBS" = x ; then
       if $CC --version 2>&1 | grep Open64 > /dev/null ; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_procs in -lopenmp" >&5
-printf %s "checking for omp_get_num_procs in -lopenmp... " >&6; }
-if test ${ac_cv_lib_openmp_omp_get_num_procs+y}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_threads in -lopenmp" >&5
+printf %s "checking for omp_get_num_threads in -lopenmp... " >&6; }
+if test ${ac_cv_lib_openmp_omp_get_num_threads+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -27458,28 +27466,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char omp_get_num_procs ();
+char omp_get_num_threads ();
 int
 main (void)
 {
-return omp_get_num_procs ();
+return omp_get_num_threads ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_openmp_omp_get_num_procs=yes
+  ac_cv_lib_openmp_omp_get_num_threads=yes
 else $as_nop
-  ac_cv_lib_openmp_omp_get_num_procs=no
+  ac_cv_lib_openmp_omp_get_num_threads=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_openmp_omp_get_num_procs" >&5
-printf "%s\n" "$ac_cv_lib_openmp_omp_get_num_procs" >&6; }
-if test "x$ac_cv_lib_openmp_omp_get_num_procs" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_openmp_omp_get_num_threads" >&5
+printf "%s\n" "$ac_cv_lib_openmp_omp_get_num_threads" >&6; }
+if test "x$ac_cv_lib_openmp_omp_get_num_threads" = xyes
 then :
   GOMP_LIBS="-lopenmp"
 fi
@@ -27487,11 +27495,11 @@ fi
       fi
     fi
     # Clang (passes for GCC but uses different OpenMP implementation)
-    if test "x$LIB_OMP" = x ; then
+    if test "x$GOMP_LIBS" = x ; then
       if $CC --version 2>&1 | grep clang > /dev/null ; then
-        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for GOMP_parallel_start in -lomp" >&5
-printf %s "checking for GOMP_parallel_start in -lomp... " >&6; }
-if test ${ac_cv_lib_omp_GOMP_parallel_start+y}
+        { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_threads in -lomp" >&5
+printf %s "checking for omp_get_num_threads in -lomp... " >&6; }
+if test ${ac_cv_lib_omp_omp_get_num_threads+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -27503,39 +27511,39 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char GOMP_parallel_start ();
+char omp_get_num_threads ();
 int
 main (void)
 {
-return GOMP_parallel_start ();
+return omp_get_num_threads ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_omp_GOMP_parallel_start=yes
+  ac_cv_lib_omp_omp_get_num_threads=yes
 else $as_nop
-  ac_cv_lib_omp_GOMP_parallel_start=no
+  ac_cv_lib_omp_omp_get_num_threads=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_omp_GOMP_parallel_start" >&5
-printf "%s\n" "$ac_cv_lib_omp_GOMP_parallel_start" >&6; }
-if test "x$ac_cv_lib_omp_GOMP_parallel_start" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_omp_omp_get_num_threads" >&5
+printf "%s\n" "$ac_cv_lib_omp_omp_get_num_threads" >&6; }
+if test "x$ac_cv_lib_omp_omp_get_num_threads" = xyes
 then :
-  LIB_OMP="-lomp"
+  GOMP_LIBS="-lomp"
 fi
 
       fi
     fi
     # GCC
     if test "x$GOMP_LIBS" = x ; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for GOMP_parallel_start in -lgomp" >&5
-printf %s "checking for GOMP_parallel_start in -lgomp... " >&6; }
-if test ${ac_cv_lib_gomp_GOMP_parallel_start+y}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_threads in -lgomp" >&5
+printf %s "checking for omp_get_num_threads in -lgomp... " >&6; }
+if test ${ac_cv_lib_gomp_omp_get_num_threads+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -27547,28 +27555,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char GOMP_parallel_start ();
+char omp_get_num_threads ();
 int
 main (void)
 {
-return GOMP_parallel_start ();
+return omp_get_num_threads ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_gomp_GOMP_parallel_start=yes
+  ac_cv_lib_gomp_omp_get_num_threads=yes
 else $as_nop
-  ac_cv_lib_gomp_GOMP_parallel_start=no
+  ac_cv_lib_gomp_omp_get_num_threads=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gomp_GOMP_parallel_start" >&5
-printf "%s\n" "$ac_cv_lib_gomp_GOMP_parallel_start" >&6; }
-if test "x$ac_cv_lib_gomp_GOMP_parallel_start" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_gomp_omp_get_num_threads" >&5
+printf "%s\n" "$ac_cv_lib_gomp_omp_get_num_threads" >&6; }
+if test "x$ac_cv_lib_gomp_omp_get_num_threads" = xyes
 then :
   GOMP_LIBS="-lgomp"
 fi
@@ -27577,9 +27585,9 @@ fi
   else
     # Sun CC
     if test "x$GOMP_LIBS" = x ; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for sunw_mp_register_warn in -lmtsk" >&5
-printf %s "checking for sunw_mp_register_warn in -lmtsk... " >&6; }
-if test ${ac_cv_lib_mtsk_sunw_mp_register_warn+y}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_threads in -lmtsk" >&5
+printf %s "checking for omp_get_num_threads in -lmtsk... " >&6; }
+if test ${ac_cv_lib_mtsk_omp_get_num_threads+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -27591,28 +27599,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char sunw_mp_register_warn ();
+char omp_get_num_threads ();
 int
 main (void)
 {
-return sunw_mp_register_warn ();
+return omp_get_num_threads ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_mtsk_sunw_mp_register_warn=yes
+  ac_cv_lib_mtsk_omp_get_num_threads=yes
 else $as_nop
-  ac_cv_lib_mtsk_sunw_mp_register_warn=no
+  ac_cv_lib_mtsk_omp_get_num_threads=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mtsk_sunw_mp_register_warn" >&5
-printf "%s\n" "$ac_cv_lib_mtsk_sunw_mp_register_warn" >&6; }
-if test "x$ac_cv_lib_mtsk_sunw_mp_register_warn" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mtsk_omp_get_num_threads" >&5
+printf "%s\n" "$ac_cv_lib_mtsk_omp_get_num_threads" >&6; }
+if test "x$ac_cv_lib_mtsk_omp_get_num_threads" = xyes
 then :
   GOMP_LIBS="-lmtsk"
 fi
@@ -27620,9 +27628,9 @@ fi
     fi
     # AIX xlc
     if test "x$GOMP_LIBS" = x ; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for _xlsmpFlush in -lxlsmp" >&5
-printf %s "checking for _xlsmpFlush in -lxlsmp... " >&6; }
-if test ${ac_cv_lib_xlsmp__xlsmpFlush+y}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_threads in -lxlsmp" >&5
+printf %s "checking for omp_get_num_threads in -lxlsmp... " >&6; }
+if test ${ac_cv_lib_xlsmp_omp_get_num_threads+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -27634,28 +27642,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char _xlsmpFlush ();
+char omp_get_num_threads ();
 int
 main (void)
 {
-return _xlsmpFlush ();
+return omp_get_num_threads ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_xlsmp__xlsmpFlush=yes
+  ac_cv_lib_xlsmp_omp_get_num_threads=yes
 else $as_nop
-  ac_cv_lib_xlsmp__xlsmpFlush=no
+  ac_cv_lib_xlsmp_omp_get_num_threads=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_xlsmp__xlsmpFlush" >&5
-printf "%s\n" "$ac_cv_lib_xlsmp__xlsmpFlush" >&6; }
-if test "x$ac_cv_lib_xlsmp__xlsmpFlush" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_xlsmp_omp_get_num_threads" >&5
+printf "%s\n" "$ac_cv_lib_xlsmp_omp_get_num_threads" >&6; }
+if test "x$ac_cv_lib_xlsmp_omp_get_num_threads" = xyes
 then :
   GOMP_LIBS="-lxlsmp"
 fi
@@ -27663,9 +27671,9 @@ fi
     fi
     # SGI IRIX 6.5 MIPSpro C/C++
     if test "x$GOMP_LIBS" = x ; then
-      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for mp_destroy in -lmp" >&5
-printf %s "checking for mp_destroy in -lmp... " >&6; }
-if test ${ac_cv_lib_mp_mp_destroy+y}
+      { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for omp_get_num_threads in -lmp" >&5
+printf %s "checking for omp_get_num_threads in -lmp... " >&6; }
+if test ${ac_cv_lib_mp_omp_get_num_threads+y}
 then :
   printf %s "(cached) " >&6
 else $as_nop
@@ -27677,28 +27685,28 @@ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
 /* Override any GCC internal prototype to avoid an error.
    Use char because int might match the return type of a GCC
    builtin and then its argument prototype would still apply.  */
-char mp_destroy ();
+char omp_get_num_threads ();
 int
 main (void)
 {
-return mp_destroy ();
+return omp_get_num_threads ();
   ;
   return 0;
 }
 _ACEOF
 if ac_fn_c_try_link "$LINENO"
 then :
-  ac_cv_lib_mp_mp_destroy=yes
+  ac_cv_lib_mp_omp_get_num_threads=yes
 else $as_nop
-  ac_cv_lib_mp_mp_destroy=no
+  ac_cv_lib_mp_omp_get_num_threads=no
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam \
     conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mp_mp_destroy" >&5
-printf "%s\n" "$ac_cv_lib_mp_mp_destroy" >&6; }
-if test "x$ac_cv_lib_mp_mp_destroy" = xyes
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_mp_omp_get_num_threads" >&5
+printf "%s\n" "$ac_cv_lib_mp_omp_get_num_threads" >&6; }
+if test "x$ac_cv_lib_mp_omp_get_num_threads" = xyes
 then :
   GOMP_LIBS="-lmp"
 fi
