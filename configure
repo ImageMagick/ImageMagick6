@@ -5137,7 +5137,7 @@ MAGICK_PATCHLEVEL_VERSION=0
 
 MAGICK_VERSION=6.9.13-0
 
-MAGICK_GIT_REVISION=0a93150da:20231125
+MAGICK_GIT_REVISION=2be8e3f40:20231126
 
 
 # Substitute library versioning
@@ -5171,7 +5171,7 @@ PACKAGE_LIB_VERSION=0x69C
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,0
 
-PACKAGE_RELEASE_DATE=2023-11-25
+PACKAGE_RELEASE_DATE=2023-11-26
 
 
 # Ensure that make can run correctly
@@ -27521,7 +27521,8 @@ if test "x$ac_cv_header_omp_h" = xyes
 then :
 
 else $as_nop
-  as_fn_error $? "OpenMP header file not found" "$LINENO" 5
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: OpenMP header file not found" >&5
+printf "%s\n" "OpenMP header file not found" >&6; }
 fi
 
   if test "${GCC}" = "yes"; then
