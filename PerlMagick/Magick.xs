@@ -2173,6 +2173,13 @@ static void SetAttribute(pTHX_ struct PackageInfo *info,Image *image,
           (void) SetMagickResourceLimit(TimeResource,limit);
           break;
         }
+      if (LocaleCompare(attribute,"title") == 0)
+        {
+          for ( ; image; image=image->next)
+            (void) CopyMagickString(image->magick_filename,SvPV(sval,na),
+              MaxTextExtent);
+          break;
+        }
       if (LocaleCompare(attribute,"transparent-color") == 0)
         {
           (void) QueryColorDatabase(SvPV(sval,na),&target_color,exception);

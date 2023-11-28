@@ -515,4 +515,4 @@ $montage->Composite(image=>$logo,gravity=>'North');
 print "Write...\n";
 $montage->Write('demo.pam');
 print "Display...\n";
-$montage->Write('show:');
+$montage->Write(magick=>'SHOW',title=>"PerlMagick Demo");
