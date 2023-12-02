@@ -469,19 +469,14 @@ AC_SUBST([THREAD_LIBS])
 if test "$have_threads" != 'yes'; then
   ac_cv_prog_c_openmp=unsupported
 fi
-enable_openmp='yes'
-AC_OPENMP([C++])
-CXXFLAGS="$OPENMP_CXXFLAGS $CXXFLAGS"
 AC_OPENMP([C])
 CFLAGS="$OPENMP_CFLAGS $CFLAGS"
-CPPFLAGS="$OPENMP_CFLAGS $CPPFLAGS"
 MAGICK_PCFLAGS="$MAGICK_PCFLAGS $OPENMP_CFLAGS"
 AC_SUBST([OPENMP_CFLAGS])
 AC_CHECK_DECL([_OPENMP],[OPENMP_ENABLED='yes'],[OPENMP_ENABLED='no'],[])
-if test "${OPENMP_ENABLED}" = 'yes'; then
-  if test "$ac_cv_prog_c_openmp" != 'unsupported'; then
+if test "${OPENMP_ENABLED}" == 'yes' && \
+   test "$ac_cv_prog_c_openmp" != 'unsupported'; then
     MAGICK_FEATURES="OpenMP $MAGICK_FEATURES"
-  fi
 fi
 
 # Enable support for OpenCL
@@ -633,18 +628,6 @@ if test "$enable_installed" = 'yes'; then
     AC_DEFINE([INSTALLED_SUPPORT],[1],[ImageMagick is formally installed under prefix])
 else
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --disable-installed "
-fi
-
-# Permit enciphering and deciphering image pixels.
-AC_ARG_ENABLE([cipher],
-    [AS_HELP_STRING([--disable-cipher],
-                    [disable enciphering and deciphering image pixels])],
-    [enable_cipher=$enableval],
-    [enable_cipher='yes'])
-
-if test "$enable_cipher" = 'yes'; then
-    AC_DEFINE([CIPHER_SUPPORT],[1],[permit enciphering and deciphering image pixels])
-    MAGICK_FEATURES="Cipher $MAGICK_FEATURES"
 fi
 
 # Build a zero-configuration version of ImageMagick.
@@ -1264,7 +1247,8 @@ AC_DEFINE_UNQUOTED([X11_CONFIGURE_PATH],["$X11ConfigurePath"],[Location of X11 c
 # Find OpenMP library
 #
 GOMP_LIBS=''
-if test "${OPENMP_ENABLED}" = 'yes'; then
+if test "${OPENMP_ENABLED}" == 'yes' && \
+   test "$ac_cv_prog_c_openmp" != 'unsupported'; then
   AC_CHECK_HEADER([omp.h], [], [AC_MSG_RESULT([OpenMP header file not found])])
   if test "${GCC}" = "yes"; then
     # Open64 (passes for GCC but uses different OpenMP implementation)
@@ -3386,6 +3370,18 @@ AC_SUBST([windows_font_dir])
 
 AC_SUBST([type_include_files])
 
+# Permit enciphering and deciphering image pixels.
+AC_ARG_ENABLE([cipher],
+    [AS_HELP_STRING([--disable-cipher],
+                    [disable enciphering and deciphering image pixels])],
+    [enable_cipher=$enableval],
+    [enable_cipher='yes'])
+
+if test "$enable_cipher" = 'yes'; then
+    AC_DEFINE([CIPHER_SUPPORT],[1],[permit enciphering and deciphering image pixels])
+    MAGICK_FEATURES="Cipher $MAGICK_FEATURES"
+fi
+
 #
 # Handle case where user doesn't want frozen paths
 #
@@ -3921,6 +3917,7 @@ CFLAGS=`echo $CFLAGS | sed -e 's/  */ /g'`
 CPPFLAGS=`echo $CPPFLAGS | sed -e 's/  */ /g'`
 CXXFLAGS=`echo $CXXFLAGS | sed -e 's/  */ /g'`
 LDFLAGS=`echo $LDFLAGS | sed -e 's/  */ /g'`
+LIBS=`echo $LIBS | sed -e 's/  */ /g'`
 
 MAGICK_CFLAGS=$CFLAGS
 MAGICK_CXXFLAGS=$CXXFLAGS
@@ -4045,7 +4042,7 @@ Shared libraries    --enable-shared=$enable_shared		        $libtool_build_share
 Static libraries    --enable-static=$enable_static		        $libtool_build_static_libs
 Module support      --with-modules=$build_modules		        $build_modules
 GNU ld              --with-gnu-ld=$with_gnu_ld		        $lt_cv_prog_gnu_ld
-OpenMP              --enable-openmp=$enable_openmp		        $OPENMP_ENABLED
+OpenMP              --enable-openmp=$enable_openmp		        ${OPENMP_ENABLED}
 Security policy     --with-security-policy=$security_policy	        $security_policy
 Quantum depth       --with-quantum-depth=$with_quantum_depth	        $with_quantum_depth
 High Dynamic Range Imagery
