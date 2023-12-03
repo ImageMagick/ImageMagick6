@@ -24,20 +24,20 @@
 #  extensions to the MAJOR.MINOR.MICRO-PATCH format.
 #
 m4_define([magick_name], [ImageMagick])
-m4_define([magick_major_version],[6])
-m4_define([magick_minor_version],[9])
-m4_define([magick_micro_version],[13])
-m4_define([magick_patchlevel_version],[0])
-m4_define([magick_is_beta],[n])
+m4_define([magick_major_version], [6])
+m4_define([magick_minor_version], [9])
+m4_define([magick_micro_version], [13])
+m4_define([magick_patchlevel_version], [0])
+m4_define([magick_is_beta], [n])
 m4_define([magick_base_version],
           [magick_major_version.magick_minor_version.magick_micro_version])
 m4_define([magick_version],
           [magick_base_version-magick_patchlevel_version])
 m4_define([magick_bugreport],
           [https://github.com/ImageMagick/ImageMagick6/issues])
-m4_define([magick_url],[https://legacy.imagemagick.org])
-m4_define([magick_lib_version],[0x69D])
-m4_define([magick_tarname],[ImageMagick])
+m4_define([magick_url], [https://legacy.imagemagick.org])
+m4_define([magick_lib_version], [0x69D])
+m4_define([magick_tarname], [ImageMagick])
 
 #
 # If the library source code has changed at all since the last update,
