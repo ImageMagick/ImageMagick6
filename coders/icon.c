@@ -254,10 +254,10 @@ static Image *Read1XImage(Image *image,ExceptionInfo *exception)
     Convert bitmap scanline.
   */
   if (SetImageExtent(image,columns,rows) == MagickFalse)
-    return((Image *) NULL);
+    return(DestroyImageList(image));
   image->matte=MagickTrue;
   if (AcquireImageColormap(image,3) == MagickFalse)
-    return((Image *) NULL);
+    return(DestroyImageList(image));
   image->colormap[1].opacity=TransparentOpacity;
   for (i=0; i < 2; i++)
   {
