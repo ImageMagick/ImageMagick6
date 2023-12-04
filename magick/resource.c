@@ -1278,7 +1278,6 @@ MagickExport void RelinquishMagickResource(const ResourceType type,
       resource_info.time-=size;
       assert(resource_info.time >= 0);
       if (logging != MagickFalse)
-      if (logging != MagickFalse)
         {
           (void) FormatMagickSize((MagickSizeType) resource_info.time,
             MagickFalse,resource_current);
