@@ -2457,6 +2457,8 @@ static ds_status AcceleratePerfEvaluator(ds_device *device,
     CloneString(&imageInfo->size,ACCELERATE_PERF_DIMEN);
     CopyMagickString(imageInfo->filename,"xc:none",MaxTextExtent);
     inputImage=ReadImage(imageInfo,exception);
+    if (inputImage == (Image *) NULL)
+      return(DS_FILE_ERROR);
 
     initAccelerateTimer(&timer);
 
