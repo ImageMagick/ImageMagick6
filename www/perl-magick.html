@@ -116,7 +116,7 @@
 
 <p>Next configure and compile ImageMagick:</p>
 
-<ul><pre class="bg-light text-dark"><code><span class="crtprompt">$ </span><span class='crtin'>cd ImageMagick-6.9.12<br/>$ ./configure -with-perl<br/>$ make</span></code></pre></ul>
+<ul><pre class="bg-light text-dark"><code><span class="crtprompt">$ </span><span class='crtin'>cd ImageMagick-6.9.13<br/>$ ./configure -with-perl<br/>$ make</span></code></pre></ul>
 <p>If ImageMagick / PerlMagick configured and compiled without complaint, you are ready to install it on your system.  Administrator privileges are required to install.  To install, type</p>
 
 <pre class="bg-light text-dark mx-4"><code>sudo make install
@@ -156,6 +156,11 @@ nmake install
 </code></pre>
 
 <p>Use <code>nmake test</code> under Windows. There are a few demonstration scripts available to exercise many of the functions PerlMagick can perform. Type</p>
+
+<p>Use the <samp>prove</samp> utility to execute a test from the build folder:</p>
+
+<pre class="bg-light text-dark mx-4"><samp>prove --blib blib -I `pwd` -bv ./t/read.t
+</samp></pre>
 
 <pre class="bg-light text-dark mx-4"><code>cd demo
 make
@@ -1740,6 +1745,12 @@ can use the integers 1 and 0.</p>
     <td>time-limit</td>
     <td><i>integer</i></td>
     <td>set time resource limit in seconds</td>
+  </tr>
+
+  <tr>
+    <td>title</td>
+    <td><i>string</i></td>
+    <td>set the image title</td>
   </tr>
 
   <tr>

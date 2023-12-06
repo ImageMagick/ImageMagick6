@@ -97,7 +97,7 @@
 
 <p>ImageMagick is a tool that allows you to manipulate images. While it offers a range of features and capabilities, there is often a trade-off between security and convenience. To ensure optimal security, you can restrict ImageMagick to only reading or writing web-safe image formats like GIF, JPEG, and PNG. Alternatively, you can customize the security policy to fit the needs of your local environment or organizational policies. This policy can include details such as memory usage limits, allowed paths for reading and writing, limits on the number of images in a sequence, maximum workflow runtime, allowed disk space for image pixels, a secret passphrase for remote connections, and which coders are permitted or denied. By customizing the security policy, you can help secure your environment and ensure that ImageMagick is a responsible member of your local system, such as by preventing overloading with large images.</p>
 
-<p>It is important to set limits on ImageMagick's resource usage to prevent potentially harmful situations. For example, if you accidentally download an image from the internet that has been crafted to generate a very large image (e.g., 20000 by 20000 pixels), ImageMagick may try to allocate the necessary resources (such as memory and disk space) and your system may deny the request or cause the program to exit. Alternatively, your computer may become temporarily slow or unresponsive, or ImageMagick may be forced to abort. To avoid such situations, you can set limits in the <a href="https://legacy.imagemagick.org/source/policy.xml">policy.xml</a> configuration file.</p>
+<p>It is important to set limits on ImageMagick's resource usage to prevent potentially harmful situations. For example, if you accidentally download an image from the internet that has been crafted to generate a very large image (e.g., 20000 by 20000 pixels), ImageMagick may try to allocate the necessary resources (such as memory and disk space) and your system may deny the request or cause the program to exit. Alternatively, your computer may become temporarily slow or unresponsive, or ImageMagick may be forced to abort. To avoid such situations, you can set limits in the <a href="https://imagemagick.org/source/policy-open.xml">policy.xml</a> configuration file.</p>
 
 <p>Keep in mind that what is considered reasonable for one environment may not be suitable for another. For example, you may have ImageMagick sandboxed in a secure environment, while someone else may use it to process images on a publicly accessible website. Or, ImageMagick may be running on a host with a lot of memory, while another instance is running on a device with limited resources. In the case of the host with large memory, it may make sense to allow large image processing, but not on the device with limited resources. If you are using ImageMagick on a public website, you may want to increase security by disabling certain coders such as MVG or HTTPS.</p>
 
@@ -157,8 +157,8 @@
 &lt;policymap>
   &lt;!-- Set maximum parallel threads. -->
   &lt;policy domain="resource" name="thread" value="2"/>
-  &lt;!-- Set maximum time in seconds. When this limit is exceeded, an exception
-       is thrown and processing stops. -->
+  &lt;!-- Set maximum time in seconds or neumonics, e.g. "2 minutes". When this
+       limit is exceeded, an exception is thrown and processing stops. -->
   &lt;policy domain="resource" name="time" value="60"/>
   &lt;!-- Set maximum number of open pixel cache files. When this limit is
        exceeded, any subsequent pixels cached to disk are closed and reopened

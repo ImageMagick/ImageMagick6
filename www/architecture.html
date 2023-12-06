@@ -167,7 +167,7 @@ if (image == (Image *) NULL)
 
 <p>When the pixel cache is initialized, pixels are scaled from whatever bit depth they originated from to that required by the pixel cache.  For example, a 1-channel 1-bit monochrome PBM image is scaled to a 4 channel 8-bit RGBA image, if you are using the Q8 version of ImageMagick, and 16-bit RGBA for the Q16 version.  You can determine which version you have with the <a class="text-nowrap" href="command-line-options.html#version">-version</a> option: </p>
 
-<ul><pre class="bg-light text-dark"><code><span class="crtprompt">$ </span><span class='crtin'>identify -version</span><span class='crtout'><br/></span><span class="crtprompt">$ </span><span class='crtin'>Version: ImageMagick 6.9.12-93 2023-05-29 Q16 https://imagemagick.org</span></code></pre></ul>
+<ul><pre class="bg-light text-dark"><code><span class="crtprompt">$ </span><span class='crtin'>identify -version</span><span class='crtout'><br/></span><span class="crtprompt">$ </span><span class='crtin'>Version: ImageMagick 6.9.13-0 2023-12-03 Q16 https://imagemagick.org</span></code></pre></ul>
 <p>As you can see, the convenience of the pixel cache sometimes comes with a trade-off in storage (e.g. storing a 1-bit monochrome image as 16-bit RGBA is wasteful) and speed (i.e. storing the entire image in memory is generally slower than accessing one scanline of pixels at a time).  In most cases, the benefits of the pixel cache typically outweigh any disadvantages.</p>
 
 <h2><a class="anchor" id="authentic-pixels"></a>Access the Pixel Cache</h2>
@@ -598,7 +598,7 @@ if (profile != (StringInfo *) NULL)
 </code></pre>
 
 <h2><a class="anchor" id="tera-pixel"></a>Large Image Support</h2>
-<p>ImageMagick can read, process, or write mega-, giga-, or tera-pixel image sizes.  An image width or height can range from 1 to 2 giga-pixels on a 32 bit OS (up to 2147483647 rows/columns) and up to 9 exa-pixels on a 64-bit OS (up to 9223372036854775807 rows/columns).  Note, that some image formats have restrictions on image size.  For example, Photoshop images are limited to 300,000 pixels for width or height.  Here we resize an image to a quarter million pixels square:</p>
+<p>ImageMagick has the capability to handle image sizes spanning from mega- to tera-pixels, encompassing reading, processing, and writing operations. In theory, image dimensions can extend up to 31 million rows/columns on a 32-bit operating system and up to a whopping 31 trillion on a 64-bit OS. However, the actual achievable dimensions are substantially less, contingent on the resources available on your host computer. It's essential to be aware that certain image formats impose limitations on image size. For instance, Photoshop images are constrained to a maximum of 300,000 pixels in width or height.  Here we resize an image to a quarter million pixels square:</p>
 
 <pre class="bg-light text-dark mx-4"><code>convert logo: -resize 250000x250000 logo.miff
 </code></pre>
