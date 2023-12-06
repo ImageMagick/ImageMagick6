@@ -2163,7 +2163,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
-            if (difftime(GetMagickTime(),fx_info->images->timestamp) > (double) fx_info->images->ttl)
+            if (IsImageTTLExpired(fx_info->images) != MagickFalse)
               (void) ThrowMagickException(exception,GetMagickModule(),
                 ResourceLimitFatalError,"TimeLimitExceeded","`%s'",
                 fx_info->images->filename);
@@ -2238,7 +2238,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
-            if (difftime(GetMagickTime(),fx_info->images->timestamp) > (double) fx_info->images->ttl)
+            if (IsImageTTLExpired(fx_info->images) != MagickFalse)
               (void) ThrowMagickException(exception,GetMagickModule(),
                 ResourceLimitFatalError,"TimeLimitExceeded","`%s'",
                 fx_info->images->filename);
@@ -2620,7 +2620,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxParseConditional(subexpression,',',p,q);
           for (alpha=0.0; ; )
           {
-            if (difftime(GetMagickTime(),fx_info->images->timestamp) > (double) fx_info->images->ttl)
+            if (IsImageTTLExpired(fx_info->images) != MagickFalse)
               (void) ThrowMagickException(exception,GetMagickModule(),
                 ResourceLimitFatalError,"TimeLimitExceeded","`%s'",
                 fx_info->images->filename);

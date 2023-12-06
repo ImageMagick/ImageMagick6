@@ -74,8 +74,6 @@
 #define MagickPathTemplate "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  /* min 6 X's */
 #define NumberOfResourceTypes  \
   (sizeof(resource_semaphore)/sizeof(*resource_semaphore))
-#define TimeToLiveMax  \
-  ((time_t) ((((time_t) 1U << (sizeof(time_t)*CHAR_BIT-2))-1)*2+1))
 
 /*
   Typedef declarations.
@@ -139,7 +137,7 @@ static ResourceInfo
     MagickULLConstant(768),               /* file limit */
     MagickULLConstant(1),                 /* thread limit */
     MagickULLConstant(0),                 /* throttle limit */
-    TimeToLiveMax                         /* time limit */
+    MagickULLConstant(0),                 /* time limit */
   };
 
 static SemaphoreInfo
@@ -392,8 +390,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
       if (((MagickSizeType) resource_info.time+request) > (MagickSizeType) resource_info.time)
         {
           resource_info.time+=request;
-          if ((limit == TimeToLiveMax) ||
-              ((MagickSizeType) resource_info.time < limit))
+          if ((limit == 0) || ((MagickSizeType) resource_info.time < limit))
             status=MagickTrue;
           else
             resource_info.time-=request;
@@ -1086,7 +1083,7 @@ MagickExport MagickBooleanType ListMagickResourceInfo(FILE *file,
   if (resource_info.disk_limit != MagickResourceInfinity)
     (void) FormatMagickSize(resource_info.disk_limit,MagickTrue,disk_limit);
   (void) CopyMagickString(time_limit,"unlimited",MaxTextExtent);
-  if (resource_info.time_limit != TimeToLiveMax)
+  if (resource_info.time_limit != 0)
     FormatTimeToLive(resource_info.time_limit,time_limit);
   (void) FormatLocaleFile(file,"Resource limits:\n");
   (void) FormatLocaleFile(file,"  Width: %s\n",width_limit);
@@ -1521,7 +1518,7 @@ MagickExport MagickBooleanType ResourceComponentGenesis(void)
         100.0));
       limit=DestroyString(limit);
     }
-  (void) SetMagickResourceLimit(TimeResource,TimeToLiveMax);
+  (void) SetMagickResourceLimit(TimeResource,0);
   limit=GetEnvironmentValue("MAGICK_TIME_LIMIT");
   if (limit != (char *) NULL)
     {
