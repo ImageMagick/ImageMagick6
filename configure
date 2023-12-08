@@ -5137,7 +5137,7 @@ MAGICK_PATCHLEVEL_VERSION=1
 
 MAGICK_VERSION=6.9.13-1
 
-MAGICK_GIT_REVISION=5b6b9f9d8:20231203
+MAGICK_GIT_REVISION=afa8a7f77:20231208
 
 
 # Substitute library versioning
@@ -5171,7 +5171,7 @@ PACKAGE_LIB_VERSION=0x69D
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,1
 
-PACKAGE_RELEASE_DATE=2023-12-03
+PACKAGE_RELEASE_DATE=2023-12-08
 
 
 # Ensure that make can run correctly
@@ -10828,7 +10828,7 @@ then :
 else $as_nop
   OPENMP_ENABLED='no'
 fi
-if test "${OPENMP_ENABLED}" == 'yes' && \
+if test "${OPENMP_ENABLED}" = 'yes' && \
    test "$ac_cv_prog_c_openmp" != 'unsupported'; then
     MAGICK_FEATURES="OpenMP $MAGICK_FEATURES"
 fi
@@ -27421,7 +27421,7 @@ printf "%s\n" "#define X11_CONFIGURE_PATH \"$X11ConfigurePath\"" >>confdefs.h
 # Find OpenMP library
 #
 GOMP_LIBS=''
-if test "${OPENMP_ENABLED}" == 'yes' && \
+if test "${OPENMP_ENABLED}" = 'yes' && \
    test "$ac_cv_prog_c_openmp" != 'unsupported'; then
   ac_fn_c_check_header_compile "$LINENO" "omp.h" "ac_cv_header_omp_h" "$ac_includes_default"
 if test "x$ac_cv_header_omp_h" = xyes
