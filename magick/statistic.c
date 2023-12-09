@@ -1456,42 +1456,48 @@ MagickExport MagickBooleanType GetImageChannelKurtosis(const Image *image,
     {
       if ((channel & RedChannel) != 0)
         {
-          mean+=(MagickRealType) GetPixelRed(p);
-          sum_squares+=(double) GetPixelRed(p)*(double) GetPixelRed(p);
-          sum_cubes+=(double) GetPixelRed(p)*(double) GetPixelRed(p)*(double)
+          mean+=QuantumScale*GetPixelRed(p);
+          sum_squares+=QuantumScale*GetPixelRed(p)*QuantumScale*GetPixelRed(p);
+          sum_cubes+=QuantumScale*GetPixelRed(p)*QuantumScale*GetPixelRed(p)*
+            QuantumScale*GetPixelRed(p);
+          sum_fourth_power+=QuantumScale*GetPixelRed(p)*QuantumScale*
+            GetPixelRed(p)*QuantumScale*GetPixelRed(p)*QuantumScale*
             GetPixelRed(p);
-          sum_fourth_power+=(double) GetPixelRed(p)*(double) GetPixelRed(p)*
-            (double) GetPixelRed(p)*(double) GetPixelRed(p);
           area++;
         }
       if ((channel & GreenChannel) != 0)
         {
-          mean+=(MagickRealType) GetPixelGreen(p);
-          sum_squares+=(double) GetPixelGreen(p)*(double) GetPixelGreen(p);
-          sum_cubes+=(double) GetPixelGreen(p)*(double) GetPixelGreen(p)*
-            (double) GetPixelGreen(p);
-          sum_fourth_power+=(double) GetPixelGreen(p)*(double) GetPixelGreen(p)*
-            (double) GetPixelGreen(p)*(double) GetPixelGreen(p);
+          mean+=QuantumScale*GetPixelGreen(p);
+          sum_squares+=QuantumScale*GetPixelGreen(p)*QuantumScale*
+            GetPixelGreen(p);
+          sum_cubes+=QuantumScale*GetPixelGreen(p)*QuantumScale*
+            GetPixelGreen(p)*QuantumScale*GetPixelGreen(p);
+          sum_fourth_power+=QuantumScale*GetPixelGreen(p)*QuantumScale*
+            GetPixelGreen(p)*QuantumScale*GetPixelGreen(p)*QuantumScale*
+            GetPixelGreen(p);
           area++;
         }
       if ((channel & BlueChannel) != 0)
         {
-          mean+=(MagickRealType) GetPixelBlue(p);
-          sum_squares+=(double) GetPixelBlue(p)*(double) GetPixelBlue(p);
-          sum_cubes+=(double) GetPixelBlue(p)*(double) GetPixelBlue(p)*(double)
+          mean+=QuantumScale*GetPixelBlue(p);
+          sum_squares+=QuantumScale*GetPixelBlue(p)*QuantumScale*
             GetPixelBlue(p);
-          sum_fourth_power+=(double) GetPixelBlue(p)*(double) GetPixelBlue(p)*
-            (double) GetPixelBlue(p)*(double) GetPixelBlue(p);
+          sum_cubes+=QuantumScale*GetPixelBlue(p)*QuantumScale*GetPixelBlue(p)*
+            QuantumScale*GetPixelBlue(p);
+          sum_fourth_power+=QuantumScale*GetPixelBlue(p)*QuantumScale*
+            GetPixelBlue(p)*QuantumScale*GetPixelBlue(p)*QuantumScale*
+            GetPixelBlue(p);
           area++;
         }
       if ((channel & OpacityChannel) != 0)
         {
-          mean+=(MagickRealType) GetPixelAlpha(p);
-          sum_squares+=(double) GetPixelOpacity(p)*(double) GetPixelAlpha(p);
-          sum_cubes+=(double) GetPixelOpacity(p)*(double) GetPixelAlpha(p)*
-            (double) GetPixelAlpha(p);
-          sum_fourth_power+=(double) GetPixelAlpha(p)*(double) GetPixelAlpha(p)*
-            (double) GetPixelAlpha(p)*GetPixelAlpha(p);
+          mean+=QuantumScale*GetPixelAlpha(p);
+          sum_squares+=QuantumScale*GetPixelOpacity(p)*QuantumScale*
+            GetPixelAlpha(p);
+          sum_cubes+=QuantumScale*GetPixelOpacity(p)*QuantumScale*
+            GetPixelAlpha(p)*QuantumScale*GetPixelAlpha(p);
+          sum_fourth_power+=QuantumScale*GetPixelAlpha(p)*QuantumScale*
+            GetPixelAlpha(p)*QuantumScale*GetPixelAlpha(p)*GetPixelAlpha(p);
           area++;
         }
       if (((channel & IndexChannel) != 0) &&
@@ -1500,7 +1506,7 @@ MagickExport MagickBooleanType GetImageChannelKurtosis(const Image *image,
           double
             index;
 
-          index=(double) GetPixelIndex(indexes+x);
+          index=QuantumScale*GetPixelIndex(indexes+x);
           mean+=index;
           sum_squares+=index*index;
           sum_cubes+=index*index*index;
@@ -2475,38 +2481,38 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
         channel_statistics[RedChannel].minima=(double) GetPixelRed(p);
       if ((double) GetPixelRed(p) > channel_statistics[RedChannel].maxima)
         channel_statistics[RedChannel].maxima=(double) GetPixelRed(p);
-      channel_statistics[RedChannel].sum+=(double) GetPixelRed(p);
-      channel_statistics[RedChannel].sum_squared+=(double) GetPixelRed(p)*
-        (double) GetPixelRed(p);
-      channel_statistics[RedChannel].sum_cubed+=(double) GetPixelRed(p)*
-        (double) GetPixelRed(p)*(double) GetPixelRed(p);
-      channel_statistics[RedChannel].sum_fourth_power+=(double)
-        GetPixelRed(p)*(double) GetPixelRed(p)*(double) GetPixelRed(p)*
-        (double) GetPixelRed(p);
+      channel_statistics[RedChannel].sum+=QuantumScale*GetPixelRed(p);
+      channel_statistics[RedChannel].sum_squared+=QuantumScale*GetPixelRed(p)*
+        QuantumScale*GetPixelRed(p);
+      channel_statistics[RedChannel].sum_cubed+=QuantumScale*GetPixelRed(p)*
+        QuantumScale*GetPixelRed(p)*QuantumScale*GetPixelRed(p);
+      channel_statistics[RedChannel].sum_fourth_power+=QuantumScale*
+        GetPixelRed(p)*QuantumScale*GetPixelRed(p)*QuantumScale*GetPixelRed(p)*
+        QuantumScale*GetPixelRed(p);
       if ((double) GetPixelGreen(p) < channel_statistics[GreenChannel].minima)
         channel_statistics[GreenChannel].minima=(double) GetPixelGreen(p);
       if ((double) GetPixelGreen(p) > channel_statistics[GreenChannel].maxima)
         channel_statistics[GreenChannel].maxima=(double) GetPixelGreen(p);
-      channel_statistics[GreenChannel].sum+=(double) GetPixelGreen(p);
-      channel_statistics[GreenChannel].sum_squared+=(double) GetPixelGreen(p)*
-        (double) GetPixelGreen(p);
-      channel_statistics[GreenChannel].sum_cubed+=(double) GetPixelGreen(p)*
-        (double) GetPixelGreen(p)*(double) GetPixelGreen(p);
-      channel_statistics[GreenChannel].sum_fourth_power+=(double)
-        GetPixelGreen(p)*(double) GetPixelGreen(p)*(double) GetPixelGreen(p)*
-        (double) GetPixelGreen(p);
+      channel_statistics[GreenChannel].sum+=QuantumScale*GetPixelGreen(p);
+      channel_statistics[GreenChannel].sum_squared+=QuantumScale*GetPixelGreen(p)*
+        QuantumScale*GetPixelGreen(p);
+      channel_statistics[GreenChannel].sum_cubed+=QuantumScale*GetPixelGreen(p)*
+        QuantumScale*GetPixelGreen(p)*QuantumScale*GetPixelGreen(p);
+      channel_statistics[GreenChannel].sum_fourth_power+=QuantumScale*
+        GetPixelGreen(p)*QuantumScale*GetPixelGreen(p)*QuantumScale*
+        GetPixelGreen(p)*QuantumScale*GetPixelGreen(p);
       if ((double) GetPixelBlue(p) < channel_statistics[BlueChannel].minima)
         channel_statistics[BlueChannel].minima=(double) GetPixelBlue(p);
       if ((double) GetPixelBlue(p) > channel_statistics[BlueChannel].maxima)
         channel_statistics[BlueChannel].maxima=(double) GetPixelBlue(p);
-      channel_statistics[BlueChannel].sum+=(double) GetPixelBlue(p);
-      channel_statistics[BlueChannel].sum_squared+=(double) GetPixelBlue(p)*
-        (double) GetPixelBlue(p);
-      channel_statistics[BlueChannel].sum_cubed+=(double) GetPixelBlue(p)*
-        (double) GetPixelBlue(p)*(double) GetPixelBlue(p);
-      channel_statistics[BlueChannel].sum_fourth_power+=(double)
-        GetPixelBlue(p)*(double) GetPixelBlue(p)*(double) GetPixelBlue(p)*
-        (double) GetPixelBlue(p);
+      channel_statistics[BlueChannel].sum+=QuantumScale*GetPixelBlue(p);
+      channel_statistics[BlueChannel].sum_squared+=QuantumScale*GetPixelBlue(p)*
+        QuantumScale*GetPixelBlue(p);
+      channel_statistics[BlueChannel].sum_cubed+=QuantumScale*GetPixelBlue(p)*
+        QuantumScale*GetPixelBlue(p)*QuantumScale*GetPixelBlue(p);
+      channel_statistics[BlueChannel].sum_fourth_power+=QuantumScale*
+        GetPixelBlue(p)*QuantumScale*GetPixelBlue(p)*QuantumScale*
+        GetPixelBlue(p)*QuantumScale*GetPixelBlue(p);
       histogram[ScaleQuantumToMap(GetPixelRed(p))].red++;
       histogram[ScaleQuantumToMap(GetPixelGreen(p))].green++;
       histogram[ScaleQuantumToMap(GetPixelBlue(p))].blue++;
@@ -2516,13 +2522,15 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
             channel_statistics[OpacityChannel].minima=(double) GetPixelAlpha(p);
           if ((double) GetPixelAlpha(p) > channel_statistics[OpacityChannel].maxima)
             channel_statistics[OpacityChannel].maxima=(double) GetPixelAlpha(p);
-          channel_statistics[OpacityChannel].sum+=GetPixelAlpha(p);
-          channel_statistics[OpacityChannel].sum_squared+=(double)
-            GetPixelAlpha(p)*GetPixelAlpha(p);
-          channel_statistics[OpacityChannel].sum_cubed+=(double)
-            GetPixelAlpha(p)*GetPixelAlpha(p)*GetPixelAlpha(p);
-          channel_statistics[OpacityChannel].sum_fourth_power+=(double)
-            GetPixelAlpha(p)*GetPixelAlpha(p)*GetPixelAlpha(p)*GetPixelAlpha(p);
+          channel_statistics[OpacityChannel].sum+=QuantumScale*GetPixelAlpha(p);
+          channel_statistics[OpacityChannel].sum_squared+=QuantumScale*
+            GetPixelAlpha(p)*QuantumScale*GetPixelAlpha(p);
+          channel_statistics[OpacityChannel].sum_cubed+=QuantumScale*
+            GetPixelAlpha(p)*QuantumScale*GetPixelAlpha(p)*QuantumScale*
+            GetPixelAlpha(p);
+          channel_statistics[OpacityChannel].sum_fourth_power+=QuantumScale*
+            GetPixelAlpha(p)*QuantumScale*GetPixelAlpha(p)*QuantumScale*
+            GetPixelAlpha(p)*QuantumScale*GetPixelAlpha(p);
           histogram[ScaleQuantumToMap(GetPixelAlpha(p))].opacity++;
         }
       if (image->colorspace == CMYKColorspace)
@@ -2533,16 +2541,17 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
           if ((double) GetPixelIndex(indexes+x) > channel_statistics[BlackChannel].maxima)
             channel_statistics[BlackChannel].maxima=(double)
               GetPixelIndex(indexes+x);
-          channel_statistics[BlackChannel].sum+=(double)
+          channel_statistics[BlackChannel].sum+=QuantumScale*
             GetPixelIndex(indexes+x);
-          channel_statistics[BlackChannel].sum_squared+=(double)
-            GetPixelIndex(indexes+x)*(double) GetPixelIndex(indexes+x);
-          channel_statistics[BlackChannel].sum_cubed+=(double)
-            GetPixelIndex(indexes+x)*(double) GetPixelIndex(indexes+x)*
-            (double) GetPixelIndex(indexes+x);
-          channel_statistics[BlackChannel].sum_fourth_power+=(double)
-            GetPixelIndex(indexes+x)*(double) GetPixelIndex(indexes+x)*
-            (double) GetPixelIndex(indexes+x)*(double) GetPixelIndex(indexes+x);
+          channel_statistics[BlackChannel].sum_squared+=QuantumScale*
+            GetPixelIndex(indexes+x)*QuantumScale*GetPixelIndex(indexes+x);
+          channel_statistics[BlackChannel].sum_cubed+=QuantumScale*
+            GetPixelIndex(indexes+x)*QuantumScale*GetPixelIndex(indexes+x)*
+            QuantumScale*GetPixelIndex(indexes+x);
+          channel_statistics[BlackChannel].sum_fourth_power+=QuantumScale*
+            GetPixelIndex(indexes+x)*QuantumScale*GetPixelIndex(indexes+x)*
+            QuantumScale*GetPixelIndex(indexes+x)*QuantumScale*
+            GetPixelIndex(indexes+x);
           histogram[ScaleQuantumToMap(GetPixelIndex(indexes+x))].index++;
         }
       x++;
@@ -2695,6 +2704,16 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
       channel_statistics[i].mean*1.0*channel_statistics[i].mean*
       channel_statistics[i].mean)*(standard_deviation*standard_deviation*
       standard_deviation*standard_deviation)-3.0;
+  }
+  for (i=0; i <= (ssize_t) CompositeChannels; i++)
+  {
+    channel_statistics[i].mean*=QuantumRange;
+    channel_statistics[i].variance*=QuantumRange;
+    channel_statistics[i].standard_deviation*=QuantumRange;
+    channel_statistics[i].sum*=QuantumRange;
+    channel_statistics[i].sum_squared*=QuantumRange;
+    channel_statistics[i].sum_cubed*=QuantumRange;
+    channel_statistics[i].sum_fourth_power*=QuantumRange;
   }
   channel_statistics[CompositeChannels].mean=0.0;
   channel_statistics[CompositeChannels].standard_deviation=0.0;
@@ -2922,7 +2941,7 @@ MagickExport Image *PolynomialImageChannel(const Image *images,
         polynomial_pixel[x].blue));
       if (image->matte == MagickFalse)
         SetPixelOpacity(q,ClampToQuantum((MagickRealType) QuantumRange-
-        (MagickRealType) QuantumRange*polynomial_pixel[x].opacity));
+          (MagickRealType) QuantumRange*polynomial_pixel[x].opacity));
       else
         SetPixelAlpha(q,ClampToQuantum((MagickRealType) QuantumRange-
           (MagickRealType) QuantumRange*polynomial_pixel[x].opacity));
