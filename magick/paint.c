@@ -200,7 +200,11 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   floodplane_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (floodplane_image == (Image *) NULL)
     return(MagickFalse);
-  (void) SetImageAlphaChannel(floodplane_image,OpaqueAlphaChannel);
+  floodplane_image->matte=MagickFalse;
+  floodplane_image->colorspace=GRAYColorspace;
+  (void) QueryColorCompliance("#000",AllCompliance,
+    &floodplane_image->background_color,exception);
+  (void) SetImageBackgroundColor(floodplane_image);
   segment_info=AcquireVirtualMemory(MaxStacksize,sizeof(*segment_stack));
   if (segment_info == (MemoryInfo *) NULL)
     {
@@ -230,11 +234,11 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     const PixelPacket
       *magick_restrict p;
 
-    ssize_t
-      x;
-
     PixelPacket
       *magick_restrict q;
+
+    ssize_t
+      x;
 
     /*
       Pop segment off stack.
@@ -257,12 +261,12 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     q+=x1;
     for (x=x1; x >= 0; x--)
     {
-      if (q->opacity == (Quantum) TransparentOpacity)
+      if (GetPixelGray(q) != 0)
         break;
       SetMagickPixelPacket(image,p,indexes+x,&pixel);
       if (IsMagickColorSimilar(&pixel,target) == invert)
         break;
-      q->opacity=(Quantum) TransparentOpacity;
+      SetPixelGray(q,QuantumRange);
       p--;
       q--;
     }
@@ -292,12 +296,12 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
               indexes=GetCacheViewVirtualIndexQueue(image_view);
               for ( ; x < (ssize_t) image->columns; x++)
               {
-                if (q->opacity == (Quantum) TransparentOpacity)
+                if (GetPixelGray(q) != 0)
                   break;
                 SetMagickPixelPacket(image,p,indexes+x,&pixel);
                 if (IsMagickColorSimilar(&pixel,target) == invert)
                   break;
-                q->opacity=(Quantum) TransparentOpacity;
+                SetPixelGray(q,QuantumRange);
                 p++;
                 q++;
               }
@@ -321,7 +325,7 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
           indexes=GetCacheViewVirtualIndexQueue(image_view);
           for ( ; x <= x2; x++)
           {
-            if (q->opacity == (Quantum) TransparentOpacity)
+            if (GetPixelGray(q) != 0)
               break;
             SetMagickPixelPacket(image,p,indexes+x,&pixel);
             if (IsMagickColorSimilar(&pixel,target) != invert)
@@ -341,11 +345,11 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     IndexPacket
       *magick_restrict indexes;
 
-    ssize_t
-      x;
-
     PixelPacket
       *magick_restrict q;
+
+    ssize_t
+      x;
 
     /*
       Tile fill color onto floodplane.
@@ -358,7 +362,7 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
-      if (GetPixelOpacity(p) != OpaqueOpacity)
+      if (GetPixelGray(p) != 0)
         {
           (void) GetFillColor(draw_info,x,y,&fill_color);
           SetMagickPixelPacket(image,&fill_color,(IndexPacket *) NULL,&fill);
