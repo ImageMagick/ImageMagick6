@@ -2361,15 +2361,13 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
   QuantumAny
     range;
 
-  ssize_t
-    i;
-
   size_t
     channels,
     depth,
     length;
 
   ssize_t
+    i,
     y;
 
   assert(image != (Image *) NULL);
