@@ -424,7 +424,7 @@ static double FxChannelStatistics(FxInfo *fx_info,const Image *image,
 
       (void) GetImageChannelKurtosis(image,channel,&kurtosis,&skewness,
         exception);
-      statistic=kurtosis;
+      statistic=QuantumRange*kurtosis;
     }
   if (LocaleNCompare(symbol,"maxima",6) == 0)
     {
@@ -462,7 +462,7 @@ static double FxChannelStatistics(FxInfo *fx_info,const Image *image,
 
       (void) GetImageChannelKurtosis(image,channel,&kurtosis,&skewness,
         exception);
-      statistic=skewness;
+      statistic=QuantumRange*skewness;
     }
   if (LocaleNCompare(symbol,"standard_deviation",18) == 0)
     {
