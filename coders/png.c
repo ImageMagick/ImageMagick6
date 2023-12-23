@@ -8253,6 +8253,69 @@ static void write_tIME_chunk(Image *image,png_struct *ping,png_info *info,
 }
 #endif
 
+
+static void Magick_png_set_text(png_struct *ping,png_info *ping_info,
+  MngInfo *mng_info,const ImageInfo *image_info,const char* key,
+  const char *value)
+{
+  const char
+    *c;
+
+  int
+    compresion_none = PNG_TEXT_COMPRESSION_NONE,
+    compresion_zTXt = PNG_TEXT_COMPRESSION_zTXt;
+
+  MagickBooleanType
+    write_itxt=MagickFalse;
+
+  png_textp
+    text;
+
+  size_t
+    length;
+
+  /*
+    Check if the string contains non-Latin1 characters.
+  */
+  c=key;
+  while (*c != '\0')
+  {
+    if (((const unsigned char) *c) > 255) {
+      write_itxt=MagickTrue;
+      compresion_none=PNG_ITXT_COMPRESSION_NONE;
+      compresion_zTXt=PNG_ITXT_COMPRESSION_zTXt;
+      break;
+    }
+    c++;
+  }
+#if PNG_LIBPNG_VER >= 10400
+  text=(png_textp) png_malloc(ping,(png_alloc_size_t) sizeof(png_text));
+#else
+  text=(png_textp) png_malloc(ping,(png_size_t) sizeof(png_text));
+#endif
+  if (text == (png_textp) NULL)
+    return;
+  (void) memset(text,0,sizeof(png_text));
+  text[0].key=(char *) key;
+  text[0].text=(char *) value;
+  length=strlen(value);
+  if (write_itxt == MagickFalse)
+    text[0].text_length=length;
+  else
+    text[0].itxt_length=length;
+  if (mng_info->ping_exclude_tEXt != MagickFalse)
+    text[0].compression=compresion_zTXt;
+  else
+    if (mng_info->ping_exclude_zTXt != MagickFalse)
+      text[0].compression=compresion_none;
+    else
+      text[0].compression=(image_info->compression == NoCompression) ||
+        ((image_info->compression == UndefinedCompression) &&
+         (length < 128)) ? compresion_none : compresion_zTXt;
+  png_set_text(ping,ping_info,text,1);
+  png_free(ping,text);
+}
+
 /* Write one PNG image */
 static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
    const ImageInfo *image_info,Image *image)
@@ -11621,9 +11684,6 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
     ResetImagePropertyIterator(image);
     while ((property=GetNextImageProperty(image)) != (const char *) NULL)
     {
-      png_textp
-        text;
-
       /* Don't write any "png:" or "jpeg:" properties; those are just for
        * "identify" or for passing through to another JPEG
        */
@@ -11648,37 +11708,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       value=GetImageProperty(image,property);
       if (value == (const char *) NULL)
         continue;
-#if PNG_LIBPNG_VER >= 10400
-      text=(png_textp) png_malloc(ping,
-            (png_alloc_size_t) sizeof(png_text));
-#else
-      text=(png_textp) png_malloc(ping,(png_size_t) sizeof(png_text));
-#endif
-      (void) memset(text,0,sizeof(png_text));
-      text[0].key=(char *) property;
-      text[0].text=(char *) value;
-      text[0].text_length=0;
-      text[0].itxt_length=strlen(value);
-      if (ping_exclude_tEXt != MagickFalse)
-        text[0].compression=PNG_ITXT_COMPRESSION_zTXt;
-      else
-        if (ping_exclude_zTXt != MagickFalse)
-          text[0].compression=PNG_ITXT_COMPRESSION_NONE;
-        else
-          text[0].compression=image_info->compression == NoCompression ||
-            (image_info->compression == UndefinedCompression &&
-            (text[0].itxt_length < 128)) ? PNG_ITXT_COMPRESSION_NONE :
-            PNG_ITXT_COMPRESSION_zTXt ;
-      if (logging != MagickFalse)
-        {
-          (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-            "  Setting up text chunk");
-
-          (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-            "    keyword: '%s'",text[0].key);
-        }
-      png_set_text(ping,ping_info,text,1);
-      png_free(ping,text);
+      Magick_png_set_text(ping,ping_info,mng_info,image_info,property,value);
     }
   }
 
