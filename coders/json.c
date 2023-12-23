@@ -758,24 +758,31 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
 
   if (channel == AlphaChannel)
     n=FormatLocaleFile(file,StatisticsFormat,name,GetMagickPrecision(),
+      channel_statistics[channel].minima == MagickMaximumValue ? 0.0 :
       (double) ClampToQuantum(scale*((MagickRealType) QuantumRange-
-      channel_statistics[channel].minima)),GetMagickPrecision(),(double)
-      ClampToQuantum(scale*((MagickRealType) QuantumRange-
+      channel_statistics[channel].minima)),GetMagickPrecision(),
+       channel_statistics[channel].maxima == -MagickMaximumValue ? 0.0 :
+      (double) ClampToQuantum(scale*((MagickRealType) QuantumRange-
       channel_statistics[channel].maxima)),GetMagickPrecision(),scale*
       ((MagickRealType) QuantumRange-channel_statistics[channel].mean),
-      GetMagickPrecision(),IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
+      GetMagickPrecision(),
+      IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
       MagickEpsilon : scale*channel_statistics[channel].standard_deviation,
       GetMagickPrecision(),channel_statistics[channel].kurtosis,
       GetMagickPrecision(),channel_statistics[channel].skewness,
       GetMagickPrecision(),channel_statistics[channel].entropy);
   else
     n=FormatLocaleFile(file,StatisticsFormat,name,GetMagickPrecision(),
+      channel_statistics[channel].minima == MagickMaximumValue ? 0.0 :
       (double) ClampToQuantum(scale*channel_statistics[channel].minima),
-      GetMagickPrecision(),(double) ClampToQuantum(scale*
-      channel_statistics[channel].maxima),GetMagickPrecision(),scale*
-      channel_statistics[channel].mean,GetMagickPrecision(),
-      IsNaN(channel_statistics[channel].standard_deviation) != 0 ? MagickEpsilon :
-      scale*channel_statistics[channel].standard_deviation,GetMagickPrecision(),
+      GetMagickPrecision(),
+      channel_statistics[channel].maxima == -MagickMaximumValue ? 0.0 :
+      (double) ClampToQuantum(scale*channel_statistics[channel].maxima),
+      GetMagickPrecision(),scale*channel_statistics[channel].mean,
+      GetMagickPrecision(),
+      IsNaN(channel_statistics[channel].standard_deviation) != 0 ?
+      MagickEpsilon : scale*channel_statistics[channel].standard_deviation,
+      GetMagickPrecision(),
       channel_statistics[channel].kurtosis,GetMagickPrecision(),
       channel_statistics[channel].skewness,GetMagickPrecision(),
       channel_statistics[channel].entropy);
@@ -1788,7 +1795,9 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
       MaxTextExtent);
     image->magick_columns=image->columns;
     image->magick_rows=image->rows;
-    (void) EncodeImageAttributes(image,GetBlobFileHandle(image));
+    status=EncodeImageAttributes(image,GetBlobFileHandle(image));
+    if (status == MagickFalse)
+      break;
     if (GetNextImageInList(image) == (Image *) NULL)
       {
         (void) WriteBlobString(image,"]");
