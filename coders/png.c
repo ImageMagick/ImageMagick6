@@ -8255,7 +8255,7 @@ static void write_tIME_chunk(Image *image,png_struct *ping,png_info *info,
 
 
 static void Magick_png_set_text(png_struct *ping,png_info *ping_info,
-  MngInfo *mng_info,const ImageInfo *image_info,const char* key,
+  MngInfo *mng_info,const ImageInfo *image_info,const char *key,
   const char *value)
 {
   const char
@@ -8277,7 +8277,7 @@ static void Magick_png_set_text(png_struct *ping,png_info *ping_info,
   /*
     Check if the string contains non-Latin1 characters.
   */
-  c=key;
+  c=value;
   while (*c != '\0')
   {
     if (((const unsigned char) *c) > 255) {
