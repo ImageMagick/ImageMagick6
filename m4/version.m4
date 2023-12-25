@@ -39,6 +39,7 @@ m4_define([magick_url], [https://legacy.imagemagick.org])
 m4_define([magick_lib_version], [0x69D])
 m4_define([magick_tarname], [ImageMagick])
 
+
 #
 # If the library source code has changed at all since the last update,
 # increment revision (‘c:r:a’ becomes ‘c:r+1:a’).  If any interfaces have been
