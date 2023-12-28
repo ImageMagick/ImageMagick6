@@ -93,6 +93,7 @@
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/timer.h"
+#include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
 #include "magick/version.h"
@@ -480,6 +481,7 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
   char
     color[MaxTextExtent],
     format[MaxTextExtent],
+    iso8601[sizeof("9999-99-99T99:99:99Z")],
     key[MaxTextExtent];
 
   ChannelFeatures
@@ -536,6 +538,9 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
 
   struct stat
     properties;
+
+  struct tm
+    timestamp;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -1465,6 +1470,15 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
         image->rows/elapsed_time+0.5),MagickFalse,format);
       (void) FormatLocaleFile(file,"  Pixels per second: %s\n",format);
     }
+  (void) GetMagickUTCTime(&image->timestamp,&timestamp);
+  (void) strftime(iso8601,sizeof(iso8601),"%FT%TZ",&timestamp);
+  expired=' ';
+  if (IsImageTTLExpired(image) != MagickFalse)
+    expired='*';
+  (void) FormatLocaleFile(file,"  Time-to-live: %g:%g:%g:%g%c %s\n",
+    (double) (image->ttl/(3600*24)),(double) ((image->ttl % (24*3600))/3600),
+    (double) ((image->ttl % 3600)/60),(double) ((image->ttl % 3600) % 60),
+    expired,iso8601);
   (void) FormatLocaleFile(file,"  User time: %0.3fu\n",user_time);
   (void) FormatLocaleFile(file,"  Elapsed time: %lu:%02lu.%03lu\n",
     (unsigned long) (elapsed_time/60.0),(unsigned long) ceil(fmod(

@@ -3035,7 +3035,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     }
   (void) WriteBlobString(image,buffer);
   seconds=GetMagickTime();
-  GetMagickUTCtime(&seconds,&utc_time);
+  GetMagickUTCTime(&seconds,&utc_time);
   (void) FormatLocaleString(date,MaxTextExtent,"D:%04d%02d%02d%02d%02d%02d",
     utc_time.tm_year+1900,utc_time.tm_mon+1,utc_time.tm_mday,
     utc_time.tm_hour,utc_time.tm_min,utc_time.tm_sec);
