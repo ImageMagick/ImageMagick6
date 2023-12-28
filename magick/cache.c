@@ -1856,6 +1856,7 @@ static Cache GetImagePixelCache(Image *image,const MagickBooleanType clone,
 
   if (IsImageTTLExpired(image) != MagickFalse)
     {
+      errno=ESTALE;
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"TimeLimitExceeded","`%s'",image->filename);
       return((Cache) NULL);

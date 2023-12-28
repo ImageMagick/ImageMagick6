@@ -181,7 +181,7 @@ MagickExport Image *AcquireImage(const ImageInfo *image_info)
   image->blob=CloneBlobInfo((BlobInfo *) NULL);
   InitializeExceptionInfo(&image->exception);
   image->timestamp=GetMagickTime();
-  image->ttl=(int) GetMagickResourceLimit(TimeResource);
+  image->ttl=(time_t) GetMagickResourceLimit(TimeResource);
   image->debug=(GetLogEventMask() & (ImageEvent | TransformEvent | CoderEvent))
     != 0 ? MagickTrue : MagickFalse;
   image->reference_count=1;
