@@ -542,6 +542,9 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
   struct tm
     timestamp;
 
+  time_t
+    expired;
+
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
