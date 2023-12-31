@@ -24,6 +24,26 @@
 extern "C" {
 #endif
 
+typedef enum
+{
+  UndefinedAlphaChannel,
+  ActivateAlphaChannel,
+  BackgroundAlphaChannel,
+  CopyAlphaChannel,
+  DeactivateAlphaChannel,
+  ExtractAlphaChannel,
+  OpaqueAlphaChannel,
+  ResetAlphaChannel,  /* deprecated */
+  SetAlphaChannel,
+  ShapeAlphaChannel,
+  TransparentAlphaChannel,
+  FlattenAlphaChannel,
+  RemoveAlphaChannel,
+  AssociateAlphaChannel,
+  DisassociateAlphaChannel,
+  RemoveOpaqueAlphaChannel
+} AlphaChannelType;
+
 extern MagickExport Image
   *CombineImages(const Image *,const ChannelType,ExceptionInfo *),
   *SeparateImage(const Image *,const ChannelType,ExceptionInfo *),

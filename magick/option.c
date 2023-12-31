@@ -43,6 +43,7 @@
 #include "magick/studio.h"
 #include "magick/artifact.h"
 #include "magick/cache.h"
+#include "magick/channel.h"
 #include "magick/color.h"
 #include "magick/compare.h"
 #include "magick/constitute.h"
@@ -109,6 +110,7 @@ static const OptionInfo
     { "On", ActivateAlphaChannel, UndefinedOptionFlag, MagickFalse },
     { "Opaque", OpaqueAlphaChannel, UndefinedOptionFlag, MagickFalse },
     { "Remove", RemoveAlphaChannel, UndefinedOptionFlag, MagickFalse },
+    { "RemoveOpaque", RemoveOpaqueAlphaChannel, UndefinedOptionFlag, MagickFalse },
     { "Set", SetAlphaChannel, UndefinedOptionFlag, MagickFalse },
     { "Shape", ShapeAlphaChannel, UndefinedOptionFlag, MagickFalse },
     { "Reset", SetAlphaChannel, DeprecateOptionFlag, MagickTrue },

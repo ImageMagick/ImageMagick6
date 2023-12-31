@@ -29,25 +29,6 @@ extern "C" {
 
 typedef enum
 {
-  UndefinedAlphaChannel,
-  ActivateAlphaChannel,
-  BackgroundAlphaChannel,
-  CopyAlphaChannel,
-  DeactivateAlphaChannel,
-  ExtractAlphaChannel,
-  OpaqueAlphaChannel,
-  ResetAlphaChannel,  /* deprecated */
-  SetAlphaChannel,
-  ShapeAlphaChannel,
-  TransparentAlphaChannel,
-  FlattenAlphaChannel,
-  RemoveAlphaChannel,
-  AssociateAlphaChannel,
-  DisassociateAlphaChannel
-} AlphaChannelType;
-
-typedef enum
-{
   UndefinedType,
   BilevelType,
   GrayscaleType,
