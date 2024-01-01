@@ -976,7 +976,7 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
       image_view=DestroyCacheView(image_view);
       return(status);
     }
-    case RemoveOpaqueAlphaChannel:
+    case DeactivateIfOpaqueAlphaChannel:
     {
       MagickBooleanType
         opaque = MagickTrue;
