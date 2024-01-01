@@ -41,7 +41,7 @@ typedef enum
   RemoveAlphaChannel,
   AssociateAlphaChannel,
   DisassociateAlphaChannel,
-  DeactivateIfOpaqueAlphaChannel
+  OffIfOpaqueAlphaChannel
 } AlphaChannelType;
 
 extern MagickExport Image

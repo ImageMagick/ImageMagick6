@@ -890,6 +890,48 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
       image->matte=MagickFalse;
       break;
     }
+    case OffIfOpaqueAlphaChannel:
+    {
+      MagickBooleanType
+        opaque = MagickTrue;
+
+      /*
+        Remove opaque alpha channel.
+      */
+      image_view=AcquireVirtualCacheView(image,exception);
+      #if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp parallel for schedule(static) shared(opaque,status) \
+          magick_number_threads(image,image,image->rows,4)
+      #endif
+      for (y=0; y < (ssize_t) image->rows; y++)
+      {
+        const PixelPacket
+          *magick_restrict p;
+
+        ssize_t
+          x;
+
+        if ((status == MagickFalse) || (opaque == MagickFalse))
+          continue;
+        p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
+        if (p == (const PixelPacket *) NULL)
+          {
+            status=MagickFalse;
+            continue;
+          }
+        for (x=0; x < (ssize_t) image->columns; x++)
+        {
+          if (GetPixelOpacity(p) != OpaqueOpacity)
+            opaque=MagickFalse;
+          p++;
+        }
+      }
+      image_view=DestroyCacheView(image_view);
+      if (opaque != MagickFalse)
+        image->matte=MagickFalse;
+      break;
+    }
+    case ResetAlphaChannel: /* deprecated */
     case RemoveAlphaChannel:
     case FlattenAlphaChannel:
     {
@@ -976,48 +1018,6 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
       image_view=DestroyCacheView(image_view);
       return(status);
     }
-    case DeactivateIfOpaqueAlphaChannel:
-    {
-      MagickBooleanType
-        opaque = MagickTrue;
-
-      /*
-        Remove opaque alpha channel.
-      */
-      image_view=AcquireVirtualCacheView(image,exception);
-      #if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp parallel for schedule(static) shared(opaque,status) \
-          magick_number_threads(image,image,image->rows,4)
-      #endif
-      for (y=0; y < (ssize_t) image->rows; y++)
-      {
-        const PixelPacket
-          *magick_restrict p;
-
-        ssize_t
-          x;
-
-        if ((status == MagickFalse) || (opaque == MagickFalse))
-          continue;
-        p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
-        if (p == (const PixelPacket *) NULL)
-          {
-            status=MagickFalse;
-            continue;
-          }
-        for (x=0; x < (ssize_t) image->columns; x++)
-        {
-          if (GetPixelOpacity(p) != OpaqueOpacity)
-            opaque=MagickFalse;
-          p++;
-        }
-      }
-      image_view=DestroyCacheView(image_view);
-      if (opaque != MagickFalse)
-        image->matte=MagickFalse;
-      break;
-    }
-    case ResetAlphaChannel: /* deprecated */
     case OpaqueAlphaChannel:
     {
       status=SetImageOpacity(image,OpaqueOpacity);
