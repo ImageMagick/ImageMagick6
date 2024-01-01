@@ -910,7 +910,7 @@ static MagickBooleanType ClonePixelCacheRepository(
   status=MagickTrue;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    cache_number_threads(cache_info,clone_info,cache_info->rows,1)
+    cache_number_threads(cache_info,clone_info,cache_info->rows,4)
 #endif
   for (y=0; y < (ssize_t) cache_info->rows; y++)
   {
@@ -949,7 +949,7 @@ static MagickBooleanType ClonePixelCacheRepository(
         sizeof(*cache_info->indexes);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
-        cache_number_threads(cache_info,clone_info,cache_info->rows,1)
+        cache_number_threads(cache_info,clone_info,cache_info->rows,4)
 #endif
       for (y=0; y < (ssize_t) cache_info->rows; y++)
       {
@@ -5345,7 +5345,7 @@ static MagickBooleanType SetCacheAlphaChannel(Image *image,
   image_view=AcquireVirtualCacheView(image,&image->exception);  /* must be virtual */
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {

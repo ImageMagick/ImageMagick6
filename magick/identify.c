@@ -524,6 +524,9 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
   ImageType
     type;
 
+  int
+    expired;
+
   MagickBooleanType
     ping;
 
@@ -541,9 +544,6 @@ MagickExport MagickBooleanType IdentifyImage(Image *image,FILE *file,
 
   struct tm
     timestamp;
-
-  time_t
-    expired;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);

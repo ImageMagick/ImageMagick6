@@ -201,7 +201,7 @@ MagickExport MagickBooleanType CycleColormapImage(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -302,9 +302,7 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     status;
 
   ssize_t
-    i;
-
-  ssize_t
+    i,
     y;
 
   unsigned short
@@ -342,20 +340,23 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     pixels[(ssize_t) image->colormap[i].opacity]=(unsigned short) i;
   status=MagickTrue;
   image_view=AcquireAuthenticCacheView(image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp parallel for schedule(static) shared(status) \
+    magick_number_threads(image,image,image->rows,2)
+#endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
-    IndexPacket
-      index;
-
-    ssize_t
-      x;
-
     IndexPacket
       *magick_restrict indexes;
 
     PixelPacket
       *magick_restrict q;
 
+    ssize_t
+      x;
+
+    if (status == MagickFalse)
+      continue;
     q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)
       {
@@ -365,6 +366,12 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
+      IndexPacket
+        index;
+
+      ssize_t
+        i;
+
       i=ConstrainColormapIndex(image,GetPixelIndex(indexes+x));
       index=(IndexPacket) pixels[i];
       SetPixelIndex(indexes+x,index);
@@ -373,8 +380,6 @@ MagickExport MagickBooleanType SortColormapByIntensity(Image *image)
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
       status=MagickFalse;
-    if (status == MagickFalse)
-      break;
   }
   image_view=DestroyCacheView(image_view);
   pixels=(unsigned short *) RelinquishMagickMemory(pixels);

@@ -1516,12 +1516,11 @@ static inline void CompositeThreshold(const MagickPixelPacket *p,
   composite->red=Threshold(p->red,q->red,threshold,amount);
   composite->green=Threshold(p->green,q->green,threshold,amount);
   composite->blue=Threshold(p->blue,q->blue,threshold,amount);
-  composite->opacity=(MagickRealType) QuantumRange-Threshold(p->opacity,q->opacity,
-       threshold,amount);
+  composite->opacity=(MagickRealType) QuantumRange-Threshold(p->opacity,
+    q->opacity,threshold,amount);
   if (q->colorspace == CMYKColorspace)
     composite->index=Threshold(p->index,q->index,threshold,amount);
 }
-
 
 static MagickRealType VividLight(const MagickRealType Sca,
   const MagickRealType Sa, const MagickRealType Dca, const MagickRealType Da)
@@ -1717,7 +1716,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
-        magick_number_threads(source_image,image,source_image->rows,1)
+        magick_number_threads(source_image,image,source_image->rows,4)
 #endif
       for (y=0; y < (ssize_t) source_image->rows; y++)
       {
@@ -3010,7 +3009,7 @@ MagickExport MagickBooleanType TextureImage(Image *image,const Image *texture)
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,texture_image,image->rows,1)
+    magick_number_threads(image,texture_image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {

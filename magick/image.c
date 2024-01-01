@@ -521,13 +521,10 @@ MagickExport Image *AppendImages(const Image *images,
     image_view=AcquireVirtualCacheView(next,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
     #pragma omp parallel for schedule(static) shared(status) \
-      magick_number_threads(next,next,next->rows,1)
+      magick_number_threads(next,next,next->rows,2)
 #endif
     for (y=0; y < (ssize_t) next->rows; y++)
     {
-      MagickBooleanType
-        sync;
-
       const IndexPacket
         *magick_restrict indexes;
 
@@ -536,6 +533,9 @@ MagickExport Image *AppendImages(const Image *images,
 
       IndexPacket
         *magick_restrict append_indexes;
+
+      MagickBooleanType
+        sync;
 
       PixelPacket
         *magick_restrict q;
@@ -1093,7 +1093,7 @@ MagickExport MagickBooleanType CopyImagePixels(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(progress,status) \
-    magick_number_threads(source_image,image,geometry->height,1)
+    magick_number_threads(source_image,image,geometry->height,2)
 #endif
   for (y=0; y < (ssize_t) geometry->height; y++)
   {
@@ -1842,7 +1842,7 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -2103,7 +2103,7 @@ MagickExport Image *NewMagickImage(const ImageInfo *image_info,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -2307,7 +2307,7 @@ MagickExport MagickBooleanType ResetImagePixels(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -2417,6 +2417,10 @@ MagickExport MagickBooleanType SetImageBackgroundColor(Image *image)
   status=MagickTrue;
   exception=(&image->exception);
   image_view=AcquireAuthenticCacheView(image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp parallel for schedule(static) shared(status) \
+    magick_number_threads(image,image,image->rows,2)
+#endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     PixelPacket
@@ -2537,7 +2541,7 @@ MagickExport MagickBooleanType SetImageColor(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -3221,7 +3225,7 @@ MagickExport MagickBooleanType SetImageOpacity(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
@@ -3699,7 +3703,7 @@ MagickExport MagickBooleanType SyncImage(Image *image)
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(range_exception,status) \
-    magick_number_threads(image,image,image->rows,1)
+    magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {

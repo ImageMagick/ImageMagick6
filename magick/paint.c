@@ -147,22 +147,17 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     *floodplane_image;
 
   MagickBooleanType
-    skip;
+    skip,
+    status;
 
   MagickPixelPacket
-    fill,
     pixel;
 
   MemoryInfo
     *segment_info;
 
-  PixelPacket
-    fill_color;
-
   SegmentInfo
-    *s;
-
-  SegmentInfo
+    *s,
     *segment_stack;
 
   ssize_t
@@ -220,7 +215,6 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
   y=y_offset;
   start=0;
   s=segment_stack;
-  GetMagickPixelPacket(image,&fill);
   GetMagickPixelPacket(image,&pixel);
   image_view=AcquireVirtualCacheView(image,exception);
   floodplane_view=AcquireAuthenticCacheView(floodplane_image,exception);
@@ -337,6 +331,11 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
       start=x;
     } while (x <= x2);
   }
+  status=MagickTrue;
+#if defined(MMAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp parallel for schedule(static) shared(status) \
+    magick_number_threads(floodplane_image,image,image->rows,2)
+#endif
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     const PixelPacket
@@ -354,17 +353,28 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     /*
       Tile fill color onto floodplane.
     */
-    p=GetCacheViewVirtualPixels(floodplane_view,0,y,image->columns,1,
-      exception);
+    if (status == MagickFalse)
+      continue;
+    p=GetCacheViewVirtualPixels(floodplane_view,0,y,image->columns,1,exception);
     q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,exception);
     if ((p == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
-      break;
+      {
+        status=MagickFalse;
+        continue;
+      }
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       if (GetPixelGray(p) != 0)
         {
+          MagickPixelPacket
+            fill;
+
+          PixelPacket
+            fill_color;
+
           (void) GetFillColor(draw_info,x,y,&fill_color);
+          GetMagickPixelPacket(image,&fill);
           SetMagickPixelPacket(image,&fill_color,(IndexPacket *) NULL,&fill);
           if (image->colorspace == CMYKColorspace)
             ConvertRGBToCMYK(&fill);
@@ -385,7 +395,7 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
-      break;
+      status=MagickFalse;
   }
   floodplane_view=DestroyCacheView(floodplane_view);
   image_view=DestroyCacheView(image_view);

@@ -2027,7 +2027,7 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,bounding_box.height-bounding_box.y,1)
+    magick_number_threads(image,image,bounding_box.height-bounding_box.y,2)
 #endif
   for (y=bounding_box.y; y < (ssize_t) bounding_box.height; y++)
   {

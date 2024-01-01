@@ -1839,6 +1839,10 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
           MagickFalse;
         p=bitmap->bitmap.buffer;
         image_view=AcquireAuthenticCacheView(image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+        #pragma omp parallel for schedule(static) shared(status) \
+          magick_number_threads(image,image,bitmap->bitmap.rows,4)
+#endif
         for (y=0; y < (ssize_t) bitmap->bitmap.rows; y++)
         {
           MagickBooleanType
@@ -2105,7 +2109,8 @@ static MagickBooleanType RenderPostscript(Image *image,
     unique_file;
 
   MagickBooleanType
-    identity;
+    identity,
+    status;
 
   PointInfo
     extent,
@@ -2281,8 +2286,13 @@ static MagickBooleanType RenderPostscript(Image *image,
       if (annotate_image->matte == MagickFalse)
         (void) SetImageAlphaChannel(annotate_image,OpaqueAlphaChannel);
       fill_color=draw_info->fill;
+      status=MagickTrue;
       exception=(&image->exception);
       annotate_view=AcquireAuthenticCacheView(annotate_image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+    #pragma omp parallel for schedule(static) shared(status) \
+      magick_number_threads(annotate_image,annotate_image,annotate_image->rows,4)
+#endif
       for (y=0; y < (ssize_t) annotate_image->rows; y++)
       {
         PixelPacket
@@ -2291,10 +2301,15 @@ static MagickBooleanType RenderPostscript(Image *image,
         ssize_t
           x;
 
+        if (status == MagickFalse)
+          continue;
         q=GetCacheViewAuthenticPixels(annotate_view,0,y,annotate_image->columns,
           1,exception);
         if (q == (PixelPacket *) NULL)
-          break;
+          {
+            status=MagickFalse;
+            continue;
+          }
         for (x=0; x < (ssize_t) annotate_image->columns; x++)
         {
           (void) GetFillColor(draw_info,x,y,&fill_color);
@@ -2308,7 +2323,7 @@ static MagickBooleanType RenderPostscript(Image *image,
         }
         sync=SyncCacheViewAuthenticPixels(annotate_view,exception);
         if (sync == MagickFalse)
-          break;
+          status=MagickFalse;
       }
       annotate_view=DestroyCacheView(annotate_view);
       (void) CompositeImage(image,OverCompositeOp,annotate_image,
