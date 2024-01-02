@@ -1825,7 +1825,7 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
     *image_view;
 
   MagickBooleanType
-    status;
+    hdri = MagickFalse;
 
   MagickPixelPacket
     zero;
@@ -1837,11 +1837,10 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  status=MagickTrue;
   GetMagickPixelPacket(image,&zero);
   image_view=AcquireVirtualCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(hdri) \
     magick_number_threads(image,image,image->rows,2)
 #endif
   for (y=0; y < (ssize_t) image->rows; y++)
@@ -1858,14 +1857,11 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
     ssize_t
       x;
 
-    if (status == MagickFalse)
+    if (hdri != MagickFalse)
       continue;
     p=GetCacheViewVirtualPixels(image_view,0,y,image->columns,1,exception);
     if (p == (const PixelPacket *) NULL)
-      {
-        status=MagickFalse;
-        continue;
-      }
+      continue;
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     pixel=zero;
     for (x=0; x < (ssize_t) image->columns; x++)
@@ -1873,34 +1869,34 @@ MagickExport MagickBooleanType IsHighDynamicRangeImage(const Image *image,
       SetMagickPixelPacket(image,p,indexes+x,&pixel);
       if ((pixel.red < 0.0) || (pixel.red > (MagickRealType) QuantumRange) ||
           (pixel.red != (QuantumAny) pixel.red))
-        break;
+        hdri=MagickTrue;
       if ((pixel.green < 0.0) ||
           (pixel.green > (MagickRealType) QuantumRange) ||
           (pixel.green != (QuantumAny) pixel.green))
-        break;
+        hdri=MagickTrue;
       if ((pixel.blue < 0.0) || (pixel.blue > (MagickRealType) QuantumRange) ||
           (pixel.blue != (QuantumAny) pixel.blue))
-        break;
+        hdri=MagickTrue;
       if (pixel.matte != MagickFalse)
         {
           if ((pixel.opacity < 0.0) || (pixel.opacity > (MagickRealType) QuantumRange) ||
               (pixel.opacity != (QuantumAny) pixel.opacity))
-            break;
+            hdri=MagickTrue;
         }
       if (pixel.colorspace == CMYKColorspace)
         {
           if ((pixel.index < 0.0) ||
               (pixel.index > (MagickRealType) QuantumRange) ||
               (pixel.index != (QuantumAny) pixel.index))
-            break;
+            hdri=MagickTrue;
         }
+      if (hdri != MagickFalse)
+        break;
       p++;
     }
-    if (x < (ssize_t) image->columns)
-      status=MagickFalse;
   }
   image_view=DestroyCacheView(image_view);
-  return(status != MagickFalse ? MagickFalse : MagickTrue);
+  return(hdri);
 #endif
 }
 
