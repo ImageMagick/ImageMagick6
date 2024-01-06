@@ -53,11 +53,13 @@
 #include "magick/magick.h"
 #include "magick/memory_.h"
 #include "magick/pixel-accessor.h"
+#include "magick/option.h"
 #include "magick/property.h"
 #include "magick/quantum-private.h"
 #include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
 #include "magick/module.h"
 #include "magick/utility.h"
 
@@ -118,12 +120,12 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
     left_bearing,
     status;
 
+  TypeMetric
+    metrics;
+
   size_t
     height,
     width;
-
-  TypeMetric
-    metrics;
 
   /*
     Initialize Image structure.
@@ -144,7 +146,8 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
         return(DestroyImageList(image));
       (void) SetImageBackgroundColor(image);
     }
-  label=InterpretImageProperties(image_info,image,image_info->filename);
+  label=InterpretImageProperties((ImageInfo *) image_info,image,
+    image_info->filename);
   if (label == (char *) NULL)
     return(DestroyImageList(image));
   (void) SetImageProperty(image,"label",label);
@@ -170,6 +173,9 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
         (((image->columns == 0) || (image->rows == 0)) ||
          (fabs(image_info->pointsize) < MagickEpsilon)))
       {
+        const char
+          *option;
+
         double
           high,
           low;
@@ -180,61 +186,84 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
         /*
           Auto fit text into bounding box.
         */
-        for (n=0; n < 32; n++, draw_info->pointsize*=2.0)
-        {
-          (void) FormatLocaleString(geometry,MagickPathExtent,"%+g%+g",
-            -metrics.bounds.x1,metrics.ascent);
-          if (draw_info->gravity == UndefinedGravity)
-            (void) CloneString(&draw_info->geometry,geometry);
-          status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-          AdjustTypeMetricBounds(&metrics);
-          if (status == MagickFalse)
-            break;
-          width=CastDoubleToUnsigned(metrics.width+draw_info->stroke_width+0.5);
-          height=CastDoubleToUnsigned(metrics.height-metrics.underline_position+
-            draw_info->stroke_width+0.5);
-          if ((image->columns != 0) && (image->rows != 0))
-            {
-              if ((width >= image->columns) || (height >= image->rows))
-                break;
-            }
-          else
-            if (((image->columns != 0) && (width >= image->columns)) ||
-                ((image->rows != 0) && (height >= image->rows)))
-              break;
-        }
-        if (status == MagickFalse)
+        low=1.0;
+        option=GetImageOption(image_info,"label:max-pointsize");
+        if (option != (const char*) NULL)
           {
-            label=DestroyString(label);
-            draw_info=DestroyDrawInfo(draw_info);
-            image=DestroyImageList(image);
-            return((Image *) NULL);
+            high=StringToDouble(option,(char**) NULL);
+            if (high < 1.0)
+              high=1.0;
+            high+=1.0;
           }
-        high=draw_info->pointsize;
-        for (low=1.0; (high-low) > 0.5; )
+        else
+          {
+            option=GetImageOption(image_info,"label:start-pointsize");
+            if (option != (const char *) NULL)
+              {
+                draw_info->pointsize=StringToDouble(option,(char**) NULL);
+                if (draw_info->pointsize < 1.0)
+                  draw_info->pointsize=1.0;
+              }
+            for (n=0; n < 32; n++, draw_info->pointsize*=2.0)
+            {
+              (void) FormatLocaleString(geometry,MagickPathExtent,"%+g%+g",
+                metrics.bounds.x1,metrics.ascent);
+              if (draw_info->gravity == UndefinedGravity)
+                (void) CloneString(&draw_info->geometry,geometry);
+              status=GetMultilineTypeMetrics(image,draw_info,&metrics);
+              if (status == MagickFalse)
+                break;
+              AdjustTypeMetricBounds(&metrics);
+              width=CastDoubleToUnsigned(metrics.width+draw_info->stroke_width+
+                0.5);
+              height=CastDoubleToUnsigned(
+                metrics.height-metrics.underline_position+
+                draw_info->stroke_width+0.5);
+              if ((image->columns != 0) && (image->rows != 0))
+                {
+                  if ((width > image->columns) || (height > image->rows))
+                    break;
+                  if ((width <= image->columns) && (height <= image->rows))
+                    low=draw_info->pointsize;
+                }
+              else
+                if (((image->columns != 0) && (width > image->columns)) ||
+                    ((image->rows != 0) && (height > image->rows)))
+                  break;
+            }
+            if (status == MagickFalse)
+              {
+                label=DestroyString(label);
+                draw_info=DestroyDrawInfo(draw_info);
+                image=DestroyImageList(image);
+                return((Image *) NULL);
+              }
+            high=draw_info->pointsize;
+          }
+        while((high-low) > 0.5)
         {
           draw_info->pointsize=(low+high)/2.0;
           (void) FormatLocaleString(geometry,MagickPathExtent,"%+g%+g",
-            -metrics.bounds.x1,metrics.ascent);
+            metrics.bounds.x1,metrics.ascent);
           if (draw_info->gravity == UndefinedGravity)
             (void) CloneString(&draw_info->geometry,geometry);
           status=GetMultilineTypeMetrics(image,draw_info,&metrics);
-          AdjustTypeMetricBounds(&metrics);
           if (status == MagickFalse)
             break;
+          AdjustTypeMetricBounds(&metrics);
           width=CastDoubleToUnsigned(metrics.width+draw_info->stroke_width+0.5);
           height=CastDoubleToUnsigned(metrics.height-metrics.underline_position+
             draw_info->stroke_width+0.5);
           if ((image->columns != 0) && (image->rows != 0))
             {
-              if ((width < image->columns) && (height < image->rows))
+              if ((width <= image->columns) && (height <= image->rows))
                 low=draw_info->pointsize+0.5;
               else
                 high=draw_info->pointsize-0.5;
             }
           else
-            if (((image->columns != 0) && (width < image->columns)) ||
-                ((image->rows != 0) && (height < image->rows)))
+            if (((image->columns != 0) && (width <= image->columns)) ||
+                ((image->rows != 0) && (height <= image->rows)))
               low=draw_info->pointsize+0.5;
             else
               high=draw_info->pointsize-0.5;
@@ -246,14 +275,13 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
             AdjustTypeMetricBounds(&metrics);
           }
       }
-  label=DestroyString(label);
-  if (status == MagickFalse)
-    {
-      draw_info=DestroyDrawInfo(draw_info);
-      InheritException(exception,&image->exception);
-      image=DestroyImageList(image);
-      return((Image *) NULL);
-    }
+   label=DestroyString(label);
+   if (status == MagickFalse)
+     {
+       draw_info=DestroyDrawInfo(draw_info);
+       image=DestroyImageList(image);
+       return((Image *) NULL);
+     }
   if (image->columns == 0)
     image->columns=(size_t) floor(metrics.width+draw_info->stroke_width+0.5);
   if (image->columns == 0)
@@ -268,13 +296,11 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
   if (status == MagickFalse)
     {
       draw_info=DestroyDrawInfo(draw_info);
-      InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
   if (SetImageBackgroundColor(image) == MagickFalse)
     {
       draw_info=DestroyDrawInfo(draw_info);
-      InheritException(exception,&image->exception);
       image=DestroyImageList(image);
       return((Image *) NULL);
     }
@@ -282,7 +308,7 @@ static Image *ReadLABELImage(const ImageInfo *image_info,
     Draw label.
   */
   left_bearing=((draw_info->gravity == UndefinedGravity) ||
-     (draw_info->gravity == NorthWestGravity) || 
+     (draw_info->gravity == NorthWestGravity) ||
      (draw_info->gravity == WestGravity) ||
      (draw_info->gravity == SouthWestGravity)) ? MagickTrue : MagickFalse;
   (void) FormatLocaleString(geometry,MagickPathExtent,"%+g%+g",
