@@ -327,11 +327,20 @@ static void SetLibRawParams(const ImageInfo *image_info,Image *image,
   const char
     *option;
 
+#if LIBRAW_COMPILE_CHECK_VERSION_NOTLESS(0,20)
 #if LIBRAW_COMPILE_CHECK_VERSION_NOTLESS(0,21)
   raw_info->rawparams.max_raw_memory_mb=8192;
+#else
+  raw_info->params.max_raw_memory_mb=8192;
+#endif
   option=GetImageOption(image_info,"dng:max-raw-memory");
   if (option != (const char *) NULL)
-    raw_info->rawparams.max_raw_memory_mb=StringToInteger(option);
+#if LIBRAW_COMPILE_CHECK_VERSION_NOTLESS(0,21)
+    raw_info->rawparams.max_raw_memory_mb=(unsigned int)
+      StringToInteger(option);
+#else
+    raw_info->params.max_raw_memory_mb=(unsigned int) StringToInteger(option);
+#endif
 #endif
   raw_info->params.user_flip=0;
   raw_info->params.output_bps=16;
