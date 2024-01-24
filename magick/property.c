@@ -833,6 +833,7 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
 #define TAG_GPS_OFFSET  0x8825
 #define TAG_INTEROP_OFFSET  0xa005
 
+
 #define EXIFGPSFractions(format,arg1,arg2,arg3,arg4,arg5,arg6) \
 { \
    size_t \
@@ -843,56 +844,59 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
  \
    for ( ; component < components; component++) \
    { \
-     extent=(size_t) ((ssize_t) extent+FormatLocaleString(buffer+extent, \
-       MagickPathExtent-extent,format", ",(arg1),(arg2),(arg3),(arg4),(arg5), \
-       (arg6))); \
+     if (component != 0) \
+       extent+=(size_t) FormatLocaleString(buffer+extent,MagickPathExtent- \
+         extent,", "); \
+     extent+=(size_t) FormatLocaleString(buffer+extent,MagickPathExtent- \
+       extent,format,(arg1),(arg2),(arg3),(arg4),(arg5),(arg6)); \
      if (extent >= (MagickPathExtent-1)) \
        extent=MagickPathExtent-1; \
    } \
-   if (extent > 1) \
-     buffer[extent-2]='\0'; \
+   buffer[extent]='\0'; \
    value=AcquireString(buffer); \
 }
 
 #define EXIFMultipleValues(format,arg) \
 { \
-   ssize_t \
-     component; \
- \
    size_t \
-     length; \
+     extent = 0; \
  \
-   length=0; \
-   for (component=0; component < components; component++) \
+   ssize_t \
+     component = 0; \
+ \
+   for ( ; component < components; component++) \
    { \
-     length+=FormatLocaleString(buffer+length,MaxTextExtent-length, \
-       format", ",arg); \
-     if (length >= (MaxTextExtent-1)) \
-       length=MaxTextExtent-1; \
+     if (component != 0) \
+       extent+=(size_t) FormatLocaleString(buffer+extent,MagickPathExtent- \
+         extent,", "); \
+     extent+=(size_t) FormatLocaleString(buffer+extent,MagickPathExtent- \
+       extent,format,arg); \
+     if (extent >= (MagickPathExtent-1)) \
+       extent=MagickPathExtent-1; \
    } \
-   if (length > 1) \
-     buffer[length-2]='\0'; \
+   buffer[extent]='\0'; \
    value=AcquireString(buffer); \
 }
 
 #define EXIFMultipleFractions(format,arg1,arg2) \
 { \
-   ssize_t \
-     component; \
- \
    size_t \
-     length; \
+     extent = 0; \
  \
-   length=0; \
-   for (component=0; component < components; component++) \
+   ssize_t \
+     component = 0; \
+ \
+   for ( ; component < components; component++) \
    { \
-     length+=FormatLocaleString(buffer+length,MaxTextExtent-length, \
-       format", ",(arg1),(arg2)); \
-     if (length >= (MaxTextExtent-1)) \
-       length=MaxTextExtent-1; \
+     if (component != 0) \
+       extent+=(size_t) FormatLocaleString(buffer+extent,MagickPathExtent-\
+         extent,", "); \
+     extent+=(size_t) FormatLocaleString(buffer+extent,MagickPathExtent- \
+       extent,format,(arg1),(arg2)); \
+     if (extent >= (MagickPathExtent-1)) \
+       extent=MagickPathExtent-1; \
    } \
-   if (length > 1) \
-     buffer[length-2]='\0'; \
+   buffer[extent]='\0'; \
    value=AcquireString(buffer); \
 }
 
