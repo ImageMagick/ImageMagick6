@@ -219,7 +219,12 @@ const Magick::Color& Magick::Color::operator=(const std::string &x11color_)
         _pixelType=RGBPixel;
     }
   else
-    _isValid=false;
+    {
+      _isValid = false;
+      _pixelOwn = false;
+      delete _pixel;
+      _pixel = nullptr;
+    }
   ThrowPPException(false);
 
   return(*this);
