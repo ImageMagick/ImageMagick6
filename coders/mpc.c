@@ -311,7 +311,7 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   Get the keyword value.
                 */
                 c=ReadBlobByte(image);
-                while ((c != (int) '}') && (c != EOF))
+                while ((c != (int) '{') && (c != (int) '}') && (c != EOF))
                 {
                   if ((size_t) (p-options+1) >= length)
                     {
@@ -328,7 +328,7 @@ static Image *ReadMPCImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   if (c == '\\')
                     {
                       c=ReadBlobByte(image);
-                      if (c == (int) '}')
+                      if ((c == (int) '{') || (c == (int) '}'))
                         {
                           *p++=(char) c;
                           c=ReadBlobByte(image);
@@ -1390,12 +1390,13 @@ static MagickBooleanType WriteMPCImage(const ImageInfo *image_info,Image *image)
           else
             {
               (void) WriteBlobByte(image,'{');
-              if (strchr(value,'}') == (char *) NULL)
+              if ((strchr(value,'{') == (char *) NULL) &&
+                  (strchr(value,'}') == (char *) NULL))
                 (void) WriteBlob(image,length,(const unsigned char *) value);
               else
                 for (i=0; i < (ssize_t) length; i++)
                 {
-                  if (value[i] == (int) '}')
+                  if ((value[i] == (int) '{') || (value[i] == (int) '}'))
                     (void) WriteBlobByte(image,'\\');
                   (void) WriteBlobByte(image,(unsigned char) value[i]);
                 }
