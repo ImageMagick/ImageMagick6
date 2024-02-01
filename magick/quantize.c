@@ -2329,8 +2329,8 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
   const ChannelType channel,const size_t levels,const MagickBooleanType dither)
 {
 #define PosterizeImageTag  "Posterize/Image"
-#define PosterizePixel(pixel) ClampToQuantum(((MagickRealType) \
-  QuantumScale*(pixel)*levels)*((MagickRealType) QuantumRange/levels))
+#define PosterizePixel(pixel) ClampToQuantum((MagickRealType) (QuantumScale* \
+  (pixel)*(levels-1))*(QuantumRange*PerceptibleReciprocal((double) levels-1)))
 
   CacheView
     *image_view;
