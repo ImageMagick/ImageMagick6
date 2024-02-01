@@ -484,11 +484,11 @@ static MagickBooleanType AssignImageColors(Image *image,QCubeInfo *cube_info)
   ColorspaceType
     colorspace;
 
-  ssize_t
-    y;
-
   size_t
     number_colors;
+
+  ssize_t
+    y;
 
   /*
     Allocate image colormap.
@@ -1072,11 +1072,11 @@ MagickExport QuantizeInfo *CloneQuantizeInfo(const QuantizeInfo *quantize_info)
 static void ClosestColor(const Image *image,QCubeInfo *cube_info,
   const QNodeInfo *node_info)
 {
-  ssize_t
-    i;
-
   size_t
     number_children;
+
+  ssize_t
+    i;
 
   /*
     Traverse any children.
@@ -2329,9 +2329,8 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
   const ChannelType channel,const size_t levels,const MagickBooleanType dither)
 {
 #define PosterizeImageTag  "Posterize/Image"
-#define PosterizePixel(pixel) ClampToQuantum((MagickRealType) QuantumRange*( \
-  MagickRound(QuantumScale*(MagickRealType) pixel*(levels-1)))/ \
-  MagickMax((ssize_t) levels-1,1))
+#define PosterizePixel(pixel) ClampToQuantum(((MagickRealType) \
+  QuantumScale*(pixel)*levels)*((MagickRealType) QuantumRange/levels))
 
   CacheView
     *image_view;
@@ -2445,9 +2444,8 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
   image_view=DestroyCacheView(image_view);
   quantize_info=AcquireQuantizeInfo((ImageInfo *) NULL);
   quantize_info->number_colors=(size_t) MagickMin((ssize_t) levels*levels*
-    levels,MaxColormapSize+1);
+    levels,MaxColormapSize);
   quantize_info->dither=dither;
-  quantize_info->tree_depth=MaxTreeDepth;
   status=QuantizeImage(quantize_info,image);
   quantize_info=DestroyQuantizeInfo(quantize_info);
   return(status);
