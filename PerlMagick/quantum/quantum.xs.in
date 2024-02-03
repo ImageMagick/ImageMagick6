@@ -5496,6 +5496,17 @@ Get(ref,...)
               PUSHs(s ? sv_2mortal(s) : &sv_undef);
               continue;
             }
+          if (LocaleNCompare(attribute,"registry:",9) == 0)
+            {   
+              const char
+                *value;
+        
+              value=GetImageRegistry(StringRegistryType,attribute+9,exception);
+              if (value != (const char *) NULL)
+                s=newSVpv(value,0);
+              PUSHs(s ? sv_2mortal(s) : &sv_undef);
+              continue;
+            }
           if (LocaleCompare(attribute,"rows") == 0)
             {
               if (image != (Image *) NULL)
