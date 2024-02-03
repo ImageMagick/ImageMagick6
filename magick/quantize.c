@@ -2325,12 +2325,18 @@ MagickExport MagickBooleanType PosterizeImage(Image *image,const size_t levels,
   return(status);
 }
 
+static inline Quantum PosterizePixel(const Quantum pixel,const size_t levels)
+{ 
+  ssize_t
+    alpha = (ssize_t) ((QuantumRange+1)/levels);
+    
+  return(ClampToQuantum((MagickRealType) (alpha*(pixel/alpha))));
+}   
+
 MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
   const ChannelType channel,const size_t levels,const MagickBooleanType dither)
 {
 #define PosterizeImageTag  "Posterize/Image"
-#define PosterizePixel(pixel) ClampToQuantum((MagickRealType) (QuantumScale* \
-  (pixel)*(levels-1))*(QuantumRange*PerceptibleReciprocal((double) levels-1)))
 
   CacheView
     *image_view;
@@ -2367,16 +2373,16 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
       */
       if ((channel & RedChannel) != 0)
         image->colormap[i].red=(MagickRealType)
-          PosterizePixel(image->colormap[i].red);
+          PosterizePixel(image->colormap[i].red,levels);
       if ((channel & GreenChannel) != 0)
         image->colormap[i].green=(MagickRealType)
-          PosterizePixel(image->colormap[i].green);
+          PosterizePixel(image->colormap[i].green,levels);
       if ((channel & BlueChannel) != 0)
         image->colormap[i].blue=(MagickRealType)
-          PosterizePixel(image->colormap[i].blue);
+          PosterizePixel(image->colormap[i].blue,levels);
       if ((channel & OpacityChannel) != 0)
         image->colormap[i].opacity=(MagickRealType)
-          PosterizePixel(image->colormap[i].opacity);
+          PosterizePixel(image->colormap[i].opacity,levels);
     }
   /*
     Posterize image.
@@ -2412,17 +2418,18 @@ MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       if ((channel & RedChannel) != 0)
-        SetPixelRed(q,PosterizePixel(GetPixelRed(q)));
+        SetPixelRed(q,PosterizePixel(GetPixelRed(q),levels));
       if ((channel & GreenChannel) != 0)
-        SetPixelGreen(q,PosterizePixel(GetPixelGreen(q)));
+        SetPixelGreen(q,PosterizePixel(GetPixelGreen(q),levels));
       if ((channel & BlueChannel) != 0)
-        SetPixelBlue(q,PosterizePixel(GetPixelBlue(q)));
+        SetPixelBlue(q,PosterizePixel(GetPixelBlue(q),levels));
       if (((channel & OpacityChannel) != 0) &&
           (image->matte != MagickFalse))
-        SetPixelOpacity(q,PosterizePixel(GetPixelOpacity(q)));
+        SetPixelOpacity(q,PosterizePixel(GetPixelOpacity(q),levels));
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace))
-        SetPixelIndex(indexes+x,PosterizePixel(GetPixelIndex(indexes+x)));
+        SetPixelIndex(indexes+x,PosterizePixel(GetPixelIndex(indexes+x),
+          levels));
       q++;
     }
     if (SyncCacheViewAuthenticPixels(image_view,exception) == MagickFalse)
