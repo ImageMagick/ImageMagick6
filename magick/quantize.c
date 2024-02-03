@@ -2327,10 +2327,17 @@ MagickExport MagickBooleanType PosterizeImage(Image *image,const size_t levels,
 
 static inline Quantum PosterizePixel(const Quantum pixel,const size_t levels)
 { 
-  ssize_t
-    alpha = (ssize_t) ((QuantumRange+1)/levels);
-    
-  return(ClampToQuantum((MagickRealType) (alpha*(pixel/alpha))));
+  double
+    step_size;
+
+  size_t
+    level_index;
+
+  if (levels < 2)
+    return(pixel);
+  step_size=1.0/(levels-1.0);
+  level_index=(step_size == 0.0) ? 0 : floor((double) pixel/step_size);
+  return(ClampToQuantum(level_index*step_size));
 }   
 
 MagickExport MagickBooleanType PosterizeImageChannel(Image *image,
