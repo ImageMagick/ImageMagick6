@@ -82,14 +82,20 @@
 #endif
 #endif
 
+/*
+  Define declarations.
+*/
+#define HEIC_COMPUTE_NUMERIC_VERSION(major,minor,patch) \
+  (((major) << 24) | ((minor) << 16) | ((patch) << 8) | 0)
+
 #if defined(MAGICKCORE_HEIC_DELEGATE)
 /*
   Forward declarations.
 */
 static MagickBooleanType
   WriteHEICImage(const ImageInfo *,Image *);
-
-/*x
+
+/*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
 %                                                                             %
@@ -565,7 +571,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   if (filetype_check == heif_filetype_no)
     ThrowReaderException(CoderError,"ImageTypeNotSupported");
   (void) CloseBlob(image);
-#if LIBHEIF_NUMERIC_VERSION >= 0x010b0000
+#if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,11,0)
   if (heif_has_compatible_brand(magic,sizeof(magic), "avif") == 1)
     (void) CopyMagickString(image->magick,"AVIF",MagickPathExtent);
 #endif
@@ -727,7 +733,7 @@ ModuleExport size_t RegisterHEICImage(void)
   MagickInfo
     *entry;
 
-#if defined(MAGICKCORE_HEIC_DELEGATE) && (LIBHEIF_NUMERIC_VERSION >= 0x010e0000)
+#if defined(MAGICKCORE_HEIC_DELEGATE) && (LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,14,0))
   heif_init((struct heif_init_params *) NULL);
 #endif
   entry=SetMagickInfo("HEIC");
@@ -760,7 +766,7 @@ ModuleExport size_t RegisterHEICImage(void)
   entry->seekable_stream=MagickTrue;
   entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
-#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+#if LIBHEIF_NUMERIC_VERSION > HEIC_COMPUTE_NUMERIC_VERSION(1,6,2)
   entry=SetMagickInfo("AVIF");
 #if defined(MAGICKCORE_HEIC_DELEGATE)
   if (heif_have_decoder_for_format(heif_compression_AV1))
@@ -802,12 +808,12 @@ ModuleExport size_t RegisterHEICImage(void)
 */
 ModuleExport void UnregisterHEICImage(void)
 {
-#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+#if LIBHEIF_NUMERIC_VERSION > HEIC_COMPUTE_NUMERIC_VERSION(1,6,2)
   (void) UnregisterMagickInfo("AVIF");
 #endif
   (void) UnregisterMagickInfo("HEIC");
   (void) UnregisterMagickInfo("HEIF");
-#if defined(MAGICKCORE_HEIC_DELEGATE) && (LIBHEIF_NUMERIC_VERSION >= 0x010e0000)
+#if defined(MAGICKCORE_HEIC_DELEGATE) && (LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,14,0))
   heif_deinit();
 #endif
 }
@@ -1171,7 +1177,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
   Image *image)
 {
   MagickBooleanType
-#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+#if LIBHEIF_NUMERIC_VERSION > HEIC_COMPUTE_NUMERIC_VERSION(1,6,2)
     encode_avif,
 #endif
     status;
@@ -1205,7 +1211,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     return(status);
   scene=0;
   heif_context=heif_context_alloc();
-#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+#if LIBHEIF_NUMERIC_VERSION > HEIC_COMPUTE_NUMERIC_VERSION(1,6,2)
   encode_avif=(LocaleCompare(image_info->magick,"AVIF") == 0) ? MagickTrue :
     MagickFalse;
 #endif
@@ -1229,7 +1235,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     /*
       Get encoder for the specified format.
     */
-#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+#if LIBHEIF_NUMERIC_VERSION > HEIC_COMPUTE_NUMERIC_VERSION(1,6,2)
     if (encode_avif != MagickFalse)
       error=heif_context_get_encoder_for_format(heif_context,
         heif_compression_AV1,&heif_encoder);
@@ -1304,7 +1310,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     status=IsHEIFSuccess(image,&error,&image->exception);
     if (status == MagickFalse)
       break;
-#if LIBHEIF_NUMERIC_VERSION > 0x01060200
+#if LIBHEIF_NUMERIC_VERSION > HEIC_COMPUTE_NUMERIC_VERSION(1,6,2)
     if (encode_avif != MagickFalse)
       {
         const char
@@ -1329,7 +1335,7 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
       }
 #endif
     options=heif_encoding_options_alloc();
-#if LIBHEIF_NUMERIC_VERSION >= 0x010e0000
+#if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,14,0)
     if (image->orientation != UndefinedOrientation)
       options->image_orientation=(enum heif_orientation) image->orientation;
 #endif
