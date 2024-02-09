@@ -3488,15 +3488,15 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 (void) GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   (void) GetNextToken(q,&q,extent,token);
-                bounds.width=CastDoubleToUnsigned(GetDrawValue(token,&next_token)+
-                  0.5);
+                bounds.width=CastDoubleToUnsigned(GetDrawValue(token,
+                  &next_token)+0.5);
                 if (token == next_token)
                   ThrowPointExpectedException(image,token);
                 (void) GetNextToken(q,&q,extent,token);
                 if (*token == ',')
                   (void) GetNextToken(q,&q,extent,token);
-                bounds.height=CastDoubleToUnsigned(GetDrawValue(token,&next_token)+
-                  0.5);
+                bounds.height=CastDoubleToUnsigned(GetDrawValue(token,
+                  &next_token)+0.5);
                 if (token == next_token)
                   ThrowPointExpectedException(image,token);
                 for (p=q; *q != '\0'; )
@@ -3911,15 +3911,15 @@ static MagickBooleanType RenderMVGContent(Image *image,
             (void) GetNextToken(q,&q,extent,token);
             if (*token == ',')
               (void) GetNextToken(q,&q,extent,token);
-            graphic_context[n]->viewbox.width=CastDoubleToUnsigned(GetDrawValue(
-              token,&next_token)+0.5);
+            graphic_context[n]->viewbox.width=CastDoubleToUnsigned(
+              GetDrawValue(token,&next_token)+0.5);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
             (void) GetNextToken(q,&q,extent,token);
             if (*token == ',')
               (void) GetNextToken(q,&q,extent,token);
-            graphic_context[n]->viewbox.height=CastDoubleToUnsigned(GetDrawValue(
-              token,&next_token)+0.5);
+            graphic_context[n]->viewbox.height=CastDoubleToUnsigned(
+              GetDrawValue(token,&next_token)+0.5);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
             break;
