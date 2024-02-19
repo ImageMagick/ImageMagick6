@@ -1792,8 +1792,8 @@ MagickExport void XColorBrowserWidget(Display *display,XWindows *windows,
         XGetWidgetInfo(action,&action_info);
         action_info.width=width;
         action_info.height=(unsigned int) ((3*height) >> 1);
-        action_info.x=cancel_info.x-(cancel_info.width+(QuantumMargin >> 1)+
-          (action_info.bevel_width << 1));
+        action_info.x=(int) windows->widget.width-(int) action_info.width-
+          (int) cancel_info.width-2*QuantumMargin-2;
         action_info.y=cancel_info.y;
         XGetWidgetInfo(GrabButtonText,&grab_info);
         grab_info.width=width;
@@ -5668,8 +5668,8 @@ MagickExport void XFontBrowserWidget(Display *display,XWindows *windows,
         XGetWidgetInfo(action,&action_info);
         action_info.width=width;
         action_info.height=(unsigned int) ((3*height) >> 1);
-        action_info.x=cancel_info.x-(cancel_info.width+(QuantumMargin >> 1)+
-          (action_info.bevel_width << 1));
+        action_info.x=(int) windows->widget.width-(int) action_info.width-
+          (int) cancel_info.width-2*QuantumMargin-2;
         action_info.y=cancel_info.y;
         XGetWidgetInfo(BackButtonText,&back_info);
         back_info.width=width;
