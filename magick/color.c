@@ -1175,7 +1175,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
       if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=360.0f;
       if ((compliance != NoCompliance) &&
-          (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse)
+          (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse))
         scale=100.0f;
       break;
     }
@@ -1185,7 +1185,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
       if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=100.0f;
       if ((compliance != NoCompliance) &&
-          (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse)
+          (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse))
         color-=QuantumRange/2.0f;
       break;
     }

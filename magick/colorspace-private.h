@@ -117,8 +117,7 @@ static inline MagickBooleanType IsLabCompatibleColorspace(
   const ColorspaceType colorspace)
 {
   if ((colorspace == LabColorspace) || (colorspace == LCHColorspace) ||
-      (colorspace == LCHabColorspace) || (colorspace == LCHuvColorspace) ||
-      (colorspace == OklabColorspace) || (colorspace == OklchColorspace))
+      (colorspace == LCHabColorspace) || (colorspace == LCHuvColorspace))
     return(MagickTrue);
   return(MagickFalse);
 }
