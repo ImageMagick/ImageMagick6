@@ -1174,7 +1174,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
       color=pixel->red;
       if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=360.0f;
-      if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
+      if ((compliance != NoCompliance) &&
+          (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=100.0f;
       break;
     }
@@ -1183,7 +1184,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
       color=pixel->green;
       if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=100.0f;
-      if ((compliance != NoCompliance) && (pixel->colorspace == LabColorspace))
+      if ((compliance != NoCompliance) &&
+          (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse)
         color-=QuantumRange/2.0f;
       break;
     }
@@ -1192,7 +1194,7 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
       color=pixel->blue;
       if (IsHueCompatibleColorspace(pixel->colorspace) != MagickFalse)
         scale=100.0f;
-      if (pixel->colorspace == LabColorspace)
+      if (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse)
         color-=QuantumRange/2.0f;
       break;
     }
@@ -1211,7 +1213,8 @@ MagickExport void ConcatenateColorComponent(const MagickPixelPacket *pixel,
     default:
       break;
   }
-  if ((scale != 100.0f) || (pixel->colorspace == LabColorspace))
+  if ((scale != 100.0f) ||
+      (IsLabCompatibleColorspace(pixel->colorspace) != MagickFalse))
     (void) FormatLocaleString(component,MagickPathExtent,"%.*g",
       GetMagickPrecision(),(double) scale*QuantumScale*(double) color);
   else
@@ -2906,7 +2909,7 @@ MagickExport MagickBooleanType QueryMagickColorCompliance(const char *name,
       if (((flags & ChiValue) != 0) && (color->matte != MagickFalse))
         color->opacity=(MagickRealType) ClampToQuantum((MagickRealType)
           QuantumRange-(MagickRealType) QuantumRange*geometry_info.chi);
-      if (color->colorspace == LabColorspace)
+      if (IsLabCompatibleColorspace(color->colorspace) != MagickFalse)
         {
           color->red=(MagickRealType) ClampToQuantum((MagickRealType)
             QuantumRange*geometry_info.rho/100.0);
