@@ -279,8 +279,7 @@ static int MVGAutoWrapPrintf(DrawingWand *wand,const char *format,...)
 
 static void MVGAppendColor(DrawingWand *wand,const PixelPacket *color)
 {
-  if ((GetPixelRed(color) == 0) &&
-      (GetPixelGreen(color) == 0) &&
+  if ((GetPixelRed(color) == 0) && (GetPixelGreen(color) == 0) &&
       (GetPixelBlue(color) == 0) &&
       (GetPixelOpacity(color) == (Quantum) TransparentOpacity))
     (void) MVGPrintf(wand,"none");
@@ -299,7 +298,7 @@ static void MVGAppendColor(DrawingWand *wand,const PixelPacket *color)
       pixel.green=(MagickRealType) GetPixelGreen(color);
       pixel.blue=(MagickRealType) GetPixelBlue(color);
       pixel.opacity=(MagickRealType) GetPixelOpacity(color);
-      GetColorTuple(&pixel,MagickTrue,tuple);
+      GetColorTuple(&pixel,color->colorspace != sRGBColorspace ? MagickFalse :         MagickTrue,tuple);
       (void) MVGPrintf(wand,"%s",tuple);
     }
 }
