@@ -298,7 +298,7 @@ static void MVGAppendColor(DrawingWand *wand,const PixelPacket *color)
       pixel.green=(MagickRealType) GetPixelGreen(color);
       pixel.blue=(MagickRealType) GetPixelBlue(color);
       pixel.opacity=(MagickRealType) GetPixelOpacity(color);
-      GetColorTuple(&pixel,color->colorspace != sRGBColorspace ? MagickFalse :         MagickTrue,tuple);
+      GetColorTuple(&pixel,MagickTrue,tuple);
       (void) MVGPrintf(wand,"%s",tuple);
     }
 }
