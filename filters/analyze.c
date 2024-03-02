@@ -36,12 +36,6 @@
 /*
   Include declarations.
 */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <assert.h>
-#include <math.h>
 #include "magick/studio.h"
 #include "magick/MagickCore.h"
 
