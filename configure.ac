@@ -2362,8 +2362,8 @@ if test "$with_jpeg" != 'no'; then
     passed=0
 
     PKG_CHECK_MODULES([JPEG],[libjpeg >= 2.0.0],[have_jpeg=yes],[have_jpeg=no])
-￼   CFLAGS="$CFLAGS $JPEG_CFLAGS"
-￼   LIBS="$LIBS $JPEG_LIBS"
+    CFLAGS="$CFLAGS $JPEG_CFLAGS"
+    LIBS="$LIBS $JPEG_LIBS"
 
     AC_CHECK_HEADER([jconfig.h],[passed=`expr $passed + 1`],[failed=`expr $failed + 1`])
     AC_CHECK_HEADER([jerror.h],[passed=`expr $passed + 1`],[failed=`expr $failed + 1`])
