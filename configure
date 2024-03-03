@@ -31537,8 +31537,8 @@ else
 printf "%s\n" "yes" >&6; }
 	have_jpeg=yes
 fi
-￼   CFLAGS="$CFLAGS $JPEG_CFLAGS"
-￼   LIBS="$LIBS $JPEG_LIBS"
+    CFLAGS="$CFLAGS $JPEG_CFLAGS"
+    LIBS="$LIBS $JPEG_LIBS"
 
     ac_fn_c_check_header_compile "$LINENO" "jconfig.h" "ac_cv_header_jconfig_h" "$ac_includes_default"
 if test "x$ac_cv_header_jconfig_h" = xyes
