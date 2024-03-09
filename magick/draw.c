@@ -2027,7 +2027,7 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
   image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,image,bounding_box.height-bounding_box.y,2)
+    magick_number_threads(image,image,(size_t) (bounding_box.height-bounding_box.y+1),1)
 #endif
   for (y=bounding_box.y; y < (ssize_t) bounding_box.height; y++)
   {
@@ -2042,19 +2042,18 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
     IndexPacket
       *magick_restrict indexes;
 
-    ssize_t
-      i,
-      x;
-
     PixelPacket
       *magick_restrict q;
 
     ssize_t
-      j;
+      i,
+      j,
+      x;
 
     if (status == MagickFalse)
       continue;
-    q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,exception);
+    q=GetCacheViewAuthenticPixels(image_view,bounding_box.x,y,(size_t)
+      (bounding_box.width-bounding_box.x+1),1,exception);
     if (q == (PixelPacket *) NULL)
       {
         status=MagickFalse;
