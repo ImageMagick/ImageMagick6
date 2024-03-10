@@ -16,7 +16,7 @@ ImageMagick is widely used in industries such as web development, graphic design
 
 ImageMagick includes a command-line interface for executing complex image processing tasks, as well as APIs for integrating its features into software applications. It is written in C and can be used on a variety of operating systems, including Linux, Windows, and macOS.
 
-The main website for ImageMagick can be found at [https://legacy.imagemagick.org](https://legacy.imagemagick.org/). The source code for this software can be accessed through a [repository](https://github.com/ImageMagick/ImageMagick). We recommend upgrading your legacy version of ImageMagick to [version 7](https://imagemagick.org/).
+The main website for ImageMagick can be found at [https://legacy.imagemagick.org](https://legacy.imagemagick.org/). The source code for this software can be accessed through a [repository](https://github.com/ImageMagick/ImageMagick6). We recommend upgrading your legacy version of ImageMagick to [version 7](https://imagemagick.org/).
 
 Creating a security policy that fits your specific local environment before making use of ImageMagick is highly advised. You can find guidance on setting up this [policy](https://legacy.imagemagick.org/script/security-policy.php). Also, it's important to verify your policy using the [validation tool](https://legacy.imagemagick.org/script/security-policy.php).
 
