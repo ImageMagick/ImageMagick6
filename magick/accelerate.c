@@ -2739,7 +2739,7 @@ static MagickBooleanType ComputeFunctionImage(Image *image,
 		  parametersBufferPtr[i] = (float)parameters[i];
 
 	  parametersBuffer = clEnv->library->clCreateBuffer(context, CL_MEM_COPY_HOST_PTR, number_parameters * sizeof(float), parametersBufferPtr, &clStatus);
-	  parametersBufferPtr=RelinquishMagickMemory(parametersBufferPtr);
+	  parametersBufferPtr=(float *) RelinquishMagickMemory(parametersBufferPtr);
   }
 
   clkernel = AcquireOpenCLKernel(clEnv, MAGICK_OPENCL_ACCELERATE, "ComputeFunction");
@@ -4688,7 +4688,7 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
       goto cleanup;
     }
 
-    kernelBufferPtr=AcquireQuantumMemory(kernel->width,sizeof(float));
+    kernelBufferPtr=(float *) AcquireQuantumMemory(kernel->width,sizeof(float));
     if (kernelBufferPtr == (float *) NULL)
     {
       (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "Memory allocation failed.",".");
@@ -4698,7 +4698,7 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
       kernelBufferPtr[i]=(float) kernel->values[i];
 
     imageKernelBuffer = clEnv->library->clCreateBuffer(context, CL_MEM_READ_ONLY | CL_MEM_COPY_HOST_PTR, kernel->width * sizeof(float), kernelBufferPtr, &clStatus);
-    kernelBufferPtr=RelinquishMagickMemory(kernelBufferPtr);
+    kernelBufferPtr=(float *) RelinquishMagickMemory(kernelBufferPtr);
     if (clStatus != CL_SUCCESS)
     {
       (void) OpenCLThrowMagickException(exception, GetMagickModule(), ResourceLimitWarning, "clEnv->library->clCreateBuffer failed.",".");

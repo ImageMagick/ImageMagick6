@@ -911,8 +911,8 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
         }
       for (i = 0; i < num_devices; i++)
       {
-        binary_program[i]=AcquireQuantumMemory(MagickMax(*(program_sizes+i),1),
-          sizeof(**binary_program));
+        binary_program[i]=(unsigned char *) AcquireQuantumMemory(
+          MagickMax(*(program_sizes+i),1),sizeof(**binary_program));
         if (binary_program[i] == (unsigned char *) NULL)
         {
           status=CL_OUT_OF_HOST_MEMORY;

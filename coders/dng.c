@@ -71,6 +71,9 @@
 #include "magick/utility-private.h"
 #include "magick/xml-tree.h"
 #if defined(MAGICKCORE_RAW_R_DELEGATE)
+#ifdef _MSC_VER
+#  define _XKEYCHECK_H
+#endif
 #include <libraw.h>
 #endif
 
@@ -132,14 +135,14 @@ static void InitializeDcrawOpenCL(ExceptionInfo *exception)
       if (name != (char *) NULL)
       {
         (void) SetEnvironmentVariable("DCR_CL_PLATFORM",name);
-        name=RelinquishMagickMemory(name);
+        name=(char *) RelinquishMagickMemory(name);
       }
       GetMagickOpenCLEnvParam(clEnv,MAGICK_OPENCL_ENV_PARAM_DEVICE_NAME,
         sizeof(char *),&name,exception);
       if (name != (char *) NULL)
       {
         (void) SetEnvironmentVariable("DCR_CL_DEVICE",name);
-        name=RelinquishMagickMemory(name);
+        name=(char *) RelinquishMagickMemory(name);
       }
     }
 }

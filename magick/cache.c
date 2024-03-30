@@ -251,7 +251,7 @@ static cl_event *CopyOpenCLEvents(OpenCLCacheInfo *opencl_info,
   *event_count=opencl_info->event_count;
   if (*event_count > 0)
     {
-      events=AcquireQuantumMemory(*event_count,sizeof(*events));
+      events=(cl_event *) AcquireQuantumMemory(*event_count,sizeof(*events));
       if (events == (cl_event *) NULL)
         *event_count=0;
       else
@@ -312,13 +312,14 @@ extern MagickPrivate void AddOpenCLEvent(const Image *image,cl_event event)
   LockSemaphoreInfo(cache_info->opencl->events_semaphore);
   if (cache_info->opencl->events == (cl_event *) NULL)
     {
-      cache_info->opencl->events=AcquireMagickMemory(sizeof(
+      cache_info->opencl->events=(cl_event *) AcquireMagickMemory(sizeof(
         *cache_info->opencl->events));
       cache_info->opencl->event_count=1;
     }
   else
-    cache_info->opencl->events=ResizeQuantumMemory(cache_info->opencl->events,
-      ++cache_info->opencl->event_count,sizeof(*cache_info->opencl->events));
+    cache_info->opencl->events=(cl_event *) ResizeQuantumMemory(
+      cache_info->opencl->events,++cache_info->opencl->event_count,
+      sizeof(*cache_info->opencl->events));
   if (cache_info->opencl->events == (cl_event *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   cache_info->opencl->events[cache_info->opencl->event_count-1]=event;

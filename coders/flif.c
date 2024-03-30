@@ -494,7 +494,7 @@ static MagickBooleanType WriteFLIFImage(const ImageInfo *image_info,
         }
       else
         {
-          qc=pixels;
+          qc=(unsigned char *) pixels;
           for (x=0; x < (ssize_t) image->columns; x++)
           {
             *qc++=ScaleQuantumToChar(GetPixelRed(p));
@@ -531,7 +531,7 @@ static MagickBooleanType WriteFLIFImage(const ImageInfo *image_info,
   pixels=RelinquishMagickMemory(pixels);
   flif_status=flif_encoder_encode_memory(flifenc,&buffer,&length);
   if (flif_status)
-    WriteBlob(image,length,buffer);
+    WriteBlob(image,length,(unsigned char *) buffer);
   CloseBlob(image);
   flif_destroy_encoder(flifenc);
   buffer=RelinquishMagickMemory(buffer);
