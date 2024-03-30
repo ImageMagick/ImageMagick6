@@ -149,11 +149,9 @@ extern "C" {
 #endif
 
 #if defined(MAGICKCORE_HAVE_CL_CL_H) && !defined(MAGICK_PIXEL_RGBA)
-#  include <CL/cl.h>
 #  define MAGICKCORE_OPENCL_SUPPORT  1
 #endif
 #if defined(MAGICKCORE_HAVE_OPENCL_CL_H) && !defined(MAGICK_PIXEL_RGBA)
-#  include <OpenCL/cl.h>
 #  define MAGICKCORE_OPENCL_SUPPORT  1
 #endif
 
