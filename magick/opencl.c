@@ -41,6 +41,7 @@
   Include declarations.
 */
 #include "magick/studio.h"
+#include "magick/accelerate-kernels-private.h"
 #include "magick/artifact.h"
 #include "magick/cache.h"
 #include "magick/cache-private.h"
