@@ -153,5 +153,5 @@ jobs:
       shell: cmd
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd ImageMagick-Windows\VisualMagick
+        cd ImageMagick-Windows
         msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.platform}}
