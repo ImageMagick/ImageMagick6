@@ -307,7 +307,7 @@ static Image *RenderSVGImage(const ImageInfo *image_info,Image *image,
   status=AcquireUniqueSymbolicLink(image->filename,input_filename);
   (void) AcquireUniqueFilename(unique);
   (void) FormatLocaleString(output_filename,MagickPathExtent,"%s.png",unique);
-  (void) AcquireUniqueFilename(unique);
+  (void) RelinquishUniqueFileResource(unique);
   density=AcquireString("");
   (void) FormatLocaleString(density,MagickPathExtent,"%.20g",
     sqrt(image->x_resolution*image->y_resolution));
@@ -321,12 +321,11 @@ static Image *RenderSVGImage(const ImageInfo *image_info,Image *image,
     image->background_color.opacity));
   (void) FormatLocaleString(command,MagickPathExtent,
     GetDelegateCommands(delegate_info),input_filename,output_filename,density,
-    background,opacity,unique);
+    background,opacity);
   density=DestroyString(density);
   status=ExternalDelegateCommand(MagickFalse,image_info->verbose,command,
     (char *) NULL,exception);
-  (void) RelinquishUniqueFileResource(unique);
-  (void) RelinquishUniqueFileResource(input_filename);
+  (void) (unique);
   if ((status == 0) && (stat(output_filename,&attributes) == 0) &&
       (attributes.st_size > 0))
     {
