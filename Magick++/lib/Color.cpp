@@ -223,7 +223,7 @@ const Magick::Color& Magick::Color::operator=(const std::string &x11color_)
       _isValid = false;
       _pixelOwn = false;
       delete _pixel;
-      _pixel = nullptr;
+      _pixel = (PixelPacket *)NULL;
     }
   ThrowPPException(false);
 
