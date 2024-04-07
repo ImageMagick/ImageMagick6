@@ -79,7 +79,9 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: CloneRepositories.IM6.cmd
+      run: |
+        cd ImageMagick-Windows
+        CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
@@ -205,7 +207,9 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: CloneRepositories.IM6.cmd
+      run: |
+        cd ImageMagick-Windows
+        CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
@@ -264,7 +268,9 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: CloneRepositories.IM6.cmd
+      run: |
+        cd ImageMagick-Windows
+        CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
