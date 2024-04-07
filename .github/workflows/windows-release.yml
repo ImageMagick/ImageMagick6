@@ -13,7 +13,7 @@ on:
     paths:
     - '.github/workflows/release.yml'
 
-name: release
+name: windows release
 jobs:
   change_log:
     name: 'Create ChangeLog.md'
@@ -79,10 +79,7 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: |
-        for /f "tokens=* USEBACKQ" %%F IN (`git -C ImageMagick rev-parse HEAD`) do set COMMIT_SHA=%%F
-        cd ImageMagick-Windows
-        CloneRepositories.IM6.cmd %COMMIT_SHA%
+      run: CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
@@ -191,7 +188,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: 'ImageMagick-${{steps.version.outputs.version}}-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.type}}-${{matrix.platform}}'
-        path: 'ImageMagick-Windows\Installer\Output'
+        path: 'ImageMagick-Windows\Installer\Inno\Output'
 
   release_windows_source:
     name: 'Windows source'
@@ -208,10 +205,7 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: |
-        for /f "tokens=* USEBACKQ" %%F IN (`git -C ImageMagick rev-parse HEAD`) do set COMMIT_SHA=%%F
-        cd ImageMagick-Windows
-        CloneRepositories.IM6.cmd %COMMIT_SHA%
+      run: CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
@@ -231,7 +225,7 @@ jobs:
         move OptionalDependencies Source
         move Output Source
         move Projects Source
-        7z a ImageMagick-Windows.7z .\Source\*
+        7z a ImageMagick6-Windows.7z .\Source\*
 
     - uses: actions/upload-artifact@v4
       with:
@@ -270,10 +264,7 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: |
-        for /f "tokens=* USEBACKQ" %%F IN (`git -C ImageMagick rev-parse HEAD`) do set COMMIT_SHA=%%F
-        cd ImageMagick-Windows
-        CloneRepositories.IM6.cmd %COMMIT_SHA%
+      run: CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
