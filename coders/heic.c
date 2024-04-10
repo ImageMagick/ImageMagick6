@@ -69,6 +69,7 @@
 #include "magick/option.h"
 #include "magick/pixel-accessor.h"
 #include "magick/quantum-private.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
@@ -560,6 +561,9 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   Image
     *image;
 
+  int
+    max_size;
+
   MagickBooleanType
     status;
 
@@ -608,6 +612,10 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
   heif_context=heif_context_alloc();
   if (heif_context == (struct heif_context *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+  max_size=(int) MagickMin(MagickMin(GetMagickResourceLimit(WidthResource),
+    GetMagickResourceLimit(HeightResource)),INT_MAX);
+  if (max_size != INT_MAX)
+    heif_context_set_maximum_image_size_limit(heif_context,max_size);
   error=heif_context_read_from_file(heif_context,image->filename,
     (const struct heif_reading_options *) NULL);
   if (IsHEIFSuccess(image,&error,exception) == MagickFalse)
