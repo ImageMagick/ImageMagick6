@@ -12211,10 +12211,8 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
         mng_info->write_png_depth = 16;
 
       else
-        (void) ThrowMagickException(&image->exception,
-             GetMagickModule(),CoderWarning,
-             "ignoring invalid defined png:bit-depth",
-             "=%s",value);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CoderWarning,"ignoring invalid defined png:bit-depth","=%s",value);
 
       if (logging != MagickFalse)
         (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -12242,10 +12240,8 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
         mng_info->write_png_colortype = 7;
 
       else
-        (void) ThrowMagickException(&image->exception,
-             GetMagickModule(),CoderWarning,
-             "ignoring invalid defined png:color-type",
-             "=%s",value);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CoderWarning,"ignoring invalid defined png:color-type","=%s",value);
 
       if (logging != MagickFalse)
         (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -12369,10 +12365,9 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
         mng_info->write_png_compression_level = 10;
 
       else
-        (void) ThrowMagickException(&image->exception,
-             GetMagickModule(),CoderWarning,
-             "ignoring invalid defined png:compression-level",
-             "=%s",value);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CoderWarning,"ignoring invalid defined png:compression-level","=%s",
+          value);
     }
 
   value=GetImageOption(image_info,"png:compression-strategy");
@@ -12404,10 +12399,9 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
 #endif
 
       else
-        (void) ThrowMagickException(&image->exception,
-             GetMagickModule(),CoderWarning,
-             "ignoring invalid defined png:compression-strategy",
-             "=%s",value);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CoderWarning,"ignoring invalid defined png:compression-strategy","=%s",
+          value);
     }
 
   value=GetImageOption(image_info,"png:compression-filter");
@@ -12424,10 +12418,9 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
 
       mng_info->write_png_compression_filter = StringToUnsignedLong(value)+1;
       if (mng_info->write_png_compression_filter > 6)
-        (void) ThrowMagickException(&image->exception,
-             GetMagickModule(),CoderWarning,
-             "ignoring invalid defined png:compression-filter",
-             "=%s",value);
+        (void) ThrowMagickException(&image->exception,GetMagickModule(),
+          CoderWarning,"ignoring invalid defined png:compression-filter","=%s",
+          value);
     }
 
   for (source=0; source<8; source++)
