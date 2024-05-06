@@ -1600,7 +1600,11 @@ MagickExport MagickBooleanType GetImageChannelMean(const Image *image,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   channel_statistics=GetImageChannelStatistics(image,exception);
   if (channel_statistics == (ChannelStatistics *) NULL)
-    return(MagickFalse);
+    {
+      *mean=NAN;
+      *standard_deviation=NAN;
+      return(MagickFalse);
+    }
   channels=0;
   channel_statistics[CompositeChannels].mean=0.0;
   channel_statistics[CompositeChannels].standard_deviation=0.0;
