@@ -3209,22 +3209,34 @@ static MagickBooleanType RenderMVGContent(Image *image,
             if (graphic_context[n]->clip_path != MagickFalse)
               break;
             factor=strchr(token,'%') != (char *) NULL ? 0.01 : 1.0;
-            opacity=MagickMin(MagickMax(factor*
+            opacity=1.0-MagickMin(MagickMax(factor*
               GetDrawValue(token,&next_token),0.0),1.0);
             if (token == next_token)
               ThrowPointExpectedException(image,token);
             if (graphic_context[n]->compliance == SVGCompliance)
               {
-                graphic_context[n]->fill_opacity*=(1.0-opacity);
-                graphic_context[n]->stroke_opacity*=(1.0-opacity);
+                graphic_context[n]->fill_opacity*=opacity;
+                graphic_context[n]->stroke_opacity*=opacity;
               }
             else
               {
-                graphic_context[n]->fill_opacity=((MagickRealType) QuantumRange-
-                  graphic_context[n]->fill_opacity)*(1.0-opacity);
-                graphic_context[n]->stroke_opacity=((MagickRealType)
-                  QuantumRange-graphic_context[n]->stroke_opacity)*
-                  (1.0-opacity);
+                graphic_context[n]->fill_opacity=(double) QuantumRange*opacity;
+                graphic_context[n]->stroke_opacity=(double) QuantumRange*
+                  opacity;
+              }
+            if (graphic_context[n]->fill.opacity != (double) TransparentOpacity)
+              {
+                graphic_context[n]->fill.opacity=
+                  graphic_context[n]->fill_opacity;
+                graphic_context[n]->stroke.opacity=
+                  graphic_context[n]->stroke_opacity;
+              }
+            else
+              {
+                graphic_context[n]->fill.opacity=(MagickRealType)
+                  ClampToQuantum((double) QuantumRange*opacity);
+                graphic_context[n]->stroke.opacity=(MagickRealType)
+                  ClampToQuantum((double) QuantumRange*opacity);
               }
             break;
           }
