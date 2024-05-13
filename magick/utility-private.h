@@ -265,6 +265,80 @@ static inline int rename_utf8(const char *source,const char *destination)
 #endif
 }
 
+static inline int set_file_timestamp(const char *path,struct stat *attributes)
+{
+  int
+    status;
+
+#if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__CYGWIN__)
+#if defined(MAGICKCORE_HAVE_UTIMENSAT)
+#if defined(__APPLE__) || defined(__NetBSD__) 
+#define st_atim st_atimespec
+#define st_ctim st_ctimespec
+#define st_mtim st_mtimespec
+#endif
+
+  struct timespec
+    timestamp[2];
+
+  timestamp[0].tv_sec=attributes->st_atim.tv_sec;
+  timestamp[0].tv_nsec=attributes->st_atim.tv_nsec;
+  timestamp[1].tv_sec=attributes->st_mtim.tv_sec;
+  timestamp[1].tv_nsec=attributes->st_mtim.tv_nsec;
+  status=utimensat(AT_FDCWD,path,timestamp,0);
+#else
+  struct utimbuf
+    timestamp;
+
+  timestamp.actime=attributes->st_atime;
+  timestamp.modtime=attributes->st_mtime;
+  status=utime(path,&timestamp);
+#endif
+#else
+  HANDLE
+    handle;
+
+  wchar_t
+    *path_wide;
+
+  status=(-1);
+  path_wide=create_wchar_path(path);
+  if (path_wide == (WCHAR *) NULL)
+    return(status);
+  handle=CreateFileW(path_wide,FILE_WRITE_ATTRIBUTES,FILE_SHARE_WRITE |
+    FILE_SHARE_READ,NULL,OPEN_EXISTING,0,NULL);
+  if (handle != (HANDLE) NULL)
+    {
+      FILETIME
+        creation_time,
+        last_access_time,
+        last_write_time;
+
+      ULARGE_INTEGER
+        date_time;
+
+      date_time.QuadPart=(ULONGLONG) (attributes->st_ctime*10000000LL)+
+        116444736000000000LL;
+      creation_time.dwLowDateTime=date_time.LowPart;
+      creation_time.dwHighDateTime=date_time.HighPart;
+      date_time.QuadPart=(ULONGLONG) (attributes->st_atime*10000000LL)+
+        116444736000000000LL;
+      last_access_time.dwLowDateTime=date_time.LowPart;
+      last_access_time.dwHighDateTime=date_time.HighPart;
+      date_time.QuadPart=(ULONGLONG) (attributes->st_mtime*10000000LL)+
+        116444736000000000LL;
+      last_write_time.dwLowDateTime=date_time.LowPart;
+      last_write_time.dwHighDateTime=date_time.HighPart;
+      status=SetFileTime(handle,&creation_time,&last_access_time,
+        &last_write_time);
+      CloseHandle(handle);
+      status=0;
+    }
+  path_wide=(WCHAR *) RelinquishMagickMemory(path_wide);
+#endif
+  return(status);
+}
+
 static inline int stat_utf8(const char *path,struct stat *attributes)
 {
 #if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__CYGWIN__)

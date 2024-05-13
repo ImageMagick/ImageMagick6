@@ -4002,24 +4002,13 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
         status&=WriteImages(image_info,image,image->filename,exception);
         if (status != MagickFalse)
           {
-#if defined(MAGICKCORE_HAVE_UTIME)
-            {
-              MagickBooleanType
-                preserve_timestamp;
+            MagickBooleanType
+               preserve_timestamp;
 
-              preserve_timestamp=IsStringTrue(GetImageOption(image_info,
-                "preserve-timestamp"));
-              if (preserve_timestamp != MagickFalse)
-                {
-                  struct utimbuf
-                    timestamp;
-
-                  timestamp.actime=properties.st_atime;
-                  timestamp.modtime=properties.st_mtime;
-                  (void) utime(image->filename,&timestamp);
-                }
-            }
-#endif
+            preserve_timestamp=IsStringTrue(GetImageOption(image_info,
+              "preserve-timestamp"));
+            if (preserve_timestamp != MagickFalse)
+              (void) set_file_timestamp(image->filename,&properties);
             if (*backup_filename != '\0')
               (void) remove_utf8(backup_filename);
           }
