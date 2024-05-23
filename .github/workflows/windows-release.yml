@@ -140,6 +140,7 @@ jobs:
         nmake release
 
     - name: 'Azure CLI login with federated credential'
+      if: github.event_name != 'pull_request'
       uses: azure/login@v2
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -163,13 +164,6 @@ jobs:
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
         "C:\Program Files (x86)\Inno Setup 6\iscc.exe" ImageMagick-Windows\Installer\Inno\ImageMagick.iss
-
-    - name: 'Azure CLI login with federated credential'
-      uses: azure/login@v2
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Sign installer
       if: github.event_name != 'pull_request'
@@ -309,6 +303,7 @@ jobs:
         msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.platform}}
 
     - name: 'Azure CLI login with federated credential'
+      if: github.event_name != 'pull_request'
       uses: azure/login@v2
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -320,7 +315,7 @@ jobs:
       uses: azure/trusted-signing-action@v0.3.18
       with:
         endpoint: https://eus.codesigning.azure.net/
-        code-signing-account-name: ImageMagick
+        trusted-signing-account-name: ImageMagick
         certificate-profile-name: ImageMagick
         files-folder: 'ImageMagick-Windows\Output\bin'
         files-folder-filter: exe
