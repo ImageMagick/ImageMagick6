@@ -112,12 +112,10 @@ typedef struct _IconInfo
     offset_bits;
 
   size_t
-    compression,
     red_mask,
     green_mask,
     blue_mask,
     alpha_mask;
-    
 
   ssize_t
     colorspace;
@@ -308,9 +306,6 @@ static Image *ReadICONImage(const ImageInfo *image_info,
   IconFile
     icon_file;
 
-  IconInfo
-    icon_info;
-
   Image
     *image;
 
@@ -478,7 +473,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
 
         if (bits_per_pixel > 32)
           ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-        icon_info.compression=ReadBlobLSBLong(image);
+        (void) ReadBlobLSBLong(image); /* compression */
         (void) ReadBlobLSBLong(image); /* image_size */
         x_pixels=ReadBlobLSBLong(image);
         y_pixels=ReadBlobLSBLong(image);
@@ -1128,7 +1123,6 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
           (void) TransformImageColorspace(image,sRGBColorspace);
         icon_info.file_size=14+12+28;
         icon_info.offset_bits=icon_info.file_size;
-        icon_info.compression=IconRgbCompression;
         if ((next->storage_class != DirectClass) && (next->colors > 256))
           (void) SetImageStorageClass(next,DirectClass);
         if (next->storage_class == DirectClass)
@@ -1138,7 +1132,6 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
             */
             number_colors=0;
             bits_per_pixel=32;
-            icon_info.compression=IconRgbCompression;
           }
         else
           {
@@ -1160,7 +1153,6 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
                 (void) SetImageStorageClass(next,DirectClass);
                 number_colors=0;
                 bits_per_pixel=(unsigned short) 24;
-                icon_info.compression=IconRgbCompression;
               }
             else
               {
@@ -1374,7 +1366,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         (void) WriteBlobLSBLong(image,(unsigned int) height*2);
         (void) WriteBlobLSBShort(image,planes);
         (void) WriteBlobLSBShort(image,bits_per_pixel);
-        (void) WriteBlobLSBLong(image,(unsigned int) icon_info.compression);
+        (void) WriteBlobLSBLong(image,(unsigned int) IconRgbCompression);
         (void) WriteBlobLSBLong(image,(unsigned int) image_size);
         (void) WriteBlobLSBLong(image,(unsigned int) x_pixels);
         (void) WriteBlobLSBLong(image,(unsigned int) y_pixels);
