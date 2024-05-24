@@ -123,8 +123,8 @@ typedef struct _IconInfo
     red_mask,
     green_mask,
     blue_mask,
-    alpha_mask,
-    colors_important;
+    alpha_mask;
+    
 
   ssize_t
     colorspace;
@@ -486,7 +486,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
         number_colors=ReadBlobLSBLong(image);
         if (number_colors > GetBlobSize(image))
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
-        icon_info.colors_important=ReadBlobLSBLong(image);
+        (void) ReadBlobLSBLong(image); /* colors_important */
         image->matte=MagickTrue;
         image->columns=(size_t) icon_file.directory[i].width;
         if ((ssize_t) image->columns > icon_info.width)
@@ -1198,7 +1198,6 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
             break;
           }
         }
-        icon_info.colors_important=number_colors;
         /*
           Convert MIFF to ICON raster pixels.
         */
@@ -1374,7 +1373,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         (void) WriteBlobLSBLong(image,(unsigned int) icon_info.x_pixels);
         (void) WriteBlobLSBLong(image,(unsigned int) icon_info.y_pixels);
         (void) WriteBlobLSBLong(image,(unsigned int) number_colors);
-        (void) WriteBlobLSBLong(image,(unsigned int) icon_info.colors_important);
+        (void) WriteBlobLSBLong(image,(unsigned int) number_colors);
         if (next->storage_class == PseudoClass)
           {
             unsigned char
