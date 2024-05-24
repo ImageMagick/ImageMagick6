@@ -96,8 +96,6 @@ typedef struct _IconEntry
 typedef struct _IconFile
 {
   short
-    reserved,
-    resource_type,
     count;
 
   IconEntry
@@ -301,12 +299,12 @@ static Image *ReadICONImage(const ImageInfo *image_info,
   IndexPacket
     *indexes;
 
-  ssize_t
-    i,
-    x;
-
   PixelPacket
     *q;
+
+  short
+    reserved,
+    resource_type;
 
   size_t
     bit,
@@ -317,7 +315,9 @@ static Image *ReadICONImage(const ImageInfo *image_info,
 
   ssize_t
     count,
+    i,
     offset,
+    x,
     y;
 
   unsigned char
@@ -339,14 +339,13 @@ static Image *ReadICONImage(const ImageInfo *image_info,
       return((Image *) NULL);
     }
   (void) memset(&icon_file,0,sizeof(icon_file));
-  icon_file.reserved=(short) ReadBlobLSBShort(image);
-  if ((icon_file.reserved == 0x0001) || (icon_file.reserved == 0x0101) ||
-      (icon_file.reserved == 0x0201))
+  reserved=(short) ReadBlobLSBShort(image);
+  if ((reserved == 0x0001) || (reserved == 0x0101) ||
+      (reserved == 0x0201))
     return(Read1XImage(image,exception));
-  icon_file.resource_type=(short) ReadBlobLSBShort(image);
+  resource_type=(short) ReadBlobLSBShort(image);
   icon_file.count=(short) ReadBlobLSBShort(image);
-  if ((icon_file.reserved != 0) ||
-      ((icon_file.resource_type != 1) && (icon_file.resource_type != 2)) ||
+  if ((reserved != 0) || ((resource_type != 1) && (resource_type != 2)) ||
       (icon_file.count > MaxIcons))
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   extent=0;
