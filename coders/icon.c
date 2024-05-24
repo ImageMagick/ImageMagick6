@@ -114,8 +114,6 @@ typedef struct _IconInfo
   size_t
     compression,
     image_size,
-    x_pixels,
-    y_pixels,
     red_mask,
     green_mask,
     blue_mask,
@@ -475,14 +473,16 @@ static Image *ReadICONImage(const ImageInfo *image_info,
     else
       {
         size_t
-          number_colors;
+          number_colors,
+          x_pixels,
+          y_pixels;
 
         if (bits_per_pixel > 32)
           ThrowReaderException(CorruptImageError,"ImproperImageHeader");
         icon_info.compression=ReadBlobLSBLong(image);
         icon_info.image_size=ReadBlobLSBLong(image);
-        icon_info.x_pixels=ReadBlobLSBLong(image);
-        icon_info.y_pixels=ReadBlobLSBLong(image);
+        x_pixels=ReadBlobLSBLong(image);
+        y_pixels=ReadBlobLSBLong(image);
         number_colors=ReadBlobLSBLong(image);
         if (number_colors > GetBlobSize(image))
           ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
@@ -1113,7 +1113,9 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
     else
       {
         size_t
-          number_colors;
+          number_colors,
+          x_pixels,
+          y_pixels;
 
         ssize_t
           width,
@@ -1184,21 +1186,21 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         size+=icon_info.image_size;
         size+=(((width+31) & ~31) >> 3)*height;
         icon_info.file_size+=icon_info.image_size;
-        icon_info.x_pixels=0;
-        icon_info.y_pixels=0;
+        x_pixels=0;
+        y_pixels=0;
         switch (next->units)
         {
           case UndefinedResolution:
           case PixelsPerInchResolution:
           {
-            icon_info.x_pixels=(size_t) (100.0*next->x_resolution/2.54);
-            icon_info.y_pixels=(size_t) (100.0*next->y_resolution/2.54);
+            x_pixels=(size_t) (100.0*next->x_resolution/2.54);
+            y_pixels=(size_t) (100.0*next->y_resolution/2.54);
             break;
           }
           case PixelsPerCentimeterResolution:
           {
-            icon_info.x_pixels=(size_t) (100.0*next->x_resolution);
-            icon_info.y_pixels=(size_t) (100.0*next->y_resolution);
+            x_pixels=(size_t) (100.0*next->x_resolution);
+            y_pixels=(size_t) (100.0*next->y_resolution);
             break;
           }
         }
@@ -1374,8 +1376,8 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         (void) WriteBlobLSBShort(image,bits_per_pixel);
         (void) WriteBlobLSBLong(image,(unsigned int) icon_info.compression);
         (void) WriteBlobLSBLong(image,(unsigned int) icon_info.image_size);
-        (void) WriteBlobLSBLong(image,(unsigned int) icon_info.x_pixels);
-        (void) WriteBlobLSBLong(image,(unsigned int) icon_info.y_pixels);
+        (void) WriteBlobLSBLong(image,(unsigned int) x_pixels);
+        (void) WriteBlobLSBLong(image,(unsigned int) y_pixels);
         (void) WriteBlobLSBLong(image,(unsigned int) number_colors);
         (void) WriteBlobLSBLong(image,(unsigned int) number_colors);
         if (next->storage_class == PseudoClass)
