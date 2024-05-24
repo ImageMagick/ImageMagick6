@@ -272,6 +272,19 @@ static Image *Read1XImage(Image *image,ExceptionInfo *exception)
   return(GetFirstImageInList(image));
 }
 
+static inline size_t GetICONSize(size_t directory_size,size_t image_size)
+{
+  size_t
+    size;
+
+  size=directory_size;
+  if (size > image_size)
+    size=image_size;
+  if (size == 0)
+    size=256;
+  return(size);
+}
+
 static Image *ReadICONImage(const ImageInfo *image_info,
   ExceptionInfo *exception)
 {
@@ -466,16 +479,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
           ThrowICONReaderException(CorruptImageError,"InsufficientImageDataInFile");
         (void) ReadBlobLSBLong(image); /* colors_important */
         image->matte=MagickTrue;
-        image->columns=(size_t) directory->icons[i]->width;
-        if ((ssize_t) image->columns > width)
-          image->columns=(size_t) width;
-        if (image->columns == 0)
-          image->columns=256;
-        image->rows=(size_t) directory->icons[i]->height;
-        if ((ssize_t) image->rows > height)
-          image->rows=(size_t) height;
-        if (image->rows == 0)
-          image->rows=256;
+        image->columns=GetICONSize(directory->icons[i]->width,width);
+        image->rows=GetICONSize(directory->icons[i]->height,height);
         image->depth=bits_per_pixel;
         if (image->depth > 16)
           image->depth=8;
