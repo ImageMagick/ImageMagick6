@@ -109,8 +109,7 @@ typedef struct _IconInfo
   size_t
     file_size,
     ba_offset,
-    offset_bits,
-    size;
+    offset_bits;
 
   ssize_t
     width,
@@ -401,6 +400,9 @@ static Image *ReadICONImage(const ImageInfo *image_info,
   one=1;
   for (i=0; i < icon_file.count; i++)
   {
+    size_t
+      size;
+
     unsigned short
       bits_per_pixel,
       planes;
@@ -412,7 +414,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
       icon_file.directory[i].offset,SEEK_SET);
     if (offset < 0)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-    icon_info.size=ReadBlobLSBLong(image);
+    size=ReadBlobLSBLong(image);
     icon_info.width=(unsigned char) ReadBlobLSBSignedLong(image);
     icon_info.height=(unsigned char) (ReadBlobLSBSignedLong(image)/2);
     planes=ReadBlobLSBShort(image);
@@ -424,7 +426,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
         break;
       }
     if (((planes == 18505) && (bits_per_pixel == 21060)) || 
-        (icon_info.size == 0x474e5089))
+        (size == 0x474e5089))
       {
         Image
           *icon_image;
@@ -502,7 +504,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
             (void) LogMagickEvent(CoderEvent,GetMagickModule(),
               " scene    = %.20g",(double) i);
             (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-              "   size   = %.20g",(double) icon_info.size);
+              "   size   = %.20g",(double) size);
             (void) LogMagickEvent(CoderEvent,GetMagickModule(),
               "   width  = %.20g",(double) icon_file.directory[i].width);
             (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -1047,6 +1049,9 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
   number_scenes=GetImageListLength(image);
   do
   {
+    size_t
+      size;
+
     unsigned short
       bits_per_pixel,
       planes;
@@ -1165,10 +1170,10 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         icon_info.height=(ssize_t) next->rows;
         planes=1;
         icon_info.image_size=bytes_per_line*next->rows;
-        icon_info.size=40;
-        icon_info.size+=(4*icon_info.number_colors);
-        icon_info.size+=icon_info.image_size;
-        icon_info.size+=(((icon_info.width+31) & ~31) >> 3)*icon_info.height;
+        size=40;
+        size+=(4*icon_info.number_colors);
+        size+=icon_info.image_size;
+        size+=(((icon_info.width+31) & ~31) >> 3)*icon_info.height;
         icon_info.file_size+=icon_info.image_size;
         icon_info.x_pixels=0;
         icon_info.y_pixels=0;
@@ -1353,7 +1358,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         icon_file.directory[scene].reserved=0;
         icon_file.directory[scene].planes=planes;
         icon_file.directory[scene].bits_per_pixel=bits_per_pixel;
-        icon_file.directory[scene].size=icon_info.size;
+        icon_file.directory[scene].size=size;
         icon_file.directory[scene].offset=(size_t) TellBlob(image);
         (void) WriteBlobLSBLong(image,(unsigned int) 40);
         (void) WriteBlobLSBLong(image,(unsigned int) icon_info.width);
