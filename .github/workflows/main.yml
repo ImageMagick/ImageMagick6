@@ -112,7 +112,7 @@ jobs:
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
         cd ImageMagick-Windows
-        msbuild IM6.StaticDLL.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
+        msbuild IM6.StaticDLL.x64.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
 
   build_msys2:
     name: Build MSYS2
