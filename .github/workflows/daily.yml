@@ -126,9 +126,8 @@ jobs:
     - name: Clone repositories
       shell: cmd
       run: |
-        for /f "tokens=* USEBACKQ" %%F IN (`git -C ImageMagick6 rev-parse HEAD`) do set COMMIT_SHA=%%F
         cd ImageMagick-Windows
-        CloneRepositories.IM6.cmd %COMMIT_SHA%
+        CloneRepositories.IM6.cmd
 
     - name: Download ChangeLog.md
       uses: actions/download-artifact@v4
