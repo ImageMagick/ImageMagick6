@@ -512,10 +512,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       for (x=0; x < (ssize_t) image->columns; x++)
       {
         if (ReadBlobString(image,text) == (char *) NULL)
-          {
-            status=MagickFalse;
-            break;
-          }
+          ThrowReaderException(CorruptImageError,"UnexpectedEndOfFile");
         switch (image->colorspace)
         {
           case LinearGRAYColorspace:
@@ -624,7 +621,7 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       }
   } while (LocaleNCompare((char *) text,MagickID,strlen(MagickID)) == 0);
   (void) CloseBlob(image);
-  if (q == (PixelPacket *) NULL)
+  if ((q == (PixelPacket *) NULL) || (y < (ssize_t) image->rows))
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
 }
