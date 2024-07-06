@@ -304,7 +304,8 @@ static Image *RenderSVGImage(const ImageInfo *image_info,Image *image,
   delegate_info=GetDelegateInfo("svg:decode",(char *) NULL,exception);
   if (delegate_info == (const DelegateInfo *) NULL)
     return((Image *) NULL);
-  status=AcquireUniqueSymbolicLink(image->filename,input_filename);
+  if (AcquireUniqueSymbolicLink(image->filename,input_filename) == MagickFalse)
+    return((Image *) NULL);
   (void) AcquireUniqueFilename(unique);
   (void) FormatLocaleString(output_filename,MagickPathExtent,"%s.png",unique);
   (void) RelinquishUniqueFileResource(unique);
