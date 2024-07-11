@@ -76,11 +76,10 @@
 #include "magick/module.h"
 #include "magick/utility.h"
 #if defined(MAGICKCORE_HEIC_DELEGATE)
-#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__)
-#include <heif.h>
-#include <heif_properties.h>
-#else
+#define HEIC_COMPUTE_NUMERIC_VERSION(major,minor,patch) \
+  ((major<<24) | (minor<<16) | (patch<<8) | 0)
 #include <libheif/heif.h>
+#if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,17,0)
 #include <libheif/heif_properties.h>
 #endif
 #endif
@@ -370,6 +369,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
     (void) SetImageProperty(image,"exif:Orientation","1");
   else
     {
+#if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,17,0)
       heif_item_id
         item_id;
 
@@ -430,6 +430,7 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
             }
           }
         }
+#endif
       image->columns=(size_t) heif_image_handle_get_ispe_width(image_handle);
       image->rows=(size_t) heif_image_handle_get_ispe_height(image_handle);
     }
