@@ -84,12 +84,6 @@
 #endif
 #endif
 
-/*
-  Define declarations.
-*/
-#define HEIC_COMPUTE_NUMERIC_VERSION(major,minor,patch) \
-  (((major) << 24) | ((minor) << 16) | ((patch) << 8) | 0)
-
 #if defined(MAGICKCORE_HEIC_DELEGATE)
 /*
   Forward declarations.
