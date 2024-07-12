@@ -110,9 +110,9 @@ extern "C" {
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && \
   !(defined(_MSC_VER) && (_MSC_VER < 1400)) && \
   !(defined(__MSVCRT_VERSION__) && (__MSVCRT_VERSION__ < 0x800))
-#  define fstat  _fstati64
+#  define fstat  _fstat64
 #else
-#  define fstat  _fstat
+#  define fstat  _fstat64
 #endif
 #endif
 #if !defined(fsync)
@@ -228,9 +228,9 @@ extern "C" {
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && \
   !(defined(_MSC_VER) && (_MSC_VER < 1400)) && \
   !(defined(__MSVCRT_VERSION__) && (__MSVCRT_VERSION__ < 0x800))
-#  define stat  _stati64
+#  define stat  _stat64
 #else
-#  define stat  _stat
+#  define stat  _stat64
 #endif
 #endif
 #if !defined(strcasecmp)
