@@ -1850,27 +1850,24 @@ WandExport void DrawGetStrokeColor(const DrawingWand *wand,
 WandExport double *DrawGetStrokeDashArray(const DrawingWand *wand,
   size_t *number_elements)
 {
-  double
-    *dasharray;
-
   const double
     *p;
 
   double
+    *dasharray,
     *q;
+
+  size_t
+    n = 0;
 
   ssize_t
     i;
-
-  size_t
-    n;
 
   assert(wand != (const DrawingWand *) NULL);
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
   assert(number_elements != (size_t *) NULL);
-  n=0;
   p=CurrentContext->dash_pattern;
   if (p != (const double *) NULL)
     while (fabs(*p++) >= MagickEpsilon)
