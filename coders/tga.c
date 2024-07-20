@@ -942,12 +942,27 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
         else
           tga_info.colormap_size=24;
       }
-  if ((image->orientation == BottomRightOrientation) ||
-      (image->orientation == TopRightOrientation))
-    tga_info.attributes|=(1UL << 4);
-  if ((image->orientation == TopLeftOrientation) ||
-      (image->orientation == TopRightOrientation))
-    tga_info.attributes|=(1UL << 5);
+  switch (image->orientation)
+  {
+    case BottomRightOrientation:
+    {
+      tga_info.attributes|=0x10;
+      break;
+    }
+    case UndefinedOrientation:
+    case TopLeftOrientation:
+    {
+      tga_info.attributes|=0x20;
+      break;
+    }
+    case TopRightOrientation:
+    {
+      tga_info.attributes|=0x30;
+      break;
+    }
+    default:
+      break;
+  }
   value=GetImageArtifact(image,"tga:image-origin");  /* deprecated */
   if (value != (const char *) NULL)
     {
