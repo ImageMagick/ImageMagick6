@@ -489,24 +489,19 @@ static MagickBooleanType DecodeLabImage(Image *image,ExceptionInfo *exception)
   return(status);
 }
 
-static MagickBooleanType ReadProfile(Image *image,const char *name,
+static void ReadProfile(Image *image,const char *name,
   const unsigned char *datum,ssize_t length)
 {
-  MagickBooleanType
-    status;
-
   StringInfo
     *profile;
 
   if (length < 4)
-    return(MagickFalse);
+    return;
   profile=BlobToStringInfo(datum,(size_t) length);
   if (profile == (StringInfo *) NULL)
-    ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
-      image->filename);
-  status=SetImageProfile(image,name,profile);
+    return;
+  (void) SetImageProfile(image,name,profile);
   profile=DestroyStringInfo(profile);
-  return(status);
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)
@@ -548,27 +543,23 @@ static toff_t TIFFGetBlobSize(thandle_t image)
   return((toff_t) GetBlobSize((Image *) image));
 }
 
-static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
+static void TIFFGetProfiles(TIFF *tiff,Image *image)
 {
-  MagickBooleanType
-    status;
-
   uint32
     length = 0;
 
   unsigned char
     *profile = (unsigned char *) NULL;
 
-  status=MagickTrue;
 #if defined(TIFFTAG_ICCPROFILE)
   if ((TIFFGetField(tiff,TIFFTAG_ICCPROFILE,&length,&profile) == 1) &&
       (profile != (unsigned char *) NULL))
-    status=ReadProfile(image,"icc",profile,(ssize_t) length);
+    ReadProfile(image,"icc",profile,(ssize_t) length);
 #endif
 #if defined(TIFFTAG_PHOTOSHOP)
   if ((TIFFGetField(tiff,TIFFTAG_PHOTOSHOP,&length,&profile) == 1) &&
       (profile != (unsigned char *) NULL))
-    status=ReadProfile(image,"8bim",profile,(ssize_t) length);
+    ReadProfile(image,"8bim",profile,(ssize_t) length);
 #endif
 #if defined(TIFFTAG_RICHTIFFIPTC) && (TIFFLIB_VERSION >= 20191103)
   if ((TIFFGetField(tiff,TIFFTAG_RICHTIFFIPTC,&length,&profile) == 1) &&
@@ -583,10 +574,10 @@ static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
         {
           if (TIFFIsByteSwapped(tiff) != 0)
             TIFFSwabArrayOfLong((uint32 *) profile,(tmsize_t) length);
-          status=ReadProfile(image,"iptc",profile,4L*length);
+          ReadProfile(image,"iptc",profile,4L*length);
         }
       else
-        status=ReadProfile(image,"iptc",profile,length);
+        ReadProfile(image,"iptc",profile,length);
     }
 #endif
 #if defined(TIFFTAG_XMLPACKET)
@@ -596,7 +587,7 @@ static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
       StringInfo
         *dng;
 
-      status=ReadProfile(image,"xmp",profile,(ssize_t) length);
+      ReadProfile(image,"xmp",profile,(ssize_t) length);
       dng=BlobToStringInfo(profile,length);
       if (dng != (StringInfo *) NULL)
         {
@@ -611,11 +602,10 @@ static MagickBooleanType TIFFGetProfiles(TIFF *tiff,Image *image)
 #endif
   if ((TIFFGetField(tiff,34118,&length,&profile) == 1) &&
       (profile != (unsigned char *) NULL))
-    status=ReadProfile(image,"tiff:34118",profile,(ssize_t) length);
+    ReadProfile(image,"tiff:34118",profile,(ssize_t) length);
   if ((TIFFGetField(tiff,37724,&length,&profile) == 1) &&
       (profile != (unsigned char *) NULL))
-    status=ReadProfile(image,"tiff:37724",profile,(ssize_t) length);
-  return(status);
+    ReadProfile(image,"tiff:37724",profile,(ssize_t) length);
 }
 
 static MagickBooleanType TIFFGetProperties(TIFF *tiff,Image *image)
@@ -1374,13 +1364,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         (compress_tag != COMPRESSION_OJPEG) &&
         (compress_tag != COMPRESSION_JPEG))
       image->colorspace=YCbCrColorspace;
-    status=TIFFGetProfiles(tiff,image);
-    if (status == MagickFalse)
-      {
-        TIFFClose(tiff);
-        InheritException(exception,&image->exception);
-        return(DestroyImageList(image));
-      }
+    TIFFGetProfiles(tiff,image);
     status=TIFFGetProperties(tiff,image);
     if (status == MagickFalse)
       {
