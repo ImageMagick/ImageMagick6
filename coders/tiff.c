@@ -1621,7 +1621,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                   break;
                 }
           }
-        if ((image->matte == MagickFalse) && (extra_samples == 1))
+        if ((image->matte == MagickFalse) && (extra_samples >= 1))
           {
             const char
               *option;
