@@ -279,7 +279,7 @@ MagickExport MagickBooleanType BlobToFile(char *filename,const void *blob,
   for (i=0; i < length; i+=(size_t) count)
   {
     count=write(file,(const char *) blob+i,MagickMin(length-i,(size_t)
-      MAGICK_SSIZE_MAX));
+      MagickMaxBufferExtent));
     if (count <= 0)
       {
         count=0;
@@ -1235,7 +1235,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
       for (i=0; i < *length; i+=count)
       {
         count=read(file,blob+i,(size_t) MagickMin(*length-i,(size_t)
-          MAGICK_SSIZE_MAX));
+          MagickMaxBufferExtent));
         if (count <= 0)
           {
             count=0;

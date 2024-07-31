@@ -150,10 +150,10 @@ static inline MagickOffsetType WriteMatrixElements(
   {
 #if !defined(MAGICKCORE_HAVE_PWRITE)
     count=write(matrix_info->file,buffer+i,(size_t) MagickMin(length-i,
-      (MagickSizeType) MAGICK_SSIZE_MAX));
+      (MagickSizeType) MagickMaxBufferExtent));
 #else
     count=pwrite(matrix_info->file,buffer+i,(size_t) MagickMin(length-i,
-      (MagickSizeType) MAGICK_SSIZE_MAX),(off_t) (offset+i));
+      (MagickSizeType) MagickMaxBufferExtent),(off_t) (offset+i));
 #endif
     if (count <= 0)
       {
@@ -683,10 +683,10 @@ static inline MagickOffsetType ReadMatrixElements(
   {
 #if !defined(MAGICKCORE_HAVE_PREAD)
     count=read(matrix_info->file,buffer+i,(size_t) MagickMin(length-i,
-      (MagickSizeType) MAGICK_SSIZE_MAX));
+      (MagickSizeType) MagickMaxBufferExtent));
 #else
     count=pread(matrix_info->file,buffer+i,(size_t) MagickMin(length-i,
-      (MagickSizeType) MAGICK_SSIZE_MAX),(off_t) (offset+i));
+      (MagickSizeType) MagickMaxBufferExtent),(off_t) (offset+i));
 #endif
     if (count <= 0)
       {
