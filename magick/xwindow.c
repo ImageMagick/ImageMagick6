@@ -5000,10 +5000,7 @@ MagickExport Image *XImportImage(const ImageInfo *image_info,
   image=XGetWindowImage(display,target,ximage_info->borders,
     ximage_info->descend ? 1U : 0U);
   (void) XUngrabServer(display);
-  if (image == (Image *) NULL)
-    ThrowXWindowException(XServerError,"UnableToReadXWindowImage",
-      image_info->filename)
-  else
+  if (image != (Image *) NULL)
     {
       (void) CopyMagickString(image->filename,image_info->filename,
         MaxTextExtent);
@@ -9221,7 +9218,7 @@ static Window XSelectWindow(Display *display,RectangleInfo *crop_info)
   annotate_context=XCreateGC(display,root_window,(size_t) (GCBackground |
     GCForeground | GCFunction | GCSubwindowMode),&context_values);
   if (annotate_context == (GC) NULL)
-    return(MagickFalse);
+    return((Window) NULL);
   /*
     Grab the pointer using target cursor.
   */
@@ -9321,6 +9318,8 @@ static Window XSelectWindow(Display *display,RectangleInfo *crop_info)
     }
   if ((crop_info->width != 0) && (crop_info->height != 0))
     target_window=root_window;
+  if (event.xbutton.button == Button3)
+    target_window=(Window) NULL;
   return(target_window);
 }
 
