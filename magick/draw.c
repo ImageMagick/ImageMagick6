@@ -761,7 +761,6 @@ static PolygonInfo *ConvertPathToPolygon(const PathInfo *path_info,
         }
     }
   polygon_info->number_edges=edge;
-  polygon_info->number_edges=edge;
   polygon_info->edges=(EdgeInfo *) ResizeQuantumMemory(polygon_info->edges,
     polygon_info->number_edges,sizeof(*polygon_info->edges));
   if (polygon_info->edges == (EdgeInfo *) NULL)
