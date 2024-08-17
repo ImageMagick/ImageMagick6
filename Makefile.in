@@ -3280,6 +3280,7 @@ ShowImageDelegate = @ShowImageDelegate@
 TAR = @TAR@
 TCMALLOC_LIBS = @TCMALLOC_LIBS@
 THREAD_LIBS = @THREAD_LIBS@
+TIFF_CFLAGS = @TIFF_CFLAGS@
 TIFF_LIBS = @TIFF_LIBS@
 TextEncodeDelegate = @TextEncodeDelegate@
 TraceEncodeDelegate = @TraceEncodeDelegate@
