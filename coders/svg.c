@@ -611,11 +611,10 @@ static Image *RenderRSVGImage(const ImageInfo *image_info,Image *image,
 
             gamma=1.0-QuantumScale*(MagickRealType) fill_color.opacity;
             gamma=PerceptibleReciprocal(gamma);
-            fill_color.blue=(Quantum) ((MagickRealType) fill_color.red*gamma);
+            fill_color.red=(Quantum) ((MagickRealType) fill_color.red*gamma);
             fill_color.green=(Quantum) ((MagickRealType) fill_color.green*
               gamma);
-            fill_color.red=(Quantum) ((MagickRealType) fill_color.blue*gamma);
-          }
+            fill_color.blue=(Quantum) ((MagickRealType) fill_color.blue*gamma);
 #endif
           MagickCompositeOver(&fill_color,fill_color.opacity,q,
             (MagickRealType) q->opacity,q);
