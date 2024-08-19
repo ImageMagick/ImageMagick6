@@ -2060,11 +2060,11 @@ static int read_user_chunk_callback(png_struct *ping, png_unknown_chunkp chunk)
   /* iTXt */
   if ((chunk->name[0] == 105) && (chunk->name[1] ==  84) &&
       (chunk->name[2] ==  88) && (chunk->name[3] == 116))
-    {     
+    {
       image=(Image *) png_get_user_chunk_ptr(ping);
- 
+
       error_info=(PNGErrorInfo *) png_get_error_ptr(ping);
-  
+
       return(PNGParseiTXt(image,chunk->data,chunk->size,
         error_info->exception));
     }
@@ -11682,40 +11682,46 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "    PNG Interlace method: %d",ping_interlace_method);
     }
-  /*
-    Generate text chunks after IDAT.
-  */
   if (ping_exclude_tEXt == MagickFalse || ping_exclude_zTXt == MagickFalse)
   {
-    ResetImagePropertyIterator(image);
-    while ((property=GetNextImageProperty(image)) != (const char *) NULL)
-    {
-      /* Don't write any "png:" or "jpeg:" properties; those are just for
-       * "identify" or for passing through to another JPEG
-       */
-      if ((LocaleNCompare(property,"png:",4) == 0 ||
-           LocaleNCompare(property,"jpeg:",5) == 0))
-        continue;
-      /* Suppress density and units if we wrote a pHYs chunk */
-      if ((ping_exclude_pHYs == MagickFalse) && (
-          ((LocaleCompare(property,"exif:ResolutionUnit") == 0) ||
-           (LocaleCompare(property,"exif:XResolution") == 0) ||
-           (LocaleCompare(property,"exif:YResolution") == 0) ||
-           (LocaleCompare(property,"tiff:ResolutionUnit") == 0) ||
-           (LocaleCompare(property,"tiff:XResolution") == 0) ||
-           (LocaleCompare(property,"tiff:YResolution") == 0) ||
-           (LocaleCompare(property,"density") == 0) ||
-           (LocaleCompare(property,"units") == 0))))
-        continue;
-      /* Suppress the IM-generated date:create and date:modify */
-      if ((ping_exclude_date == MagickFalse) &&
-          (LocaleNCompare(property, "date:",5) == 0))
-        continue;
-      value=GetImageProperty(image,property);
-      if (value == (const char *) NULL)
-        continue;
-      Magick_png_set_text(ping,ping_info,mng_info,image_info,property,value);
-    }
+    /*
+      Generate text chunks after IDAT.
+    */
+    Image *property_image = CloneImage(image,0,0,MagickTrue,&image->exception);
+    if (property_image != (Image *) NULL)
+      {
+        ResetImagePropertyIterator(property_image);
+        while ((property=GetNextImageProperty(property_image)) != (const char *) NULL)
+        {
+          /* Don't write any "png:" or "jpeg:" properties; those are just for
+           * "identify" or for passing through to another JPEG
+           */
+          if ((LocaleNCompare(property,"png:",4) == 0 ||
+               LocaleNCompare(property,"jpeg:",5) == 0))
+            continue;
+          /* Suppress density and units if we wrote a pHYs chunk */
+          if ((ping_exclude_pHYs == MagickFalse) && (
+              ((LocaleCompare(property,"exif:ResolutionUnit") == 0) ||
+               (LocaleCompare(property,"exif:XResolution") == 0) ||
+               (LocaleCompare(property,"exif:YResolution") == 0) ||
+               (LocaleCompare(property,"tiff:ResolutionUnit") == 0) ||
+               (LocaleCompare(property,"tiff:XResolution") == 0) ||
+               (LocaleCompare(property,"tiff:YResolution") == 0) ||
+               (LocaleCompare(property,"density") == 0) ||
+               (LocaleCompare(property,"units") == 0))))
+            continue;
+          /* Suppress the IM-generated date:create and date:modify */
+          if ((ping_exclude_date == MagickFalse) &&
+              (LocaleNCompare(property, "date:",5) == 0))
+            continue;
+          value=GetImageProperty(property_image,property);
+          if (value == (const char *) NULL)
+            continue;
+          Magick_png_set_text(ping,ping_info,mng_info,image_info,property,
+            value);
+        }
+        property_image=DestroyImage(property_image);
+      }
   }
 
   /* write eXIf profile */
