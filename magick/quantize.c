@@ -3127,8 +3127,7 @@ MagickExport MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   assert(remap_image != (Image *) NULL);
   assert(remap_image->signature == MagickCoreSignature);
-  cube_info=GetQCubeInfo(quantize_info,MaxTreeDepth,
-    quantize_info->number_colors);
+  cube_info=GetQCubeInfo(quantize_info,MaxTreeDepth,MaxColormapSize);
   if (cube_info == (QCubeInfo *) NULL)
     ThrowBinaryImageException(ResourceLimitError,"MemoryAllocationFailed",
       image->filename);
@@ -3140,6 +3139,8 @@ MagickExport MagickBooleanType RemapImage(const QuantizeInfo *quantize_info,
         Classify image colors from the reference image.
       */
       cube_info->quantize_info->number_colors=cube_info->colors;
+      if (cube_info->colors > cube_info->maximum_colors)
+        ReduceImageColors(image,cube_info);
       status=AssignImageColors(image,cube_info);
     }
   DestroyQCubeInfo(cube_info);
