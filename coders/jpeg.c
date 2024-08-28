@@ -98,10 +98,14 @@
 /*
   Define declarations.
 */
-#define ICC_MARKER  (JPEG_APP0+2)
+#define COMMENT_INDEX  0
+#define APP_INDEX  0
+#define APP_MARKER  (JPEG_APP0+APP_INDEX)
+#define ICC_INDEX  2
+#define ICC_MARKER  (JPEG_APP0+ICC_INDEX)
 #define ICC_PROFILE  "ICC_PROFILE"
-#define IPTC_MARKER  (JPEG_APP0+13)
-#define XML_MARKER  (JPEG_APP0+1)
+#define IPTC_INDEX  13
+#define IPTC_MARKER  (JPEG_APP0+IPTC_INDEX)
 #define MaxJPEGProfiles  16
 #define MaxJPEGScans  1024
 
@@ -725,7 +729,7 @@ static boolean ReadIPTCProfile(j_decompress_ptr jpeg_info)
   return(TRUE);
 }
 
-static boolean ReadProfile(j_decompress_ptr jpeg_info)
+static boolean ReadAPPProfiles(j_decompress_ptr jpeg_info)
 {
   char
     name[MaxTextExtent];
@@ -1219,14 +1223,28 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   JPEGSourceManager(jpeg_info,image);
   jpeg_set_marker_processor(jpeg_info,JPEG_COM,ReadComment);
   option=GetImageOption(image_info,"profile:skip");
-  if (IsOptionMember("ICC",option) == MagickFalse)
-    jpeg_set_marker_processor(jpeg_info,ICC_MARKER,ReadICCProfile);
-  if (IsOptionMember("IPTC",option) == MagickFalse)
-    jpeg_set_marker_processor(jpeg_info,IPTC_MARKER,ReadIPTCProfile);
   for (i=1; i < MaxJPEGProfiles; i++)
-    if ((i != 2) && (i != 13) && (i != 14))
-      if (IsOptionMember("APP",option) == MagickFalse)
-        jpeg_set_marker_processor(jpeg_info,(int) (JPEG_APP0+i),ReadProfile);
+  {
+    if (i == ICC_INDEX)
+      {
+        if (IsOptionMember("ICC",option) == MagickFalse)
+          jpeg_set_marker_processor(jpeg_info,ICC_MARKER,ReadICCProfile);
+      }
+    else if (i == IPTC_INDEX)
+      {
+        if (IsOptionMember("IPTC",option) == MagickFalse)
+          jpeg_set_marker_processor(jpeg_info,IPTC_MARKER,ReadIPTCProfile);
+      }
+    else if (i != 14)
+      {
+        /*
+          Ignore APP14 as this will change the colors of the image.
+        */
+        if (IsOptionMember("APP",option) == MagickFalse)
+          jpeg_set_marker_processor(jpeg_info,(int) (JPEG_APP0+i),
+            ReadAPPProfiles);
+      }
+  }
   i=(ssize_t) jpeg_read_header(jpeg_info,TRUE);
   if (IsYCbCrCompatibleColorspace(image_info->colorspace) != MagickFalse)
     jpeg_info->out_color_space=JCS_YCbCr;
@@ -2139,7 +2157,7 @@ static void WriteProfiles(j_compress_ptr jpeg_info,Image *image)
               image->filename);
             length=65533L;
           }
-        jpeg_write_marker(jpeg_info,XML_MARKER,GetStringInfoDatum(profile),
+        jpeg_write_marker(jpeg_info,APP_MARKER+1,GetStringInfoDatum(profile),
           (unsigned int) length);
       }
     if (LocaleCompare(name,"ICC") == 0)
@@ -2208,7 +2226,7 @@ static void WriteProfiles(j_compress_ptr jpeg_info,Image *image)
             ConcatenateStringInfo(xmp_profile,profile);
             GetStringInfoDatum(xmp_profile)[XMPNamespaceExtent]='\0';
             length=GetStringInfoLength(xmp_profile);
-            jpeg_write_marker(jpeg_info,XML_MARKER,
+            jpeg_write_marker(jpeg_info,APP_MARKER+1,
               GetStringInfoDatum(xmp_profile),(unsigned int) length);
             xmp_profile=DestroyStringInfo(xmp_profile);
           }
