@@ -751,6 +751,7 @@ ConvertDelegate
 DVIDecodeDelegate
 DOCDecodeDelegate
 DNGDecodeDelegate
+ClipboardDelegate
 BrowseDelegate
 BlenderDecodeDelegate
 BPGEncodeDelegate
@@ -5142,7 +5143,7 @@ MAGICK_PATCHLEVEL_VERSION=16
 
 MAGICK_VERSION=6.9.13-16
 
-MAGICK_GIT_REVISION=b7dde5236:20240824
+MAGICK_GIT_REVISION=9594abd29:20240828
 
 
 # Substitute library versioning
@@ -5176,7 +5177,7 @@ PACKAGE_LIB_VERSION=0x69D
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,16
 
-PACKAGE_RELEASE_DATE=2024-08-24
+PACKAGE_RELEASE_DATE=2024-08-28
 
 
 # Ensure that make can run correctly
@@ -34447,6 +34448,7 @@ BPGDecodeDelegateDefault='bpgdec'
 BPGEncodeDelegateDefault='bpgenc'
 BlenderDecodeDelegateDefault='blender'
 BrowseDelegateDefault='xdg-open'
+ClipboardDelegateDefault='xclip'
 DNGDecodeDelegateDefault='darktable-cli'
 DOCDecodeDelegateDefault='libreoffice'
 GVCDecodeDelegateDefault='dot'
@@ -34626,7 +34628,7 @@ printf "%s\n" "no" >&6; }
 fi
 
 
-for ac_prog in "$BrowseDelegateDefault" google-chrome firefox konqueror mozilla lynx
+for ac_prog in "$BrowseDelegateDefault" brave-browser microsoft-edge google-chrome firefox konqueror lynx
 do
   # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -34676,6 +34678,57 @@ fi
   test -n "$BrowseDelegate" && break
 done
 test -n "$BrowseDelegate" || BrowseDelegate=""$BrowseDelegateDefault""
+
+for ac_prog in "$ClipboardDelegateDefault"
+do
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+set dummy $ac_prog; ac_word=$2
+{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
+printf %s "checking for $ac_word... " >&6; }
+if test ${ac_cv_path_ClipboardDelegate+y}
+then :
+  printf %s "(cached) " >&6
+else $as_nop
+  case $ClipboardDelegate in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ClipboardDelegate="$ClipboardDelegate" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  case $as_dir in #(((
+    '') as_dir=./ ;;
+    */) ;;
+    *) as_dir=$as_dir/ ;;
+  esac
+    for ac_exec_ext in '' $ac_executable_extensions; do
+  if as_fn_executable_p "$as_dir$ac_word$ac_exec_ext"; then
+    ac_cv_path_ClipboardDelegate="$as_dir$ac_word$ac_exec_ext"
+    printf "%s\n" "$as_me:${as_lineno-$LINENO}: found $as_dir$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+  done
+IFS=$as_save_IFS
+
+  ;;
+esac
+fi
+ClipboardDelegate=$ac_cv_path_ClipboardDelegate
+if test -n "$ClipboardDelegate"; then
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $ClipboardDelegate" >&5
+printf "%s\n" "$ClipboardDelegate" >&6; }
+else
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+fi
+
+
+  test -n "$ClipboardDelegate" && break
+done
+test -n "$ClipboardDelegate" || ClipboardDelegate=""$ClipboardDelegateDefault""
 
 # Extract the first word of ""$DNGDecodeDelegateDefault"", so it can be a program name with args.
 set dummy "$DNGDecodeDelegateDefault"; ac_word=$2
@@ -36394,6 +36447,7 @@ if test "$with_frozenpaths" != 'yes'; then
   BPGEncodeDelegate="$BPGEncodeDelegateDefault"
   BlenderDecodeDelegate="$BlenderDecodeDelegateDefault"
   BrowseDelegate="$BrowseDelegateDefault"
+  ClipboardDelegate="$ClipboardDelegateDefault"
   ConvertDelegate="$ConvertDelegateDefault"
   DisplayDelegate="$DisplayDelegateDefault"
   DNGDecodeDelegate="$DNGDecodeDelegateDefault"
@@ -36428,6 +36482,7 @@ if test "$with_frozenpaths" != 'yes'; then
 fi
 
 # Delegate substitutions
+
 
 
 

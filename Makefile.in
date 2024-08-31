@@ -3023,6 +3023,7 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+ClipboardDelegate = @ClipboardDelegate@
 ConvertDelegate = @ConvertDelegate@
 DATA_DIR = @DATA_DIR@
 DEFS = @DEFS@
