@@ -2590,14 +2590,14 @@ MagickExport void *GetConfigureBlob(const char *filename,char *path,
   blob=(void *) NULL;
   (void) CopyMagickString(path,filename,MaxTextExtent);
 #if defined(MAGICKCORE_INSTALLED_SUPPORT)
-#if defined(MAGICKCORE_LIBRARY_PATH)
+#if defined(MAGICKCORE_LIBRARY_ABSOLUTE_PATH)
   if (blob == (void *) NULL)
     {
       /*
         Search hard coded paths.
       */
       (void) FormatLocaleString(path,MaxTextExtent,"%s%s",
-        MAGICKCORE_LIBRARY_PATH,filename);
+        MAGICKCORE_LIBRARY_ABSOLUTE_PATH,filename);
       if (IsPathAccessible(path) != MagickFalse)
         blob=FileToBlob(path,~0UL,length,exception);
     }
