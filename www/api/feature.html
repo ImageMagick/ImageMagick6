@@ -22,9 +22,9 @@
   <meta name="copyright" content="Copyright (c) 1999 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
-  <meta property='og:url' content='https://legacy.imagemagick.org/' />
+  <meta property='og:url' content='../../' />
   <meta property='og:title' content='ImageMagick' />
-  <meta property='og:image' content='https://legacy.imagemagick.org/images/logo.png' />
+  <meta property='og:image' content='../../../images/logo.png' />
   <meta property='og:type' content='website' />
   <meta property='og:site_name' content='ImageMagick' />
   <meta property='og:description' content="Create, Edit, Compose, or Convert Digital Images" />
@@ -33,6 +33,8 @@
   <link href="../../images/wand.png" rel="icon" />
   <link href="../../images/wand.ico" rel="shortcut icon" />
   <link href="../assets/magick.css" rel="stylesheet" />
+  <script async src="https://localhost/pagead/js/adsbygoogle.js?client=ca-pub-3129977114552745" crossorigin="anonymous"></script>
+  <script async src="https://cse.google.com/cse.js?cx=006134137889097767902:turn9fku95u"> </script>
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -63,27 +65,13 @@
           <iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border: 0;"></iframe>
         </li>
       </ul>
-      <form class="d-flex form-inline" action="https://imagemagick.org/script/search.php">
+      <form class="d-flex form-inline" action="https://legacy.imagemagick.org/script/search.php">
         <input class="form-control me-2" type="text" name="q" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit" name="sa">Search</button>
       </form>
     </div>
   </div>
   </nav>
-
-  <div class="container">
-    <script async="async" src="https://localhost/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-3129977114552745"
-      data-ad-slot="6345125851"
-      data-full-width-responsive="true"
-      data-ad-format="horizontal"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-  </div>
 
   <main class="container">
   <div class="magick-template">
@@ -93,15 +81,15 @@
   Select API Method
 </button>
 <ul class="dropdown-menu pre-scrollable" aria-labelledby="defaultDropdown">
-  <li><a href="feature.html#CannyEdgeImage">CannyEdgeImage</a></li>
-  <li><a href="feature.html#GetImageChannelFeatures">GetImageChannelFeatures</a></li>
-  <li><a href="feature.html#Use HoughLineImage">Use HoughLineImage</a></li>
+  <li><a href="#CannyEdgeImage">CannyEdgeImage</a></li>
+  <li><a href="#GetImageChannelFeatures">GetImageChannelFeatures</a></li>
+  <li><a href="#Use HoughLineImage">Use HoughLineImage</a></li>
 </ul>
 </div>
 <br/>
 <br/>
 <div class="magick-header">
-<h2><a href="https://legacy.imagemagick.org/api/MagickCore/feature_8c.html" id="CannyEdgeImage">CannyEdgeImage</a></h2>
+<h2><a href="../../api/MagickCore/feature_8c.html" id="CannyEdgeImage">CannyEdgeImage</a></h2>
 
 <p>CannyEdgeImage() uses a multi-stage algorithm to detect a wide range of edges in images.</p>
 
@@ -144,7 +132,7 @@
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://legacy.imagemagick.org/api/MagickCore/feature_8c.html" id="GetImageChannelFeatures">GetImageChannelFeatures</a></h2>
+<h2><a href="../../api/MagickCore/feature_8c.html" id="GetImageChannelFeatures">GetImageChannelFeatures</a></h2>
 
 <p>GetImageChannelFeatures() returns features for each channel in the image in each of four directions (horizontal, vertical, left and right diagonals) for the specified distance.  The features include the angular second moment, contrast, correlation, sum of squares: variance, inverse difference moment, sum average, sum varience, sum entropy, entropy, difference variance,  difference entropy, information measures of correlation 1, information measures of correlation 2, and maximum correlation coefficient.  You can access the red channel contrast, for example, like this:</p>
 
@@ -180,7 +168,7 @@ contrast=channel_features[RedChannel].contrast[0];
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://legacy.imagemagick.org/api/MagickCore/feature_8c.html" id="Use_HoughLineImage">Use HoughLineImage</a></h2>
+<h2><a href="../../api/MagickCore/feature_8c.html" id="Use_HoughLineImage">Use HoughLineImage</a></h2>
 
 <p>Use HoughLineImage() in conjunction with any binary edge extracted image (we recommand Canny) to identify lines in the image.  The algorithm accumulates counts for every white pixel for every possible orientation (for angles from 0 to 179 in 1 degree increments) and distance from the center of the image to the corner (in 1 px increments) and stores the counts in an accumulator matrix of angle vs distance. The size of the accumulator is 180x(diagonal/2).  Next it searches this space for peaks in counts and converts the locations of the peaks to slope and intercept in the normal x,y input image space. Use the slope/intercepts to find the endpoints clipped to the bounds of the image. The lines are then drawn. The counts are a measure of the length of the lines.</p>
 
@@ -214,7 +202,7 @@ contrast=channel_features[RedChannel].contrast[0];
 
 <dd>  </dd>
 </dl>
-<h2><a href="https://legacy.imagemagick.org/api/MagickCore/feature_8c.html" id="MeanShiftImage">MeanShiftImage</a></h2>
+<h2><a href="../../api/MagickCore/feature_8c.html" id="MeanShiftImage">MeanShiftImage</a></h2>
 
 <p>MeanShiftImage() delineate arbitrarily shaped clusters in the image. For each pixel, it visits all the pixels in the neighborhood specified by the window centered at the pixel and excludes those that are outside the radius=(window-1)/2 surrounding the pixel. From those pixels, it finds those that are within the specified color distance from the current mean, and computes a new x,y centroid from those coordinates and a new mean. This new x,y centroid is used as the center for a new window. This process iterates until it converges and the final mean is replaces the (original window center) pixel value. It repeats this process for the next pixel, etc.,  until it processes all pixels in the image. Results are typically better with colorspaces other than sRGB. We recommend YIQ, YUV or YCbCr.</p>
 
@@ -257,7 +245,7 @@ contrast=channel_features[RedChannel].contrast[0];
       <a href="../www/security-policy.html">Security</a> •
       <a href="../www/news.html">News</a>
      
-      <a href="feature.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../../images/wand.ico"/></a>
+      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../../images/wand.ico"/></a>
      
       <a href="../www/links.html">Related</a> •
       <a href="../www/sitemap.html">Sitemap</a>

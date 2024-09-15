@@ -22,9 +22,9 @@
   <meta name="copyright" content="Copyright (c) 1999 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
-  <meta property='og:url' content='https://legacy.imagemagick.org/' />
+  <meta property='og:url' content='../' />
   <meta property='og:title' content='ImageMagick' />
-  <meta property='og:image' content='https://legacy.imagemagick.org/images/logo.png' />
+  <meta property='og:image' content='../images/logo.png' />
   <meta property='og:type' content='website' />
   <meta property='og:site_name' content='ImageMagick' />
   <meta property='og:description' content="Create, Edit, Compose, or Convert Digital Images" />
@@ -33,6 +33,8 @@
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
+  <script async src="https://localhost/pagead/js/adsbygoogle.js?client=ca-pub-3129977114552745" crossorigin="anonymous"></script>
+  <script async src="https://cse.google.com/cse.js?cx=006134137889097767902:turn9fku95u"> </script>
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -63,7 +65,7 @@
           <iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border: 0;"></iframe>
         </li>
       </ul>
-      <form class="d-flex form-inline" action="https://imagemagick.org/script/search.php">
+      <form class="d-flex form-inline" action="https://legacy.imagemagick.org/script/search.php">
         <input class="form-control me-2" type="text" name="q" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit" name="sa">Search</button>
       </form>
@@ -71,25 +73,11 @@
   </div>
   </nav>
 
-  <div class="container">
-    <script async="async" src="https://localhost/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-3129977114552745"
-      data-ad-slot="6345125851"
-      data-full-width-responsive="true"
-      data-ad-format="horizontal"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-  </div>
-
   <main class="container">
   <div class="magick-template">
 <div class="magick-header">
 <h1 class="text-center">Security Policy</h1>
-<p class="text-center"><a href="security-policy.html#policy">Security Policy </a> • <a href="security-policy.html#example">Example Security Policy</a> • <a href="security-policy.html#synchronize">Pixel Cache Synchronize Policy</a> • <a href="security-policy.html#zero-configuration">Zero Configuration Security Policy</a> • <a href="security-policy.html#other">Other Security Considerations</a></p>
+<p class="text-center"><a href="#policy">Security Policy </a> • <a href="#example">Example Security Policy</a> • <a href="#synchronize">Pixel Cache Synchronize Policy</a> • <a href="#zero-configuration">Zero Configuration Security Policy</a> • <a href="#other">Other Security Considerations</a></p>
 
 <p class="text-info">It is strongly recommended to establish a security policy suitable for your local environment before utilizing ImageMagick.</p>
 
@@ -97,20 +85,20 @@
 
 <p>ImageMagick is a tool that allows you to manipulate images. While it offers a range of features and capabilities, there is often a trade-off between security and convenience. To ensure optimal security, you can restrict ImageMagick to only reading or writing web-safe image formats like GIF, JPEG, and PNG. Alternatively, you can customize the security policy to fit the needs of your local environment or organizational policies. This policy can include details such as memory usage limits, allowed paths for reading and writing, limits on the number of images in a sequence, maximum workflow runtime, allowed disk space for image pixels, a secret passphrase for remote connections, and which coders are permitted or denied. By customizing the security policy, you can help secure your environment and ensure that ImageMagick is a responsible member of your local system, such as by preventing overloading with large images.</p>
 
-<p>It is important to set limits on ImageMagick's resource usage to prevent potentially harmful situations. For example, if you accidentally download an image from the internet that has been crafted to generate a very large image (e.g., 20000 by 20000 pixels), ImageMagick may try to allocate the necessary resources (such as memory and disk space) and your system may deny the request or cause the program to exit. Alternatively, your computer may become temporarily slow or unresponsive, or ImageMagick may be forced to abort. To avoid such situations, you can set limits in the <a href="https://imagemagick.org/source/policy-open.xml">policy.xml</a> configuration file.</p>
+<p>It is important to set limits on ImageMagick's resource usage to prevent potentially harmful situations. For example, if you accidentally download an image from the internet that has been crafted to generate a very large image (e.g., 20000 by 20000 pixels), ImageMagick may try to allocate the necessary resources (such as memory and disk space) and your system may deny the request or cause the program to exit. Alternatively, your computer may become temporarily slow or unresponsive, or ImageMagick may be forced to abort. To avoid such situations, you can set limits in the <a href="https://legacy.imagemagick.org/source/policy-open.xml">policy.xml</a> configuration file.</p>
 
 <p>Keep in mind that what is considered reasonable for one environment may not be suitable for another. For example, you may have ImageMagick sandboxed in a secure environment, while someone else may use it to process images on a publicly accessible website. Or, ImageMagick may be running on a host with a lot of memory, while another instance is running on a device with limited resources. In the case of the host with large memory, it may make sense to allow large image processing, but not on the device with limited resources. If you are using ImageMagick on a public website, you may want to increase security by disabling certain coders such as MVG or HTTPS.</p>
 
 <p>To help you get started, as of version 6.9.12-94, ImageMagick provides security polices that you can select when installing ImageMagick.  Choose from:
 
 <ul>
-<dt><a href="https://imagemagick.org/source/policy-open.xml">open</a></dt>
+<dt><a href="https://legacy.imagemagick.org/source/policy-open.xml">open</a></dt>
 <dd>The default policy for ImageMagick installations is the open security policy. This policy is designed for usage in secure settings like those protected by firewalls or within Docker containers. Within this framework, ImageMagick enjoys broad access to resources and functionalities. This policy provides convenient and adaptable options for image manipulation. However, it's important to note that it might present security vulnerabilities in less regulated conditions. Thus, organizations should thoroughly assess the appropriateness of the open policy according to their particular use case and security prerequisites.  </dd>
-<dt><a href="https://imagemagick.org/source/policy-limited.xml">limited</a></dt>
+<dt><a href="https://legacy.imagemagick.org/source/policy-limited.xml">limited</a></dt>
 <dd>The primary objective of the limited security policy is to find a middle ground between convenience and security. This policy involves the deactivation of potentially hazardous functionalities, like specific coders such as SVG or HTTP. Furthermore, it establishes several constraints on the utilization of resources like memory, storage, and processing duration, all of which are adjustable. This policy proves advantageous in situations where there's a need to mitigate the potential threat of handling possibly malicious or demanding images, all while retaining essential capabilities for prevalent image formats.</dt>
-<dt><a href="https://imagemagick.org/source/policy-secure.xml">secure</a></dt>
+<dt><a href="https://legacy.imagemagick.org/source/policy-secure.xml">secure</a></dt>
 <dd>This stringent security policy prioritizes the implementation of rigorous controls and restricted resource utilization to establish a profoundly secure setting while employing ImageMagick. It deactivates conceivably hazardous functionalities, including specific coders like SVG or HTTP. The policy promotes the tailoring of security measures to harmonize with the requirements of the local environment and the guidelines of the organization. This protocol encompasses explicit particulars like limitations on memory consumption, sanctioned pathways for reading and writing, confines on image sequences, the utmost permissible duration of workflows, allocation of disk space intended for image data, and even an undisclosed passphrase for remote connections. By adopting this robust policy, entities can elevate their overall security stance and alleviate potential vulnerabilities.</dt>
-<dt><a href="https://imagemagick.org/source/policy-websafe.xml">websafe</a></dt>
+<dt><a href="https://legacy.imagemagick.org/source/policy-websafe.xml">websafe</a></dt>
 <dd>This security protocol designed for web-safe usage focuses on situations where ImageMagick is applied in publicly accessible contexts, like websites.  It deactivates the capability to read from or write to any image formats other than web-safe formats like GIF, JPEG, and PNG. Additionally, this policy prohibits the execution of image filters and indirect reads, thereby thwarting potential security breaches. By implementing these limitations, the web-safe policy fortifies the safeguarding of systems accessible to the public, reducing the risk of exploiting ImageMagick's capabilities for potential attacks.</dd>
 </ul>
 <p>Under Linux, select the policy with the <code>--with-security-policy={open,limited,secure,websafe}</code> configure script option.  Under Windows, the choice is presented when you run the configure app.</p>
@@ -137,7 +125,7 @@
 &lt;!--
   Creating a security policy that fits your specific local environment
   before making use of ImageMagick is highly advised. You can find guidance on
-  setting up this policy at ../www/security-policy.html,
+  setting up this policy at https://imagemagick.org/www/security-policy.html,
   and it's important to verify your policy using the validation tool located
   at https://imagemagick-secevaluator.doyensec.com/.
 
@@ -234,7 +222,7 @@
 
 <p>Here is what you can expect when you restrict the HTTPS coder, for example:</p>
 
-<pre class="bg-light text-dark mx-4">$ magick ../images/wizard.png wizard.jpg
+<pre class="bg-light text-dark mx-4">$ magick https://imagemagick.org/images/wizard.png wizard.jpg
 convert: attempt to perform an operation not allowed by the security policy `HTTPS'
 convert: no images defined `wizard.jpg'</pre>
 
@@ -335,7 +323,7 @@ Path: [built-in]
     rights: None</pre>
 <p>Notice the <samp>shared-secret</samp> policy is not listed due to the <samp>stealth</samp> property.</p>
 
-<p>Doyensec provides a policy evaluator tool that can assist you in designing and auditing your security policy.  The tool is found at <a href="https://imagemagick-secevaluator.doyensec.com/">imagemagick-secevaluator.doyensec.com</a>.</p>
+<p>Doyensec provides a policy evaluator tool that can assist you in designing and auditing your security policy.  The tool is found at <a href="../index.html">imagemagick-secevaluator.doyensec.com</a>.</p>
 
 <h2><a class="anchor" id="synchronize"></a>Pixel Cache Synchronize Policy</h2>
 
@@ -386,7 +374,7 @@ Path: [built-in]
       <a href="security-policy.html">Security</a> •
       <a href="news.html">News</a>
      
-      <a href="security-policy.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
      
       <a href="links.html">Related</a> •
       <a href="sitemap.html">Sitemap</a>
@@ -394,7 +382,7 @@ Path: [built-in]
      <a href="support.html">Sponsor</a> •
      <a href="cite.html">Cite</a> •
      <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
-     <a href="https://imagemagick.org/script/contact.php">Contact Us</a>
+     <a href="https://legacy.imagemagick.org/script/contact.php">Contact Us</a>
    <br/>
      <a href="https://github.com/imagemagick/imagemagick6" target="_blank" rel="noopener" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg" viewBox="0 0 512 499.36" width="2%" height="2%" role="img" focusable="false"><title>GitHub</title><path fill="currentColor" fill-rule="evenodd" d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z"/></svg></a> •
      <a href="https://twitter.com/imagemagick" target="_blank" rel="noopener" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg" viewBox="0 0 300 300" width="2%" height="2%" role="img" focusable="false"><title>Twitter</title><path d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"/></svg></a>
@@ -407,3 +395,4 @@ Path: [built-in]
   <script src="assets/magick.js" ></script>
   </body>
 </html>
+<!-- Magick Cache 15th September 2024 23:05 -->

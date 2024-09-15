@@ -22,9 +22,9 @@
   <meta name="copyright" content="Copyright (c) 1999 ImageMagick Studio LLC" />
   <meta name="distribution" content="Global" />
   <meta name="magick-serial" content="P131-S030410-R485315270133-P82224-A6668-G1245-1" />
-  <meta property='og:url' content='https://legacy.imagemagick.org/' />
+  <meta property='og:url' content='../' />
   <meta property='og:title' content='ImageMagick' />
-  <meta property='og:image' content='https://legacy.imagemagick.org/images/logo.png' />
+  <meta property='og:image' content='../images/logo.png' />
   <meta property='og:type' content='website' />
   <meta property='og:site_name' content='ImageMagick' />
   <meta property='og:description' content="Create, Edit, Compose, or Convert Digital Images" />
@@ -33,6 +33,8 @@
   <link href="../images/wand.png" rel="icon" />
   <link href="../images/wand.ico" rel="shortcut icon" />
   <link href="assets/magick.css" rel="stylesheet" />
+  <script async src="https://localhost/pagead/js/adsbygoogle.js?client=ca-pub-3129977114552745" crossorigin="anonymous"></script>
+  <script async src="https://cse.google.com/cse.js?cx=006134137889097767902:turn9fku95u"> </script>
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -63,7 +65,7 @@
           <iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border: 0;"></iframe>
         </li>
       </ul>
-      <form class="d-flex form-inline" action="https://imagemagick.org/script/search.php">
+      <form class="d-flex form-inline" action="https://legacy.imagemagick.org/script/search.php">
         <input class="form-control me-2" type="text" name="q" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit" name="sa">Search</button>
       </form>
@@ -71,38 +73,24 @@
   </div>
   </nav>
 
-  <div class="container">
-    <script async="async" src="https://localhost/pagead/js/adsbygoogle.js"></script>
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-3129977114552745"
-      data-ad-slot="6345125851"
-      data-full-width-responsive="true"
-      data-ad-format="horizontal"></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-
-  </div>
-
   <main class="container">
   <div class="magick-template">
 <div class="magick-header">
 <h1 class="text-center">Anatomy of the Command-line</h1>
-<p class="text-center"><a href="command-line-processing.html#anatomy">The Anatomy of the Command-line</a> • <a href="command-line-processing.html#input">Input Filename</a> • <a href="command-line-processing.html#option">Command-line Options</a> • <a href="command-line-processing.html#output">Output Filename</a></p>
+<p class="text-center"><a href="#anatomy">The Anatomy of the Command-line</a> • <a href="#input">Input Filename</a> • <a href="#option">Command-line Options</a> • <a href="#output">Output Filename</a></p>
 
 <p class="lead magick-description">The ImageMagick command-line <a href="command-line-tools.html">tools</a> can be as simple as this:</p>
 
 <pre class="bg-light text-dark mx-4"><code>convert image.jpg image.png </code></pre>
 
-<p>Or it can be complex with a plethora of <a href="command-line-processing.html#option">options</a>, as in the following:</p>
+<p>Or it can be complex with a plethora of <a href="#option">options</a>, as in the following:</p>
 
 <pre class="bg-light text-dark mx-4"><code>convert label.gif +matte \
   \( +clone  -shade 110x90 -normalize -negate +clone  -compose Plus -composite \) \
   \( -clone 0 -shade 110x50 -normalize -channel BG -fx 0 +channel -matte \) \
   -delete 0 +swap  -compose Multiply -composite  button.gif");</code></pre>
 
-<p class="text-info">This example command is long enough that the command must be written across several lines, so we formatted it for clarity by inserting backslashes (<code>\</code>). The backslash is the Linux <var>line-continuation</var> character. In the Windows shell, use a carat character (<code>^</code>) for line-continuation. We use the Linux style on these web pages, as above. Sometimes, however, the lines are wrapped by your browser if the browser window is small enough, but the command-lines, shown in white, are still intended to be typed as one line. Line continuation characters need not be entered. The <var>parentheses</var> that are <var>escaped</var> above using the backslash are not escaped in Windows. There are some other differences between Windows and Linux (involving quotation marks, for instance), but we'll discuss some of those issues later, as they arise. </p>
+<p class="text-info">This example command is long enough that the command must be written across several lines, so we formatted it for clarity by inserting backslashes (<code>\</code>). The backslash is the Linux <var>line-continuation</var> character. In the Windows shell, use a caret character (<code>^</code>) for line-continuation. We use the Linux style on these web pages, as above. Sometimes, however, the lines are wrapped by your browser if the browser window is small enough, but the command-lines, shown in white, are still intended to be typed as one line. Line continuation characters need not be entered. The <var>parentheses</var> that are <var>escaped</var> above using the backslash are not escaped in Windows. There are some other differences between Windows and Linux (involving quotation marks, for instance), but we'll discuss some of those issues later, as they arise. </p>
 
 <p>Without knowing much about the ImageMagick command-line, you can probably surmise that the first command above converts an image in the JPEG format to one in the PNG format.  However, very few may realize the second, more complex command, gives a flat two-dimensional label a three-dimensional look with rich textures and simulated depth:</p>
 
@@ -176,7 +164,7 @@
 
 <p>These extensions are explained in the next few paragraphs.</p>
 
-<p>Note, by default, if a command-line option is also a filename (e.g., <samp>-quality</samp>), it is intrepetted as a filename.  Use <samp>-define registry:option:pedantic=true</samp> to instead interpret it as an option. </p>
+<p>Note, by default, if a command-line option is also a filename (e.g., <samp>-quality</samp>), it is interpreted as a filename.  Use <samp>-define registry:option:pedantic=true</samp> to instead interpret it as an option. </p>
 
 <h4>Filename Globbing</h4>
 <p>In Linux shells, certain characters such as the asterisk (<code>*</code>) and question mark (<code>?</code>) automagically cause lists of filenames to be generated based on pattern matches. This feature is known as globbing.  ImageMagick supports filename globbing for systems, such as Windows, that does not natively support it.  For example, suppose you want to convert <code>1.jpg</code>, <code>2.jpg</code>, <code>3.jpg</code>, <code>4.jpg</code>, and <code>5.jpg</code> in your current directory to a GIF animation.  You can conveniently  refer to all of the JPEG files with this command:
@@ -254,7 +242,7 @@ In a Windows command shell the brackets are not interpreted but using quotes doe
 
 <pre class="bg-light text-dark mx-4"><code>convert 'images.gif[3,2,4]' images.mng</code></pre>
 
-<p>Notice that in the last two commands, a single image is written. The output in this case, where the image type is MNG, is a multi-frame file because the MNG format supports multiple frames. Had the output format been JPG, which only supports single frames, the output would have consisted of separate frames. More about that below, in the section about the <a href="command-line-processing.html#output">Output Filename</a>.
+<p>Notice that in the last two commands, a single image is written. The output in this case, where the image type is MNG, is a multi-frame file because the MNG format supports multiple frames. Had the output format been JPG, which only supports single frames, the output would have consisted of separate frames. More about that below, in the section about the <a href="#output">Output Filename</a>.
 </p>
 
 <h4>Selecting an Image Region</h4>
@@ -270,7 +258,7 @@ In a Windows command shell the brackets are not interpreted but using quotes doe
 <pre class="bg-light text-dark mx-4"><code>convert -size 6000x4000 -depth 8 -extract 600x400+1900+2900 rgb:image image.jpg</code></pre>
 
 <h4>Inline Image Resize</h4>
-<p>It is sometimes convenient to resize an image as they are read.  Suppose you have hundreds of large JPEG images you want to convert to a sequence of PNG thumbails:
+<p>It is sometimes convenient to resize an image as they are read.  Suppose you have hundreds of large JPEG images you want to convert to a sequence of PNG thumbnails:
 </p>
 
 <pre class="bg-light text-dark mx-4"><code>convert '*.jpg' -resize 120x120 thumbnail%03d.png</code></pre>
@@ -283,7 +271,7 @@ is read:
 <pre class="bg-light text-dark mx-4"><code>convert '*.jpg[120x120]' thumbnail%03d.png</code></pre>
 
 <h4>Inline Image Crop</h4>
-<p>It is sometimes convenient to crop an image as they are read.  Suppose you have hundreds of large JPEG images you want to convert to a sequence of PNG thumbails:
+<p>It is sometimes convenient to crop an image as they are read.  Suppose you have hundreds of large JPEG images you want to convert to a sequence of PNG thumbnails:
 </p>
 
 <pre class="bg-light text-dark mx-4"><code>convert '*.jpg' -crop 120x120+10+5 thumbnail%03d.png</code></pre>
@@ -345,12 +333,12 @@ image-5.jpg</pre>
 <p>You can direct the behavior of ImageMagick utilities with these command-line <a href="command-line-options.html">options</a>.  The behavior of an option falls into one of these categories:</p>
 
 <ul>
-<li><a href="command-line-processing.html#setting">Image Setting</a></li>
-<li><a href="command-line-processing.html#operator">Image Operator</a></li>
-<li><a href="command-line-processing.html#channel">Image Channel Operator</a></li>
-<li><a href="command-line-processing.html#sequence">Image Sequence Operator</a></li>
-<li><a href="command-line-processing.html#geometry">Image Geometry</a></li>
-<li><a href="command-line-processing.html#stack">Image Stack</a></li>
+<li><a href="#setting">Image Setting</a></li>
+<li><a href="#operator">Image Operator</a></li>
+<li><a href="#channel">Image Channel Operator</a></li>
+<li><a href="#sequence">Image Sequence Operator</a></li>
+<li><a href="#geometry">Image Geometry</a></li>
+<li><a href="#stack">Image Stack</a></li>
 </ul>
 
 <h4><a class="anchor" id="setting"></a>Image Setting</h4>
@@ -373,8 +361,8 @@ is reset or the command-line terminates.  The image settings include:</p>
 <p>An image operator differs from a setting in that it affects the image
 immediately as it appears on the command-line.  An operator is
 any command-line <a href="command-line-options.html">option</a> not listed as a
-<a href="command-line-processing.html#setting">image setting</a> or
-<a href="command-line-processing.html#sequence">image sequence operator</a>.  Unlike an
+<a href="#setting">image setting</a> or
+<a href="#sequence">image sequence operator</a>.  Unlike an
 image setting, which persists until the command-line terminates,
 an operator is applied to the current image set and forgotten.  The image operators include:</p>
 
@@ -529,7 +517,7 @@ magick logo: -resize '100x200&lt;' wiz4.png</code></pre>
 
 <pre class="bg-light text-dark mx-4"><code>convert logo: -resize '10000@' wiz10000.png</code></pre>
 
-<p class="text-info">In all the examples above and below, we have enclosed the <var>geometry</var> arguments  within quotation marks. Doing so is optional in many cases, but not always. We <var>must</var> enclose the geometry specifications in quotation marks when using <code>&lt;</code> or <code>&gt;</code> to prevent these characters from being interpreted by the shell as <var>file redirection</var>. On Windows systems, the carat <code>^</code>  needs to be within quotes, else it is ignored. To be safe, one should probably maintain a habit of enclosing all <var>geometry</var> arguments in quotes, as we have here.
+<p class="text-info">In all the examples above and below, we have enclosed the <var>geometry</var> arguments  within quotation marks. Doing so is optional in many cases, but not always. We <var>must</var> enclose the geometry specifications in quotation marks when using <code>&lt;</code> or <code>&gt;</code> to prevent these characters from being interpreted by the shell as <var>file redirection</var>. On Windows systems, the caret <code>^</code>  needs to be within quotes, else it is ignored. To be safe, one should probably maintain a habit of enclosing all <var>geometry</var> arguments in quotes, as we have here.
 </p>
 
 <h4>Offsets in geometry</h4>
@@ -621,7 +609,7 @@ image-2.jpg</pre>
 
 <pre class="bg-light text-dark mx-4"><code>convert *.jpg +adjoin page-%d.pdf</code></pre>
 
-<p>Use <code>-define filename:literal=true</code> to bypass interpretting embedded formatting characters and instead use the filename literally.</p>
+<p>Use <code>-define filename:literal=true</code> to bypass interpreting embedded formatting characters and instead use the filename literally.</p>
 
 <h4>Stream Buffering</h4>
 
@@ -636,7 +624,7 @@ image-2.jpg</pre>
       <a href="security-policy.html">Security</a> •
       <a href="news.html">News</a>
      
-      <a href="command-line-processing.html#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
+      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../images/wand.ico"/></a>
      
       <a href="links.html">Related</a> •
       <a href="sitemap.html">Sitemap</a>
@@ -644,7 +632,7 @@ image-2.jpg</pre>
      <a href="support.html">Sponsor</a> •
      <a href="cite.html">Cite</a> •
      <a href="http://pgp.mit.edu/pks/lookup?op=get&amp;search=0x89AB63D48277377A">Public Key</a> •
-     <a href="https://imagemagick.org/script/contact.php">Contact Us</a>
+     <a href="https://legacy.imagemagick.org/script/contact.php">Contact Us</a>
    <br/>
      <a href="https://github.com/imagemagick/imagemagick6" target="_blank" rel="noopener" aria-label="GitHub"><svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg" viewBox="0 0 512 499.36" width="2%" height="2%" role="img" focusable="false"><title>GitHub</title><path fill="currentColor" fill-rule="evenodd" d="M256 0C114.64 0 0 114.61 0 256c0 113.09 73.34 209 175.08 242.9 12.8 2.35 17.47-5.56 17.47-12.34 0-6.08-.22-22.18-.35-43.54-71.2 15.49-86.2-34.34-86.2-34.34-11.64-29.57-28.42-37.45-28.42-37.45-23.27-15.84 1.73-15.55 1.73-15.55 25.69 1.81 39.21 26.38 39.21 26.38 22.84 39.12 59.92 27.82 74.5 21.27 2.33-16.54 8.94-27.82 16.25-34.22-56.84-6.43-116.6-28.43-116.6-126.49 0-27.95 10-50.8 26.35-68.69-2.63-6.48-11.42-32.5 2.51-67.75 0 0 21.49-6.88 70.4 26.24a242.65 242.65 0 0 1 128.18 0c48.87-33.13 70.33-26.24 70.33-26.24 14 35.25 5.18 61.27 2.55 67.75 16.41 17.9 26.31 40.75 26.31 68.69 0 98.35-59.85 120-116.88 126.32 9.19 7.9 17.38 23.53 17.38 47.41 0 34.22-.31 61.83-.31 70.23 0 6.85 4.61 14.81 17.6 12.31C438.72 464.97 512 369.08 512 256.02 512 114.62 397.37 0 256 0z"/></svg></a> •
      <a href="https://twitter.com/imagemagick" target="_blank" rel="noopener" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" class="navbar-nav-svg" viewBox="0 0 300 300" width="2%" height="2%" role="img" focusable="false"><title>Twitter</title><path d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"/></svg></a>
@@ -657,4 +645,4 @@ image-2.jpg</pre>
   <script src="assets/magick.js" ></script>
   </body>
 </html>
-<!-- Magick Cache 28th February 2024 21:54 -->
+<!-- Magick Cache 15th September 2024 22:14 -->
