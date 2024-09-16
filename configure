@@ -5143,7 +5143,7 @@ MAGICK_PATCHLEVEL_VERSION=17
 
 MAGICK_VERSION=6.9.13-17
 
-MAGICK_GIT_REVISION=0c69754b7:20240913
+MAGICK_GIT_REVISION=27250f437:20240915
 
 
 # Substitute library versioning
@@ -5177,7 +5177,7 @@ PACKAGE_LIB_VERSION=0x69D
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,17
 
-PACKAGE_RELEASE_DATE=2024-09-13
+PACKAGE_RELEASE_DATE=2024-09-15
 
 
 # Ensure that make can run correctly
@@ -36408,6 +36408,13 @@ printf %s "checking for Windows fonts directory... " >&6; }
 windows_font_dir=''
 if test "${with_windows_font_dir}" != 'default'; then
   windows_font_dir="${with_windows_font_dir}/"
+else
+  for font_dir in '/usr/share/wine/fonts/' '/usr/share/fonts/msttcore/' '/usr/share/fonts/microsoft/' '/usr/share/fonts/truetype/msttcorefonts/'; do
+    if test -f "${font_dir}arial.ttf"; then
+      windows_font_dir="${font_dir}"
+      break 1
+    fi
+  done
 fi
 if test "${windows_font_dir}x" != 'x'; then
   type_include_files="${type_include_files} "'<include file="type-windows.xml" />'

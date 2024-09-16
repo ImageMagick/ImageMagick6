@@ -3342,6 +3342,13 @@ AC_MSG_CHECKING([for Windows fonts directory])
 windows_font_dir=''
 if test "${with_windows_font_dir}" != 'default'; then
   windows_font_dir="${with_windows_font_dir}/"
+else
+  for font_dir in '/usr/share/wine/fonts/' '/usr/share/fonts/msttcore/' '/usr/share/fonts/microsoft/' '/usr/share/fonts/truetype/msttcorefonts/'; do
+    if test -f "${font_dir}arial.ttf"; then
+      windows_font_dir="${font_dir}"
+      break 1
+    fi
+  done
 fi
 if test "${windows_font_dir}x" != 'x'; then
   type_include_files="${type_include_files} "'<include file="type-windows.xml" />'
