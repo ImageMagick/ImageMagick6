@@ -3257,7 +3257,7 @@ if test "${with_dejavu_font_dir}" != 'default'; then
   dejavu_font_dir="${with_dejavu_font_dir}/"
 else
   for font_dir in "${prefix}/share/fonts/dejavu" "${prefix}/share/dejavu-serif-fonts/fonts/" '/usr/share/fonts/dejavu-serif-fonts/' '/usr/share/fonts/truetype/dejavu/'; do
-    if test -f "${font_dir}DejaVuSerif.ttf"; then
+    if test -f "${font_dir}URWGothic-Book.otf"; then
       dejavu_font_dir="${font_dir}"
       break 1
     fi
