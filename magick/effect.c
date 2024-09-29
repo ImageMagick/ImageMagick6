@@ -966,8 +966,11 @@ static void Hull(const Image *image,const ssize_t x_offset,
   ssize_t
     y;
 
+  assert(image != (const Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
   assert(f != (Quantum *) NULL);
   assert(g != (Quantum *) NULL);
+  assert(columns <= (MAGICK_SSIZE_MAX-2));
   p=f+(columns+2);
   q=g+(columns+2);
   r=p+(y_offset*((ssize_t) columns+2)+x_offset);
