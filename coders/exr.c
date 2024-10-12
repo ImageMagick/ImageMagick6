@@ -218,6 +218,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (status == MagickFalse)
     {
       (void) ImfCloseInputFile(file);
+      (void) CloseBlob(image);
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
@@ -233,6 +234,7 @@ static Image *ReadEXRImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (scanline == (ImfRgba *) NULL)
         {
           (void) ImfCloseInputFile(file);
+          (void) CloseBlob(image);
           image=DestroyImageList(image);
           ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
         }
