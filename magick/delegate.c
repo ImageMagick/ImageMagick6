@@ -2085,7 +2085,7 @@ MagickExport MagickBooleanType ListDelegateInfo(FILE *file,
     if (delegate_info[i]->encode != (char *) NULL)
       (void) CopyMagickString(delegate,delegate_info[i]->encode,MaxTextExtent);
     (void) ConcatenateMagickString(delegate,"        ",MaxTextExtent);
-    delegate[8]='\0';
+    delegate[9]='\0';
     commands=StringToList(delegate_info[i]->commands);
     if (commands == (char **) NULL)
       continue;
