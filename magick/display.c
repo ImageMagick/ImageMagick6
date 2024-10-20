@@ -6391,6 +6391,8 @@ static void XImageCache(Display *display,XResourceInfo *resource_info,
       if (undo_image == (Image *) NULL)
         {
           (void) XBell(display,0);
+          ThrowXWindowException(ImageError,"NoImagesWereFound",
+            (*image)->filename);
           return;
         }
       cache_image=undo_image;
@@ -10165,8 +10167,8 @@ static Image *XOpenImage(Display *display,XResourceInfo *resource_info,
       if (filelist == (char **) NULL)
         {
           (void) XFreeStringList(files);
-          ThrowXWindowException(ResourceLimitError,
-            "MemoryAllocationFailed","...");
+          ThrowXWindowException(ResourceLimitError,"MemoryAllocationFailed",
+            "...");
           return((Image *) NULL);
         }
       j=0;
