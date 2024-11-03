@@ -14,6 +14,7 @@
 
 #include "Magick++/Include.h"
 #include "Magick++/Thread.h"
+#include <string>
 
 namespace Magick
 {
