@@ -30,7 +30,7 @@
 #include <errno.h>
 #include <stdint.h>
 
-void* operator new(std::size_t, void*) throw();
+void* operator new(size_t, void*) throw();
 
 #if defined(__BORLANDC__)
 # include <vcl.h> /* Borland C++ Builder 4.0 requirement */
