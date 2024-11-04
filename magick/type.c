@@ -944,6 +944,7 @@ MagickExport MagickBooleanType ListTypeInfo(FILE *file,ExceptionInfo *exception)
   const char
     *family,
     *glyphs,
+    *metrics,
     *name,
     *path,
     *stretch,
@@ -975,15 +976,18 @@ MagickExport MagickBooleanType ListTypeInfo(FILE *file,ExceptionInfo *exception)
          (type_info[i]->path != (char *) NULL))
       (void) FormatLocaleFile(file,"\nPath: %s\n",type_info[i]->path);
     path=type_info[i]->path;
-    name="unknown";
+    name="not defined";
     if (type_info[i]->name != (char *) NULL)
       name=type_info[i]->name;
-    family="unknown";
+    family="not defined";
     if (type_info[i]->family != (char *) NULL)
       family=type_info[i]->family;
     style=CommandOptionToMnemonic(MagickStyleOptions,type_info[i]->style);
     stretch=CommandOptionToMnemonic(MagickStretchOptions,type_info[i]->stretch);
-    glyphs="unknown";
+    metrics="not defined";
+    if (type_info[i]->metrics != (char *) NULL)
+      metrics=type_info[i]->metrics;
+    glyphs="not defined";
     if (type_info[i]->glyphs != (char *) NULL)
       glyphs=type_info[i]->glyphs;
     (void) FormatLocaleString(weight,MaxTextExtent,"%.20g",(double)
@@ -993,6 +997,7 @@ MagickExport MagickBooleanType ListTypeInfo(FILE *file,ExceptionInfo *exception)
     (void) FormatLocaleFile(file,"    style: %s\n",style);
     (void) FormatLocaleFile(file,"    stretch: %s\n",stretch);
     (void) FormatLocaleFile(file,"    weight: %s\n",weight);
+    (void) FormatLocaleFile(file,"    metrics: %s\n",metrics);
     (void) FormatLocaleFile(file,"    glyphs: %s\n",glyphs);
   }
   (void) fflush(file);
@@ -1260,8 +1265,7 @@ static MagickBooleanType LoadTypeCache(SplayTreeInfo *cache,const char *xml,
       {
         if (LocaleCompare((char *) keyword,"glyphs") == 0)
           {
-            if (SetTypeNodePath(filename,font_path,token,&type_info->glyphs) ==
-                MagickFalse)
+            if (SetTypeNodePath(filename,font_path,token,&type_info->glyphs) == MagickFalse)
               type_info=(TypeInfo *) DestroyTypeNode(type_info);
             break;
           }
@@ -1272,8 +1276,7 @@ static MagickBooleanType LoadTypeCache(SplayTreeInfo *cache,const char *xml,
       {
         if (LocaleCompare((char *) keyword,"metrics") == 0)
           {
-            if (SetTypeNodePath(filename,font_path,token,&type_info->metrics) ==
-                MagickFalse)
+            if (SetTypeNodePath(filename,font_path,token,&type_info->metrics) == MagickFalse)
               type_info=(TypeInfo *) DestroyTypeNode(type_info);
             break;
           }
