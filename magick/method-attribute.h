@@ -22,7 +22,7 @@
 extern "C" {
 #endif
 
-#if defined(__BORLANDC__) && defined(_DLL)
+#if defined(_DLL)
 #  define _MAGICKDLL_
 #  define _MAGICKLIB_
 #  define MAGICKCORE_MODULES_SUPPORT

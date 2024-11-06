@@ -69,11 +69,7 @@ extern "C" {
 #endif
 
 #if !defined(chsize)
-# if defined(__BORLANDC__)
-#   define chsize(file,length)  chsize(file,length)
-# else
-#   define chsize(file,length)  _chsize(file,length)
-# endif
+#  define chsize(file,length)  _chsize(file,length)
 #endif
 
 #if !defined(access)
@@ -106,7 +102,7 @@ extern "C" {
 #  define fseek  _fseeki64
 #endif
 #endif
-#if !defined(fstat) && !defined(__BORLANDC__)
+#if !defined(fstat)
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && \
   !(defined(_MSC_VER) && (_MSC_VER < 1400)) && \
   !(defined(__MSVCRT_VERSION__) && (__MSVCRT_VERSION__ < 0x800))
@@ -224,7 +220,7 @@ extern "C" {
 #if !defined(strtod_l)
 #define strtod_l  _strtod_l
 #endif
-#if !defined(stat) && !defined(__BORLANDC__)
+#if !defined(stat)
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && \
   !(defined(_MSC_VER) && (_MSC_VER < 1400)) && \
   !(defined(__MSVCRT_VERSION__) && (__MSVCRT_VERSION__ < 0x800))
@@ -282,7 +278,7 @@ extern "C" {
 #if !defined(write)
 #  define write(fd,buffer,count)  _write(fd,buffer,(unsigned int) count)
 #endif
-#if !defined(wstat) && !defined(__BORLANDC__)
+#if !defined(wstat)
 #if defined(MAGICKCORE_WINDOWS_SUPPORT) && \
   !(defined(_MSC_VER) && (_MSC_VER < 1400)) && \
   !(defined(__MSVCRT_VERSION__) && (__MSVCRT_VERSION__ < 0x800))
@@ -290,17 +286,6 @@ extern "C" {
 #else
 #  define wstat  _wstat
 #endif
-#endif
-
-#if defined(__BORLANDC__)
-#undef _O_RANDOM
-#define _O_RANDOM 0
-#undef _O_SEQUENTIAL
-#define _O_SEQUENTIAL 0
-#undef _O_SHORT_LIVED
-#define _O_SHORT_LIVED 0
-#undef _O_TEMPORARY
-#define _O_TEMPORARY 0
 #endif
 
 #undef gettimeofday
