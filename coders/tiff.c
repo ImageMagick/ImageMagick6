@@ -1341,7 +1341,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     image->endian=MSBEndian;
     if (endian == FILLORDER_LSB2MSB)
       image->endian=LSBEndian;
-#if defined(MAGICKCORE_HAVE_TIFFISBIGENDIAN)
     if (TIFFIsBigEndian(tiff) == 0)
       {
         (void) SetImageProperty(image,"tiff:endian","lsb");
@@ -1352,7 +1351,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         (void) SetImageProperty(image,"tiff:endian","msb");
         image->endian=MSBEndian;
       }
-#endif
     if ((photometric == PHOTOMETRIC_MINISBLACK) ||
         (photometric == PHOTOMETRIC_MINISWHITE))
       image->colorspace=GRAYColorspace;
