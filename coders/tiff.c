@@ -91,9 +91,6 @@
 #include "magick/utility.h"
 #include "psd-private.h"
 #if defined(MAGICKCORE_TIFF_DELEGATE)
-# if defined(MAGICKCORE_HAVE_TIFFCONF_H)
-#  include <tiffconf.h>
-# endif
 # include <tiff.h>
 # include <tiffio.h>
 # if !defined(COMPRESSION_ADOBE_DEFLATE)
@@ -756,7 +753,6 @@ static MagickBooleanType TIFFSetImageProperties(TIFF *tiff,Image *image,
 
 static MagickBooleanType TIFFGetEXIFProperties(TIFF *tiff,Image *image)
 {
-#if defined(MAGICKCORE_HAVE_TIFFREADEXIFDIRECTORY)
   MagickBooleanType
     status;
 
@@ -785,16 +781,10 @@ static MagickBooleanType TIFFGetEXIFProperties(TIFF *tiff,Image *image)
   status=TIFFSetImageProperties(tiff,image,"exif:");
   TIFFSetDirectory(tiff,directory);
   return(status);
-#else
-  (void) tiff;
-  (void) image;
-  return(MagickTrue);
-#endif
 }
 
 static MagickBooleanType TIFFGetGPSProperties(TIFF *tiff,Image *image)
 {
-#if defined(MAGICKCORE_HAVE_TIFFREADGPSDIRECTORY)
   MagickBooleanType
     status;
 
@@ -823,11 +813,6 @@ static MagickBooleanType TIFFGetGPSProperties(TIFF *tiff,Image *image)
   status=TIFFSetImageProperties(tiff,image,"exif:GPS");
   TIFFSetDirectory(tiff,directory);
   return(status);
-#else
-  (void) tiff;
-  (void) image;
-  return(MagickTrue);
-#endif
 }
 
 static int TIFFMapBlob(thandle_t image,tdata_t *base,toff_t *size)
@@ -1421,14 +1406,12 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
             image->chromaticity.blue_primary.y=chromaticity[5];
           }
       }
-#if defined(MAGICKCORE_HAVE_TIFFISCODECCONFIGURED) || (TIFFLIB_VERSION > 20040919)
     if ((compress_tag != COMPRESSION_NONE) &&
         (TIFFIsCODECConfigured(compress_tag) == 0))
       {
         TIFFClose(tiff);
         ThrowReaderException(CoderError,"CompressNotSupported");
       }
-#endif
     switch (compress_tag)
     {
       case COMPRESSION_NONE: image->compression=NoCompression; break;
@@ -2153,7 +2136,6 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
 */
 
 #if defined(MAGICKCORE_TIFF_DELEGATE)
-#if defined(MAGICKCORE_HAVE_TIFFMERGEFIELDINFO) && defined(MAGICKCORE_HAVE_TIFFSETTAGEXTENDER)
 static TIFFExtendProc
   tag_extender = (TIFFExtendProc) NULL;
 
@@ -2251,7 +2233,6 @@ static void TIFFTagExtender(TIFF *tiff)
   TIFFIgnoreTags(tiff);
 }
 #endif
-#endif
 
 ModuleExport size_t RegisterTIFFImage(void)
 {
@@ -2311,10 +2292,8 @@ ModuleExport size_t RegisterTIFFImage(void)
         ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
       error_handler=TIFFSetErrorHandler(TIFFErrors);
       warning_handler=TIFFSetWarningHandler(TIFFWarnings);
-#if defined(MAGICKCORE_HAVE_TIFFMERGEFIELDINFO) && defined(MAGICKCORE_HAVE_TIFFSETTAGEXTENDER)
       if (tag_extender == (TIFFExtendProc) NULL)
         tag_extender=TIFFSetTagExtender(TIFFTagExtender);
-#endif
       instantiate_key=MagickTrue;
     }
   UnlockSemaphoreInfo(tiff_semaphore);
@@ -2443,12 +2422,10 @@ ModuleExport void UnregisterTIFFImage(void)
   LockSemaphoreInfo(tiff_semaphore);
   if (instantiate_key != MagickFalse)
     {
-      if (DeleteMagickThreadKey(tiff_exception) == MagickFalse)
-        ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-#if defined(MAGICKCORE_HAVE_TIFFMERGEFIELDINFO) && defined(MAGICKCORE_HAVE_TIFFSETTAGEXTENDER)
       if (tag_extender == (TIFFExtendProc) NULL)
         (void) TIFFSetTagExtender(tag_extender);
-#endif
+      if (DeleteMagickThreadKey(tiff_exception) == MagickFalse)
+        ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
       (void) TIFFSetWarningHandler(warning_handler);
       (void) TIFFSetErrorHandler(error_handler);
       instantiate_key=MagickFalse;
@@ -3390,7 +3367,6 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
         break;
       }
     }
-#if defined(MAGICKCORE_HAVE_TIFFISCODECCONFIGURED) || (TIFFLIB_VERSION > 20040919)
     if ((compress_tag != COMPRESSION_NONE) &&
         (TIFFIsCODECConfigured(compress_tag) == 0))
       {
@@ -3399,40 +3375,6 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
           MagickCompressOptions,(ssize_t) compression));
         compress_tag=COMPRESSION_NONE;
       }
-#else
-      switch (compress_tag)
-      {
-#if defined(CCITT_SUPPORT)
-        case COMPRESSION_CCITTFAX3:
-        case COMPRESSION_CCITTFAX4:
-#endif
-#if defined(YCBCR_SUPPORT) && defined(JPEG_SUPPORT)
-        case COMPRESSION_JPEG:
-#endif
-#if defined(LZMA_SUPPORT) && defined(COMPRESSION_LZMA)
-        case COMPRESSION_LZMA:
-#endif
-#if defined(LZW_SUPPORT)
-        case COMPRESSION_LZW:
-#endif
-#if defined(PACKBITS_SUPPORT)
-        case COMPRESSION_PACKBITS:
-#endif
-#if defined(ZIP_SUPPORT)
-        case COMPRESSION_ADOBE_DEFLATE:
-#endif
-        case COMPRESSION_NONE:
-          break;
-        default:
-        {
-          (void) ThrowMagickException(&image->exception,GetMagickModule(),
-            CoderError,"CompressionNotSupported","`%s'",CommandOptionToMnemonic(
-              MagickCompressOptions,(ssize_t) compression));
-          compress_tag=COMPRESSION_NONE;
-          break;
-        }
-      }
-#endif
     if (image->colorspace == CMYKColorspace)
       {
         photometric=PHOTOMETRIC_SEPARATED;
