@@ -6730,6 +6730,12 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
         return(DestroyImageList(image));
       }
 
+    if (exception->severity > ErrorException)
+      {
+        (void) CloseBlob(image);
+        return(DestroyImageList(image));
+      }
+
     mng_info->image=image;
 
     if (mng_type)
