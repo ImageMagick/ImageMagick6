@@ -3022,7 +3022,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
           hex_digits[15]='F';
           (void) FormatLocaleString(buffer,MagickPathExtent,"/Title <FEFF");
           (void) WriteBlobString(image,buffer);
-          for (i=0; i < (ssize_t) length; i++)
+          for (i=0; i < (ssize_t) length - 1; i++)
           {
             (void) WriteBlobByte(image,hex_digits[(utf16[i] >> 12) & 0x0f]);
             (void) WriteBlobByte(image,hex_digits[(utf16[i] >> 8) & 0x0f]);
