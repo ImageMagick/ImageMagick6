@@ -1058,12 +1058,6 @@ static MagickBooleanType RenderType(Image *image,const DrawInfo *draw_info,
     }
   sans_exception=AcquireExceptionInfo();
   if (type_info == (const TypeInfo *) NULL)
-    type_info=GetTypeInfoByFamily("Noto Sans",draw_info->style,
-      draw_info->stretch,draw_info->weight,sans_exception);
-  if (type_info == (const TypeInfo *) NULL)
-    type_info=GetTypeInfoByFamily("Nimbus Sans",draw_info->style,
-      draw_info->stretch,draw_info->weight,sans_exception);
-  if (type_info == (const TypeInfo *) NULL)
     type_info=GetTypeInfoByFamily((const char *) NULL,draw_info->style,
       draw_info->stretch,draw_info->weight,sans_exception);
   if (type_info == (const TypeInfo *) NULL)
