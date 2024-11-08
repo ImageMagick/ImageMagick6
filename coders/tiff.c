@@ -1714,8 +1714,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                 pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
                   extra_samples-3,0);
               }
-            status=SetQuantumPad(image,quantum_info,pad*((bits_per_sample+7) >>
-              3));
+            status=SetQuantumPad(image,quantum_info,pad*
+              (size_t) ((bits_per_sample+7) >> 3));
             if (status == MagickFalse)
               ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
           }
