@@ -30,10 +30,6 @@
 #include <errno.h>
 #include <stdint.h>
 
-#if __cplusplus >= 201703L
-void* operator new(size_t, void*) throw();
-#endif
-
 #if defined(__BORLANDC__)
 # include <vcl.h> /* Borland C++ Builder 4.0 requirement */
 #endif // defined(__BORLANDC__)
