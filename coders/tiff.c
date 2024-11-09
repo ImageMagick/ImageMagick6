@@ -1706,7 +1706,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
               {
                 quantum_type=RGBAQuantum;
                 pad=(size_t) MagickMax((ssize_t) samples_per_pixel+
-                  extra_samples-4,0);
+                  extra_samples-5,0);
               }
             else
               {
