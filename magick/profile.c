@@ -1486,10 +1486,10 @@ static void WriteTo8BimProfile(Image *image,const char *name,
     q=p;
     if (LocaleNCompare((char *) p,"8BIM",4) != 0)
       break;
-    p+=4;
+    p+=(ptrdiff_t) 4;
     p=ReadResourceShort(p,&id);
     p=ReadResourceByte(p,&length_byte);
-    p+=length_byte;
+    p+=(ptrdiff_t) length_byte;
     if (((length_byte+1) & 0x01) != 0)
       p++;
     if (p > (datum+length-4))
@@ -1501,7 +1501,7 @@ static void WriteTo8BimProfile(Image *image,const char *name,
     if ((count < 0) || (p > (datum+length-count)) || (count > (ssize_t) length))
       break;
     if (id != profile_id)
-      p+=count;
+      p+=(ptrdiff_t) count;
     else
       {
         size_t
@@ -1578,10 +1578,10 @@ static void GetProfilesFromResourceBlock(Image *image,
   {
     if (LocaleNCompare((char *) p,"8BIM",4) != 0)
       break;
-    p+=4;
+    p+=(ptrdiff_t) 4;
     p=ReadResourceShort(p,&id);
     p=ReadResourceByte(p,&length_byte);
-    p+=length_byte;
+    p+=(ptrdiff_t) length_byte;
     if (((length_byte+1) & 0x01) != 0)
       p++;
     if (p > (datum+length-4))
@@ -1633,7 +1633,7 @@ static void GetProfilesFromResourceBlock(Image *image,
         SetStringInfoDatum(profile,p);
         (void) SetImageProfileInternal(image,"iptc",profile,MagickTrue);
         profile=DestroyStringInfo(profile);
-        p+=count;
+        p+=(ptrdiff_t) count;
         break;
       }
       case 0x040c:
@@ -1641,7 +1641,7 @@ static void GetProfilesFromResourceBlock(Image *image,
         /*
           Thumbnail.
         */
-        p+=count;
+        p+=(ptrdiff_t) count;
         break;
       }
       case 0x040f:
@@ -1653,7 +1653,7 @@ static void GetProfilesFromResourceBlock(Image *image,
         SetStringInfoDatum(profile,p);
         (void) SetImageProfileInternal(image,"icc",profile,MagickTrue);
         profile=DestroyStringInfo(profile);
-        p+=count;
+        p+=(ptrdiff_t) count;
         break;
       }
       case 0x0422:
@@ -1665,7 +1665,7 @@ static void GetProfilesFromResourceBlock(Image *image,
         SetStringInfoDatum(profile,p);
         (void) SetImageProfileInternal(image,"exif",profile,MagickTrue);
         profile=DestroyStringInfo(profile);
-        p+=count;
+        p+=(ptrdiff_t) count;
         break;
       }
       case 0x0424:
@@ -1677,12 +1677,12 @@ static void GetProfilesFromResourceBlock(Image *image,
         SetStringInfoDatum(profile,p);
         (void) SetImageProfileInternal(image,"xmp",profile,MagickTrue);
         profile=DestroyStringInfo(profile);
-        p+=count;
+        p+=(ptrdiff_t) count;
         break;
       }
       default:
       {
-        p+=count;
+        p+=(ptrdiff_t) count;
         break;
       }
     }
@@ -2215,7 +2215,7 @@ static MagickBooleanType Sync8BimProfile(const Image *image,
     count=(ssize_t) ReadProfileByte(&p,&length);
     if ((count >= (ssize_t) length) || (count < 0))
       return(MagickFalse);
-    p+=count;
+    p+=(ptrdiff_t) count;
     length-=count;
     if ((*p & 0x01) == 0)
       (void) ReadProfileByte(&p,&length);
@@ -2241,7 +2241,7 @@ static MagickBooleanType Sync8BimProfile(const Image *image,
       }
     if (id == 0x0422)
       (void) SyncExifProfile(image,p,count);
-    p+=count;
+    p+=(ptrdiff_t) count;
     length-=count;
   }
   return(MagickTrue);

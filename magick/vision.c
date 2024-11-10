@@ -272,7 +272,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
           status=MagickFalse;
           continue;
         }
-      p+=image->columns;
+      p+=(ptrdiff_t) image->columns;
       for (x=0; x < (ssize_t) image->columns; x++)
       {
         ssize_t

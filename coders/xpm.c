@@ -325,7 +325,7 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
       continue;
     if ((*p == '}') && (*(p+1) == ';'))
       break;
-    p+=strlen(p);
+    p+=(ptrdiff_t) strlen(p);
     offset=p-xpm_buffer;
     if ((size_t) (offset+MaxTextExtent) < length)
       continue;
@@ -511,7 +511,7 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           if (image->storage_class == PseudoClass)
             SetPixelIndex(indexes+x,j);
           *r=image->colormap[j];
-          p+=count;
+          p+=(ptrdiff_t) count;
           r++;
         }
         if (x < (ssize_t) image->columns)

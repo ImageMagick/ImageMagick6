@@ -1106,8 +1106,8 @@ MagickExport void *CloneMemory(void *destination,const void *source,
   /*
     Overlap, copy backwards.
   */
-  p+=size;
-  q+=size;
+  p+=(ptrdiff_t) size;
+  q+=(ptrdiff_t) size;
   for (i=(ssize_t) (size-1); i >= 0; i--)
     *--q=(*--p);
   return(destination);
@@ -1301,8 +1301,8 @@ MagickExport MagickBooleanType ColorFloodfillImage(Image *image,
       &image->exception);
     if ((p == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
       break;
-    p+=x1;
-    q+=x1;
+    p+=(ptrdiff_t) x1;
+    q+=(ptrdiff_t) x1;
     for (x=x1; x >= 0; x--)
     {
       if (q->opacity == (Quantum) TransparentOpacity)
@@ -4963,8 +4963,8 @@ MagickExport MagickBooleanType MatteFloodfillImage(Image *image,
       &image->exception);
     if ((p == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
       break;
-    p+=x1;
-    q+=x1;
+    p+=(ptrdiff_t) x1;
+    q+=(ptrdiff_t) x1;
     for (x=x1; x >= 0; x--)
     {
       if (q->opacity == (Quantum) TransparentOpacity)

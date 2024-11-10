@@ -2885,7 +2885,7 @@ static const char *GetMagickPropertyLetter(const ImageInfo *image_info,
       (void) CopyMagickString(value,image->magick_filename,MaxTextExtent);
       p=value;
       q=value+strlen(value);
-      for (p+=strspn(p,allowlist); p != q; p+=strspn(p,allowlist))
+      for (p+=strspn(p,allowlist); p != q; p+=(ptrdiff_t) strspn(p,allowlist))
         *p='_';
       break;
     }
@@ -3712,7 +3712,7 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
         } \
       q=interpret_text+strlen(interpret_text); \
      } \
-   q+=FormatLocaleString(q,extent,"%s=%s\n",(key),(value)); \
+   q+=(ptrdiff_t) FormatLocaleString(q,extent,"%s=%s\n",(key),(value)); \
 }
 
 #define AppendString2Text(string) \
@@ -3732,7 +3732,7 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
       q=interpret_text+strlen(interpret_text); \
     } \
   (void) CopyMagickString(q,(string),extent); \
-  q+=length; \
+  q+=(ptrdiff_t) length; \
 }
 
   char
@@ -3843,19 +3843,19 @@ MagickExport char *InterpretImageProperties(const ImageInfo *image_info,
         if (LocaleNCompare("&lt;",p,4) == 0)
           {
             *q++='<';
-             p+=3;
+             p+=(ptrdiff_t) 3;
           }
         else
           if (LocaleNCompare("&gt;",p,4) == 0)
             {
               *q++='>';
-               p+=3;
+               p+=(ptrdiff_t) 3;
             }
           else
             if (LocaleNCompare("&amp;",p,5) == 0)
               {
                 *q++='&';
-                p+=4;
+                p+=(ptrdiff_t) 4;
               }
             else
               *q++=(*p);

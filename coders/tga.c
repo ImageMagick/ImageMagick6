@@ -472,7 +472,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (q == (PixelPacket *) NULL)
       break;
     if (flip_x != MagickFalse)
-      q+=(image->columns-1);
+      q+=(ptrdiff_t) (image->columns-1);
     indexes=GetAuthenticIndexQueue(image);
     for (x=0; x < (ssize_t) image->columns; x++)
     {
@@ -1081,7 +1081,7 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
           if (i < 3)
             {
               count+=i;
-              p+=i;
+              p+=(ptrdiff_t) i;
               indexes+=i;
             }
           if ((i >= 3) || (count == 128) ||
@@ -1103,7 +1103,7 @@ static MagickBooleanType WriteTGAImage(const ImageInfo *image_info,Image *image)
             {
               (void) WriteBlobByte(image,(unsigned char) ((i-1) | 0x80));
               WriteTGAPixel(image,tga_info.image_type,indexes,p,range,midpoint);
-              p+=i;
+              p+=(ptrdiff_t) i;
               indexes+=i;
             }
           x+=i;

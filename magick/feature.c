@@ -910,7 +910,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
         continue;
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
-    p+=distance;
+    p+=(ptrdiff_t) distance;
     indexes+=distance;
     for (x=0; x < (ssize_t) image->columns; x++)
     {

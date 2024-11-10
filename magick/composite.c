@@ -3061,7 +3061,7 @@ MagickExport MagickBooleanType TextureImage(Image *image,const Image *texture)
             sizeof(*indexes));
           indexes+=width;
         }
-      q+=width;
+      q+=(ptrdiff_t) width;
     }
     sync=SyncCacheViewAuthenticPixels(image_view,exception);
     if (sync == MagickFalse)

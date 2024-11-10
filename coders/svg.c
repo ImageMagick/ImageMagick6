@@ -980,7 +980,7 @@ static void SVGStripString(const MagickBooleanType trim,char *message)
         for ( ; *p != '\0'; p++)
           if ((*p == '*') && (*(p+1) == '/'))
             {
-              p+=2;
+              p+=(ptrdiff_t) 2;
               break;
             }
         if (*p == '\0')
@@ -4141,7 +4141,7 @@ static MagickBooleanType TraceSVGImage(Image *image,ExceptionInfo *exception)
     {
       (void) FormatLocaleString(message,MaxTextExtent,"%.76s",p);
       (void) WriteBlobString(image,message);
-      p+=76;
+      p+=(ptrdiff_t) 76;
       if (i > 76)
         (void) WriteBlobString(image,"\n");
     }

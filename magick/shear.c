@@ -939,7 +939,7 @@ MagickExport Image *IntegralRotateImage(const Image *image,size_t rotations,
           }
         indexes=GetCacheViewVirtualIndexQueue(image_view);
         rotate_indexes=GetCacheViewAuthenticIndexQueue(rotate_view);
-        q+=image->columns;
+        q+=(ptrdiff_t) image->columns;
         for (x=0; x < (ssize_t) image->columns; x++)
           *--q=(*p++);
         if ((indexes != (IndexPacket *) NULL) &&
@@ -1226,7 +1226,7 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
         continue;
       }
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
-    p+=x_offset;
+    p+=(ptrdiff_t) x_offset;
     indexes+=x_offset;
     displacement=degrees*(MagickRealType) (y-height/2.0);
     if (displacement == 0.0)
@@ -1282,7 +1282,7 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
         /*
           Transfer pixels right-to-left.
         */
-        p+=width;
+        p+=(ptrdiff_t) width;
         indexes+=width;
         q=p+step;
         shear_indexes=indexes+step;
@@ -1448,7 +1448,7 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
         continue;
       }
     indexes=GetCacheViewAuthenticIndexQueue(image_view);
-    p+=y_offset;
+    p+=(ptrdiff_t) y_offset;
     indexes+=y_offset;
     displacement=degrees*(MagickRealType) (x-width/2.0);
     if (displacement == 0.0)
@@ -1504,7 +1504,7 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
         /*
           Transfer pixels bottom-to-top.
         */
-        p+=height;
+        p+=(ptrdiff_t) height;
         indexes+=height;
         q=p+step;
         shear_indexes=indexes+step;

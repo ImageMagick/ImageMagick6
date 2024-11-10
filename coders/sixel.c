@@ -1048,7 +1048,7 @@ static Image *ReadSIXELImage(const ImageInfo *image_info,ExceptionInfo *exceptio
         continue;
       if ((*p == '}') && (*(p+1) == ';'))
         break;
-      p+=strlen(p);
+      p+=(ptrdiff_t) strlen(p);
       offset=p-sixel_buffer;
       if ((size_t) (offset+MaxTextExtent+1) < length)
         continue;

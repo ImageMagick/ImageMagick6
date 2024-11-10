@@ -1113,22 +1113,22 @@ static char *TranslateEvent(const LogEventType magick_unused(type),
     {
       case 'c':
       {
-        q+=CopyMagickString(q,GetClientName(),extent);
+        q+=(ptrdiff_t) CopyMagickString(q,GetClientName(),extent);
         break;
       }
       case 'd':
       {
-        q+=CopyMagickString(q,domain,extent);
+        q+=(ptrdiff_t) CopyMagickString(q,domain,extent);
         break;
       }
       case 'e':
       {
-        q+=CopyMagickString(q,event,extent);
+        q+=(ptrdiff_t) CopyMagickString(q,event,extent);
         break;
       }
       case 'f':
       {
-        q+=CopyMagickString(q,function,extent);
+        q+=(ptrdiff_t) CopyMagickString(q,function,extent);
         break;
       }
       case 'g':
@@ -1139,19 +1139,19 @@ static char *TranslateEvent(const LogEventType magick_unused(type),
             q++;
             break;
           }
-        q+=FormatLocaleString(q,extent,"%.20g",(double) (log_info->generation %
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%.20g",(double) (log_info->generation %
           log_info->generations));
         break;
       }
       case 'i':
       {
-        q+=FormatLocaleString(q,extent,"%.20g",(double)
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%.20g",(double)
           GetMagickThreadSignature());
         break;
       }
       case 'l':
       {
-        q+=FormatLocaleString(q,extent,"%.20g",(double) line);
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%.20g",(double) line);
         break;
       }
       case 'm':
@@ -1165,39 +1165,39 @@ static char *TranslateEvent(const LogEventType magick_unused(type),
               p++;
               break;
             }
-        q+=CopyMagickString(q,p,extent);
+        q+=(ptrdiff_t) CopyMagickString(q,p,extent);
         break;
       }
       case 'n':
       {
-        q+=CopyMagickString(q,GetLogName(),extent);
+        q+=(ptrdiff_t) CopyMagickString(q,GetLogName(),extent);
         break;
       }
       case 'p':
       {
-        q+=FormatLocaleString(q,extent,"%.20g",(double) getpid());
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%.20g",(double) getpid());
         break;
       }
       case 'r':
       {
-        q+=FormatLocaleString(q,extent,"%lu:%02lu.%03lu",(unsigned long)
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%lu:%02lu.%03lu",(unsigned long)
           (elapsed_time/60.0),(unsigned long) floor(fmod(elapsed_time,60.0)),
           (unsigned long) (1000.0*(elapsed_time-floor(elapsed_time))+0.5));
         break;
       }
       case 't':
       {
-        q+=FormatMagickTime(seconds,extent,q);
+        q+=(ptrdiff_t) FormatMagickTime(seconds,extent,q);
         break;
       }
       case 'u':
       {
-        q+=FormatLocaleString(q,extent,"%0.3fu",user_time);
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%0.3fu",user_time);
         break;
       }
       case 'v':
       {
-        q+=CopyMagickString(q,MagickLibVersionText,extent);
+        q+=(ptrdiff_t) CopyMagickString(q,MagickLibVersionText,extent);
         break;
       }
       case '%':
@@ -1278,7 +1278,7 @@ static char *TranslateFilename(const LogInfo *log_info)
       }
       case 'c':
       {
-        q+=CopyMagickString(q,GetClientName(),extent);
+        q+=(ptrdiff_t) CopyMagickString(q,GetClientName(),extent);
         break;
       }
       case 'g':
@@ -1289,23 +1289,23 @@ static char *TranslateFilename(const LogInfo *log_info)
             q++;
             break;
           }
-        q+=FormatLocaleString(q,extent,"%.20g",(double) (log_info->generation %
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%.20g",(double) (log_info->generation %
           log_info->generations));
         break;
       }
       case 'n':
       {
-        q+=CopyMagickString(q,GetLogName(),extent);
+        q+=(ptrdiff_t) CopyMagickString(q,GetLogName(),extent);
         break;
       }
       case 'p':
       {
-        q+=FormatLocaleString(q,extent,"%.20g",(double) getpid());
+        q+=(ptrdiff_t) FormatLocaleString(q,extent,"%.20g",(double) getpid());
         break;
       }
       case 'v':
       {
-        q+=CopyMagickString(q,MagickLibVersionText,extent);
+        q+=(ptrdiff_t) CopyMagickString(q,MagickLibVersionText,extent);
         break;
       }
       case '%':

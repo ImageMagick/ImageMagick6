@@ -294,7 +294,7 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
         if (image->colorspace == CMYKColorspace)
           channel_sum.index=(MagickRealType) GetPixelIndex(indexes+(r-p)+u);
       }
-      r+=image->columns+width;
+      r+=(ptrdiff_t) image->columns+width;
     }
     for (x=0; x < (ssize_t) image->columns; x++)
     {
@@ -324,7 +324,7 @@ MagickExport Image *AdaptiveThresholdImage(const Image *image,
         if (image->colorspace == CMYKColorspace)
           channel_sum.index=(MagickRealType) GetPixelIndex(indexes+x+(r-p)+
             width-1);
-        r+=image->columns+width;
+        r+=(ptrdiff_t) image->columns+width;
       }
       mean.red=(MagickRealType) (channel_sum.red/number_pixels+offset);
       mean.green=(MagickRealType) (channel_sum.green/number_pixels+offset);

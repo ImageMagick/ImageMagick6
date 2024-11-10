@@ -636,7 +636,7 @@ MagickExport ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
   q=draw_info->text;
   s=(char *) NULL;
   width=0;
-  for (p=(*caption); GetUTFCode(p) != 0; p+=GetUTFOctets(p))
+  for (p=(*caption); GetUTFCode(p) != 0; p+=(ptrdiff_t) GetUTFOctets(p))
   {
     int
       code;
@@ -690,7 +690,7 @@ MagickExport ssize_t FormatMagickCaption(Image *image,DrawInfo *draw_info,
     s=(char *) NULL;
   }
   n=0;
-  for (p=(*caption); GetUTFCode(p) != 0; p+=GetUTFOctets(p))
+  for (p=(*caption); GetUTFCode(p) != 0; p+=(ptrdiff_t) GetUTFOctets(p))
     if (GetUTFCode(p) == '\n')
       n++;
   return(n);
@@ -1223,7 +1223,7 @@ static size_t ComplexTextLayout(const DrawInfo *draw_info,const char *text,
     return(0);
   last_glyph=0;
   p=text;
-  for (i=0; GetUTFCode(p) != 0; p+=GetUTFOctets(p), i++)
+  for (i=0; GetUTFCode(p) != 0; p+=(ptrdiff_t) GetUTFOctets(p), i++)
   {
     (*grapheme)[i].index=(ssize_t) FT_Get_Char_Index(face,GetUTFCode(p));
     (*grapheme)[i].x_offset=0;
@@ -1718,7 +1718,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
       if (image->matte == MagickFalse)
         (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
     }
-  for (p=draw_info->text; GetUTFCode(p) != 0; p+=GetUTFOctets(p))
+  for (p=draw_info->text; GetUTFCode(p) != 0; p+=(ptrdiff_t) GetUTFOctets(p))
     if (GetUTFCode(p) < 0)
       break;
   utf8=(unsigned char *) NULL;

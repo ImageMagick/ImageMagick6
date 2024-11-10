@@ -3298,7 +3298,7 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
         break;
       virtual_indexes=GetVirtualIndexesFromNexus(cache_info,virtual_nexus);
       (void) memcpy(q,p,(size_t) length*sizeof(*p));
-      q+=length;
+      q+=(ptrdiff_t) length;
       if ((indexes != (IndexPacket *) NULL) &&
           (virtual_indexes != (const IndexPacket *) NULL))
         {
@@ -4699,8 +4699,8 @@ static MagickBooleanType ReadPixelCacheIndexes(
       for (y=0; y < (ssize_t) rows; y++)
       {
         (void) memcpy(q,p,(size_t) length);
-        p+=cache_info->columns;
-        q+=nexus_info->region.width;
+        p+=(ptrdiff_t) cache_info->columns;
+        q+=(ptrdiff_t) nexus_info->region.width;
       }
       break;
     }
@@ -4732,7 +4732,7 @@ static MagickBooleanType ReadPixelCacheIndexes(
         if (count < (MagickOffsetType) length)
           break;
         offset+=(MagickOffsetType) cache_info->columns;
-        q+=nexus_info->region.width;
+        q+=(ptrdiff_t) nexus_info->region.width;
       }
       if (IsFileDescriptorLimitExceeded() != MagickFalse)
         (void) ClosePixelCacheOnDisk(cache_info);
@@ -4763,7 +4763,7 @@ static MagickBooleanType ReadPixelCacheIndexes(
           cache_info->server_info,&region,length,(unsigned char *) q);
         if (count != (MagickOffsetType) length)
           break;
-        q+=nexus_info->region.width;
+        q+=(ptrdiff_t) nexus_info->region.width;
         region.y++;
       }
       UnlockSemaphoreInfo(cache_info->file_semaphore);
@@ -4874,8 +4874,8 @@ static MagickBooleanType ReadPixelCachePixels(
       for (y=0; y < (ssize_t) rows; y++)
       {
         (void) memcpy(q,p,(size_t) length);
-        p+=cache_info->columns;
-        q+=nexus_info->region.width;
+        p+=(ptrdiff_t) cache_info->columns;
+        q+=(ptrdiff_t) nexus_info->region.width;
       }
       break;
     }
@@ -4905,7 +4905,7 @@ static MagickBooleanType ReadPixelCachePixels(
         if (count < (MagickOffsetType) length)
           break;
         offset+=(MagickOffsetType) cache_info->columns;
-        q+=nexus_info->region.width;
+        q+=(ptrdiff_t) nexus_info->region.width;
       }
       if (IsFileDescriptorLimitExceeded() != MagickFalse)
         (void) ClosePixelCacheOnDisk(cache_info);
@@ -4936,7 +4936,7 @@ static MagickBooleanType ReadPixelCachePixels(
           cache_info->server_info,&region,length,(unsigned char *) q);
         if (count != (MagickOffsetType) length)
           break;
-        q+=nexus_info->region.width;
+        q+=(ptrdiff_t) nexus_info->region.width;
         region.y++;
       }
       UnlockSemaphoreInfo(cache_info->file_semaphore);
@@ -5821,8 +5821,8 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
       for (y=0; y < (ssize_t) rows; y++)
       {
         (void) memcpy(q,p,(size_t) length);
-        p+=nexus_info->region.width;
-        q+=cache_info->columns;
+        p+=(ptrdiff_t) nexus_info->region.width;
+        q+=(ptrdiff_t) cache_info->columns;
       }
       break;
     }
@@ -5854,7 +5854,7 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
           p);
         if (count < (MagickOffsetType) length)
           break;
-        p+=nexus_info->region.width;
+        p+=(ptrdiff_t) nexus_info->region.width;
         offset+=(MagickOffsetType) cache_info->columns;
       }
       if (IsFileDescriptorLimitExceeded() != MagickFalse)
@@ -5886,7 +5886,7 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
           cache_info->server_info,&region,length,(const unsigned char *) p);
         if (count != (MagickOffsetType) length)
           break;
-        p+=nexus_info->region.width;
+        p+=(ptrdiff_t) nexus_info->region.width;
         region.y++;
       }
       UnlockSemaphoreInfo(cache_info->file_semaphore);
@@ -5990,8 +5990,8 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
       for (y=0; y < (ssize_t) rows; y++)
       {
         (void) memcpy(q,p,(size_t) length);
-        p+=nexus_info->region.width;
-        q+=cache_info->columns;
+        p+=(ptrdiff_t) nexus_info->region.width;
+        q+=(ptrdiff_t) cache_info->columns;
       }
       break;
     }
@@ -6020,7 +6020,7 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
           (MagickOffsetType) sizeof(*p),length,(const unsigned char *) p);
         if (count < (MagickOffsetType) length)
           break;
-        p+=nexus_info->region.width;
+        p+=(ptrdiff_t) nexus_info->region.width;
         offset+=(MagickOffsetType) cache_info->columns;
       }
       if (IsFileDescriptorLimitExceeded() != MagickFalse)
@@ -6052,7 +6052,7 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
           cache_info->server_info,&region,length,(const unsigned char *) p);
         if (count != (MagickOffsetType) length)
           break;
-        p+=nexus_info->region.width;
+        p+=(ptrdiff_t) nexus_info->region.width;
         region.y++;
       }
       UnlockSemaphoreInfo(cache_info->file_semaphore);

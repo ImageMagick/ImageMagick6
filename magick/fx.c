@@ -737,14 +737,14 @@ static double FxGetSymbol(FxInfo *fx_info,const ChannelType channel,
           if (color != (MagickPixelPacket *) NULL)
             {
               pixel=(*color);
-              p+=length;
+              p+=(ptrdiff_t) length;
             }
           else
             if (QueryMagickColor(name,&pixel,fx_info->exception) != MagickFalse)
               {
                 (void) AddValueToSplayTree(fx_info->colors,ConstantString(name),
                   CloneMagickPixelPacket(&pixel));
-                p+=length;
+                p+=(ptrdiff_t) length;
               }
         }
     }

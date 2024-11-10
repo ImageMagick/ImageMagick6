@@ -551,16 +551,16 @@ MagickExport unsigned int GetMagickCoreSignature(const StringInfo *nonce)
   p=GetStringInfoDatum(version);
   signature=MAGICKCORE_QUANTUM_DEPTH;
   (void) memcpy(p,&signature,sizeof(signature));
-  p+=sizeof(signature);
+  p+=(ptrdiff_t) sizeof(signature);
   signature=MAGICKCORE_HDRI_ENABLE;
   (void) memcpy(p,&signature,sizeof(signature));
-  p+=sizeof(signature);
+  p+=(ptrdiff_t) sizeof(signature);
   signature=MagickLibInterface;
   (void) memcpy(p,&signature,sizeof(signature));
-  p+=sizeof(signature);
+  p+=(ptrdiff_t) sizeof(signature);
   signature=1;  /* endinaness */
   (void) memcpy(p,&signature,sizeof(signature));
-  p+=sizeof(signature);
+  p+=(ptrdiff_t) sizeof(signature);
   SetStringInfoLength(version,p-GetStringInfoDatum(version));
   if (nonce != (const StringInfo *) NULL)
     ConcatenateStringInfo(version,nonce);

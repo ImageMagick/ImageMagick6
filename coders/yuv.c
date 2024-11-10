@@ -271,14 +271,14 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
               {
                 SetPixelGreen(chroma_pixels,ScaleShortToQuantum(((*p) << 8) |
                   *(p+1)));
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
             if (quantum == 1)
               SetPixelRed(q,ScaleCharToQuantum(*p++));
             else
               {
                 SetPixelRed(q,ScaleShortToQuantum(((*p) << 8) | *(p+1)));
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
             SetPixelGreen(q,0);
             SetPixelBlue(q,0);
@@ -291,14 +291,14 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
               {
                 SetPixelBlue(chroma_pixels,ScaleShortToQuantum(((*p) << 8) |
                   *(p+1)));
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
             if (quantum == 1)
               SetPixelRed(q,ScaleCharToQuantum(*p++));
             else
               {
                 SetPixelRed(q,ScaleShortToQuantum(((*p) << 8) | *(p+1)));
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
             chroma_pixels++;
             q++;
@@ -329,7 +329,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
             else
               {
                 SetPixelRed(q,ScaleShortToQuantum(((*p) << 8) | *(p+1)));
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
             SetPixelGreen(q,0);
             SetPixelBlue(q,0);
@@ -387,7 +387,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
             else
               {
                 SetPixelGreen(q,ScaleShortToQuantum(((*p) << 8) | *(p+1)));
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
             SetPixelBlue(q,0);
             q++;
@@ -430,7 +430,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
           else
             {
               SetPixelBlue(q,ScaleShortToQuantum(((*p) << 8) | *(p+1)));
-              p+=2;
+              p+=(ptrdiff_t) 2;
             }
           q++;
         }

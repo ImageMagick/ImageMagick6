@@ -875,7 +875,7 @@ static MagickBooleanType ClassifyImageColors(QCubeInfo *cube_info,
       else
         node_info->total_color.opacity+=count*QuantumScale*(MagickRealType)
           ClampPixel(OpaqueOpacity);
-      p+=count;
+      p+=(ptrdiff_t) count;
     }
     if (cube_info->colors > cube_info->maximum_colors)
       {
@@ -979,7 +979,7 @@ static MagickBooleanType ClassifyImageColors(QCubeInfo *cube_info,
       else
         node_info->total_color.opacity+=count*QuantumScale*(MagickRealType)
           ClampPixel(OpaqueOpacity);
-      p+=count;
+      p+=(ptrdiff_t) count;
     }
     proceed=SetImageProgress(image,ClassifyImageTag,(MagickOffsetType) y,
       image->rows);

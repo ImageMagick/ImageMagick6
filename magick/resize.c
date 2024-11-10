@@ -2094,7 +2094,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
           *r=p[4];
           r++;
           *r=p[4];
-          r+=(magnify_image->columns-1);
+          r+=(ptrdiff_t) (magnify_image->columns-1);
           *r=p[4];
           r++;
           *r=p[4];
@@ -2113,7 +2113,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
             *r=p[5];
           else
             *r=p[4];
-          r+=(magnify_image->columns-1);
+          r+=(ptrdiff_t) (magnify_image->columns-1);
           if (fabs((double) (intensity[3]-intensity[7])) < MagickEpsilon)
             *r=p[3];
           else
@@ -2142,7 +2142,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
               *r=indexes[4];
               r++;
               *r=indexes[4];
-              r+=(magnify_image->columns-1);
+              r+=(ptrdiff_t) (magnify_image->columns-1);
               *r=indexes[4];
               r++;
               *r=indexes[4];
@@ -2161,7 +2161,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
                 *r=indexes[5];
               else
                 *r=indexes[4];
-              r+=(magnify_image->columns-1);
+              r+=(ptrdiff_t) (magnify_image->columns-1);
               if (fabs((double) (intensity[3]-intensity[7])) < MagickEpsilon)
                 *r=indexes[3];
               else
@@ -2174,7 +2174,7 @@ MagickExport Image *MagnifyImage(const Image *image,ExceptionInfo *exception)
             }
           magnify_indexes+=2;
         }
-      q+=2;
+      q+=(ptrdiff_t) 2;
     }
     if (SyncCacheViewAuthenticPixels(magnify_view,exception) == MagickFalse)
       status=MagickFalse;

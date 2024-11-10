@@ -3752,8 +3752,8 @@ MagickExport Image *StatisticImageChannel(const Image *image,
       {
         for (u=0; u < (ssize_t) neighbor_width; u++)
           InsertPixelList(image,r+u,s+u,pixel_list[id]);
-        r+=image->columns+neighbor_width;
-        s+=image->columns+neighbor_width;
+        r+=(ptrdiff_t) image->columns+neighbor_width;
+        s+=(ptrdiff_t) image->columns+neighbor_width;
       }
       GetMagickPixelPacket(image,&pixel);
       SetMagickPixelPacket(image,p+neighbor_width*neighbor_height/2,indexes+x+

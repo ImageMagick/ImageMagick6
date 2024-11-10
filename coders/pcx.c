@@ -538,7 +538,7 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 break;
               }
             }
-            r+=pcx_info.planes;
+            r+=(ptrdiff_t) pcx_info.planes;
           }
         }
       else

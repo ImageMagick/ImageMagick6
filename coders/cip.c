@@ -237,7 +237,7 @@ static MagickBooleanType WriteCIPImage(const ImageInfo *image_info,Image *image)
          (((size_t) (3*ClampToQuantum(GetPixelLuma(image,p+0))/QuantumRange) & 0x03) << 0));
       (void) FormatLocaleString(buffer,MaxTextExtent,"%02x",byte);
       (void) WriteBlobString(image,buffer);
-      p+=4;
+      p+=(ptrdiff_t) 4;
     }
     if ((image->columns % 4) != 0)
       {

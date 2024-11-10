@@ -1993,7 +1993,7 @@ static int read_user_chunk_callback(png_struct *ping, png_unknown_chunkp chunk)
           if (s[0] == 'E' && s[1] == 'x'  && s[2] == 'i' &&
               s[3] == 'f' && s[4] == '\0' && s[5] == '\0')
           {
-            s+=6;
+            s+=(ptrdiff_t) 6;
             i=6;
             SetStringInfoLength(profile,chunk->size);
             p=GetStringInfoDatum(profile);
@@ -5482,7 +5482,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                   "  MNG height: %.20g",(double) mng_info->mng_height);
               }
 
-            p+=8;
+            p+=(ptrdiff_t) 8;
             mng_info->ticks_per_second=(size_t) mng_get_long(p);
 
             if (mng_info->ticks_per_second == 0)
@@ -5496,7 +5496,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
             simplicity=0;
 
             /* Skip nominal layer count, frame count, and play time */
-            p+=16;
+            p+=(ptrdiff_t) 16;
             simplicity=(size_t) mng_get_long(p);
 
             mng_type=1;    /* Full MNG */
@@ -5900,7 +5900,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                         if (change_delay == 2)
                           default_frame_delay=frame_delay;
 
-                        p+=4;
+                        p+=(ptrdiff_t) 4;
 
                         if (logging != MagickFalse)
                           (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -5921,7 +5921,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                         if (change_timeout == 2)
                           default_frame_timeout=frame_timeout;
 
-                        p+=4;
+                        p+=(ptrdiff_t) 4;
 
                         if (logging != MagickFalse)
                           (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -5931,7 +5931,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                     if (change_clipping && ((p-chunk) < (ssize_t) (length-16)))
                       {
                         fb=mng_read_box(previous_fb,(char) p[0],&p[1]);
-                        p+=16;
+                        p+=(ptrdiff_t) 16;
                         previous_fb=fb;
 
                         if (logging != MagickFalse)
@@ -6026,7 +6026,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
               {
                 first_object=(p[0] << 8) | p[1];
                 last_object=(p[2] << 8) | p[3];
-                p+=4;
+                p+=(ptrdiff_t) 4;
 
                 for (i=(int) first_object; i <= (int) last_object; i++)
                 {
@@ -6104,7 +6104,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
             {
               first_object=(p[0] << 8) | p[1];
               last_object=(p[2] << 8) | p[3];
-              p+=4;
+              p+=(ptrdiff_t) 4;
 
               for (i=(ssize_t) first_object; i <= (ssize_t) last_object; i++)
               {
@@ -6981,7 +6981,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                       1,exception);
                     if (q == (PixelPacket *) NULL)
                       break;
-                    q+=(large_image->columns-image->columns);
+                    q+=(ptrdiff_t) (large_image->columns-image->columns);
 
                     for (x=(ssize_t) image->columns-1; x >= 0; x--)
                     {
@@ -13145,7 +13145,7 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
                 (((unsigned int) *(p + 1) & 0xff) << 16) +
                 (((unsigned int) *(p + 2) & 0xff) <<  8) +
                 (((unsigned int) *(p + 3) & 0xff)      ) ;
-            p+=4;
+            p+=(ptrdiff_t) 4;
 
             if (*(p)==73 && *(p+1)==68 && *(p+2)==65 && *(p+3)==84) /* IDAT */
               {
@@ -13163,7 +13163,7 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
                     "    Skipping %c%c%c%c chunk, length=%.20g.",
                     *(p),*(p+1),*(p+2),*(p+3),(double) len);
               }
-            p+=(8+len);
+            p+=(ptrdiff_t) (8+len);
           }
         }
       else if (length != 0)

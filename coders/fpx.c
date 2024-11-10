@@ -494,7 +494,7 @@ static Image *ReadFPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (image->matte != MagickFalse)
         SetPixelAlpha(q,ScaleCharToQuantum(*a));
       q++;
-      r+=red_component->columnStride;
+      r+=(ptrdiff_t) red_component->columnStride;
       g+=green_component->columnStride;
       b+=blue_component->columnStride;
       a+=alpha_component->columnStride;

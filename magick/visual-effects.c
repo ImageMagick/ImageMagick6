@@ -3469,22 +3469,22 @@ static inline void HatTransform(const float *magick_restrict pixels,
   for (i=0; i < (ssize_t) scale; i++)
   {
     kernel[i]=0.25f*(*p+(*p)+(*q)+(*r));
-    p+=stride;
+    p+=(ptrdiff_t) stride;
     q-=stride;
-    r+=stride;
+    r+=(ptrdiff_t) stride;
   }
   for ( ; i < (ssize_t) (extent-scale); i++)
   {
     kernel[i]=0.25f*(2.0f*(*p)+*(p-scale*stride)+*(p+scale*stride));
-    p+=stride;
+    p+=(ptrdiff_t) stride;
   }
   q=p-scale*stride;
   r=pixels+stride*(extent-2);
   for ( ; i < (ssize_t) extent; i++)
   {
     kernel[i]=0.25f*(*p+(*p)+(*q)+(*r));
-    p+=stride;
-    q+=stride;
+    p+=(ptrdiff_t) stride;
+    q+=(ptrdiff_t) stride;
     r-=stride;
   }
 }
@@ -3651,7 +3651,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
         p=kernel+id*image->columns;
         q=pixels+y*image->columns;
         HatTransform(q+high_pass,1,image->columns,(size_t) (1UL << level),p);
-        q+=low_pass;
+        q+=(ptrdiff_t) low_pass;
         for (x=0; x < (ssize_t) image->columns; x++)
           *q++=(*p++);
       }
@@ -3677,7 +3677,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
         for (y=0; y < (ssize_t) image->rows; y++)
         {
           *q=(*p++);
-          q+=image->columns;
+          q+=(ptrdiff_t) image->columns;
         }
       }
       /*

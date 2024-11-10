@@ -199,7 +199,7 @@ static Image *ReadJBIGImage(const ImageInfo *image_info,
         count;
 
       status=jbg_dec_in(&jbig_info,p,length,&count);
-      p+=count;
+      p+=(ptrdiff_t) count;
       length-=(ssize_t) count;
     }
   } while ((status == JBG_EAGAIN) || (status == JBG_EOK));

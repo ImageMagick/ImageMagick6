@@ -548,15 +548,15 @@ static MagickBooleanType ReadHEICImageHandle(const ImageInfo *image_info,
       for (x=0; x < (ssize_t) image->columns; x++)
       {
         unsigned short pixel = (((unsigned short) *(p+1) << 8) |
-          (*(p+0))) << shift; p+=2;
+          (*(p+0))) << shift; p+=(ptrdiff_t) 2;
         SetPixelRed(q,ScaleShortToQuantum(pixel));
-        pixel=(((unsigned short) *(p+1) << 8) | (*(p+0))) << shift; p+=2;
+        pixel=(((unsigned short) *(p+1) << 8) | (*(p+0))) << shift; p+=(ptrdiff_t) 2;
         SetPixelGreen(q,ScaleShortToQuantum(pixel));
-        pixel=(((unsigned short) *(p+1) << 8) | (*(p+0))) << shift; p+=2;
+        pixel=(((unsigned short) *(p+1) << 8) | (*(p+0))) << shift; p+=(ptrdiff_t) 2;
         SetPixelBlue(q,ScaleShortToQuantum(pixel));
         if (image->matte != MagickFalse)
           {
-            pixel=(((unsigned short) *(p+1) << 8) | (*(p+0))) << shift; p+=2;
+            pixel=(((unsigned short) *(p+1) << 8) | (*(p+0))) << shift; p+=(ptrdiff_t) 2;
             SetPixelAlpha(q,ScaleShortToQuantum(pixel));
           }
         q++;

@@ -3674,7 +3674,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else
                   index=(unsigned short) (*p | (*(p+1) << 8));
                 redmap[i]=(int) index;
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
               break;
             }
@@ -3706,7 +3706,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else
                   index=(unsigned short) (*p | (*(p+1) << 8));
                 greenmap[i]=(int) index;
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
               break;
             }
@@ -3738,7 +3738,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else
                   index=(unsigned short) (*p | (*(p+1) << 8));
                 bluemap[i]=(int) index;
-                p+=2;
+                p+=(ptrdiff_t) 2;
               }
               break;
             }

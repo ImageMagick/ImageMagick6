@@ -942,7 +942,7 @@ WandExport MagickBooleanType DrawComposite(DrawingWand *wand,
   for (i=(ssize_t) encoded_length; i > 0; i-=76)
   {
     (void) MVGPrintf(wand,"%.76s",p);
-    p+=76;
+    p+=(ptrdiff_t) 76;
     if (i > 76)
       (void) MVGPrintf(wand,"\n");
   }

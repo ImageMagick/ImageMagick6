@@ -1443,7 +1443,7 @@ MagickExport Image *FlopImage(const Image *image,ExceptionInfo *exception)
         status=MagickFalse;
         continue;
       }
-    q+=flop_image->columns;
+    q+=(ptrdiff_t) flop_image->columns;
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     flop_indexes=GetCacheViewAuthenticIndexQueue(flop_view);
     for (x=0; x < (ssize_t) flop_image->columns; x++)
@@ -2407,7 +2407,7 @@ MagickExport Image *TransverseImage(const Image *image,ExceptionInfo *exception)
         status=MagickFalse;
         continue;
       }
-    q+=image->columns;
+    q+=(ptrdiff_t) image->columns;
     for (x=0; x < (ssize_t) image->columns; x++)
       *--q=(*p++);
     indexes=GetCacheViewAuthenticIndexQueue(image_view);

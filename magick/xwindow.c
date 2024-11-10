@@ -2192,7 +2192,7 @@ static void XDitherImage(Image *image,XImage *ximage)
       if (j == 16)
         j=0;
     }
-    q+=scanline_pad;
+    q+=(ptrdiff_t) scanline_pad;
     i++;
     if (i == 2)
       i=0;
@@ -5926,7 +5926,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         }
         if (bit != 0)
           *q=byte >> (8-bit);
-        q+=scanline_pad;
+        q+=(ptrdiff_t) scanline_pad;
       }
     }
   else
@@ -5981,7 +5981,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
                 }
               }
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6021,7 +6021,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
                 }
               }
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6049,7 +6049,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
               pixel=pixels[(ssize_t) GetPixelIndex(indexes+x)];
               *q++=(unsigned char) pixel;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6081,7 +6081,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
                 pixel>>=8;
               }
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6138,7 +6138,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
               }
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6179,7 +6179,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
               }
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6207,7 +6207,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
               *q++=(unsigned char) pixel;
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6322,7 +6322,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
                     }
                     p++;
                   }
-                  q+=scanline_pad;
+                  q+=(ptrdiff_t) scanline_pad;
                 }
               }
           break;
@@ -6360,7 +6360,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         }
         if (bit != 0)
           *q=byte >> (8-bit);
-        q+=scanline_pad;
+        q+=(ptrdiff_t) scanline_pad;
       }
     }
   canvas_view=DestroyCacheView(canvas_view);
@@ -6535,7 +6535,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         }
         if (bit != 0)
           *q=byte << (8-bit);
-        q+=scanline_pad;
+        q+=(ptrdiff_t) scanline_pad;
       }
     }
   else
@@ -6590,7 +6590,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
                 }
               }
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6630,7 +6630,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
                 }
               }
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6658,7 +6658,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
               pixel=pixels[(ssize_t) GetPixelIndex(indexes+x)];
               *q++=(unsigned char) pixel;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6695,7 +6695,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
               for (k=0; k < (int) bytes_per_pixel; k++)
                 *q++=channel[k];
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6752,7 +6752,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
               }
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6793,7 +6793,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
               }
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6821,7 +6821,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
               *q++=(unsigned char) pixel;
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           break;
         }
@@ -6936,7 +6936,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
                     }
                     p++;
                   }
-                  q+=scanline_pad;
+                  q+=(ptrdiff_t) scanline_pad;
                 }
               }
           break;
@@ -6974,7 +6974,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         }
         if (bit != 0)
           *q=byte << (8-bit);
-        q+=scanline_pad;
+        q+=(ptrdiff_t) scanline_pad;
       }
     }
   canvas_view=DestroyCacheView(canvas_view);
@@ -7204,7 +7204,7 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
                   }
                 if (q_bit != 0)
                   *q=byte >> (8-q_bit);
-                q+=scanline_pad;
+                q+=(ptrdiff_t) scanline_pad;
               }
             }
             y++;
@@ -7276,7 +7276,7 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
                   }
                 if (q_bit != 0)
                   *q=byte << (8-q_bit);
-                q+=scanline_pad;
+                q+=(ptrdiff_t) scanline_pad;
               }
             }
             y++;
@@ -7312,7 +7312,7 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
                 *q++=(*p);
               p++;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           y++;
         }
@@ -7345,9 +7345,9 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
               for (l=0; l < magnify; l++)
                 for (m=0; m < bytes_per_pixel; m++)
                   *q++=(*(p+m));
-              p+=bytes_per_pixel;
+              p+=(ptrdiff_t) bytes_per_pixel;
             }
-            q+=scanline_pad;
+            q+=(ptrdiff_t) scanline_pad;
           }
           y++;
         }

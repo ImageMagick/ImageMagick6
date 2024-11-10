@@ -251,8 +251,8 @@ MagickExport MagickBooleanType FloodfillPaintImage(Image *image,
     if ((p == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
       break;
     indexes=GetCacheViewVirtualIndexQueue(image_view);
-    p+=x1;
-    q+=x1;
+    p+=(ptrdiff_t) x1;
+    q+=(ptrdiff_t) x1;
     for (x=x1; x >= 0; x--)
     {
       if (GetPixelGray(q) != 0)
