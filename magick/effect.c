@@ -313,15 +313,15 @@ MagickExport Image *AdaptiveBlurImageChannel(const Image *image,
     blur_indexes=GetCacheViewAuthenticIndexQueue(blur_view);
     for (x=0; x < (ssize_t) blur_image->columns; x++)
     {
+      const double
+        *magick_restrict k;
+
       double
         alpha,
         gamma;
 
       DoublePixelPacket
         pixel;
-
-      const double
-        *magick_restrict k;
 
       ssize_t
         i,
