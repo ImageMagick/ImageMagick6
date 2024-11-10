@@ -6246,7 +6246,7 @@ static MagickBooleanType TraceArcPath(MVGInfo *mvg_info,const PointInfo start,
     status&=TraceBezier(mvg_info,4);
     if (status == 0)
       break;
-    p=(*mvg_info->primitive_info)+mvg_info->offset;
+    p=(*mvg_info->primitive_info)+(ptrdiff_t) mvg_info->offset;
     mvg_info->offset+=p->coordinates;
     p+=(ptrdiff_t) p->coordinates;
   }
@@ -7100,7 +7100,7 @@ static MagickBooleanType TraceRoundRectangle(MVGInfo *mvg_info,
   degrees.y=360.0;
   if (TraceEllipse(mvg_info,point,arc,degrees) == MagickFalse)
     return(MagickFalse);
-  p=(*mvg_info->primitive_info)+mvg_info->offset;
+  p=(*mvg_info->primitive_info)+(ptrdiff_t) mvg_info->offset;
   mvg_info->offset+=p->coordinates;
   point.x=start.x+segment.x-arc.x;
   point.y=start.y+segment.y-arc.y;
@@ -7108,7 +7108,7 @@ static MagickBooleanType TraceRoundRectangle(MVGInfo *mvg_info,
   degrees.y=90.0;
   if (TraceEllipse(mvg_info,point,arc,degrees) == MagickFalse)
     return(MagickFalse);
-  p=(*mvg_info->primitive_info)+mvg_info->offset;
+  p=(*mvg_info->primitive_info)+(ptrdiff_t) mvg_info->offset;
   mvg_info->offset+=p->coordinates;
   point.x=start.x+arc.x;
   point.y=start.y+segment.y-arc.y;
@@ -7116,7 +7116,7 @@ static MagickBooleanType TraceRoundRectangle(MVGInfo *mvg_info,
   degrees.y=180.0;
   if (TraceEllipse(mvg_info,point,arc,degrees) == MagickFalse)
     return(MagickFalse);
-  p=(*mvg_info->primitive_info)+mvg_info->offset;
+  p=(*mvg_info->primitive_info)+(ptrdiff_t) mvg_info->offset;
   mvg_info->offset+=p->coordinates;
   point.x=start.x+arc.x;
   point.y=start.y+arc.y;
@@ -7124,11 +7124,11 @@ static MagickBooleanType TraceRoundRectangle(MVGInfo *mvg_info,
   degrees.y=270.0;
   if (TraceEllipse(mvg_info,point,arc,degrees) == MagickFalse)
     return(MagickFalse);
-  p=(*mvg_info->primitive_info)+mvg_info->offset;
+  p=(*mvg_info->primitive_info)+(ptrdiff_t) mvg_info->offset;
   mvg_info->offset+=p->coordinates;
   if (CheckPrimitiveExtent(mvg_info,PrimitiveExtentPad) == MagickFalse)
     return(MagickFalse);
-  p=(*mvg_info->primitive_info)+mvg_info->offset;
+  p=(*mvg_info->primitive_info)+(ptrdiff_t) mvg_info->offset;
   if (TracePoint(p,(*mvg_info->primitive_info+offset)->point) == MagickFalse)
     return(MagickFalse);
   p+=(ptrdiff_t) p->coordinates;
