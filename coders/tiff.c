@@ -1574,34 +1574,31 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       default:
         break;
     }
-    tiff_status=TIFFGetFieldDefaulted(tiff,TIFFTAG_EXTRASAMPLES,&extra_samples,
-      &sample_info,sans);
-    if (tiff_status == 1)
+    if (extra_samples == 0)
       {
-        (void) SetImageProperty(image,"tiff:alpha","unspecified");
-        if (extra_samples == 0)
-          {
-            if ((samples_per_pixel == 4) && (photometric == PHOTOMETRIC_RGB))
+        if ((samples_per_pixel == 4) && (photometric == PHOTOMETRIC_RGB))
+          image->matte=MagickTrue;
+      }
+    else
+      {
+        for (i=0; i < extra_samples; i++)
+        {
+          if (sample_info[i] == EXTRASAMPLE_ASSOCALPHA)
+            {
               image->matte=MagickTrue;
-          }
-        else
-          for (i=0; i < extra_samples; i++)
-          {
-            image->matte=MagickTrue;
-            if (sample_info[i] == EXTRASAMPLE_ASSOCALPHA)
+              SetQuantumAlphaType(quantum_info,AssociatedQuantumAlpha);
+              (void) SetImageProperty(image,"tiff:alpha","associated");
+              break;
+            }
+          else
+            if (sample_info[i] == EXTRASAMPLE_UNASSALPHA)
               {
-                SetQuantumAlphaType(quantum_info,AssociatedQuantumAlpha);
-                (void) SetImageProperty(image,"tiff:alpha","associated");
+                image->matte=MagickTrue;
+                SetQuantumAlphaType(quantum_info,DisassociatedQuantumAlpha);
+                (void) SetImageProperty(image,"tiff:alpha","unassociated");
                 break;
               }
-            else
-              if (sample_info[i] == EXTRASAMPLE_UNASSALPHA)
-                {
-                  SetQuantumAlphaType(quantum_info,DisassociatedQuantumAlpha);
-                  (void) SetImageProperty(image,"tiff:alpha","unassociated");
-                  break;
-                }
-          }
+        }
         if ((image->matte == MagickFalse) && (extra_samples >= 1))
           {
             const char
@@ -1615,7 +1612,11 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           extra_samples--;
       }
     if (image->matte != MagickFalse)
-      (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
+      {
+        if (quantum_info->alpha_type == UndefinedQuantumAlpha)
+          (void) SetImageProperty(image,"tiff:alpha","unspecified");
+        (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
+      }
     method=ReadGenericMethod;
     rows_per_strip=(uint32) image->rows;
     if (TIFFGetField(tiff,TIFFTAG_ROWSPERSTRIP,&rows_per_strip) == 1)
