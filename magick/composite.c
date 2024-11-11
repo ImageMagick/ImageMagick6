@@ -2332,7 +2332,7 @@ MagickExport MagickBooleanType CompositeImageChannel(Image *image,
           }
         pixels=p;
         if (x_offset < 0)
-          p-=x_offset;
+          p-=(ptrdiff_t)x_offset;
       }
     q=GetCacheViewAuthenticPixels(image_view,0,y,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)

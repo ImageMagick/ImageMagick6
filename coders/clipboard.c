@@ -191,7 +191,7 @@ static Image *ReadCLIPBOARDImage(const ImageInfo *image_info,
         offset+=12;
     }
   offset+=BMP_HEADER_SIZE;
-  p-=BMP_HEADER_SIZE;
+  p-=(ptrdiff_t)BMP_HEADER_SIZE;
   p[0]='B';
   p[1]='M';
   p[2]=(unsigned char) total_size;
