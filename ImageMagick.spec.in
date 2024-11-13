@@ -10,7 +10,6 @@
 
 # Disable automatic .la file removal
 %global __brp_remove_la_files %nil
-
 %global Version @PACKAGE_BASE_VERSION@
 %global Patchlevel @MAGICK_PATCHLEVEL_VERSION@
 %global libsover 7
@@ -97,8 +96,7 @@ ImageMagick is widely used in web development, graphic design, and other
 areas where image processing is required. It provides a versatile and
 efficient way to handle a variety of image-related tasks. Additionally,
 ImageMagick has bindings for various programming languages, making it easy
-to integrate into software applications
-and workflows.
+to integrate into software applications and workflows.
 
 
 %package devel
@@ -219,11 +217,6 @@ however.
 %prep
 %autosetup -p1 -n %{name}-%{Version}-%{Patchlevel}
 
-# for %%doc
-mkdir Magick++/examples
-cp -p Magick++/demo/*.cpp Magick++/demo/*.miff Magick++/examples
-
-
 %build
 autoconf -f -i -v
 # Reduce thread contention, upstream sets this flag for Linux hosts
@@ -249,6 +242,7 @@ export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
         --with-xml \
         --with-urw-base35-font-dir="%{urw_base35_fontpath}" \
         --without-dps \
+        --enable-openmp \
         --without-gcc-arch \
         --with-jbig \
         --with-jxl \
@@ -260,7 +254,7 @@ export CFLAGS="%{optflags} -DIMPNG_SETJMP_IS_THREAD_SAFE"
         --with-gvc \
         --with-raqm \
 %if %{with libheif}
-           --with-heic \
+        --with-heic \
 %endif
 
 # Do *NOT* use %%{?_smp_mflags}, this causes PerlMagick to be silently misbuild
@@ -272,11 +266,12 @@ make html-local
 %install
 %make_install
 
-cp -a www/source %{buildroot}%{_datadir}/doc/%{name}-%{Version}
 # Do NOT remove .la files for codecs
 rm %{buildroot}%{_libdir}/*.la
 
 %if %{with perl}
+chmod 755 %{buildroot}%{perl_vendorarch}/auto/Image/Magick/Q16HDRI/Q16HDRI.so
+
 # perlmagick: fix perl path of demo files
 %{__perl} -MExtUtils::MakeMaker -e 'MY->fixin(@ARGV)' PerlMagick/demo/*.pl
 
@@ -286,11 +281,12 @@ find %{buildroot} -name ".packlist" |xargs rm -f
 find %{buildroot} -name "perllocal.pod" |xargs rm -f
 
 # perlmagick: build files list
-echo "%defattr(-,root,root,-)" > perl-pkg-files
-mv %{buildroot}/%{_prefix}/man/man3 %{buildroot}/%{_prefix}/share/man
-mv %{buildroot}/%{_prefix}/lib/perl* %{buildroot}/%{_libdir}
 find %{buildroot}/%{_libdir}/perl* -type f -print \
         | sed "s@^%{buildroot}@@g" > perl-pkg-files
+find %{buildroot}%{perl_vendorarch} -type d -print \
+        | sed "s@^%{buildroot}@%dir @g" \
+        | grep -v '^%dir %{perl_vendorarch}$' \
+        | grep -v '/auto$' >> perl-pkg-files
 if [ -z perl-pkg-files ] ; then
         echo "ERROR: EMPTY FILE LIST"
         exit -1
@@ -330,18 +326,15 @@ export LD_LIBRARY_PATH=%{buildroot}/%{_libdir}
 %endif
 rm PerlMagick/demo/Generic.ttf
 
-%ldconfig_scriptlets libs
-%ldconfig_scriptlets c++
-
 %files
-%doc README.txt NOTICE AUTHORS.txt NEWS.txt
+%doc NOTICE AUTHORS.txt
 %license LICENSE
 %{_bindir}/[a-z]*
 %{_mandir}/man[145]/[a-z]*
 %{_mandir}/man1/%{name}.*
 
 %files libs
-%doc NOTICE AUTHORS.txt QuickStart.txt
+%doc NOTICE AUTHORS.txt
 %license LICENSE
 %{_libdir}/libMagickCore-6.Q16.so.%{libsover}{,.*}
 %{_libdir}/libMagickWand-6.Q16.so.%{libsover}{,.*}
@@ -390,8 +383,8 @@ rm PerlMagick/demo/Generic.ttf
 %doc LICENSE
 
 %files c++
-%doc Magick++/AUTHORS Magick++/ChangeLog Magick++/NEWS Magick++/README
-%doc www/Magick++/COPYING
+%doc Magick++/AUTHORS
+%license Magick++/LICENSE
 %{_libdir}/libMagick++-6.Q16.so.%{libcxxsover}{,.*}
 
 %files c++-devel
