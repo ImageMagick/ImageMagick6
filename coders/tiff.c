@@ -1680,7 +1680,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         ssize_t
           pad;
 
-        pad=(ssize_t) samples_per_pixel-extra_samples;
+        pad=(ssize_t) samples_per_pixel;
         if (samples_per_pixel > 2)
           {
             if (image->colorspace == CMYKColorspace)
@@ -1688,14 +1688,20 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                 pad-=4;
                 quantum_type=CMYKQuantum;
                 if (image->matte != MagickFalse)
-                  quantum_type=CMYKAQuantum;
+                  {
+                    pad--;
+                    quantum_type=CMYKAQuantum;
+                  }
               }
             else
               {
                 pad-=3;
                 quantum_type=RGBQuantum;
                 if (image->matte != MagickFalse)
-                  quantum_type=RGBAQuantum;
+                  {
+                    pad--;
+                    quantum_type=RGBAQuantum;
+                  }
               }
           }
         else
