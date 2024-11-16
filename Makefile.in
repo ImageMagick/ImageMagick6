@@ -304,12 +304,13 @@ CONFIG_CLEAN_FILES = common.shi config/configure.xml \
 	config/MagickCore.dox config/MagickWand.dox \
 	config/Magick++.dox config/policy.xml config/type-apple.xml \
 	config/type-dejavu.xml config/type-ghostscript.xml \
-	config/type-urw-base35.xml config/type-windows.xml \
-	config/type.xml ImageMagick.spec Magick++/bin/Magick++-config \
-	magick/ImageMagick.pc Magick++/lib/ImageMagick++.pc \
-	Magick++/lib/Magick++.pc magick/Magick-config \
-	magick/MagickCore-config magick/MagickCore.pc magick/version.h \
-	magick.sh PerlMagick/check.sh PerlMagick/default/Magick.pm \
+	config/type-urw-base35.xml config/type-urw-base35-type1.xml \
+	config/type-windows.xml config/type.xml ImageMagick.spec \
+	Magick++/bin/Magick++-config magick/ImageMagick.pc \
+	Magick++/lib/ImageMagick++.pc Magick++/lib/Magick++.pc \
+	magick/Magick-config magick/MagickCore-config \
+	magick/MagickCore.pc magick/version.h magick.sh \
+	PerlMagick/check.sh PerlMagick/default/Magick.pm \
 	PerlMagick/Makefile.PL PerlMagick/default/Makefile.PL \
 	PerlMagick/quantum/Makefile.PL PerlMagick/quantum/quantum.pm \
 	PerlMagick/quantum/quantum.xs PerlMagick/quantum/typemap \
@@ -2938,6 +2939,7 @@ am__DIST_COMMON = $(srcdir)/ImageMagick.spec.in \
 	$(top_srcdir)/config/type-apple.xml.in \
 	$(top_srcdir)/config/type-dejavu.xml.in \
 	$(top_srcdir)/config/type-ghostscript.xml.in \
+	$(top_srcdir)/config/type-urw-base35-type1.xml.in \
 	$(top_srcdir)/config/type-urw-base35.xml.in \
 	$(top_srcdir)/config/type-windows.xml.in \
 	$(top_srcdir)/config/type.xml.in \
@@ -5770,6 +5772,8 @@ config/type-dejavu.xml: $(top_builddir)/config.status $(top_srcdir)/config/type-
 config/type-ghostscript.xml: $(top_builddir)/config.status $(top_srcdir)/config/type-ghostscript.xml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 config/type-urw-base35.xml: $(top_builddir)/config.status $(top_srcdir)/config/type-urw-base35.xml.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+config/type-urw-base35-type1.xml: $(top_builddir)/config.status $(top_srcdir)/config/type-urw-base35-type1.xml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
 config/type-windows.xml: $(top_builddir)/config.status $(top_srcdir)/config/type-windows.xml.in
 	cd $(top_builddir) && $(SHELL) ./config.status $@
