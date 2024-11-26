@@ -2109,7 +2109,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
     similarity_threshold;
 
   Image
-    *similarity_image;
+    *similarity_image = (Image *) NULL;
 
   MagickBooleanType
     status;
@@ -2131,8 +2131,10 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   *similarity_metric=MagickMaximumValue;
   if (ValidateImageMorphology(image,reference) == MagickFalse)
     ThrowImageException(ImageError,"ImageMorphologyDiffers");
-  similarity_image=CloneImage(image,image->columns-reference->columns+1,
-    image->rows-reference->rows+1,MagickTrue,exception);
+  if ((image->columns >= reference->columns) &&
+      (image->rows >= reference->rows))
+    similarity_image=CloneImage(image,image->columns-reference->columns+1,
+      image->rows-reference->rows+1,MagickTrue,exception);
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
   if (SetImageStorageClass(similarity_image,DirectClass) == MagickFalse)
