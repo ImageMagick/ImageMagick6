@@ -2991,7 +2991,9 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
       image=AcquireImage(image_info);
       (void) CopyMagickString(image->filename,image_info->filename,
         MaxTextExtent);
-      status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
+      sans_exception=AcquireExceptionInfo();
+      status=OpenBlob(image_info,image,ReadBinaryBlobMode,sans_exception);
+      sans_exception=DestroyExceptionInfo(sans_exception);
       if (status == MagickFalse)
         {
           image=DestroyImage(image);
