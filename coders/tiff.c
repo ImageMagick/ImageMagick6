@@ -785,6 +785,7 @@ static MagickBooleanType TIFFGetEXIFProperties(TIFF *tiff,Image *image)
 
 static MagickBooleanType TIFFGetGPSProperties(TIFF *tiff,Image *image)
 {
+#if (TIFFLIB_VERSION >= 20210416)
   MagickBooleanType
     status;
 
@@ -813,6 +814,10 @@ static MagickBooleanType TIFFGetGPSProperties(TIFF *tiff,Image *image)
   status=TIFFSetImageProperties(tiff,image,"exif:GPS");
   TIFFSetDirectory(tiff,directory);
   return(status);
+#else
+  magick_unreferenced(tiff);
+  magick_unreferenced(image);
+#endif
 }
 
 static int TIFFMapBlob(thandle_t image,tdata_t *base,toff_t *size)
