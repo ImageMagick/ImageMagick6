@@ -681,10 +681,8 @@ MagickExport MagickBooleanType DeleteNodeFromSplayTree(
 MagickExport SplayTreeInfo *DestroySplayTree(SplayTreeInfo *splay_tree)
 {
   NodeInfo
-    *node;
-
-  NodeInfo
     *active,
+    *node,
     *pend;
 
   LockSemaphoreInfo(splay_tree->semaphore);
@@ -1027,13 +1025,11 @@ static int IterateOverSplayTree(SplayTreeInfo *splay_tree,
     final_transition;
 
   NodeInfo
+    *node,
     **nodes;
 
   ssize_t
     i;
-
-  NodeInfo
-    *node;
 
   TransitionType
     transition;
@@ -1381,10 +1377,8 @@ MagickExport void *RemoveNodeFromSplayTree(SplayTreeInfo *splay_tree,
 MagickExport void ResetSplayTree(SplayTreeInfo *splay_tree)
 {
   NodeInfo
-    *node;
-
-  NodeInfo
     *active,
+    *node,
     *pend;
 
   assert(splay_tree != (SplayTreeInfo *) NULL);
@@ -1520,10 +1514,8 @@ static NodeInfo *Splay(SplayTreeInfo *splay_tree,const size_t depth,
     compare;
 
   NodeInfo
-    **next;
-
-  NodeInfo
     *n,
+    **next,
     *p;
 
   n=(*node);
