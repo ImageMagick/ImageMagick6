@@ -299,9 +299,8 @@ static Image *ReadGROUP4Image(const ImageInfo *image_info,
   size_t
     length;
 
-  ssize_t
-    offset,
-    strip_offset;
+  TIFF
+    *tiff;
 
   /*
     Open image file.
@@ -323,69 +322,65 @@ static Image *ReadGROUP4Image(const ImageInfo *image_info,
   /*
     Write raw CCITT Group 4 wrapped as a TIFF image file.
   */
-  file=(FILE *) NULL;
+ file=(FILE *) NULL;
   unique_file=AcquireUniqueFileResource(filename);
   if (unique_file != -1)
     file=fdopen(unique_file,"wb");
   if ((unique_file == -1) || (file == (FILE *) NULL))
     ThrowImageException(FileOpenError,"UnableToCreateTemporaryFile");
-  length=fwrite("\111\111\052\000\010\000\000\000\016\000",1,10,file);
-  if (length != 10)
-    ThrowReaderException(CorruptImageError,"UnexpectedEndOfFile");
-  length=fwrite("\376\000\003\000\001\000\000\000\000\000\000\000",1,12,file);
-  length=fwrite("\000\001\004\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(unsigned int) image->columns);
-  length=fwrite("\001\001\004\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(unsigned int) image->rows);
-  length=fwrite("\002\001\003\000\001\000\000\000\001\000\000\000",1,12,file);
-  length=fwrite("\003\001\003\000\001\000\000\000\004\000\000\000",1,12,file);
-  length=fwrite("\006\001\003\000\001\000\000\000\000\000\000\000",1,12,file);
-  length=fwrite("\021\001\003\000\001\000\000\000",1,8,file);
-  strip_offset=10+(12*14)+4+8;
-  length=WriteLSBLong(file,(unsigned int) strip_offset);
-  length=fwrite("\022\001\003\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(unsigned int) image_info->orientation);
-  length=fwrite("\025\001\003\000\001\000\000\000\001\000\000\000",1,12,file);
-  length=fwrite("\026\001\004\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(unsigned int) image->rows);
-  length=fwrite("\027\001\004\000\001\000\000\000\000\000\000\000",1,12,file);
-  offset=(ssize_t) ftell(file)-4;
-  length=fwrite("\032\001\005\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(unsigned int) (strip_offset-8));
-  length=fwrite("\033\001\005\000\001\000\000\000",1,8,file);
-  length=WriteLSBLong(file,(unsigned int) (strip_offset-8));
-  length=fwrite("\050\001\003\000\001\000\000\000\002\000\000\000",1,12,file);
-  length=fwrite("\000\000\000\000",1,4,file);
-  length=WriteLSBLong(file,(unsigned int) image->x_resolution);
-  length=WriteLSBLong(file,1);
-  status=MagickTrue;
-  for (length=0; (c=ReadBlobByte(image)) != EOF; length++)
-    if (fputc(c,file) != c)
-      status=MagickFalse;
-  offset=(ssize_t) fseek(file,(off_t) offset,SEEK_SET);
-  length=WriteLSBLong(file,(unsigned int) length);
-  if (ferror(file) != 0)
+  tiff=TIFFOpen(filename,"w");
+  if (tiff == (TIFF *) NULL)
     {
-      (void) fclose(file);
+      (void) RelinquishUniqueFileResource(filename);
       ThrowImageException(FileOpenError,"UnableToCreateTemporaryFile");
     }
-  (void) fclose(file);
+  TIFFSetField(tiff,TIFFTAG_IMAGEWIDTH,(uint32) image->columns);
+  TIFFSetField(tiff,TIFFTAG_IMAGELENGTH,(uint32) image->rows);
+  TIFFSetField(tiff,TIFFTAG_BITSPERSAMPLE,1);
+  TIFFSetField(tiff,TIFFTAG_SAMPLESPERPIXEL,1);
+  TIFFSetField(tiff,TIFFTAG_PHOTOMETRIC,PHOTOMETRIC_MINISBLACK);
+  TIFFSetField(tiff,TIFFTAG_ORIENTATION,ORIENTATION_TOPLEFT);
+  TIFFSetField(tiff,TIFFTAG_COMPRESSION,COMPRESSION_CCITTFAX4);
+  TIFFSetField(tiff,TIFFTAG_ROWSPERSTRIP,(uint32) image->rows);
+  if ((image->x_resolution > 0.0) && (image->y_resolution > 0.0))
+    {
+      if (image->units == PixelsPerCentimeterResolution)
+        TIFFSetField(tiff,TIFFTAG_RESOLUTIONUNIT,RESUNIT_CENTIMETER);
+      else
+        TIFFSetField(tiff,TIFFTAG_RESOLUTIONUNIT,RESUNIT_INCH);
+      TIFFSetField(tiff,TIFFTAG_XRESOLUTION,(uint32) image->x_resolution);
+      TIFFSetField(tiff,TIFFTAG_YRESOLUTION,(uint32) image->y_resolution);
+    }
+  status=MagickTrue;
+  c=ReadBlobByte(image);
+  for (length=0; c != EOF; length++)
+  {
+    unsigned char byte = (unsigned char) c;
+    if (TIFFWriteRawStrip(tiff,0,&byte,1) < 0)
+      {
+        status=MagickFalse;
+        break;
+      }
+    c=ReadBlobByte(image);
+  }
+  TIFFSetField(tiff,TIFFTAG_STRIPBYTECOUNTS,(uint32) length);
+  TIFFClose(tiff);
   (void) CloseBlob(image);
   image=DestroyImage(image);
   /*
     Read TIFF image.
   */
   read_info=CloneImageInfo((ImageInfo *) NULL);
-  (void) FormatLocaleString(read_info->filename,MaxTextExtent,"%s",filename);
+  (void) FormatLocaleString(read_info->filename,MagickPathExtent,"%s",filename);
   image=ReadTIFFImage(read_info,exception);
   read_info=DestroyImageInfo(read_info);
   if (image != (Image *) NULL)
     {
       (void) CopyMagickString(image->filename,image_info->filename,
-        MaxTextExtent);
+        MagickPathExtent);
       (void) CopyMagickString(image->magick_filename,image_info->filename,
-        MaxTextExtent);
-      (void) CopyMagickString(image->magick,"GROUP4",MaxTextExtent);
+        MagickPathExtent);
+      (void) CopyMagickString(image->magick,"GROUP4",MagickPathExtent);
     }
   (void) RelinquishUniqueFileResource(filename);
   if (status == MagickFalse)
