@@ -383,8 +383,6 @@ static Image *ReadGROUP4Image(const ImageInfo *image_info,
       (void) CopyMagickString(image->magick,"GROUP4",MagickPathExtent);
     }
   (void) RelinquishUniqueFileResource(filename);
-  if (status == MagickFalse)
-    image=DestroyImage(image);
   return(image);
 }
 #endif
