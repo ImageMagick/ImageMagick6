@@ -1706,17 +1706,18 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           {
             pad--;
             if (image->matte != MagickFalse)
-              {
-                if (image->storage_class == PseudoClass)
-                  quantum_type=IndexAlphaQuantum;
-                else if (samples_per_pixel == 1)
-                  quantum_type=AlphaQuantum;
-                else
-                  {
-                    quantum_type=GrayAlphaQuantum;
-                    pad--;
-                  }
-              }
+                {
+                  if (samples_per_pixel == 1)
+                    quantum_type=AlphaQuantum;
+                  else
+                    {
+                      pad--;
+                      if (image->storage_class == PseudoClass)
+                        quantum_type=IndexAlphaQuantum;
+                      else
+                        quantum_type=GrayAlphaQuantum;
+                    }
+                }
           }
         if (pad < 0)
           ThrowTIFFException(CorruptImageError,"CorruptImage");
