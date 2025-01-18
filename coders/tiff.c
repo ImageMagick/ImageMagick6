@@ -3267,6 +3267,8 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
               (void) SetImageDepth(image,1);
           }
         image->depth=1;
+        if (image->matte != MagickFalse)
+          compression=UndefinedCompression;
         break;
       }
       case JPEGCompression:
