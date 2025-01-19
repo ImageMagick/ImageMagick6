@@ -365,6 +365,8 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case PowEvaluateOperator:
     {
+      if (PerceptibleReciprocal(value) <= MagickEpsilon)
+        break;
       if (((double) pixel < 0.0) && ((value-floor(value)) > MagickEpsilon))
         result=(double) -((MagickRealType) QuantumRange*pow(-(QuantumScale*
           (double) pixel),(double) value));
