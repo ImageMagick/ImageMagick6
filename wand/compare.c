@@ -255,6 +255,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     fire,
     pend,
     respect_parenthesis,
+    similar = MagickTrue,
     subimage_search;
 
   MagickStatusType
@@ -1164,7 +1165,11 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       similarity_image=SimilarityMetricImage(image,reconstruct_image,metric,
         &offset,&similarity_metric,exception);
       if (similarity_metric > dissimilarity_threshold)
-        ThrowCompareException(ImageError,"ImagesTooDissimilar",image->filename);
+        {
+          similar=MagickFalse;
+          (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
+            "ImagesTooDissimilar","`%s'",image->filename);
+        }
     }
   if (similarity_image == (Image *) NULL)
     difference_image=CompareImageChannels(image,reconstruct_image,channels,
@@ -1222,6 +1227,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
           similarity_image=(Image *) NULL;
         }
     }
+  if (fabs(distortion) > CompareEpsilon)
+    similar=MagickFalse;
   if (metric == NormalizedCrossCorrelationErrorMetric)
     {
       distortion=1.0-distortion;
@@ -1462,14 +1469,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     }
   DestroyCompare();
   image_info=restore_info;
-  if ((metric == NormalizedCrossCorrelationErrorMetric) ||
-      (metric == UndefinedErrorMetric))
-    {
-      if (fabs(distortion-1.0) > CompareEpsilon)
-        (void) SetImageOption(image_info,"compare:dissimilar","true");
-    }
-  else
-    if (fabs(distortion) > CompareEpsilon)
-      (void) SetImageOption(image_info,"compare:dissimilar","true");
+  if (similar == MagickFalse)
+    (void) SetImageOption(image_info,"compare:dissimilar","true");
   return(status != 0 ? MagickTrue : MagickFalse);
 }
