@@ -2192,7 +2192,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         break;
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
       if (metric == PeakSignalToNoiseRatioMetric) 
-        similarity*=0.01;
+        similarity/=48.1647;
       if ((metric == NormalizedCrossCorrelationErrorMetric) ||
           (metric == UndefinedErrorMetric))
         similarity=1.0-similarity;
