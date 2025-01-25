@@ -1439,8 +1439,9 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             channel_distortion);
           if (subimage_search != MagickFalse)
             {
-              (void) FormatLocaleFile(stderr,"    Offset: %.20g,%.20g\n",(double)
-                difference_image->page.x,(double) difference_image->page.y);
+              (void) FormatLocaleFile(stderr,"    Offset: %.20g,%.20g\n",
+                (double) difference_image->page.x,(double)
+                difference_image->page.y);
               (void) FormatLocaleFile(stderr,"    Similarity metric: %.*g\n",
                 GetMagickPrecision(),similarity_metric);
             }
