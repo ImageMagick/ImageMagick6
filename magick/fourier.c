@@ -281,31 +281,27 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
       }
     for (x=0; x < (ssize_t) columns; x++)
     {
-      QuantumPixelPacket
-        ai = { (Quantum) (QuantumScale*(MagickRealType) GetPixelRed(Ai)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelGreen(Ai)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelBlue(Ai)),
-               (Quantum) (image->matte != MagickFalse ? QuantumScale*
-               (MagickRealType) GetPixelOpacity(Ai) : (MagickRealType)
-               OpaqueOpacity), 0 },
-        ar = { (Quantum) (QuantumScale*(MagickRealType) GetPixelRed(Ar)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelGreen(Ar)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelBlue(Ar)),
-               (Quantum) (image->matte != MagickFalse ? QuantumScale*
-               (MagickRealType) GetPixelOpacity(Ar) : (MagickRealType)
-               OpaqueOpacity), 0 },
-        bi = { (Quantum) (QuantumScale*(MagickRealType) GetPixelRed(Bi)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelGreen(Bi)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelBlue(Bi)),
-               (Quantum) (image->matte != MagickFalse ? QuantumScale*
-               (MagickRealType) GetPixelOpacity(Bi) : (MagickRealType)
-               OpaqueOpacity), 0 },
-        br = { (Quantum) (QuantumScale*(MagickRealType) GetPixelRed(Br)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelGreen(Br)),
-               (Quantum) (QuantumScale*(MagickRealType) GetPixelBlue(Br)),
-               (Quantum) (image->matte != MagickFalse ? QuantumScale*
-               (MagickRealType) GetPixelOpacity(Br) : (MagickRealType)
-               OpaqueOpacity), 0 },
+      DoublePixelPacket
+        ai = { (double) (QuantumScale*(double) GetPixelRed(Ai)),
+               (double) (QuantumScale*(double) GetPixelGreen(Ai)),
+               (double) (QuantumScale*(double) GetPixelBlue(Ai)),
+               (double) (image->matte != MagickFalse ? QuantumScale*
+               (double) GetPixelOpacity(Ai) : (double) OpaqueOpacity), 0 },
+        ar = { (double) (QuantumScale*(double) GetPixelRed(Ar)),
+               (double) (QuantumScale*(double) GetPixelGreen(Ar)),
+               (double) (QuantumScale*(double) GetPixelBlue(Ar)),
+               (double) (image->matte != MagickFalse ? QuantumScale*
+               (double) GetPixelOpacity(Ar) : (double) OpaqueOpacity), 0 },
+        bi = { (double) (QuantumScale*(double) GetPixelRed(Bi)),
+               (double) (QuantumScale*(double) GetPixelGreen(Bi)),
+               (double) (QuantumScale*(double) GetPixelBlue(Bi)),
+               (double) (image->matte != MagickFalse ? QuantumScale*
+               (double) GetPixelOpacity(Bi) : (double) OpaqueOpacity), 0 },
+        br = { (double) (QuantumScale*(double) GetPixelRed(Br)),
+               (double) (QuantumScale*(double) GetPixelGreen(Br)),
+               (double) (QuantumScale*(double) GetPixelBlue(Br)),
+               (double) (image->matte != MagickFalse ? QuantumScale*
+               (double) GetPixelOpacity(Br) : (double) OpaqueOpacity), 0 },
         ci,
         cr;
 
