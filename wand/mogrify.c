@@ -8834,7 +8834,7 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
             if ((p == (Image *) NULL) || (q == (Image *) NULL))
               {
                 (void) ThrowMagickException(exception,GetMagickModule(),
-                  OptionError,"NoSuchImage","`%s'",(*images)->filename);
+                  OptionError,"InvalidImageIndex","`%s'",(*images)->filename);
                 status=MagickFalse;
                 break;
               }
