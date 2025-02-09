@@ -1426,32 +1426,36 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
   if ((channel & RedChannel) != 0)
     {
       if (fabs(distortion[RedChannel]) >= MagickEpsilon)
-        distortion[RedChannel]=(-10.0*MagickLog10(distortion[RedChannel]));
+        distortion[RedChannel]=(-10.0*MagickLog10(distortion[RedChannel]))/
+          48.1647;
     }
   if ((channel & GreenChannel) != 0)
     {
       if (fabs(distortion[GreenChannel]) >= MagickEpsilon)
-        distortion[GreenChannel]=(-10.0*MagickLog10(distortion[GreenChannel]));
+        distortion[GreenChannel]=(-10.0*MagickLog10(distortion[GreenChannel]))/
+          48.1647;
     }
   if ((channel & BlueChannel) != 0)
     {
       if (fabs(distortion[BlueChannel]) >= MagickEpsilon)
-        distortion[BlueChannel]=(-10.0*MagickLog10(distortion[BlueChannel]));
+        distortion[BlueChannel]=(-10.0*MagickLog10(distortion[BlueChannel]))/
+          48.1647;
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
       if (fabs(distortion[OpacityChannel]) >= MagickEpsilon)
         distortion[OpacityChannel]=(-10.0*
-          MagickLog10(distortion[OpacityChannel]));
+          MagickLog10(distortion[OpacityChannel]))/48.1647;
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
       if (fabs(distortion[BlackChannel]) >= MagickEpsilon)
-        distortion[BlackChannel]=(-10.0*MagickLog10(distortion[BlackChannel]));
+        distortion[BlackChannel]=(-10.0*MagickLog10(distortion[BlackChannel]))/
+          48.1647;
     }
   if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
     distortion[CompositeChannels]=(-10.0*
-      MagickLog10(distortion[CompositeChannels]));
+      MagickLog10(distortion[CompositeChannels]))/48.1647;
   return(status);
 }
 
@@ -2191,8 +2195,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       if (*similarity_metric <= similarity_threshold)
         break;
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
-      if (metric == PeakSignalToNoiseRatioMetric) 
-        similarity/=48.1647;
       if ((metric == NormalizedCrossCorrelationErrorMetric) ||
           (metric == UndefinedErrorMetric))
         similarity=1.0-similarity;
