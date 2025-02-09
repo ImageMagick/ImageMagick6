@@ -2205,7 +2205,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         }
       if (metric == PerceptualHashErrorMetric)
         similarity=MagickMin(0.01*similarity,1.0);
-      SetPixelRed(q,(double) QuantumRange*similarity));
+      SetPixelRed(q,(double) QuantumRange*similarity);
       SetPixelGreen(q,GetPixelRed(q));
       SetPixelBlue(q,GetPixelRed(q));
       q++;
