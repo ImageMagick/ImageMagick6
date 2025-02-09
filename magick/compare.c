@@ -42,6 +42,7 @@
 */
 #include "magick/studio.h"
 #include "magick/artifact.h"
+#include "magick/attribute.h"
 #include "magick/cache-view.h"
 #include "magick/channel.h"
 #include "magick/client.h"
@@ -2141,13 +2142,8 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       image->rows-reference->rows+1,MagickTrue,exception);
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
-  if (SetImageStorageClass(similarity_image,DirectClass) == MagickFalse)
-    {
-      InheritException(exception,&similarity_image->exception);
-      similarity_image=DestroyImage(similarity_image);
-      return((Image *) NULL);
-    }
   (void) SetImageAlphaChannel(similarity_image,DeactivateAlphaChannel);
+  (void) SetImageType(similarity_image,GrayscaleType);
   /*
     Measure similarity of reference image against image.
   */
@@ -2209,8 +2205,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         }
       if (metric == PerceptualHashErrorMetric)
         similarity=MagickMin(0.01*similarity,1.0);
-      SetPixelRed(q,ClampToQuantum((double) QuantumRange-(double) QuantumRange*
-        similarity));
+      SetPixelRed(q,(double) QuantumRange*similarity));
       SetPixelGreen(q,GetPixelRed(q));
       SetPixelBlue(q,GetPixelRed(q));
       q++;
