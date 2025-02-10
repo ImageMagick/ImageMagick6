@@ -2136,14 +2136,15 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   *similarity_metric=MagickMaximumValue;
   if (ValidateImageMorphology(image,reference) == MagickFalse)
     ThrowImageException(ImageError,"ImageMorphologyDiffers");
-  if ((image->columns >= reference->columns) &&
-      (image->rows >= reference->rows))
-    similarity_image=CloneImage(image,image->columns-reference->columns+1,
-      image->rows-reference->rows+1,MagickTrue,exception);
+  if ((image->columns < reference->columns) || (image->rows < reference->rows))
+    return((Image *) NULL);
+  similarity_image=CloneImage(image,image->columns-reference->columns,
+    image->rows-reference->rows,MagickTrue,exception);
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
   (void) SetImageAlphaChannel(similarity_image,DeactivateAlphaChannel);
   (void) SetImageType(similarity_image,GrayscaleType);
+  similarity_image->depth=MAGICKCORE_QUANTUM_DEPTH;
   /*
     Measure similarity of reference image against image.
   */
@@ -2158,7 +2159,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   #pragma omp parallel for schedule(static,1) \
     shared(progress,status,similarity_metric)
 #endif
-  for (y=0; y < (ssize_t) (image->rows-reference->rows+1); y++)
+  for (y=0; y < (ssize_t) similarity_image->rows; y++)
   {
     double
       similarity;
@@ -2183,7 +2184,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         status=MagickFalse;
         continue;
       }
-    for (x=0; x < (ssize_t) (image->columns-reference->columns+1); x++)
+    for (x=0; x < (ssize_t) similarity_image->columns; x++)
     {
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp flush(similarity_metric)
