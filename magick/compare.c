@@ -2137,7 +2137,11 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   if (ValidateImageMorphology(image,reference) == MagickFalse)
     ThrowImageException(ImageError,"ImageMorphologyDiffers");
   if ((image->columns < reference->columns) || (image->rows < reference->rows))
-    return((Image *) NULL);
+    {
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),
+        OptionWarning,"GeometryDoesNotContainImage","`%s'",image->filename);
+      return((Image *) NULL);
+    }
   similarity_image=CloneImage(image,image->columns-reference->columns,
     image->rows-reference->rows,MagickTrue,exception);
   if (similarity_image == (Image *) NULL)
