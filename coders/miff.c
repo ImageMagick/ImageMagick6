@@ -1320,7 +1320,7 @@ static Image *ReadMIFFImage(const ImageInfo *image_info,
     if (quantum_format != UndefinedQuantumFormat)
       {
         status=SetQuantumFormat(image,quantum_info,quantum_format);
-        image->depth=GetImageQuantumDepth(image,MagickFalse);
+        image->depth=quantum_info->depth;
         if (status == MagickFalse)
           ThrowMIFFException(ResourceLimitError,"MemoryAllocationFailed");
       }
