@@ -2209,7 +2209,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         }
       if (metric == PerceptualHashErrorMetric)
         similarity=MagickMin(0.01*similarity,1.0);
-      if (metric == NormalizedCrossCorrelationErrorMetric)
+      if ((metric == MeanSquaredErrorMetric) ||
+          (metric == NormalizedCrossCorrelationErrorMetric) ||
+          (metric == RootMeanSquaredErrorMetric))
         SetPixelRed(q,ClampToQuantum((double) QuantumRange-QuantumRange*
           similarity));
       else
