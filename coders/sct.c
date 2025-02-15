@@ -133,6 +133,9 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MagickBooleanType
     status;
 
+  MagickSizeType
+    extent;
+
   MagickRealType
     height,
     width;
@@ -240,6 +243,13 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
+  extent=(MagickSizeType) image->rows*image->columns*separations;
+  if (extent > GetBlobSize(image))
+    {
+      ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
+        image->filename);
+      return(DestroyImageList(image));
+    }
   /*
     Convert SCT raster image to pixel packets.
   */
@@ -294,7 +304,8 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (SyncAuthenticPixels(image,exception) == MagickFalse)
         break;
       if ((image->columns % 2) != 0)
-        (void) ReadBlobByte(image);  /* pad */
+        if (ReadBlobByte(image) == EOF)  /* pad */
+          break;
     }
     if (i < (ssize_t) separations)
       break;
