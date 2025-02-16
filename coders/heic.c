@@ -678,7 +678,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     GetMagickResourceLimit(HeightResource)),INT_MAX);
 #if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,19,0)
   if (max_size != INT_MAX)
-    heif_context_set_maximum_image_size_limit(heif_context,max_size);'
+    heif_context_set_maximum_image_size_limit(heif_context,max_size);
 #endif
   error=heif_context_read_from_file(heif_context,image->filename,
     (const struct heif_reading_options *) NULL);
