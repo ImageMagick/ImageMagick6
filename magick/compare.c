@@ -2122,6 +2122,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   MagickOffsetType
     progress;
 
+  size_t
+    rows;
+
   ssize_t
     y;
 
@@ -2158,11 +2161,13 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   status=MagickTrue;
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
+  rows=similarity_image->rows;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static,1) \
-    shared(progress,status,similarity_metric)
+    shared(progress,status,similarity_metric) \
+    magick_number_threads(similarity_image,similarity_image,rows << 3,1)
 #endif
-  for (y=0; y < (ssize_t) similarity_image->rows; y++)
+  for (y=0; y < (ssize_t) rows; y++)
   {
     double
       similarity;
