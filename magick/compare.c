@@ -1422,6 +1422,9 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
   MagickBooleanType
     status;
 
+  ssize_t
+    i;
+
   status=GetMeanSquaredDistortion(image,reconstruct_image,channel,distortion,
     exception);
   if ((channel & RedChannel) != 0)
@@ -1454,9 +1457,11 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[BlackChannel]=(-10.0*MagickLog10(distortion[BlackChannel]))/
           48.1647;
     }
-  if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
-    distortion[CompositeChannels]=(-10.0*
-      MagickLog10(distortion[CompositeChannels]))/48.1647;
+  distortion[CompositeChannels]=0.0;
+  for (i=0; i < (ssize_t) CompositeChannels; i++)
+    if (fabs(distortion[i]) >= MagickEpsilon)
+      distortion[CompositeChannels]+=distortion[i];
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   return(status);
 }
 
