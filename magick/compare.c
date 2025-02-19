@@ -2150,12 +2150,19 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         OptionWarning,"GeometryDoesNotContainImage","`%s'",image->filename);
       return((Image *) NULL);
     }
-  similarity_image=CloneImage(image,0,0,MagickTrue,exception);
+  similarity_image=CloneImage(image,image->columns,image->rows,MagickTrue,
+    exception);
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
-  (void) SetImageAlphaChannel(similarity_image,DeactivateAlphaChannel);
-  (void) SetImageType(similarity_image,GrayscaleType);
   similarity_image->depth=MAGICKCORE_QUANTUM_DEPTH;
+  similarity_image->matte=MagickFalse;
+  similarity_image->type=GrayscaleType;
+  status=SetImageStorageClass(similarity_image,DirectClass);
+  if (status == MagickFalse)
+    {
+      InheritException(exception,&similarity_image->exception);
+      return(DestroyImage(similarity_image));
+    }
   /*
     Measure similarity of reference image against image.
   */
