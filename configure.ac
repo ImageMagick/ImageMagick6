@@ -3154,6 +3154,7 @@ LEPDelegateDefault='lepton'
 LPDelegateDefault='lp'
 LPRDelegateDefault='lpr'
 LaunchDelegateDefault='gimp'
+MKDIRDelegateDefault='mkdir'
 MrSIDDecodeDelegateDefault='mrsidgeodecode'
 MVDelegateDefault='mv'
 PCLDelegateDefault='pcl6'
@@ -3199,9 +3200,8 @@ AC_PATH_PROG([LEPDelegate],["$LEPDelegateDefault"],["$LEPDelegateDefault"])
 AC_PATH_PROG([LPDelegate],["$LPDelegateDefault"],[no])
 AC_PATH_PROG([LPRDelegate],["$LPRDelegateDefault"],["$LPRDelegateDefault"])
 AC_PATH_PROG([LaunchDelegate],["$LaunchDelegateDefault"],["$LaunchDelegateDefault"])
+AC_PATH_PROG([MKDIRDelegate],["$MKDIRDelegateDefault"],["$MKDIRDelegateDefault"])
 AC_PATH_PROG([MogrifyDelegate],["$MogrifyDelegateDefault"],["$MogrifyDelegateDefault"])
-AC_PATH_PROG([VIDEODecodeDelegate],["$VIDEODecodeDelegateDefault"],["$VIDEODecodeDelegateDefault"])
-AC_PATH_PROG([VIDEOEncodeDelegate],["$VIDEOEncodeDelegateDefault"],["$VIDEOEncodeDelegateDefault"])
 AC_PATH_PROG([MrSIDDecodeDelegate],["$MrSIDDecodeDelegateDefault"],["$MrSIDDecodeDelegateDefault"])
 AC_PATH_PROG([MVDelegate],["$MVDelegateDefault"],["$MVDelegateDefault"])
 AC_PATH_PROG([PCLDelegate],["$PCLDelegateDefault"],["$PCLDelegateDefault"])
@@ -3211,6 +3211,8 @@ AC_PATH_PROG([RSVGDecodeDelegate],["$RSVGDecodeDelegateDefault"],["$RSVGDecodeDe
 AC_PATH_PROG([SVGDecodeDelegate],["$SVGDecodeDelegateDefault"],["$SVGDecodeDelegateDefault"])
 AC_PATH_PROG([TextEncodeDelegate],["$TextEncodeDelegateDefault"],["$TextEncodeDelegateDefault"])
 AC_PATH_PROG([TraceEncodeDelegate],["$TraceEncodeDelegateDefault"],["$TraceEncodeDelegateDefault"])
+AC_PATH_PROG([VIDEODecodeDelegate],["$VIDEODecodeDelegateDefault"],["$VIDEODecodeDelegateDefault"])
+AC_PATH_PROG([VIDEOEncodeDelegate],["$VIDEOEncodeDelegateDefault"],["$VIDEOEncodeDelegateDefault"])
 AC_PATH_PROG([WebPDecodeDelegate],["$WebPDecodeDelegateDefault"],["$WebPDecodeDelegateDefault"])
 AC_PATH_PROG([WebPEncodeDelegate],["$WebPEncodeDelegateDefault"],["$WebPEncodeDelegateDefault"])
 AC_PATH_PROG([WWWDecodeDelegate],["$WWWDecodeDelegateDefault"],["$WWWDecodeDelegateDelegateDefault"])
