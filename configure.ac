@@ -3611,7 +3611,7 @@ AC_SUBST([XPSVersion])
 #
 # Ghostscript related configuration.
 #
-GSAlphaDevice=pngalpha
+GSAlphaDevice=png16malpha
 GSColorDevice=png16m
 GSCMYKDevice=pamcmyk32
 GSMonoDevice=pbmraw

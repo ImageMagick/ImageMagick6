@@ -5203,7 +5203,7 @@ MAGICK_PATCHLEVEL_VERSION=23
 
 MAGICK_VERSION=6.9.13-23
 
-MAGICK_GIT_REVISION=36d4c9410:20250302
+MAGICK_GIT_REVISION=60f2502ae:20250308
 
 
 # Substitute library versioning
@@ -5237,7 +5237,7 @@ PACKAGE_LIB_VERSION=0x69D
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,23
 
-PACKAGE_RELEASE_DATE=2025-03-02
+PACKAGE_RELEASE_DATE=2025-03-08
 
 
 # Ensure that make can run correctly
@@ -37986,7 +37986,7 @@ fi
 #
 # Ghostscript related configuration.
 #
-GSAlphaDevice=pngalpha
+GSAlphaDevice=png16malpha
 GSColorDevice=png16m
 GSCMYKDevice=pamcmyk32
 GSMonoDevice=pbmraw
