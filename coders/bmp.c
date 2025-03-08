@@ -835,6 +835,8 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
             (void) LogMagickEvent(CoderEvent,GetMagickModule(),
               "  Number of colors: %u",bmp_info.number_colors);
           }
+        if ((bmp_info.height < 0) && (bmp_info.compression != 0))
+          ThrowReaderException(CoderError,"CompressNotSupported");
         if ((bmp_info.size > 40) || (bmp_info.compression == BI_BITFIELDS) ||
             (bmp_info.compression == BI_ALPHABITFIELDS))
           {
