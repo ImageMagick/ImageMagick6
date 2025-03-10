@@ -1210,10 +1210,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
   do
   {
     /* TIFFPrintDirectory(tiff,stdout,MagickFalse); */
-    photometric=PHOTOMETRIC_RGB;
     if ((TIFFGetField(tiff,TIFFTAG_IMAGEWIDTH,&width) != 1) ||
         (TIFFGetField(tiff,TIFFTAG_IMAGELENGTH,&height) != 1) ||
-        (TIFFGetFieldDefaulted(tiff,TIFFTAG_PHOTOMETRIC,&photometric,sans) != 1) ||
         (TIFFGetFieldDefaulted(tiff,TIFFTAG_COMPRESSION,&compress_tag,sans) != 1) ||
         (TIFFGetFieldDefaulted(tiff,TIFFTAG_FILLORDER,&endian,sans) != 1) ||
         (TIFFGetFieldDefaulted(tiff,TIFFTAG_PLANARCONFIG,&interlace,sans) != 1) ||
@@ -1239,6 +1237,8 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       }
     if (sample_format == SAMPLEFORMAT_IEEEFP)
       (void) SetImageProperty(image,"quantum:format","floating-point");
+    if (TIFFGetField(tiff,TIFFTAG_PHOTOMETRIC,&photometric) != 1)
+      photometric=PHOTOMETRIC_RGB;
     switch (photometric)
     {
       case PHOTOMETRIC_MINISBLACK:
