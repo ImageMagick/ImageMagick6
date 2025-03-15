@@ -1168,6 +1168,12 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       if (similarity_metric > dissimilarity_threshold)
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "ImagesTooDissimilar","`%s'",image->filename);
+      if ((image->columns == reconstruct_image->columns) &&
+          (image->rows == reconstruct_image->rows))
+        {
+          offset.x=0;
+          offset.y=0;
+        }
     }
   if (similarity_image == (Image *) NULL)
     difference_image=CompareImageChannels(image,reconstruct_image,channels,
