@@ -1168,12 +1168,6 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       if (similarity_metric > dissimilarity_threshold)
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "ImagesTooDissimilar","`%s'",image->filename);
-      if ((image->columns == reconstruct_image->columns) &&
-          (image->rows == reconstruct_image->rows))
-        {
-          offset.x=0;
-          offset.y=0;
-        }
     }
   if (similarity_image == (Image *) NULL)
     difference_image=CompareImageChannels(image,reconstruct_image,channels,
@@ -1198,8 +1192,13 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
           RectangleInfo
             page;
 
-          (void) CompositeImage(composite_image,CopyCompositeOp,
-            reconstruct_image,offset.x,offset.y);
+          if ((image->columns == reconstruct_image->columns) &&
+              (image->rows == reconstruct_image->rows))
+            (void) CompositeImage(composite_image,CopyCompositeOp,
+              reconstruct_image,0,0);
+          else
+            (void) CompositeImage(composite_image,CopyCompositeOp,
+              reconstruct_image,offset.x,offset.y);
           difference_image=CompareImageChannels(image,composite_image,
             channels,metric,&distortion,exception);
           if (difference_image != (Image *) NULL)
@@ -1268,8 +1267,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case PeakSignalToNoiseRatioMetric:
             {
               (void) FormatLocaleFile(stderr,"%.*g (%.*g)",GetMagickPrecision(),
-                (double) QuantumRange*distortion,GetMagickPrecision(),
-                0.01*distortion);
+                100.0*distortion,GetMagickPrecision(),distortion);
               break;
             }
             case MeanErrorPerPixelMetric:
