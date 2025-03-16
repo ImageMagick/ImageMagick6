@@ -1227,11 +1227,21 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     }
   if (fabs(distortion) > CompareEpsilon)
     similar=MagickFalse;
-  if (metric == NormalizedCrossCorrelationErrorMetric)
+  switch (metric)
+  {
+    case NormalizedCrossCorrelationErrorMetric:
     {
       distortion=1.0-distortion;
       similarity_metric=1.0-similarity_metric;
     }
+    case PeakSignalToNoiseRatioMetric:
+    {
+      distortion=fabs(distortion);
+      similarity_metric+=1.0;
+    }
+    default:
+      break;
+  }
   if (difference_image == (Image *) NULL)
     status=0;
   else
