@@ -3706,17 +3706,39 @@ MagickExport Image *ScaleImage(const Image *image,const size_t columns,
 %    o exception: return any errors or warnings in this structure.
 %
 */
+
+static void url_encode(const char *uri,char *encode_uri)
+{
+  char
+    *p;
+
+  const char
+    *hex = "0123456789ABCDEF";
+
+  for (p=encode_uri; *uri != '\0'; uri++)
+    if ((('a' <= *uri) && (*uri <= 'z')) || (('A' <= *uri) && (*uri <= 'Z')) ||
+        (('0' <= *uri) && (*uri <= '9')) || (strchr("/-_.~",*uri) != 0))
+      *p++=(*uri);
+    else
+      {
+        *p++='%';
+        *p++=hex[(*uri >> 4) & 0xF];
+        *p++=hex[*uri & 0xF];
+      }
+  *p='\0';
+}
+
 MagickExport Image *ThumbnailImage(const Image *image,const size_t columns,
   const size_t rows,ExceptionInfo *exception)
 {
 #define SampleFactor  5
 
   char
-    filename[MaxTextExtent],
-    value[MaxTextExtent];
+    encode_uri[3*MagickPathExtent+1] = "/0";
 
   const char
-    *name;
+    *name,
+    *mime_type;
 
   Image
     *thumbnail_image;
@@ -3742,8 +3764,8 @@ MagickExport Image *ThumbnailImage(const Image *image,const size_t columns,
         x_factor,
         y_factor;
 
-      x_factor=(ssize_t) image->columns/columns;
-      y_factor=(ssize_t) image->rows/rows;
+      x_factor=(ssize_t) image->columns/(ssize_t) columns;
+      y_factor=(ssize_t) image->rows/(ssize_t) rows;
       if ((x_factor > 4) && (y_factor > 4))
         {
           thumbnail_image=SampleImage(clone_image,4*columns,4*rows,exception);
@@ -3755,8 +3777,8 @@ MagickExport Image *ThumbnailImage(const Image *image,const size_t columns,
         }
       if ((x_factor > 2) && (y_factor > 2))
         {
-          thumbnail_image=ResizeImage(clone_image,2*columns,2*rows,BoxFilter,
-            1.0,exception);
+          thumbnail_image=ResizeImage(clone_image,2*columns,2*rows,1.0,BoxFilter,
+            exception);
           if (thumbnail_image != (Image *) NULL)
             {
               clone_image=DestroyImage(clone_image);
@@ -3786,36 +3808,26 @@ MagickExport Image *ThumbnailImage(const Image *image,const size_t columns,
     name=GetNextImageProfile(thumbnail_image);
   }
   (void) DeleteImageProperty(thumbnail_image,"comment");
-  (void) CopyMagickString(value,image->magick_filename,MaxTextExtent);
-  if (strstr(image->magick_filename,"//") == (char *) NULL)
-    (void) FormatLocaleString(value,MaxTextExtent,"file://%s",
-      image->magick_filename);
-  (void) SetImageProperty(thumbnail_image,"Thumb::URI",value);
-  GetPathComponent(image->magick_filename,TailPath,filename);
-  (void) CopyMagickString(value,filename,MaxTextExtent);
-  if (GetPathAttributes(image->filename,&attributes) != MagickFalse)
-    {
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-        attributes.st_mtime);
-      (void) SetImageProperty(thumbnail_image,"Thumb::MTime",value);
-    }
-  (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-    attributes.st_mtime);
-  (void) FormatMagickSize(GetBlobSize(image),MagickFalse,value);
-  (void) ConcatenateMagickString(value,"B",MaxTextExtent);
-  (void) SetImageProperty(thumbnail_image,"Thumb::Size",value);
-  (void) FormatLocaleString(value,MaxTextExtent,"image/%s",image->magick);
-  LocaleLower(value);
-  (void) SetImageProperty(thumbnail_image,"Thumb::Mimetype",value);
+  url_encode(image->filename,encode_uri);
+  if (*image->filename != '/')
+    (void) FormatImageProperty(thumbnail_image,"Thumb::URI","./%s",encode_uri);
+  else
+    (void) FormatImageProperty(thumbnail_image,"Thumb::URI","file://%s",
+      encode_uri);
+  if (GetPathAttributes(image->filename,&attributes) != MagickFalse )
+    (void) FormatImageProperty(thumbnail_image,"Thumb::MTime","%.20g",(double)
+      attributes.st_mtime);
+  (void) FormatImageProperty(thumbnail_image,"Thumb::Size","%.20g",
+    (double) GetBlobSize(image));
+  mime_type=GetImageProperty(image,"mime:type");
+  if (mime_type != (const char *) NULL)
+    (void) SetImageProperty(thumbnail_image,"Thumb::Mimetype",mime_type);
   (void) SetImageProperty(thumbnail_image,"software",MagickAuthoritativeURL);
-  (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-    image->magick_columns);
-  (void) SetImageProperty(thumbnail_image,"Thumb::Image::Width",value);
-  (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-    image->magick_rows);
-  (void) SetImageProperty(thumbnail_image,"Thumb::Image::Height",value);
-  (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
-    GetImageListLength(image));
-  (void) SetImageProperty(thumbnail_image,"Thumb::Document::Pages",value);
+  (void) FormatImageProperty(thumbnail_image,"Thumb::Image::Width","%.20g",
+    (double) image->magick_columns);
+  (void) FormatImageProperty(thumbnail_image,"Thumb::Image::Height","%.20g",
+    (double) image->magick_rows);
+  (void) FormatImageProperty(thumbnail_image,"Thumb::Document::Pages","%.20g",
+    (double) GetImageListLength(image));
   return(thumbnail_image);
 }
