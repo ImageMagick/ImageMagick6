@@ -3777,8 +3777,8 @@ MagickExport Image *ThumbnailImage(const Image *image,const size_t columns,
         }
       if ((x_factor > 2) && (y_factor > 2))
         {
-          thumbnail_image=ResizeImage(clone_image,2*columns,2*rows,1.0,BoxFilter,
-            exception);
+          thumbnail_image=ResizeImage(clone_image,2*columns,2*rows,BoxFilter,
+            1.0,exception);
           if (thumbnail_image != (Image *) NULL)
             {
               clone_image=DestroyImage(clone_image);
