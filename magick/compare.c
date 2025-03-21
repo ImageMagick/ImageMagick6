@@ -1269,7 +1269,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   for (i=0; i < (ssize_t) CompositeChannels; i++)
   {
     distortion[i]/=sqrt(alpha_variance[i]*beta_variance[i]);
-    if (fabs(distortion[i]) > MagickEpsilon)
+    if (fabs(distortion[i]) >= MagickEpsilon)
       distortion[CompositeChannels]+=distortion[i];
   }
   distortion[CompositeChannels]=distortion[CompositeChannels]/
@@ -1429,33 +1429,48 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     exception);
   if ((channel & RedChannel) != 0)
     {
-      if (fabs(distortion[RedChannel]) >= MagickEpsilon)
-        distortion[RedChannel]=(10.0*MagickLog10(distortion[RedChannel]))/
-          48.1647;
+      if ((fabs(distortion[RedChannel]) < MagickEpsilon) ||
+          (fabs(distortion[RedChannel]) >= 1.0))
+        distortion[RedChannel]=1.0-distortion[RedChannel];
+      else
+        distortion[RedChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+          distortion[RedChannel])))/48.1647;
     }
   if ((channel & GreenChannel) != 0)
     {
-      if (fabs(distortion[GreenChannel]) >= MagickEpsilon)
-        distortion[GreenChannel]=(10.0*MagickLog10(distortion[GreenChannel]))/
-          48.1647;
+      if ((fabs(distortion[GreenChannel]) < MagickEpsilon) ||
+          (fabs(distortion[GreenChannel]) >= 1.0))
+        distortion[GreenChannel]=1.0-distortion[GreenChannel];
+      else
+        distortion[GreenChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+          distortion[GreenChannel])))/48.1647;
     }
   if ((channel & BlueChannel) != 0)
     {
-      if (fabs(distortion[BlueChannel]) >= MagickEpsilon)
-        distortion[BlueChannel]=(10.0*MagickLog10(distortion[BlueChannel]))/
-          48.1647;
+      if ((fabs(distortion[BlueChannel]) < MagickEpsilon) ||
+          (fabs(distortion[BlueChannel]) >= 1.0))
+        distortion[BlueChannel]=1.0-distortion[BlueChannel];
+      else
+        distortion[BlueChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+          distortion[BlueChannel])))/48.1647;
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
-      if (fabs(distortion[OpacityChannel]) >= MagickEpsilon)
-        distortion[OpacityChannel]=(10.0*
-          MagickLog10(distortion[OpacityChannel]))/48.1647;
+      if ((fabs(distortion[OpacityChannel]) < MagickEpsilon) ||
+          (fabs(distortion[OpacityChannel]) >= 1.0))
+        distortion[OpacityChannel]=1.0-distortion[OpacityChannel];
+      else
+        distortion[OpacityChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+          distortion[OpacityChannel])))/48.1647;
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
-      if (fabs(distortion[BlackChannel]) >= MagickEpsilon)
-        distortion[BlackChannel]=(10.0*MagickLog10(distortion[BlackChannel]))/
-          48.1647;
+      if ((fabs(distortion[BlackChannel]) < MagickEpsilon) ||
+          (fabs(distortion[BlackChannel]) >= 1.0))
+        distortion[BlackChannel]=1.0-distortion[BlackChannel];
+      else
+        distortion[BlackChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+          distortion[BlackChannel])))/48.1647;
     }
   distortion[CompositeChannels]=0.0;
   for (i=0; i < (ssize_t) CompositeChannels; i++)
