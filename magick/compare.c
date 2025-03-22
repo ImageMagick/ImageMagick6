@@ -1431,7 +1431,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[RedChannel]) < MagickEpsilon) ||
           (fabs(distortion[RedChannel]) >= 1.0))
-        distortion[RedChannel]=1.0-distortion[RedChannel];
+        distortion[RedChannel]=fabs(distortion[RedChannel]) < MagickEpsilon ?
+          0.0 : 1.0;
       else
         distortion[RedChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[RedChannel])))/48.1647;
@@ -1440,7 +1441,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[GreenChannel]) < MagickEpsilon) ||
           (fabs(distortion[GreenChannel]) >= 1.0))
-        distortion[GreenChannel]=1.0-distortion[GreenChannel];
+        distortion[GreenChannel]=fabs(distortion[GreenChannel]) < MagickEpsilon ?
+          0.0 : 1.0;
       else
         distortion[GreenChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[GreenChannel])))/48.1647;
@@ -1449,7 +1451,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[BlueChannel]) < MagickEpsilon) ||
           (fabs(distortion[BlueChannel]) >= 1.0))
-        distortion[BlueChannel]=1.0-distortion[BlueChannel];
+        distortion[BlueChannel]=fabs(distortion[BlueChannel]) < MagickEpsilon ?
+          0.0 : 1.0;
       else
         distortion[BlueChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlueChannel])))/48.1647;
@@ -1458,7 +1461,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[OpacityChannel]) < MagickEpsilon) ||
           (fabs(distortion[OpacityChannel]) >= 1.0))
-        distortion[OpacityChannel]=1.0-distortion[OpacityChannel];
+        distortion[OpacityChannel]=fabs(distortion[OpacityChannel]) < MagickEpsilon ?
+          0.0 : 1.0;
       else
         distortion[OpacityChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[OpacityChannel])))/48.1647;
@@ -1467,7 +1471,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[BlackChannel]) < MagickEpsilon) ||
           (fabs(distortion[BlackChannel]) >= 1.0))
-        distortion[BlackChannel]=1.0-distortion[BlackChannel];
+        distortion[BlackChannel]=fabs(distortion[BlackChannel]) < MagickEpsilon ?
+          0.0 : 1.0;
       else
         distortion[BlackChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlackChannel])))/48.1647;
