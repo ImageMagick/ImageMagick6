@@ -2176,7 +2176,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
     return((Image *) NULL);
   similarity_image->depth=MAGICKCORE_QUANTUM_DEPTH;
   similarity_image->matte=MagickFalse;
-  similarity_image->type=GrayscaleType;
   status=SetImageStorageClass(similarity_image,DirectClass);
   if (status == MagickFalse)
     {
@@ -2246,13 +2245,27 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         }
       if (metric == PerceptualHashErrorMetric)
         similarity=MagickMin(0.01*similarity,1.0);
-      if ((metric == MeanSquaredErrorMetric) ||
-          (metric == NormalizedCrossCorrelationErrorMetric) ||
-          (metric == RootMeanSquaredErrorMetric))
-        SetPixelRed(q,ClampToQuantum((double) QuantumRange-QuantumRange*
-          similarity));
-      else
-        SetPixelRed(q,ClampToQuantum((double) QuantumRange*similarity));
+      switch (metric)
+      {
+        case AbsoluteErrorMetric:
+        case FuzzErrorMetric:
+        case MeanAbsoluteErrorMetric:
+        case MeanSquaredErrorMetric:
+        case NormalizedCrossCorrelationErrorMetric:
+        case PeakAbsoluteErrorMetric:
+        case PerceptualHashErrorMetric:
+        case RootMeanSquaredErrorMetric:
+        {
+          SetPixelRed(q,ClampToQuantum((double) QuantumRange-QuantumRange*
+            similarity));
+          break;
+        }
+        default:
+        {
+          SetPixelRed(q,ClampToQuantum((double) QuantumRange*similarity));
+          break;
+        }
+      }
       SetPixelGreen(q,GetPixelRed(q));
       SetPixelBlue(q,GetPixelRed(q));
       q++;
@@ -2274,6 +2287,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       }
   }
   similarity_view=DestroyCacheView(similarity_view);
+  (void) SetImageType(similarity_image,GrayscaleType);
   if (status == MagickFalse)
     similarity_image=DestroyImage(similarity_image);
   return(similarity_image);
