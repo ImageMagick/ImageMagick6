@@ -105,6 +105,7 @@ static MagickBooleanType CompareUsage(void)
       "  -separate            separate an image channel into a grayscale image\n"
       "  -write filename      write images to this file",
     settings[] =
+      "  -adjoin              join images into a single multi-image file\n"
       "  -alpha option        on, activate, off, deactivate, set, opaque, copy\n"
       "                       transparent, extract, background, or shape\n"
       "  -authenticate password\n"
@@ -373,6 +374,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     {
       case 'a':
       {
+        if (LocaleCompare("adjoin",option+1) == 0)
+          break;
         if (LocaleCompare("alpha",option+1) == 0)
           {
             ssize_t
