@@ -1300,9 +1300,12 @@ static MagickBooleanType GetPeakAbsoluteDistortion(const Image *image,
     rows;
 
   ssize_t
+    i,
     y;
 
   status=MagickTrue;
+  for (i=0; i <= CompositeChannels; i++)
+    distortion[i]=MagickMinimumValue;
   rows=MagickMax(image->rows,reconstruct_image->rows);
   columns=MagickMax(image->columns,reconstruct_image->columns);
   image_view=AcquireVirtualCacheView(image,exception);
@@ -1339,7 +1342,8 @@ static MagickBooleanType GetPeakAbsoluteDistortion(const Image *image,
       }
     indexes=GetCacheViewVirtualIndexQueue(image_view);
     reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) memset(channel_distortion,0,sizeof(channel_distortion));
+    for (i=0; i <= CompositeChannels; i++)
+      channel_distortion[i]=MagickMinimumValue;
     for (x=0; x < (ssize_t) columns; x++)
     {
       MagickRealType
