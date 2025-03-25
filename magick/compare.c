@@ -2252,6 +2252,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         case AbsoluteErrorMetric:
         case FuzzErrorMetric:
         case MeanAbsoluteErrorMetric:
+        case MeanErrorPerPixelMetric:
         case MeanSquaredErrorMetric:
         case NormalizedCrossCorrelationErrorMetric:
         case PeakAbsoluteErrorMetric:
