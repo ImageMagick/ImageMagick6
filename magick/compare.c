@@ -1424,9 +1424,6 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
   MagickBooleanType
     status;
 
-  ssize_t
-    i;
-
   status=GetMeanSquaredDistortion(image,reconstruct_image,channel,distortion,
     exception);
   if ((channel & RedChannel) != 0)
@@ -1443,8 +1440,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[GreenChannel]) < MagickEpsilon) ||
           (fabs(distortion[GreenChannel]) >= 1.0))
-        distortion[GreenChannel]=fabs(distortion[GreenChannel]) < MagickEpsilon ?
-          0.0 : 1.0;
+        distortion[GreenChannel]=fabs(distortion[GreenChannel]) <
+          MagickEpsilon ? 0.0 : 1.0;
       else
         distortion[GreenChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[GreenChannel])))/48.1647;
@@ -1463,8 +1460,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[OpacityChannel]) < MagickEpsilon) ||
           (fabs(distortion[OpacityChannel]) >= 1.0))
-        distortion[OpacityChannel]=fabs(distortion[OpacityChannel]) < MagickEpsilon ?
-          0.0 : 1.0;
+        distortion[OpacityChannel]=fabs(distortion[OpacityChannel]) <
+          MagickEpsilon ? 0.0 : 1.0;
       else
         distortion[OpacityChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[OpacityChannel])))/48.1647;
@@ -1473,17 +1470,12 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if ((fabs(distortion[BlackChannel]) < MagickEpsilon) ||
           (fabs(distortion[BlackChannel]) >= 1.0))
-        distortion[BlackChannel]=fabs(distortion[BlackChannel]) < MagickEpsilon ?
-          0.0 : 1.0;
+        distortion[BlackChannel]=fabs(distortion[BlackChannel]) <
+          MagickEpsilon ? 0.0 : 1.0;
       else
         distortion[BlackChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlackChannel])))/48.1647;
     }
-  distortion[CompositeChannels]=0.0;
-  for (i=0; i < (ssize_t) CompositeChannels; i++)
-    if (fabs(distortion[i]) >= MagickEpsilon)
-      distortion[CompositeChannels]+=distortion[i];
-  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   return(status);
 }
 
