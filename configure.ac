@@ -3828,6 +3828,7 @@ if test "$have_pango"    = 'yes' ; then
 fi
 if test "$have_pcl"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES pcl"
+fi
 if test "$have_png"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES png"
 fi

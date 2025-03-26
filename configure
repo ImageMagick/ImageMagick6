@@ -5203,7 +5203,7 @@ MAGICK_PATCHLEVEL_VERSION=25
 
 MAGICK_VERSION=6.9.13-25
 
-MAGICK_GIT_REVISION=cfeca4226:20250326
+MAGICK_GIT_REVISION=cc0242d86:20250326
 
 
 # Substitute library versioning
@@ -38379,6 +38379,7 @@ if test "$have_pango"    = 'yes' ; then
 fi
 if test "$have_pcl"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES pcl"
+fi
 if test "$have_png"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES png"
 fi
