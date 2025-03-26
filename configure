@@ -5203,7 +5203,7 @@ MAGICK_PATCHLEVEL_VERSION=25
 
 MAGICK_VERSION=6.9.13-25
 
-MAGICK_GIT_REVISION=f4921d7ed:20250318
+MAGICK_GIT_REVISION=d0749f0f3:20250325
 
 
 # Substitute library versioning
@@ -5237,7 +5237,7 @@ PACKAGE_LIB_VERSION=0x69D
 
 PACKAGE_LIB_VERSION_NUMBER=6,9,13,25
 
-PACKAGE_RELEASE_DATE=2025-03-18
+PACKAGE_RELEASE_DATE=2025-03-25
 
 
 # Ensure that make can run correctly
@@ -38377,6 +38377,8 @@ fi
 if test "$have_pango"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES pango"
 fi
+if test "$have_pcl"    = 'yes' ; then
+   MAGICK_DELEGATES="$MAGICK_DELEGATES pcl"
 if test "$have_png"    = 'yes' ; then
    MAGICK_DELEGATES="$MAGICK_DELEGATES png"
 fi
