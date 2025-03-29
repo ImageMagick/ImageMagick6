@@ -1433,7 +1433,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[RedChannel]=fabs(distortion[RedChannel]) < MagickEpsilon ?
           0.0 : 1.0;
       else
-        distortion[RedChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+        distortion[RedChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[RedChannel])))/48.1647;
     }
   if ((channel & GreenChannel) != 0)
@@ -1443,7 +1443,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[GreenChannel]=fabs(distortion[GreenChannel]) <
           MagickEpsilon ? 0.0 : 1.0;
       else
-        distortion[GreenChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+        distortion[GreenChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[GreenChannel])))/48.1647;
     }
   if ((channel & BlueChannel) != 0)
@@ -1453,7 +1453,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[BlueChannel]=fabs(distortion[BlueChannel]) < MagickEpsilon ?
           0.0 : 1.0;
       else
-        distortion[BlueChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+        distortion[BlueChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlueChannel])))/48.1647;
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
@@ -1463,7 +1463,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[OpacityChannel]=fabs(distortion[OpacityChannel]) <
           MagickEpsilon ? 0.0 : 1.0;
       else
-        distortion[OpacityChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+        distortion[OpacityChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[OpacityChannel])))/48.1647;
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
@@ -1473,7 +1473,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[BlackChannel]=fabs(distortion[BlackChannel]) <
           MagickEpsilon ? 0.0 : 1.0;
       else
-        distortion[BlackChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+        distortion[BlackChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlackChannel])))/48.1647;
     }
   return(status);
