@@ -1476,6 +1476,13 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[BlackChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlackChannel])))/48.1647;
     }
+  if ((fabs(distortion[CompositeChannels]) < MagickEpsilon) ||
+      (fabs(distortion[CompositeChannels]) >= 1.0))
+    distortion[CompositeChannels]=fabs(distortion[CompositeChannels]) <
+      MagickEpsilon ? 0.0 : 1.0;
+  else
+    distortion[CompositeChannels]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
+      distortion[CompositeChannels])))/48.1647;
   return(status);
 }
 
@@ -1960,8 +1967,12 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
   maximum_error=0.0;
   mean_error_per_pixel=0.0;
   mean_error=0.0;
-  rows=MagickMax(image->rows,reconstruct_image->rows);
-  columns=MagickMax(image->columns,reconstruct_image->columns);
+  artifact=GetImageArtifact(image,"compare:virtual-pixels");
+  if (IsStringTrue(artifact) != MagickFalse)
+    {
+      columns=MagickMax(image->columns,reconstruct_image->columns);
+      rows=MagickMax(image->rows,reconstruct_image->rows);
+    }
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
   for (y=0; y < (ssize_t) rows; y++)
