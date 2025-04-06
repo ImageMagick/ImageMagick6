@@ -1786,6 +1786,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
   clone_info=CloneDrawInfo((ImageInfo *) NULL,draw_info);
   clone_info->miterlimit=0;
   dash_polygon[0]=primitive_info[0];
+  dash_polygon[0].closed_subpath=MagickFalse;
   scale=ExpandAffine(&draw_info->affine);
   length=scale*draw_info->dash_pattern[0];
   offset=fabs(draw_info->dash_offset) >= MagickEpsilon ?
@@ -1836,6 +1837,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
       if ((n & 0x01) != 0)
         {
           dash_polygon[0]=primitive_info[0];
+          dash_polygon[0].closed_subpath=MagickFalse;
           dash_polygon[0].point.x=(double) (primitive_info[i-1].point.x+dx*
             total_length*PerceptibleReciprocal(maximum_length));
           dash_polygon[0].point.y=(double) (primitive_info[i-1].point.y+dy*
@@ -1847,6 +1849,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
           if ((j+1) > (ssize_t) number_vertices)
             break;
           dash_polygon[j]=primitive_info[i-1];
+          dash_polygon[j].closed_subpath=MagickFalse;
           dash_polygon[j].point.x=(double) (primitive_info[i-1].point.x+dx*
             total_length*PerceptibleReciprocal(maximum_length));
           dash_polygon[j].point.y=(double) (primitive_info[i-1].point.y+dy*
@@ -1876,6 +1879,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
       ((n & 0x01) == 0) && (j > 1))
     {
       dash_polygon[j]=primitive_info[i-1];
+      dash_polygon[j].closed_subpath=MagickFalse;
       dash_polygon[j].point.x+=MagickEpsilon;
       dash_polygon[j].point.y+=MagickEpsilon;
       dash_polygon[j].coordinates=1;
