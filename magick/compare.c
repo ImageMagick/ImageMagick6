@@ -1936,6 +1936,9 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
     *image_view,
     *reconstruct_view;
 
+  const char
+    *artifact;
+
   ExceptionInfo
     *exception;
 
@@ -1967,6 +1970,8 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
   maximum_error=0.0;
   mean_error_per_pixel=0.0;
   mean_error=0.0;
+  columns=MagickMin(image->columns,reconstruct_image->columns);
+  rows=MagickMin(image->rows,reconstruct_image->rows);
   artifact=GetImageArtifact(image,"compare:virtual-pixels");
   if (IsStringTrue(artifact) != MagickFalse)
     {
