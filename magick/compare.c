@@ -1973,7 +1973,8 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
   columns=MagickMax(image->columns,reconstruct_image->columns);
   rows=MagickMax(image->rows,reconstruct_image->rows);
   artifact=GetImageArtifact(image,"compare:virtual-pixels");
-  if (IsStringTrue(artifact) == MagickFalse)
+  if ((artifact != (const char *) NULL) &&
+      (IsStringTrue(artifact) == MagickFalse))
     {
       columns=MagickMin(image->columns,reconstruct_image->columns);
       rows=MagickMin(image->rows,reconstruct_image->rows);
