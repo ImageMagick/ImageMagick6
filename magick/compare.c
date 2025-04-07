@@ -1970,13 +1970,13 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
   maximum_error=0.0;
   mean_error_per_pixel=0.0;
   mean_error=0.0;
-  columns=MagickMin(image->columns,reconstruct_image->columns);
-  rows=MagickMin(image->rows,reconstruct_image->rows);
+  columns=MagickMax(image->columns,reconstruct_image->columns);
+  rows=MagickMax(image->rows,reconstruct_image->rows);
   artifact=GetImageArtifact(image,"compare:virtual-pixels");
-  if (IsStringTrue(artifact) != MagickFalse)
+  if (IsStringTrue(artifact) == MagickFalse)
     {
-      columns=MagickMax(image->columns,reconstruct_image->columns);
-      rows=MagickMax(image->rows,reconstruct_image->rows);
+      columns=MagickMin(image->columns,reconstruct_image->columns);
+      rows=MagickMin(image->rows,reconstruct_image->rows);
     }
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
