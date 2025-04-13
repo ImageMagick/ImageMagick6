@@ -1465,9 +1465,6 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
         distortion[BlackChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlackChannel])))/48.1647;
     }
-  if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
-    distortion[CompositeChannels]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-      distortion[CompositeChannels])))/48.1647;
   return(status);
 }
 
