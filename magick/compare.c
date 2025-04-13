@@ -2219,6 +2219,8 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       if ((metric == NormalizedCrossCorrelationErrorMetric) ||
           (metric == UndefinedErrorMetric))
         similarity=1.0-similarity;
+      if (metric == PerceptualHashErrorMetric)
+        similarity=MagickMin(0.01*similarity,1.0);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp critical (MagickCore_SimilarityImage)
 #endif
@@ -2228,8 +2230,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
           offset->x=x;
           offset->y=y;
         }
-      if (metric == PerceptualHashErrorMetric)
-        similarity=MagickMin(0.01*similarity,1.0);
+      if ((metric == PeakSignalToNoiseRatioMetric) &&
+          (fabs(similarity) < MagickEpsilon))
+        similarity=1.0-similarity;
       switch (metric)
       {
         case AbsoluteErrorMetric:
