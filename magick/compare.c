@@ -1437,59 +1437,35 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     exception);
   if ((channel & RedChannel) != 0)
     {
-      if ((fabs(distortion[RedChannel]) < MagickEpsilon) ||
-          (fabs(distortion[RedChannel]) >= 1.0))
-        distortion[RedChannel]=fabs(distortion[RedChannel]) < MagickEpsilon ?
-          0.0 : 1.0;
-      else
+      if (fabs(distortion[RedChannel]) >= MagickEpsilon)
         distortion[RedChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[RedChannel])))/48.1647;
     }
   if ((channel & GreenChannel) != 0)
     {
-      if ((fabs(distortion[GreenChannel]) < MagickEpsilon) ||
-          (fabs(distortion[GreenChannel]) >= 1.0))
-        distortion[GreenChannel]=fabs(distortion[GreenChannel]) <
-          MagickEpsilon ? 0.0 : 1.0;
-      else
+      if (fabs(distortion[GreenChannel]) >= MagickEpsilon)
         distortion[GreenChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[GreenChannel])))/48.1647;
     }
   if ((channel & BlueChannel) != 0)
     {
-      if ((fabs(distortion[BlueChannel]) < MagickEpsilon) ||
-          (fabs(distortion[BlueChannel]) >= 1.0))
-        distortion[BlueChannel]=fabs(distortion[BlueChannel]) < MagickEpsilon ?
-          0.0 : 1.0;
-      else
+      if (fabs(distortion[BlueChannel]) >= MagickEpsilon)
         distortion[BlueChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlueChannel])))/48.1647;
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
-      if ((fabs(distortion[OpacityChannel]) < MagickEpsilon) ||
-          (fabs(distortion[OpacityChannel]) >= 1.0))
-        distortion[OpacityChannel]=fabs(distortion[OpacityChannel]) <
-          MagickEpsilon ? 0.0 : 1.0;
-      else
+      if (fabs(distortion[OpacityChannel]) >= MagickEpsilon)
         distortion[OpacityChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[OpacityChannel])))/48.1647;
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
-      if ((fabs(distortion[BlackChannel]) < MagickEpsilon) ||
-          (fabs(distortion[BlackChannel]) >= 1.0))
-        distortion[BlackChannel]=fabs(distortion[BlackChannel]) <
-          MagickEpsilon ? 0.0 : 1.0;
-      else
+      if (fabs(distortion[BlackChannel]) >= MagickEpsilon)
         distortion[BlackChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
           distortion[BlackChannel])))/48.1647;
     }
-  if ((fabs(distortion[CompositeChannels]) < MagickEpsilon) ||
-      (fabs(distortion[CompositeChannels]) >= 1.0))
-    distortion[CompositeChannels]=fabs(distortion[CompositeChannels]) <
-      MagickEpsilon ? 0.0 : 1.0;
-  else
+  if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
     distortion[CompositeChannels]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
       distortion[CompositeChannels])))/48.1647;
   return(status);
