@@ -2155,6 +2155,12 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         OptionWarning,"GeometryDoesNotContainImage","`%s'",image->filename);
       return((Image *) NULL);
     }
+  if (metric == PeakAbsoluteErrorMetric)
+    {
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),
+        OptionError,"InvalidUseOfOption","`%s'",image->filename);
+      return((Image *) NULL);
+    }
   similarity_image=CloneImage(image,image->columns,image->rows,MagickTrue,
     exception);
   if (similarity_image == (Image *) NULL)
