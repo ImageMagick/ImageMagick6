@@ -973,19 +973,19 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
 #endif
     {
       for (i=0; i <= (ssize_t) CompositeChannels; i++)
-      distortion[i]+=channel_distortion[i];
+        distortion[i]+=channel_distortion[i];
       if (local_maximum > maximum_error)
         maximum_error=local_maximum;
     }
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]/=((double) columns*rows);
-  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   image->error.mean_error_per_pixel=distortion[CompositeChannels];
   image->error.normalized_mean_error=distortion[CompositeChannels];
-  image->error.normalized_maximum_error=maximum_error;
+  image->error.normalized_maximum_error=QuantumScale*maximum_error;
   return(status);
 }
 
