@@ -2190,11 +2190,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
   rows=similarity_image->rows;
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static,1) \
-    shared(progress,status,similarity_metric) \
-    magick_number_threads(similarity_image,similarity_image,rows << 3,1)
-#endif
   for (y=0; y < (ssize_t) rows; y++)
   {
     double
@@ -2208,9 +2203,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
 
     if (status == MagickFalse)
       continue;
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-    #pragma omp flush(similarity_metric)
-#endif
     if (*similarity_metric <= similarity_threshold)
       continue;
     q=GetCacheViewAuthenticPixels(similarity_view,0,y,similarity_image->columns,
@@ -2222,9 +2214,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       }
     for (x=0; x < (ssize_t) similarity_image->columns; x++)
     {
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-      #pragma omp flush(similarity_metric)
-#endif
       if (*similarity_metric <= similarity_threshold)
         break;
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
@@ -2233,9 +2222,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         similarity=1.0-similarity;
       if (metric == PerceptualHashErrorMetric)
         similarity=MagickMin(0.01*similarity,1.0);
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-      #pragma omp critical (MagickCore_SimilarityImage)
-#endif
       if (similarity < *similarity_metric)
         {
           *similarity_metric=similarity;
@@ -2278,9 +2264,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         MagickBooleanType
           proceed;
 
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-        #pragma omp atomic
-#endif
         progress++;
         proceed=SetImageProgress(image,SimilarityImageTag,progress,image->rows);
         if (proceed == MagickFalse)
