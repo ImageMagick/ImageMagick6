@@ -329,7 +329,11 @@ static void SetLibRawParams(const ImageInfo *image_info,Image *image,
 }
 
 static void LibRawDataError(void *data,const char *magick_unused(file),
+#if defined(_MSC_VER)
+  const INT64 offset)
+#else
   const int offset)
+#endif
 {
   magick_unreferenced(file);
   if (offset >= 0)
