@@ -2217,11 +2217,22 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       if (*similarity_metric <= similarity_threshold)
         break;
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
-      if ((metric == NormalizedCrossCorrelationErrorMetric) ||
-          (metric == UndefinedErrorMetric))
-        similarity=1.0-similarity;
-      if (metric == PerceptualHashErrorMetric)
-        similarity=MagickMin(0.01*similarity,1.0);
+      switch (metric)
+      {
+        case NormalizedCrossCorrelationErrorMetric:
+        case UndefinedErrorMetric:
+        {
+          similarity=1.0-similarity;
+          break;
+        }
+        case PerceptualHashErrorMetric:
+        {
+          similarity=1.0-MagickMin(0.01*similarity,1.0);
+          break;
+        }
+        default:
+          break;
+      }
       if (similarity < *similarity_metric)
         {
           *similarity_metric=similarity;

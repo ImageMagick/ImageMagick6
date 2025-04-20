@@ -1232,6 +1232,11 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     similar=MagickFalse;
   switch (metric)
   {
+    case PerceptualHashErrorMetric:
+    {
+      distortion=1.0-distortion;
+      similarity_metric=1.0-similarity_metric;
+    }
     case PeakSignalToNoiseRatioMetric:
     {
       distortion=fabs(distortion);
