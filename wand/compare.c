@@ -1236,6 +1236,13 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     {
       distortion=fabs(distortion);
       similarity_metric=fabs(similarity_metric);
+      break;
+    }
+    case PerceptualHashErrorMetric:
+    {
+      if (distortion == INFINITY)
+        distortion=1.0;
+      break;
     }
     default:
       break;
