@@ -1238,6 +1238,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       similarity_metric=fabs(similarity_metric);
       break;
     }
+    case NormalizedCrossCorrelationErrorMetric:
     case PerceptualHashErrorMetric:
     {
       double
@@ -1245,7 +1246,10 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
         minima = 0.0;
 
       (void) GetImageRange(reconstruct_image,&minima,&maxima,exception);
-      if (fabs(maxima-minima) < MagickEpsilon)
+      if ((fabs(maxima-minima) < MagickEpsilon) ||
+          ((subimage_search != MagickFalse) &&
+           (image->columns == reconstruct_image->columns) &&
+           (image->rows == reconstruct_image->rows)))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "subimage search is not sufficiently robust for PAE/PHASH metrics",
           "`%s'",image->filename);
