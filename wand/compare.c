@@ -1240,8 +1240,9 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     }
     case PerceptualHashErrorMetric:
     {
-      if (distortion == INFINITY)
-        distortion=1.0;
+      if ((fabs(distortion) < MagickEpsilon) || (distortion == INFINITY))
+        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
+          "images have no discernible similarity","`%s'",image->filename);
       break;
     }
     default:
