@@ -1238,8 +1238,15 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       similarity_metric=fabs(similarity_metric);
       break;
     }
+    case PeakAbsoluteErrorMetric:
     case PerceptualHashErrorMetric:
     {
+      if ((subimage_search != MagickFalse) &&
+          (image->columns == reconstruct_image->columns) &&
+          (image->rows == reconstruct_image->rows))
+        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
+          "subimage search is not sufficiently robust for PAE/PHASH metrics",
+          "`%s'",image->filename);
       if ((fabs(distortion) < MagickEpsilon) || (distortion == INFINITY))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "images have no discernible similarity","`%s'",image->filename);
