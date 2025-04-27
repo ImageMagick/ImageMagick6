@@ -60,11 +60,6 @@
 #include "magick/string_.h"
 #include "magick/utility.h"
 #if defined(MAGICKCORE_XML_DELEGATE)
-#  if defined(MAGICKCORE_WINDOWS_SUPPORT)
-#    if !defined(__MINGW32__)
-#      include <win32config.h>
-#    endif
-#  endif
 #  include <libxml/parser.h>
 #  include <libxml/xmlmemory.h>
 #if defined(LIBXML_FTP_ENABLED)
