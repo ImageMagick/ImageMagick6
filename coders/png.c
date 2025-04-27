@@ -1717,7 +1717,7 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
     nibbles;
 
   ssize_t
-    length;
+    length=0;
 
   StringInfo
     *profile;
@@ -1748,22 +1748,23 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
 
   if (extent == 0)
     {
-      png_warning(ping,"missing profile length");
+      png_warning(ping,"invalid profile length");
       return(MagickFalse);
     }
 
-  length=StringToLong(sp);
+  if (extent >= 8)
+    length=StringToLong(sp);
 
   if (image->debug != MagickFalse)
     (void) LogMagickEvent(CoderEvent,GetMagickModule(),
          "      length: %lu",(unsigned long) length);
 
   while ((extent != 0) && (*sp != ' ' && *sp != '\n') && extent--)
-     sp++;
+    sp++;
 
   if (extent == 0)
     {
-      png_warning(ping,"invalid profile length");
+      png_warning(ping,"missing profile length");
       return(MagickFalse);
     }
 
@@ -1784,25 +1785,31 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
 
   /* copy profile, skipping white space and column 1 "=" signs */
   dp=GetStringInfoDatum(profile);
-  nibbles=length*2;
+  nibbles=(size_t) length*2;
 
   for (i=0; i < (ssize_t) nibbles; i++)
   {
-    while (*sp < '0' || (*sp > '9' && *sp < 'a') || *sp > 'f')
+    while ((extent != 0) && (*sp < '0' || (*sp > '9' && *sp < 'a') || *sp > 'f'))
     {
       if (*sp == '\0')
         {
           png_warning(ping, "ran out of profile data");
+          profile=DestroyStringInfo(profile);
           return(MagickFalse);
         }
       sp++;
+      extent--;
     }
-
-    if (i%2 == 0)
-      *dp=(unsigned char) (16*unhex[(int) *sp++]);
-
-    else
-      (*dp++)+=unhex[(int) *sp++];
+    if (extent != 0)
+      {
+        if (i % 2 == 0)
+          *dp=(unsigned char) (16*unhex[(int) *sp++]);
+        else
+          (*dp++)+=unhex[(int) *sp++];
+        extent--;
+      }
+    if (extent == 0)
+      break;
   }
   /*
     We have already read "Raw profile type.
@@ -1813,7 +1820,7 @@ Magick_png_read_raw_profile(png_struct *ping,Image *image,
   if (image_info->verbose)
     (void) printf(" Found a generic profile, type %s\n",&text[ii].key[17]);
 
-  return MagickTrue;
+  return(MagickTrue);
 }
 
 #if defined(PNG_UNKNOWN_CHUNKS_SUPPORTED)
