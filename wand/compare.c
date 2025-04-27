@@ -1251,8 +1251,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
            (image->columns == reconstruct_image->columns) &&
            (image->rows == reconstruct_image->rows)))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
-          "subimage search is not sufficiently robust for PAE/PHASH metrics",
-          "`%s'",image->filename);
+          "subimage search is not sufficiently robust","(%s)",
+          CommandOptionToMnemonic(MagickMetricOptions,(ssize_t) metric));
       if (distortion == INFINITY)
         distortion=1.0;
       break;
@@ -1263,8 +1263,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
           (image->columns == reconstruct_image->columns) &&
           (image->rows == reconstruct_image->rows))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
-          "subimage search is not sufficiently robust for PAE/PHASH metrics",
-          "`%s'",image->filename);
+          "subimage search is not sufficiently robust","(%s)",
+          CommandOptionToMnemonic(MagickMetricOptions,(ssize_t) metric));
       break;
     }
     default:
