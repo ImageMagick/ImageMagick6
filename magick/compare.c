@@ -1449,7 +1449,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           distortion[RedChannel]=1.0;
         else
           distortion[RedChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-            distortion[RedChannel])))/MaxPSNRDistortion;
+            distortion[RedChannel])))/MagickPSNRDistortion;
         }
     }
   if ((channel & GreenChannel) != 0)
@@ -1461,7 +1461,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           else
             distortion[GreenChannel]=fabs(-10.0*MagickLog10(
               PerceptibleReciprocal(distortion[GreenChannel])))/
-              MaxPSNRDistortion;
+              MagickPSNRDistortion;
         }
     }
   if ((channel & BlueChannel) != 0)
@@ -1473,7 +1473,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           else
             distortion[BlueChannel]=fabs(-10.0*MagickLog10(
               PerceptibleReciprocal(distortion[BlueChannel])))/
-              MaxPSNRDistortion;
+              MagickPSNRDistortion;
         }
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
@@ -1485,7 +1485,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           else
             distortion[OpacityChannel]=fabs(-10.0*MagickLog10(
               PerceptibleReciprocal(distortion[OpacityChannel])))/
-              MaxPSNRDistortion;
+              MagickPSNRDistortion;
         }
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
@@ -1497,7 +1497,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           else
             distortion[BlackChannel]=fabs(-10.0*MagickLog10(
               PerceptibleReciprocal(distortion[BlackChannel])))/
-              MaxPSNRDistortion;
+              MagickPSNRDistortion;
         }
     }
   if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
@@ -1507,7 +1507,7 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
       else
         distortion[CompositeChannels]=fabs(-10.0*MagickLog10(
           PerceptibleReciprocal(distortion[CompositeChannels])))/
-          MaxPSNRDistortion;
+          MagickPSNRDistortion;
     }
   return(status);
 }
