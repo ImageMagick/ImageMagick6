@@ -1445,11 +1445,11 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     {
       if (fabs(distortion[RedChannel]) >= MagickEpsilon)
         {
-        if (fabs(distortion[RedChannel]-1.0) <= MagickEpsilon)
-          distortion[RedChannel]=1.0;
-        else
-          distortion[RedChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-            distortion[RedChannel])))/MagickPSNRDistortion;
+          if (fabs(distortion[RedChannel]-1.0) <= MagickEpsilon)
+            distortion[RedChannel]=1.0;
+          else
+            distortion[RedChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+              distortion[RedChannel])))/MagickPSNRDistortion;
         }
     }
   if ((channel & GreenChannel) != 0)
@@ -1459,9 +1459,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           if (fabs(distortion[GreenChannel]-1.0) <= MagickEpsilon)
             distortion[GreenChannel]=1.0;
           else
-            distortion[GreenChannel]=fabs(-10.0*MagickLog10(
-              PerceptibleReciprocal(distortion[GreenChannel])))/
-              MagickPSNRDistortion;
+            distortion[GreenChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+              distortion[GreenChannel])))/MagickPSNRDistortion;
         }
     }
   if ((channel & BlueChannel) != 0)
@@ -1471,9 +1470,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           if (fabs(distortion[BlueChannel]-1.0) <= MagickEpsilon)
             distortion[BlueChannel]=1.0;
           else
-            distortion[BlueChannel]=fabs(-10.0*MagickLog10(
-              PerceptibleReciprocal(distortion[BlueChannel])))/
-              MagickPSNRDistortion;
+            distortion[BlueChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+              distortion[BlueChannel])))/MagickPSNRDistortion;
         }
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
@@ -1483,9 +1481,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           if (fabs(distortion[OpacityChannel]-1.0) <= MagickEpsilon)
             distortion[OpacityChannel]=1.0;
           else
-            distortion[OpacityChannel]=fabs(-10.0*MagickLog10(
-              PerceptibleReciprocal(distortion[OpacityChannel])))/
-              MagickPSNRDistortion;
+            distortion[OpacityChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+              distortion[OpacityChannel])))/MagickPSNRDistortion;
         }
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
@@ -1495,9 +1492,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
           if (fabs(distortion[BlackChannel]-1.0) <= MagickEpsilon)
             distortion[BlackChannel]=1.0;
           else
-            distortion[BlackChannel]=fabs(-10.0*MagickLog10(
-              PerceptibleReciprocal(distortion[BlackChannel])))/
-              MagickPSNRDistortion;
+            distortion[BlackChannel]=(-10.0*MagickLog10(PerceptibleReciprocal(
+              distortion[BlackChannel])))/MagickPSNRDistortion;
         }
     }
   if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
@@ -1505,9 +1501,8 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
       if (fabs(distortion[CompositeChannels]-1.0) <= MagickEpsilon)
         distortion[CompositeChannels]=1.0;
       else
-        distortion[CompositeChannels]=fabs(-10.0*MagickLog10(
-          PerceptibleReciprocal(distortion[CompositeChannels])))/
-          MagickPSNRDistortion;
+        distortion[CompositeChannels]=(-10.0*MagickLog10(PerceptibleReciprocal(
+          distortion[CompositeChannels])))/MagickPSNRDistortion;
     }
   return(status);
 }

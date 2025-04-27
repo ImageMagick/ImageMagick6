@@ -1232,12 +1232,6 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     similar=MagickFalse;
   switch (metric)
   {
-    case PeakSignalToNoiseRatioMetric:
-    {
-      distortion=fabs(distortion);
-      similarity_metric=fabs(similarity_metric);
-      break;
-    }
     case NormalizedCrossCorrelationErrorMetric:
     case PerceptualHashErrorMetric:
     {
@@ -1303,7 +1297,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case PeakSignalToNoiseRatioMetric:
             {
               (void) FormatLocaleFile(stderr,"%.*g (%.*g)",GetMagickPrecision(),
-                MagickPSNRDistortion*distortion,GetMagickPrecision(),distortion);
+                MagickPSNRDistortion*distortion,GetMagickPrecision(),
+                distortion);
               break;
             }
             case MeanErrorPerPixelMetric:
