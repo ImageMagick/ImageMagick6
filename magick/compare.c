@@ -1444,36 +1444,66 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
   if ((channel & RedChannel) != 0)
     {
       if (fabs(distortion[RedChannel]) >= MagickEpsilon)
-        distortion[RedChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-          distortion[RedChannel])))/48.1647;
+        {
+        if (fabs(distortion[RedChannel]-1.0) <= MagickEpsilon)
+          distortion[i]=1.0;
+        else
+          distortion[RedChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
+            distortion[RedChannel])))/MaxPSNRDistortion;
+        }
     }
   if ((channel & GreenChannel) != 0)
     {
       if (fabs(distortion[GreenChannel]) >= MagickEpsilon)
-        distortion[GreenChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-          distortion[GreenChannel])))/48.1647;
+        {
+          if (fabs(distortion[GreenChannel]-1.0) <= MagickEpsilon)
+            distortion[i]=1.0;
+          else
+            distortion[GreenChannel]=fabs(-10.0*MagickLog10(
+              PerceptibleReciprocal(distortion[GreenChannel])))/MaxPSNRDistortion;
+        }
     }
   if ((channel & BlueChannel) != 0)
     {
       if (fabs(distortion[BlueChannel]) >= MagickEpsilon)
-        distortion[BlueChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-          distortion[BlueChannel])))/48.1647;
+        {
+          if (fabs(distortion[BlueChannel]-1.0) <= MagickEpsilon)
+            distortion[i]=1.0;
+          else
+            distortion[BlueChannel]=fabs(-10.0*MagickLog10(
+              PerceptibleReciprocal(distortion[BlueChannel])))/MaxPSNRDistortion;
+        }
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
       if (fabs(distortion[OpacityChannel]) >= MagickEpsilon)
-        distortion[OpacityChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-          distortion[OpacityChannel])))/48.1647;
+        {
+          if (fabs(distortion[OpacityChannel]-1.0) <= MagickEpsilon)
+            distortion[i]=1.0;
+          else
+            distortion[OpacityChannel]=fabs(-10.0*MagickLog10(
+              PerceptibleReciprocal(distortion[OpacityChannel])))/MaxPSNRDistortion;
+        }
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
       if (fabs(distortion[BlackChannel]) >= MagickEpsilon)
-        distortion[BlackChannel]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-          distortion[BlackChannel])))/48.1647;
+        {
+          if (fabs(distortion[BlackChannel]-1.0) <= MagickEpsilon)
+            distortion[i]=1.0;
+          else
+            distortion[BlackChannel]=fabs(-10.0*MagickLog10(
+              PerceptibleReciprocal(distortion[BlackChannel])))/MaxPSNRDistortion;
+        }
     }
   if (fabs(distortion[CompositeChannels]) >= MagickEpsilon)
-    distortion[CompositeChannels]=fabs(-10.0*MagickLog10(PerceptibleReciprocal(
-      distortion[CompositeChannels])))/48.1647;
+    {
+      if (fabs(distortion[CompositeChannels]-1.0) <= MagickEpsilon)
+        distortion[i]=1.0;
+      else
+        distortion[CompositeChannels]=fabs(-10.0*MagickLog10(
+          PerceptibleReciprocal(distortion[CompositeChannels])))/MaxPSNRDistortion;
+    }
   return(status);
 }
 
