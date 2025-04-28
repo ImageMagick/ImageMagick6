@@ -1298,7 +1298,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             {
               (void) FormatLocaleFile(stderr,"%.*g (%.*g)",GetMagickPrecision(),
                 MagickPSNRDistortion*distortion,GetMagickPrecision(),
-                distortion);
+                MagickPSNRDistortion*distortion/(10.0*log10((double) 
+                QuantumRange*QuantumRange)));
               break;
             }
             case MeanErrorPerPixelMetric:
