@@ -2249,7 +2249,8 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
       switch (metric)
       {
-        case NormalizedCrossCorrelationErrorMetric:
+        case NormalizedCrossCorrelationErrorMetric: 
+        case PeakSignalToNoiseRatioMetric:
         case UndefinedErrorMetric:
         {
           similarity=1.0-similarity;
@@ -2257,7 +2258,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         }
         case PerceptualHashErrorMetric:
         {
-          similarity=1.0-MagickMin(0.01*similarity,1.0);
+          similarity=MagickMin(0.01*similarity,1.0);
           break;
         }
         default:
