@@ -2250,7 +2250,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       switch (metric)
       {
         case NormalizedCrossCorrelationErrorMetric: 
-        case PeakSignalToNoiseRatioMetric:
         case UndefinedErrorMetric:
         {
           similarity=1.0-similarity;
