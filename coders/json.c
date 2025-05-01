@@ -547,10 +547,14 @@ static ssize_t PrintChannelFeatures(FILE *file,const ChannelType channel,
   "          \"average\": %.*g\n" \
   "        }\n"
 
+  char
+    *buffer;
+
   ssize_t
     n;
 
-  n=FormatLocaleFile(file,FeaturesFormat,name,
+  buffer=AcquireString((char *) NULL);
+  n=FormatLocaleString(buffer,MagickPathExtent,FeaturesFormat,name,
     PrintFeature(channel_features[channel].angular_second_moment),
     PrintFeature(channel_features[channel].contrast),
     PrintFeature(channel_features[channel].correlation),
@@ -565,6 +569,11 @@ static ssize_t PrintChannelFeatures(FILE *file,const ChannelType channel,
     PrintFeature(channel_features[channel].measure_of_correlation_1),
     PrintFeature(channel_features[channel].measure_of_correlation_2),
     PrintFeature(channel_features[channel].maximum_correlation_coefficient));
+  (void) SubstituteString(&buffer,": -inf",": null");
+  (void) SubstituteString(&buffer,": inf",": null");
+  (void) SubstituteString(&buffer,": nan",": null");
+  n=FormatLocaleFile(file,"%s",buffer);
+  buffer=DestroyString(buffer);
   (void) FormatLocaleFile(file,"      }");
   if (separator != MagickFalse)
     (void) FormatLocaleFile(file,",");
@@ -753,11 +762,16 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
   "\"standardDeviation\": %.*g,\n        \"kurtosis\": %.*g,\n        "\
   "\"skewness\": %.*g,\n        \"entropy\": %.*g\n      }"
 
+ char
+    *buffer;
+    
   ssize_t
     n;
-
+    
+  buffer=AcquireString((char *) NULL);
   if (channel == AlphaChannel)
-    n=FormatLocaleFile(file,StatisticsFormat,name,GetMagickPrecision(),
+    n=FormatLocaleString(buffer,MagickPathExtent,StatisticsFormat,name,
+      GetMagickPrecision(),
       channel_statistics[channel].minima == MagickMaximumValue ? 0.0 :
       (double) ClampToQuantum(scale*((MagickRealType) QuantumRange-
       channel_statistics[channel].minima)),GetMagickPrecision(),
@@ -772,7 +786,8 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
       GetMagickPrecision(),channel_statistics[channel].skewness,
       GetMagickPrecision(),channel_statistics[channel].entropy);
   else
-    n=FormatLocaleFile(file,StatisticsFormat,name,GetMagickPrecision(),
+    n=FormatLocaleString(buffer,MagickPathExtent,StatisticsFormat,name,
+      GetMagickPrecision(),
       channel_statistics[channel].minima == MagickMaximumValue ? 0.0 :
       (double) ClampToQuantum(scale*channel_statistics[channel].minima),
       GetMagickPrecision(),
@@ -786,6 +801,11 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
       channel_statistics[channel].kurtosis,GetMagickPrecision(),
       channel_statistics[channel].skewness,GetMagickPrecision(),
       channel_statistics[channel].entropy);
+  (void) SubstituteString(&buffer,": -inf",": null");
+  (void) SubstituteString(&buffer,": inf",": null");
+  (void) SubstituteString(&buffer,": nan",": null");
+  n=FormatLocaleFile(file,"%s",buffer);
+  buffer=DestroyString(buffer);
   if (separator != MagickFalse)
     (void) FormatLocaleFile(file,",");
   (void) FormatLocaleFile(file,"\n");
