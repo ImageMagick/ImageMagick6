@@ -2395,13 +2395,13 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+6,
             depth+1,beta,exception);
-          FxReturn(MagickLog10(alpha)/log10(2.0));
+          FxReturn(log10(alpha)/log10(2.0));
         }
       if (IsFxFunction(expression,"log",3) != MagickFalse)
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
-          FxReturn(MagickLog10(alpha));
+          FxReturn(log10(alpha));
         }
       if (LocaleCompare(expression,"lightness") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
