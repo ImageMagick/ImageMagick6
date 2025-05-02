@@ -1443,67 +1443,67 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
     exception);
   if ((channel & RedChannel) != 0)
     {
-      if (distortion[RedChannel] >= MagickEpsilon)
-        {
-          if (distortion[RedChannel] >= 1.0)
-            distortion[RedChannel]=1.0;
-          else
-            distortion[RedChannel]=10.0*MagickLog10(PerceptibleReciprocal(
-              distortion[RedChannel]))/MagickPSNRDistortion;
-        }
+      if (distortion[RedChannel] < MagickEpsilon)
+        distortion[RedChannel]=1.0;
+      else
+        if (distortion[RedChannel] >= 1.0)
+          distortion[RedChannel]=0.0;
+        else
+          distortion[RedChannel]=10.0*log10(PerceptibleReciprocal(
+            distortion[RedChannel]))/MagickPSNRDistortion;
     }
   if ((channel & GreenChannel) != 0)
     {
-      if (distortion[GreenChannel] >= MagickEpsilon)
-        {
-          if (distortion[GreenChannel] >= 1.0)
-            distortion[GreenChannel]=1.0;
-          else
-            distortion[GreenChannel]=10.0*MagickLog10(PerceptibleReciprocal(
-              distortion[GreenChannel]))/MagickPSNRDistortion;
-        }
+      if (distortion[GreenChannel] < MagickEpsilon)
+        distortion[GreenChannel]=1.0;
+      else
+        if (distortion[GreenChannel] >= 1.0)
+          distortion[GreenChannel]=0.0;
+        else
+          distortion[GreenChannel]=10.0*log10(PerceptibleReciprocal(
+            distortion[GreenChannel]))/MagickPSNRDistortion;
     }
   if ((channel & BlueChannel) != 0)
     {
-      if (distortion[BlueChannel] >= MagickEpsilon)
-        {
-          if (distortion[BlueChannel] >= 1.0)
-            distortion[BlueChannel]=1.0;
-          else
-            distortion[BlueChannel]=10.0*MagickLog10(PerceptibleReciprocal(
-              distortion[BlueChannel]))/MagickPSNRDistortion;
-        }
+      if (distortion[BlueChannel] < MagickEpsilon)
+        distortion[BlueChannel]=1.0;
+      else 
+        if (distortion[BlueChannel] >= 1.0)
+          distortion[BlueChannel]=0.0;
+        else
+          distortion[BlueChannel]=10.0*log10(PerceptibleReciprocal(
+            distortion[BlueChannel]))/MagickPSNRDistortion;
     }
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
     {
-      if (distortion[OpacityChannel] >= MagickEpsilon)
-        {
-          if (distortion[OpacityChannel] >= 1.0)
-            distortion[OpacityChannel]=1.0;
-          else
-            distortion[OpacityChannel]=10.0*MagickLog10(PerceptibleReciprocal(
-              distortion[OpacityChannel]))/MagickPSNRDistortion;
-        }
+      if (distortion[OpacityChannel] < MagickEpsilon)
+        distortion[OpacityChannel]=1.0;
+      else
+        if (distortion[OpacityChannel] >= 1.0)
+          distortion[OpacityChannel]=0.0;
+        else
+          distortion[OpacityChannel]=10.0*log10(PerceptibleReciprocal(
+            distortion[OpacityChannel]))/MagickPSNRDistortion;
     }
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
     {
-      if (distortion[BlackChannel] >= MagickEpsilon)
-        {
-          if (distortion[BlackChannel] >= 1.0)
-            distortion[BlackChannel]=1.0;
-          else
-            distortion[BlackChannel]=10.0*MagickLog10(PerceptibleReciprocal(
-              distortion[BlackChannel]))/MagickPSNRDistortion;
-        }
-    }
-  if (distortion[CompositeChannels] >= MagickEpsilon)
-    {
-      if (distortion[CompositeChannels] >= 1.0)
-        distortion[CompositeChannels]=1.0;
+      if (distortion[BlackChannel] < MagickEpsilon)
+        distortion[BlackChannel]=1.0;
       else
-        distortion[CompositeChannels]=10.0*MagickLog10(PerceptibleReciprocal(
-          distortion[CompositeChannels]))/MagickPSNRDistortion;
+        if (distortion[BlackChannel] >= 1.0)
+          distortion[BlackChannel]=0.0;
+        else
+          distortion[BlackChannel]=10.0*log10(PerceptibleReciprocal(
+            distortion[BlackChannel]))/MagickPSNRDistortion;
     }
+  if (distortion[CompositeChannels] < MagickEpsilon)
+    distortion[CompositeChannels]=1.0;
+  else
+    if (distortion[CompositeChannels] >= 1.0)
+      distortion[CompositeChannels]=0.0;
+    else
+      distortion[CompositeChannels]=10.0*log10(PerceptibleReciprocal(
+        distortion[CompositeChannels]))/MagickPSNRDistortion;
   return(status);
 }
 
