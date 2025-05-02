@@ -2164,7 +2164,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     return((ChannelPerceptualHash *) NULL);
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].P[i]=(-MagickLog10(moments[channel].I[i]));
+      perceptual_hash[channel].P[i]=(-log10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
     Blur then transform to HCLp colorspace.
@@ -2194,7 +2194,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     }
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].Q[i]=(-MagickLog10(moments[channel].I[i]));
+      perceptual_hash[channel].Q[i]=(-log10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }
@@ -2607,29 +2607,29 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     */
     histogram[i].red*=area;
     channel_statistics[RedChannel].entropy+=-histogram[i].red*
-      MagickLog10(histogram[i].red)*
-      PerceptibleReciprocal(MagickLog10((double) number_bins.red));
+      log10(histogram[i].red)*
+      PerceptibleReciprocal(log10((double) number_bins.red));
     histogram[i].green*=area;
     channel_statistics[GreenChannel].entropy+=-histogram[i].green*
-      MagickLog10(histogram[i].green)*
-      PerceptibleReciprocal(MagickLog10((double) number_bins.green));
+      log10(histogram[i].green)*
+      PerceptibleReciprocal(log10((double) number_bins.green));
     histogram[i].blue*=area;
     channel_statistics[BlueChannel].entropy+=-histogram[i].blue*
-      MagickLog10(histogram[i].blue)*
-      PerceptibleReciprocal(MagickLog10((double) number_bins.blue));
+      log10(histogram[i].blue)*
+      PerceptibleReciprocal(log10((double) number_bins.blue));
     if (image->matte != MagickFalse)
       {
         histogram[i].opacity*=area;
         channel_statistics[OpacityChannel].entropy+=-histogram[i].opacity*
-          MagickLog10(histogram[i].opacity)*
-          PerceptibleReciprocal(MagickLog10((double) number_bins.opacity));
+          log10(histogram[i].opacity)*
+          PerceptibleReciprocal(log10((double) number_bins.opacity));
       }
     if (image->colorspace == CMYKColorspace)
       {
         histogram[i].index*=area;
         channel_statistics[IndexChannel].entropy+=-histogram[i].index*
-          MagickLog10(histogram[i].index)*
-          PerceptibleReciprocal(MagickLog10((double) number_bins.index));
+          log10(histogram[i].index)*
+          PerceptibleReciprocal(log10((double) number_bins.index));
       }
   }
   /*
