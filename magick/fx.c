@@ -1517,7 +1517,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          FxReturn(PerceptibleReciprocal(*beta)*alpha);
+          FxReturn(alpha/(*beta));
         }
         case '%':
         {
@@ -1721,7 +1721,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           FxReturn(*beta);
         }
        case DivideAssignmentOperator:
-        {
+       {
           q=subexpression;
           while (isalpha((int) ((unsigned char) *q)) != 0)
             q++;
@@ -1734,7 +1734,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           ClearMagickException(exception);
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          value=alpha*PerceptibleReciprocal(*beta);
+          value=alpha/(*beta);
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -2180,7 +2180,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
-          FxReturn(alpha*PerceptibleReciprocal(*beta*(alpha-1.0)+1.0));
+          FxReturn(alpha/(*beta*(alpha-1.0)+1.0));
         }
       break;
     }
@@ -2432,7 +2432,9 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           alpha=FxEvaluateSubexpression(fx_info,channel,x,y,expression+3,
             depth+1,beta,exception);
-          FxReturn(alpha-floor((alpha*PerceptibleReciprocal(*beta)))*(*beta));
+          if (*beta == 0.0)
+            FxReturn(0.0);
+          FxReturn(alpha-floor((double) (alpha/(*beta))*(*beta)));
         }
       if (LocaleCompare(expression,"m") == 0)
         FxReturn(FxGetSymbol(fx_info,channel,x,y,expression,depth+1,exception));
