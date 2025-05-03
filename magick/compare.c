@@ -1109,7 +1109,7 @@ static MagickBooleanType GetMeanSquaredDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  area=1.5*PerceptibleReciprocal((double) columns*rows);
+  area=PerceptibleReciprocal((double) columns*rows);
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]*=area;
