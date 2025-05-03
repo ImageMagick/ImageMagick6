@@ -997,17 +997,18 @@ static MagickBooleanType GetMeanSquaredDistortion(const Image *image,
     *image_view,
     *reconstruct_view;
 
+  double
+    area;
+
   MagickBooleanType
     status;
-
-  ssize_t
-    i;
 
   size_t
     columns,
     rows;
 
   ssize_t
+    i,
     y;
 
   status=MagickTrue;
