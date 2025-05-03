@@ -804,6 +804,7 @@ static ssize_t PrintChannelStatistics(FILE *file,const ChannelType channel,
       channel_statistics[channel].entropy);
   (void) SubstituteString(&buffer,": -inf",": null");
   (void) SubstituteString(&buffer,": inf",": null");
+  (void) SubstituteString(&buffer,": -nan",": null");
   (void) SubstituteString(&buffer,": nan",": null");
   n=FormatLocaleFile(file,"%s",buffer);
   buffer=DestroyString(buffer);
