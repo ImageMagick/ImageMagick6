@@ -1243,7 +1243,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       if (((subimage_search != MagickFalse) &&
            (image->columns == reconstruct_image->columns) &&
            (image->rows == reconstruct_image->rows)) &&
-          (fabs(maxima-minima) < MagickEpsilon))
+          ((fabs(maxima-minima) < MagickEpsilon) || 
+           (metric == PerceptualHashErrorMetric)))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "metric for subimage search is not sufficiently robust","(%s)",
           CommandOptionToMnemonic(MagickMetricOptions,(ssize_t) metric));
