@@ -1544,6 +1544,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
       {
         difference=reconstruct_phash[RedChannel].P[i]-
           image_phash[RedChannel].P[i];
+        if (IsNaN(difference) != 0)
+          difference=0.0;
         distortion[RedChannel]+=difference*difference;
         distortion[CompositeChannels]+=difference*difference;
       }
@@ -1551,6 +1553,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
       {
         difference=reconstruct_phash[GreenChannel].P[i]-
           image_phash[GreenChannel].P[i];
+        if (IsNaN(difference) != 0)
+          difference=0.0;
         distortion[GreenChannel]+=difference*difference;
         distortion[CompositeChannels]+=difference*difference;
       }
@@ -1558,6 +1562,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
       {
         difference=reconstruct_phash[BlueChannel].P[i]-
           image_phash[BlueChannel].P[i];
+        if (IsNaN(difference) != 0)
+          difference=0.0;
         distortion[BlueChannel]+=difference*difference;
         distortion[CompositeChannels]+=difference*difference;
       }
@@ -1566,6 +1572,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
       {
         difference=reconstruct_phash[OpacityChannel].P[i]-
           image_phash[OpacityChannel].P[i];
+        if (IsNaN(difference) != 0)
+          difference=0.0;
         distortion[OpacityChannel]+=difference*difference;
         distortion[CompositeChannels]+=difference*difference;
       }
@@ -1575,6 +1583,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
       {
         difference=reconstruct_phash[IndexChannel].P[i]-
           image_phash[IndexChannel].P[i];
+        if (IsNaN(difference) != 0)
+          difference=0.0;
         distortion[IndexChannel]+=difference*difference;
         distortion[CompositeChannels]+=difference*difference;
       }
