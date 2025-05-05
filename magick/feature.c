@@ -1176,21 +1176,21 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
         */
         channel_features[RedChannel].entropy[i]-=
           cooccurrence[x][y].direction[i].red*
-          log10(cooccurrence[x][y].direction[i].red);
+          log2(cooccurrence[x][y].direction[i].red);
         channel_features[GreenChannel].entropy[i]-=
           cooccurrence[x][y].direction[i].green*
-          log10(cooccurrence[x][y].direction[i].green);
+          log2(cooccurrence[x][y].direction[i].green);
         channel_features[BlueChannel].entropy[i]-=
           cooccurrence[x][y].direction[i].blue*
-          log10(cooccurrence[x][y].direction[i].blue);
+          log2(cooccurrence[x][y].direction[i].blue);
         if (image->colorspace == CMYKColorspace)
           channel_features[IndexChannel].entropy[i]-=
             cooccurrence[x][y].direction[i].index*
-            log10(cooccurrence[x][y].direction[i].index);
+            log2(cooccurrence[x][y].direction[i].index);
         if (image->matte != MagickFalse)
           channel_features[OpacityChannel].entropy[i]-=
             cooccurrence[x][y].direction[i].opacity*
-            log10(cooccurrence[x][y].direction[i].opacity);
+            log2(cooccurrence[x][y].direction[i].opacity);
         /*
           Information Measures of Correlation.
         */
@@ -1300,21 +1300,21 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       */
       channel_features[RedChannel].sum_entropy[i]-=
         density_xy[x].direction[i].red*
-        log10(density_xy[x].direction[i].red);
+        log2(density_xy[x].direction[i].red);
       channel_features[GreenChannel].sum_entropy[i]-=
         density_xy[x].direction[i].green*
-        log10(density_xy[x].direction[i].green);
+        log2(density_xy[x].direction[i].green);
       channel_features[BlueChannel].sum_entropy[i]-=
         density_xy[x].direction[i].blue*
-        log10(density_xy[x].direction[i].blue);
+        log2(density_xy[x].direction[i].blue);
       if (image->colorspace == CMYKColorspace)
         channel_features[IndexChannel].sum_entropy[i]-=
           density_xy[x].direction[i].index*
-          log10(density_xy[x].direction[i].index);
+          log2(density_xy[x].direction[i].index);
       if (image->matte != MagickFalse)
         channel_features[OpacityChannel].sum_entropy[i]-=
           density_xy[x].direction[i].opacity*
-          log10(density_xy[x].direction[i].opacity);
+          log2(density_xy[x].direction[i].opacity);
       /*
         Sum variance.
       */
@@ -1396,52 +1396,52 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
           Information Measures of Correlation.
         */
         entropy_xy.direction[i].red-=cooccurrence[x][y].direction[i].red*
-          log10(cooccurrence[x][y].direction[i].red);
+          log2(cooccurrence[x][y].direction[i].red);
         entropy_xy.direction[i].green-=cooccurrence[x][y].direction[i].green*
-          log10(cooccurrence[x][y].direction[i].green);
+          log2(cooccurrence[x][y].direction[i].green);
         entropy_xy.direction[i].blue-=cooccurrence[x][y].direction[i].blue*
-          log10(cooccurrence[x][y].direction[i].blue);
+          log2(cooccurrence[x][y].direction[i].blue);
         if (image->colorspace == CMYKColorspace)
           entropy_xy.direction[i].index-=cooccurrence[x][y].direction[i].index*
-            log10(cooccurrence[x][y].direction[i].index);
+            log2(cooccurrence[x][y].direction[i].index);
         if (image->matte != MagickFalse)
           entropy_xy.direction[i].opacity-=
-            cooccurrence[x][y].direction[i].opacity*log10(
+            cooccurrence[x][y].direction[i].opacity*log2(
             cooccurrence[x][y].direction[i].opacity);
         entropy_xy1.direction[i].red-=(cooccurrence[x][y].direction[i].red*
-          log10(density_x[x].direction[i].red*
+          log2(density_x[x].direction[i].red*
           density_y[y].direction[i].red));
         entropy_xy1.direction[i].green-=(cooccurrence[x][y].direction[i].green*
-          log10(density_x[x].direction[i].green*
+          log2(density_x[x].direction[i].green*
           density_y[y].direction[i].green));
         entropy_xy1.direction[i].blue-=(cooccurrence[x][y].direction[i].blue*
-          log10(density_x[x].direction[i].blue*
+          log2(density_x[x].direction[i].blue*
           density_y[y].direction[i].blue));
         if (image->colorspace == CMYKColorspace)
           entropy_xy1.direction[i].index-=(
-            cooccurrence[x][y].direction[i].index*log10(
+            cooccurrence[x][y].direction[i].index*log2(
             density_x[x].direction[i].index*density_y[y].direction[i].index));
         if (image->matte != MagickFalse)
           entropy_xy1.direction[i].opacity-=(
-            cooccurrence[x][y].direction[i].opacity*log10(
+            cooccurrence[x][y].direction[i].opacity*log2(
             density_x[x].direction[i].opacity*
             density_y[y].direction[i].opacity));
         entropy_xy2.direction[i].red-=(density_x[x].direction[i].red*
-          density_y[y].direction[i].red*log10(
+          density_y[y].direction[i].red*log2(
           density_x[x].direction[i].red*density_y[y].direction[i].red));
         entropy_xy2.direction[i].green-=(density_x[x].direction[i].green*
-          density_y[y].direction[i].green*log10(
+          density_y[y].direction[i].green*log2(
           density_x[x].direction[i].green*density_y[y].direction[i].green));
         entropy_xy2.direction[i].blue-=(density_x[x].direction[i].blue*
-          density_y[y].direction[i].blue*log10(
+          density_y[y].direction[i].blue*log2(
           density_x[x].direction[i].blue*density_y[y].direction[i].blue));
         if (image->colorspace == CMYKColorspace)
           entropy_xy2.direction[i].index-=(density_x[x].direction[i].index*
-            density_y[y].direction[i].index*log10(
+            density_y[y].direction[i].index*log2(
             density_x[x].direction[i].index*density_y[y].direction[i].index));
         if (image->matte != MagickFalse)
           entropy_xy2.direction[i].opacity-=(density_x[x].direction[i].opacity*
-            density_y[y].direction[i].opacity*log10(
+            density_y[y].direction[i].opacity*log2(
             density_x[x].direction[i].opacity*
             density_y[y].direction[i].opacity));
       }
@@ -1502,48 +1502,48 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       */
       channel_features[RedChannel].difference_entropy[i]-=
         density_xy[x].direction[i].red*
-        log10(density_xy[x].direction[i].red);
+        log2(density_xy[x].direction[i].red);
       channel_features[GreenChannel].difference_entropy[i]-=
         density_xy[x].direction[i].green*
-        log10(density_xy[x].direction[i].green);
+        log2(density_xy[x].direction[i].green);
       channel_features[BlueChannel].difference_entropy[i]-=
         density_xy[x].direction[i].blue*
-        log10(density_xy[x].direction[i].blue);
+        log2(density_xy[x].direction[i].blue);
       if (image->colorspace == CMYKColorspace)
         channel_features[IndexChannel].difference_entropy[i]-=
           density_xy[x].direction[i].index*
-          log10(density_xy[x].direction[i].index);
+          log2(density_xy[x].direction[i].index);
       if (image->matte != MagickFalse)
         channel_features[OpacityChannel].difference_entropy[i]-=
           density_xy[x].direction[i].opacity*
-          log10(density_xy[x].direction[i].opacity);
+          log2(density_xy[x].direction[i].opacity);
       /*
         Information Measures of Correlation.
       */
       entropy_x.direction[i].red-=(density_x[x].direction[i].red*
-        log10(density_x[x].direction[i].red));
+        log2(density_x[x].direction[i].red));
       entropy_x.direction[i].green-=(density_x[x].direction[i].green*
-        log10(density_x[x].direction[i].green));
+        log2(density_x[x].direction[i].green));
       entropy_x.direction[i].blue-=(density_x[x].direction[i].blue*
-        log10(density_x[x].direction[i].blue));
+        log2(density_x[x].direction[i].blue));
       if (image->colorspace == CMYKColorspace)
         entropy_x.direction[i].index-=(density_x[x].direction[i].index*
-          log10(density_x[x].direction[i].index));
+          log2(density_x[x].direction[i].index));
       if (image->matte != MagickFalse)
         entropy_x.direction[i].opacity-=(density_x[x].direction[i].opacity*
-          log10(density_x[x].direction[i].opacity));
+          log2(density_x[x].direction[i].opacity));
       entropy_y.direction[i].red-=(density_y[x].direction[i].red*
-        log10(density_y[x].direction[i].red));
+        log2(density_y[x].direction[i].red));
       entropy_y.direction[i].green-=(density_y[x].direction[i].green*
-        log10(density_y[x].direction[i].green));
+        log2(density_y[x].direction[i].green));
       entropy_y.direction[i].blue-=(density_y[x].direction[i].blue*
-        log10(density_y[x].direction[i].blue));
+        log2(density_y[x].direction[i].blue));
       if (image->colorspace == CMYKColorspace)
         entropy_y.direction[i].index-=(density_y[x].direction[i].index*
-          log10(density_y[x].direction[i].index));
+          log2(density_y[x].direction[i].index));
       if (image->matte != MagickFalse)
         entropy_y.direction[i].opacity-=(density_y[x].direction[i].opacity*
-          log10(density_y[x].direction[i].opacity));
+          log2(density_y[x].direction[i].opacity));
     }
     /*
       Difference variance.
