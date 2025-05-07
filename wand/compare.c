@@ -196,8 +196,10 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
   int argc,char **argv,char **metadata,ExceptionInfo *exception)
 {
 #define CompareEpsilon  (1.0e-06)
-#define CompareRobustExceptionMessage \
+#define CompareConstantColorException \
   "subimage search metric is unreliable for constant-color images"
+#define CompareEqualSizedException \
+  "subimage search metric is unreliable for equal-sized images"
 #define DefaultDissimilarityThreshold  (1.0/MagickPI)
 #define DefaultSimilarityThreshold  (-1.0)
 #define DestroyCompare() \
@@ -1252,7 +1254,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
            (image->rows == reconstruct_image->rows)) &&
           (fabs(maxima-minima) < MagickEpsilon))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
-          CompareRobustExceptionMessage,"(%s)",CommandOptionToMnemonic(
+          CompareConstantColorException,"(%s)",CommandOptionToMnemonic(
           MagickMetricOptions,(ssize_t) metric));
       if (distortion == INFINITY)
         distortion=1.0;
@@ -1266,8 +1268,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
           (image->columns == reconstruct_image->columns) &&
           (image->rows == reconstruct_image->rows))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
-          "subimage search metric is unreliable","(%s)",
-          CommandOptionToMnemonic(MagickMetricOptions,(ssize_t) metric));
+          CompareEqualSizedException,"(%s)",CommandOptionToMnemonic(
+          MagickMetricOptions,(ssize_t) metric));
       break;
     }       
     case PeakAbsoluteErrorMetric:
@@ -1276,8 +1278,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
           (image->columns == reconstruct_image->columns) &&
           (image->rows == reconstruct_image->rows))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
-          "subimage search metric is unreliable","(%s)",
-          CommandOptionToMnemonic(MagickMetricOptions,(ssize_t) metric));
+          CompareEqualSizedException,"(%s)",CommandOptionToMnemonic(
+          MagickMetricOptions,(ssize_t) metric));
       break;
     }       
     case PeakSignalToNoiseRatioMetric:
