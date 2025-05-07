@@ -458,9 +458,6 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     *image_view,
     *reconstruct_view;
 
-  double
-    fuzz;
-
   MagickBooleanType
     status;
 
@@ -469,13 +466,13 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     rows;
 
   ssize_t
+    i,
     y;
 
   /*
     Compute the absolute difference in pixels between two images.
   */
   status=MagickTrue;
-  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   SetImageDistortionBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -516,72 +513,50 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     {
       double
         Da,
-        distance,
-        pixel,
+        delta,
         Sa;
 
-      MagickBooleanType
-        difference;
-
-      difference=MagickFalse;
       Sa=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(p) :
         ((double) QuantumRange-(double) OpaqueOpacity));
       Da=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(q) :
         ((double) QuantumRange-(double) OpaqueOpacity));
       if ((channel & RedChannel) != 0)
         {
-          pixel=Sa*(double) GetPixelRed(p)-Da*(double) GetPixelRed(q);
-          distance=pixel*pixel;
-          if (distance >= fuzz)
-            {
-              channel_distortion[RedChannel]++;
-              difference=MagickTrue;
-            }
+          delta=QuantumScale*(Sa*(double) GetPixelRed(p)-Da*(double)
+            GetPixelRed(q));
+          channel_distortion[RedChannel]+=fabs(delta);
+          channel_distortion[CompositeChannels]+=fabs(delta);
         }
       if ((channel & GreenChannel) != 0)
         {
-          pixel=Sa*(double) GetPixelGreen(p)-Da*(double) GetPixelGreen(q);
-          distance=pixel*pixel;
-          if (distance >= fuzz)
-            {
-              channel_distortion[GreenChannel]++;
-              difference=MagickTrue;
-            }
+          delta=QuantumScale*(Sa*(double) GetPixelGreen(p)-Da*(double)
+            GetPixelGreen(q));
+          channel_distortion[RedChannel]+=fabs(delta);
+          channel_distortion[CompositeChannels]+=fabs(delta);
         }
       if ((channel & BlueChannel) != 0)
         {
-          pixel=Sa*(double) GetPixelBlue(p)-Da*(double) GetPixelBlue(q);
-          distance=pixel*pixel;
-          if (distance >= fuzz)
-            {
-              channel_distortion[BlueChannel]++;
-              difference=MagickTrue;
-            }
+          delta=QuantumScale*(Sa*(double) GetPixelBlue(p)-Da*(double)
+            GetPixelBlue(q));
+          channel_distortion[RedChannel]+=fabs(delta);
+          channel_distortion[CompositeChannels]+=fabs(delta);
         }
       if (((channel & OpacityChannel) != 0) &&
           (image->matte != MagickFalse))
         {
-          pixel=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
-          distance=pixel*pixel;
-          if (distance >= fuzz)
-            {
-              channel_distortion[OpacityChannel]++;
-              difference=MagickTrue;
-            }
+          delta=QuantumScale*((double) GetPixelOpacity(p)-(double)
+            GetPixelOpacity(q));
+          channel_distortion[RedChannel]+=fabs(delta);
+          channel_distortion[CompositeChannels]+=fabs(delta);
         }
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace))
         {
-          pixel=Sa*(double) indexes[x]-Da*(double) reconstruct_indexes[x];
-          distance=pixel*pixel;
-          if (distance >= fuzz)
-            {
-              channel_distortion[BlackChannel]++;
-              difference=MagickTrue;
-            }
+          delta=QuantumScale*(Sa*(double) indexes[x]-Da*(double)
+            reconstruct_indexes[x]);
+          channel_distortion[RedChannel]+=fabs(delta);
+          channel_distortion[CompositeChannels]+=fabs(delta);
         }
-      if (difference != MagickFalse)
-        channel_distortion[CompositeChannels]++;
       p++;
       q++;
     }
@@ -593,6 +568,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
+  for (i=0; i <= (ssize_t) CompositeChannels; i++)
+    distortion[i]/=((double) columns*rows);
   return(status);
 }
 
@@ -717,9 +695,9 @@ static MagickBooleanType GetFuzzDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]/=((double) columns*rows);
-  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   distortion[CompositeChannels]=sqrt(distortion[CompositeChannels]);
   return(status);
 }
