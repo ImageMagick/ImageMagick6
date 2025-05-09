@@ -2199,7 +2199,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
     exception);
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
-  similarity_image->depth=MAGICKCORE_QUANTUM_DEPTH;
+  similarity_image->depth=32;
   similarity_image->matte=MagickFalse;
   status=SetImageStorageClass(similarity_image,DirectClass);
   if (status == MagickFalse)
