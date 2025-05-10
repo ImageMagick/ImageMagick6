@@ -1118,14 +1118,12 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   MagickOffsetType
     progress;
 
-  ssize_t
-    i;
-
   size_t
     columns,
     rows;
 
   ssize_t
+    i,
     y;
 
   /*
@@ -1204,11 +1202,8 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
           beta=QuantumScale*fabs(Da*(double) GetPixelRed(q)-
             reconstruct_statistics[RedChannel].mean);
           channel_distortion[RedChannel]+=alpha*beta;
-          channel_distortion[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[RedChannel]+=alpha*alpha;
-          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[RedChannel]+=beta*beta;
-          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if ((channel & GreenChannel) != 0)
         {
@@ -1217,11 +1212,8 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
           beta=QuantumScale*fabs(Da*(double) GetPixelGreen(q)-
             reconstruct_statistics[GreenChannel].mean);
           channel_distortion[GreenChannel]+=alpha*beta;
-          channel_distortion[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[GreenChannel]+=alpha*alpha;
-          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[GreenChannel]+=beta*beta;
-          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if ((channel & BlueChannel) != 0)
         {
@@ -1230,11 +1222,8 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
           beta=QuantumScale*fabs(Da*(double) GetPixelBlue(q)-
             reconstruct_statistics[BlueChannel].mean);
           channel_distortion[BlueChannel]+=alpha*beta;
-          channel_distortion[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[BlueChannel]+=alpha*alpha;
-          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[BlueChannel]+=beta*beta;
-          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
         {
@@ -1243,11 +1232,8 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
           beta=QuantumScale*fabs((double) GetPixelAlpha(q)-
             reconstruct_statistics[AlphaChannel].mean);
           channel_distortion[OpacityChannel]+=alpha*beta;
-          channel_distortion[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[OpacityChannel]+=alpha*alpha;
-          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[OpacityChannel]+=beta*beta;
-          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace) &&
@@ -1258,11 +1244,8 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
           beta=QuantumScale*fabs(Da*(double) GetPixelIndex(reconstruct_indexes+
             x)-reconstruct_statistics[BlackChannel].mean);
           channel_distortion[BlackChannel]+=alpha*beta;
-          channel_distortion[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[BlackChannel]+=alpha*alpha;
-          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[BlackChannel]+=beta*beta;
-          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       p++;
       q++;
@@ -1274,7 +1257,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
       ssize_t
         j;
 
-      for (j=0; j <= CompositeChannels; j++)
+      for (j=0; j < (ssize_t) GetNumberChannels(image,channel); j++)
       {
         distortion[j]+=channel_distortion[j];
         alpha_variance[j]+=channel_alpha_variance[j];
@@ -1300,11 +1283,14 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   /*
     Divide by the standard deviation.
   */
-  distortion[CompositeChannels]/=GetNumberChannels(image,channel);
-  alpha_variance[CompositeChannels]/=GetNumberChannels(image,channel);
-  beta_variance[CompositeChannels]/=GetNumberChannels(image,channel);
-  for (i=0; i <= (ssize_t) CompositeChannels; i++)
+  for (i=0; i < (ssize_t) GetNumberChannels(image,channel); i++)
+  {
+    distortion[i]/=((double) image->columns*image->rows);
+    alpha_variance[i]/=((double) image->columns*image->rows);
+    beta_variance[i]/=((double) image->columns*image->rows);
     distortion[i]/=sqrt(alpha_variance[i]*beta_variance[i]);
+    distortion[CompositeChannels]+=distortion[i];
+  }
   /*
     Free resources.
   */
