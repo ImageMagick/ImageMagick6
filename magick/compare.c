@@ -1154,9 +1154,6 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    reduction(+:distortion[:CompositeChannels+1]) \
-    reduction(+:alpha_variance[:CompositeChannels+1]) \
-    reduction(+:beta_variance[:CompositeChannels+1]) \
     magick_number_threads(image,image,rows,1)
 #endif
   for (y=0; y < (ssize_t) rows; y++)
@@ -1168,6 +1165,11 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
     const PixelPacket
       *magick_restrict p,
       *magick_restrict q;
+
+    double
+      channel_alpha_variance[CompositeChannels+1] = { 0.0 },
+      channel_beta_variance[CompositeChannels+1] = { 0.0 },
+      channel_distortion[CompositeChannels+1] = { 0.0 };
 
     ssize_t
       x;
@@ -1201,9 +1203,12 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
             image_statistics[RedChannel].mean);
           beta=QuantumScale*fabs(Da*(double) GetPixelRed(q)-
             reconstruct_statistics[RedChannel].mean);
-          distortion[RedChannel]+=alpha*beta;
-          alpha_variance[RedChannel]+=alpha*alpha;
-          beta_variance[RedChannel]+=beta*beta;
+          channel_distortion[RedChannel]+=alpha*beta;
+          channel_distortion[CompositeChannels]+=alpha*beta;
+          channel_alpha_variance[RedChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
+          channel_beta_variance[RedChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if ((channel & GreenChannel) != 0)
         {
@@ -1211,9 +1216,12 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
             image_statistics[GreenChannel].mean);
           beta=QuantumScale*fabs(Da*(double) GetPixelGreen(q)-
             reconstruct_statistics[GreenChannel].mean);
-          distortion[GreenChannel]+=alpha*beta;
-          alpha_variance[GreenChannel]+=alpha*alpha;
-          beta_variance[GreenChannel]+=beta*beta;
+          channel_distortion[GreenChannel]+=alpha*beta;
+          channel_distortion[CompositeChannels]+=alpha*beta;
+          channel_alpha_variance[GreenChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
+          channel_beta_variance[GreenChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if ((channel & BlueChannel) != 0)
         {
@@ -1221,9 +1229,12 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
             image_statistics[BlueChannel].mean);
           beta=QuantumScale*fabs(Da*(double) GetPixelBlue(q)-
             reconstruct_statistics[BlueChannel].mean);
-          distortion[BlueChannel]+=alpha*beta;
-          alpha_variance[BlueChannel]+=alpha*alpha;
-          beta_variance[BlueChannel]+=beta*beta;
+          channel_distortion[BlueChannel]+=alpha*beta;
+          channel_distortion[CompositeChannels]+=alpha*beta;
+          channel_alpha_variance[BlueChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
+          channel_beta_variance[BlueChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
         {
@@ -1231,9 +1242,12 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
             image_statistics[AlphaChannel].mean);
           beta=QuantumScale*fabs((double) GetPixelAlpha(q)-
             reconstruct_statistics[AlphaChannel].mean);
-          distortion[OpacityChannel]+=alpha*beta;
-          alpha_variance[OpacityChannel]+=alpha*alpha;
-          beta_variance[OpacityChannel]+=beta*beta;
+          channel_distortion[OpacityChannel]+=alpha*beta;
+          channel_distortion[CompositeChannels]+=alpha*beta;
+          channel_alpha_variance[OpacityChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
+          channel_beta_variance[OpacityChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace) &&
@@ -1243,12 +1257,29 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
             image_statistics[BlackChannel].mean);
           beta=QuantumScale*fabs(Da*(double) GetPixelIndex(reconstruct_indexes+
             x)-reconstruct_statistics[BlackChannel].mean);
-          distortion[BlackChannel]+=alpha*beta;
-          alpha_variance[BlackChannel]+=alpha*alpha;
-          beta_variance[BlackChannel]+=beta*beta;
+          channel_distortion[BlackChannel]+=alpha*beta;
+          channel_distortion[CompositeChannels]+=alpha*beta;
+          channel_alpha_variance[BlackChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
+          channel_beta_variance[BlackChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       p++;
       q++;
+    }
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+    #pragma omp critical (GetNormalizedCrossCorrelationDistortion)
+#endif
+    {
+      ssize_t
+        j;
+
+      for (j=0; j <= CompositeChannels; j++)
+      {
+        distortion[j]+=channel_distortion[j];
+        alpha_variance[j]+=channel_alpha_variance[j];
+        beta_variance[j]+=channel_beta_variance[j];
+      }
     }
     if (image->progress_monitor != (MagickProgressMonitor) NULL)
       {
@@ -1269,14 +1300,11 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   /*
     Divide by the standard deviation.
   */
-  for (i=0; i < (ssize_t) CompositeChannels; i++)
-  {
+  distortion[CompositeChannels]/=GetNumberChannels(image,channel);
+  alpha_variance[CompositeChannels]/=GetNumberChannels(image,channel);
+  beta_variance[CompositeChannels]/=GetNumberChannels(image,channel);
+  for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]/=sqrt(alpha_variance[i]*beta_variance[i]);
-    if (fabs(distortion[i]) >= MagickEpsilon)
-      distortion[CompositeChannels]+=distortion[i];
-  }
-  distortion[CompositeChannels]=distortion[CompositeChannels]/
-    GetNumberChannels(image,channel);
   /*
     Free resources.
   */
@@ -2240,11 +2268,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
   rows=similarity_image->rows;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp declare reduction(similarity:SimilarityInfo: \
-    omp_out = omp_out.similarity < omp_in.similarity ? omp_out : omp_in) \
-    initializer(omp_priv = {MagickMaximumValue, 0, 0})
-  #pragma omp parallel for schedule(static) shared(status) \
-    reduction(similarity:similarity_info) 
+  #pragma omp parallel for schedule(static) shared(status)
 #endif
   for (y=0; y < (ssize_t) rows; y++)
   {
@@ -2256,6 +2280,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
 
     PixelPacket
       *magick_restrict q;
+
+    SimilarityInfo
+      channel_similarity = { MagickMaximumValue, 0, 0 };
 
     if (status == MagickFalse)
       continue;
@@ -2290,11 +2317,11 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         default:
           break;
       }
-      if (similarity < similarity_info.similarity)
+      if (similarity < channel_similarity.similarity)
         {
-          similarity_info.similarity=similarity;
-          similarity_info.x=x;
-          similarity_info.y=y;
+          channel_similarity.similarity=similarity;
+          channel_similarity.x=x;
+          channel_similarity.y=y;
         }
       if ((metric == PeakSignalToNoiseRatioMetric) &&
           (fabs(similarity) < MagickEpsilon))
@@ -2326,6 +2353,11 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       SetPixelBlue(q,GetPixelRed(q));
       q++;
     }
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+    #pragma omp critical (SimilarityImage)
+#endif
+    if (channel_similarity.similarity < similarity_info.similarity)
+      similarity_info=channel_similarity;
     if (SyncCacheViewAuthenticPixels(similarity_view,exception) == MagickFalse)
       status=MagickFalse;
     if (image->progress_monitor != (MagickProgressMonitor) NULL)
