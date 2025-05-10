@@ -1109,8 +1109,8 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
     *reconstruct_statistics;
 
   double
-    alpha_variance[CompositeChannels+1],
-    beta_variance[CompositeChannels+1];
+    alpha_variance[CompositeChannels+1] = { 0.0 },
+    beta_variance[CompositeChannels+1] = { 0.0 };
 
   MagickBooleanType
     status;
