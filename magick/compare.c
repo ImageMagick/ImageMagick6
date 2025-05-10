@@ -1152,6 +1152,13 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   SetImageDistortionBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp parallel for schedule(static) shared(status) \
+    reduction(+:distortion[:CompositeChannels+1]) \
+    reduction(+:alpha_variance[:CompositeChannels+1]) \
+    reduction(+:beta_variance[:CompositeChannels+1]) \
+    magick_number_threads(image,image,rows,1)
+#endif
   for (y=0; y < (ssize_t) rows; y++)
   {
     const IndexPacket
@@ -2148,6 +2155,16 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
 {
 #define SimilarityImageTag  "Similarity/Image"
 
+  typedef struct
+  {     
+    double
+      similarity;
+
+    ssize_t
+      x,
+      y;
+  } SimilarityInfo;
+
   CacheView
     *similarity_view;
 
@@ -2165,6 +2182,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
 
   MagickOffsetType
     progress;
+
+  SimilarityInfo
+    similarity_info = { MagickMaximumValue, 0, 0 };
 
   size_t
     rows;
@@ -2200,6 +2220,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
   similarity_image->depth=32;
+  similarity_image->colorspace=GRAYColorspace;
   similarity_image->matte=MagickFalse;
   status=SetImageStorageClass(similarity_image,DirectClass);
   if (status == MagickFalse)
@@ -2218,6 +2239,13 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
   rows=similarity_image->rows;
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp declare reduction(similarity:SimilarityInfo: \
+    omp_out = omp_out.similarity < omp_in.similarity ? omp_out : omp_in) \
+    initializer(omp_priv = {MagickMaximumValue, 0, 0})
+  #pragma omp parallel for schedule(static) shared(status) \
+    reduction(similarity:similarity_info) 
+#endif
   for (y=0; y < (ssize_t) rows; y++)
   {
     double
@@ -2262,11 +2290,11 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         default:
           break;
       }
-      if (similarity < *similarity_metric)
+      if (similarity < similarity_info.similarity)
         {
-          *similarity_metric=similarity;
-          offset->x=x;
-          offset->y=y;
+          similarity_info.similarity=similarity;
+          similarity_info.x=x;
+          similarity_info.y=y;
         }
       if ((metric == PeakSignalToNoiseRatioMetric) &&
           (fabs(similarity) < MagickEpsilon))
@@ -2312,7 +2340,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       }
   }
   similarity_view=DestroyCacheView(similarity_view);
-  (void) SetImageType(similarity_image,GrayscaleType);
+  *similarity_metric=similarity_info.similarity;
+  offset->x=similarity_info.x;
+  offset->y=similarity_info.y;
   if (status == MagickFalse)
     similarity_image=DestroyImage(similarity_image);
   return(similarity_image);
