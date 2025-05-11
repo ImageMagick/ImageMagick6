@@ -2164,7 +2164,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     return((ChannelPerceptualHash *) NULL);
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].P[i]=(-log10(moments[channel].I[i]));
+      perceptual_hash[channel].P[i]=(-PerceptibleLog10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
     Blur then transform to HCLp colorspace.
@@ -2194,7 +2194,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     }
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].Q[i]=(-log10(moments[channel].I[i]));
+      perceptual_hash[channel].Q[i]=(-PerceptibleLog10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }
