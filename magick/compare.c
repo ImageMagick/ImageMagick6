@@ -2231,9 +2231,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
   rows=similarity_image->rows;
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status)
-#endif
   for (y=0; y < (ssize_t) rows; y++)
   {
     double
@@ -2250,7 +2247,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
 
     if (status == MagickFalse)
       continue;
-    if (*similarity_metric <= similarity_threshold)
+    if (similarity_info.similarity <= similarity_threshold)
       continue;
     q=GetCacheViewAuthenticPixels(similarity_view,0,y,similarity_image->columns,
       1,exception);
@@ -2261,7 +2258,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       }
     for (x=0; x < (ssize_t) similarity_image->columns; x++)
     {
-      if (*similarity_metric <= similarity_threshold)
+      if (similarity_info.similarity <= similarity_threshold)
         break;
       similarity=GetSimilarityMetric(image,reference,MeanSquaredErrorMetric,
         x,y,exception);
@@ -2313,9 +2310,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       SetPixelBlue(q,GetPixelRed(q));
       q++;
     }
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-    #pragma omp critical (SimilarityImage)
-#endif
     if (channel_similarity.similarity < similarity_info.similarity)
       similarity_info=channel_similarity;
     if (SyncCacheViewAuthenticPixels(similarity_view,exception) == MagickFalse)
