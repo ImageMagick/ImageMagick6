@@ -197,7 +197,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
 {
 #define CompareEpsilon  (1.0e-06)
 #define CompareConstantColorException \
-  "subimage search metric is unreliable for constant-color images"
+  "search metric is unreliable for constant-color images"
 #define CompareEqualSizedException \
   "subimage search metric is unreliable for equal-sized images"
 #define DefaultDissimilarityThreshold  (1.0/MagickPI)
@@ -1237,31 +1237,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     similar=MagickFalse;
   switch (metric)
   {
-    case AbsoluteErrorMetric:
-    {
-      scale=(double) image->columns*image->rows;
-      break;
-    }       
     case NormalizedCrossCorrelationErrorMetric:
-    {
-      double
-        maxima = 0.0,
-        minima = 0.0;
-
-      (void) GetImageRange(reconstruct_image,&minima,&maxima,exception);
-      if (((subimage_search != MagickFalse) &&
-           (image->columns == reconstruct_image->columns) &&
-           (image->rows == reconstruct_image->rows)) &&
-          (fabs(maxima-minima) < MagickEpsilon))
-        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
-          CompareConstantColorException,"(%s)",CommandOptionToMnemonic(
-          MagickMetricOptions,(ssize_t) metric));
-      if (distortion == INFINITY)
-        distortion=1.0;
-      distortion=1.0-distortion;
-      similarity_metric=1.0-similarity_metric;
-      break;
-    }       
     case PerceptualHashErrorMetric:
     {
       double
@@ -1269,32 +1245,41 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
         minima = 0.0;
 
       (void) GetImageRange(reconstruct_image,&minima,&maxima,exception);
-      if (((subimage_search != MagickFalse) &&
-           (image->columns == reconstruct_image->columns) &&
-           (image->rows == reconstruct_image->rows)) &&
-          (fabs(maxima-minima) < MagickEpsilon))
-        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
+      if (fabs(maxima-minima) < MagickEpsilon)
+        (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
           CompareConstantColorException,"(%s)",CommandOptionToMnemonic(
           MagickMetricOptions,(ssize_t) metric));
-      break;
-    }       
-    case PeakAbsoluteErrorMetric:
-    {       
       if ((subimage_search != MagickFalse) &&
           (image->columns == reconstruct_image->columns) &&
           (image->rows == reconstruct_image->rows))
-        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
+        (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
           CompareEqualSizedException,"(%s)",CommandOptionToMnemonic(
           MagickMetricOptions,(ssize_t) metric));
       break;
-    }       
+    } 
+    default:
+      break;
+  }
+  switch (metric)
+  {
+    case AbsoluteErrorMetric:
+    {
+      scale=(double) image->columns*image->rows;
+      break;
+    }
+    case NormalizedCrossCorrelationErrorMetric:
+    case UndefinedErrorMetric:
+    {
+      distortion=1.0-distortion;
+      similarity_metric=1.0-similarity_metric;
+      break;
+    } 
     case PeakSignalToNoiseRatioMetric:
     {
       scale=MagickPSNRDistortion;
       break;
-    }       
-    default:
-      break;
+    }
+    default: break;
   }
   if (difference_image == (Image *) NULL)
     status=0;
