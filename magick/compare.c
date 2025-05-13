@@ -2263,7 +2263,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
         x,y,exception);
       switch (metric)
       {
-        case NormalizedCrossCorrelationErrorMetric: 
         case PeakSignalToNoiseRatioMetric:
         case UndefinedErrorMetric:
         {
@@ -2279,9 +2278,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
           channel_similarity.x=x;
           channel_similarity.y=y;
         }
-      if ((metric == PeakSignalToNoiseRatioMetric) &&
-          (fabs(similarity) < MagickEpsilon))
-        similarity=1.0-similarity;
       switch (metric)
       {
         case AbsoluteErrorMetric:
