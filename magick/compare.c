@@ -1518,9 +1518,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[RedChannel].P[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[RedChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=QuantumScale*difference*difference/
-          389.3738;
+        distortion[RedChannel]+=difference*difference;
+        distortion[CompositeChannels]+=QuantumScale*difference*difference;
       }
     if ((channel & GreenChannel) != 0)
       {
@@ -1528,9 +1527,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[GreenChannel].P[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[GreenChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=QuantumScale*difference*difference/
-          389.3738;
+        distortion[GreenChannel]+=difference*difference;
+        distortion[CompositeChannels]+=QuantumScale*difference*difference;
       }
     if ((channel & BlueChannel) != 0)
       {
@@ -1538,9 +1536,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[BlueChannel].P[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[BlueChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=QuantumScale*difference*difference/
-          389.3738;
+        distortion[BlueChannel]+=difference*difference;
+        distortion[CompositeChannels]+=QuantumScale*difference*difference;
       }
     if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse) &&
         (reconstruct_image->matte != MagickFalse))
@@ -1549,9 +1546,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[OpacityChannel].P[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[OpacityChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=QuantumScale*difference*difference/
-          389.3738;
+        distortion[OpacityChannel]+=difference*difference;
+        distortion[CompositeChannels]+=QuantumScale*difference*difference;
       }
     if (((channel & IndexChannel) != 0) &&
         (image->colorspace == CMYKColorspace) &&
@@ -1561,9 +1557,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[IndexChannel].P[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[IndexChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=QuantumScale*difference*difference/
-          389.3738;
+        distortion[IndexChannel]+=difference*difference;
+        distortion[CompositeChannels]+=QuantumScale*difference*difference;
       }
   }
   /*
@@ -1580,8 +1575,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[RedChannel].Q[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[RedChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=difference*difference/389.3738;
+        distortion[RedChannel]+=difference*difference;
+        distortion[CompositeChannels]+=difference*difference;
       }
     if ((channel & GreenChannel) != 0)
       {
@@ -1589,15 +1584,15 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[GreenChannel].Q[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[GreenChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=difference*difference/389.3738;
+        distortion[GreenChannel]+=difference*difference;
+        distortion[CompositeChannels]+=difference*difference;
       }
     if ((channel & BlueChannel) != 0)
       {
         difference=reconstruct_phash[BlueChannel].Q[i]-
           image_phash[BlueChannel].Q[i];
-        distortion[BlueChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=difference*difference/389.3738;
+        distortion[BlueChannel]+=difference*difference;
+        distortion[CompositeChannels]+=difference*difference;
       }
     if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse) &&
         (reconstruct_image->matte != MagickFalse))
@@ -1606,8 +1601,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[OpacityChannel].Q[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[OpacityChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=difference*difference/389.3738;
+        distortion[OpacityChannel]+=difference*difference;
+        distortion[CompositeChannels]+=difference*difference;
       }
     if (((channel & IndexChannel) != 0) &&
         (image->colorspace == CMYKColorspace) &&
@@ -1617,10 +1612,12 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
           image_phash[IndexChannel].Q[i];
         if (IsNaN(difference) != 0)
           difference=0.0;
-        distortion[IndexChannel]+=difference*difference/389.3738;
-        distortion[CompositeChannels]+=difference*difference/389.3738;
+        distortion[IndexChannel]+=difference*difference;
+        distortion[CompositeChannels]+=difference*difference;
       }
   }
+  for (i=0; i <= (ssize_t) CompositeChannels; i++)
+    distortion[i]/=PHASHNormalizationFactor;
   /*
     Free resources.
   */
