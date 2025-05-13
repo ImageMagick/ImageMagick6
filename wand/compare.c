@@ -1246,13 +1246,13 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
 
       (void) GetImageRange(reconstruct_image,&minima,&maxima,exception);
       if (fabs(maxima-minima) < MagickEpsilon)
-        (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
+        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           CompareConstantColorException,"(%s)",CommandOptionToMnemonic(
           MagickMetricOptions,(ssize_t) metric));
       if ((subimage_search != MagickFalse) &&
           (image->columns == reconstruct_image->columns) &&
           (image->rows == reconstruct_image->rows))
-        (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
+        (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           CompareEqualSizedException,"(%s)",CommandOptionToMnemonic(
           MagickMetricOptions,(ssize_t) metric));
       break;
