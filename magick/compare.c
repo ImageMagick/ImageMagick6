@@ -1485,6 +1485,8 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
   const Image *reconstruct_image,const ChannelType channel,double *distortion,
   ExceptionInfo *exception)
 {
+#define PHASHNormalizationFactor  389.373723242
+
   ChannelPerceptualHash
     *image_phash,
     *reconstruct_phash;
