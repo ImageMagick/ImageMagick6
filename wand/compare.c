@@ -1272,6 +1272,10 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       break;
     }
     case NormalizedCrossCorrelationErrorMetric:
+    {
+      similarity_metric=1.0-similarity_metric;
+      break;
+    } 
     case UndefinedErrorMetric:
     {
       distortion=1.0-distortion;
@@ -1301,9 +1305,9 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case MeanErrorPerPixelMetric:
             {
               (void) FormatLocaleFile(stderr,"%.*g (%.*g, %.*g)",
-                GetMagickPrecision(),QuantumRange*distortion,
-                GetMagickPrecision(),image->error.normalized_mean_error,
-                GetMagickPrecision(),image->error.normalized_maximum_error);
+                GetMagickPrecision(),scale*distortion,
+                GetMagickPrecision(),distortion,GetMagickPrecision(),
+                image->error.normalized_maximum_error);
               break;
             }
             default:
@@ -1459,7 +1463,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             {
               (void) FormatLocaleFile(stderr,"    %.*g (%.*g, %.*g)\n",
                 GetMagickPrecision(),channel_distortion[CompositeChannels],
-                GetMagickPrecision(),image->error.normalized_mean_error,
+                GetMagickPrecision(),channel_distortion[CompositeChannels],
                 GetMagickPrecision(),image->error.normalized_maximum_error);
               break;
             }

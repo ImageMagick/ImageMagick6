@@ -528,30 +528,30 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*(Sa*(double) GetPixelRed(p)-Da*(double)
             GetPixelRed(q));
-          if ((QuantumRange*delta*delta) >= fuzz)
+          if ((delta*delta) >= fuzz)
             {
-              channel_distortion[RedChannel]+=fabs(delta);
-              channel_distortion[CompositeChannels]+=fabs(delta);
+              channel_distortion[RedChannel]++;
+              channel_distortion[CompositeChannels]++;
             }
         }
       if ((channel & GreenChannel) != 0)
         {
           delta=QuantumScale*(Sa*(double) GetPixelGreen(p)-Da*(double)
             GetPixelGreen(q));
-          if ((QuantumRange*delta*delta) >= fuzz)
+          if ((delta*delta) >= fuzz)
             {
-              channel_distortion[RedChannel]+=fabs(delta);
-              channel_distortion[CompositeChannels]+=fabs(delta);
+              channel_distortion[RedChannel]++;
+              channel_distortion[CompositeChannels]++;
             }
         }
       if ((channel & BlueChannel) != 0)
         {
           delta=QuantumScale*(Sa*(double) GetPixelBlue(p)-Da*(double)
             GetPixelBlue(q));
-          if ((QuantumRange*delta*delta) >= fuzz)
+          if ((delta*delta) >= fuzz)
             {
-              channel_distortion[RedChannel]+=fabs(delta);
-              channel_distortion[CompositeChannels]+=fabs(delta);
+              channel_distortion[RedChannel]++;
+              channel_distortion[CompositeChannels]++;
             }
         }
       if (((channel & OpacityChannel) != 0) &&
@@ -559,10 +559,10 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*((double) GetPixelOpacity(p)-(double)
             GetPixelOpacity(q));
-          if ((QuantumRange*delta*delta) >= fuzz)
+          if ((delta*delta) >= fuzz)
             {
-              channel_distortion[RedChannel]+=fabs(delta);
-              channel_distortion[CompositeChannels]+=fabs(delta);
+              channel_distortion[RedChannel]++;
+              channel_distortion[CompositeChannels]++;
             }
         }
       if (((channel & IndexChannel) != 0) &&
@@ -570,10 +570,10 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*(Sa*(double) indexes[x]-Da*(double)
             reconstruct_indexes[x]);
-          if ((QuantumRange*delta*delta) >= fuzz)
+          if ((delta*delta) >= fuzz)
             {
-              channel_distortion[RedChannel]+=fabs(delta);
-              channel_distortion[CompositeChannels]+=fabs(delta);
+              channel_distortion[RedChannel]++;
+              channel_distortion[CompositeChannels]++;
             }
         }
       p++;
@@ -852,7 +852,8 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
     *reconstruct_view;
 
   double
-    maximum_error = MagickMinimumValue;
+    maximum_error = MagickMinimumValue,
+    mean_error = 0.0;
 
   MagickBooleanType
     status;
@@ -877,7 +878,8 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
   {
     double
       channel_distortion[CompositeChannels+1],
-      local_maximum = MinimumValue;
+      local_maximum = MinimumValue,
+      local_mean_error = 0.0;
 
     const IndexPacket
       *magick_restrict indexes,
@@ -921,6 +923,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
             (double) GetPixelRed(q));
           channel_distortion[RedChannel]+=distance;
           channel_distortion[CompositeChannels]+=distance;
+          local_mean_error+=distance*distance;
           if (distance > local_maximum)
             local_maximum=distance;
         }
@@ -930,6 +933,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
             (double) GetPixelGreen(q));
           channel_distortion[GreenChannel]+=distance;
           channel_distortion[CompositeChannels]+=distance;
+          local_mean_error+=distance*distance;
           if (distance > local_maximum)
             local_maximum=distance;
         }
@@ -939,6 +943,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
             (double) GetPixelBlue(q));
           channel_distortion[BlueChannel]+=distance;
           channel_distortion[CompositeChannels]+=distance;
+          local_mean_error+=distance*distance;
           if (distance > local_maximum)
             local_maximum=distance;
         }
@@ -949,6 +954,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
             GetPixelOpacity(q));
           channel_distortion[OpacityChannel]+=distance;
           channel_distortion[CompositeChannels]+=distance;
+          local_mean_error+=distance*distance;
           if (distance > local_maximum)
             local_maximum=distance;
         }
@@ -959,6 +965,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
             (double) GetPixelIndex(reconstruct_indexes+x));
           channel_distortion[BlackChannel]+=distance;
           channel_distortion[CompositeChannels]+=distance;
+          local_mean_error+=distance*distance;
           if (distance > local_maximum)
             local_maximum=distance;
         }
@@ -971,18 +978,19 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
     {
       for (i=0; i <= (ssize_t) CompositeChannels; i++)
         distortion[i]+=channel_distortion[i];
+      mean_error+=local_mean_error;
       if (local_maximum > maximum_error)
         maximum_error=local_maximum;
     }
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]/=((double) columns*rows);
-  image->error.mean_error_per_pixel=distortion[CompositeChannels];
-  image->error.normalized_mean_error=distortion[CompositeChannels];
-  image->error.normalized_maximum_error=QuantumScale*maximum_error;
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
+  image->error.mean_error_per_pixel=QuantumRange*distortion[CompositeChannels];
+  image->error.normalized_mean_error=mean_error;
+  image->error.normalized_maximum_error=maximum_error;
   return(status);
 }
 
