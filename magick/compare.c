@@ -469,7 +469,6 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     rows;
 
   ssize_t
-    i,
     y;
 
   /*
@@ -587,6 +586,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
+  distortion[CompositeChannels]/=((double) image->columns*image->rows);
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   return(status);
 }
@@ -2272,11 +2272,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
       switch (metric)
       {
-        case AbsoluteErrorMetric:
-        {
-          similarity/=(image->columns*image->rows);
-          break;
-        }
         case NormalizedCrossCorrelationErrorMetric:
         case PeakSignalToNoiseRatioMetric:
         case UndefinedErrorMetric:
