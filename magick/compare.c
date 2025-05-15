@@ -344,21 +344,21 @@ MagickExport Image *CompareImageChannels(Image *image,
             {
               pixel=Sa*(double) GetPixelRed(p)-Da*(double) GetPixelRed(q);
               distance=pixel*pixel;
-              if (distance >= fuzz)
+              if (distance > fuzz)
                 difference=MagickTrue;
             }
           if ((channel & GreenChannel) != 0)
             {
               pixel=Sa*(double) GetPixelGreen(p)-Da*(double) GetPixelGreen(q);
               distance=pixel*pixel;
-              if (distance >= fuzz)
+              if (distance > fuzz)
                 difference=MagickTrue;
             }
           if ((channel & BlueChannel) != 0)
             {
               pixel=Sa*(double) GetPixelBlue(p)-Da*(double) GetPixelBlue(q);
               distance=pixel*pixel;
-              if (distance >= fuzz)
+              if (distance > fuzz)
                 difference=MagickTrue;
             }
           if (((channel & OpacityChannel) != 0) &&
@@ -366,7 +366,7 @@ MagickExport Image *CompareImageChannels(Image *image,
             {
               pixel=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
               distance=pixel*pixel;
-              if (distance >= fuzz)
+              if (distance > fuzz)
                 difference=MagickTrue;
             }
           if (((channel & IndexChannel) != 0) &&
@@ -374,7 +374,7 @@ MagickExport Image *CompareImageChannels(Image *image,
             {
               pixel=Sa*(double) indexes[x]-Da*(double) reconstruct_indexes[x];
               distance=pixel*pixel;
-              if (distance >= fuzz)
+              if (distance > fuzz)
                 difference=MagickTrue;
             }
         }
@@ -528,9 +528,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         ((double) QuantumRange-(double) OpaqueOpacity));
       if ((channel & RedChannel) != 0)
         {
-          delta=QuantumScale*(Sa*(double) GetPixelRed(p)-Da*(double)
-            GetPixelRed(q));
-          if ((delta*delta) >= (QuantumScale*fuzz))
+          delta=Sa*(double) GetPixelRed(p)-Da*(double)
+            GetPixelRed(q);
+          if ((delta*delta) > fuzz)
             {
               channel_distortion[RedChannel]++;
               count++;
@@ -538,9 +538,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         }
       if ((channel & GreenChannel) != 0)
         {
-          delta=QuantumScale*(Sa*(double) GetPixelGreen(p)-Da*(double)
-            GetPixelGreen(q));
-          if ((delta*delta) >= (QuantumScale*fuzz))
+          delta=Sa*(double) GetPixelGreen(p)-Da*(double)
+            GetPixelGreen(q);
+          if ((delta*delta) > fuzz)
             {
               channel_distortion[RedChannel]++;
               count++;
@@ -548,9 +548,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         }
       if ((channel & BlueChannel) != 0)
         {
-          delta=QuantumScale*(Sa*(double) GetPixelBlue(p)-Da*(double)
-            GetPixelBlue(q));
-          if ((delta*delta) >= (QuantumScale*fuzz))
+          delta=Sa*(double) GetPixelBlue(p)-Da*(double)
+            GetPixelBlue(q);
+          if ((delta*delta) > fuzz)
             {
               channel_distortion[RedChannel]++;
               count++;
@@ -559,9 +559,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
       if (((channel & OpacityChannel) != 0) &&
           (image->matte != MagickFalse))
         {
-          delta=QuantumScale*((double) GetPixelOpacity(p)-(double)
-            GetPixelOpacity(q));
-          if ((delta*delta) >= (QuantumScale*fuzz))
+          delta=(double) GetPixelOpacity(p)-(double)
+            GetPixelOpacity(q);
+          if ((delta*delta) > fuzz)
             {
               channel_distortion[RedChannel]++;
               count++;
@@ -570,9 +570,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace))
         {
-          delta=QuantumScale*(Sa*(double) indexes[x]-Da*(double)
-            reconstruct_indexes[x]);
-          if ((delta*delta) >= (QuantumScale*fuzz))
+          delta=Sa*(double) indexes[x]-Da*(double)
+            reconstruct_indexes[x];
+          if ((delta*delta) > fuzz)
             {
               channel_distortion[RedChannel]++;
               count++;
