@@ -528,7 +528,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*(Sa*(double) GetPixelRed(p)-Da*(double)
             GetPixelRed(q));
-          if ((delta*delta) >= fuzz)
+          if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
               channel_distortion[CompositeChannels]++;
@@ -538,7 +538,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*(Sa*(double) GetPixelGreen(p)-Da*(double)
             GetPixelGreen(q));
-          if ((delta*delta) >= fuzz)
+          if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
               channel_distortion[CompositeChannels]++;
@@ -548,7 +548,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*(Sa*(double) GetPixelBlue(p)-Da*(double)
             GetPixelBlue(q));
-          if ((delta*delta) >= fuzz)
+          if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
               channel_distortion[CompositeChannels]++;
@@ -559,7 +559,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*((double) GetPixelOpacity(p)-(double)
             GetPixelOpacity(q));
-          if ((delta*delta) >= fuzz)
+          if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
               channel_distortion[CompositeChannels]++;
@@ -570,7 +570,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         {
           delta=QuantumScale*(Sa*(double) indexes[x]-Da*(double)
             reconstruct_indexes[x]);
-          if ((delta*delta) >= fuzz)
+          if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
               channel_distortion[CompositeChannels]++;
@@ -588,8 +588,6 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
-  for (i=0; i <= (ssize_t) CompositeChannels; i++)
-    distortion[i]/=((double) columns*rows);
   return(status);
 }
 
@@ -2274,6 +2272,11 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
       switch (metric)
       {
+        case AbsoluteErrorMetric:
+        {
+          similarity/=(image->columns*image->rows);
+          break;
+        }
         case NormalizedCrossCorrelationErrorMetric:
         case PeakSignalToNoiseRatioMetric:
         case UndefinedErrorMetric:
