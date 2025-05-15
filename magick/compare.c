@@ -519,6 +519,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
         delta,
         Sa;
 
+      size_t
+        count = 0;
+
       Sa=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(p) :
         ((double) QuantumRange-(double) OpaqueOpacity));
       Da=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(q) :
@@ -530,7 +533,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
           if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
-              channel_distortion[CompositeChannels]++;
+              count++;
             }
         }
       if ((channel & GreenChannel) != 0)
@@ -540,7 +543,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
           if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
-              channel_distortion[CompositeChannels]++;
+              count++;
             }
         }
       if ((channel & BlueChannel) != 0)
@@ -550,7 +553,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
           if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
-              channel_distortion[CompositeChannels]++;
+              count++;
             }
         }
       if (((channel & OpacityChannel) != 0) &&
@@ -561,7 +564,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
           if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
-              channel_distortion[CompositeChannels]++;
+              count++;
             }
         }
       if (((channel & IndexChannel) != 0) &&
@@ -572,9 +575,11 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
           if ((delta*delta) >= (QuantumScale*fuzz))
             {
               channel_distortion[RedChannel]++;
-              channel_distortion[CompositeChannels]++;
+              count++;
             }
         }
+      if (count != 0)
+        channel_distortion[CompositeChannels]++;
       p++;
       q++;
     }
@@ -587,7 +592,6 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
   distortion[CompositeChannels]/=((double) image->columns*image->rows);
-  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   return(status);
 }
 
