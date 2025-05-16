@@ -595,6 +595,7 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
     *indexes;
 
   MagickBooleanType
+    ignore_filesize,
     status;
 
   MagickOffsetType
@@ -707,7 +708,12 @@ static Image *ReadBMPImage(const ImageInfo *image_info,ExceptionInfo *exception)
       }
     if (bmp_info.size > 124)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-    if ((bmp_info.file_size != 0) &&
+    /*
+      Get option to bypass file size check
+    */
+    ignore_filesize=IsStringTrue(GetImageOption(image_info,
+      "bmp:ignore-filesize"));
+    if ((ignore_filesize == MagickFalse) && (bmp_info.file_size != 0) &&
         ((MagickSizeType) bmp_info.file_size > GetBlobSize(image)))
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     if (bmp_info.offset_bits < bmp_info.size)
