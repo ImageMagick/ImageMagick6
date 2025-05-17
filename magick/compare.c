@@ -51,6 +51,7 @@
 #include "magick/colorspace.h"
 #include "magick/colorspace-private.h"
 #include "magick/compare.h"
+#include "magick/compare-private.h"
 #include "magick/composite-private.h"
 #include "magick/constitute.h"
 #include "magick/exception-private.h"
@@ -139,23 +140,6 @@ static size_t GetNumberChannels(const Image *image,const ChannelType channel)
     channels++;
   return(channels == 0 ? 1UL : channels);
 }
-
-static void SetImageDistortionBounds(const Image *image,
-  const Image *reconstruct_image,size_t *columns,size_t *rows)
-{ 
-  const char
-    *artifact;
-  
-  *columns=MagickMax(image->columns,reconstruct_image->columns);
-  *rows=MagickMax(image->rows,reconstruct_image->rows);
-  artifact=GetImageArtifact(image,"compare:virtual-pixels");
-  if ((artifact != (const char *) NULL) &&
-      (IsStringTrue(artifact) == MagickFalse))
-    {
-      *columns=MagickMin(image->columns,reconstruct_image->columns);
-      *rows=MagickMin(image->rows,reconstruct_image->rows);
-    }
-}   
 
 static inline MagickBooleanType ValidateImageMorphology(
   const Image *magick_restrict image,
@@ -459,6 +443,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     *reconstruct_view;
 
   double
+    area,
     fuzz;
 
   MagickBooleanType
@@ -469,6 +454,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     rows;
 
   ssize_t
+    j,
     y;
 
   /*
@@ -542,7 +528,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
             GetPixelGreen(q);
           if ((delta*delta) > fuzz)
             {
-              channel_distortion[RedChannel]++;
+              channel_distortion[GreenChannel]++;
               count++;
             }
         }
@@ -552,7 +538,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
             GetPixelBlue(q);
           if ((delta*delta) > fuzz)
             {
-              channel_distortion[RedChannel]++;
+              channel_distortion[BlueChannel]++;
               count++;
             }
         }
@@ -563,7 +549,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
             GetPixelOpacity(q);
           if ((delta*delta) > fuzz)
             {
-              channel_distortion[RedChannel]++;
+              channel_distortion[OpacityChannel]++;
               count++;
             }
         }
@@ -574,7 +560,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
             reconstruct_indexes[x];
           if ((delta*delta) > fuzz)
             {
-              channel_distortion[RedChannel]++;
+              channel_distortion[IndexChannel]++;
               count++;
             }
         }
@@ -591,7 +577,9 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  distortion[CompositeChannels]/=((double) image->columns*image->rows);
+  area=PerceptibleReciprocal((double) columns*rows);
+  for (j=0; j <= CompositeChannels; j++)
+    distortion[j]*=area;
   return(status);
 }
 
@@ -1139,6 +1127,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
 
   double
     alpha_variance[CompositeChannels+1] = { 0.0 },
+    area,
     beta_variance[CompositeChannels+1] = { 0.0 };
 
   MagickBooleanType
@@ -1172,8 +1161,6 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
       return(MagickFalse);
     }
   (void) memset(distortion,0,(CompositeChannels+1)*sizeof(*distortion));
-  (void) memset(alpha_variance,0,(CompositeChannels+1)*sizeof(*alpha_variance));
-  (void) memset(beta_variance,0,(CompositeChannels+1)*sizeof(*beta_variance));
   status=MagickTrue;
   progress=0;
   SetImageDistortionBounds(image,reconstruct_image,&columns,&rows);
@@ -1286,7 +1273,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
       ssize_t
         j;
 
-      for (j=0; j < (ssize_t) GetNumberChannels(image,channel); j++)
+      for (j=0; j < (ssize_t) CompositeChannels; j++)
       {
         distortion[j]+=channel_distortion[j];
         alpha_variance[j]+=channel_alpha_variance[j];
@@ -1312,14 +1299,17 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   /*
     Divide by the standard deviation.
   */
-  for (i=0; i < (ssize_t) GetNumberChannels(image,channel); i++)
+  area=PerceptibleReciprocal((double) columns*rows);
+  for (i=0; i < (ssize_t) CompositeChannels; i++)
   {
-    distortion[i]/=((double) image->columns*image->rows);
-    alpha_variance[i]/=((double) image->columns*image->rows);
-    beta_variance[i]/=((double) image->columns*image->rows);
-    distortion[i]/=sqrt(alpha_variance[i]*beta_variance[i]);
+    distortion[i]*=area;
+    alpha_variance[i]*=area;
+    beta_variance[i]*=area;
+    distortion[i]*=PerceptibleReciprocal(sqrt(alpha_variance[i]*
+      beta_variance[i]));
     distortion[CompositeChannels]+=distortion[i];
   }
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   /*
     Free resources.
   */
@@ -2150,7 +2140,7 @@ MagickExport Image *SimilarityImage(Image *image,const Image *reference,
   return(similarity_image);
 }
 
-MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
+MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
   const MetricType metric,RectangleInfo *offset,double *similarity_metric,
   ExceptionInfo *exception)
 {
@@ -2185,10 +2175,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
     progress;
 
   SimilarityInfo
-    similarity_info = { MagickMaximumValue, 0, 0 };
-
-  size_t
-    rows;
+    similarity_info = { 0 };
 
   ssize_t
     y;
@@ -2200,20 +2187,17 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
   assert(offset != (RectangleInfo *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  SetGeometry(reference,offset);
-  *similarity_metric=MagickMaximumValue;
-  if (ValidateImageMorphology(image,reference) == MagickFalse)
+  SetGeometry(reconstruct,offset);
+  *similarity_metric=0.0;
+  offset->x=0;
+  offset->y=0;
+  if (ValidateImageMorphology(image,reconstruct) == MagickFalse)
     ThrowImageException(ImageError,"ImageMorphologyDiffers");
-  if ((image->columns < reference->columns) || (image->rows < reference->rows))
+  if ((image->columns < reconstruct->columns) ||
+      (image->rows < reconstruct->rows))
     {
       (void) ThrowMagickException(&image->exception,GetMagickModule(),
         OptionWarning,"GeometryDoesNotContainImage","`%s'",image->filename);
-      return((Image *) NULL);
-    }
-  if (metric == PeakAbsoluteErrorMetric)
-    {
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        OptionError,"InvalidUseOfOption","`%s'",image->filename);
       return((Image *) NULL);
     }
   similarity_image=CloneImage(image,image->columns,image->rows,MagickTrue,
@@ -2230,88 +2214,88 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
       return(DestroyImage(similarity_image));
     }
   /*
-    Measure similarity of reference image against image.
+    Measure similarity of reconstruction image against image.
   */
-  similarity_threshold=(-1.0);
+  similarity_threshold=DefaultSimilarityThreshold;
   artifact=GetImageArtifact(image,"compare:similarity-threshold");
   if (artifact != (const char *) NULL)
     similarity_threshold=StringToDouble(artifact,(char **) NULL);
   status=MagickTrue;
+  similarity_info.similarity=GetSimilarityMetric(image,reconstruct,metric,
+    similarity_info.x,similarity_info.y,exception);
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
-  rows=similarity_image->rows;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
-    magick_number_threads(image,reference,rows << 2,1)
+  #pragma omp parallel for schedule(static) shared(status,similarity_info) \
+    magick_number_threads(image,reconstruct,similarity_image->rows << 2,1)
 #endif    
-  for (y=0; y < (ssize_t) rows; y++)
+  for (y=0; y < (ssize_t) similarity_image->rows; y++)
   {
     double
       similarity;
 
-    ssize_t
-      x;
+    MagickBooleanType
+      threshold_trigger = MagickFalse;
 
     PixelPacket
       *magick_restrict q;
 
     SimilarityInfo
-      channel_similarity = { MagickMaximumValue, 0, 0 };
+      channel_info = similarity_info;
+
+    ssize_t
+      x;
 
     if (status == MagickFalse)
       continue;
-    if (similarity_info.similarity <= similarity_threshold)
+    if (threshold_trigger != MagickFalse)
       continue;
-    q=GetCacheViewAuthenticPixels(similarity_view,0,y,similarity_image->columns,
-      1,exception);
-    if (q == (const PixelPacket *) NULL)
+    q=QueueCacheViewAuthenticPixels(similarity_view,0,y,
+      similarity_image->columns,1,exception);
+    if (q == (PixelPacket *) NULL)
       {
         status=MagickFalse;
         continue;
       }
     for (x=0; x < (ssize_t) similarity_image->columns; x++)
     {
-      if (similarity_info.similarity <= similarity_threshold)
-        break;
-      similarity=GetSimilarityMetric(image,reference,metric,x,y,exception);
+      MagickBooleanType
+        update = MagickFalse;
+
+      similarity=GetSimilarityMetric(image,reconstruct,metric,x,y,exception);
       switch (metric)
       {
         case NormalizedCrossCorrelationErrorMetric:
         case PeakSignalToNoiseRatioMetric:
-        case UndefinedErrorMetric:
         {
-          similarity=1.0-similarity;
+          if (similarity > channel_info.similarity)
+            update=MagickTrue;
           break;
         }
         default:
+        {
+          if (similarity < channel_info.similarity)
+            update=MagickTrue;
           break;
+        }
       }
-      if (similarity < channel_similarity.similarity)
+      if (update != MagickFalse)
         {
-          channel_similarity.similarity=similarity;
-          channel_similarity.x=x;
-          channel_similarity.y=y;
+          channel_info.similarity=similarity;
+          channel_info.x=x;
+          channel_info.y=y;
         }
       switch (metric)
       {
-        case AbsoluteErrorMetric:
-        case FuzzErrorMetric:
-        case MeanAbsoluteErrorMetric:
-        case MeanErrorPerPixelMetric:
-        case MeanSquaredErrorMetric:
         case NormalizedCrossCorrelationErrorMetric:
-        case PeakAbsoluteErrorMetric:
         case PeakSignalToNoiseRatioMetric:
-        case PerceptualHashErrorMetric:
-        case RootMeanSquaredErrorMetric:
-        {
-          SetPixelRed(q,ClampToQuantum((double) QuantumRange-QuantumRange*
-            similarity));
-          break;
-        }
-        default:
         {
           SetPixelRed(q,ClampToQuantum((double) QuantumRange*similarity));
+          break;
+        }
+        default:
+        {
+          SetPixelRed(q,ClampToQuantum((double) QuantumRange*(1.0-similarity)));
           break;
         }
       }
@@ -2322,8 +2306,28 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reference,
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
     #pragma omp critical (MagickCore_SimilarityMetricImage)
 #endif
-    if (channel_similarity.similarity < similarity_info.similarity)
-      similarity_info=channel_similarity;
+    switch (metric)
+    {
+      case NormalizedCrossCorrelationErrorMetric:
+      case PeakSignalToNoiseRatioMetric:
+      {
+        if (similarity_threshold != DefaultSimilarityThreshold)
+          if (channel_info.similarity >= similarity_threshold)
+            threshold_trigger=MagickTrue;
+        if (channel_info.similarity >= similarity_info.similarity)
+          similarity_info=channel_info;
+        break;
+      }
+      default:
+      {
+        if (similarity_threshold != DefaultSimilarityThreshold)
+          if (channel_info.similarity < similarity_threshold)
+            threshold_trigger=MagickTrue;
+        if (channel_info.similarity < similarity_info.similarity)
+          similarity_info=channel_info;
+        break;
+      }
+    }
     if (SyncCacheViewAuthenticPixels(similarity_view,exception) == MagickFalse)
       status=MagickFalse;
     if (image->progress_monitor != (MagickProgressMonitor) NULL)

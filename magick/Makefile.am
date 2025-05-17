@@ -118,6 +118,7 @@ MAGICK_BASE_SRCS = \
   magick/colorspace-private.h \
   magick/compare.c \
   magick/compare.h \
+  magick/compare-private.h \
   magick/composite.c \
   magick/composite.h \
   magick/composite-private.h \
@@ -442,6 +443,7 @@ MAGICK_NOINST_HDRS = \
   magick/color-private.h \
   magick/colormap-private.h \
   magick/colorspace-private.h \
+  magick/compare-private.h \
   magick/composite-private.h \
   magick/delegate-private.h \
   magick/display-private.h \
