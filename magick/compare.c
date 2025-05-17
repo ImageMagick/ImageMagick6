@@ -1618,6 +1618,7 @@ static MagickBooleanType GetPerceptualHashDistortion(const Image *image,
         distortion[CompositeChannels]+=difference*difference;
       }
   }
+  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]/=PHASHNormalizationFactor;
   /*

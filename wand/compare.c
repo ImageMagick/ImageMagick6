@@ -1261,6 +1261,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       break;
     }
     case NormalizedCrossCorrelationErrorMetric:
+    case PerceptualHashErrorMetric:
     {
       double
         maxima = 0.0,
@@ -1274,7 +1275,6 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       break;
     } 
     case PeakAbsoluteErrorMetric:
-    case PerceptualHashErrorMetric:
     {
       if ((subimage_search != MagickFalse) &&
           (image->columns == reconstruct_image->columns) &&
