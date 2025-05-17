@@ -22,7 +22,7 @@
 extern "C" {
 #endif
 
-#include "MagickCore/image-private.h"
+#include "magick/image-private.h"
 
 #define DefaultSimilarityThreshold  (-1.0)
 

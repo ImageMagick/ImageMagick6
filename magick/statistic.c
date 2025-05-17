@@ -2399,9 +2399,17 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     sizeof(*channel_statistics));
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
   {
-    channel_statistics[i].depth=1;
-    channel_statistics[i].maxima=(-MagickMaximumValue);
-    channel_statistics[i].minima=MagickMaximumValue;
+    ChannelStatistics *cs = channel_statistics+i;
+    cs->depth=1;
+    cs->maxima=(-MagickMaximumValue);
+    cs->minima=MagickMaximumValue;
+    cs->sum=0.0;
+    cs->mean=0.0;
+    cs->standard_deviation=0.0;
+    cs->variance=0.0;
+    cs->skewness=0.0;
+    cs->kurtosis=0.0;
+    cs->entropy=0.0;
   }
   (void) memset(histogram,0,(MaxMap+1U)*sizeof(*histogram));
   (void) memset(&number_bins,0,sizeof(number_bins));
@@ -2602,34 +2610,42 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
   area=PerceptibleReciprocal((double) image->columns*image->rows);
   for (i=0; i < (ssize_t) (MaxMap+1U); i++)
   {
+    double
+      entropy;
+
     /*
       Compute pixel entropy.
     */
     histogram[i].red*=area;
-    channel_statistics[RedChannel].entropy+=-histogram[i].red*
-      log10(histogram[i].red)*
+    entropy=-histogram[i].red*log2(histogram[i].red)*
       PerceptibleReciprocal(log10((double) number_bins.red));
+    if (IsNaN(entropy) == 0)
+      channel_statistics[RedChannel].entropy+=entropy;
     histogram[i].green*=area;
-    channel_statistics[GreenChannel].entropy+=-histogram[i].green*
-      log10(histogram[i].green)*
+    entropy=-histogram[i].green*log2(histogram[i].green)*
       PerceptibleReciprocal(log10((double) number_bins.green));
+    if (IsNaN(entropy) == 0)
+      channel_statistics[GreenChannel].entropy+=entropy;
     histogram[i].blue*=area;
-    channel_statistics[BlueChannel].entropy+=-histogram[i].blue*
-      log10(histogram[i].blue)*
+    entropy=-histogram[i].blue*log2(histogram[i].blue)*
       PerceptibleReciprocal(log10((double) number_bins.blue));
+    if (IsNaN(entropy) == 0)
+      channel_statistics[BlueChannel].entropy+=entropy;
     if (image->matte != MagickFalse)
       {
         histogram[i].opacity*=area;
-        channel_statistics[OpacityChannel].entropy+=-histogram[i].opacity*
-          log10(histogram[i].opacity)*
+        entropy=-histogram[i].opacity*log2(histogram[i].opacity)*
           PerceptibleReciprocal(log10((double) number_bins.opacity));
+        if (IsNaN(entropy) == 0)
+          channel_statistics[OpacityChannel].entropy+=entropy;
       }
     if (image->colorspace == CMYKColorspace)
       {
         histogram[i].index*=area;
-        channel_statistics[IndexChannel].entropy+=-histogram[i].index*
-          log10(histogram[i].index)*
+        entropy=-histogram[i].index*log2(histogram[i].index)*
           PerceptibleReciprocal(log10((double) number_bins.index));
+        if (IsNaN(entropy) == 0)
+          channel_statistics[IndexChannel].entropy+=entropy;
       }
   }
   /*
