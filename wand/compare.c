@@ -1155,13 +1155,11 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
   FinalizeImageSettings(image_info,image,MagickTrue);
   if ((image == (Image *) NULL) || (GetImageListLength(image) < 2))
     ThrowCompareException(OptionError,"MissingAnImageFilename",argv[i]);
-  if ((metric == MeanSquaredErrorMetric) ||
-      (metric == PeakSignalToNoiseRatioMetric))
-    distortion_metric=metric;
   image=GetImageFromList(image,0);
   reconstruct_image=GetImageFromList(image,1);
   offset.x=0;
   offset.y=0;
+  distortion_metric=metric;
   if (subimage_search != MagickFalse)
     {
       char
@@ -1175,6 +1173,9 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       if (similarity_metric >= dissimilarity_threshold)
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "ImagesTooDissimilar","`%s'",image->filename);
+      if ((metric != MeanSquaredErrorMetric) &&
+          (metric != PeakSignalToNoiseRatioMetric))
+        distortion_metric=MeanSquaredErrorMetric;
     }
   if (similarity_image == (Image *) NULL)
     difference_image=CompareImageChannels(image,reconstruct_image,channels,
