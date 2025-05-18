@@ -1213,9 +1213,9 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
         (double) GetPixelAlpha(q) : (double) QuantumRange);
       if ((channel & RedChannel) != 0)
         {
-          alpha=QuantumScale*fabs(Sa*(double) GetPixelRed(p)-
+          alpha=QuantumScale*(Sa*(double) GetPixelRed(p)-
             image_statistics[RedChannel].mean);
-          beta=QuantumScale*fabs(Da*(double) GetPixelRed(q)-
+          beta=QuantumScale*(Da*(double) GetPixelRed(q)-
             reconstruct_statistics[RedChannel].mean);
           channel_distortion[RedChannel]+=alpha*beta;
           channel_alpha_variance[RedChannel]+=alpha*alpha;
@@ -1223,9 +1223,9 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
         }
       if ((channel & GreenChannel) != 0)
         {
-          alpha=QuantumScale*fabs(Sa*(double) GetPixelGreen(p)-
+          alpha=QuantumScale*(Sa*(double) GetPixelGreen(p)-
             image_statistics[GreenChannel].mean);
-          beta=QuantumScale*fabs(Da*(double) GetPixelGreen(q)-
+          beta=QuantumScale*(Da*(double) GetPixelGreen(q)-
             reconstruct_statistics[GreenChannel].mean);
           channel_distortion[GreenChannel]+=alpha*beta;
           channel_alpha_variance[GreenChannel]+=alpha*alpha;
@@ -1233,9 +1233,9 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
         }
       if ((channel & BlueChannel) != 0)
         {
-          alpha=QuantumScale*fabs(Sa*(double) GetPixelBlue(p)-
+          alpha=QuantumScale*(Sa*(double) GetPixelBlue(p)-
             image_statistics[BlueChannel].mean);
-          beta=QuantumScale*fabs(Da*(double) GetPixelBlue(q)-
+          beta=QuantumScale*(Da*(double) GetPixelBlue(q)-
             reconstruct_statistics[BlueChannel].mean);
           channel_distortion[BlueChannel]+=alpha*beta;
           channel_alpha_variance[BlueChannel]+=alpha*alpha;
@@ -1243,9 +1243,9 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
         }
       if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
         {
-          alpha=QuantumScale*fabs((double) GetPixelAlpha(p)-
+          alpha=QuantumScale*((double) GetPixelAlpha(p)-
             image_statistics[AlphaChannel].mean);
-          beta=QuantumScale*fabs((double) GetPixelAlpha(q)-
+          beta=QuantumScale*((double) GetPixelAlpha(q)-
             reconstruct_statistics[AlphaChannel].mean);
           channel_distortion[OpacityChannel]+=alpha*beta;
           channel_alpha_variance[OpacityChannel]+=alpha*alpha;
@@ -1255,9 +1255,9 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
           (image->colorspace == CMYKColorspace) &&
           (reconstruct_image->colorspace == CMYKColorspace))
         {
-          alpha=QuantumScale*fabs(Sa*(double) GetPixelIndex(indexes+x)-
+          alpha=QuantumScale*(Sa*(double) GetPixelIndex(indexes+x)-
             image_statistics[BlackChannel].mean);
-          beta=QuantumScale*fabs(Da*(double) GetPixelIndex(reconstruct_indexes+
+          beta=QuantumScale*(Da*(double) GetPixelIndex(reconstruct_indexes+
             x)-reconstruct_statistics[BlackChannel].mean);
           channel_distortion[BlackChannel]+=alpha*beta;
           channel_alpha_variance[BlackChannel]+=alpha*alpha;
