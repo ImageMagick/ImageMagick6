@@ -365,7 +365,7 @@ static ssize_t PrintChannelLocations(FILE *file,const Image *image,
         }
         case BlueChannel:
         {
-          match=fabs((double) p->blue-target) < MagfickEpsilon ? MagickTrue :
+          match=fabs((double) p->blue-target) < MagickEpsilon ? MagickTrue :
             MagickFalse;
           break;
         }
