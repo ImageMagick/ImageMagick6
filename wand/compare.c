@@ -1374,6 +1374,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
             case MeanSquaredErrorMetric:
             case PeakAbsoluteErrorMetric:
             case RootMeanSquaredErrorMetric:
+            case UndefinedErrorMetric:
             {
               switch (image->colorspace)
               {
@@ -1498,8 +1499,6 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 GetMagickPrecision(),image->error.normalized_maximum_error);
               break;
             }
-            case UndefinedErrorMetric:
-              break;
           }
           channel_distortion=(double *) RelinquishMagickMemory(
             channel_distortion);
