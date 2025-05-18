@@ -1745,7 +1745,7 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
       break;
     }
     case RootMeanSquaredErrorMetric:
-    case UndefineErrorMetric:
+    case UndefinedErrorMetric:
     default:
     {
       status=GetRootMeanSquaredDistortion(image,reconstruct_image,channel,
@@ -1886,7 +1886,7 @@ MagickExport double *GetImageChannelDistortions(Image *image,
       break;
     }
     case RootMeanSquaredErrorMetric:
-    case UndefineErrorMetric:
+    case UndefinedErrorMetric:
     default:
     {
       status=GetRootMeanSquaredDistortion(image,reconstruct_image,
