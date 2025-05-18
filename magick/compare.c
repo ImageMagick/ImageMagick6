@@ -1721,7 +1721,6 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
       break;
     }
     case NormalizedCrossCorrelationErrorMetric:
-    default:
     {
       status=GetNormalizedCrossCorrelationDistortion(image,reconstruct_image,
         channel,channel_distortion,exception);
@@ -1746,6 +1745,8 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
       break;
     }
     case RootMeanSquaredErrorMetric:
+    case UndefineErrorMetric:
+    default:
     {
       status=GetRootMeanSquaredDistortion(image,reconstruct_image,channel,
         channel_distortion,exception);
@@ -1861,7 +1862,6 @@ MagickExport double *GetImageChannelDistortions(Image *image,
       break;
     }
     case NormalizedCrossCorrelationErrorMetric:
-    default:
     {
       status=GetNormalizedCrossCorrelationDistortion(image,reconstruct_image,
         CompositeChannels,channel_distortion,exception);
@@ -1886,6 +1886,8 @@ MagickExport double *GetImageChannelDistortions(Image *image,
       break;
     }
     case RootMeanSquaredErrorMetric:
+    case UndefineErrorMetric:
+    default:
     {
       status=GetRootMeanSquaredDistortion(image,reconstruct_image,
         CompositeChannels,channel_distortion,exception);
