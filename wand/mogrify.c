@@ -7987,7 +7987,7 @@ WandExport MagickBooleanType MogrifyImageList(ImageInfo *image_info,
             if (option != (const char *) NULL)
               metric=(MetricType) ParseCommandOption(MagickMetricOptions,
                 MagickFalse,option);
-            if ((metric != MeanSquaredErrorMetric) &&
+            if ((metric != AbsoluteErrorMetric) &&
                 (metric != PeakSignalToNoiseRatioMetric))
               metric=MeanSquaredErrorMetric;
             difference_image=CompareImageChannels(image,reconstruct_image,

@@ -561,7 +561,7 @@ static struct
     { "CopyPixels", { {"image", ImageReference}, {"geometry", StringReference},
       {"width", IntegerReference}, {"height", IntegerReference},
       {"x", IntegerReference}, {"y", IntegerReference},
-      {"gravity", MagickGravityOptions}, {"offset", StringReference}, 
+      {"gravity", MagickGravityOptions}, {"offset", StringReference},
       {"dx", IntegerReference}, {"dy", IntegerReference} } },
     { "WaveletDenoise", {  {"geometry", StringReference},
       {"threshold", RealReference}, {"softness", RealReference} } },
@@ -3363,6 +3363,9 @@ Compare(ref,...)
         }
       }
     }
+    if ((metric != AbsoluteErrorMetric) &&
+        (metric != PeakSignalToNoiseRatioMetric))
+      metric=MeanSquaredErrorMetric;
     difference_image=CompareImageChannels(image,reconstruct_image,channel,
       metric,&distortion,exception);
     if (difference_image != (Image *) NULL)
@@ -5497,10 +5500,10 @@ Get(ref,...)
               continue;
             }
           if (LocaleNCompare(attribute,"registry:",9) == 0)
-            {   
+            {
               const char
                 *value;
-        
+
               value=(const char *) GetImageRegistry(StringRegistryType,
                 attribute+9,exception);
               if (value != (const char *) NULL)

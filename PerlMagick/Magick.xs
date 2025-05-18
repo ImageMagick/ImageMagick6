@@ -566,7 +566,7 @@ static struct
     { "WaveletDenoise", {  {"geometry", StringReference},
       {"threshold", RealReference}, {"softness", RealReference} } },
     { "Colorspace", { {"colorspace", MagickColorspaceOptions} } },
-    { "AutoThreshold", { {"method", MagickAutoThresholdOptions} } } 
+    { "AutoThreshold", { {"method", MagickAutoThresholdOptions} } }
   };
 
 static SplayTreeInfo
@@ -3363,6 +3363,9 @@ Compare(ref,...)
         }
       }
     }
+    if ((metric != AbsoluteErrorMetric) &&
+        (metric != PeakSignalToNoiseRatioMetric))
+      metric=MeanSquaredErrorMetric;
     difference_image=CompareImageChannels(image,reconstruct_image,channel,
       metric,&distortion,exception);
     if (difference_image != (Image *) NULL)
@@ -5496,10 +5499,10 @@ Get(ref,...)
               continue;
             }
           if (LocaleNCompare(attribute,"registry:",9) == 0)
-            {   
+            {
               const char
                 *value;
-        
+ 
               value=(const char *) GetImageRegistry(StringRegistryType,
                 attribute+9,exception);
               if (value != (const char *) NULL)
