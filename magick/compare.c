@@ -1167,7 +1167,7 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(alpha_variance,beta_variance,distortion,status) \
     magick_number_threads(image,image,rows,1)
 #endif
   for (y=0; y < (ssize_t) rows; y++)
@@ -1247,9 +1247,9 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
             image_statistics[AlphaChannel].mean);
           beta=QuantumScale*((double) GetPixelAlpha(q)-
             reconstruct_statistics[AlphaChannel].mean);
-          channel_distortion[OpacityChannel]+=alpha*beta;
-          channel_alpha_variance[OpacityChannel]+=alpha*alpha;
-          channel_beta_variance[OpacityChannel]+=beta*beta;
+          channel_distortion[AlphaChannel]+=alpha*beta;
+          channel_alpha_variance[AlphaChannel]+=alpha*alpha;
+          channel_beta_variance[AlphaChannel]+=beta*beta;
         }
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace) &&
@@ -2141,8 +2141,9 @@ static double GetSimilarityMetric(const Image *image,const Image *reference,
   distortion=0.0;
   status=GetImageDistortion(similarity_image,reference,metric,&distortion,
     exception);
-  (void) status;
   similarity_image=DestroyImage(similarity_image);
+  if (status == MagickFalse)
+    return(0.0);
   return(distortion);
 }
 
@@ -2243,7 +2244,7 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status,similarity_info) \
+  #pragma omp parallel for schedule(static) shared(similarity_info,status) \
     magick_number_threads(image,reconstruct,similarity_image->rows << 2,1)
 #endif    
   for (y=0; y < (ssize_t) similarity_image->rows; y++)
@@ -2282,7 +2283,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
       similarity=GetSimilarityMetric(image,reconstruct,metric,x,y,exception);
       switch (metric)
       {
-        case NormalizedCrossCorrelationErrorMetric:
         case PeakSignalToNoiseRatioMetric:
         {
           if (similarity > channel_info.similarity)
@@ -2304,7 +2304,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
         }
       switch (metric)
       {
-        case NormalizedCrossCorrelationErrorMetric:
         case PeakSignalToNoiseRatioMetric:
         {
           SetPixelRed(q,ClampToQuantum((double) QuantumRange*similarity));
@@ -2325,7 +2324,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
 #endif
     switch (metric)
     {
-      case NormalizedCrossCorrelationErrorMetric:
       case PeakSignalToNoiseRatioMetric:
       {
         if (similarity_threshold != DefaultSimilarityThreshold)
@@ -2359,10 +2357,10 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
       }
   }
   similarity_view=DestroyCacheView(similarity_view);
+  if (status == MagickFalse)
+    similarity_image=DestroyImage(similarity_image);
   *similarity_metric=similarity_info.similarity;
   offset->x=similarity_info.x;
   offset->y=similarity_info.y;
-  if (status == MagickFalse)
-    similarity_image=DestroyImage(similarity_image);
   return(similarity_image);
 }
