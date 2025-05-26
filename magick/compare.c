@@ -1727,6 +1727,8 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
     {
       status=GetNormalizedCrossCorrelationDistortion(image,reconstruct_image,
         channel,channel_distortion,exception);
+      for (i=0; i <= (ssize_t) CompositeChannels; i++)
+        channel_distortion[i]=1.0-channel_distortion[i];
       break;
     }
     case PeakAbsoluteErrorMetric:
