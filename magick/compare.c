@@ -1307,9 +1307,6 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
     beta_variance[i]*=area;
     distortion[i]*=PerceptibleReciprocal(sqrt(alpha_variance[i]*
       beta_variance[i]));
-    distortion[i]=1.0-distortion[i];
-    if (fabs(distortion[i]) < MagickEpsilon)
-      distortion[i]=0.0;
     distortion[CompositeChannels]+=distortion[i];
   }
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
