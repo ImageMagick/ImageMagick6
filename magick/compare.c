@@ -842,7 +842,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
     *reconstruct_view;
 
   double
-    maximum_error = MagickMinimumValue,
+    maximum_error = -MagickMaximumValue,
     mean_error = 0.0;
 
   MagickBooleanType
@@ -861,14 +861,14 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(maximum_error,status) \
     magick_number_threads(image,image,rows,1)
 #endif
   for (y=0; y < (ssize_t) rows; y++)
   {
     double
-      channel_distortion[CompositeChannels+1],
-      local_maximum = MinimumValue,
+      channel_distortion[CompositeChannels+1] = { 0.0 },
+      local_maximum = maximum_error,
       local_mean_error = 0.0;
 
     const IndexPacket
