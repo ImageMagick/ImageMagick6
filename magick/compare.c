@@ -609,7 +609,7 @@ static MagickBooleanType GetFuzzDistortion(const Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(distortion,status) \
     magick_number_threads(image,image,rows,1)
 #endif
   for (y=0; y < (ssize_t) rows; y++)
@@ -979,7 +979,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
     distortion[i]/=((double) columns*rows);
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   image->error.mean_error_per_pixel=QuantumRange*distortion[CompositeChannels];
-  image->error.normalized_mean_error=mean_error;
+  image->error.normalized_mean_error=mean_error*area;
   image->error.normalized_maximum_error=maximum_error;
   return(status);
 }
