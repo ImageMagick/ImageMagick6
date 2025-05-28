@@ -477,30 +477,23 @@ MagickExport MatrixInfo *DestroyMatrixInfo(MatrixInfo *matrix_info)
 %
 */
 MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
-  double **vectors,const size_t rank,const size_t number_vectors)
+  double **vectors, const size_t rank, const size_t number_vectors)
 {
 #define GaussJordanSwap(x,y) \
 { \
-  if ((x) != (y)) \
-    { \
-      (x)+=(y); \
-      (y)=(x)-(y); \
-      (x)=(x)-(y); \
-    } \
+  double temp = (x); \
+  (x)=(y); \
+  (y)=temp; \
 }
 
   double
-    max,
     scale;
-
-  ssize_t
-    i,
-    j,
-    k;
 
   ssize_t
     column,
     *columns,
+    i,
+    j,
     *pivots,
     row,
     *rows;
@@ -508,42 +501,41 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
   columns=(ssize_t *) AcquireQuantumMemory(rank,sizeof(*columns));
   rows=(ssize_t *) AcquireQuantumMemory(rank,sizeof(*rows));
   pivots=(ssize_t *) AcquireQuantumMemory(rank,sizeof(*pivots));
-  if ((rows == (ssize_t *) NULL) || (columns == (ssize_t *) NULL) ||
+  if ((columns == (ssize_t *) NULL) || (rows == (ssize_t *) NULL) ||
       (pivots == (ssize_t *) NULL))
     {
-      if (pivots != (ssize_t *) NULL)
-        pivots=(ssize_t *) RelinquishMagickMemory(pivots);
       if (columns != (ssize_t *) NULL)
-        columns=(ssize_t *) RelinquishMagickMemory(columns);
+        pivots=(ssize_t *) RelinquishMagickMemory(pivots);
       if (rows != (ssize_t *) NULL)
         rows=(ssize_t *) RelinquishMagickMemory(rows);
-      return(MagickFalse);
+      if (columns != (ssize_t *) NULL)
+        columns=(ssize_t *) RelinquishMagickMemory(columns);
+      return MagickFalse;
     }
   (void) memset(columns,0,rank*sizeof(*columns));
   (void) memset(rows,0,rank*sizeof(*rows));
   (void) memset(pivots,0,rank*sizeof(*pivots));
-  column=0;
-  row=0;
   for (i=0; i < (ssize_t) rank; i++)
   {
-    max=0.0;
+    double
+      max = 0.0;
+
+    ssize_t
+      k;
+
+    column=(-1);
+    row=(-1);
     for (j=0; j < (ssize_t) rank; j++)
       if (pivots[j] != 1)
-        {
-          for (k=0; k < (ssize_t) rank; k++)
-            if (pivots[k] != 0)
-              {
-                if (pivots[k] > 1)
-                  return(MagickFalse);
-              }
-            else
-              if (fabs(matrix[j][k]) >= max)
-                {
-                  max=fabs(matrix[j][k]);
-                  row=j;
-                  column=k;
-                }
-        }
+        for (k = 0; k < (ssize_t) rank; k++)
+          if ((pivots[k] == 0) && (fabs(matrix[j][k]) > max))
+            {
+              max=fabs(matrix[j][k]);
+              row=j;
+              column=k;
+            }
+    if ((column == -1) || (row == -1))
+      return(MagickFalse);  /* Singular matrix */
     pivots[column]++;
     if (row != column)
       {
@@ -554,9 +546,9 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
       }
     rows[i]=row;
     columns[i]=column;
-    if (matrix[column][column] == 0.0)
-      return(MagickFalse);  /* singularity */
-    scale=PerceptibleReciprocal(matrix[column][column]);
+    if (fabs(matrix[column][column]) < MagickEpsilon)
+      return(MagickFalse);  /* Singular matrix */
+    scale=1.0/matrix[column][column];
     matrix[column][column]=1.0;
     for (j=0; j < (ssize_t) rank; j++)
       matrix[column][j]*=scale;
