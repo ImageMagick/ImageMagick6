@@ -979,7 +979,7 @@ static MagickBooleanType GetMeanErrorPerPixel(Image *image,
     distortion[i]/=((double) columns*rows);
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   image->error.mean_error_per_pixel=QuantumRange*distortion[CompositeChannels];
-  image->error.normalized_mean_error=mean_error*area;
+  image->error.normalized_mean_error=mean_error/((double) columns*rows);
   image->error.normalized_maximum_error=maximum_error;
   return(status);
 }
