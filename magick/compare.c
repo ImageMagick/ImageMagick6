@@ -466,7 +466,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status) \
+  #pragma omp parallel for schedule(static) shared(distortion,status) \
     magick_number_threads(image,image,rows,1)
 #endif
   for (y=0; y < (ssize_t) rows; y++)
@@ -480,7 +480,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
       *magick_restrict q;
 
     double
-      channel_distortion[CompositeChannels+1];
+      channel_distortion[CompositeChannels+1] = { 0.0 };
 
     ssize_t
       i,

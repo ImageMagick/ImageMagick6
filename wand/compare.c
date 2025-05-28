@@ -1173,7 +1173,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       if (similarity_metric >= dissimilarity_threshold)
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "ImagesTooDissimilar","`%s'",image->filename);
-      if ((metric != MeanSquaredErrorMetric) &&
+      if ((metric != AbsoluteErrorMetric) &&
           (metric != PeakSignalToNoiseRatioMetric))
         distortion_metric=MeanSquaredErrorMetric;
     }
