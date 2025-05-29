@@ -1633,24 +1633,26 @@ static MagickBooleanType GetRootMeanSquaredDistortion(const Image *image,
   const Image *reconstruct_image,const ChannelType channel,double *distortion,
   ExceptionInfo *exception)
 {
+#define RMSESquareRoot(x)  sqrt((x) < 0.0 ? 0.0 : (x))
+
   MagickBooleanType
     status;
 
   status=GetMeanSquaredDistortion(image,reconstruct_image,channel,distortion,
     exception);
   if ((channel & RedChannel) != 0)
-    distortion[RedChannel]=sqrt(distortion[RedChannel]);
+    distortion[RedChannel]=RMSESquareRoot(distortion[RedChannel]);
   if ((channel & GreenChannel) != 0)
-    distortion[GreenChannel]=sqrt(distortion[GreenChannel]);
+    distortion[GreenChannel]=RMSESquareRoot(distortion[GreenChannel]);
   if ((channel & BlueChannel) != 0)
-    distortion[BlueChannel]=sqrt(distortion[BlueChannel]);
+    distortion[BlueChannel]=RMSESquareRoot(distortion[BlueChannel]);
   if (((channel & OpacityChannel) != 0) &&
       (image->matte != MagickFalse))
-    distortion[OpacityChannel]=sqrt(distortion[OpacityChannel]);
+    distortion[OpacityChannel]=RMSESquareRoot(distortion[OpacityChannel]);
   if (((channel & IndexChannel) != 0) &&
       (image->colorspace == CMYKColorspace))
-    distortion[BlackChannel]=sqrt(distortion[BlackChannel]);
-  distortion[CompositeChannels]=sqrt(distortion[CompositeChannels]);
+    distortion[BlackChannel]=RMSESquareRoot(distortion[BlackChannel]);
+  distortion[CompositeChannels]=RMSESquareRoot(distortion[CompositeChannels]);
   return(status);
 }
 
