@@ -443,6 +443,153 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
     *reconstruct_view;
 
   double
+    area;
+
+  MagickBooleanType
+    status;
+
+  size_t
+    columns,
+    rows;
+
+  ssize_t
+    j,
+    y;
+
+  /*
+    Compute the absolute difference in pixels between two images.
+  */
+  status=MagickTrue;
+  SetImageDistortionBounds(image,reconstruct_image,&columns,&rows);
+  image_view=AcquireVirtualCacheView(image,exception);
+  reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp parallel for schedule(static) shared(distortion,status) \
+    magick_number_threads(image,image,rows,1)
+#endif
+  for (y=0; y < (ssize_t) rows; y++)
+  {
+    const IndexPacket
+      *magick_restrict indexes,
+      *magick_restrict reconstruct_indexes;
+
+    const PixelPacket
+      *magick_restrict p,
+      *magick_restrict q;
+
+    double
+      channel_distortion[CompositeChannels+1] = { 0.0 };
+
+    ssize_t
+      i,
+      x;
+
+    if (status == MagickFalse)
+      continue;
+    p=GetCacheViewVirtualPixels(image_view,0,y,columns,1,exception);
+    q=GetCacheViewVirtualPixels(reconstruct_view,0,y,columns,1,exception);
+    if ((p == (const PixelPacket *) NULL) || (q == (const PixelPacket *) NULL))
+      {
+        status=MagickFalse;
+        continue;
+      }
+    indexes=GetCacheViewVirtualIndexQueue(image_view);
+    reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
+    (void) memset(channel_distortion,0,sizeof(channel_distortion));
+    for (x=0; x < (ssize_t) columns; x++)
+    {
+      double
+        Da,
+        delta,
+        Sa;
+
+      size_t
+        count = 0;
+
+      Sa=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(p) :
+        ((double) QuantumRange-(double) OpaqueOpacity));
+      Da=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(q) :
+        ((double) QuantumRange-(double) OpaqueOpacity));
+      if ((channel & RedChannel) != 0)
+        {
+          delta=Sa*(double) GetPixelRed(p)-Da*(double)
+            GetPixelRed(q);
+          if ((delta*delta) >= MagickEpsilon)
+            {
+              channel_distortion[RedChannel]++;
+              count++;
+            }
+        }
+      if ((channel & GreenChannel) != 0)
+        {
+          delta=Sa*(double) GetPixelGreen(p)-Da*(double)
+            GetPixelGreen(q);
+          if ((delta*delta) >= MagickEpsilon)
+            {
+              channel_distortion[GreenChannel]++;
+              count++;
+            }
+        }
+      if ((channel & BlueChannel) != 0)
+        {
+          delta=Sa*(double) GetPixelBlue(p)-Da*(double)
+            GetPixelBlue(q);
+          if ((delta*delta) >= MagickEpsilon)
+            {
+              channel_distortion[BlueChannel]++;
+              count++;
+            }
+        }
+      if (((channel & OpacityChannel) != 0) &&
+          (image->matte != MagickFalse))
+        {
+          delta=(double) GetPixelOpacity(p)-(double)
+            GetPixelOpacity(q);
+          if ((delta*delta) >= MagickEpsilon)
+            {
+              channel_distortion[OpacityChannel]++;
+              count++;
+            }
+        }
+      if (((channel & IndexChannel) != 0) &&
+          (image->colorspace == CMYKColorspace))
+        {
+          delta=Sa*(double) indexes[x]-Da*(double)
+            reconstruct_indexes[x];
+          if ((delta*delta) >= MagickEpsilon)
+            {
+              channel_distortion[IndexChannel]++;
+              count++;
+            }
+        }
+      if (count != 0)
+        channel_distortion[CompositeChannels]++;
+      p++;
+      q++;
+    }
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+    #pragma omp critical (MagickCore_GetAbsoluteDistortion)
+#endif
+    for (i=0; i <= (ssize_t) CompositeChannels; i++)
+      distortion[i]+=channel_distortion[i];
+  }
+  reconstruct_view=DestroyCacheView(reconstruct_view);
+  image_view=DestroyCacheView(image_view);
+  area=PerceptibleReciprocal((double) columns*rows);
+  for (j=0; j <= CompositeChannels; j++)
+    distortion[j]*=area;
+  return(status);
+}
+
+static MagickBooleanType GetFuzzDistortion(const Image *image,
+  const Image *reconstruct_image,const ChannelType channel,double *distortion,
+  ExceptionInfo *exception)
+{
+  CacheView
+    *image_view,
+    *reconstruct_view;
+
+  double
     area,
     fuzz;
 
@@ -583,133 +730,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   return(status);
 }
 
-static MagickBooleanType GetFuzzDistortion(const Image *image,
-  const Image *reconstruct_image,const ChannelType channel,
-  double *distortion,ExceptionInfo *exception)
-{
-  CacheView
-    *image_view,
-    *reconstruct_view;
 
-  MagickBooleanType
-    status;
-
-  ssize_t
-    i;
-
-  size_t
-    columns,
-    rows;
-
-  ssize_t
-    y;
-
-  status=MagickTrue;
-  SetImageDistortionBounds(image,reconstruct_image,&columns,&rows);
-  image_view=AcquireVirtualCacheView(image,exception);
-  reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(distortion,status) \
-    magick_number_threads(image,image,rows,1)
-#endif
-  for (y=0; y < (ssize_t) rows; y++)
-  {
-    double
-      channel_distortion[CompositeChannels+1];
-
-    const IndexPacket
-      *magick_restrict indexes,
-      *magick_restrict reconstruct_indexes;
-
-    const PixelPacket
-      *magick_restrict p,
-      *magick_restrict q;
-
-    ssize_t
-      i,
-      x;
-
-    if (status == MagickFalse)
-      continue;
-    p=GetCacheViewVirtualPixels(image_view,0,y,columns,1,exception);
-    q=GetCacheViewVirtualPixels(reconstruct_view,0,y,columns,1,exception);
-    if ((p == (const PixelPacket *) NULL) || (q == (const PixelPacket *) NULL))
-      {
-        status=MagickFalse;
-        continue;
-      }
-    indexes=GetCacheViewVirtualIndexQueue(image_view);
-    reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
-    (void) memset(channel_distortion,0,sizeof(channel_distortion));
-    for (x=0; x < (ssize_t) columns; x++)
-    {
-      MagickRealType
-        distance,
-        Da,
-        Sa;
-
-      Sa=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(p) :
-        ((double) QuantumRange-(double) OpaqueOpacity));
-      Da=QuantumScale*(reconstruct_image->matte != MagickFalse ?
-        (double) GetPixelAlpha(q) : ((double) QuantumRange-(double)
-        OpaqueOpacity));
-      if ((channel & RedChannel) != 0)
-        {
-          distance=QuantumScale*(Sa*(double) GetPixelRed(p)-Da*(double)
-            GetPixelRed(q));
-          channel_distortion[RedChannel]+=distance*distance;
-          channel_distortion[CompositeChannels]+=distance*distance;
-        }
-      if ((channel & GreenChannel) != 0)
-        {
-          distance=QuantumScale*(Sa*(double) GetPixelGreen(p)-Da*(double)
-            GetPixelGreen(q));
-          channel_distortion[GreenChannel]+=distance*distance;
-          channel_distortion[CompositeChannels]+=distance*distance;
-        }
-      if ((channel & BlueChannel) != 0)
-        {
-          distance=QuantumScale*(Sa*(double) GetPixelBlue(p)-Da*(double)
-            GetPixelBlue(q));
-          channel_distortion[BlueChannel]+=distance*distance;
-          channel_distortion[CompositeChannels]+=distance*distance;
-        }
-      if (((channel & OpacityChannel) != 0) && ((image->matte != MagickFalse) ||
-          (reconstruct_image->matte != MagickFalse)))
-        {
-          distance=QuantumScale*((image->matte != MagickFalse ? (double)
-            GetPixelOpacity(p) : (double) OpaqueOpacity)-
-            (reconstruct_image->matte != MagickFalse ?
-            (double) GetPixelOpacity(q): (double) OpaqueOpacity));
-          channel_distortion[OpacityChannel]+=distance*distance;
-          channel_distortion[CompositeChannels]+=distance*distance;
-        }
-      if (((channel & IndexChannel) != 0) &&
-          (image->colorspace == CMYKColorspace) &&
-          (reconstruct_image->colorspace == CMYKColorspace))
-        {
-          distance=QuantumScale*(Sa*(double) GetPixelIndex(indexes+x)-
-            Da*(double) GetPixelIndex(reconstruct_indexes+x));
-          channel_distortion[BlackChannel]+=distance*distance;
-          channel_distortion[CompositeChannels]+=distance*distance;
-        }
-      p++;
-      q++;
-    }
-#if defined(MAGICKCORE_OPENMP_SUPPORT)
-    #pragma omp critical (MagickCore_GetFuzzDistortion)
-#endif
-    for (i=0; i <= (ssize_t) CompositeChannels; i++)
-      distortion[i]+=channel_distortion[i];
-  }
-  reconstruct_view=DestroyCacheView(reconstruct_view);
-  image_view=DestroyCacheView(image_view);
-  distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
-  for (i=0; i <= (ssize_t) CompositeChannels; i++)
-    distortion[i]/=((double) columns*rows);
-  distortion[CompositeChannels]=sqrt(distortion[CompositeChannels]);
-  return(status);
-}
 
 static MagickBooleanType GetMeanAbsoluteDistortion(const Image *image,
   const Image *reconstruct_image,const ChannelType channel,
