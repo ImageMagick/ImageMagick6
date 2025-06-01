@@ -487,7 +487,7 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
 }
 #define ThrowGaussJordanSwapException() \
 { \
-  if (columns != (ssize_t *) NULL) \
+  if (pivots != (ssize_t *) NULL) \
     pivots=(ssize_t *) RelinquishMagickMemory(pivots); \
   if (rows != (ssize_t *) NULL) \
     rows=(ssize_t *) RelinquishMagickMemory(rows); \
