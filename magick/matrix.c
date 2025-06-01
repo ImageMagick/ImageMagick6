@@ -485,6 +485,16 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
   (x)=(y); \
   (y)=temp; \
 }
+#define ThrowGaussJordanSwapException() \
+{ \
+  if (columns != (ssize_t *) NULL) \
+    pivots=(ssize_t *) RelinquishMagickMemory(pivots); \
+  if (rows != (ssize_t *) NULL) \
+    rows=(ssize_t *) RelinquishMagickMemory(rows); \
+  if (columns != (ssize_t *) NULL) \
+    columns=(ssize_t *) RelinquishMagickMemory(columns); \
+  return(MagickFalse); \
+}
 
   double
     scale;
@@ -503,15 +513,7 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
   pivots=(ssize_t *) AcquireQuantumMemory(rank,sizeof(*pivots));
   if ((columns == (ssize_t *) NULL) || (rows == (ssize_t *) NULL) ||
       (pivots == (ssize_t *) NULL))
-    {
-      if (columns != (ssize_t *) NULL)
-        pivots=(ssize_t *) RelinquishMagickMemory(pivots);
-      if (rows != (ssize_t *) NULL)
-        rows=(ssize_t *) RelinquishMagickMemory(rows);
-      if (columns != (ssize_t *) NULL)
-        columns=(ssize_t *) RelinquishMagickMemory(columns);
-      return MagickFalse;
-    }
+    ThrowGaussJordanSwapException();
   (void) memset(columns,0,rank*sizeof(*columns));
   (void) memset(rows,0,rank*sizeof(*rows));
   (void) memset(pivots,0,rank*sizeof(*pivots));
@@ -535,7 +537,7 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
               column=k;
             }
     if ((column == -1) || (row == -1))
-      return(MagickFalse);  /* Singular matrix */
+      ThrowGaussJordanSwapException();  /* Singular matrix */
     pivots[column]++;
     if (row != column)
       {
@@ -547,7 +549,7 @@ MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
     rows[i]=row;
     columns[i]=column;
     if (fabs(matrix[column][column]) < MagickEpsilon)
-      return(MagickFalse);  /* Singular matrix */
+      ThrowGaussJordanSwapException();  /* Singular matrix */
     scale=1.0/matrix[column][column];
     matrix[column][column]=1.0;
     for (j=0; j < (ssize_t) rank; j++)

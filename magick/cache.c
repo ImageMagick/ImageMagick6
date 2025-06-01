@@ -842,17 +842,37 @@ static MagickBooleanType ClonePixelCacheOnDisk(
   return(MagickTrue);
 }
 
+static inline int GetCacheNumberThreads(const CacheInfo *source,
+  const CacheInfo *destination,const size_t chunk,const int factor)
+{
+  int
+    max_threads = GetMagickResourceLimit(ThreadResource),
+    number_threads = 1;
+
+  size_t
+    workload_factor = 64UL << factor;
+
+  /*
+    Determine number of threads based on workload.
+  */
+  number_threads=(chunk <= workload_factor) ? 1 :
+    (chunk >= (workload_factor << 6)) ? max_threads :
+    1+(chunk-workload_factor)*(max_threads-1)/(((workload_factor << 6))-1);
+  /*
+    Limit threads for non-memory or non-map cache sources/destinations.
+  */
+  if (((source->type != MemoryCache) && (source->type != MapCache)) ||
+      ((destination->type != MemoryCache) && (destination->type != MapCache)))
+    number_threads=MagickMin(number_threads,4);
+  return(number_threads);
+}
+
 static MagickBooleanType ClonePixelCacheRepository(
   CacheInfo *magick_restrict clone_info,CacheInfo *magick_restrict cache_info,
   ExceptionInfo *exception)
 {
-#define MaxCacheThreads  ((size_t) GetMagickResourceLimit(ThreadResource))
-#define cache_number_threads(source,destination,chunk,multithreaded) \
-  num_threads((multithreaded) == 0 ? 1 : \
-    (((source)->type != MemoryCache) && ((source)->type != MapCache)) || \
-    (((destination)->type != MemoryCache) && ((destination)->type != MapCache)) ? \
-    MagickMax(MagickMin((ssize_t) GetMagickResourceLimit(ThreadResource),2),1) : \
-    MagickMax(MagickMin((ssize_t) GetMagickResourceLimit(ThreadResource),(ssize_t) (chunk)/256),1))
+#define cache_number_threads(source,destination,chunk,factor) \
+  num_threads(GetCacheNumberThreads((source),(destination),(chunk),(factor)))
 
   MagickBooleanType
     status;
@@ -909,7 +929,7 @@ static MagickBooleanType ClonePixelCacheRepository(
   status=MagickTrue;
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
   #pragma omp parallel for schedule(static) shared(status) \
-    cache_number_threads(cache_info,clone_info,cache_info->rows,4)
+    cache_number_threads(cache_info,clone_info,cache_info->rows,3)
 #endif
   for (y=0; y < (ssize_t) cache_info->rows; y++)
   {
@@ -948,7 +968,7 @@ static MagickBooleanType ClonePixelCacheRepository(
         sizeof(*cache_info->indexes);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
-        cache_number_threads(cache_info,clone_info,cache_info->rows,4)
+        cache_number_threads(cache_info,clone_info,cache_info->rows,3)
 #endif
       for (y=0; y < (ssize_t) cache_info->rows; y++)
       {
