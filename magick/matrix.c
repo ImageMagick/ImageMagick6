@@ -477,7 +477,7 @@ MagickExport MatrixInfo *DestroyMatrixInfo(MatrixInfo *matrix_info)
 %
 */
 MagickExport MagickBooleanType GaussJordanElimination(double **matrix,
-  double **vectors, const size_t rank, const size_t number_vectors)
+  double **vectors,const size_t rank,const size_t number_vectors)
 {
 #define GaussJordanSwap(x,y) \
 { \
