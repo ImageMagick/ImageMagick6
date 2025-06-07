@@ -734,7 +734,7 @@ MagickExport MagickBooleanType AutoThresholdImage(Image *image,
   sum=0.0;
   for (i=0; i <= (ssize_t) MaxIntensity; i++)
     sum+=histogram[i];
-  gamma=PerceptibleReciprocal(sum);
+  gamma=MagickSafeReciprocal(sum);
   for (i=0; i <= (ssize_t) MaxIntensity; i++)
     histogram[i]=gamma*histogram[i];
   /*

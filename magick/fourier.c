@@ -337,25 +337,25 @@ MagickExport Image *ComplexImages(const Image *images,const ComplexOperator op,
           double
             gamma;
 
-          gamma=PerceptibleReciprocal((double) br.red*(double) br.red+
+          gamma=MagickSafeReciprocal((double) br.red*(double) br.red+
             (double) bi.red*(double) bi.red+snr);
           cr.red=gamma*((double) ar.red*(double) br.red+(double) ai.red*
             (double) bi.red);
           ci.red=gamma*((double) ai.red*(double) br.red-(double) ar.red*
              (double) bi.red);
-          gamma=PerceptibleReciprocal((double) br.green*(double) br.green+
+          gamma=MagickSafeReciprocal((double) br.green*(double) br.green+
             (double) bi.green*(double) bi.green+snr);
           cr.green=gamma*((double) ar.green*(double) br.green+
             (double) ai.green*(double) bi.green);
           ci.green=gamma*((double) ai.green*(double) br.green-
             (double) ar.green*(double) bi.green);
-          gamma=PerceptibleReciprocal((double) br.blue*(double) br.blue+
+          gamma=MagickSafeReciprocal((double) br.blue*(double) br.blue+
             (double) bi.blue*(double) bi.blue+snr);
           cr.blue=gamma*((double) ar.blue*(double) br.blue+
             (double) ai.blue*(double) bi.blue);
           ci.blue=gamma*((double) ai.blue*(double) br.blue-
             (double) ar.blue*(double) bi.blue);
-          gamma=PerceptibleReciprocal((double) br.opacity*(double) br.opacity+
+          gamma=MagickSafeReciprocal((double) br.opacity*(double) br.opacity+
             (double) bi.opacity*(double) bi.opacity+snr);
           cr.opacity=gamma*((double) ar.opacity*(double) br.opacity+
            (double) ai.opacity*(double) bi.opacity);
@@ -925,7 +925,7 @@ static MagickBooleanType ForwardFourierTransform(FourierInfo *fourier_info,
         Normalize forward transform.
       */
       i=0L;
-      gamma=PerceptibleReciprocal((double) fourier_info->width*
+      gamma=MagickSafeReciprocal((double) fourier_info->width*
         fourier_info->height);
       for (y=0L; y < (ssize_t) fourier_info->height; y++)
         for (x=0L; x < (ssize_t) fourier_info->center; x++)
@@ -1493,7 +1493,7 @@ static MagickBooleanType InverseFourierTransform(FourierInfo *fourier_info,
         Normalize inverse transform.
       */
       i=0L;
-      gamma=PerceptibleReciprocal((double) fourier_info->width*
+      gamma=MagickSafeReciprocal((double) fourier_info->width*
         fourier_info->height);
       for (y=0L; y < (ssize_t) fourier_info->height; y++)
         for (x=0L; x < (ssize_t) fourier_info->center; x++)

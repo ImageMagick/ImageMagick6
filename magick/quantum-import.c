@@ -4612,7 +4612,7 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
       for (x=0; x < (ssize_t) number_pixels; x++)
       {
         alpha=QuantumScale*(double) GetPixelAlpha(q);
-        alpha=PerceptibleReciprocal(alpha);
+        alpha=MagickSafeReciprocal(alpha);
         SetPixelRed(q,ClampToQuantum(alpha*(double) GetPixelRed(q)));
         SetPixelGreen(q,ClampToQuantum(alpha*(double) GetPixelGreen(q)));
         SetPixelBlue(q,ClampToQuantum(alpha*(double) GetPixelBlue(q)));

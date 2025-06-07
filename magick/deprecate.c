@@ -4001,7 +4001,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
               pixels[i].index*=alpha[i];
           }
         gamma=alpha[i];
-        gamma=PerceptibleReciprocal(gamma);
+        gamma=MagickSafeReciprocal(gamma);
         pixel.red+=gamma*0.0625*pixels[i].red;
         pixel.green+=gamma*0.0625*pixels[i].green;
         pixel.blue+=gamma*0.0625*pixels[i].blue;
@@ -4097,7 +4097,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
       delta.y=y-floor(y);
       gamma=(((1.0-delta.y)*((1.0-delta.x)*alpha[0]+delta.x*alpha[1])+delta.y*
         ((1.0-delta.x)*alpha[2]+delta.x*alpha[3])));
-      gamma=PerceptibleReciprocal(gamma);
+      gamma=MagickSafeReciprocal(gamma);
       pixel.red=gamma*((1.0-delta.y)*((1.0-delta.x)*pixels[0].red+delta.x*
         pixels[1].red)+delta.y*((1.0-delta.x)*pixels[2].red+delta.x*
         pixels[3].red));
@@ -4218,7 +4218,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
               */
               delta.y=1.0-delta.y;
               gamma=MeshInterpolate(&delta,alpha[2],alpha[3],alpha[0]);
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               pixel.red=gamma*MeshInterpolate(&delta,pixels[2].red,
                 pixels[3].red,pixels[0].red);
               pixel.green=gamma*MeshInterpolate(&delta,pixels[2].green,
@@ -4238,7 +4238,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
               */
               delta.x=1.0-delta.x;
               gamma=MeshInterpolate(&delta,alpha[1],alpha[0],alpha[3]);
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               pixel.red=gamma*MeshInterpolate(&delta,pixels[1].red,
                 pixels[0].red,pixels[3].red);
               pixel.green=gamma*MeshInterpolate(&delta,pixels[1].green,
@@ -4263,7 +4263,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
                 Top-left triangle (pixel 0, diagonal: 1-2).
               */
               gamma=MeshInterpolate(&delta,alpha[0],alpha[1],alpha[2]);
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               pixel.red=gamma*MeshInterpolate(&delta,pixels[0].red,
                 pixels[1].red,pixels[2].red);
               pixel.green=gamma*MeshInterpolate(&delta,pixels[0].green,
@@ -4284,7 +4284,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
               delta.x=1.0-delta.x;
               delta.y=1.0-delta.y;
               gamma=MeshInterpolate(&delta,alpha[3],alpha[2],alpha[1]);
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               pixel.red=gamma*MeshInterpolate(&delta,pixels[3].red,
                 pixels[2].red,pixels[1].red);
               pixel.green=gamma*MeshInterpolate(&delta,pixels[3].green,
@@ -4362,7 +4362,7 @@ MagickExport MagickPixelPacket InterpolatePixelColor(const Image *image,
             }
           dx=CubicWeightingFunction(delta.x-(MagickRealType) j);
           gamma=alpha[n];
-          gamma=PerceptibleReciprocal(gamma);
+          gamma=MagickSafeReciprocal(gamma);
           pixel.red+=gamma*dx*dy*pixels[n].red;
           pixel.green+=gamma*dx*dy*pixels[n].green;
           pixel.blue+=gamma*dx*dy*pixels[n].blue;

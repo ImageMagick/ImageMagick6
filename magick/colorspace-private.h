@@ -75,9 +75,9 @@ static inline void ConvertRGBToCMYK(MagickPixelPacket *pixel)
     black=magenta;
   if (yellow < black)
     black=yellow;
-  cyan=(MagickRealType) (PerceptibleReciprocal(1.0-black)*(cyan-black));
-  magenta=(MagickRealType) (PerceptibleReciprocal(1.0-black)*(magenta-black));
-  yellow=(MagickRealType) (PerceptibleReciprocal(1.0-black)*(yellow-black));
+  cyan=(MagickRealType) (MagickSafeReciprocal(1.0-black)*(cyan-black));
+  magenta=(MagickRealType) (MagickSafeReciprocal(1.0-black)*(magenta-black));
+  yellow=(MagickRealType) (MagickSafeReciprocal(1.0-black)*(yellow-black));
   pixel->colorspace=CMYKColorspace;
   pixel->red=(double) QuantumRange*cyan;
   pixel->green=(double) QuantumRange*magenta;

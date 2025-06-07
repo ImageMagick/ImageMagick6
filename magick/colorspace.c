@@ -221,7 +221,7 @@ static void ConvertRGBToxyY(const Quantum red,const Quantum green,
     Z;
 
   ConvertRGBToXYZ(red,green,blue,&X,&Y,&Z);
-  gamma=PerceptibleReciprocal(X+Y+Z);
+  gamma=MagickSafeReciprocal(X+Y+Z);
   *low_x=gamma*X;
   *low_y=gamma*Y;
   *cap_Y=Y;
@@ -732,7 +732,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       gamma=DisplayGamma;
       value=GetImageProperty(image,"gamma");
       if (value != (const char *) NULL)
-        gamma=PerceptibleReciprocal(StringToDouble(value,(char **) NULL));
+        gamma=MagickSafeReciprocal(StringToDouble(value,(char **) NULL));
       film_gamma=FilmGamma;
       value=GetImageProperty(image,"film-gamma");
       if (value != (const char *) NULL)
@@ -751,14 +751,14 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
         ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
           image->filename);
       black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002*
-        PerceptibleReciprocal(film_gamma));
+        MagickSafeReciprocal(film_gamma));
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static)
 #endif
       for (i=0; i <= (ssize_t) MaxMap; i++)
         logmap[i]=ScaleMapToQuantum((MagickRealType) (MaxMap*(reference_white+
           log10(black+(1.0*i/MaxMap)*(1.0-black))/((gamma/density)*0.002*
-          PerceptibleReciprocal(film_gamma)))/1024.0));
+          MagickSafeReciprocal(film_gamma)))/1024.0));
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
@@ -1666,7 +1666,7 @@ static inline void ConvertxyYToRGB(const double low_x,const double low_y,
     Y,
     Z;
 
-  gamma=PerceptibleReciprocal(low_y);
+  gamma=MagickSafeReciprocal(low_y);
   X=gamma*cap_Y*low_x;
   Y=cap_Y;
   Z=gamma*cap_Y*(1.0-low_x-low_y);
@@ -2405,7 +2405,7 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
       gamma=DisplayGamma;
       value=GetImageProperty(image,"gamma");
       if (value != (const char *) NULL)
-        gamma=PerceptibleReciprocal(StringToDouble(value,(char **) NULL));
+        gamma=MagickSafeReciprocal(StringToDouble(value,(char **) NULL));
       film_gamma=FilmGamma;
       value=GetImageProperty(image,"film-gamma");
       if (value != (const char *) NULL)
@@ -2424,13 +2424,13 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
           image->filename);
       black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002*
-        PerceptibleReciprocal(film_gamma));
+        MagickSafeReciprocal(film_gamma));
       for (i=0; i <= (ssize_t) (reference_black*MaxMap/1024.0); i++)
         logmap[i]=(Quantum) 0;
       for ( ; i < (ssize_t) (reference_white*MaxMap/1024.0); i++)
         logmap[i]=ClampToQuantum((MagickRealType) QuantumRange/(1.0-black)*
           (pow(10.0,(1024.0*i/MaxMap-reference_white)*(gamma/density)*0.002*
-          PerceptibleReciprocal(film_gamma))-black));
+          MagickSafeReciprocal(film_gamma))-black));
       for ( ; i <= (ssize_t) MaxMap; i++)
         logmap[i]=QuantumRange;
       if (image->storage_class == PseudoClass)

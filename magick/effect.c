@@ -374,7 +374,7 @@ MagickExport Image *AdaptiveBlurImageChannel(const Image *image,
           p++;
         }
       }
-      gamma=PerceptibleReciprocal(gamma);
+      gamma=MagickSafeReciprocal(gamma);
       if ((channel & RedChannel) != 0)
         SetPixelRed(q,ClampToQuantum(gamma*(MagickRealType) pixel.red));
       if ((channel & GreenChannel) != 0)
@@ -700,7 +700,7 @@ MagickExport Image *AdaptiveSharpenImageChannel(const Image *image,
           p++;
         }
       }
-      gamma=PerceptibleReciprocal(gamma);
+      gamma=MagickSafeReciprocal(gamma);
       if ((channel & RedChannel) != 0)
         SetPixelRed(q,ClampToQuantum(gamma*pixel.red));
       if ((channel & GreenChannel) != 0)
@@ -1424,7 +1424,7 @@ MagickExport Image *EmbossImage(const Image *image,const double radius,
   normalize=0.0;
   for (i=0; i < (ssize_t) (kernel_info->width*kernel_info->height); i++)
     normalize+=kernel_info->values[i];
-  gamma=PerceptibleReciprocal(normalize);
+  gamma=MagickSafeReciprocal(normalize);
   for (i=0; i < (ssize_t) (kernel_info->width*kernel_info->height); i++)
     kernel_info->values[i]*=gamma;
   emboss_image=(Image *) NULL;
@@ -1738,7 +1738,7 @@ MagickExport Image *FilterImageChannel(const Image *image,
             }
             kernel_pixels+=image->columns+kernel->width;
           }
-          gamma=PerceptibleReciprocal(gamma);
+          gamma=MagickSafeReciprocal(gamma);
           if ((channel & RedChannel) != 0)
             SetPixelRed(q,ClampToQuantum(gamma*(double) pixel.red));
           if ((channel & GreenChannel) != 0)
@@ -2184,7 +2184,7 @@ MagickExport Image *MotionBlurImageChannel(const Image *image,
             gamma+=(*k)*alpha;
             k++;
           }
-          gamma=PerceptibleReciprocal(gamma);
+          gamma=MagickSafeReciprocal(gamma);
           if ((channel & RedChannel) != 0)
             SetPixelRed(q,ClampToQuantum(gamma*qixel.red));
           if ((channel & GreenChannel) != 0)
@@ -3515,7 +3515,7 @@ MagickExport Image *RotationalBlurImageChannel(const Image *image,
               }
             normalize+=1.0;
           }
-          normalize=PerceptibleReciprocal(normalize);
+          normalize=MagickSafeReciprocal(normalize);
           if ((channel & RedChannel) != 0)
             SetPixelRed(q,ClampToQuantum(normalize*qixel.red));
           if ((channel & GreenChannel) != 0)
@@ -3555,8 +3555,8 @@ MagickExport Image *RotationalBlurImageChannel(const Image *image,
             gamma+=alpha;
             normalize+=1.0;
           }
-          gamma=PerceptibleReciprocal(gamma);
-          normalize=PerceptibleReciprocal(normalize);
+          gamma=MagickSafeReciprocal(gamma);
+          normalize=MagickSafeReciprocal(normalize);
           if ((channel & RedChannel) != 0)
             SetPixelRed(q,ClampToQuantum(gamma*(MagickRealType) qixel.red));
           if ((channel & GreenChannel) != 0)
@@ -3878,7 +3878,7 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
           }
           if (gamma != 0.0)
             {
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               if ((channel & RedChannel) != 0)
                 SetPixelRed(q,ClampToQuantum(gamma*(MagickRealType)
                   pixel.red));
@@ -3907,7 +3907,7 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
                 }
                 j+=(ssize_t) (image->columns+width);
               }
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               SetPixelOpacity(q,ClampToQuantum(gamma*pixel.opacity));
             }
           if (((channel & IndexChannel) != 0) &&
@@ -3930,7 +3930,7 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
                 }
                 j+=(ssize_t) (image->columns+width);
               }
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               SetPixelIndex(blur_indexes+x,ClampToQuantum(gamma*pixel.index));
             }
         }
@@ -3960,7 +3960,7 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
           }
           if (gamma != 0.0)
             {
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               if ((channel & RedChannel) != 0)
                 SetPixelRed(q,ClampToQuantum(gamma*(MagickRealType) pixel.red));
               if ((channel & GreenChannel) != 0)
@@ -4008,7 +4008,7 @@ MagickExport Image *SelectiveBlurImageChannel(const Image *image,
                 }
                 j+=(ssize_t) (image->columns+width);
               }
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               SetPixelIndex(blur_indexes+x,ClampToQuantum(gamma*pixel.index));
             }
         }
@@ -4382,7 +4382,7 @@ MagickExport Image *SharpenImageChannel(const Image *image,
   normalize=0.0;
   for (i=0; i < (ssize_t) (kernel_info->width*kernel_info->height); i++)
     normalize+=kernel_info->values[i];
-  gamma=PerceptibleReciprocal(normalize);
+  gamma=MagickSafeReciprocal(normalize);
   for (i=0; i < (ssize_t) (kernel_info->width*kernel_info->height); i++)
     kernel_info->values[i]*=gamma;
   sharp_image=MorphologyImageChannel(image,channel,ConvolveMorphology,1,

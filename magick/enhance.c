@@ -298,7 +298,7 @@ MagickExport MagickBooleanType BrightnessContrastImageChannel(Image *image,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  slope=100.0*PerceptibleReciprocal(100.0-contrast);
+  slope=100.0*MagickSafeReciprocal(100.0-contrast);
   if (contrast < 0.0)
     slope=0.01*contrast+1.0;
   intercept=(0.01*brightness-0.5)*slope+0.5;
@@ -2204,7 +2204,7 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
     for (i=0; i <= (ssize_t) MaxMap; i++)
       gamma_map[i]=ClampToQuantum((MagickRealType) ScaleMapToQuantum((
         MagickRealType) (MaxMap*pow((double) i/MaxMap,
-        PerceptibleReciprocal(gamma)))));
+        MagickSafeReciprocal(gamma)))));
   if (image->storage_class == PseudoClass)
     {
       /*
@@ -2235,19 +2235,19 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
 #else
         if ((channel & RedChannel) != 0)
           image->colormap[i].red=(double) QuantumRange*gamma_pow(QuantumScale*
-            (double) image->colormap[i].red,PerceptibleReciprocal(gamma));
+            (double) image->colormap[i].red,MagickSafeReciprocal(gamma));
         if ((channel & GreenChannel) != 0)
           image->colormap[i].green=(double) QuantumRange*gamma_pow(QuantumScale*
-            (double) image->colormap[i].green,PerceptibleReciprocal(gamma));
+            (double) image->colormap[i].green,MagickSafeReciprocal(gamma));
         if ((channel & BlueChannel) != 0)
           image->colormap[i].blue=(double) QuantumRange*gamma_pow(QuantumScale*
-            (double) image->colormap[i].blue,PerceptibleReciprocal(gamma));
+            (double) image->colormap[i].blue,MagickSafeReciprocal(gamma));
         if ((channel & OpacityChannel) != 0)
           {
             if (image->matte == MagickFalse)
               image->colormap[i].opacity=(double) QuantumRange*
                 gamma_pow(QuantumScale*(double) image->colormap[i].opacity,
-                PerceptibleReciprocal(gamma));
+                MagickSafeReciprocal(gamma));
             else
               image->colormap[i].opacity=(double) QuantumRange-(double)
                 QuantumRange*gamma_pow(QuantumScale*((double) QuantumRange-
@@ -2317,31 +2317,31 @@ MagickExport MagickBooleanType GammaImageChannel(Image *image,
       if ((channel & SyncChannels) != 0)
         {
           SetPixelRed(q,(double) QuantumRange*gamma_pow(QuantumScale*(double)
-            GetPixelRed(q),PerceptibleReciprocal(gamma)));
+            GetPixelRed(q),MagickSafeReciprocal(gamma)));
           SetPixelGreen(q,(double) QuantumRange*gamma_pow(QuantumScale*(double)
-            GetPixelGreen(q),PerceptibleReciprocal(gamma)));
+            GetPixelGreen(q),MagickSafeReciprocal(gamma)));
           SetPixelBlue(q,(double) QuantumRange*gamma_pow(QuantumScale*(double)
-            GetPixelBlue(q),PerceptibleReciprocal(gamma)));
+            GetPixelBlue(q),MagickSafeReciprocal(gamma)));
         }
       else
         {
           if ((channel & RedChannel) != 0)
             SetPixelRed(q,(double) QuantumRange*gamma_pow(QuantumScale*
-              (double) GetPixelRed(q),PerceptibleReciprocal(gamma)));
+              (double) GetPixelRed(q),MagickSafeReciprocal(gamma)));
           if ((channel & GreenChannel) != 0)
             SetPixelGreen(q,(double) QuantumRange*gamma_pow(QuantumScale*
-              (double) GetPixelGreen(q),PerceptibleReciprocal(gamma)));
+              (double) GetPixelGreen(q),MagickSafeReciprocal(gamma)));
           if ((channel & BlueChannel) != 0)
             SetPixelBlue(q,(double) QuantumRange*gamma_pow(QuantumScale*
-              (double) GetPixelBlue(q),PerceptibleReciprocal(gamma)));
+              (double) GetPixelBlue(q),MagickSafeReciprocal(gamma)));
           if ((channel & OpacityChannel) != 0)
             {
               if (image->matte == MagickFalse)
                 SetPixelOpacity(q,(double) QuantumRange*gamma_pow(QuantumScale*
-                  (double) GetPixelOpacity(q),PerceptibleReciprocal(gamma)));
+                  (double) GetPixelOpacity(q),MagickSafeReciprocal(gamma)));
               else
                 SetPixelAlpha(q,(double) QuantumRange*gamma_pow(QuantumScale*
-                  (double) GetPixelAlpha(q),PerceptibleReciprocal(gamma)));
+                  (double) GetPixelAlpha(q),MagickSafeReciprocal(gamma)));
             }
         }
 #endif
@@ -2948,9 +2948,9 @@ static inline double LevelPixel(const double black_point,
     level_pixel,
     scale;
 
-  scale=PerceptibleReciprocal(white_point-black_point);
+  scale=MagickSafeReciprocal(white_point-black_point);
   level_pixel=(double) QuantumRange*gamma_pow(scale*((double) pixel-
-    black_point),PerceptibleReciprocal(gamma));
+    black_point),MagickSafeReciprocal(gamma));
   return(level_pixel);
 }
 

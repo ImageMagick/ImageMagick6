@@ -605,7 +605,7 @@ static Image *RenderRSVGImage(const ImageInfo *image_info,Image *image,
               gamma;
 
             gamma=1.0-QuantumScale*(MagickRealType) fill_color.opacity;
-            gamma=PerceptibleReciprocal(gamma);
+            gamma=MagickSafeReciprocal(gamma);
             fill_color.red=(Quantum) ((MagickRealType) fill_color.red*gamma);
             fill_color.green=(Quantum) ((MagickRealType) fill_color.green*
               gamma);
@@ -2839,8 +2839,8 @@ static void SVGStartElement(void *context,const xmlChar *name,
             svg_info->height=CastDoubleToUnsigned(svg_info->bounds.height+0.5);
           (void) FormatLocaleFile(svg_info->file,"viewbox 0 0 %.20g %.20g\n",
             (double) svg_info->width,(double) svg_info->height);
-          sx=PerceptibleReciprocal(svg_info->view_box.width)*svg_info->width;
-          sy=PerceptibleReciprocal(svg_info->view_box.height)*svg_info->height;
+          sx=MagickSafeReciprocal(svg_info->view_box.width)*svg_info->width;
+          sy=MagickSafeReciprocal(svg_info->view_box.height)*svg_info->height;
           tx=svg_info->view_box.x != 0.0 ? (double) -sx*svg_info->view_box.x :
             0.0;
           ty=svg_info->view_box.y != 0.0 ? (double) -sy*svg_info->view_box.y :

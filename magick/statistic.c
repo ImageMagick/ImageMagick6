@@ -298,7 +298,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     case InverseLogEvaluateOperator:
     {
       result=((MagickRealType) QuantumRange*pow((value+1.0),
-        QuantumScale*(MagickRealType) pixel)-1.0)*PerceptibleReciprocal(value);
+        QuantumScale*(MagickRealType) pixel)-1.0)*MagickSafeReciprocal(value);
       break;
     }
     case LaplacianNoiseEvaluateOperator:
@@ -1056,7 +1056,7 @@ static Quantum ApplyFunction(Quantum pixel,const MagickFunction function,
       center=(number_parameters >= 2) ? parameters[1] : 0.5;
       range=(number_parameters >= 3) ? parameters[2] : 1.0;
       bias=(number_parameters >= 4) ? parameters[3] : 0.5;
-      result=2.0*PerceptibleReciprocal(width)*(QuantumScale*(MagickRealType)
+      result=2.0*MagickSafeReciprocal(width)*(QuantumScale*(MagickRealType)
         pixel-center);
       if (result <= -1.0)
         result=bias-range/2.0;
@@ -1999,15 +1999,15 @@ MagickExport ChannelMoments *GetImageChannelMoments(const Image *image,
     */
     channel_moments[channel].centroid=centroid[channel];
     channel_moments[channel].ellipse_axis.x=sqrt((2.0*
-      PerceptibleReciprocal(M00[channel]))*((M20[channel]+M02[channel])+
+      MagickSafeReciprocal(M00[channel]))*((M20[channel]+M02[channel])+
       sqrt(4.0*M11[channel]*M11[channel]+(M20[channel]-M02[channel])*
       (M20[channel]-M02[channel]))));
     channel_moments[channel].ellipse_axis.y=sqrt((2.0*
-      PerceptibleReciprocal(M00[channel]))*((M20[channel]+M02[channel])-
+      MagickSafeReciprocal(M00[channel]))*((M20[channel]+M02[channel])-
       sqrt(4.0*M11[channel]*M11[channel]+(M20[channel]-M02[channel])*
       (M20[channel]-M02[channel]))));
     channel_moments[channel].ellipse_angle=RadiansToDegrees(1.0/2.0*atan(2.0*
-      M11[channel]*PerceptibleReciprocal(M20[channel]-M02[channel])));
+      M11[channel]*MagickSafeReciprocal(M20[channel]-M02[channel])));
     if (fabs(M11[channel]) < 0.0)
       {
         if ((fabs(M20[channel]-M02[channel]) >= 0.0) &&
@@ -2031,7 +2031,7 @@ MagickExport ChannelMoments *GetImageChannelMoments(const Image *image,
           channel_moments[channel].ellipse_angle+=90.0;
     channel_moments[channel].ellipse_eccentricity=sqrt(1.0-(
       channel_moments[channel].ellipse_axis.y*
-      channel_moments[channel].ellipse_axis.y*PerceptibleReciprocal(
+      channel_moments[channel].ellipse_axis.y*MagickSafeReciprocal(
       channel_moments[channel].ellipse_axis.x*
       channel_moments[channel].ellipse_axis.x)));
     channel_moments[channel].ellipse_intensity=M00[channel]/
@@ -2164,7 +2164,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     return((ChannelPerceptualHash *) NULL);
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].P[i]=(-PerceptibleLog10(moments[channel].I[i]));
+      perceptual_hash[channel].P[i]=(-MagickSafeLog10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
     Blur then transform to HCLp colorspace.
@@ -2194,7 +2194,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     }
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].Q[i]=(-PerceptibleLog10(moments[channel].I[i]));
+      perceptual_hash[channel].Q[i]=(-MagickSafeLog10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }
@@ -2580,7 +2580,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     /*
       Normalize pixel statistics.
     */
-    area=PerceptibleReciprocal((double) image->columns*image->rows);
+    area=MagickSafeReciprocal((double) image->columns*image->rows);
     mean=channel_statistics[i].sum*area;
     channel_statistics[i].sum=mean;
     channel_statistics[i].sum_squared*=area;
@@ -2589,7 +2589,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     channel_statistics[i].mean=mean;
     channel_statistics[i].variance=channel_statistics[i].sum_squared;
     standard_deviation=sqrt(channel_statistics[i].variance-(mean*mean));
-    area=PerceptibleReciprocal((double) image->columns*image->rows-1.0)*
+    area=MagickSafeReciprocal((double) image->columns*image->rows-1.0)*
       ((double) image->columns*image->rows);
     standard_deviation=sqrt(area*standard_deviation*standard_deviation);
     channel_statistics[i].standard_deviation=standard_deviation;
@@ -2607,7 +2607,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     if ((image->colorspace == CMYKColorspace) && (histogram[i].index > 0.0))
       number_bins.index++;
   }
-  area=PerceptibleReciprocal((double) image->columns*image->rows);
+  area=MagickSafeReciprocal((double) image->columns*image->rows);
   for (i=0; i < (ssize_t) (MaxMap+1U); i++)
   {
     double
@@ -2618,24 +2618,24 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     */
     histogram[i].red*=area;
     entropy=-histogram[i].red*log2(histogram[i].red)*
-      PerceptibleReciprocal(log10((double) number_bins.red));
+      MagickSafeReciprocal(log10((double) number_bins.red));
     if (IsNaN(entropy) == 0)
       channel_statistics[RedChannel].entropy+=entropy;
     histogram[i].green*=area;
     entropy=-histogram[i].green*log2(histogram[i].green)*
-      PerceptibleReciprocal(log10((double) number_bins.green));
+      MagickSafeReciprocal(log10((double) number_bins.green));
     if (IsNaN(entropy) == 0)
       channel_statistics[GreenChannel].entropy+=entropy;
     histogram[i].blue*=area;
     entropy=-histogram[i].blue*log2(histogram[i].blue)*
-      PerceptibleReciprocal(log10((double) number_bins.blue));
+      MagickSafeReciprocal(log10((double) number_bins.blue));
     if (IsNaN(entropy) == 0)
       channel_statistics[BlueChannel].entropy+=entropy;
     if (image->matte != MagickFalse)
       {
         histogram[i].opacity*=area;
         entropy=-histogram[i].opacity*log2(histogram[i].opacity)*
-          PerceptibleReciprocal(log10((double) number_bins.opacity));
+          MagickSafeReciprocal(log10((double) number_bins.opacity));
         if (IsNaN(entropy) == 0)
           channel_statistics[OpacityChannel].entropy+=entropy;
       }
@@ -2643,7 +2643,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
       {
         histogram[i].index*=area;
         entropy=-histogram[i].index*log2(histogram[i].index)*
-          PerceptibleReciprocal(log10((double) number_bins.index));
+          MagickSafeReciprocal(log10((double) number_bins.index));
         if (IsNaN(entropy) == 0)
           channel_statistics[IndexChannel].entropy+=entropy;
       }
@@ -2675,7 +2675,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
       channel_statistics[i].mean;
     standard_deviation=sqrt(channel_statistics[i].variance-
       (channel_statistics[i].mean*channel_statistics[i].mean));
-    area=PerceptibleReciprocal((double) image->columns*image->rows-1.0)*
+    area=MagickSafeReciprocal((double) image->columns*image->rows-1.0)*
       ((double) image->columns*image->rows);
     standard_deviation=sqrt(area*standard_deviation*standard_deviation);
     channel_statistics[CompositeChannels].standard_deviation=standard_deviation;
@@ -2696,12 +2696,12 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
   channel_statistics[CompositeChannels].skewness/=channels;
   channel_statistics[CompositeChannels].entropy/=channels;
   i=CompositeChannels;
-  area=PerceptibleReciprocal((double) channels*image->columns*image->rows);
+  area=MagickSafeReciprocal((double) channels*image->columns*image->rows);
   channel_statistics[i].variance=channel_statistics[i].sum_squared;
   channel_statistics[i].mean=channel_statistics[i].sum;
   standard_deviation=sqrt(channel_statistics[i].variance-
     (channel_statistics[i].mean*channel_statistics[i].mean));
-  standard_deviation=sqrt(PerceptibleReciprocal((double) channels*
+  standard_deviation=sqrt(MagickSafeReciprocal((double) channels*
     image->columns*image->rows-1.0)*channels*image->columns*image->rows*
     standard_deviation*standard_deviation);
   channel_statistics[i].standard_deviation=standard_deviation;
@@ -2710,7 +2710,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     /*
       Compute kurtosis & skewness statistics.
     */
-    standard_deviation=PerceptibleReciprocal(
+    standard_deviation=MagickSafeReciprocal(
       channel_statistics[i].standard_deviation);
     channel_statistics[i].skewness=(channel_statistics[i].sum_cubed-3.0*
       channel_statistics[i].mean*channel_statistics[i].sum_squared+2.0*

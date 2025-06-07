@@ -4012,7 +4012,7 @@ static MagickBooleanType resizeHorizontalFilter(const Image *image,
     support=(MagickRealType) 0.5;
     scale=1.0;
   }
-  scale=PerceptibleReciprocal(scale);
+  scale=MagickSafeReciprocal(scale);
 
   if (resizedColumns < workgroupSize) 
   {
@@ -4229,7 +4229,7 @@ static MagickBooleanType resizeVerticalFilter(const Image *image,
     support=(MagickRealType) 0.5;
     scale=1.0;
   }
-  scale=PerceptibleReciprocal(scale);
+  scale=MagickSafeReciprocal(scale);
 
   if (resizedRows < workgroupSize) 
   {

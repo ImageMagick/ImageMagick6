@@ -75,7 +75,7 @@ static inline void ConvertXYZToLuv(const double X,const double Y,const double Z,
     *L=(double) (116.0*pow(Y/D65Y,1.0/3.0)-16.0);
   else
     *L=CIEK*(Y/D65Y);
-  alpha=PerceptibleReciprocal(X+15.0*Y+3.0*Z);
+  alpha=MagickSafeReciprocal(X+15.0*Y+3.0*Z);
   *u=13.0*(*L)*((4.0*alpha*X)-(4.0*D65X/(D65X+15.0*D65Y+3.0*D65Z)));
   *v=13.0*(*L)*((9.0*alpha*Y)-(9.0*D65Y/(D65X+15.0*D65Y+3.0*D65Z)));
   *L/=100.0;
@@ -146,11 +146,11 @@ static inline void ConvertLuvToXYZ(const double L,const double u,const double v,
     *Y=(double) pow((L+16.0)/116.0,3.0);
   else
     *Y=L/CIEK;
-  gamma=PerceptibleReciprocal((((52.0*L*PerceptibleReciprocal(u+13.0*L* 
+  gamma=MagickSafeReciprocal((((52.0*L*MagickSafeReciprocal(u+13.0*L* 
     (4.0*D65X/(D65X+15.0*D65Y+3.0*D65Z))))-1.0)/3.0)-(-1.0/3.0));
-  *X=gamma*((*Y*((39.0*L*PerceptibleReciprocal(v+13.0*L*(9.0*D65Y/
+  *X=gamma*((*Y*((39.0*L*MagickSafeReciprocal(v+13.0*L*(9.0*D65Y/
     (D65X+15.0*D65Y+3.0*D65Z))))-5.0))+5.0*(*Y));
-  *Z=(*X*(((52.0*L*PerceptibleReciprocal(u+13.0*L*(4.0*D65X/
+  *Z=(*X*(((52.0*L*MagickSafeReciprocal(u+13.0*L*(4.0*D65X/
     (D65X+15.0*D65Y+3.0*D65Z))))-1.0)/3.0))-5.0*(*Y);
 }
 

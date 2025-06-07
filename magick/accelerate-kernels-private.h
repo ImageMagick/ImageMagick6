@@ -343,7 +343,7 @@ OPENCL_ENDIF()
   )
 
   STRINGIFY(
-    static inline float PerceptibleReciprocal(const float x)
+    static inline float MagickSafeReciprocal(const float x)
     {
       float sign = x < (float) 0.0 ? (float)-1.0 : (float) 1.0;
       return((sign*x) >= MagickEpsilon ? (float) 1.0 / x : sign*((float) 1.0 / MagickEpsilon));
@@ -703,7 +703,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
         beta=mwcReadPseudoRandomValue(r);
         alpha*=beta;
       }
-      noise=(float) (QuantumRange*i*PerceptibleReciprocal(SigmaPoisson));
+      noise=(float) (QuantumRange*i*MagickSafeReciprocal(SigmaPoisson));
       break;
     }
     case RandomNoise:
@@ -1055,7 +1055,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
       Da=1.0-QuantumScale*beta;
       gamma=RoundToUnity(Sa+Da);  /* 'Plus' blending -- not 'Over' blending */
       setOpacityF4(composite,(float) QuantumRange*(1.0-gamma));
-      gamma=PerceptibleReciprocal(gamma);
+      gamma=MagickSafeReciprocal(gamma);
       setRedF4(composite,gamma*(Sa*getRedF4(*p)+Da*getRedF4(*q)));
       setGreenF4(composite,gamma*(Sa*getGreenF4(*p)+Da*getGreenF4(*q)));
       setBlueF4(composite,gamma*(Sa*getBlueF4(*p)+Da*getBlueF4(*q)));
@@ -1485,7 +1485,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
           }
           cacheIndexY++;
         }
-        gamma = PerceptibleReciprocal(gamma);
+        gamma = MagickSafeReciprocal(gamma);
         sum.xyz = gamma*sum.xyz;
       }
       CLPixelType outputPixel;
@@ -1573,7 +1573,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
             filterIndex++;
           }
         }
-        gamma = PerceptibleReciprocal(gamma);
+        gamma = MagickSafeReciprocal(gamma);
         sum.xyz = gamma*sum.xyz;
       }
 
@@ -2468,7 +2468,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
 
           gamma+=k*alpha;
         }
-        gamma = PerceptibleReciprocal(gamma);
+        gamma = MagickSafeReciprocal(gamma);
         pixel.xyz = gamma*pixel.xyz;
 
         CLPixelType outputPixel;
@@ -2537,7 +2537,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
                 ClampToCanvas(blurCenter.y+center_x*sin_theta[i]+center_y*cos_theta[i]+0.5f, rows)*columns]);
               normalize += 1.0f;
           }
-          normalize = PerceptibleReciprocal(normalize);
+          normalize = MagickSafeReciprocal(normalize);
           result = result * normalize;
         }
         else {
@@ -2556,8 +2556,8 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
             gamma+=alpha;
             normalize += 1.0f;
           }
-          gamma = PerceptibleReciprocal(gamma);
-          normalize = PerceptibleReciprocal(normalize);
+          gamma = MagickSafeReciprocal(gamma);
+          normalize = MagickSafeReciprocal(normalize);
           result.x = gamma*result.x;
           result.y = gamma*result.y;
           result.z = gamma*result.z;
@@ -2790,7 +2790,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
     // calculate the range of input image pixels to cache
     float scale = MagickMax(1.0f/xFactor+MagickEpsilon ,1.0f);
     const float support = MagickMax(scale*resizeFilterSupport,0.5f);
-    scale = PerceptibleReciprocal(scale);
+    scale = MagickSafeReciprocal(scale);
 
     const int cacheRangeStartX = MagickMax((int)((startX+0.5f)/xFactor+MagickEpsilon-support+0.5f),(int)(0));
     const int cacheRangeEndX = MagickMin((int)(cacheRangeStartX + numCachedPixels), (int)inputColumns);
@@ -2905,7 +2905,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
         float4 filteredPixel = outputPixelCache[itemID];
         if (density!= 0.0f && density != 1.0)
         {
-          density = PerceptibleReciprocal(density);
+          density = MagickSafeReciprocal(density);
           filteredPixel *= (float4)density;
         }
         filteredImage[y*filteredColumns+chunkStartX+itemID] = (CLPixelType) (ClampToQuantum(filteredPixel.x)
@@ -2919,11 +2919,11 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
         float4 filteredPixel = outputPixelCache[itemID];
 
         if (density!= 0.0f && density != 1.0) {
-          density = PerceptibleReciprocal(density);
+          density = MagickSafeReciprocal(density);
           filteredPixel *= (float4)density;
           gamma *= density;
         }
-        gamma = PerceptibleReciprocal(gamma);
+        gamma = MagickSafeReciprocal(gamma);
 
         CLPixelType fp;
         fp = (CLPixelType) ( ClampToQuantum(gamma*filteredPixel.x)
@@ -2960,7 +2960,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
     // calculate the range of input image pixels to cache
     float scale = MagickMax(1.0f/yFactor+MagickEpsilon ,1.0f);
     const float support = MagickMax(scale*resizeFilterSupport,0.5f);
-    scale = PerceptibleReciprocal(scale);
+    scale = MagickSafeReciprocal(scale);
 
     const int cacheRangeStartY = MagickMax((int)((startY+0.5f)/yFactor+MagickEpsilon-support+0.5f),(int)(0));
     const int cacheRangeEndY = MagickMin((int)(cacheRangeStartY + numCachedPixels), (int)inputRows);
@@ -3075,7 +3075,7 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
         float4 filteredPixel = outputPixelCache[itemID];
         if (density!= 0.0f && density != 1.0)
         {
-          density = PerceptibleReciprocal(density);
+          density = MagickSafeReciprocal(density);
           filteredPixel *= (float4)density;
         }
         filteredImage[(chunkStartY+itemID)*filteredColumns+x] = (CLPixelType) (ClampToQuantum(filteredPixel.x)
@@ -3089,11 +3089,11 @@ uint MWC64X_NextUint(mwc64x_state_t *s)
         float4 filteredPixel = outputPixelCache[itemID];
 
         if (density!= 0.0f && density != 1.0) {
-          density = PerceptibleReciprocal(density);
+          density = MagickSafeReciprocal(density);
           filteredPixel *= (float4)density;
           gamma *= density;
         }
-        gamma = PerceptibleReciprocal(gamma);
+        gamma = MagickSafeReciprocal(gamma);
 
         CLPixelType fp;
         fp = (CLPixelType) ( ClampToQuantum(gamma*filteredPixel.x)

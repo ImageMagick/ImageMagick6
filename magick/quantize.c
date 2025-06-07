@@ -210,7 +210,7 @@
 #define CacheShift  3
 #endif
 #define ErrorQueueLength  16
-#define ErrorRelativeWeight  PerceptibleReciprocal(16)
+#define ErrorRelativeWeight  MagickSafeReciprocal(16)
 #define MaxQNodes  266817
 #define MaxTreeDepth  8
 #define QNodesInAList  1920
@@ -1238,7 +1238,7 @@ static void DefineImageColormap(Image *image,QCubeInfo *cube_info,
       */
       q=image->colormap+image->colors;
       alpha=(MagickRealType) ((MagickOffsetType) node_info->number_unique);
-      alpha=PerceptibleReciprocal(alpha);
+      alpha=MagickSafeReciprocal(alpha);
       if (cube_info->associate_alpha == MagickFalse)
         {
           SetPixelRed(q,ClampToQuantum(alpha*(MagickRealType) QuantumRange*
@@ -1273,7 +1273,7 @@ static void DefineImageColormap(Image *image,QCubeInfo *cube_info,
 
               gamma=(double) (QuantumScale*((double) QuantumRange-(double)
                 q->opacity));
-              gamma=PerceptibleReciprocal(gamma);
+              gamma=MagickSafeReciprocal(gamma);
               SetPixelRed(q,ClampToQuantum(alpha*gamma*(MagickRealType)
                 QuantumRange*node_info->total_color.red));
               SetPixelGreen(q,ClampToQuantum(alpha*gamma*(MagickRealType)
@@ -2034,7 +2034,7 @@ static QCubeInfo *GetQCubeInfo(const QuantizeInfo *quantize_info,
   weight=1.0;
   for (i=0; i < ErrorQueueLength; i++)
   {
-    cube_info->weights[i]=PerceptibleReciprocal(weight);
+    cube_info->weights[i]=MagickSafeReciprocal(weight);
     weight*=exp(log(1.0/ErrorRelativeWeight)/(ErrorQueueLength-1.0));
   }
   cube_info->diffusion=1.0;
@@ -2228,7 +2228,7 @@ MagickExport MagickBooleanType GetImageQuantizeError(Image *image)
     }
   }
   image_view=DestroyCacheView(image_view);
-  gamma=PerceptibleReciprocal(area);
+  gamma=MagickSafeReciprocal(area);
   image->error.mean_error_per_pixel=gamma*mean_error_per_pixel;
   image->error.normalized_mean_error=gamma*QuantumScale*QuantumScale*mean_error;
   image->error.normalized_maximum_error=QuantumScale*maximum_error;

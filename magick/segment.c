@@ -1687,7 +1687,7 @@ static MagickRealType OptimalTau(const ssize_t *histogram,const double max_tau,
   average_tau=0.0;
   for (i=0; i < number_nodes; i++)
     average_tau+=list[i]->tau;
-  average_tau*=PerceptibleReciprocal((MagickRealType) number_nodes);
+  average_tau*=MagickSafeReciprocal((MagickRealType) number_nodes);
   /*
     Relinquish resources.
   */

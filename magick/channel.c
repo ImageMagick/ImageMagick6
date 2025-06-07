@@ -875,7 +875,7 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
             gamma;
 
           alpha=QuantumScale*(double) GetPixelAlpha(q);
-          gamma=PerceptibleReciprocal(alpha);
+          gamma=MagickSafeReciprocal(alpha);
           SetPixelRed(q,ClampToQuantum(gamma*(double) GetPixelRed(q)));
           SetPixelGreen(q,ClampToQuantum(gamma*(double) GetPixelGreen(q)));
           SetPixelBlue(q,ClampToQuantum(gamma*(double) GetPixelBlue(q)));
@@ -1000,7 +1000,7 @@ MagickExport MagickBooleanType SetImageAlphaChannel(Image *image,
           gamma=1.0-QuantumScale*QuantumScale*(double) q->opacity*(double)
             pixel.opacity;
           opacity=(double) QuantumRange*(1.0-gamma);
-          gamma=PerceptibleReciprocal(gamma);
+          gamma=MagickSafeReciprocal(gamma);
           q->red=ClampToQuantum(gamma*MagickOver_((MagickRealType) q->red,
             (MagickRealType) q->opacity,(MagickRealType) pixel.red,
             (MagickRealType) pixel.opacity));

@@ -3626,7 +3626,7 @@ static inline void ApplyPixelCompositeMask(const MagickPixelPacket *p,
       return;
     }
   gamma=1.0-QuantumScale*QuantumScale*alpha*beta;
-  gamma=PerceptibleReciprocal(gamma);
+  gamma=MagickSafeReciprocal(gamma);
   composite->red=gamma*MagickOver_(p->red,alpha,q->red,beta);
   composite->green=gamma*MagickOver_(p->green,alpha,q->green,beta);
   composite->blue=gamma*MagickOver_(p->blue,alpha,q->blue,beta);

@@ -1155,9 +1155,9 @@ MagickExport void ConvertRGBToHSL(const Quantum red,const Quantum green,
       *hue=4.0+(QuantumScale*(double) red-QuantumScale*(double) green)/c;
   *hue*=60.0/360.0;
   if (*lightness <= 0.5)
-    *saturation=c*PerceptibleReciprocal(2.0*(*lightness));
+    *saturation=c*MagickSafeReciprocal(2.0*(*lightness));
   else
-    *saturation=c*PerceptibleReciprocal(2.0-2.0*(*lightness));
+    *saturation=c*MagickSafeReciprocal(2.0-2.0*(*lightness));
 }
 
 /*
@@ -1226,7 +1226,7 @@ MagickExport void ConvertRGBToHSV(const Quantum red,const Quantum green,
     else
       *hue=4.0+(QuantumScale*(double) red-QuantumScale*(double) green)/c;
   *hue*=60.0/360.0;
-  *saturation=c*PerceptibleReciprocal(max);
+  *saturation=c*MagickSafeReciprocal(max);
 }
 
 /*
@@ -1575,7 +1575,7 @@ MagickExport double GenerateDifferentialNoise(RandomInfo *random_info,
         beta=GetPseudoRandomValue(random_info);
         alpha*=beta;
       }
-      noise=(double) QuantumRange*i*PerceptibleReciprocal(SigmaPoisson);
+      noise=(double) QuantumRange*i*MagickSafeReciprocal(SigmaPoisson);
       break;
     }
     case RandomNoise:
@@ -1638,8 +1638,8 @@ MagickExport size_t GetOptimalKernelWidth1D(const double radius,
   gamma=fabs(sigma);
   if (gamma <= MagickEpsilon)
     return(3UL);
-  alpha=PerceptibleReciprocal(2.0*gamma*gamma);
-  beta=(double) PerceptibleReciprocal((double) MagickSQ2PI*gamma);
+  alpha=MagickSafeReciprocal(2.0*gamma*gamma);
+  beta=(double) MagickSafeReciprocal((double) MagickSQ2PI*gamma);
   for (width=5; ; )
   {
     normalize=0.0;
@@ -1679,8 +1679,8 @@ MagickExport size_t GetOptimalKernelWidth2D(const double radius,
   gamma=fabs(sigma);
   if (gamma <= MagickEpsilon)
     return(3UL);
-  alpha=PerceptibleReciprocal(2.0*gamma*gamma);
-  beta=(double) PerceptibleReciprocal((double) Magick2PI*gamma*gamma);
+  alpha=MagickSafeReciprocal(2.0*gamma*gamma);
+  beta=(double) MagickSafeReciprocal((double) Magick2PI*gamma*gamma);
   for (width=5; ; )
   {
     normalize=0.0;

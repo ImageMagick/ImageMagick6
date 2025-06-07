@@ -2804,7 +2804,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
               k_indexes++;
             }
             /* Sync'ed channels, all channels are modified */
-            gamma=PerceptibleReciprocal(gamma);
+            gamma=MagickSafeReciprocal(gamma);
             if (count != 0)
               gamma*=(double) kernel->height/count;
             SetPixelRed(q,ClampToQuantum(gamma*result.red));
@@ -3053,7 +3053,7 @@ static ssize_t MorphologyPrimitive(const Image *image, Image *result_image,
                   k_indexes += virt_width;
                 }
                 /* Sync'ed channels, all channels are modified */
-                gamma=PerceptibleReciprocal(gamma);
+                gamma=MagickSafeReciprocal(gamma);
                 if (count != 0)
                   gamma*=(double) kernel->height*kernel->width/count;
                 SetPixelRed(q,ClampToQuantum((MagickRealType) (gamma*result.red)));

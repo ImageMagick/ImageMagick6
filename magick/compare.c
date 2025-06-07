@@ -575,7 +575,7 @@ static MagickBooleanType GetAbsoluteDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  area=PerceptibleReciprocal((double) columns*rows);
+  area=MagickSafeReciprocal((double) columns*rows);
   for (j=0; j <= CompositeChannels; j++)
     distortion[j]*=area;
   return(status);
@@ -724,7 +724,7 @@ static MagickBooleanType GetFuzzDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  area=PerceptibleReciprocal((double) columns*rows);
+  area=MagickSafeReciprocal((double) columns*rows);
   for (j=0; j <= CompositeChannels; j++)
     distortion[j]*=area;
   return(status);
@@ -1124,7 +1124,7 @@ static MagickBooleanType GetMeanSquaredDistortion(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  area=PerceptibleReciprocal((double) columns*rows);
+  area=MagickSafeReciprocal((double) columns*rows);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     distortion[i]*=area;
   distortion[CompositeChannels]/=(double) GetNumberChannels(image,channel);
@@ -1319,13 +1319,13 @@ static MagickBooleanType GetNormalizedCrossCorrelationDistortion(
   /*
     Divide by the standard deviation.
   */
-  area=PerceptibleReciprocal((double) columns*rows);
+  area=MagickSafeReciprocal((double) columns*rows);
   for (i=0; i < (ssize_t) CompositeChannels; i++)
   {
     distortion[i]*=area;
     alpha_variance[i]*=area;
     beta_variance[i]*=area;
-    distortion[i]*=PerceptibleReciprocal(sqrt(alpha_variance[i]*
+    distortion[i]*=MagickSafeReciprocal(sqrt(alpha_variance[i]*
       beta_variance[i]));
     distortion[CompositeChannels]+=distortion[i];
   }
@@ -1482,21 +1482,21 @@ static MagickBooleanType GetPeakSignalToNoiseRatio(const Image *image,
   status=GetMeanSquaredDistortion(image,reconstruct_image,channel,distortion,
     exception);
   if ((channel & RedChannel) != 0)
-    distortion[RedChannel]=10.0*PerceptibleLog10(PerceptibleReciprocal(
+    distortion[RedChannel]=10.0*MagickSafeLog10(MagickSafeReciprocal(
       distortion[RedChannel]))/MagickPSNRDistortion;
   if ((channel & GreenChannel) != 0)
-    distortion[GreenChannel]=10.0*PerceptibleLog10(PerceptibleReciprocal(
+    distortion[GreenChannel]=10.0*MagickSafeLog10(MagickSafeReciprocal(
     distortion[GreenChannel]))/MagickPSNRDistortion;
   if ((channel & BlueChannel) != 0)
-    distortion[BlueChannel]=10.0*PerceptibleLog10(PerceptibleReciprocal(
+    distortion[BlueChannel]=10.0*MagickSafeLog10(MagickSafeReciprocal(
       distortion[BlueChannel]))/MagickPSNRDistortion;
   if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
-    distortion[OpacityChannel]=10.0*PerceptibleLog10(PerceptibleReciprocal(
+    distortion[OpacityChannel]=10.0*MagickSafeLog10(MagickSafeReciprocal(
       distortion[OpacityChannel]))/MagickPSNRDistortion;
   if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
-    distortion[BlackChannel]=10.0*PerceptibleLog10(PerceptibleReciprocal(
+    distortion[BlackChannel]=10.0*MagickSafeLog10(MagickSafeReciprocal(
       distortion[BlackChannel]))/MagickPSNRDistortion;
-  distortion[CompositeChannels]=10.0*PerceptibleLog10(PerceptibleReciprocal(
+  distortion[CompositeChannels]=10.0*MagickSafeLog10(MagickSafeReciprocal(
     distortion[CompositeChannels]))/MagickPSNRDistortion;
   return(status);
 }
@@ -2095,7 +2095,7 @@ MagickExport MagickBooleanType IsImagesEqual(Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  gamma=PerceptibleReciprocal(area);
+  gamma=MagickSafeReciprocal(area);
   image->error.mean_error_per_pixel=gamma*mean_error_per_pixel;
   image->error.normalized_mean_error=gamma*QuantumScale*QuantumScale*mean_error;
   image->error.normalized_maximum_error=QuantumScale*maximum_error;

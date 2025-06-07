@@ -1043,12 +1043,12 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
   center.y=0.5*image->rows;
   radius=center.x;
   if (image->columns > image->rows)
-    scale.y=(double) image->columns*PerceptibleReciprocal((double)
+    scale.y=(double) image->columns*MagickSafeReciprocal((double)
       image->rows);
   else
     if (image->columns < image->rows)
       {
-        scale.x=(double) image->rows*PerceptibleReciprocal((double)
+        scale.x=(double) image->rows*MagickSafeReciprocal((double)
           image->columns);
         radius=center.y;
       }
@@ -1117,9 +1117,9 @@ MagickExport Image *ImplodeImage(const Image *image,const double amount,
           factor=1.0;
           if (distance > 0.0)
             factor=pow(sin((double) (MagickPI*sqrt(distance)*
-              PerceptibleReciprocal(radius)/2.0)),-amount);
-          offset.x=factor*delta.x*PerceptibleReciprocal(scale.x)+center.x;
-          offset.y=factor*delta.y*PerceptibleReciprocal(scale.y)+center.y;
+              MagickSafeReciprocal(radius)/2.0)),-amount);
+          offset.x=factor*delta.x*MagickSafeReciprocal(scale.x)+center.x;
+          offset.y=factor*delta.y*MagickSafeReciprocal(scale.y)+center.y;
           if ((IsValidPixelOffset(offset.x,image->columns) != MagickFalse) &&
               (IsValidPixelOffset(offset.y,image->rows) != MagickFalse))
             status=InterpolateMagickPixelPacket(image,image_view,
@@ -3343,7 +3343,7 @@ MagickExport Image *WaveImage(const Image *image,const double amplitude,
     }
   for (i=0; i < (ssize_t) wave_image->columns; i++)
     sine_map[i]=(float) (fabs(amplitude)+amplitude*sin((double)
-      ((2.0*MagickPI*i)*PerceptibleReciprocal(wave_length))));
+      ((2.0*MagickPI*i)*MagickSafeReciprocal(wave_length))));
   /*
     Wave image.
   */

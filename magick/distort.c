@@ -98,7 +98,7 @@ static void InvertAffineCoefficients(const double *coeff,double *inverse)
   /* From "Digital Image Warping" by George Wolberg, page 50 */
   double determinant;
 
-  determinant=PerceptibleReciprocal(coeff[0]*coeff[4]-coeff[1]*coeff[3]);
+  determinant=MagickSafeReciprocal(coeff[0]*coeff[4]-coeff[1]*coeff[3]);
   inverse[0]=determinant*coeff[4];
   inverse[1]=determinant*(-coeff[1]);
   inverse[2]=determinant*(coeff[1]*coeff[5]-coeff[2]*coeff[4]);
@@ -113,7 +113,7 @@ static void InvertPerspectiveCoefficients(const double *coeff,
   /* From "Digital Image Warping" by George Wolberg, page 53 */
   double determinant;
 
-  determinant=PerceptibleReciprocal(coeff[0]*coeff[4]-coeff[3]*coeff[1]);
+  determinant=MagickSafeReciprocal(coeff[0]*coeff[4]-coeff[3]*coeff[1]);
   inverse[0]=determinant*(coeff[4]-coeff[7]*coeff[5]);
   inverse[1]=determinant*(coeff[7]*coeff[2]-coeff[1]);
   inverse[2]=determinant*(coeff[1]*coeff[5]-coeff[4]*coeff[2]);
@@ -1804,28 +1804,28 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         s.x = (double) image->page.x;
         s.y = (double) image->page.y;
         scale=inverse[6]*s.x+inverse[7]*s.y+1.0;
-        scale=PerceptibleReciprocal(scale);
+        scale=MagickSafeReciprocal(scale);
         d.x = scale*(inverse[0]*s.x+inverse[1]*s.y+inverse[2]);
         d.y = scale*(inverse[3]*s.x+inverse[4]*s.y+inverse[5]);
         InitalBounds(d);
         s.x = (double) image->page.x+image->columns;
         s.y = (double) image->page.y;
         scale=inverse[6]*s.x+inverse[7]*s.y+1.0;
-        scale=PerceptibleReciprocal(scale);
+        scale=MagickSafeReciprocal(scale);
         d.x = scale*(inverse[0]*s.x+inverse[1]*s.y+inverse[2]);
         d.y = scale*(inverse[3]*s.x+inverse[4]*s.y+inverse[5]);
         ExpandBounds(d);
         s.x = (double) image->page.x;
         s.y = (double) image->page.y+image->rows;
         scale=inverse[6]*s.x+inverse[7]*s.y+1.0;
-        scale=PerceptibleReciprocal(scale);
+        scale=MagickSafeReciprocal(scale);
         d.x = scale*(inverse[0]*s.x+inverse[1]*s.y+inverse[2]);
         d.y = scale*(inverse[3]*s.x+inverse[4]*s.y+inverse[5]);
         ExpandBounds(d);
         s.x = (double) image->page.x+image->columns;
         s.y = (double) image->page.y+image->rows;
         scale=inverse[6]*s.x+inverse[7]*s.y+1.0;
-        scale=PerceptibleReciprocal(scale);
+        scale=MagickSafeReciprocal(scale);
         d.x = scale*(inverse[0]*s.x+inverse[1]*s.y+inverse[2]);
         d.y = scale*(inverse[3]*s.x+inverse[4]*s.y+inverse[5]);
         ExpandBounds(d);
@@ -1887,8 +1887,8 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         geometry.width = (size_t) ceil((coeff[0]-coeff[1])*
           (coeff[5]-coeff[4])*0.5);
         /* correct scaling factors relative to new size */
-        coeff[6]=(coeff[5]-coeff[4])*PerceptibleReciprocal(geometry.width); /* changed width */
-        coeff[7]=(coeff[0]-coeff[1])*PerceptibleReciprocal(geometry.height); /* should be about 1.0 */
+        coeff[6]=(coeff[5]-coeff[4])*MagickSafeReciprocal(geometry.width); /* changed width */
+        coeff[7]=(coeff[0]-coeff[1])*MagickSafeReciprocal(geometry.height); /* should be about 1.0 */
         break;
       }
       case Cylinder2PlaneDistortion:
