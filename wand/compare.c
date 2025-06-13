@@ -1241,7 +1241,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
         columns,
         rows;
 
-      SetImageDistortionBounds(image,reconstruct_image,&columns,&rows);
+      SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
       scale=(double) columns*rows;
       break;
     }
@@ -1292,7 +1292,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     }
     case PeakSignalToNoiseRatioMetric:
     {
-      scale=MagickPSNRDistortion;
+      scale=MagickSafePSNRRecipicol(10.0);
       break;
     }
     default:
@@ -1499,6 +1499,11 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
                 difference_image->page.y);
               (void) FormatLocaleFile(stderr,"    Similarity metric: %.*g\n",
                 GetMagickPrecision(),similarity_metric);
+              (void) FormatLocaleFile(stderr,"   Similarity threshold: %*g\n",
+                GetMagickPrecision(),similarity_threshold);
+              (void) FormatLocaleFile(stderr,
+                "   Dissimilarity threshold: %*g\n",GetMagickPrecision(),
+                dissimilarity_threshold);
             }
         }
       (void) ResetImagePage(difference_image,"0x0+0+0");

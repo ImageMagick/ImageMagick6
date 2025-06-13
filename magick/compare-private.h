@@ -25,8 +25,10 @@ extern "C" {
 #include "magick/image-private.h"
 
 #define DefaultSimilarityThreshold  (-1.0)
+#define MagickSafePSNRRecipicol(x)  ((x)*log10(1.0/MagickEpsilon))
 
-static inline void SetImageDistortionBounds(const Image *image,
+
+static inline void SetImageCompareBounds(const Image *image,
   const Image *reconstruct_image,size_t *columns,size_t *rows)
 {
   const char
