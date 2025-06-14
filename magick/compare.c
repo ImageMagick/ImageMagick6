@@ -1130,9 +1130,9 @@ static MagickBooleanType GetMSESimilarity(const Image *image,
   return(status);
 }
 
-static MagickBooleanType GetNCCSimilarity(
-  const Image *image,const Image *reconstruct_image,const ChannelType channel,
-  double *similarity,ExceptionInfo *exception)
+static MagickBooleanType GetNCCSimilarity(const Image *image,
+  const Image *reconstruct_image,const ChannelType channel,double *similarity,
+  ExceptionInfo *exception)
 {
 #define SimilarityImageTag  "Similarity/Image"
 
@@ -2402,16 +2402,6 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
       }
   }
   similarity_view=DestroyCacheView(similarity_view);
-  switch (metric)
-  {       
-    case NormalizedCrossCorrelationErrorMetric:
-    { 
-      similarity_info.similarity=1.0-similarity_info.similarity;
-      break;
-    }   
-    default:
-      break;
-  }   
   if (status == MagickFalse)
     similarity_image=DestroyImage(similarity_image);
   *similarity_metric=similarity_info.similarity;
