@@ -836,9 +836,10 @@ MagickExport Image *MontageImageList(const ImageInfo *image_info,
                 image->columns : width)-2*border_width),(double)
                 (metrics.ascent-metrics.descent+4)*MultilineCensus(value),
                 (double) (x_offset+border_width),(double)
-                ((montage_info->frame ? y_offset+height+border_width+4 :
-                y_offset+extract_info.height+border_width+
-                (montage_info->shadow != MagickFalse ? 4 : 0))+bevel_width));
+                ((montage_info->frame ? y_offset+height+border_width+4 : y_offset+
+                (concatenate != MagickFalse ? max_height : extract_info.height)+
+                border_width+(montage_info->shadow != MagickFalse ? 4 : 0))+
+                bevel_width));
               (void) CloneString(&draw_info->geometry,geometry);
               (void) CloneString(&draw_info->text,value);
               (void) AnnotateImage(montage,draw_info);
