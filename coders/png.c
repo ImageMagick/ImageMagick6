@@ -12163,6 +12163,11 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
       mng_info->write_png_colortype = /* 3 */ 4;
       mng_info->write_png_depth = 8;
       image->depth = 8;
+      if (image->matte != MagickFalse)
+        (void) SetImageType(image,PaletteMatteType);
+      else
+        (void) SetImageType(image,PaletteType);
+
     }
 
   if (mng_info->write_png24)
@@ -12173,7 +12178,6 @@ static MagickBooleanType WritePNGImage(const ImageInfo *image_info,Image *image)
 
       if (image->matte != MagickFalse)
         (void) SetImageType(image,TrueColorMatteType);
-
       else
         (void) SetImageType(image,TrueColorType);
 
