@@ -1779,7 +1779,8 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
   {
     case NormalizedCrossCorrelationErrorMetric:
     {
-      *distortion=1.0-(*distortion);
+      if (*distortion >= 0.0)
+        *distortion=1.0-(*distortion);
       break;
     }
     default: break;
@@ -1939,7 +1940,8 @@ MagickExport double *GetImageChannelDistortions(Image *image,
     case NormalizedCrossCorrelationErrorMetric:
     {
       for (i=0; i <= (ssize_t) CompositeChannels; i++)
-        distortion[i]=1.0-distortion[i];
+        if (*distortion >= 0.0)
+          distortion[i]=1.0-distortion[i];
       break;
     }
     default: break;
