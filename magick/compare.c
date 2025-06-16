@@ -204,6 +204,8 @@ MagickExport Image *CompareImageChannels(Image *image,
     distortion,exception);
   if (status == MagickFalse)
     return((Image *) NULL);
+  if ((metric == NormalizedCrossCorrelationErrorMetric) && (*distortion > 1.0))
+    *distortion=1.0-(*distortion);
   clone_image=CloneImage(image,0,0,MagickTrue,exception);
   if (clone_image == (Image *) NULL)
     return((Image *) NULL);
@@ -1779,8 +1781,7 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
   {
     case NormalizedCrossCorrelationErrorMetric:
     {
-      if (*distortion >= 0.0)
-        *distortion=1.0-(*distortion);
+      *distortion=1.0-(*distortion);
       break;
     }
     default: break;
@@ -1940,8 +1941,7 @@ MagickExport double *GetImageChannelDistortions(Image *image,
     case NormalizedCrossCorrelationErrorMetric:
     {
       for (i=0; i <= (ssize_t) CompositeChannels; i++)
-        if (*distortion >= 0.0)
-          distortion[i]=1.0-distortion[i];
+        distortion[i]=1.0-distortion[i];
       break;
     }
     default: break;
