@@ -1513,6 +1513,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
     *reconstruct_phash;
 
   double
+    delta,
     difference;
 
   ssize_t
@@ -1537,51 +1538,54 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
     */
     if ((channel & RedChannel) != 0)
       {
-        difference=reconstruct_phash[RedChannel].P[i]-
-          image_phash[RedChannel].P[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[RedChannel]+=difference*difference;
-        similarity[CompositeChannels]+=QuantumScale*difference*difference;
+        delta=reconstruct_phash[RedChannel].P[i]-image_phash[RedChannel].P[i];
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[RedChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if ((channel & GreenChannel) != 0)
       {
-        difference=reconstruct_phash[GreenChannel].P[i]-
+        delta=reconstruct_phash[GreenChannel].P[i]-
           image_phash[GreenChannel].P[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[GreenChannel]+=difference*difference;
-        similarity[CompositeChannels]+=QuantumScale*difference*difference;
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[GreenChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if ((channel & BlueChannel) != 0)
       {
-        difference=reconstruct_phash[BlueChannel].P[i]-
-          image_phash[BlueChannel].P[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[BlueChannel]+=difference*difference;
-        similarity[CompositeChannels]+=QuantumScale*difference*difference;
+        delta=reconstruct_phash[BlueChannel].P[i]-image_phash[BlueChannel].P[i];
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[BlueChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse) &&
         (reconstruct_image->matte != MagickFalse))
       {
-        difference=reconstruct_phash[OpacityChannel].P[i]-
+        delta=reconstruct_phash[OpacityChannel].P[i]-
           image_phash[OpacityChannel].P[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[OpacityChannel]+=difference*difference;
-        similarity[CompositeChannels]+=QuantumScale*difference*difference;
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[OpacityChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if (((channel & IndexChannel) != 0) &&
         (image->colorspace == CMYKColorspace) &&
         (reconstruct_image->colorspace == CMYKColorspace))
       {
-        difference=reconstruct_phash[IndexChannel].P[i]-
+        delta=reconstruct_phash[IndexChannel].P[i]-
           image_phash[IndexChannel].P[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[IndexChannel]+=difference*difference;
-        similarity[CompositeChannels]+=QuantumScale*difference*difference;
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[IndexChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
   }
   /*
@@ -1594,54 +1598,57 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
     */
     if ((channel & RedChannel) != 0)
       {
-        difference=reconstruct_phash[RedChannel].Q[i]-
-          image_phash[RedChannel].Q[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[RedChannel]+=difference*difference;
-        similarity[CompositeChannels]+=difference*difference;
+        delta=reconstruct_phash[RedChannel].Q[i]-image_phash[RedChannel].Q[i];
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[RedChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if ((channel & GreenChannel) != 0)
       {
-        difference=reconstruct_phash[GreenChannel].Q[i]-
+        delta=reconstruct_phash[GreenChannel].Q[i]-
           image_phash[GreenChannel].Q[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[GreenChannel]+=difference*difference;
-        similarity[CompositeChannels]+=difference*difference;
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[GreenChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if ((channel & BlueChannel) != 0)
       {
-        difference=reconstruct_phash[BlueChannel].Q[i]-
-          image_phash[BlueChannel].Q[i];
-        similarity[BlueChannel]+=difference*difference;
-        similarity[CompositeChannels]+=difference*difference;
+        delta=reconstruct_phash[BlueChannel].Q[i]-image_phash[BlueChannel].Q[i];
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[BlueChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse) &&
         (reconstruct_image->matte != MagickFalse))
       {
-        difference=reconstruct_phash[OpacityChannel].Q[i]-
+        delta=reconstruct_phash[OpacityChannel].Q[i]-
           image_phash[OpacityChannel].Q[i];
-        if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[OpacityChannel]+=difference*difference;
-        similarity[CompositeChannels]+=difference*difference;
+        if (IsNaN(delta) != 0)
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[OpacityChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
     if (((channel & IndexChannel) != 0) &&
         (image->colorspace == CMYKColorspace) &&
         (reconstruct_image->colorspace == CMYKColorspace))
       {
-        difference=reconstruct_phash[IndexChannel].Q[i]-
+        delta=reconstruct_phash[IndexChannel].Q[i]-
           image_phash[IndexChannel].Q[i];
         if (IsNaN(difference) != 0)
-          difference=0.0;
-        similarity[IndexChannel]+=difference*difference;
-        similarity[CompositeChannels]+=difference*difference;
+          delta=0.0;
+        difference=delta*delta/PHASHNormalizationFactor;
+        similarity[IndexChannel]+=difference;
+        similarity[CompositeChannels]+=difference;
       }
   }
   similarity[CompositeChannels]/=(double) GetNumberChannels(image,channel);
-  for (i=0; i <= (ssize_t) CompositeChannels; i++)
-    similarity[i]/=PHASHNormalizationFactor;
   /*
     Free resources.
   */
