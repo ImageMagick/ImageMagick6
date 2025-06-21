@@ -1641,7 +1641,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
       {
         delta=reconstruct_phash[IndexChannel].Q[i]-
           image_phash[IndexChannel].Q[i];
-        if (IsNaN(difference) != 0)
+        if (IsNaN(delta) != 0)
           delta=0.0;
         difference=delta*delta/PHASHNormalizationFactor;
         similarity[IndexChannel]+=difference;
