@@ -501,7 +501,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     {
       double
         Da,
-        delta,
+        error,
         Sa;
 
       size_t
@@ -513,9 +513,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         ((double) QuantumRange-(double) OpaqueOpacity));
       if ((channel & RedChannel) != 0)
         {
-          delta=Sa*(double) GetPixelRed(p)-Da*(double)
+          error=Sa*(double) GetPixelRed(p)-Da*(double)
             GetPixelRed(q);
-          if ((delta*delta) >= fuzz)
+          if ((error*error) >= fuzz)
             {
               channel_similarity[RedChannel]++;
               count++;
@@ -523,9 +523,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         }
       if ((channel & GreenChannel) != 0)
         {
-          delta=Sa*(double) GetPixelGreen(p)-Da*(double)
+          error=Sa*(double) GetPixelGreen(p)-Da*(double)
             GetPixelGreen(q);
-          if ((delta*delta) >= fuzz)
+          if ((error*error) >= fuzz)
             {
               channel_similarity[GreenChannel]++;
               count++;
@@ -533,9 +533,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         }
       if ((channel & BlueChannel) != 0)
         {
-          delta=Sa*(double) GetPixelBlue(p)-Da*(double)
+          error=Sa*(double) GetPixelBlue(p)-Da*(double)
             GetPixelBlue(q);
-          if ((delta*delta) >= fuzz)
+          if ((error*error) >= fuzz)
             {
               channel_similarity[BlueChannel]++;
               count++;
@@ -544,9 +544,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
       if (((channel & OpacityChannel) != 0) &&
           (image->matte != MagickFalse))
         {
-          delta=(double) GetPixelOpacity(p)-(double)
+          error=(double) GetPixelOpacity(p)-(double)
             GetPixelOpacity(q);
-          if ((delta*delta) >= fuzz)
+          if ((error*error) >= fuzz)
             {
               channel_similarity[OpacityChannel]++;
               count++;
@@ -555,9 +555,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace))
         {
-          delta=Sa*(double) indexes[x]-Da*(double)
+          error=Sa*(double) indexes[x]-Da*(double)
             reconstruct_indexes[x];
-          if ((delta*delta) >= fuzz)
+          if ((error*error) >= fuzz)
             {
               channel_similarity[IndexChannel]++;
               count++;
@@ -645,13 +645,10 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
     for (x=0; x < (ssize_t) columns; x++)
     {
       MagickRealType
-        delta,
         Da,
+        error,
         Sa;
  
-      size_t
-        count = 0;
-
       Sa=QuantumScale*(image->matte != MagickFalse ? (double)
         GetPixelAlpha(p) : ((double) QuantumRange-(double) OpaqueOpacity));
       Da=QuantumScale*(reconstruct_image->matte != MagickFalse ?
@@ -659,58 +656,56 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
         OpaqueOpacity));
       if ((channel & RedChannel) != 0)
         {
-          delta=Sa*(double) GetPixelRed(p)-Da*(double) GetPixelRed(q);
-          if ((delta*delta) > fuzz)
+          error=QuantumScale*(Sa*GetPixelRed(p)-Da*GetPixelRed(q));
+          if ((error*error) > fuzz)
             {
-              channel_similarity[RedChannel]+=QuantumScale*fabs(delta);
-              channel_similarity[CompositeChannels]+=QuantumScale*fabs(delta);
-              count++;
+              channel_similarity[RedChannel]+=error*error;
+              channel_similarity[CompositeChannels]+=error*error;
+              channel_area++;
             }
         }
       if ((channel & GreenChannel) != 0)
         {
-          delta=Sa*(double) GetPixelGreen(p)-Da*(double) GetPixelGreen(q);
-          if ((delta*delta) > fuzz)
+          error=QuantumScale*(Sa*GetPixelGreen(p)-Da*GetPixelGreen(q));
+          if ((error*error) > fuzz)
             {
-              channel_similarity[GreenChannel]+=QuantumScale*fabs(delta);
-              channel_similarity[CompositeChannels]+=QuantumScale*fabs(delta);
-              count++;
+              channel_similarity[GreenChannel]+=error*error;
+              channel_similarity[CompositeChannels]+=error*error;
+              channel_area++;
             }
         }
       if ((channel & BlueChannel) != 0)
         {
-          delta=Sa*(double) GetPixelBlue(p)-Da*(double) GetPixelBlue(q);
-          if ((delta*delta) > fuzz)
+          error=QuantumScale*(Sa*GetPixelBlue(p)-Da*GetPixelBlue(q));
+          if ((error*error) > fuzz)
             {
-              channel_similarity[BlueChannel]+=QuantumScale*fabs(delta);
-              channel_similarity[CompositeChannels]+=QuantumScale*fabs(delta);
-              count++;
+              channel_similarity[BlueChannel]+=error*error;
+              channel_similarity[CompositeChannels]+=error*error;
+              channel_area++;
             }
         }
       if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
         {
-          delta=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
-          if ((delta*delta) > fuzz)
+          error=QuantumScale*((double) GetPixelOpacity(p)-GetPixelOpacity(q));
+          if ((error*error) > fuzz)
             {
-              channel_similarity[OpacityChannel]+=QuantumScale*fabs(delta);
-              channel_similarity[CompositeChannels]+=QuantumScale*fabs(delta);
-              count++;
+              channel_similarity[OpacityChannel]+=error*error;
+              channel_similarity[CompositeChannels]+=error*error;
+              channel_area++;
             }
         }
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace))
         {
-          delta=Sa*(double) GetPixelIndex(indexes+x)-Da*
-            (double) GetPixelIndex(reconstruct_indexes+x);
-          if ((delta*delta) > fuzz)
+          error=QuantumScale*(Sa*GetPixelIndex(indexes+x)-Da*
+            GetPixelIndex(reconstruct_indexes+x));
+          if ((error*error) > fuzz)
             {
-              channel_similarity[BlackChannel]+=QuantumScale*fabs(delta);
-              channel_similarity[CompositeChannels]+=QuantumScale*fabs(delta);
-              count++;
+              channel_similarity[BlackChannel]+=error*error;
+              channel_similarity[CompositeChannels]+=error*error;
+              channel_area++;
             }
         }
-      if (count != 0)
-        channel_area++;
       p++;
       q++;
     }
@@ -728,7 +723,6 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
   area=MagickSafeReciprocal(area);
   for (i=0; i <= (ssize_t) CompositeChannels; i++)
     similarity[i]*=area;
-  similarity[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   return(status);
 }
 
@@ -1304,7 +1298,7 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
       ssize_t
         j;
 
-      for (j=0; j < (ssize_t) CompositeChannels; j++)
+      for (j=0; j <= (ssize_t) CompositeChannels; j++)
       {
         similarity[j]+=channel_similarity[j];
         alpha_variance[j]+=channel_alpha_variance[j];
@@ -1515,7 +1509,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
     *reconstruct_phash;
 
   double
-    delta,
+    error,
     difference;
 
   ssize_t
@@ -1540,40 +1534,40 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
     */
     if ((channel & RedChannel) != 0)
       {
-        delta=reconstruct_phash[RedChannel].P[i]-image_phash[RedChannel].P[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        error=reconstruct_phash[RedChannel].P[i]-image_phash[RedChannel].P[i];
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[RedChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
     if ((channel & GreenChannel) != 0)
       {
-        delta=reconstruct_phash[GreenChannel].P[i]-
+        error=reconstruct_phash[GreenChannel].P[i]-
           image_phash[GreenChannel].P[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[GreenChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
     if ((channel & BlueChannel) != 0)
       {
-        delta=reconstruct_phash[BlueChannel].P[i]-image_phash[BlueChannel].P[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        error=reconstruct_phash[BlueChannel].P[i]-image_phash[BlueChannel].P[i];
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[BlueChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
     if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse) &&
         (reconstruct_image->matte != MagickFalse))
       {
-        delta=reconstruct_phash[OpacityChannel].P[i]-
+        error=reconstruct_phash[OpacityChannel].P[i]-
           image_phash[OpacityChannel].P[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[OpacityChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1581,11 +1575,11 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
         (image->colorspace == CMYKColorspace) &&
         (reconstruct_image->colorspace == CMYKColorspace))
       {
-        delta=reconstruct_phash[IndexChannel].P[i]-
+        error=reconstruct_phash[IndexChannel].P[i]-
           image_phash[IndexChannel].P[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[IndexChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1600,40 +1594,40 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
     */
     if ((channel & RedChannel) != 0)
       {
-        delta=reconstruct_phash[RedChannel].Q[i]-image_phash[RedChannel].Q[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        error=reconstruct_phash[RedChannel].Q[i]-image_phash[RedChannel].Q[i];
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[RedChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
     if ((channel & GreenChannel) != 0)
       {
-        delta=reconstruct_phash[GreenChannel].Q[i]-
+        error=reconstruct_phash[GreenChannel].Q[i]-
           image_phash[GreenChannel].Q[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[GreenChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
     if ((channel & BlueChannel) != 0)
       {
-        delta=reconstruct_phash[BlueChannel].Q[i]-image_phash[BlueChannel].Q[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        error=reconstruct_phash[BlueChannel].Q[i]-image_phash[BlueChannel].Q[i];
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[BlueChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
     if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse) &&
         (reconstruct_image->matte != MagickFalse))
       {
-        delta=reconstruct_phash[OpacityChannel].Q[i]-
+        error=reconstruct_phash[OpacityChannel].Q[i]-
           image_phash[OpacityChannel].Q[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[OpacityChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1641,11 +1635,11 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
         (image->colorspace == CMYKColorspace) &&
         (reconstruct_image->colorspace == CMYKColorspace))
       {
-        delta=reconstruct_phash[IndexChannel].Q[i]-
+        error=reconstruct_phash[IndexChannel].Q[i]-
           image_phash[IndexChannel].Q[i];
-        if (IsNaN(delta) != 0)
-          delta=0.0;
-        difference=delta*delta/PHASHNormalizationFactor;
+        if (IsNaN(error) != 0)
+          error=0.0;
+        difference=error*error/PHASHNormalizationFactor;
         similarity[IndexChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
