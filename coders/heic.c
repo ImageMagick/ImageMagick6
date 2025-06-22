@@ -1336,6 +1336,11 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     MagickBooleanType
       lossless = image_info->quality >= 100 ? MagickTrue : MagickFalse;
 
+#if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,17,0)
+    struct heif_color_profile_nclx
+      nclx_profile;
+#endif
+
     struct heif_encoding_options
       *options;
 
@@ -1393,6 +1398,17 @@ static MagickBooleanType WriteHEICImage(const ImageInfo *image_info,
     status=IsHEIFSuccess(image,&error,&image->exception);
     if (status == MagickFalse)
       break;
+#if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,17,0)
+    /*
+      Set BT.709 primaries, sRGB transfer, @ full range.
+    */
+    memset(&nclx_profile,0,sizeof(nclx_profile));
+    heif_nclx_color_profile_set_matrix_coefficients(&nclx_profile,1);
+    heif_nclx_color_profile_set_color_primaries(&nclx_profile,1);
+    heif_nclx_color_profile_set_transfer_characteristics(&nclx_profile,13);
+    nclx_profile.full_range_flag=1;
+    heif_image_set_nclx_color_profile(heif_image,&nclx_profile);
+#endif
     profile=GetImageProfile(image,"icc");
     if (profile != (StringInfo *) NULL)
       (void) heif_image_set_raw_color_profile(heif_image,"prof",
