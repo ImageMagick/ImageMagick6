@@ -204,8 +204,6 @@ MagickExport Image *CompareImageChannels(Image *image,
     distortion,exception);
   if (status == MagickFalse)
     return((Image *) NULL);
-  if ((metric == NormalizedCrossCorrelationErrorMetric) && (*distortion > 1.0))
-    *distortion=1.0-(*distortion);
   clone_image=CloneImage(image,0,0,MagickTrue,exception);
   if (clone_image == (Image *) NULL)
     return((Image *) NULL);
@@ -445,10 +443,11 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     *reconstruct_view;
 
   double
-    area;
+    area,
+    fuzz;
 
   MagickBooleanType
-    status;
+    status = MagickTrue;
 
   size_t
     columns,
@@ -461,7 +460,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
   /*
     Compute the absolute difference in pixels between two images.
   */
-  status=MagickTrue;
+  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -516,7 +515,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           delta=Sa*(double) GetPixelRed(p)-Da*(double)
             GetPixelRed(q);
-          if ((delta*delta) >= MagickEpsilon)
+          if ((delta*delta) >= fuzz)
             {
               channel_similarity[RedChannel]++;
               count++;
@@ -526,7 +525,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           delta=Sa*(double) GetPixelGreen(p)-Da*(double)
             GetPixelGreen(q);
-          if ((delta*delta) >= MagickEpsilon)
+          if ((delta*delta) >= fuzz)
             {
               channel_similarity[GreenChannel]++;
               count++;
@@ -536,7 +535,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           delta=Sa*(double) GetPixelBlue(p)-Da*(double)
             GetPixelBlue(q);
-          if ((delta*delta) >= MagickEpsilon)
+          if ((delta*delta) >= fuzz)
             {
               channel_similarity[BlueChannel]++;
               count++;
@@ -547,7 +546,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           delta=(double) GetPixelOpacity(p)-(double)
             GetPixelOpacity(q);
-          if ((delta*delta) >= MagickEpsilon)
+          if ((delta*delta) >= fuzz)
             {
               channel_similarity[OpacityChannel]++;
               count++;
@@ -558,7 +557,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           delta=Sa*(double) indexes[x]-Da*(double)
             reconstruct_indexes[x];
-          if ((delta*delta) >= MagickEpsilon)
+          if ((delta*delta) >= fuzz)
             {
               channel_similarity[IndexChannel]++;
               count++;
@@ -1148,7 +1147,6 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
 
   double
     alpha_variance[CompositeChannels+1] = { 0.0 },
-    area,
     beta_variance[CompositeChannels+1] = { 0.0 };
 
   MagickBooleanType
@@ -1239,8 +1237,11 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
           beta=QuantumScale*(Da*(double) GetPixelRed(q)-
             reconstruct_statistics[RedChannel].mean);
           channel_similarity[RedChannel]+=alpha*beta;
+          channel_similarity[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[RedChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[RedChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if ((channel & GreenChannel) != 0)
         {
@@ -1249,8 +1250,11 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
           beta=QuantumScale*(Da*(double) GetPixelGreen(q)-
             reconstruct_statistics[GreenChannel].mean);
           channel_similarity[GreenChannel]+=alpha*beta;
+          channel_similarity[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[GreenChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[GreenChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if ((channel & BlueChannel) != 0)
         {
@@ -1269,8 +1273,11 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
           beta=QuantumScale*((double) GetPixelAlpha(q)-
             reconstruct_statistics[AlphaChannel].mean);
           channel_similarity[OpacityChannel]+=alpha*beta;
+          channel_similarity[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[OpacityChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[OpacityChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace) &&
@@ -1281,8 +1288,11 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
           beta=QuantumScale*(Da*(double) GetPixelIndex(reconstruct_indexes+
             x)-reconstruct_statistics[BlackChannel].mean);
           channel_similarity[BlackChannel]+=alpha*beta;
+          channel_similarity[CompositeChannels]+=alpha*beta;
           channel_alpha_variance[BlackChannel]+=alpha*alpha;
+          channel_alpha_variance[CompositeChannels]+=alpha*alpha;
           channel_beta_variance[BlackChannel]+=beta*beta;
+          channel_beta_variance[CompositeChannels]+=beta*beta;
         }
       p++;
       q++;
@@ -1320,17 +1330,9 @@ static MagickBooleanType GetNCCSimilarity(const Image *image,
   /*
     Divide by the standard deviation.
   */
-  area=MagickSafeReciprocal((double) columns*rows);
-  for (i=0; i < (ssize_t) CompositeChannels; i++)
-  {
-    similarity[i]*=area;
-    alpha_variance[i]*=area;
-    beta_variance[i]*=area;
-    similarity[i]*=MagickSafeReciprocal(sqrt(alpha_variance[i]*
-      beta_variance[i]));
-    similarity[CompositeChannels]+=similarity[i];
-  }
-  similarity[CompositeChannels]/=(double) GetNumberChannels(image,channel);
+  for (i=0; i <= (ssize_t) CompositeChannels; i++)
+    similarity[i]*=MagickSafeReciprocal(sqrt(alpha_variance[i])*
+      sqrt(beta_variance[i]));
   /*
     Free resources.
   */
@@ -1784,15 +1786,6 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
     }
   }
   *distortion=channel_similarity[CompositeChannels];
-  switch (metric)
-  {
-    case NormalizedCrossCorrelationErrorMetric:
-    {
-      *distortion=1.0-(*distortion);
-      break;
-    }
-    default: break;
-  }
   channel_similarity=(double *) RelinquishMagickMemory(channel_similarity);
   (void) FormatImageProperty(image,"distortion","%.*g",GetMagickPrecision(),
     *distortion);
@@ -1844,9 +1837,6 @@ MagickExport double *GetImageChannelDistortions(Image *image,
 
   size_t
     length;
-
-  ssize_t
-    i;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -1943,16 +1933,6 @@ MagickExport double *GetImageChannelDistortions(Image *image,
       return((double *) NULL);
     }
   distortion=similarity;
-  switch (metric)
-  {
-    case NormalizedCrossCorrelationErrorMetric:
-    {
-      for (i=0; i <= (ssize_t) CompositeChannels; i++)
-        distortion[i]=1.0-distortion[i];
-      break;
-    }
-    default: break;
-  }
   return(distortion);
 }
 
