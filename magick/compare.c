@@ -1789,6 +1789,8 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
     }
     default: break;
   } 
+  if (fabs(*distortion) < MagickEpsilon)
+    *distortion=0.0;
   channel_similarity=(double *) RelinquishMagickMemory(channel_similarity);
   (void) FormatImageProperty(image,"distortion","%.*g",GetMagickPrecision(),
     *distortion);
@@ -1840,6 +1842,9 @@ MagickExport double *GetImageChannelDistortions(Image *image,
 
   size_t
     length;
+
+  ssize_t
+    i;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -1935,17 +1940,19 @@ MagickExport double *GetImageChannelDistortions(Image *image,
       return((double *) NULL);
     }
   distortion=similarity;
-  distortion=channel_similarity;
   switch (metric)
   {
     case NormalizedCrossCorrelationErrorMetric:
     {
-      for (i=0; i <= MaxPixelChannels; i++)
+      for (i=0; i <= (ssize_t) CompositeChannels; i++)
         distortion[i]=(1.0-distortion[i])/2.0;
       break;
     }
     default: break;
   }
+  for (i=0; i <= (ssize_t) CompositeChannels; i++)
+    if (fabs(distortion[i]) < MagickEpsilon)
+      distortion[i]=0.0;
   return(distortion);
 }
 
