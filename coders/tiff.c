@@ -2011,6 +2011,7 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           /*
             Convert generic TIFF image.
           */
+          (void) SetImageStorageClass(image,DirectClass,exception);
           if (HeapOverflowSanityCheck(image->rows,sizeof(*pixels)) != MagickFalse)
             ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
           number_pixels=(MagickSizeType) image->columns*image->rows;
