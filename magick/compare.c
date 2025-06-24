@@ -1780,6 +1780,15 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
     }
   }
   *distortion=channel_similarity[CompositeChannels];
+  switch (metric)
+  {
+    case NormalizedCrossCorrelationErrorMetric:
+    {
+      *distortion=(1.0-(*distortion))/2.0;
+      break;
+    }
+    default: break;
+  } 
   channel_similarity=(double *) RelinquishMagickMemory(channel_similarity);
   (void) FormatImageProperty(image,"distortion","%.*g",GetMagickPrecision(),
     *distortion);
@@ -1853,8 +1862,7 @@ MagickExport double *GetImageChannelDistortions(Image *image,
     sizeof(*similarity));
   if (similarity == (double *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  (void) memset(similarity,0,length*
-    sizeof(*similarity));
+  (void) memset(similarity,0,length*sizeof(*similarity));
   status=MagickTrue;
   switch (metric)
   {
@@ -1927,6 +1935,17 @@ MagickExport double *GetImageChannelDistortions(Image *image,
       return((double *) NULL);
     }
   distortion=similarity;
+  distortion=channel_similarity;
+  switch (metric)
+  {
+    case NormalizedCrossCorrelationErrorMetric:
+    {
+      for (i=0; i <= MaxPixelChannels; i++)
+        distortion[i]=(1.0-distortion[i])/2.0;
+      break;
+    }
+    default: break;
+  }
   return(distortion);
 }
 
