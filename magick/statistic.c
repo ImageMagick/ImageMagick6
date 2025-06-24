@@ -2167,7 +2167,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       perceptual_hash[channel].P[i]=(-MagickSafeLog10(moments[channel].I[i]));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
-    Blur then transform to HCLp colorspace.
+    Blur then transform to HSB colorspace.
   */
   hash_image=BlurImage(image,0.0,1.0,exception);
   if (hash_image == (Image *) NULL)
