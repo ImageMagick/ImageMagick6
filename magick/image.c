@@ -1690,7 +1690,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
     q=(char *) p+1;
     if (*q == '%')
       {
-        p=q+1;
+        p++;
         continue;
       }
     field_width=0;
