@@ -175,7 +175,7 @@ MagickExport Image *CompareImageChannels(Image *image,
     *highlight_image;
 
   MagickBooleanType
-    status;
+    status = MagickTrue;
 
   MagickPixelPacket
     highlight,
@@ -245,8 +245,7 @@ MagickExport Image *CompareImageChannels(Image *image,
   /*
     Generate difference image.
   */
-  status=MagickTrue;
-  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
+  fuzz=image->fuzz*reconstruct_image->fuzz;
   GetMagickPixelPacket(image,&zero);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -460,7 +459,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
   /*
     Compute the absolute difference in pixels between two images.
   */
-  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
+  fuzz=image->fuzz*reconstruct_image->fuzz;
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -605,7 +604,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
     i,
     y;
 
-  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
+  fuzz=image->fuzz*reconstruct_image->fuzz;
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
