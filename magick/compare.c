@@ -166,9 +166,6 @@ MagickExport Image *CompareImageChannels(Image *image,
   const char
     *artifact;
 
-  double
-    fuzz;
-
   Image
     *clone_image,
     *difference_image,
@@ -245,7 +242,6 @@ MagickExport Image *CompareImageChannels(Image *image,
   /*
     Generate difference image.
   */
-  fuzz=image->fuzz*reconstruct_image->fuzz;
   GetMagickPixelPacket(image,&zero);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -298,70 +294,11 @@ MagickExport Image *CompareImageChannels(Image *image,
     reconstruct_pixel=zero;
     for (x=0; x < (ssize_t) columns; x++)
     {
-      MagickStatusType
-        difference;
-
       SetMagickPixelPacket(image,p,indexes == (IndexPacket *) NULL ? NULL :
         indexes+x,&pixel);
       SetMagickPixelPacket(reconstruct_image,q,reconstruct_indexes ==
         (IndexPacket *) NULL ? NULL : reconstruct_indexes+x,&reconstruct_pixel);
-      difference=MagickFalse;
-      if (channel == CompositeChannels)
-        {
-          if (IsMagickColorSimilar(&pixel,&reconstruct_pixel) == MagickFalse)
-            difference=MagickTrue;
-        }
-      else
-        {
-          double
-            Da,
-            distance,
-            pixel,
-            Sa;
-
-          Sa=QuantumScale*(image->matte != MagickFalse ? (double)
-            GetPixelAlpha(p) : ((double) QuantumRange-(double) OpaqueOpacity));
-          Da=QuantumScale*(image->matte != MagickFalse ? (double)
-            GetPixelAlpha(q) : ((double) QuantumRange-(double) OpaqueOpacity));
-          if ((channel & RedChannel) != 0)
-            {
-              pixel=Sa*(double) GetPixelRed(p)-Da*(double) GetPixelRed(q);
-              distance=pixel*pixel;
-              if (distance > fuzz)
-                difference=MagickTrue;
-            }
-          if ((channel & GreenChannel) != 0)
-            {
-              pixel=Sa*(double) GetPixelGreen(p)-Da*(double) GetPixelGreen(q);
-              distance=pixel*pixel;
-              if (distance > fuzz)
-                difference=MagickTrue;
-            }
-          if ((channel & BlueChannel) != 0)
-            {
-              pixel=Sa*(double) GetPixelBlue(p)-Da*(double) GetPixelBlue(q);
-              distance=pixel*pixel;
-              if (distance > fuzz)
-                difference=MagickTrue;
-            }
-          if (((channel & OpacityChannel) != 0) &&
-              (image->matte != MagickFalse))
-            {
-              pixel=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
-              distance=pixel*pixel;
-              if (distance > fuzz)
-                difference=MagickTrue;
-            }
-          if (((channel & IndexChannel) != 0) &&
-              (image->colorspace == CMYKColorspace))
-            {
-              pixel=Sa*(double) indexes[x]-Da*(double) reconstruct_indexes[x];
-              distance=pixel*pixel;
-              if (distance > fuzz)
-                difference=MagickTrue;
-            }
-        }
-      if (difference != MagickFalse)
+      if (IsMagickColorSimilar(&pixel,&reconstruct_pixel) == MagickFalse)
         SetPixelPacket(highlight_image,&highlight,r,highlight_indexes ==
           (IndexPacket *) NULL ? NULL : highlight_indexes+x);
       else
@@ -459,7 +396,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
   /*
     Compute the absolute difference in pixels between two images.
   */
-  fuzz=image->fuzz*reconstruct_image->fuzz;
+  fuzz=0.5*(image->fuzz,reconstruct_image->fuzz);
+  fuzz*=fuzz;
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -604,7 +542,8 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
     i,
     y;
 
-  fuzz=image->fuzz*reconstruct_image->fuzz;
+  fuzz=0.5*(image->fuzz,reconstruct_image->fuzz);
+  fuzz*=fuzz;
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
