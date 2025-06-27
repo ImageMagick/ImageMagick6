@@ -1681,8 +1681,7 @@ MagickExport MagickBooleanType IsColorSimilar(const Image *image,
     distance,
     scale;
 
-  fuzz=(double) MagickMax(image->fuzz,(MagickRealType) MagickSQ1_2);
-  fuzz*=fuzz;
+  fuzz=GetFuzzyColorDistance(image,(const Image *) NULL);
   scale=1.0;
   distance=0.0;
   if (image->matte != MagickFalse)
@@ -1903,16 +1902,11 @@ MagickPrivate MagickBooleanType IsIntensitySimilar(const Image *image,
     fuzz,
     pixel;
 
-  MagickRealType
-    distance;
-
   if (GetPixelIntensity(image,p) == GetPixelIntensity(image,q))
     return(MagickTrue);
-  fuzz=(MagickRealType) MagickMax(image->fuzz,MagickSQ1_2);
-  fuzz*=fuzz;
+  fuzz=GetFuzzyColorDistance(image,(const Image *) NULL);
   pixel=GetPixelIntensity(image,p)-GetPixelIntensity(image,q);
-  distance=pixel*pixel;
-  if (distance > fuzz)
+  if ((pixel*pixel) > fuzz)
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -1973,9 +1967,7 @@ MagickExport MagickBooleanType IsMagickColorSimilar(const MagickPixelPacket *p,
 
   if ((p->fuzz == 0.0) && (q->fuzz == 0.0))
     return(IsMagickColorEqual(p,q));
-  fuzz=(MagickRealType) MagickMax(MagickMax(p->fuzz,q->fuzz),(double)
-    MagickSQ1_2);
-  fuzz*=fuzz;
+  fuzz=p->fuzz*p->fuzz+q->fuzz*q->fuzz;
   scale=1.0;
   distance=0.0;
   if ((p->matte != MagickFalse) || (q->matte != MagickFalse))
@@ -2080,18 +2072,13 @@ MagickExport MagickBooleanType IsOpacitySimilar(const Image *image,
     fuzz,
     pixel;
 
-  MagickRealType
-    distance;
-
   if (image->matte == MagickFalse)
     return(MagickTrue);
   if (GetPixelOpacity(p) == GetPixelOpacity(q))
     return(MagickTrue);
-  fuzz=MagickMax(image->fuzz,(double) MagickSQ1_2);
-  fuzz*=fuzz;
+  fuzz=GetFuzzyColorDistance(image,(const Image *) NULL);
   pixel=(MagickRealType) GetPixelOpacity(p)-(MagickRealType) GetPixelOpacity(q);
-  distance=pixel*pixel;
-  if (distance > fuzz)
+  if ((pixel*pixel) > fuzz)
     return(MagickFalse);
   return(MagickTrue);
 }

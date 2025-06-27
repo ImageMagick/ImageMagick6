@@ -396,8 +396,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
   /*
     Compute the absolute difference in pixels between two images.
   */
-  fuzz=0.5*(image->fuzz,reconstruct_image->fuzz);
-  fuzz*=fuzz;
+  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
@@ -542,8 +541,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
     i,
     y;
 
-  fuzz=0.5*(image->fuzz,reconstruct_image->fuzz);
-  fuzz*=fuzz;
+  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
   image_view=AcquireVirtualCacheView(image,exception);
   reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);

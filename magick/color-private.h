@@ -34,12 +34,12 @@ extern MagickPrivate MagickBooleanType
 
 static inline double GetFuzzyColorDistance(const Image *p,const Image *q)
 {
-  double
-    fuzz;
-
-  fuzz=(double) MagickMax(MagickMax(p->fuzz,q->fuzz),(double)
-    MagickSQ1_2);
-  return(fuzz*fuzz);
+  /*
+    Variance-style combined fuzz.
+  */
+  if (q == (const Image *) NULL)
+    return(p->fuzz*p->fuzz);
+  return(p->fuzz*p->fuzz+q->fuzz*q->fuzz);
 }
 
 static inline MagickBooleanType IsColorEqual(const PixelPacket *p,
