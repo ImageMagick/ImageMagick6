@@ -1693,7 +1693,7 @@ MagickExport MagickBooleanType IsColorSimilar(const Image *image,
         GetPixelOpacity(p) : OpaqueOpacity)-(image->matte != MagickFalse ?
         q->opacity : OpaqueOpacity));
       distance=pixel*pixel;
-      if (distance > fuzz)
+      if (distance >= fuzz)
         return(MagickFalse);
       /*
         Generate a alpha scaling factor to generate a 4D cone on colorspace
@@ -1722,15 +1722,15 @@ MagickExport MagickBooleanType IsColorSimilar(const Image *image,
       pixel*=2.0;
     }
   distance+=scale*pixel*pixel;
-  if (distance > fuzz)
+  if (distance >= fuzz)
     return(MagickFalse);
   pixel=(double) GetPixelGreen(p)-(double) q->green;
   distance+=scale*pixel*pixel;
-  if (distance > fuzz)
+  if (distance >= fuzz)
     return(MagickFalse);
   pixel=(double) GetPixelBlue(p)-(double) q->blue;
   distance+=scale*pixel*pixel;
-  if (distance > fuzz)
+  if (distance >= fuzz)
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -1906,7 +1906,7 @@ MagickPrivate MagickBooleanType IsIntensitySimilar(const Image *image,
     return(MagickTrue);
   fuzz=GetFuzzyColorDistance(image,(const Image *) NULL);
   pixel=GetPixelIntensity(image,p)-GetPixelIntensity(image,q);
-  if ((pixel*pixel) > fuzz)
+  if ((pixel*pixel) >= fuzz)
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -1979,7 +1979,7 @@ MagickExport MagickBooleanType IsMagickColorSimilar(const MagickPixelPacket *p,
         OpaqueOpacity)-(q->matte != MagickFalse ? (double) q->opacity :
         (double) OpaqueOpacity);
       distance=pixel*pixel;
-      if (distance > fuzz)
+      if (distance >= fuzz)
         return(MagickFalse);
       /*
         Generate a alpha scaling factor to generate a 4D cone on colorspace.
@@ -1999,7 +1999,7 @@ MagickExport MagickBooleanType IsMagickColorSimilar(const MagickPixelPacket *p,
     {
       pixel=p->index-q->index;
       distance+=pixel*pixel*scale;
-      if (distance > fuzz)
+      if (distance >= fuzz)
         return(MagickFalse);
       scale*=(MagickRealType) (QuantumScale*((double) QuantumRange-p->index));
       scale*=(MagickRealType) (QuantumScale*((double) QuantumRange-q->index));
@@ -2022,15 +2022,15 @@ MagickExport MagickBooleanType IsMagickColorSimilar(const MagickPixelPacket *p,
       pixel*=2.0;
     }
   distance+=pixel*pixel*scale;
-  if (distance > fuzz)
+  if (distance >= fuzz)
     return(MagickFalse);
   pixel=GetPixelGreen(p)-q->green;
   distance+=pixel*pixel*scale;
-  if (distance > fuzz)
+  if (distance >= fuzz)
     return(MagickFalse);
   pixel=GetPixelBlue(p)-q->blue;
   distance+=pixel*pixel*scale;
-  if (distance > fuzz)
+  if (distance >= fuzz)
     return(MagickFalse);
   return(MagickTrue);
 }
@@ -2078,7 +2078,7 @@ MagickExport MagickBooleanType IsOpacitySimilar(const Image *image,
     return(MagickTrue);
   fuzz=GetFuzzyColorDistance(image,(const Image *) NULL);
   pixel=(MagickRealType) GetPixelOpacity(p)-(MagickRealType) GetPixelOpacity(q);
-  if ((pixel*pixel) > fuzz)
+  if ((pixel*pixel) >= fuzz)
     return(MagickFalse);
   return(MagickTrue);
 }
