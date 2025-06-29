@@ -18,6 +18,11 @@
 #ifndef MAGICKCORE_STUDIO_H
 #define MAGICKCORE_STUDIO_H
 
+#if defined(_OPENMP) && ((_OPENMP >= 200203) || defined(__OPENCC__))
+#  include <omp.h>
+#  define MAGICKCORE_OPENMP_SUPPORT  1
+#endif
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
@@ -153,11 +158,6 @@ extern "C" {
 #endif
 #if defined(MAGICKCORE_HAVE_OPENCL_CL_H) && !defined(MAGICK_PIXEL_RGBA)
 #  define MAGICKCORE_OPENCL_SUPPORT  1
-#endif
-
-#if defined(_OPENMP) && ((_OPENMP >= 200203) || defined(__OPENCC__))
-#  include <omp.h>
-#  define MAGICKCORE_OPENMP_SUPPORT  1
 #endif
 
 #if defined(MAGICKCORE_HAVE_PREAD) && defined(MAGICKCORE_HAVE_DECL_PREAD) && !MAGICKCORE_HAVE_DECL_PREAD
