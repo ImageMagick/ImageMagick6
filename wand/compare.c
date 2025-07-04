@@ -269,7 +269,6 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     status;
 
   MetricType
-    distortion_metric = MeanSquaredErrorMetric,
     metric = UndefinedErrorMetric;
 
   RectangleInfo
@@ -1159,7 +1158,6 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
   reconstruct_image=GetImageFromList(image,1);
   offset.x=0;
   offset.y=0;
-  distortion_metric=metric;
   if (subimage_search != MagickFalse)
     {
       char
@@ -1173,13 +1171,10 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       if (similarity_metric >= dissimilarity_threshold)
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "ImagesTooDissimilar","`%s'",image->filename);
-      if ((metric != AbsoluteErrorMetric) &&
-          (metric != PeakSignalToNoiseRatioMetric))
-        distortion_metric=MeanSquaredErrorMetric;
     }
   if (similarity_image == (Image *) NULL)
-    difference_image=CompareImageChannels(image,reconstruct_image,channels,
-      distortion_metric,&distortion,exception);
+    difference_image=CompareImageChannels(image,reconstruct_image,channels,metric,
+      &distortion,exception);
   else
     {
       Image
@@ -1190,8 +1185,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       */
       composite_image=CloneImage(image,0,0,MagickTrue,exception);
       if (composite_image == (Image *) NULL)
-        difference_image=CompareImageChannels(image,reconstruct_image,
-          channels,distortion_metric,&distortion,exception);
+        difference_image=CompareImageChannels(image,reconstruct_image,channels,metric,
+          &distortion,exception);
       else
         {
           Image
@@ -1202,8 +1197,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
 
           (void) CompositeImage(composite_image,CopyCompositeOp,
             reconstruct_image,offset.x,offset.y);
-          difference_image=CompareImageChannels(image,composite_image,channels,
-            distortion_metric,&distortion,exception);
+          difference_image=CompareImageChannels(image,composite_image,channels,metric,
+            &distortion,exception);
           if (difference_image != (Image *) NULL)
             {
               difference_image->page.x=offset.x;
@@ -1220,8 +1215,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
               Image
                 *sans_image;
 
-              sans_image=CompareImages(distort_image,reconstruct_image,
-                distortion_metric,&distortion,exception);
+              sans_image=CompareImages(distort_image,reconstruct_image,metric,
+                &distortion,exception);
               if (sans_image != (Image *) NULL)
                 sans_image=DestroyImage(sans_image);
               distort_image=DestroyImage(distort_image);
