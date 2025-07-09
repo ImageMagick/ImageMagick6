@@ -2113,7 +2113,7 @@ static double GetSimilarityMetric(const Image *image,
     geometry;
 
   size_t
-    length = MaxPixelChannels+1UL;
+    length = CompositeChannels+1UL;
 
   SetGeometry(reconstruct_image,&geometry);
   geometry.x=x_offset;
@@ -2135,62 +2135,55 @@ static double GetSimilarityMetric(const Image *image,
     case AbsoluteErrorMetric:
     {
       status=GetAESimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
-      break;
-    }
-    case DotProductCorrelationErrorMetric:
-    case PhaseCorrelationErrorMetric:
-    {
-      status=GetMSESimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case FuzzErrorMetric:
     {
       status=GetFUZZSimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case MeanAbsoluteErrorMetric:
     {
       status=GetMAESimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
-    case MeanErrorPerPixelErrorMetric:
+    case MeanErrorPerPixelMetric:
     {
       status=GetMEPPSimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case MeanSquaredErrorMetric:
     {
       status=GetMSESimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case NormalizedCrossCorrelationErrorMetric:
     {
       status=GetNCCSimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case PeakAbsoluteErrorMetric:
     {
       status=GetPASimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
-    case PeakSignalToNoiseRatioErrorMetric:
+    case PeakSignalToNoiseRatioMetric:
     {
       status=GetPSNRSimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case PerceptualHashErrorMetric:
     {
       status=GetPHASHSimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
     case RootMeanSquaredErrorMetric:
@@ -2198,24 +2191,12 @@ static double GetSimilarityMetric(const Image *image,
     default:
     {
       status=GetRMSESimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
-      break;
-    }
-    case StructuralDissimilarityErrorMetric:
-    {
-      status=GetDSSIMSimilarity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
-      break;
-    }
-    case StructuralSimilarityErrorMetric:
-    {
-      status=GetSSIMSimularity(similarity_image,reconstruct_image,
-        channel_similarity,exception);
+        DefaultChannels,channel_similarity,exception);
       break;
     }
   }
   similarity_image=DestroyImage(similarity_image);
-  similarity=channel_similarity[CompositePixelChannel];
+  similarity=channel_similarity[CompositeChannels];
   channel_similarity=(double *) RelinquishMagickMemory(channel_similarity);
   if (status == MagickFalse)
     return(NAN);
