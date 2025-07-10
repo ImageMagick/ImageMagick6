@@ -2135,55 +2135,55 @@ static double GetSimilarityMetric(const Image *image,
     case AbsoluteErrorMetric:
     {
       status=GetAESimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case FuzzErrorMetric:
     {
       status=GetFUZZSimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case MeanAbsoluteErrorMetric:
     {
       status=GetMAESimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case MeanErrorPerPixelMetric:
     {
       status=GetMEPPSimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case MeanSquaredErrorMetric:
     {
       status=GetMSESimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case NormalizedCrossCorrelationErrorMetric:
     {
       status=GetNCCSimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case PeakAbsoluteErrorMetric:
     {
       status=GetPASimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case PeakSignalToNoiseRatioMetric:
     {
       status=GetPSNRSimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case PerceptualHashErrorMetric:
     {
       status=GetPHASHSimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
     case RootMeanSquaredErrorMetric:
@@ -2191,7 +2191,7 @@ static double GetSimilarityMetric(const Image *image,
     default:
     {
       status=GetRMSESimilarity(similarity_image,reconstruct_image,
-        DefaultChannels,channel_similarity,exception);
+        CompositeChannels,channel_similarity,exception);
       break;
     }
   }
