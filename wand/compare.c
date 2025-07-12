@@ -1185,8 +1185,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       */
       composite_image=CloneImage(image,0,0,MagickTrue,exception);
       if (composite_image == (Image *) NULL)
-        difference_image=CompareImageChannels(image,reconstruct_image,channels,metric,
-          &distortion,exception);
+        difference_image=CompareImageChannels(image,reconstruct_image,channels,
+          metric,&distortion,exception);
       else
         {
           Image
@@ -1197,8 +1197,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
 
           (void) CompositeImage(composite_image,CopyCompositeOp,
             reconstruct_image,offset.x,offset.y);
-          difference_image=CompareImageChannels(image,composite_image,channels,metric,
-            &distortion,exception);
+          difference_image=CompareImageChannels(image,composite_image,channels,
+            metric,&distortion,exception);
           if (difference_image != (Image *) NULL)
             {
               difference_image->page.x=offset.x;
@@ -1215,6 +1215,8 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
               Image
                 *sans_image;
 
+              (void) SetImageArtifact(distort_image,"compare:virtual-pixels",
+                "false");
               sans_image=CompareImages(distort_image,reconstruct_image,metric,
                 &distortion,exception);
               if (sans_image != (Image *) NULL)
