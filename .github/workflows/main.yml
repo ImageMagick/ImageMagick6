@@ -106,7 +106,7 @@ jobs:
       shell: cmd
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        msbuild IM6.StaticDLL.${{matrix.architecture}}.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
+        msbuild IM6.Static.${{matrix.architecture}}.sln /m /t:Rebuild /p:Configuration=Release,Platform=x64
 
   build_msys2:
     name: Build MSYS2
