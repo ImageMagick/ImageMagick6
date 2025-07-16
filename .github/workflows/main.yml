@@ -44,8 +44,16 @@ jobs:
 
     - name: Build ImageMagick
       run: |
-        set -e
         make
+
+    - name: Test ImageMagick
+      run: |
+        make check || exit_code=$?
+        if [ "$exit_code" != "0" ] ; then cat ./test-suite.log ; fi
+        exit $exit_code
+
+    - name: Install ImageMagick
+      run: |
         make install
 
   build_macos:
