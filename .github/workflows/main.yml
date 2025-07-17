@@ -22,8 +22,10 @@ jobs:
         compiler: [ gcc, clang ]
         include:
           - compiler: gcc
+            cxx_compiler: g++
             packages: gcc g++
           - compiler: clang
+            cxx_compiler: clang++
             packages: clang
 
     steps:
@@ -39,7 +41,9 @@ jobs:
     - name: Configure ImageMagick
       env:
         CC: ${{ matrix.compiler }}
+        CXX: ${{ matrix.cxx_compiler }}
         CFLAGS: -Wno-deprecated-declarations
+        CXXFLAGS: -Wno-deprecated-declarations
       run: |
         autoreconf -fiv
         ./configure --with-quantum-depth=16 --enable-hdri=no --without-perl --prefix=/usr
