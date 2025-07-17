@@ -5171,9 +5171,6 @@ int main(int argc,char **argv)
     **properties,
     *property;
 
-  DrawingWand
-    *drawing_wand;
-
   ExceptionType
     severity;
 
@@ -5187,7 +5184,6 @@ int main(int argc,char **argv)
   PixelWand
     *background,
     *border,
-    *fill,
     **pixels;
 
   ssize_t
@@ -5308,23 +5304,31 @@ int main(int argc,char **argv)
     ThrowAPIException(magick_wand);
   background=DestroyPixelWand(background);
   border=DestroyPixelWand(border);
-  drawing_wand=NewDrawingWand();
-  (void) PushDrawingWand(drawing_wand);
-  (void) DrawRotate(drawing_wand,45);
-  if (getenv("MAGICK_FONT") != 0)
-    (void) DrawSetFont(drawing_wand,getenv("MAGICK_FONT"));
-  (void) DrawSetFontSize(drawing_wand,18);
-  fill=NewPixelWand();
-  (void) PixelSetColor(fill,"green");
-  (void) DrawSetFillColor(drawing_wand,fill);
-  fill=DestroyPixelWand(fill);
-  (void) DrawAnnotation(drawing_wand,15,5,(const unsigned char *) "Magick");
-  (void) PopDrawingWand(drawing_wand);
-  (void) MagickSetIteratorIndex(magick_wand,1);
-  status=MagickDrawImage(magick_wand,drawing_wand);
-  if (status == MagickFalse)
-    ThrowAPIException(magick_wand);
-  drawing_wand=DestroyDrawingWand(drawing_wand);
+#if MAGICKCORE_FREETYPE_DELEGATE
+  {
+    DrawingWand
+      *drawing_wand = NewDrawingWand();
+
+    PixelWand
+      *fill = NewPixelWand();
+
+    (void) PushDrawingWand(drawing_wand);
+    (void) DrawRotate(drawing_wand,45);
+    if (getenv("MAGICK_FONT") != 0)
+      (void) DrawSetFont(drawing_wand,getenv("MAGICK_FONT"));
+    (void) DrawSetFontSize(drawing_wand,18);
+    (void) PixelSetColor(fill,"green");
+    (void) DrawSetFillColor(drawing_wand,fill);
+    fill=DestroyPixelWand(fill);
+    (void) DrawAnnotation(drawing_wand,15,5,(const unsigned char *) "Magick");
+    (void) PopDrawingWand(drawing_wand);
+    (void) MagickSetIteratorIndex(magick_wand,1);
+    status=MagickDrawImage(magick_wand,drawing_wand);
+    if (status == MagickFalse)
+      ThrowAPIException(magick_wand);
+    drawing_wand=DestroyDrawingWand(drawing_wand);
+  }
+#endif
   {
     unsigned char
       pixels[27],
