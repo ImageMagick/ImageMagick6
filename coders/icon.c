@@ -359,7 +359,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
   if (directory == (IconDirectory *) NULL)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   extent=0;
-  for (i=0; i < directory->count; i++)
+  for (i=0; i < (ssize_t) directory->count; i++)
   {
     directory->icons[i]->width=(unsigned char) ReadBlobByte(image);
     directory->icons[i]->height=(unsigned char) ReadBlobByte(image);
