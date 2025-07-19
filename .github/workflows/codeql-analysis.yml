@@ -14,6 +14,9 @@ jobs:
     name: Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})
     runs-on: ubuntu-24.04
 
+    permissions:
+      security-events: write
+
     strategy:
       fail-fast: false
       matrix:
@@ -26,10 +29,20 @@ jobs:
       with:
         fetch-depth: 2
 
+    - name: Install dependencies
+      run: |
+        set -e
+        export DEBIAN_FRONTEND=noninteractive
+        sudo apt-get update -y
+        sudo apt-get install -y libltdl-dev
+
     - name: Configure ImageMagick
       run: |
         export CFLAGS="-Wno-deprecated-declarations"
+        autoreconf -fiv
         ./configure --with-quantum-depth=${{matrix.quantum}} --enable-hdri=${{matrix.hdri}} --${{matrix.modules}}
+        echo "" > config.status
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
@@ -38,5 +51,6 @@ jobs:
     - name: Build ImageMagick
       run: |
         make
+
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
