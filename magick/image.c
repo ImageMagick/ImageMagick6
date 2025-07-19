@@ -1662,8 +1662,7 @@ MagickExport VirtualPixelMethod GetImageVirtualPixelMethod(const Image *image)
 %
 */
 MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
-  Image *image,const char *format,int value,char *filename,
-  ExceptionInfo *exception)
+  Image *image,const char *format,int value,char *filename)
 {
   char
     *p = filename,
@@ -1738,7 +1737,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         (void) CopyMagickString(pattern,cursor,extent);
         pattern[extent]='\0';
         if (image != (Image *) NULL)
-          option=GetImageProperty(image,pattern,exception);
+          option=GetImageProperty(image,pattern);
         if ((option == (const char *) NULL) && (image != (Image *)NULL))
           option=GetImageArtifact(image,pattern);
         if ((option == (const char *) NULL) &&
