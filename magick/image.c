@@ -1674,6 +1674,8 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   /*
     Start with a copy of the format string.
   */
+  assert(format != (const char *) NULL);
+  assert(filename != (char *) NULL);
   (void) CopyMagickString(filename,format,MagickPathExtent);
   if (IsStringTrue(GetImageOption(image_info,"filename:literal")) != MagickFalse)
     return(strlen(filename));
@@ -1697,7 +1699,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
     /*
       Skip padding digits like %03d.
     */
-    if (*cursor == '0')
+    if (isdigit((int) ((unsigned char) *cursor)) != 0)
       (void) strtol(cursor,(char **) &cursor,10);
     switch (*cursor)
     {
@@ -1709,9 +1711,8 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
           count;
 
         count=FormatLocaleString(pattern,sizeof(pattern),q,value);
-        if ((count <= 0) || (count >= MagickPathExtent))
-          return(0);
-        if ((offset+count) >= MagickPathExtent)
+        if ((count <= 0) || (count >= MagickPathExtent) ||
+            ((offset+count) >= MagickPathExtent))
           return(0);
         (void) CopyMagickString(p+offset,pattern,(size_t) (MagickPathExtent-
           offset));
@@ -1725,7 +1726,9 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
           *option = (const char *) NULL;
 
         size_t
-          extent = (size_t) (end-cursor);
+          extent = (size_t) (end-cursor-1),
+          option_length,
+          tail_length;
 
         /*
           Handle %[key:value];
@@ -1734,21 +1737,27 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
           break;
         if (extent >= sizeof(pattern))
           break;
-        (void) CopyMagickString(pattern,cursor,extent);
+        (void) CopyMagickString(pattern,cursor+1,extent+1);
         pattern[extent]='\0';
         if (image != (Image *) NULL)
-          option=GetImageProperty(image,pattern);
-        if ((option == (const char *) NULL) && (image != (Image *)NULL))
-          option=GetImageArtifact(image,pattern);
+          {
+            option=GetImageProperty(image,pattern);
+            if (option == (const char *) NULL)
+              option=GetImageArtifact(image,pattern);
+          }
         if ((option == (const char *) NULL) &&
             (image_info != (ImageInfo *) NULL))
           option=GetImageOption(image_info,pattern);
         if (option == (const char *) NULL)
           break;
+        option_length=strlen(option);
+        tail_length=strlen(end+1);
+        if ((offset+option_length+tail_length+1) > MagickPathExtent)
+          return(0);
         (void) CopyMagickString(p+offset,option,(size_t) (MagickPathExtent-
           offset));
-        (void) ConcatenateMagickString(p+offset+strlen(option),end+1,(size_t)
-          (MagickPathExtent-offset-strlen(option)-strlen(end)-1));
+        (void) ConcatenateMagickString(p+offset+option_length,end+1,(size_t) (
+          MagickPathExtent-offset-option_length-tail_length-1));
         cursor=end+1;
         break;
       }
@@ -1762,7 +1771,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
       Replace "%%" with "%".
     */
     if ((*p == '%') && (*(p+1) == '%'))
-      (void) memmove(p,p+1,strlen(p));  /* shift left */
+      (void) memmove(p,p+1,strlen(p+1)+1);  /* shift left */
     else
       p++;
   }
