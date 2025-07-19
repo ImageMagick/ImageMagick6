@@ -2,12 +2,17 @@ on:
   workflow_dispatch:
   schedule:
   - cron: 0 6 * * *
+  push:
+    branches:
+    - main
+    paths:
+    - '.github/workflows/codeql-analysis.yml'
 
 name: codeql analysis
 jobs:
   scan_linux:
-    name: 'Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})'
-    runs-on: ubuntu-latest
+    name: Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: false
