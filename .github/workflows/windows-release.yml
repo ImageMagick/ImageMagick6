@@ -125,7 +125,7 @@ jobs:
         msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
 
     - name: Build PerlMagick
-      if: ${{matrix.architecture == 'dynamic'}}
+      if: ${{matrix.buildType == 'dynamic'}}
       shell: cmd
       run: |
         set PATH=
