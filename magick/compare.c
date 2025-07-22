@@ -451,7 +451,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           error=Sa*(double) GetPixelRed(p)-Da*(double)
             GetPixelRed(q);
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[RedChannel]++;
               count++;
@@ -461,7 +461,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           error=Sa*(double) GetPixelGreen(p)-Da*(double)
             GetPixelGreen(q);
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[GreenChannel]++;
               count++;
@@ -471,7 +471,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         {
           error=Sa*(double) GetPixelBlue(p)-Da*(double)
             GetPixelBlue(q);
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[BlueChannel]++;
               count++;
@@ -480,9 +480,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
       if (((channel & OpacityChannel) != 0) &&
           (image->matte != MagickFalse))
         {
-          error=(double) GetPixelOpacity(p)-(double)
-            GetPixelOpacity(q);
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          error=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[OpacityChannel]++;
               count++;
@@ -491,9 +490,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
       if (((channel & IndexChannel) != 0) &&
           (image->colorspace == CMYKColorspace))
         {
-          error=Sa*(double) indexes[x]-Da*(double)
-            reconstruct_indexes[x];
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          error=Sa*(double) indexes[x]-Da*(double) reconstruct_indexes[x];
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[IndexChannel]++;
               count++;
@@ -593,7 +591,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
       if ((channel & RedChannel) != 0)
         {
           error=QuantumScale*(Sa*GetPixelRed(p)-Da*GetPixelRed(q));
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[RedChannel]+=error*error;
               channel_similarity[CompositeChannels]+=error*error;
@@ -603,7 +601,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
       if ((channel & GreenChannel) != 0)
         {
           error=QuantumScale*(Sa*GetPixelGreen(p)-Da*GetPixelGreen(q));
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[GreenChannel]+=error*error;
               channel_similarity[CompositeChannels]+=error*error;
@@ -613,7 +611,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
       if ((channel & BlueChannel) != 0)
         {
           error=QuantumScale*(Sa*GetPixelBlue(p)-Da*GetPixelBlue(q));
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[BlueChannel]+=error*error;
               channel_similarity[CompositeChannels]+=error*error;
@@ -623,7 +621,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
       if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
         {
           error=QuantumScale*((double) GetPixelOpacity(p)-GetPixelOpacity(q));
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[OpacityChannel]+=error*error;
               channel_similarity[CompositeChannels]+=error*error;
@@ -635,7 +633,7 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
         {
           error=QuantumScale*(Sa*GetPixelIndex(indexes+x)-Da*
             GetPixelIndex(reconstruct_indexes+x));
-          if ((error*error) > (fuzz*(1.0+FLT_EPSILON)))
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
               channel_similarity[BlackChannel]+=error*error;
               channel_similarity[CompositeChannels]+=error*error;
