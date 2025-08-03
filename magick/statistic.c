@@ -2618,24 +2618,24 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
     */
     histogram[i].red*=area;
     entropy=-histogram[i].red*log2(histogram[i].red)*
-      MagickSafeReciprocal(log10((double) number_bins.red));
+      MagickSafeReciprocal(log2((double) number_bins.red));
     if (IsNaN(entropy) == 0)
       channel_statistics[RedChannel].entropy+=entropy;
     histogram[i].green*=area;
     entropy=-histogram[i].green*log2(histogram[i].green)*
-      MagickSafeReciprocal(log10((double) number_bins.green));
+      MagickSafeReciprocal(log2((double) number_bins.green));
     if (IsNaN(entropy) == 0)
       channel_statistics[GreenChannel].entropy+=entropy;
     histogram[i].blue*=area;
     entropy=-histogram[i].blue*log2(histogram[i].blue)*
-      MagickSafeReciprocal(log10((double) number_bins.blue));
+      MagickSafeReciprocal(log2((double) number_bins.blue));
     if (IsNaN(entropy) == 0)
       channel_statistics[BlueChannel].entropy+=entropy;
     if (image->matte != MagickFalse)
       {
         histogram[i].opacity*=area;
         entropy=-histogram[i].opacity*log2(histogram[i].opacity)*
-          MagickSafeReciprocal(log10((double) number_bins.opacity));
+          MagickSafeReciprocal(log2((double) number_bins.opacity));
         if (IsNaN(entropy) == 0)
           channel_statistics[OpacityChannel].entropy+=entropy;
       }
@@ -2643,7 +2643,7 @@ MagickExport ChannelStatistics *GetImageChannelStatistics(const Image *image,
       {
         histogram[i].index*=area;
         entropy=-histogram[i].index*log2(histogram[i].index)*
-          MagickSafeReciprocal(log10((double) number_bins.index));
+          MagickSafeReciprocal(log2((double) number_bins.index));
         if (IsNaN(entropy) == 0)
           channel_statistics[IndexChannel].entropy+=entropy;
       }
