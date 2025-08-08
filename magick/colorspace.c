@@ -68,6 +68,11 @@
 #include "magick/utility.h"
 
 /*
+  Define declarations.
+*/
+#define MaximumLogarithmicColorspace  1024.0
+
+/*
   Typedef declarations.
 */
 typedef struct _TransformPacket
@@ -741,10 +746,16 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       value=GetImageProperty(image,"reference-black");
       if (value != (const char *) NULL)
         reference_black=StringToDouble(value,(char **) NULL);
+      if (reference_black > MaximumLogarithmicColorspace)
+        reference_black=MaximumLogarithmicColorspace;
       reference_white=ReferenceWhite;
       value=GetImageProperty(image,"reference-white");
       if (value != (const char *) NULL)
         reference_white=StringToDouble(value,(char **) NULL);
+      if (reference_white > MaximumLogarithmicColorspace)
+        reference_white=MaximumLogarithmicColorspace;
+      if (reference_black > reference_white)
+        reference_black=reference_white;
       logmap=(Quantum *) AcquireQuantumMemory((size_t) MaxMap+1UL,
         sizeof(*logmap));
       if (logmap == (Quantum *) NULL)
@@ -758,7 +769,7 @@ MagickExport MagickBooleanType RGBTransformImage(Image *image,
       for (i=0; i <= (ssize_t) MaxMap; i++)
         logmap[i]=ScaleMapToQuantum((MagickRealType) (MaxMap*(reference_white+
           log10(black+(1.0*i/MaxMap)*(1.0-black))/((gamma/density)*0.002*
-          MagickSafeReciprocal(film_gamma)))/1024.0));
+          MagickSafeReciprocal(film_gamma)))/MaximumLogarithmicColorspace));
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
       #pragma omp parallel for schedule(static) shared(status) \
@@ -2425,12 +2436,12 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
           image->filename);
       black=pow(10.0,(reference_black-reference_white)*(gamma/density)*0.002*
         MagickSafeReciprocal(film_gamma));
-      for (i=0; i <= (ssize_t) (reference_black*MaxMap/1024.0); i++)
+      for (i=0; i <= (ssize_t) (reference_black*MaxMap/MaximumLogarithmicColorspace); i++)
         logmap[i]=(Quantum) 0;
-      for ( ; i < (ssize_t) (reference_white*MaxMap/1024.0); i++)
+      for ( ; i < (ssize_t) (reference_white*MaxMap/MaximumLogarithmicColorspace); i++)
         logmap[i]=ClampToQuantum((MagickRealType) QuantumRange/(1.0-black)*
-          (pow(10.0,(1024.0*i/MaxMap-reference_white)*(gamma/density)*0.002*
-          MagickSafeReciprocal(film_gamma))-black));
+          (pow(10.0,(MaximumLogarithmicColorspace*i/MaxMap-reference_white)*
+          (gamma/density)*0.002*MagickSafeReciprocal(film_gamma))-black));
       for ( ; i <= (ssize_t) MaxMap; i++)
         logmap[i]=QuantumRange;
       if (image->storage_class == PseudoClass)
@@ -2780,12 +2791,12 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
           pixel.blue=x_map[red].z+y_map[green].z+z_map[blue].z;
           if (colorspace == YCCColorspace)
             {
-              pixel.red=QuantumRange*YCCMap[RoundToYCC(1024.0*pixel.red/
-                (double) MaxMap)];
-              pixel.green=QuantumRange*YCCMap[RoundToYCC(1024.0*pixel.green/
-                (double) MaxMap)];
-              pixel.blue=QuantumRange*YCCMap[RoundToYCC(1024.0*pixel.blue/
-                (double) MaxMap)];
+              pixel.red=QuantumRange*YCCMap[RoundToYCC(
+                MaximumLogarithmicColorspace*pixel.red/(double) MaxMap)];
+              pixel.green=QuantumRange*YCCMap[RoundToYCC(
+                MaximumLogarithmicColorspace*pixel.green/(double) MaxMap)];
+              pixel.blue=QuantumRange*YCCMap[RoundToYCC(
+                MaximumLogarithmicColorspace*pixel.blue/(double) MaxMap)];
             }
           else
             {
@@ -2846,12 +2857,12 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         pixel.blue=x_map[red].z+y_map[green].z+z_map[blue].z;
         if (colorspace == YCCColorspace)
           {
-            pixel.red=QuantumRange*YCCMap[RoundToYCC(1024.0*pixel.red/
-              (double) MaxMap)];
-            pixel.green=QuantumRange*YCCMap[RoundToYCC(1024.0*pixel.green/
-              (double) MaxMap)];
-            pixel.blue=QuantumRange*YCCMap[RoundToYCC(1024.0*pixel.blue/
-              (double) MaxMap)];
+            pixel.red=QuantumRange*YCCMap[RoundToYCC(
+              MaximumLogarithmicColorspace*pixel.red/(double) MaxMap)];
+            pixel.green=QuantumRange*YCCMap[RoundToYCC(
+              MaximumLogarithmicColorspace*pixel.green/(double) MaxMap)];
+            pixel.blue=QuantumRange*YCCMap[RoundToYCC(
+              MaximumLogarithmicColorspace*pixel.blue/(double) MaxMap)];
           }
         else
           {
