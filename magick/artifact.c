@@ -97,6 +97,21 @@
 %    o clone_image: the clone image.
 %
 */
+
+typedef char
+  *(*CloneKeyFunc)(const char *),
+  *(*CloneValueFunc)(const char *);
+
+static inline void *CloneArtifactKey(void *key)
+{
+  return((void *) ((CloneKeyFunc) ConstantString)((const char *) key));
+}
+
+static inline void *CloneArtifactValue(void *value)
+{
+  return((void *) ((CloneValueFunc) ConstantString)((const char *) value));
+}
+
 MagickExport MagickBooleanType CloneImageArtifacts(Image *image,
   const Image *clone_image)
 {
@@ -115,7 +130,7 @@ MagickExport MagickBooleanType CloneImageArtifacts(Image *image,
       if (image->artifacts != (void *) NULL)
         DestroyImageArtifacts(image);
       image->artifacts=CloneSplayTree((SplayTreeInfo *) clone_image->artifacts,
-        (void *(*)(void *)) ConstantString,(void *(*)(void *)) ConstantString);
+        CloneArtifactKey,CloneArtifactValue);
     }
   return(MagickTrue);
 }

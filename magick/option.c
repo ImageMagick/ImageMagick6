@@ -1790,6 +1790,21 @@ static const OptionInfo
 %    o clone_info: the clone image info.
 %
 */
+
+typedef char
+  *(*CloneKeyFunc)(const char *),
+  *(*CloneValueFunc)(const char *);
+
+static inline void *CloneOptionKey(void *key)
+{
+  return((void *) ((CloneKeyFunc) ConstantString)((const char *) key));
+}
+
+static inline void *CloneOptionValue(void *value)
+{
+  return((void *) ((CloneValueFunc) ConstantString)((const char *) value));
+}
+
 MagickExport MagickBooleanType CloneImageOptions(ImageInfo *image_info,
   const ImageInfo *clone_info)
 {
@@ -1805,7 +1820,7 @@ MagickExport MagickBooleanType CloneImageOptions(ImageInfo *image_info,
       if (image_info->options != (void *) NULL)
         DestroyImageOptions(image_info);
       image_info->options=CloneSplayTree((SplayTreeInfo *) clone_info->options,
-        (void *(*)(void *)) ConstantString,(void *(*)(void *)) ConstantString);
+        CloneOptionKey,CloneOptionValue);
     }
   return(MagickTrue);
 }
