@@ -183,7 +183,7 @@ MagickExport Image *AcquireImage(const ImageInfo *image_info)
   image->cache=AcquirePixelCache(0);
   image->blob=CloneBlobInfo((BlobInfo *) NULL);
   InitializeExceptionInfo(&image->exception);
-  image->timestamp=GetMagickTime();
+  image->timestamp=time((time_t *) NULL);
   time_limit=GetMagickResourceLimit(TimeResource);
   if (time_limit != MagickResourceInfinity)
     image->ttl=image->timestamp+(time_t) time_limit;
