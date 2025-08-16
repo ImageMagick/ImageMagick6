@@ -163,8 +163,8 @@ static Image *ReadSCREENSHOTImage(const ImageInfo *image_info,
         ThrowReaderException(CoderError,"UnableToCreateDC");
 
       screen=AcquireImage(image_info);
-      screen->columns=(size_t) GetDeviceCaps(hDC,HORZRES);
-      screen->rows=(size_t) GetDeviceCaps(hDC,VERTRES);
+      screen->columns=(size_t) GetDeviceCaps(hDC,DESKTOPHORZRES);
+      screen->rows=(size_t) GetDeviceCaps(hDC,DESKTOPVERTRES);
       screen->storage_class=DirectClass;
       if (image == (Image *) NULL)
         image=screen;
