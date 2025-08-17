@@ -1661,6 +1661,31 @@ MagickExport VirtualPixelMethod GetImageVirtualPixelMethod(const Image *image)
 %    o filename:  return the formatted filename in this character buffer.
 %
 */
+
+static inline MagickBooleanType PercentNInvalidOperation(char *filename)
+{
+  MagickBooleanType
+    match = MagickFalse;
+
+  size_t
+    length = strlen(filename);
+
+  ssize_t
+    i;
+
+  for (i=0; i < (ssize_t) length-1; i++)
+  {
+    if ((filename[i] == '%') &&
+        ((filename[i+1] == 'n') || (filename[i+1] == 'N')))
+      {
+        filename[i]='?';
+        filename[i+1]='?';
+        match=MagickTrue;
+      }
+  }
+  return(match);
+}
+
 MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   Image *image,const char *format,int value,char *filename)
 {
@@ -1679,6 +1704,13 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   (void) CopyMagickString(filename,format,MagickPathExtent);
   if (IsStringTrue(GetImageOption(image_info,"filename:literal")) != MagickFalse)
     return(strlen(filename));
+  if (PercentNInvalidOperation(filename) != MagickFalse)
+    {
+      errno=EPERM;
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),
+        OptionError,"InvalidArgument","`%s'",filename);
+      return(0);
+    }
   while ((cursor=strchr(cursor,'%')) != (const char *) NULL)
   {
     const char
