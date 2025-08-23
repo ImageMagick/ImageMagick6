@@ -1878,6 +1878,7 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
 
   size_t
     bytes_per_line,
+    extent,
     number_scenes,
     type;
 
@@ -2048,7 +2049,10 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
               }
           }
       }
-    bytes_per_line=4*((image->columns*bmp_info.bits_per_pixel+31)/32);
+    extent=image->columns*(size_t) bmp_info.bits_per_pixel;
+    bytes_per_line=4*((extent+31)/32);
+    if (BMPOverflowCheck(bytes_per_line,image->rows) != MagickFalse)
+      ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
     bmp_info.ba_offset=0;
     if (type > 3)
       profile=GetImageProfile(image,"icc");
@@ -2110,8 +2114,11 @@ static MagickBooleanType WriteBMPImage(const ImageInfo *image_info,Image *image)
     /*
       Convert MIFF to BMP raster pixels.
     */
-    pixel_info=AcquireVirtualMemory(image->rows,MagickMax(bytes_per_line,
-      image->columns+256UL)*sizeof(*pixels));
+    extent=4*MagickMax(bytes_per_line,image->columns+1UL);
+    if ((BMPOverflowCheck(image->rows,extent) != MagickFalse) ||
+        (BMPOverflowCheck(extent,sizeof(*pixels)) != MagickFalse))
+      ThrowWriterException(ImageError,"WidthOrHeightExceedsLimit");
+    pixel_info=AcquireVirtualMemory(image->rows,extent*sizeof(*pixels));
     if (pixel_info == (MemoryInfo *) NULL)
       ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
     pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
