@@ -4945,6 +4945,7 @@ static Image *ReadOneJNGImage(MngInfo *mng_info,
     color_image->filename);
 
   color_image_info->ping=MagickFalse;   /* To do: avoid this */
+  CloseBlob(color_image);
   jng_image=ReadImage(color_image_info,exception);
 
   (void) RelinquishUniqueFileResource(color_image->filename);
