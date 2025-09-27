@@ -15,7 +15,9 @@ on:
     paths:
     - '.github/workflows/windows-release.yml'
 
-name: windows release
+name: Windows release
+permissions:
+  contents: read
 jobs:
   change_log:
     name: Create ChangeLog.md
