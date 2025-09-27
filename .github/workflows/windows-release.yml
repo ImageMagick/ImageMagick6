@@ -53,8 +53,8 @@ jobs:
     runs-on: windows-2022
 
     permissions:
-      id-token: write
       contents: read
+      id-token: write
 
     strategy:
       fail-fast: false
@@ -238,8 +238,8 @@ jobs:
     runs-on: windows-2022
 
     permissions:
-      id-token: write
       contents: read
+      id-token: write
 
     strategy:
       fail-fast: false
