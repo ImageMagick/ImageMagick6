@@ -1251,13 +1251,33 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   /*
     Set image resolution.
   */
+  image->x_resolution=DefaultResolution;
+  image->y_resolution=DefaultResolution;
   units=0;
-  if ((jpeg_info->saw_JFIF_marker != 0) && (jpeg_info->X_density != 1) &&
-      (jpeg_info->Y_density != 1))
+  if (jpeg_info->saw_JFIF_marker != 0)
     {
-      image->x_resolution=(double) jpeg_info->X_density;
-      image->y_resolution=(double) jpeg_info->Y_density;
-      units=(size_t) jpeg_info->density_unit;
+      if (jpeg_info->density_unit != 0)
+        {
+          /*
+            Units are defined: 1 = DPI, 2 = DPC.
+          */
+          image->x_resolution=(double) jpeg_info->X_density;
+          image->y_resolution=(double) jpeg_info->Y_density;
+          units=(size_t) jpeg_info->density_unit;
+        }
+      else
+        {
+          /*
+            Optionally scale based on aspect ratio.
+          */
+          if ((jpeg_info->X_density != 0) && (jpeg_info->Y_density != 0))
+            {
+              double aspect_ratio = (double) jpeg_info->Y_density/
+                (double) jpeg_info->X_density;
+              image->y_resolution=image->x_resolution*aspect_ratio;
+            }
+          units=1;
+        }
     }
   if (units == 1)
     image->units=PixelsPerInchResolution;
