@@ -1367,8 +1367,20 @@ static Image *ReadPICTImage(const ImageInfo *image_info,
             if ((jpeg == MagickFalse) && (EOFBlob(image) == MagickFalse))
               if ((code == 0x9a) || (code == 0x9b) ||
                   ((bytes_per_line & 0x8000) != 0))
+                {
+                  if ((source.right-source.left) != (destination.right-destination.left) ||
+                      (source.bottom-source.top) != (destination.bottom-destination.top))
+                    {
+                      Image *clone_image = tile_image;
+                      tile_image=ResizeImage(clone_image,(size_t)
+                        (destination.right-destination.left),(size_t)
+                        (destination.bottom-destination.top),image->filter,
+                        image->blur,exception);
+                      clone_image=DestroyImage(clone_image);
+                    }
                 (void) CompositeImage(image,CopyCompositeOp,tile_image,
                   (ssize_t) destination.left,(ssize_t) destination.top);
+              }
             tile_image=DestroyImage(tile_image);
             break;
           }
