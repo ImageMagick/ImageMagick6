@@ -1503,7 +1503,7 @@ static void SVGStartDocument(void *context)
   if (svg_info->document == (xmlDocPtr) NULL)
     return;
   if (parser->encoding == NULL)
-    svg_info->document->encoding=(const xmlChar *) NULL;
+    svg_info->document->encoding=NULL;
   else
     svg_info->document->encoding=xmlStrdup(parser->encoding);
   svg_info->document->standalone=parser->standalone;
