@@ -45,6 +45,8 @@ extern "C" {
 #define MagickPHI    1.61803398874989484820458683436563811772030917980576
 #define MagickPI2    1.57079632679489661923132169163975144209858469968755
 #define MagickPI  3.14159265358979323846264338327950288419716939937510
+#define MAGICK_PTRDIFF_MAX  (PTRDIFF_MAX)
+#define MAGICK_PTRDIFF_MIN  (-PTRDIFF_MAX-1)
 #define MagickSQ1_2  0.70710678118654752440084436210484903928483593768847
 #define MagickSQ2    1.41421356237309504880168872420969807856967187537695
 #define MagickSQ2PI  2.50662827463100024161235523934010416269302368164062
@@ -73,45 +75,42 @@ static inline ssize_t CastDoubleToLong(const double x)
       errno=ERANGE;
       return(0);
     }
-  if (x < 0.0)
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < ((double) MAGICK_SSIZE_MIN))
     {
-      value=ceil(x);
-      if (value < ((double) MAGICK_SSIZE_MIN))
-        {
-          errno=ERANGE;
-          return((ssize_t) MAGICK_SSIZE_MIN);
-        }
+      errno=ERANGE;
+      return(MAGICK_SSIZE_MIN);
     }
-  else
+  if (value > ((double) MAGICK_SSIZE_MAX))
     {
-      value=floor(x);
-      if (value > ((double) MAGICK_SSIZE_MAX))
-        {
-          errno=ERANGE;
-          return((ssize_t) MAGICK_SSIZE_MAX);
-        }
+      errno=ERANGE;
+      return(MAGICK_SSIZE_MAX);
     }
   return((ssize_t) value);
 }
 
 static inline QuantumAny CastDoubleToQuantumAny(const double x)
 {
+  double
+    value;
+
   if (IsNaN(x) != 0)
     {
       errno=ERANGE;
       return(0);
     }
-  if (x > ((double) ((QuantumAny) ~0)))
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < 0.0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  if (value > ((double) ((QuantumAny) ~0)))
     {
       errno=ERANGE;
       return((QuantumAny) ~0);
     }
-  if (x < 0.0)
-    {
-      errno=ERANGE;
-      return((QuantumAny) 0);
-    }
-  return((QuantumAny) (x+0.5));
+  return((QuantumAny) value);
 }
 
 static inline size_t CastDoubleToUnsigned(const double x)
@@ -124,16 +123,16 @@ static inline size_t CastDoubleToUnsigned(const double x)
       errno=ERANGE;
       return(0);
     }
-  value=floor(x);
-  if (value >= ((double) MAGICK_SIZE_MAX))
-    {
-      errno=ERANGE;
-      return((size_t) MAGICK_SIZE_MAX);
-    }
+  value=(x < 0.0) ? ceil(x) : floor(x);
   if (value < 0.0)
     {
       errno=ERANGE;
       return(0);
+    }
+  if (value > ((double) MAGICK_SIZE_MAX))
+    {
+      errno=ERANGE;
+      return(MAGICK_SIZE_MAX);
     }
   return((size_t) value);
 }
