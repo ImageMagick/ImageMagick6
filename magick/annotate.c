@@ -240,15 +240,15 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
   RectangleInfo
     geometry;
 
+  size_t
+    height,
+    number_lines;
+
   ssize_t
     i;
 
   TypeMetric
     metrics;
-
-  size_t
-    height,
-    number_lines;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -345,9 +345,9 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
         offset.x=(geometry.width == 0 ? -1.0 : 1.0)*annotate_info->affine.tx+i*
           annotate_info->affine.ry*height+annotate_info->affine.ry*
           (metrics.ascent+metrics.descent);
-        offset.y=(geometry.height == 0 ? -1.0 : 1.0)*annotate_info->affine.ty+i*
-          annotate_info->affine.sy*height+annotate_info->affine.sy*
-          metrics.ascent;
+        offset.y=(geometry.height == 0 ? -1.0 : 1.0)*annotate_info->affine.ty+
+          (metrics.bounds.y2-metrics.ascent)+i*annotate_info->affine.sy*height+
+          annotate_info->affine.sy*metrics.ascent;
         break;
       }
       case (GravityType) NorthGravity:
@@ -356,9 +356,10 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
           geometry.width/2.0+i*annotate_info->affine.ry*height-
           annotate_info->affine.sx*metrics.width/2.0+annotate_info->affine.ry*
           (metrics.ascent+metrics.descent);
-        offset.y=(geometry.height == 0 ? -1.0 : 1.0)*annotate_info->affine.ty+i*
-          annotate_info->affine.sy*height+annotate_info->affine.sy*
-          metrics.ascent-annotate_info->affine.rx*metrics.width/2.0;
+        offset.y=(geometry.height == 0 ? -1.0 : 1.0)*annotate_info->affine.ty+
+          (metrics.bounds.y2-metrics.ascent)+i*annotate_info->affine.sy*height+
+          annotate_info->affine.sy*metrics.ascent-annotate_info->affine.rx*
+          metrics.width/2.0;
         break;
       }
       case (GravityType) NorthEastGravity:
@@ -367,9 +368,10 @@ MagickExport MagickBooleanType AnnotateImage(Image *image,
           geometry.width+i*annotate_info->affine.ry*height-
           annotate_info->affine.sx*metrics.width+annotate_info->affine.ry*
           (metrics.ascent+metrics.descent)-1.0;
-        offset.y=(geometry.height == 0 ? -1.0 : 1.0)*annotate_info->affine.ty+i*
-          annotate_info->affine.sy*height+annotate_info->affine.sy*
-          metrics.ascent-annotate_info->affine.rx*metrics.width;
+        offset.y=(geometry.height == 0 ? -1.0 : 1.0)*annotate_info->affine.ty+
+          (metrics.bounds.y2-metrics.ascent)+i*annotate_info->affine.sy*height+
+          annotate_info->affine.sy*metrics.ascent-annotate_info->affine.rx*
+          metrics.width;
         break;
       }
       case (GravityType) WestGravity:
