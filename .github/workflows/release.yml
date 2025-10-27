@@ -73,7 +73,7 @@ jobs:
         mv ChangeLog.md Artifacts/ChangeLog.md
 
     - name: Upload ChangeLog.md
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: ChangeLog
         path: Artifacts
@@ -193,7 +193,7 @@ jobs:
         subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
         directory: Configure\Installer\Inno\Artifacts
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: ImageMagick-${{needs.version.outputs.version}}-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.typeName}}-${{matrix.architecture}}.exe
         path: Configure\Installer\Inno\Artifacts
@@ -232,7 +232,7 @@ jobs:
         move ImageMagick source
         7z a ImageMagick-${{needs.version.outputs.version}}-Windows.7z .\source\*
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: ImageMagick-${{needs.version.outputs.version}}-Windows.7z
         path: ImageMagick-${{needs.version.outputs.version}}-Windows.7z
@@ -316,7 +316,7 @@ jobs:
         Copy-Item "ImageMagick\LICENSE" "portable\LICENSE.txt"
         7z a ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z .\portable\*
 
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v5
       with:
         name: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
         path: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
