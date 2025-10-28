@@ -198,7 +198,7 @@ WandExport PixelWand **ClonePixelWands(const PixelWand **wands,
   PixelWand
     **clone_wands;
 
-  clone_wands=(PixelWand **) AcquireCriticalMemory((size_t) number_wands&
+  clone_wands=(PixelWand **) AcquireCriticalMemory((size_t) number_wands*
     sizeof(*clone_wands));
   for (i=0; i < (ssize_t) number_wands; i++)
     clone_wands[i]=ClonePixelWand(wands[i]);
