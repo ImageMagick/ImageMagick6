@@ -2982,6 +2982,8 @@ MagickExport MagickBooleanType SetImageInfo(ImageInfo *image_info,
           image_info->affirm=MagickTrue;
           (void) CopyMagickString(image_info->magick,magic,MaxTextExtent);
           GetPathComponent(image_info->filename,CanonicalPath,filename);
+          if (IsStringTrue(GetImageOption(image_info,"filename:literal")) != MagickFalse)
+            GetPathComponent(image_info->filename,SubcanonicalPath,filename);
           (void) CopyMagickString(image_info->filename,filename,MaxTextExtent);
         }
     }
