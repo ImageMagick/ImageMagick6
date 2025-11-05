@@ -525,6 +525,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       geometry=GetPageGeometry(option);
       flags=ParseMetaGeometry(geometry,&page.x,&page.y,&page.width,
         &page.height);
+      geometry=DestroyString(geometry);
       if (flags == NoValue)
         {
           (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
@@ -537,7 +538,6 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
         image->x_resolution/delta.x)-0.5));
       page.height=(size_t) ((ssize_t) ceil((double) (page.height*
         image->y_resolution/delta.y)-0.5));
-      geometry=DestroyString(geometry);
       fitPage=MagickTrue;
     }
   if ((fabs(info.angle) == 90.0) || (fabs(info.angle) == 270.0))
