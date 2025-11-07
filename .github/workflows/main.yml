@@ -105,6 +105,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           path: ImageMagick
+          persist-credentials: false
 
       - name: Download configure
         shell: cmd

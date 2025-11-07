@@ -82,6 +82,8 @@ jobs:
           ./install.sh
 
       - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
       - name: Configure ImageMagick
         run: |
