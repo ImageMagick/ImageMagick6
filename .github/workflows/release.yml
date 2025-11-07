@@ -225,12 +225,14 @@ jobs:
 
       - name: Create source archive
         shell: cmd
+        env:
+          VERSION: ${{needs.version.outputs.version}}
         run: |
           mkdir source
           move Configure source
           move Dependencies source
           move ImageMagick source
-          7z a ImageMagick-${{needs.version.outputs.version}}-Windows.7z .\source\*
+          7z a "ImageMagick-$env:VERSION-Windows.7z" .\source\*
 
       - uses: actions/upload-artifact@v5
         with:
@@ -305,6 +307,8 @@ jobs:
 
       - name: Copy Files
         shell: pwsh
+        env:
+          VERSION: ${{needs.version.outputs.version}}
         run: |
           [void](New-Item -Name "portable" -ItemType directory)
           Copy-Item "Artifacts\bin\*.exe" "portable"
@@ -314,7 +318,7 @@ jobs:
           Copy-Item "Artifacts\NOTICE.txt" "portable"
           Copy-Item "ImageMagick\ChangeLog.md" "portable"
           Copy-Item "ImageMagick\LICENSE" "portable\LICENSE.txt"
-          7z a ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z .\portable\*
+          7z a "ImageMagick-$env:VERSION-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z" .\portable\*
 
       - uses: actions/upload-artifact@v5
         with:
@@ -347,4 +351,5 @@ jobs:
       - name: Publish release
         env:
           GH_TOKEN: ${{github.token}}
-        run: gh release create ${{needs.version.outputs.version}} --title "${{needs.version.outputs.version}}" ${{github.workspace}}/artifacts/*.7z ${{github.workspace}}/artifacts/*.exe
+          VERSION: ${{needs.version.outputs.version}}
+        run: gh release create $VERSION --title "$VERSION" ${{github.workspace}}/artifacts/*.7z ${{github.workspace}}/artifacts/*.exe
