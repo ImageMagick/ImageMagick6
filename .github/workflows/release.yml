@@ -29,22 +29,22 @@ jobs:
       publish: ${{ steps.version.outputs.publish }}
 
     steps:
-    - name: Clone ImageMagick
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
+      - name: Clone ImageMagick
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-    - name: Set version
-      id: version
-      run: |
-        version=$(grep -oP "PACKAGE_VERSION='\K[0-9\.-]*" configure)
-        echo "version=$version" >> $GITHUB_OUTPUT
-        echo "version=$version"
-        tag=$(git describe --tags HEAD --exact-match || true)
-        if [[ "$tag" == "$version" ]]; then
-          echo "publish=true" >> $GITHUB_OUTPUT
-          echo "publish=true"
-        fi
+      - name: Set version
+        id: version
+        run: |
+          version=$(grep -oP "PACKAGE_VERSION='\K[0-9\.-]*" configure)
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "version=$version"
+          tag=$(git describe --tags HEAD --exact-match || true)
+          if [[ "$tag" == "$version" ]]; then
+            echo "publish=true" >> $GITHUB_OUTPUT
+            echo "publish=true"
+          fi
 
   changelog:
     name: Create ChangeLog.md
@@ -53,30 +53,30 @@ jobs:
       - version
 
     steps:
-    - name: Clone ImageMagick
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
+      - name: Clone ImageMagick
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-    - name: Install dependencies
-      run: npm install -g auto-changelog
+      - name: Install dependencies
+        run: npm install -g auto-changelog
 
-    - name: Create ChangeLog.md
-      env:
-        VERSION: ${{needs.version.outputs.version}}
-      run: |
-        if ! git tag -l | grep -q "^$VERSION$"; then
-          git tag $VERSION
-        fi
-        auto-changelog --sort-commits date
-        mkdir -p Artifacts
-        mv ChangeLog.md Artifacts/ChangeLog.md
+      - name: Create ChangeLog.md
+        env:
+          VERSION: ${{needs.version.outputs.version}}
+        run: |
+          if ! git tag -l | grep -q "^$VERSION$"; then
+            git tag $VERSION
+          fi
+          auto-changelog --sort-commits date
+          mkdir -p Artifacts
+          mv ChangeLog.md Artifacts/ChangeLog.md
 
-    - name: Upload ChangeLog.md
-      uses: actions/upload-artifact@v5
-      with:
-        name: ChangeLog
-        path: Artifacts
+      - name: Upload ChangeLog.md
+        uses: actions/upload-artifact@v5
+        with:
+          name: ChangeLog
+          path: Artifacts
 
   windows_installer:
     name: Windows ${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}} (${{matrix.buildType}})
@@ -112,91 +112,91 @@ jobs:
             hdri_flag: -HDRI
 
     steps:
-    - name: Install Strawberry Perl
-      if: ${{matrix.buildType == 'dynamic'}}
-      shell: cmd
-      run: |
-        powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/Windows/releases/download/build-binaries-2025-08-30/strawberry-perl-5.30.2.1-${{matrix.bit}}bit.msi -OutFile strawberry-perl-5.30.2.1-${{matrix.bit}}bit.msi
-        msiexec /i strawberry-perl-5.30.2.1-${{matrix.bit}}bit.msi /qn INSTALLDIR="C:\Strawberry${{matrix.bit}}"
-        mv "C:\Strawberry" "C:\Strawberry64"
+      - name: Install Strawberry Perl
+        if: ${{matrix.buildType == 'dynamic'}}
+        shell: cmd
+        run: |
+          powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/Windows/releases/download/build-binaries-2025-08-30/strawberry-perl-5.30.2.1-${{matrix.bit}}bit.msi -OutFile strawberry-perl-5.30.2.1-${{matrix.bit}}bit.msi
+          msiexec /i strawberry-perl-5.30.2.1-${{matrix.bit}}bit.msi /qn INSTALLDIR="C:\Strawberry${{matrix.bit}}"
+          mv "C:\Strawberry" "C:\Strawberry64"
 
-    - name: Install Inno Setup
-      shell: cmd
-      run: |
-        powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/Windows/releases/download/build-binaries-2025-08-30/innosetup-6.2.0.exe -OutFile innosetup-6.2.0.exe
-        innosetup-6.2.0.exe /SILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+      - name: Install Inno Setup
+        shell: cmd
+        run: |
+          powershell Invoke-WebRequest -Uri https://github.com/ImageMagick/Windows/releases/download/build-binaries-2025-08-30/innosetup-6.2.0.exe -OutFile innosetup-6.2.0.exe
+          innosetup-6.2.0.exe /SILENT /SUPPRESSMSGBOXES /NORESTART /SP-
 
-    - name: Clone ImageMagick
-      uses: actions/checkout@v5
-      with:
-        path: ImageMagick
+      - name: Clone ImageMagick
+        uses: actions/checkout@v5
+        with:
+          path: ImageMagick
 
-    - name: Download configure
-      shell: cmd
-      run: |
-        ImageMagick\.github\build\windows\download-configure.cmd
+      - name: Download configure
+        shell: cmd
+        run: |
+          ImageMagick\.github\build\windows\download-configure.cmd
 
-    - name: Download dependencies
-      shell: cmd
-      run: |
-        ImageMagick\.github\build\windows\download-dependencies.cmd windows-${{matrix.architecture}}-${{matrix.buildType}}-openMP.zip
+      - name: Download dependencies
+        shell: cmd
+        run: |
+          ImageMagick\.github\build\windows\download-dependencies.cmd windows-${{matrix.architecture}}-${{matrix.buildType}}-openMP.zip
 
-    - name: Download ChangeLog.md
-      uses: actions/download-artifact@v6
-      with:
-        name: ChangeLog
-        path: ImageMagick
+      - name: Download ChangeLog.md
+        uses: actions/download-artifact@v6
+        with:
+          name: ChangeLog
+          path: ImageMagick
 
-    - name: Configure ImageMagick
-      shell: cmd
-      working-directory: Configure
-      run: |
-        Configure.Release.x64.exe /noWizard /VS2022 /installedSupport /deprecated /${{matrix.hdri}} /${{matrix.quantum}} /${{matrix.architecture}} /${{matrix.buildType}}
+      - name: Configure ImageMagick
+        shell: cmd
+        working-directory: Configure
+        run: |
+          Configure.Release.x64.exe /noWizard /VS2022 /installedSupport /deprecated /${{matrix.hdri}} /${{matrix.quantum}} /${{matrix.architecture}} /${{matrix.buildType}}
 
-    - name: Build ImageMagick
-      shell: cmd
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
+      - name: Build ImageMagick
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+          msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
 
-    - name: Build PerlMagick
-      if: ${{matrix.buildType == 'dynamic'}}
-      shell: cmd
-      run: |
-        set PATH=
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        cd ImageMagick\PerlMagick
-        set PATH=%PATH%;C:\Strawberry${{matrix.bit}}\c\bin;C:\Strawberry${{matrix.bit}}\perl\site\bin;C:\Strawberry${{matrix.bit}}\perl\bin;C:\WINDOWS\System32\WindowsPowerShell\v1.0
-        perl "Makefile.PL" "MAKE=nmake"
-        nmake
-        nmake release
+      - name: Build PerlMagick
+        if: ${{matrix.buildType == 'dynamic'}}
+        shell: cmd
+        run: |
+          set PATH=
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+          cd ImageMagick\PerlMagick
+          set PATH=%PATH%;C:\Strawberry${{matrix.bit}}\c\bin;C:\Strawberry${{matrix.bit}}\perl\site\bin;C:\Strawberry${{matrix.bit}}\perl\bin;C:\WINDOWS\System32\WindowsPowerShell\v1.0
+          perl "Makefile.PL" "MAKE=nmake"
+          nmake
+          nmake release
 
-    - name: Sign executables and libraries
-      uses: ImageMagick/.github/actions/code-signing@main
-      with:
-        client-id: ${{secrets.AZURE_CLIENT_ID}}
-        tenant-id: ${{secrets.AZURE_TENANT_ID}}
-        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-        directory: Artifacts\bin
+      - name: Sign executables and libraries
+        uses: ImageMagick/.github/actions/code-signing@main
+        with:
+          client-id: ${{secrets.AZURE_CLIENT_ID}}
+          tenant-id: ${{secrets.AZURE_TENANT_ID}}
+          subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+          directory: Artifacts\bin
 
-    - name: Create installer
-      shell: cmd
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        "C:\Program Files (x86)\Inno Setup 6\iscc.exe" Configure\Installer\Inno\ImageMagick.iss
+      - name: Create installer
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+          "C:\Program Files (x86)\Inno Setup 6\iscc.exe" Configure\Installer\Inno\ImageMagick.iss
 
-    - name: Sign installer
-      uses: ImageMagick/.github/actions/code-signing@main
-      with:
-        client-id: ${{secrets.AZURE_CLIENT_ID}}
-        tenant-id: ${{secrets.AZURE_TENANT_ID}}
-        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-        directory: Configure\Installer\Inno\Artifacts
+      - name: Sign installer
+        uses: ImageMagick/.github/actions/code-signing@main
+        with:
+          client-id: ${{secrets.AZURE_CLIENT_ID}}
+          tenant-id: ${{secrets.AZURE_TENANT_ID}}
+          subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+          directory: Configure\Installer\Inno\Artifacts
 
-    - uses: actions/upload-artifact@v5
-      with:
-        name: ImageMagick-${{needs.version.outputs.version}}-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.typeName}}-${{matrix.architecture}}.exe
-        path: Configure\Installer\Inno\Artifacts
+      - uses: actions/upload-artifact@v5
+        with:
+          name: ImageMagick-${{needs.version.outputs.version}}-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.typeName}}-${{matrix.architecture}}.exe
+          path: Configure\Installer\Inno\Artifacts
 
   windows_source:
     name: Windows source
@@ -206,36 +206,36 @@ jobs:
       - version
 
     steps:
-    - name: Clone ImageMagick/Windows
-      uses: actions/checkout@v5
-      with:
-        repository: ImageMagick/Windows
-        ref: refs/heads/main
+      - name: Clone ImageMagick/Windows
+        uses: actions/checkout@v5
+        with:
+          repository: ImageMagick/Windows
+          ref: refs/heads/main
 
-    - name: Clone repositories
-      shell: cmd
-      run: |
-        clone-repositories-im6.cmd
+      - name: Clone repositories
+        shell: cmd
+        run: |
+          clone-repositories-im6.cmd
 
-    - name: Download ChangeLog.md
-      uses: actions/download-artifact@v6
-      with:
-        name: ChangeLog
-        path: ImageMagick
+      - name: Download ChangeLog.md
+        uses: actions/download-artifact@v6
+        with:
+          name: ChangeLog
+          path: ImageMagick
 
-    - name: Create source archive
-      shell: cmd
-      run: |
-        mkdir source
-        move Configure source
-        move Dependencies source
-        move ImageMagick source
-        7z a ImageMagick-${{needs.version.outputs.version}}-Windows.7z .\source\*
+      - name: Create source archive
+        shell: cmd
+        run: |
+          mkdir source
+          move Configure source
+          move Dependencies source
+          move ImageMagick source
+          7z a ImageMagick-${{needs.version.outputs.version}}-Windows.7z .\source\*
 
-    - uses: actions/upload-artifact@v5
-      with:
-        name: ImageMagick-${{needs.version.outputs.version}}-Windows.7z
-        path: ImageMagick-${{needs.version.outputs.version}}-Windows.7z
+      - uses: actions/upload-artifact@v5
+        with:
+          name: ImageMagick-${{needs.version.outputs.version}}-Windows.7z
+          path: ImageMagick-${{needs.version.outputs.version}}-Windows.7z
 
   windows_portable:
     name: Windows portable ${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}
@@ -262,64 +262,64 @@ jobs:
             hdri_flag: -HDRI
 
     steps:
-    - name: Clone ImageMagick
-      uses: actions/checkout@v5
-      with:
-        path: ImageMagick
+      - name: Clone ImageMagick
+        uses: actions/checkout@v5
+        with:
+          path: ImageMagick
 
-    - name: Download configure
-      shell: cmd
-      run: |
-        ImageMagick\.github\build\windows\download-configure.cmd
+      - name: Download configure
+        shell: cmd
+        run: |
+          ImageMagick\.github\build\windows\download-configure.cmd
 
-    - name: Download dependencies
-      shell: cmd
-      run: |
-        ImageMagick\.github\build\windows\download-dependencies.cmd windows-${{matrix.architecture}}-static-openMP-linked-runtime.zip
+      - name: Download dependencies
+        shell: cmd
+        run: |
+          ImageMagick\.github\build\windows\download-dependencies.cmd windows-${{matrix.architecture}}-static-openMP-linked-runtime.zip
 
-    - name: Download ChangeLog.md
-      uses: actions/download-artifact@v6
-      with:
-        name: ChangeLog
-        path: ImageMagick
+      - name: Download ChangeLog.md
+        uses: actions/download-artifact@v6
+        with:
+          name: ChangeLog
+          path: ImageMagick
 
-    - name: Configure ImageMagick
-      shell: cmd
-      working-directory: Configure
-      run: |
-        Configure.Release.x64.exe /noWizard /VS2022 /${{matrix.hdri}} /${{matrix.quantum}} /${{matrix.architecture}} /static /linkRuntime
+      - name: Configure ImageMagick
+        shell: cmd
+        working-directory: Configure
+        run: |
+          Configure.Release.x64.exe /noWizard /VS2022 /${{matrix.hdri}} /${{matrix.quantum}} /${{matrix.architecture}} /static /linkRuntime
 
-    - name: Build ImageMagick
-      shell: cmd
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
-        msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
+      - name: Build ImageMagick
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+          msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
 
-    - name: Sign executables and libraries
-      uses: ImageMagick/.github/actions/code-signing@main
-      with:
-        client-id: ${{secrets.AZURE_CLIENT_ID}}
-        tenant-id: ${{secrets.AZURE_TENANT_ID}}
-        subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-        directory: Artifacts\bin
+      - name: Sign executables and libraries
+        uses: ImageMagick/.github/actions/code-signing@main
+        with:
+          client-id: ${{secrets.AZURE_CLIENT_ID}}
+          tenant-id: ${{secrets.AZURE_TENANT_ID}}
+          subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+          directory: Artifacts\bin
 
-    - name: Copy Files
-      shell: pwsh
-      run: |
-        [void](New-Item -Name "portable" -ItemType directory)
-        Copy-Item "Artifacts\bin\*.exe" "portable"
-        Copy-Item "Artifacts\bin\*.xml" "portable"
-        Copy-Item "Artifacts\bin\sRGB.icc" "portable"
+      - name: Copy Files
+        shell: pwsh
+        run: |
+          [void](New-Item -Name "portable" -ItemType directory)
+          Copy-Item "Artifacts\bin\*.exe" "portable"
+          Copy-Item "Artifacts\bin\*.xml" "portable"
+          Copy-Item "Artifacts\bin\sRGB.icc" "portable"
 
-        Copy-Item "Artifacts\NOTICE.txt" "portable"
-        Copy-Item "ImageMagick\ChangeLog.md" "portable"
-        Copy-Item "ImageMagick\LICENSE" "portable\LICENSE.txt"
-        7z a ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z .\portable\*
+          Copy-Item "Artifacts\NOTICE.txt" "portable"
+          Copy-Item "ImageMagick\ChangeLog.md" "portable"
+          Copy-Item "ImageMagick\LICENSE" "portable\LICENSE.txt"
+          7z a ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z .\portable\*
 
-    - uses: actions/upload-artifact@v5
-      with:
-        name: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
-        path: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
+      - uses: actions/upload-artifact@v5
+        with:
+          name: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
+          path: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
 
   release:
     name: Publish Release
@@ -335,16 +335,16 @@ jobs:
       contents: write
 
     steps:
-    - name: Clone ImageMagick
-      uses: actions/checkout@v5
+      - name: Clone ImageMagick
+        uses: actions/checkout@v5
 
-    - name: Download artifacts
-      uses: actions/download-artifact@v6
-      with:
-        path: artifacts
-        merge-multiple: true
+      - name: Download artifacts
+        uses: actions/download-artifact@v6
+        with:
+          path: artifacts
+          merge-multiple: true
 
-    - name: Publish release
-      env:
-        GH_TOKEN: ${{github.token}}
-      run: gh release create ${{needs.version.outputs.version}} --title "${{needs.version.outputs.version}}" ${{github.workspace}}/artifacts/*.7z ${{github.workspace}}/artifacts/*.exe
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{github.token}}
+        run: gh release create ${{needs.version.outputs.version}} --title "${{needs.version.outputs.version}}" ${{github.workspace}}/artifacts/*.7z ${{github.workspace}}/artifacts/*.exe
