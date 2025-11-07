@@ -18,7 +18,7 @@ permissions:
   contents: read
 jobs:
   change_log:
-    name: 'Create ChangeLog.md'
+    name: Create ChangeLog.md
     runs-on: ubuntu-24.04
 
     steps:
@@ -45,7 +45,7 @@ jobs:
           path: artifacts
 
   build_linux:
-    name: 'Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})'
+    name: Linux Q${{matrix.quantum}}-x64 hdri=${{matrix.hdri}} (${{matrix.modules}})
     container:
       image: ubuntu:20.04
     runs-on: ubuntu-24.04
