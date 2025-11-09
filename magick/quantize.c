@@ -1430,8 +1430,8 @@ static DoublePixelPacket **AcquirePixelTLS(const size_t count)
   (void) memset(pixels,0,number_threads*sizeof(*pixels));
   for (i=0; i < (ssize_t) number_threads; i++)
   {
-    pixels[i]=(DoublePixelPacket *) AcquireQuantumMemory(count,
-      2*sizeof(**pixels));
+    pixels[i]=(DoublePixelPacket *) AcquireQuantumMemory(count,2*
+      sizeof(**pixels));
     if (pixels[i] == (DoublePixelPacket *) NULL)
       return(DestroyPixelTLS(pixels));
   }

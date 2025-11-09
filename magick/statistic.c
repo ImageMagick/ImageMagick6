@@ -163,13 +163,13 @@ static MagickPixelPacket **AcquirePixelTLS(const Image *images)
   MagickPixelPacket
     **pixels;
 
-  ssize_t
-    i,
-    j;
-
   size_t
     columns,
     rows;
+
+  ssize_t
+    i,
+    j;
 
   rows=MagickMax(GetImageListLength(images),
     (size_t) GetMagickResourceLimit(ThreadResource));
@@ -3112,8 +3112,7 @@ static PixelList *AcquirePixelList(const size_t width,const size_t height)
   return(pixel_list);
 }
 
-static PixelList **AcquirePixelListTLS(const size_t width,
-  const size_t height)
+static PixelList **AcquirePixelListTLS(const size_t width,const size_t height)
 {
   PixelList
     **pixel_list;

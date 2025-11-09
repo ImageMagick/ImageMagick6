@@ -414,8 +414,7 @@ static double **DestroyPixelTLS(double **pixels)
   return(pixels);
 }
 
-static double **AcquirePixelTLS(const size_t columns,
-  const size_t channels)
+static double **AcquirePixelTLS(const size_t columns,const size_t channels)
 {
   double
     **pixels;
@@ -433,7 +432,8 @@ static double **AcquirePixelTLS(const size_t columns,
   (void) memset(pixels,0,number_threads*sizeof(*pixels));
   for (i=0; i < (ssize_t) number_threads; i++)
   {
-    pixels[i]=(double *) AcquireQuantumMemory(columns,channels*sizeof(**pixels));
+    pixels[i]=(double *) AcquireQuantumMemory(columns,channels*
+      sizeof(**pixels));
     if (pixels[i] == (double *) NULL)
       return(DestroyPixelTLS(pixels));
   }
