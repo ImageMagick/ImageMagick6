@@ -31,7 +31,7 @@ jobs:
             packages: clang
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
@@ -71,7 +71,7 @@ jobs:
     runs-on: macos-13
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 
@@ -102,7 +102,7 @@ jobs:
         architecture: [ x64, x86 ]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           path: ImageMagick
           persist-credentials: false
@@ -137,7 +137,7 @@ jobs:
       - name: Prepare git
         run: git config --global core.autocrlf false
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
 

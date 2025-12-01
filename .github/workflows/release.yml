@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Clone ImageMagick
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -55,7 +55,7 @@ jobs:
 
     steps:
       - name: Clone ImageMagick
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -129,7 +129,7 @@ jobs:
           innosetup-6.2.0.exe /SILENT /SUPPRESSMSGBOXES /NORESTART /SP-
 
       - name: Clone ImageMagick
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: ImageMagick
           persist-credentials: false
@@ -210,7 +210,7 @@ jobs:
 
     steps:
       - name: Clone ImageMagick/Windows
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: ImageMagick/Windows
           ref: refs/heads/main
@@ -269,7 +269,7 @@ jobs:
 
     steps:
       - name: Clone ImageMagick
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           path: ImageMagick
           persist-credentials: false
@@ -345,7 +345,7 @@ jobs:
 
     steps:
       - name: Clone ImageMagick
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           persist-credentials: false
 
