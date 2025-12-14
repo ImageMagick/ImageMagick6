@@ -2305,16 +2305,6 @@ MagickExport void GetQuantizeInfo(QuantizeInfo *quantize_info)
 %
 */
 
-static inline double MagickRound(double x)
-{
-  /*
-    Round the fraction to nearest integer.
-  */
-  if ((x-floor(x)) < (ceil(x)-x))
-    return(floor(x));
-  return(ceil(x));
-}
-
 MagickExport MagickBooleanType PosterizeImage(Image *image,const size_t levels,
   const MagickBooleanType dither)
 {
