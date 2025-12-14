@@ -262,18 +262,6 @@ static MagickBooleanType IsTIFF(const unsigned char *magick,const size_t length)
 %
 */
 
-static inline size_t WriteLSBLong(FILE *file,const unsigned int value)
-{
-  unsigned char
-    buffer[4];
-
-  buffer[0]=(unsigned char) value;
-  buffer[1]=(unsigned char) (value >> 8);
-  buffer[2]=(unsigned char) (value >> 16);
-  buffer[3]=(unsigned char) (value >> 24);
-  return(fwrite(buffer,1,4,file));
-}
-
 static Image *ReadGROUP4Image(const ImageInfo *image_info,
   ExceptionInfo *exception)
 {
