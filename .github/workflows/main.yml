@@ -79,12 +79,13 @@ jobs:
         run: |
           set -e
           export HOMEBREW_NO_AUTO_UPDATE=1
-          brew install autoconf libtool libxml2 pkg-config
+          brew install automake libtool libxml2
 
       - name: Configure ImageMagick
         run: |
           export CFLAGS="-Wno-deprecated-declarations"
-          export PKG_CONFIG_PATH="/usr/local/opt/libxml2/lib/pkgconfig"
+          export LDFLAGS=$(pkg-config --libs libjpeg)
+          autoreconf -fiv
           ./configure --with-quantum-depth=16 --enable-hdri=no --without-perl
 
       - name: Build ImageMagick
