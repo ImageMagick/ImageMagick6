@@ -5322,7 +5322,7 @@ MAGICK_PATCHLEVEL_VERSION=37
 
 MAGICK_VERSION=6.9.13-37
 
-MAGICK_GIT_REVISION=d9ae5cde0:20251214
+MAGICK_GIT_REVISION=56dbefe7c:20251214
 
 
 # Substitute library versioning
@@ -27633,7 +27633,41 @@ main (void)
 _ACEOF
 if ac_fn_c_try_compile "$LINENO"
 then :
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+else case e in #(
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+ { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether our compiler supports __FUNCTION__" >&5
+printf %s "checking whether our compiler supports __FUNCTION__... " >&6; }
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
 
+int
+main (void)
+{
+{ const char *func = __FUNCTION__; return(func != 0 ? 0 : 1); }
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_compile "$LINENO"
+then :
+  { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+
+printf "%s\n" "#define __func__ __FUNCTION__" >>confdefs.h
+
+else case e in #(
+  e) { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+
+printf "%s\n" "#define __func__ __FILE__" >>confdefs.h
+ ;;
+esac
+fi
+rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext ;;
+esac
 fi
 rm -f core conftest.err conftest.$ac_objext conftest.beam conftest.$ac_ext
 
@@ -33273,7 +33307,7 @@ else
 printf "%s\n" "#define MAGICK_FONT_PATH \"$with_fontpath\"" >>confdefs.h
 
 fi
-if test "$with_fontpath=" != ''; then
+if test "$with_fontpath" != ''; then
     DISTCHECK_CONFIG_FLAGS="${DISTCHECK_CONFIG_FLAGS} --with-fontpath=$with_fontpath "
 fi
 
