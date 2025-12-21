@@ -120,6 +120,7 @@ typedef struct _MSLInfo
     *exception;
 
   ssize_t
+    depth,
     n,
     number_groups;
 
@@ -645,25 +646,23 @@ static void MSLStartElement(void *context,const xmlChar *tag,
   int
     flags;
 
-  ssize_t
-    option,
-    j,
-    n,
-    x,
-    y;
-
   MSLInfo
     *msl_info;
 
   RectangleInfo
     geometry;
 
-  ssize_t
-    i;
-
   size_t
     height,
     width;
+
+  ssize_t
+    option,
+    i,
+    j,
+    n,
+    x,
+    y;
 
   /*
     Called when an opening tag has been processed.
@@ -672,6 +671,13 @@ static void MSLStartElement(void *context,const xmlChar *tag,
     "  SAX.startElement(%s",tag);
   exception=AcquireExceptionInfo();
   msl_info=(MSLInfo *) context;
+  if (msl_info->depth++ > MagickMaxRecursionDepth)
+    {        
+      (void) ThrowMagickException(msl_info->exception,GetMagickModule(),
+        DrawError,"VectorGraphicsNestedTooDeeply","`%s'",tag);
+      xmlStopParser((xmlParserCtxtPtr) context);
+      return;
+    }
   n=msl_info->n;
   keyword=(const char *) NULL;
   value=(char *) NULL;
@@ -7499,6 +7505,7 @@ static void MSLEndElement(void *context,const xmlChar *tag)
   }
   if (msl_info->content != (char *) NULL)
     msl_info->content=DestroyString(msl_info->content);
+  msl_info->depth--;
 }
 
 static void MSLCharacters(void *context,const xmlChar *c,int length)

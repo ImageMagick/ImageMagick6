@@ -1566,12 +1566,12 @@ static void SVGStartElement(void *context,const xmlChar *name,
     *p,
     *value;
 
+  size_t
+    number_tokens;
+
   ssize_t
     i,
     j;
-
-  size_t
-    number_tokens;
 
   SVGInfo
     *svg_info;
@@ -1582,6 +1582,13 @@ static void SVGStartElement(void *context,const xmlChar *name,
   (void) LogMagickEvent(CoderEvent,GetMagickModule(),"  SAX.startElement(%s",
     name);
   svg_info=(SVGInfo *) context;
+  if (svg_info->n >= MagickMaxRecursionDepth)
+    {
+      (void) ThrowMagickException(svg_info->exception,GetMagickModule(),
+        DrawError,"VectorGraphicsNestedTooDeeply","`%s'",name);
+      xmlStopParser((xmlParserCtxtPtr) context);
+      return;
+    }
   svg_info->n++;
   svg_info->scale=(double *) ResizeQuantumMemory(svg_info->scale,
     svg_info->n+1UL,sizeof(*svg_info->scale));
