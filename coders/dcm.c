@@ -3257,8 +3257,14 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
             onto the stack, so we can restore them at the end of the sequence.
           */
           DCMInfo *clone_info = (DCMInfo *) AcquireMagickMemory(sizeof(info));
+          if (clone_info == (DCMInfo *) NULL)
+            ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
           (void) memcpy(clone_info,&info,sizeof(info));
-          AppendValueToLinkedList(stack,clone_info);
+          if (AppendValueToLinkedList(stack,clone_info) == MagickFalse)
+            {
+              clone_info=(DCMInfo *) RelinquishMagickMemory(clone_info);
+              ThrowDCMException(ResourceLimitError,"MemoryAllocationFailed");
+            }
           sequence_depth++;
         }
       datum=0;
