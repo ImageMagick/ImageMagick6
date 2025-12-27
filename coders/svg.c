@@ -5195,17 +5195,33 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
       }
       case PathPrimitive:
       {
-        int
-          number_attributes;
+        size_t
+          number_attributes,
+          quantum;
 
         (void) GetNextToken(q,&q,extent,token);
         number_attributes=1;
         for (p=token; *p != '\0'; p++)
           if (isalpha((int) *p))
             number_attributes++;
-        if (i > (ssize_t) (number_points-6*BezierQuantum*number_attributes-1))
+        if ((6*BezierQuantum) >= (MAGICK_SSIZE_MAX/number_attributes))
           {
-            number_points+=6*BezierQuantum*number_attributes;
+            (void) ThrowMagickException(&image->exception,GetMagickModule(),
+              ResourceLimitError,"MemoryAllocationFailed","`%s'", 
+              image->filename);
+            break;
+          }
+        quantum=(size_t) 6*BezierQuantum*number_attributes;
+        if (number_points >= (MAGICK_SSIZE_MAX-quantum))
+          {
+            (void) ThrowMagickException(&image->exception,GetMagickModule(),
+              ResourceLimitError,"MemoryAllocationFailed","`%s'", 
+              image->filename);
+            break;
+          }
+        if (i > (ssize_t) (number_points-quantum-1))
+          {
+            number_points+=quantum;
             primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(primitive_info,
               number_points,sizeof(*primitive_info));
             if (primitive_info == (PrimitiveInfo *) NULL)
