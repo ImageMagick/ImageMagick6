@@ -294,6 +294,23 @@ static void InitializeSource(j_decompress_ptr compress_info)
   source->start_of_blob=TRUE;
 }
 
+static MagickBooleanType IsAspectRatio(const j_decompress_ptr compress_info)
+{
+  if (compress_info->density_unit != 0)
+    return(MagickFalse);
+  if ((compress_info->X_density == 1) && (compress_info->Y_density == 1))
+    return(MagickTrue);
+  if ((compress_info->X_density == 3) && (compress_info->Y_density == 2))
+    return(MagickTrue);
+  if ((compress_info->X_density == 4) && (compress_info->Y_density == 3))
+    return(MagickTrue);
+  if ((compress_info->X_density == 16) && (compress_info->Y_density == 9))
+    return(MagickTrue);
+  if ((compress_info->X_density == 16) && (compress_info->Y_density == 10))
+    return(MagickTrue);
+  return(MagickFalse);
+}
+
 static MagickBooleanType IsITUFaxImage(const Image *image)
 {
   const StringInfo
@@ -1250,16 +1267,19 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
   /*
     Set image resolution.
   */
-  if ((jpeg_info->saw_JFIF_marker != 0) && (jpeg_info->density_unit != 0))
+  if (jpeg_info->saw_JFIF_marker != 0)
     {
       if (jpeg_info->density_unit == 1)
         image->units=PixelsPerInchResolution;
       else if (jpeg_info->density_unit == 2)
         image->units = PixelsPerCentimeterResolution;
-      if (jpeg_info->X_density != 0)
-        image->x_resolution=(double) jpeg_info->X_density;
-      if (jpeg_info->Y_density != 0)
-        image->y_resolution=(double) jpeg_info->Y_density;
+      if (IsAspectRatio(jpeg_info) == MagickFalse)
+        {
+          if (jpeg_info->X_density != 0)
+            image->x_resolution=(double) jpeg_info->X_density;
+          if (jpeg_info->Y_density != 0)
+            image->y_resolution=(double) jpeg_info->Y_density;
+        }
     }
   number_pixels=(MagickSizeType) image->columns*image->rows;
   option=GetImageOption(image_info,"jpeg:size");
