@@ -523,7 +523,7 @@ static Image *ReadJP2Image(const ImageInfo *image_info,ExceptionInfo *exception)
            }
            case 1:
            {
-             if (image->matte != MagickFalse)
+            if ((jp2_image->numcomps == 2) && (image->matte != MagickFalse))
                {
                  q->opacity=ClampToQuantum((double) QuantumRange-pixel);
                  break;
