@@ -1781,15 +1781,14 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         case ReadStripMethod:
         {
           size_t
+            count,
             extent,
-            length;
-
-          ssize_t
+            length,
             stride,
-            strip_id;
-
-          tsize_t
             strip_size;
+
+          uint32_t
+            strip_id;
 
           unsigned char
             *p,
@@ -1798,11 +1797,12 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           /*
             Convert stripped TIFF image.
           */
-          strip_size=TIFFStripSize(tiff);
+          strip_size=(size_t) TIFFStripSize(tiff);
           stride=(ssize_t) TIFFVStripSize(tiff,1);
           length=GetQuantumExtent(image,quantum_info,quantum_type);
-          extent=MagickMax((size_t) strip_size,(size_t) rows_per_strip*
-            MagickMax((size_t) stride,(size_t) length));
+          if (HeapOverflowSanityCheckGetSize(rows_per_strip,MagickMax(stride,length),&count) != MagickFalse)
+            ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
+          extent=MagickMax(strip_size,count);
           strip_pixels=(unsigned char *) AcquireQuantumMemory(extent,
             sizeof(*strip_pixels));
           if (strip_pixels == (unsigned char *) NULL)
@@ -1877,13 +1877,10 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         case ReadTileMethod:
         {
           size_t
+            count,
             extent,
-            length;
-
-          ssize_t
-            stride;
-
-          tmsize_t
+            length,
+            stride,
             tile_size;
 
           uint32
@@ -1900,14 +1897,17 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
           if ((TIFFGetField(tiff,TIFFTAG_TILEWIDTH,&columns) != 1) ||
               (TIFFGetField(tiff,TIFFTAG_TILELENGTH,&rows) != 1))
             ThrowTIFFException(CoderError,"ImageIsNotTiled");
-          number_pixels=(MagickSizeType) columns*rows;
+          if (HeapOverflowSanityCheckGetSize(columns,rows,&count) != MagickFalse)
+            ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
+          number_pixels=(MagickSizeType) count;
           if (HeapOverflowSanityCheck(rows,sizeof(*tile_pixels)) != MagickFalse)
             ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
-          tile_size=TIFFTileSize(tiff);
-          stride=(ssize_t) TIFFTileRowSize(tiff);
+          tile_size=(size_t) TIFFTileSize(tiff);
+          stride=(size_t) TIFFTileRowSize(tiff);
           length=GetQuantumExtent(image,quantum_info,quantum_type);
-          extent=(size_t) MagickMax((size_t) tile_size,rows*
-            MagickMax((size_t) stride,length));
+          if (HeapOverflowSanityCheckGetSize(rows,MagickMax(stride,length),&count) != MagickFalse)
+            ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
+          extent=MagickMax(tile_size,count);
           tile_pixels=(unsigned char *) AcquireQuantumMemory(extent,
             sizeof(*tile_pixels));
           if (tile_pixels == (unsigned char *) NULL)
@@ -1989,33 +1989,34 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
         default:
         {
           MemoryInfo
-            *generic_info = (MemoryInfo *) NULL;
+            *generic_info = (MemoryInfo * ) NULL;
+
+          size_t
+            count;
 
           uint32
             *p;
-
-          uint32
-            *pixels;
 
           /*
             Convert generic TIFF image.
           */
           (void) SetImageStorageClass(image,DirectClass);
-          if (HeapOverflowSanityCheck(image->rows,sizeof(*pixels)) != MagickFalse)
+          if (HeapOverflowSanityCheckGetSize(image->rows,image->columns,&count) != MagickFalse)
             ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
-          number_pixels=(MagickSizeType) image->columns*image->rows;
-          generic_info=AcquireVirtualMemory(number_pixels,sizeof(*pixels));
+          number_pixels=(MagickSizeType) count;
+          generic_info=AcquireVirtualMemory(count,sizeof(*p));
           if (generic_info == (MemoryInfo *) NULL)
             ThrowTIFFException(ResourceLimitError,"MemoryAllocationFailed");
-          pixels=(uint32 *) GetVirtualMemoryBlob(generic_info);
+          p=(uint32 *) GetVirtualMemoryBlob(generic_info);
+          (void) memset(p,0,count*sizeof(*p));
           tiff_status=TIFFReadRGBAImage(tiff,(uint32) image->columns,(uint32)
-            image->rows,(uint32 *) pixels,0);
+            image->rows,p,0);
           if (tiff_status == -1)
             {
               generic_info=RelinquishVirtualMemory(generic_info);
               break;
             }
-          p=pixels+(image->columns*image->rows)-1;
+          p+=(image->columns*image->rows)-1;
           for (y=0; y < (ssize_t) image->rows; y++)
           {
             ssize_t
