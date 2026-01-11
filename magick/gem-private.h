@@ -146,7 +146,7 @@ static inline void ConvertLuvToXYZ(const double L,const double u,const double v,
     *Y=(double) pow((L+16.0)/116.0,3.0);
   else
     *Y=L/CIEK;
-  gamma=MagickSafeReciprocal((((52.0*L*MagickSafeReciprocal(u+13.0*L* 
+  gamma=MagickSafeReciprocal((((52.0*L*MagickSafeReciprocal(u+13.0*L*
     (4.0*D65X/(D65X+15.0*D65Y+3.0*D65Z))))-1.0)/3.0)-(-1.0/3.0));
   *X=gamma*((*Y*((39.0*L*MagickSafeReciprocal(v+13.0*L*(9.0*D65Y/
     (D65X+15.0*D65Y+3.0*D65Z))))-5.0))+5.0*(*Y));

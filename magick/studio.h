@@ -269,7 +269,7 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 /*
   Review these platform specific definitions.
 */
-#if ( defined(MAGICKCORE_POSIX_SUPPORT) && !defined(__OS2__) ) && !defined( __VMS ) 
+#if ( defined(MAGICKCORE_POSIX_SUPPORT) && !defined(__OS2__) ) && !defined( __VMS )
 # define DirectorySeparator  "/"
 # define DirectoryListSeparator  ':'
 # define EditorOptions  " -title \"Edit Image Comment\" -e vi"

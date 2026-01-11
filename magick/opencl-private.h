@@ -56,24 +56,24 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clGetPlatformIDs)(
                  cl_uint *        num_platforms) CL_API_SUFFIX__VERSION_1_0;
 
 typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clGetPlatformInfo)(
-    cl_platform_id   platform, 
+    cl_platform_id   platform,
     cl_platform_info param_name,
-    size_t           param_value_size, 
+    size_t           param_value_size,
     void *           param_value,
     size_t *         param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
 /* Device APIs */
 typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clGetDeviceIDs)(
     cl_platform_id   platform,
-    cl_device_type   device_type, 
-    cl_uint          num_entries, 
-    cl_device_id *   devices, 
+    cl_device_type   device_type,
+    cl_uint          num_entries,
+    cl_device_id *   devices,
     cl_uint *        num_devices) CL_API_SUFFIX__VERSION_1_0;
 
 typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clGetDeviceInfo)(
     cl_device_id    device,
-    cl_device_info  param_name, 
-    size_t          param_value_size, 
+    cl_device_info  param_name,
+    size_t          param_value_size,
     void *          param_value,
     size_t *        param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
@@ -91,8 +91,8 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clReleaseContext)(
 
 /* Command Queue APIs */
 typedef CL_API_ENTRY cl_command_queue (CL_API_CALL *MAGICKpfn_clCreateCommandQueue)(
-    cl_context                     context, 
-    cl_device_id                   device, 
+    cl_context                     context,
+    cl_device_id                   device,
     cl_command_queue_properties    properties,
     cl_int *                       errcode_ret) CL_API_SUFFIX__VERSION_1_0;
 
@@ -138,7 +138,7 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clBuildProgram)(
     cl_program           program,
     cl_uint              num_devices,
     const cl_device_id * device_list,
-    const char *         options, 
+    const char *         options,
     void (CL_CALLBACK *pfn_notify)(cl_program program, void * user_data),
     void *               user_data) CL_API_SUFFIX__VERSION_1_0;
 
@@ -156,7 +156,7 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clGetProgramBuildInfo)(
     size_t                param_value_size,
     void *                param_value,
     size_t *              param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
-                            
+
 /* Kernel Object APIs */
 typedef CL_API_ENTRY cl_kernel (CL_API_CALL *MAGICKpfn_clCreateKernel)(
     cl_program      program,
@@ -183,7 +183,7 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clEnqueueReadBuffer)(
     cl_mem              buffer,
     cl_bool             blocking_read,
     size_t              offset,
-    size_t              cb, 
+    size_t              cb,
     void *              ptr,
     cl_uint             num_events_in_wait_list,
     const cl_event *    event_wait_list,
@@ -192,7 +192,7 @@ typedef CL_API_ENTRY cl_int (CL_API_CALL *MAGICKpfn_clEnqueueReadBuffer)(
 typedef CL_API_ENTRY void * (CL_API_CALL *MAGICKpfn_clEnqueueMapBuffer)(
     cl_command_queue command_queue,
     cl_mem           buffer,
-    cl_bool          blocking_map, 
+    cl_bool          blocking_map,
     cl_map_flags     map_flags,
     size_t           offset,
     size_t           cb,
@@ -251,7 +251,7 @@ typedef CL_API_ENTRY cl_int(CL_API_CALL *MAGICKpfn_clSetEventCallback)(
  *
  * vendor dispatch table structure
  *
- * note that the types in the structure KHRicdVendorDispatch mirror the function 
+ * note that the types in the structure KHRicdVendorDispatch mirror the function
  * names listed in the string table khrIcdVendorDispatchFunctionNames
  *
  */
@@ -319,7 +319,7 @@ struct _MagickCLEnv {
   MagickBooleanType disableProgramCache; /* disable the OpenCL program cache */
   cl_program programs[MAGICK_OPENCL_NUM_PROGRAMS]; /* one program object maps one kernel source file */
 
-  MagickBooleanType regenerateProfile;   /* re-run the microbenchmark in auto device selection mode */ 
+  MagickBooleanType regenerateProfile;   /* re-run the microbenchmark in auto device selection mode */
 
   SemaphoreInfo* lock;
 
@@ -428,8 +428,8 @@ extern MagickPrivate void
   OpenCLTerminus();
 
 /* #define OPENCLLOG_ENABLED 1 */
-static inline void OpenCLLogException(const char* function, 
-                        const unsigned int line, 
+static inline void OpenCLLogException(const char* function,
+                        const unsigned int line,
                         ExceptionInfo* exception) {
 #ifdef OPENCLLOG_ENABLED
   if (exception->severity!=0) {

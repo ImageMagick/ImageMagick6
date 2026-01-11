@@ -50,7 +50,7 @@ static inline wchar_t *create_wchar_path(const char *utf8)
 {
   int
     count;
- 
+
   wchar_t
     *wideChar;
 
@@ -275,7 +275,7 @@ static inline int set_file_timestamp(const char *path,struct stat *attributes)
 
 #if !defined(MAGICKCORE_WINDOWS_SUPPORT) || defined(__CYGWIN__)
 #if defined(MAGICKCORE_HAVE_UTIMENSAT)
-#if defined(__APPLE__) || defined(__NetBSD__) 
+#if defined(__APPLE__) || defined(__NetBSD__)
 #define st_atim st_atimespec
 #define st_ctim st_ctimespec
 #define st_mtim st_mtimespec

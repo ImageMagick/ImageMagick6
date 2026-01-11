@@ -32,7 +32,7 @@ extern "C" {
 static inline MagickBooleanType IsGrayPixel(const PixelPacket *pixel)
 {
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
-  if ((GetPixelRed(pixel) == GetPixelGreen(pixel)) && 
+  if ((GetPixelRed(pixel) == GetPixelGreen(pixel)) &&
       (GetPixelGreen(pixel) == GetPixelBlue(pixel)))
     return(MagickTrue);
 #else

@@ -109,9 +109,9 @@ static inline MagickRealType AbsolutePixelValue(const MagickRealType x)
 }
 
 static inline Quantum ClampPixel(const MagickRealType value)
-{ 
+{
   if (value < 0.0)
-    return((Quantum) 0); 
+    return((Quantum) 0);
   if (value >= (MagickRealType) QuantumRange)
     return((Quantum) QuantumRange);
 #if !defined(MAGICKCORE_HDRI_SUPPORT)
@@ -228,7 +228,7 @@ static inline Quantum PixelPacketIntensity(const PixelPacket *pixel)
 static inline void SetPixelViaMagickPixel(const Image *magick_restrict image,
   const MagickPixelPacket *magick_restrict magick_pixel,
   PixelPacket *magick_restrict pixel)
-{ 
+{
   pixel->red=ClampToQuantum(magick_pixel->red);
   pixel->green=ClampToQuantum(magick_pixel->green);
   pixel->blue=ClampToQuantum(magick_pixel->blue);
