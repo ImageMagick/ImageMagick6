@@ -8,3 +8,6 @@ tab_width = 2
 
 insert_final_newline = true
 trim_trailing_whitespace = true
+
+[*.c]
+trim_trailing_whitespace = false
