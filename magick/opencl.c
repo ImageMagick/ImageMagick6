@@ -910,6 +910,7 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
           program_sizes=(size_t *) RelinquishMagickMemory(program_sizes);
           return;
         }
+      memset(binary_program,0,binary_program_size);
       for (i = 0; i < num_devices; i++)
       {
         binary_program[i]=(unsigned char *) AcquireQuantumMemory(
