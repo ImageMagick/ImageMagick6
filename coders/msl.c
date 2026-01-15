@@ -7386,8 +7386,18 @@ static void MSLStartElement(void *context,const xmlChar *tag,
 
           /* process */
           {
-            *msl_info->image_info[n]->magick='\0';
-            (void) WriteImage(msl_info->image_info[n], msl_info->image[n]);
+            (void) CopyMagickString(msl_info->image_info[n]->filename,
+              msl_info->image[n]->filename,MagickPathExtent);
+            (void) SetImageInfo(msl_info->image_info[n],1,exception);
+            if (LocaleCompare(msl_info->image_info[n]->magick,"msl") != 0)
+              {
+                *msl_info->image_info[n]->magick='\0';
+                (void) WriteImage(msl_info->image_info[n],msl_info->image[n]);
+              }
+            else
+              (void) ThrowMagickException(msl_info->exception,GetMagickModule(),
+                FileOpenError,"UnableToWriteFile","`%s'",
+                msl_info->image[n]->filename);
             break;
           }
         }
