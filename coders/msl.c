@@ -7428,6 +7428,12 @@ static void MSLEndElement(void *context,const xmlChar *tag)
     {
       if (LocaleCompare((const char *) tag,"comment") == 0 )
         {
+          if (msl_info->image[n] == (Image *) NULL)
+            {
+              ThrowMSLException(OptionError,"NoImagesDefined",
+                (const char *) tag);
+              break;
+            }
           (void) DeleteImageProperty(msl_info->image[n],"comment");
           if (msl_info->content == (char *) NULL)
             break;
@@ -7477,6 +7483,12 @@ static void MSLEndElement(void *context,const xmlChar *tag)
     {
       if (LocaleCompare((const char *) tag,"label") == 0 )
         {
+          if (msl_info->image[n] == (Image *) NULL)
+            {
+              ThrowMSLException(OptionError,"NoImagesDefined",
+                (const char *) tag);
+              break;
+            }
           (void) DeleteImageProperty(msl_info->image[n],"label");
           if (msl_info->content == (char *) NULL)
             break;
