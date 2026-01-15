@@ -355,7 +355,7 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
   if (status == MagickFalse)
     ThrowMontageException(ResourceLimitError,"MemoryAllocationFailed",
       GetExceptionMessage(errno));
-  for (i=1; i < (ssize_t) (argc-1); i++)
+  for (i=1; i < ((ssize_t) argc-1); i++)
   {
     option=argv[i];
     if (LocaleCompare(option,"(") == 0)
@@ -390,7 +390,7 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
             Option is a file name: begin by reading image from specified file.
           */
           filename=argv[i];
-          if ((LocaleCompare(filename,"--") == 0) && (i < (ssize_t) (argc-1)))
+          if ((LocaleCompare(filename,"--") == 0) && (i < ((ssize_t) argc-1)))
             filename=argv[++i];
           (void) SetImageOption(image_info,"filename",filename);
           (void) CopyMagickString(image_info->filename,filename,MaxTextExtent);
@@ -1803,7 +1803,7 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
   }
   if (k != 0)
     ThrowMontageException(OptionError,"UnbalancedParenthesis",argv[i]);
-  if (i-- != (ssize_t) (argc-1))
+  if (i-- != ((ssize_t) argc-1))
     ThrowMontageException(OptionError,"MissingAnImageFilename",argv[i]);
   if (image == (Image *) NULL)
     ThrowMontageException(OptionError,"MissingAnImageFilename",argv[argc-1]);

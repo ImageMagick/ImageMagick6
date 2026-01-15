@@ -148,7 +148,7 @@ WandExport MagickBooleanType MagickCommandGenesis(ImageInfo *image_info,
   iterations=1;
   status=MagickTrue;
   regard_warnings=MagickFalse;
-  for (i=1; i < (ssize_t) (argc-1); i++)
+  for (i=1; i < ((ssize_t) argc-1); i++)
   {
     option=argv[i];
     if ((strlen(option) == 1) || ((*option != '-') && (*option != '+')))
@@ -3926,7 +3926,7 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
         */
         FireImageStack(MagickFalse,MagickFalse,pend);
         filename=argv[i];
-        if ((LocaleCompare(filename,"--") == 0) && (i < (ssize_t) (argc-1)))
+        if ((LocaleCompare(filename,"--") == 0) && (i < ((ssize_t) argc-1)))
           filename=argv[++i];
         (void) SetImageOption(image_info,"filename",filename);
         (void) CopyMagickString(image_info->filename,filename,MaxTextExtent);

@@ -307,7 +307,7 @@ WandExport MagickBooleanType IdentifyImageCommand(ImageInfo *image_info,
         identify_info=CloneImageInfo(image_info);
         identify_info->verbose=MagickFalse;
         filename=argv[i];
-        if ((LocaleCompare(filename,"--") == 0) && (i < (ssize_t) (argc-1)))
+        if ((LocaleCompare(filename,"--") == 0) && (i < ((ssize_t) argc-1)))
           filename=argv[++i];
         (void) SetImageOption(image_info,"filename",filename);
         (void) CopyMagickString(identify_info->filename,filename,MaxTextExtent);
