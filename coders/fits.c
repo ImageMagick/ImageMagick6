@@ -186,7 +186,7 @@ static MagickOffsetType GetFITSPixelExtrema(Image *image,
   offset=TellBlob(image);
   if (offset == -1)
     return(-1);
-  number_pixels=(MagickSizeType) image->columns*image->rows;
+  number_pixels=((MagickSizeType) image->columns*image->rows);
   *minima=GetFITSPixel(image,bits_per_pixel);
   *maxima=(*minima);
   for (i=1; i < (MagickOffsetType) number_pixels; i++)
@@ -415,7 +415,7 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
             comment=DestroyString(comment);
           ThrowReaderException(CorruptImageError,"ImproperImageHeader");
         }
-      number_pixels=(MagickSizeType) fits_info.columns*fits_info.rows;
+      number_pixels=((MagickSizeType) fits_info.columns*fits_info.rows);
       if ((fits_info.simple != MagickFalse) && (fits_info.number_axes >= 1) &&
           (fits_info.number_axes <= 4) && (number_pixels != 0))
         break;
@@ -431,7 +431,7 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
     if (EOFBlob(image) != MagickFalse)
       ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
         image->filename);
-    number_pixels=(MagickSizeType) (fits_info.columns*fits_info.rows);
+    number_pixels=((MagickSizeType) fits_info.columns*fits_info.rows);
     if ((fits_info.simple == MagickFalse) || (fits_info.number_axes < 1) ||
         (fits_info.number_axes > 4) || (number_pixels == 0) ||
         (fits_info.number_planes <= 0))
