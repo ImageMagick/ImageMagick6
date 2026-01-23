@@ -117,19 +117,34 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
 #define IsSync(sum)  ((sum & 0xffffff00UL) == 0xfffffe00UL)
 #define PCDGetBits(n) \
 {  \
+  ssize_t \
+    byte_count = 0x800; \
+  \
   sum=(sum << n) & 0xffffffff; \
   bits-=n; \
   while (bits <= 24) \
   { \
     if (p >= (buffer+0x800)) \
       { \
-        count=ReadBlob(image,0x800,buffer); \
+        byte_count=ReadBlob(image,0x800,buffer); \
+        if (byte_count != 0x800) \
+          { \
+            (void) ThrowMagickException(&image->exception,GetMagickModule(), \
+              CorruptImageWarning,"CorruptImage","`%s'",image->filename); \
+            break; \
+          } \
         p=buffer; \
       } \
     sum|=(((unsigned int) (*p)) << (24-bits)); \
     bits+=8; \
     p++; \
   } \
+  if (byte_count != 0x800) \
+    { \
+      (void) ThrowMagickException(&image->exception,GetMagickModule(), \
+        CorruptImageWarning,"CorruptImage","`%s'",image->filename); \
+      break; \
+    } \
 }
 
   typedef struct PCDTable
@@ -148,16 +163,8 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   PCDTable
     *pcd_table[3];
 
-  ssize_t
-    i,
-    j;
-
   PCDTable
     *r;
-
-  unsigned char
-    *p,
-    *q;
 
   size_t
     bits,
@@ -169,10 +176,15 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
 
   ssize_t
     count,
+    i,
+    j,
     quantum;
 
   unsigned char
-    *buffer;
+    *buffer,
+    *p,
+    *q;
+
 
   /*
     Initialize Huffman tables.
@@ -503,19 +515,11 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   MemoryInfo
     *pixel_info;
 
-  ssize_t
-    i,
-    y;
-
   PixelPacket
     *q;
 
-  unsigned char
-    *c1,
-    *c2,
-    *yy;
-
   size_t
+    extent,
     height,
     number_images,
     number_pixels,
@@ -525,13 +529,18 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
   ssize_t
     count,
-    x;
+    i,
+    x,
+    y;
 
   unsigned char
+    *c1,
+    *c2,
     *chroma1,
     *chroma2,
     *header,
-    *luma;
+    *luma,
+    *yy;
 
   unsigned int
     overview;
@@ -629,11 +638,15 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Allocate luma and chroma memory.
   */
-  pixel_info=AcquireVirtualMemory(image->columns+1UL,30*image->rows*
-    sizeof(*luma));
+  if (HeapOverflowSanityCheckGetSize(image->columns+1UL,image->rows,&extent) != MagickFalse)
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  if (HeapOverflowSanityCheckGetSize(extent,10,&number_pixels) != MagickFalse)
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  if (HeapOverflowSanityCheckGetSize(extent,30,&extent) != MagickFalse)
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+  pixel_info=AcquireVirtualMemory(extent,sizeof(*luma));
   if (pixel_info == (MemoryInfo *) NULL)
     ThrowPCDException(ResourceLimitError,"MemoryAllocationFailed");
-  number_pixels=(image->columns+1UL)*10*image->rows*sizeof(*luma);
   luma=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
   chroma1=(unsigned char *) GetVirtualMemoryBlob(pixel_info)+number_pixels;
   chroma2=(unsigned char *) GetVirtualMemoryBlob(pixel_info)+2*number_pixels;
