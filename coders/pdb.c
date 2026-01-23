@@ -269,15 +269,12 @@ static MagickBooleanType IsPDB(const unsigned char *magick,const size_t length)
 */
 static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
 {
-  unsigned char
-    attributes,
-    tag[3];
-
   Image
     *image;
 
   IndexPacket
-    index;
+    index,
+    *indexes;
 
   MagickBooleanType
     status;
@@ -288,17 +285,8 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   PDBInfo
     pdb_info;
 
-  IndexPacket
-    *indexes;
-
-  ssize_t
-    x;
-
   PixelPacket
     *q;
-
-  unsigned char
-    *p;
 
   size_t
     bits_per_pixel,
@@ -310,10 +298,14 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
     count,
     img_offset,
     comment_offset = 0,
+    x,
     y;
 
   unsigned char
-    *pixels;
+    attributes,
+    *p,
+    *pixels,
+    tag[3];
 
   /*
     Open image file.
@@ -403,8 +395,8 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   /*
     Initialize image structure.
   */
-  image->columns=(size_t) pdb_image.width;
-  image->rows=(size_t) pdb_image.height;
+  image->columns=(size_t) MagickAbsoluteValue(pdb_image.width);
+  image->rows=(size_t) MagickAbsoluteValue(pdb_image.height);
   image->depth=8;
   image->storage_class=PseudoClass;
   bits_per_pixel=pdb_image.type == 0 ? 2UL : pdb_image.type == 2 ? 4UL : 1UL;
