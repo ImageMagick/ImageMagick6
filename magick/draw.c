@@ -3484,6 +3484,10 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     (void) GetNextToken(q,&q,extent,token);
                     (void) CloneString(&graphic_context[n]->id,token);
                   }
+                if (n > MagickMaxRecursionDepth)
+                  (void) ThrowMagickException(&image->exception,
+                    GetMagickModule(),DrawError,"VectorGraphicsNestedTooDeeply",
+                    "`%s'",image->filename);
                 break;
               }
             if (LocaleCompare("mask",token) == 0)
