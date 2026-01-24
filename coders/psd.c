@@ -2072,6 +2072,12 @@ static MagickBooleanType ReadPSDMergedImage(const ImageInfo *image_info,
   sizes=(MagickOffsetType *) NULL;
   if (compression == RLE)
     {
+      size_t
+        extent;
+
+      if (HeapOverflowSanityCheckGetSize(image->rows,psd_info->channels,&extent) != MagickFalse)
+        ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
+          image->filename);
       sizes=ReadPSDRLESizes(image,psd_info,image->rows*psd_info->channels);
       if (sizes == (MagickOffsetType *) NULL)
         ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
