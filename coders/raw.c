@@ -118,6 +118,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
     length;
 
   ssize_t
+    columns,
     count,
     y;
 
@@ -188,6 +189,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
   length=0;
   status=MagickTrue;
   stream=NULL;
+  columns=(ssize_t) MagickMin(image->columns,canvas_image->columns);
   do
   {
     /*
@@ -240,7 +242,7 @@ static Image *ReadRAWImage(const ImageInfo *image_info,ExceptionInfo *exception)
             1,exception);
           if ((p == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
             break;
-          for (x=0; x < (ssize_t) image->columns; x++)
+          for (x=0; x < columns; x++)
           {
             SetPixelRed(q,GetPixelRed(p));
             SetPixelGreen(q,GetPixelGreen(p));

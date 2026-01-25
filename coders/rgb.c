@@ -126,6 +126,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
     length;
 
   ssize_t
+    columns,
     count,
     y;
 
@@ -209,6 +210,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   scene=0;
   status=MagickTrue;
   stream=NULL;
+  columns=(ssize_t) MagickMin(image->columns,canvas_image->columns);
   do
   {
     /*
@@ -270,7 +272,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelRed(q,GetPixelRed(p));
                 SetPixelGreen(q,GetPixelGreen(p));
@@ -355,7 +357,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 if ((p == (const PixelPacket *) NULL) ||
                     (q == (PixelPacket *) NULL))
                   break;
-                for (x=0; x < (ssize_t) image->columns; x++)
+                for (x=0; x < columns; x++)
                 {
                   switch (quantum_type)
                   {
@@ -455,7 +457,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelRed(q,GetPixelRed(p));
                 p++;
@@ -508,7 +510,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelGreen(q,GetPixelGreen(p));
                 p++;
@@ -561,7 +563,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelBlue(q,GetPixelBlue(p));
                 p++;
@@ -623,7 +625,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   if ((p == (const PixelPacket *) NULL) ||
                       (q == (PixelPacket *) NULL))
                     break;
-                  for (x=0; x < (ssize_t) image->columns; x++)
+                  for (x=0; x < columns; x++)
                   {
                     SetPixelOpacity(q,GetPixelOpacity(p));
                     p++;
@@ -715,7 +717,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelRed(q,GetPixelRed(p));
                 p++;
@@ -788,7 +790,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelGreen(q,GetPixelGreen(p));
                 p++;
@@ -861,7 +863,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelBlue(q,GetPixelBlue(p));
                 p++;
@@ -936,7 +938,7 @@ static Image *ReadRGBImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   if ((p == (const PixelPacket *) NULL) ||
                       (q == (PixelPacket *) NULL))
                     break;
-                  for (x=0; x < (ssize_t) image->columns; x++)
+                  for (x=0; x < columns; x++)
                   {
                     SetPixelOpacity(q,GetPixelOpacity(p));
                     p++;

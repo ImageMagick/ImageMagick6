@@ -126,6 +126,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
     length;
 
   ssize_t
+    columns,
     count,
     y;
 
@@ -205,6 +206,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
   scene=0;
   status=MagickTrue;
   stream=NULL;
+  columns=(ssize_t) MagickMin(image->columns,canvas_image->columns);
   do
   {
     /*
@@ -276,7 +278,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                 break;
               canvas_indexes=GetVirtualIndexQueue(canvas_image);
               indexes=GetAuthenticIndexQueue(image);
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelRed(q,GetPixelRed(p));
                 SetPixelGreen(q,GetPixelGreen(p));
@@ -370,7 +372,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                   break;
                 canvas_indexes=GetVirtualIndexQueue(canvas_image);
                 indexes=GetAuthenticIndexQueue(image);
-                for (x=0; x < (ssize_t) image->columns; x++)
+                for (x=0; x < columns; x++)
                 {
                   switch (quantum_type)
                   {
@@ -467,7 +469,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelRed(q,GetPixelRed(p));
                 p++;
@@ -520,7 +522,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelGreen(q,GetPixelGreen(p));
                 p++;
@@ -572,7 +574,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelBlue(q,GetPixelBlue(p));
                 p++;
@@ -633,7 +635,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                 break;
               canvas_indexes=GetVirtualIndexQueue(canvas_image);
               indexes=GetAuthenticIndexQueue(image);
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelIndex(indexes+x,GetPixelIndex(
                   canvas_indexes+image->extract_info.x+x));
@@ -690,7 +692,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                   if ((p == (const PixelPacket *) NULL) ||
                       (q == (PixelPacket *) NULL))
                     break;
-                  for (x=0; x < (ssize_t) image->columns; x++)
+                  for (x=0; x < columns; x++)
                   {
                     SetPixelOpacity(q,GetPixelOpacity(p));
                     p++;
@@ -782,7 +784,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelRed(q,GetPixelRed(p));
                 p++;
@@ -855,7 +857,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelGreen(q,GetPixelGreen(p));
                 p++;
@@ -928,7 +930,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
               if ((p == (const PixelPacket *) NULL) ||
                   (q == (PixelPacket *) NULL))
                 break;
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelBlue(q,GetPixelBlue(p));
                 p++;
@@ -1009,7 +1011,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                 break;
               canvas_indexes=GetVirtualIndexQueue(canvas_image);
               indexes=GetAuthenticIndexQueue(image);
-              for (x=0; x < (ssize_t) image->columns; x++)
+              for (x=0; x < columns; x++)
               {
                 SetPixelIndex(indexes+x,GetPixelIndex(
                   canvas_indexes+image->extract_info.x+x));
@@ -1085,7 +1087,7 @@ static Image *ReadCMYKImage(const ImageInfo *image_info,
                   if ((p == (const PixelPacket *) NULL) ||
                       (q == (PixelPacket *) NULL))
                     break;
-                  for (x=0; x < (ssize_t) image->columns; x++)
+                  for (x=0; x < columns; x++)
                   {
                     SetPixelOpacity(q,GetPixelOpacity(p));
                     p++;
