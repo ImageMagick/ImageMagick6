@@ -1261,6 +1261,7 @@ static MagickBooleanType ReadPSDChannelZip(Image *image,const size_t channels,
       ThrowBinaryException(ResourceLimitError,"MemoryAllocationFailed",
         image->filename);
     }
+  memset(pixels,0,count*sizeof(*pixels));
   if (ReadBlob(image,compact_size,compact_pixels) != (ssize_t) compact_size)
     {
       pixels=(unsigned char *) RelinquishMagickMemory(pixels);
