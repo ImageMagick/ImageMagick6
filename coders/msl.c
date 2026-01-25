@@ -700,7 +700,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Add noise image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -774,7 +774,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Annotate image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1110,7 +1110,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           MagickBooleanType
             stack;
 
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1174,7 +1174,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Blur image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1269,7 +1269,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Border image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1391,7 +1391,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Add noise image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1455,7 +1455,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         double  radius = 0.0,
             sigma = 1.0;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -1530,7 +1530,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Chop image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1637,7 +1637,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Color floodfill image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -1768,7 +1768,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Composite image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2110,7 +2110,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Contrast image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2163,7 +2163,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Crop image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2265,7 +2265,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Cycle-colormap image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2319,7 +2319,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Despeckle image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2345,7 +2345,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         }
       if (LocaleCompare((const char *) tag,"display") == 0)
         {
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2380,7 +2380,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Annotate image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2743,7 +2743,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Edge image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2810,7 +2810,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Emboss image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2889,7 +2889,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Enhance image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2918,7 +2918,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Equalize image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -2953,7 +2953,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
     {
       if (LocaleCompare((const char *) tag, "flatten") == 0)
       {
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -2984,7 +2984,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Flip image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3016,7 +3016,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Flop image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3051,7 +3051,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Frame image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3203,7 +3203,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Gamma image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3321,7 +3321,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         }
       else if (LocaleCompare((const char *) tag,"get") == 0)
         {
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3453,7 +3453,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Implode image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3525,7 +3525,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         double
           levelBlack = 0, levelGamma = 1, levelWhite = QuantumRange;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -3603,7 +3603,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Magnify image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3641,7 +3641,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Map image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3727,7 +3727,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
             Matte floodfill image.
           */
           opacity=0.0;
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3853,7 +3853,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Median-filter image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3921,7 +3921,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Minify image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -3955,7 +3955,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Modulate image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -4084,7 +4084,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Negate image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -4150,7 +4150,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Normalize image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -4207,7 +4207,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Oil-paint image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -4275,7 +4275,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Opaque image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -4380,7 +4380,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         }
         if (LocaleCompare((const char *) tag, "profile") == 0)
           {
-            if (msl_info->image[n] == (Image *) NULL)
+            if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
               {
                 ThrowMSLException(OptionError,"NoImagesDefined",
                   (const char *) tag);
@@ -4494,7 +4494,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Quantize image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -4972,7 +4972,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Raise image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5109,7 +5109,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Reduce-noise image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5177,7 +5177,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         x=msl_info->image[n]->page.x;
         y=msl_info->image[n]->page.y;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -5304,7 +5304,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         x_resolution,
         y_resolution;
 
-      if (msl_info->image[n] == (Image *) NULL)
+      if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -5424,7 +5424,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Resize image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5532,7 +5532,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Roll image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5611,7 +5611,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         height=msl_info->image[n]->rows;
         x = y = 0;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -5693,7 +5693,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Rotate image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5757,7 +5757,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         /* init the values */
         double  degrees = 0;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -5823,7 +5823,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Sample image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5900,7 +5900,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Scale image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -5980,7 +5980,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Segment image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6064,7 +6064,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         }
       else if (LocaleCompare((const char *) tag, "set") == 0)
       {
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",(const char *) tag);
           break;
@@ -6236,7 +6236,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Shade image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6327,7 +6327,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Shear image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6426,7 +6426,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         double  radius = 0.0,
             sigma = 1.0;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
           {
             ThrowMSLException(OptionError,"NoImagesDefined",
               (const char *) tag);
@@ -6498,7 +6498,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         width = height = 0;
         x = y = 0;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
@@ -6589,7 +6589,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Shear image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6678,7 +6678,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Signature image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6710,7 +6710,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Solarize image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6771,7 +6771,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Spread image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6835,7 +6835,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         Image *
           watermark = (Image*) NULL;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
           {
             ThrowMSLException(OptionError,"NoImagesDefined",
               (const char *) tag);
@@ -6902,7 +6902,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         Image *
           stereoImage = (Image*) NULL;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
           {
             ThrowMSLException(OptionError,"NoImagesDefined",(const char *) tag);
             break;
@@ -6968,7 +6968,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Strip image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -6998,7 +6998,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
             index,
             swap_index;
 
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -7063,7 +7063,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Swirl image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -7127,7 +7127,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Sync image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -7168,7 +7168,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Texture image.
           */
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -7222,7 +7222,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         /* init the values */
         double  threshold = 0;
 
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
           {
             ThrowMSLException(OptionError,"NoImagesDefined",(const char *) tag);
             break;
@@ -7269,7 +7269,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
       }
       else if (LocaleCompare((const char *) tag, "transparent") == 0)
       {
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
           {
             ThrowMSLException(OptionError,"NoImagesDefined",(const char *) tag);
             break;
@@ -7312,7 +7312,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
       }
       else if (LocaleCompare((const char *) tag, "trim") == 0)
       {
-        if (msl_info->image[n] == (Image *) NULL)
+        if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
           {
             ThrowMSLException(OptionError,"NoImagesDefined",(const char *) tag);
             break;
@@ -7347,7 +7347,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
     {
       if (LocaleCompare((const char *) tag,"write") == 0)
         {
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -7438,7 +7438,7 @@ static void MSLEndElement(void *context,const xmlChar *tag)
     {
       if (LocaleCompare((const char *) tag,"comment") == 0 )
         {
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
@@ -7493,7 +7493,7 @@ static void MSLEndElement(void *context,const xmlChar *tag)
     {
       if (LocaleCompare((const char *) tag,"label") == 0 )
         {
-          if (msl_info->image[n] == (Image *) NULL)
+          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
             {
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
