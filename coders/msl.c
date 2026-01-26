@@ -5171,20 +5171,19 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         }
       else if (LocaleCompare((const char *) tag,"repage") == 0)
       {
-        /* init the values */
-        width=msl_info->image[n]->page.width;
-        height=msl_info->image[n]->page.height;
-        x=msl_info->image[n]->page.x;
-        y=msl_info->image[n]->page.y;
-
         if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
           break;
         }
+        /* init the values */
+        width=msl_info->image[n]->page.width;
+        height=msl_info->image[n]->page.height;
+        x=msl_info->image[n]->page.x;
+        y=msl_info->image[n]->page.y;
         if (attributes == (const xmlChar **) NULL)
-        break;
+          break;
         for (i=0; (attributes[i] != (const xmlChar *) NULL); i++)
         {
         keyword=(const char *) attributes[i++];
@@ -5537,7 +5536,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               ThrowMSLException(OptionError,"NoImagesDefined",
                 (const char *) tag);
               break;
-            }
+            } 
           SetGeometry(msl_info->image[n],&geometry);
           if (attributes != (const xmlChar **) NULL)
             for (i=0; (attributes[i] != (const xmlChar *) NULL); i++)
@@ -5606,19 +5605,18 @@ static void MSLStartElement(void *context,const xmlChar *tag,
         }
       else if (LocaleCompare((const char *) tag,"roll") == 0)
       {
-        /* init the values */
-        width=msl_info->image[n]->columns;
-        height=msl_info->image[n]->rows;
-        x = y = 0;
-
         if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
         {
           ThrowMSLException(OptionError,"NoImagesDefined",
             (const char *) tag);
           break;
         }
+        /* init the values */
+        width=msl_info->image[n]->columns;
+        height=msl_info->image[n]->rows;
+        x = y = 0;
         if (attributes == (const xmlChar **) NULL)
-        break;
+          break;
         for (i=0; (attributes[i] != (const xmlChar *) NULL); i++)
         {
           keyword=(const char *) attributes[i++];
