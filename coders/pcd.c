@@ -168,9 +168,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
 
   size_t
     bits,
-    length,
     plane,
-    pcd_length[3],
     row,
     sum;
 
@@ -179,6 +177,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
     i,
     j,
     pcd_count,
+    pcd_length[3],
     quantum;
 
   unsigned char
@@ -213,8 +212,8 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   for (i=0; i < pcd_count; i++)
   {
     PCDGetBits(8);
-    length=(sum & 0xff)+1;
-    pcd_table[i]=(PCDTable *) AcquireQuantumMemory(length,
+    pcd_length[i]=(ssize_t) (sum & 0xff)+1;
+    pcd_table[i]=(PCDTable *) AcquireQuantumMemory((size_t) pcd_length[i],
       sizeof(*pcd_table[i]));
     if (pcd_table[i] == (PCDTable *) NULL)
       {
@@ -225,7 +224,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
           image->filename);
       }
     r=pcd_table[i];
-    for (j=0; j < (ssize_t) length; j++)
+    for (j=0; j < pcd_length[i]; j++)
     {
       PCDGetBits(8);
       r->length=(unsigned int) (sum & 0xff)+1;
@@ -243,7 +242,6 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
       r->mask=(~((1U << (32-r->length))-1));
       r++;
     }
-    pcd_length[i]=(size_t) length;
   }
   if (EOFBlob(image) == MagickFalse)
     {
@@ -263,7 +261,6 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
     Recover the Huffman encoded luminance and chrominance deltas.
   */
   count=0;
-  length=0;
   plane=0;
   row=0;
   for (q=luma; EOFBlob(image) == MagickFalse; )
@@ -311,14 +308,13 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
               image->filename);
           }
         }
-        length=pcd_length[plane];
         continue;
       }
     /*
       Decode luminance or chrominance deltas.
     */
     r=pcd_table[plane];
-    for (i=0; ((i < (ssize_t) length) && ((sum & r->mask) != r->sequence)); i++)
+    for (i=0; ((i < pcd_length[plane]) && ((sum & r->mask) != r->sequence)); i++)
       r++;
     if ((row > image->rows) || (r == (PCDTable *) NULL))
       {
