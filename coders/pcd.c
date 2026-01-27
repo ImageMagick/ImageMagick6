@@ -178,6 +178,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
     count,
     i,
     j,
+    pcd_count,
     quantum;
 
   unsigned char
@@ -208,7 +209,8 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
     pcd_table[i]=(PCDTable *) NULL;
     pcd_length[i]=0;
   }
-  for (i=0; i < (ssize_t) (image->columns > 1536 ? 3 : 1); i++)
+  pcd_count=(ssize_t) (image->columns > 1536 ? 3 : 1);
+  for (i=0; i < pcd_count; i++)
   {
     PCDGetBits(8);
     length=(sum & 0xff)+1;
@@ -302,7 +304,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
           }
           default:
           {
-            for (i=0; i < (ssize_t) (image->columns > 1536 ? 3 : 1); i++)
+            for (i=0; i < pcd_count; i++)
               pcd_table[i]=(PCDTable *) RelinquishMagickMemory(pcd_table[i]);
             buffer=(unsigned char *) RelinquishMagickMemory(buffer);
             ThrowBinaryImageException(CorruptImageError,"CorruptImage",
@@ -337,11 +339,10 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
     PCDGetBits(r->length);
     count--;
   }
-  (void) count;
   /*
     Relinquish resources.
   */
-  for (i=0; i < (ssize_t) (image->columns > 1536 ? 3 : 1); i++)
+  for (i=0; i < pcd_count; i++)
     pcd_table[i]=(PCDTable *) RelinquishMagickMemory(pcd_table[i]);
   buffer=(unsigned char *) RelinquishMagickMemory(buffer);
   return(MagickTrue);
