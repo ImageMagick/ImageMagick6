@@ -246,10 +246,10 @@ MagickBooleanType sixel_decode(Image *image,
     int param[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     int sixel_palet[SIXEL_PALETTE_MAX];
     unsigned char *imbuf, *dmbuf;
-    int imsx, imsy;
-    int dmsx, dmsy;
     int y;
     size_t extent,offset;
+    ssize_t imsx, imsy;
+    ssize_t dmsx, dmsy;
 
     extent=strlen((char *) p);
     posision_x = posision_y = 0;
@@ -434,8 +434,8 @@ MagickBooleanType sixel_decode(Image *image,
 
         } else if (*p >= '?' && *p <= '\177') {
             if (imsx < (posision_x + repeat_count) || imsy < (posision_y + 6)) {
-                int nx = imsx * 2;
-                int ny = imsy * 2;
+                ssize_t nx = imsx * 2;
+                ssize_t ny = imsy * 2;
 
                 while (nx < (posision_x + repeat_count) || ny < (posision_y + 6)) {
                     nx *= 2;
