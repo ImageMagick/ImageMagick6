@@ -202,7 +202,7 @@ ModuleExport void UnregisterPS3Image(void)
 %
 */
 
-static void inline FilenameToTitle(const char *filename,char *title,
+static inline void FilenameToTitle(const char *filename,char *title,
   const size_t extent)
 {
   int
