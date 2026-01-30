@@ -61,6 +61,7 @@
 #include "magick/timer-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
+#include "magick/utility-private.h"
 #include "magick/xml-tree.h"
 #include "magick/xml-tree-private.h"
 #if defined(MAGICKCORE_XML_DELEGATE)
@@ -474,7 +475,7 @@ static char *AcquirePolicyString(const char *source,const size_t pad)
   if (source != (char *) NULL)
     length+=strlen(source);
   destination=(char *) NULL;
-  if (~length >= pad) 
+  if (~length >= pad)
     destination=(char *) AcquireMagickMemory((length+pad)*sizeof(*destination));
   if (destination == (char *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToAcquireString");
@@ -674,18 +675,31 @@ MagickExport MagickBooleanType IsRightsAuthorized(const PolicyDomain domain,
   p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
   while (p != (PolicyInfo *) NULL)
   {
-    if ((p->domain == domain) &&
-        (GlobExpression(pattern,p->pattern,MagickFalse) != MagickFalse))
+    char
+      *real_pattern = (char *) pattern;
+
+    if (p->domain == domain)
       {
-        if ((rights & ReadPolicyRights) != 0)
-          authorized=(p->rights & ReadPolicyRights) != 0 ? MagickTrue :
-            MagickFalse;
-        if ((rights & WritePolicyRights) != 0)
-          authorized=(p->rights & WritePolicyRights) != 0 ? MagickTrue :
-            MagickFalse;
-        if ((rights & ExecutePolicyRights) != 0)
-          authorized=(p->rights & ExecutePolicyRights) != 0 ? MagickTrue :
-            MagickFalse;
+        if (p->domain == PathPolicyDomain)
+          {
+            real_pattern=realpath_utf8(pattern);
+            if (real_pattern == (char *) NULL)
+              real_pattern=AcquireString(pattern);
+          }
+        if (GlobExpression(real_pattern,p->pattern,MagickFalse) != MagickFalse)
+          {
+            if ((rights & ReadPolicyRights) != 0)
+              authorized=(p->rights & ReadPolicyRights) != 0 ? MagickTrue :
+                MagickFalse;
+            if ((rights & WritePolicyRights) != 0)
+              authorized=(p->rights & WritePolicyRights) != 0 ? MagickTrue :
+                MagickFalse;
+            if ((rights & ExecutePolicyRights) != 0)
+              authorized=(p->rights & ExecutePolicyRights) != 0 ? MagickTrue :
+                MagickFalse;
+          }
+        if (p->domain == PathPolicyDomain)
+          real_pattern=DestroyString(real_pattern);
       }
     p=(PolicyInfo *) GetNextValueInLinkedList(policy_cache);
   }
@@ -1013,7 +1027,7 @@ static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
         break;
       }
       default:
-        break; 
+        break;
     }
   }
   token=(char *) RelinquishMagickMemory(token);

@@ -2704,6 +2704,7 @@ typedef struct _DCMInfo
 
   size_t
     bits_allocated,
+    bits_per_entry,
     bytes_per_pixel,
     depth,
     mask,
@@ -3139,6 +3140,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
   */
   (void) CopyMagickString(photometric,"MONOCHROME1 ",MaxTextExtent);
   info.bits_allocated=8;
+  info.bits_per_entry=1;
   info.bytes_per_pixel=1;
   info.depth=8;
   info.mask=0xffff;
@@ -3680,7 +3682,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else
                   index=(unsigned short) (*p | (*(p+1) << 8));
                 redmap[i]=(int) index;
-                p+=(ptrdiff_t) 2;
+                p+=(ptrdiff_t) info.bits_per_entry;
               }
               break;
             }
@@ -3712,7 +3714,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else
                   index=(unsigned short) (*p | (*(p+1) << 8));
                 greenmap[i]=(int) index;
-                p+=(ptrdiff_t) 2;
+                p+=(ptrdiff_t) info.bits_per_entry;
               }
               break;
             }
@@ -3744,10 +3746,20 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else
                   index=(unsigned short) (*p | (*(p+1) << 8));
                 bluemap[i]=(int) index;
-                p+=(ptrdiff_t) 2;
+                p+=(ptrdiff_t) info.bits_per_entry;
               }
               break;
             }
+            case 0x3002:
+            { 
+              /*
+                Bytes per entry.
+              */
+              info.bits_per_entry=(size_t) datum;
+              if ((info.bits_per_entry == 0) || (info.bits_per_entry > 2))
+                ThrowDCMException(CorruptImageError,"ImproperImageHeader")
+              break;
+            } 
             default:
               break;
           }
