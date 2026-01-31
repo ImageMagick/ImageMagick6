@@ -192,6 +192,12 @@ typedef struct _SVGInfo
     svgDepth;
 } SVGInfo;
 
+/*    
+  Global declarations.
+*/
+static SplayTreeInfo
+  *svg_tree = (SplayTreeInfo *) NULL;
+
 /*
   Static declarations.
 */
@@ -2982,6 +2988,26 @@ static void SVGEndElement(void *context,const xmlChar *name)
     {
       if (LocaleCompare((const char *) name,"image") == 0)
         {
+          Image
+            *image;
+
+          ImageInfo
+            *image_info = AcquireImageInfo();
+  
+          if (GetValueFromSplayTree(svg_tree,svg_info->url) != (const char *) NULL)
+            {
+              (void) ThrowMagickException(svg_info->exception,GetMagickModule(),
+                DrawError,"VectorGraphicsNestedTooDeeply","`%s'",svg_info->url);
+              break;
+            }
+          (void) AddValueToSplayTree(svg_tree,ConstantString(svg_info->url),
+            (void *) 1);
+          (void) CopyMagickString(image_info->filename,svg_info->url,
+            MagickPathExtent);
+          image=ReadImage(image_info,svg_info->exception);
+          if (image != (Image *) NULL)
+            image=DestroyImage(image);
+          (void) DeleteNodeFromSplayTree(svg_tree,svg_info->url);
           (void) FormatLocaleFile(svg_info->file,
             "image Over %g,%g %g,%g \"%s\"\n",svg_info->bounds.x,
             svg_info->bounds.y,svg_info->bounds.width,svg_info->bounds.height,
@@ -3797,6 +3823,9 @@ ModuleExport size_t RegisterSVGImage(void)
   MagickInfo
     *entry;
 
+  if (svg_tree == (SplayTreeInfo *) NULL)
+    svg_tree=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
+      (void *(*)(void *)) NULL);
   *version='\0';
 #if defined(LIBXML_DOTTED_VERSION)
   (void) CopyMagickString(version,"XML " LIBXML_DOTTED_VERSION,MaxTextExtent);
@@ -3816,9 +3845,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
-#if defined(MAGICKCORE_RSVG_DELEGATE)
-  entry->thread_support=MagickFalse;
-#endif
   entry->description=ConstantString("Scalable Vector Graphics");
   entry->mime_type=ConstantString("image/svg+xml");
   if (*version != '\0')
@@ -3833,9 +3859,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
-#if defined(MAGICKCORE_RSVG_DELEGATE)
-  entry->thread_support=MagickFalse;
-#endif
   entry->description=ConstantString("Compressed Scalable Vector Graphics");
   entry->mime_type=ConstantString("image/svg+xml");
   if (*version != '\0')
@@ -3850,9 +3873,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
-#if defined(MAGICKCORE_RSVG_DELEGATE)
-  entry->thread_support=MagickFalse;
-#endif
   entry->description=ConstantString("ImageMagick's own SVG internal renderer");
   entry->magick=(IsImageFormatHandler *) IsSVG;
   entry->magick_module=ConstantString("SVG");
@@ -3884,6 +3904,8 @@ ModuleExport void UnregisterSVGImage(void)
   (void) UnregisterMagickInfo("SVGZ");
   (void) UnregisterMagickInfo("SVG");
   (void) UnregisterMagickInfo("MSVG");
+  if (svg_tree != (SplayTreeInfo *) NULL)
+    svg_tree=DestroySplayTree(svg_tree);
 }
 
 /*

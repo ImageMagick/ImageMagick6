@@ -148,6 +148,11 @@ typedef struct _MSLInfo
     document;
 #endif
 } MSLInfo;
+/*    
+  Global declarations.
+*/
+static SplayTreeInfo
+  *msl_tree = (SplayTreeInfo *) NULL;
 
 /*
   Forward declarations.
@@ -5080,18 +5085,20 @@ static void MSLStartElement(void *context,const xmlChar *tag,
 
                     if (value == (char *) NULL)
                       break;
+                    if (GetValueFromSplayTree(msl_tree,value) != (const char *) NULL)
+                      {
+                        (void) ThrowMagickException(msl_info->exception,
+                          GetMagickModule(),DrawError,
+                          "VectorGraphicsNestedTooDeeply","`%s'",value);
+                        break;
+                      }
+                    (void) AddValueToSplayTree(msl_tree,ConstantString(value),
+                      (void *) 1);
                     *msl_info->image_info[n]->magick='\0';
                     (void) CopyMagickString(msl_info->image_info[n]->filename,
                       value,MagickPathExtent);
-                    (void) SetImageInfo(msl_info->image_info[n],1,exception);
-                    if ((LocaleCompare(msl_info->image_info[n]->magick,"msl") != 0) &&
-                        (LocaleCompare(msl_info->image_info[n]->magick,"svg") != 0))
-                      next=ReadImage(msl_info->image_info[n],exception);
-                    else
-                      (void) ThrowMagickException(msl_info->exception,
-                        GetMagickModule(),DrawError,
-                        "VectorGraphicsNestedTooDeeply","`%s'",
-                        msl_info->image_info[n]->filename);
+                    next=ReadImage(msl_info->image_info[n],exception);
+                    (void) DeleteNodeFromSplayTree(msl_tree,value);
                     CatchException(exception);
                     if (next == (Image *) NULL)
                       continue;
@@ -8034,6 +8041,9 @@ ModuleExport size_t RegisterMSLImage(void)
   MagickInfo
     *entry;
 
+  if (msl_tree == (SplayTreeInfo *) NULL)
+    msl_tree=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
+      (void *(*)(void *)) NULL);
   entry=SetMagickInfo("MSL");
 #if defined(MAGICKCORE_XML_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadMSLImage;
@@ -8360,6 +8370,8 @@ static MagickBooleanType SetMSLAttributes(MSLInfo *msl_info,const char *keyword,
 ModuleExport void UnregisterMSLImage(void)
 {
   (void) UnregisterMagickInfo("MSL");
+  if (msl_tree != (SplayTreeInfo *) NULL)
+    msl_tree=DestroySplayTree(msl_tree);
 }
 
 #if defined(MAGICKCORE_XML_DELEGATE)
