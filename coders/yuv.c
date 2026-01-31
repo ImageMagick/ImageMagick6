@@ -171,7 +171,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
       vertical_factor=horizontal_factor;
       if ((flags & SigmaValue) != 0)
         vertical_factor=(ssize_t) geometry_info.sigma;
-      if ((horizontal_factor != 1) && (horizontal_factor != 2) &&
+      if ((horizontal_factor != 1) && (horizontal_factor != 2) ||
           (vertical_factor != 1) && (vertical_factor != 2))
         ThrowReaderException(CorruptImageError,"UnexpectedSamplingFactor");
     }
@@ -659,7 +659,7 @@ static MagickBooleanType WriteYUVImage(const ImageInfo *image_info,Image *image)
       vertical_factor=horizontal_factor;
       if ((flags & SigmaValue) != 0)
         vertical_factor=(ssize_t) geometry_info.sigma;
-      if ((horizontal_factor != 1) && (horizontal_factor != 2) &&
+      if ((horizontal_factor != 1) && (horizontal_factor != 2) ||
           (vertical_factor != 1) && (vertical_factor != 2))
         ThrowWriterException(CorruptImageError,"UnexpectedSamplingFactor");
     }
