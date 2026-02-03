@@ -1928,7 +1928,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
 
                       attribute=GetImageProperty(msl_info->attributes[j],"id");
                       if ((attribute != (const char *) NULL)  &&
-                          (LocaleCompare(value,value) == 0))
+                          (LocaleCompare(attribute,value) == 0))
                         {
                           SetImageType(composite_image,TrueColorMatteType);
                           (void) CompositeImage(composite_image,
