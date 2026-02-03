@@ -366,7 +366,10 @@ MagickBooleanType sixel_decode(Image *image,
                 dmsx = imsx > attributed_ph ? imsx : attributed_ph;
                 dmsy = imsy > attributed_pv ? imsy : attributed_pv;
                 if (SetImageExtent(image,dmsx,dmsy) == MagickFalse)
-                  break;
+                  {
+                    imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
+                    return (MagickFalse);
+                  }
                 dmbuf = (unsigned char *) AcquireQuantumMemory(dmsx , dmsy);
                 if (dmbuf == (unsigned char *) NULL) {
                     imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
@@ -444,7 +447,10 @@ MagickBooleanType sixel_decode(Image *image,
                 dmsx = nx;
                 dmsy = ny;
                 if (SetImageExtent(image,dmsx,dmsy) == MagickFalse)
-                  break;
+                  {
+                    imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
+                    return (MagickFalse);
+                  }
                 dmbuf = (unsigned char *) AcquireQuantumMemory(dmsx , dmsy);
                 if (dmbuf == (unsigned char *) NULL) {
                     imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);
