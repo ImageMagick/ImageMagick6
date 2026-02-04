@@ -2993,7 +2993,12 @@ static void SVGEndElement(void *context,const xmlChar *name)
 
           ImageInfo
             *image_info = AcquireImageInfo();
-  
+
+          if (svg_info->url == (char*) NULL)
+            {
+              (void) FormatLocaleFile(svg_info->file,"pop graphic-context\n");
+              break;
+            }
           if (GetValueFromSplayTree(svg_tree,svg_info->url) != (const char *) NULL)
             {
               (void) ThrowMagickException(svg_info->exception,GetMagickModule(),
