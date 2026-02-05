@@ -445,10 +445,12 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
         else
           (void) CopyMagickString(target,q,MaxTextExtent);
         q=ParseXPMColor(target,MagickFalse);
-        (void) CopyXPMColor(symbolic,q,MagickMin((size_t) (next-q),
-          MagickPathExtent-1));
         if (q != (char *) NULL)
-          *q='\0';
+          {
+            (void) CopyXPMColor(symbolic,q,MagickMin((size_t) (next-q),
+              MagickPathExtent-1));
+            *q='\0';
+          }
       }
     StripString(target);
     if (*symbolic != '\0')
