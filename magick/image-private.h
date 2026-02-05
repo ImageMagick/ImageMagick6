@@ -42,6 +42,7 @@ extern "C" {
 #define LoadImageTag  "Load/Image"
 #define Magick2PI    6.28318530717958647692528676655900576839433879875020
 #define MagickAbsoluteValue(x)  ((x) < 0 ? -(x) : (x))
+#define MAGICK_INT_MAX  (INT_MAX)
 #define MagickPHI    1.61803398874989484820458683436563811772030917980576
 #define MagickPI2    1.57079632679489661923132169163975144209858469968755
 #define MagickPI  3.14159265358979323846264338327950288419716939937510
@@ -64,6 +65,30 @@ extern "C" {
 #define TransparentColorRGBA  0,0,0,TransparentOpacity
 #define UndefinedCompressionQuality  0UL
 #define UndefinedTicksPerSecond  100L
+
+static inline int CastDoubleToInt(const double x)
+{
+  double
+    value;
+
+  if (IsNaN(x) != 0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < 0.0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  if (value > ((double) MAGICK_INT_MAX))
+    {
+      errno=ERANGE;
+      return(MAGICK_INT_MAX);
+    }
+  return((int) value);
+}
 
 static inline ssize_t CastDoubleToLong(const double x)
 {
