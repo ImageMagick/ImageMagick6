@@ -153,15 +153,20 @@ static Image *ReadSTEGANOImage(const ImageInfo *image_info,
     return(DestroyImageList(image));
   watermark->depth=MAGICKCORE_QUANTUM_DEPTH;
   if (AcquireImageColormap(image,MaxColormapSize) == MagickFalse)
-    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+    {
+      ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+      watermark=DestroyImage(watermark);
+    }
   if (image_info->ping != MagickFalse)
     {
+      watermark=DestroyImage(watermark);
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
+      watermark=DestroyImage(watermark);
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
