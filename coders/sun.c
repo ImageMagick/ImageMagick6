@@ -469,12 +469,16 @@ static Image *ReadSUNImage(const ImageInfo *image_info,ExceptionInfo *exception)
         ThrowReaderException(ResourceLimitError,"ImproperImageHeader");
       }
     bytes_per_line>>=4;
-    if (HeapOverflowSanityCheck(height,bytes_per_line) != MagickFalse)
+    if (HeapOverflowSanityCheckGetSize(height,bytes_per_line,&pixels_length) != MagickFalse)
       {
         sun_data=(unsigned char *) RelinquishMagickMemory(sun_data);
         ThrowReaderException(ResourceLimitError,"ImproperImageHeader");
       }
-    pixels_length=height*bytes_per_line;
+    if (image->rows > (MAGICK_SIZE_MAX - pixels_length))
+      {
+        sun_data=(unsigned char *) RelinquishMagickMemory(sun_data);
+        ThrowReaderException(ResourceLimitError,"ImproperImageHeader");
+      }
     sun_pixels=(unsigned char *) AcquireQuantumMemory(pixels_length+image->rows,
       sizeof(*sun_pixels));
     if (sun_pixels == (unsigned char *) NULL)
