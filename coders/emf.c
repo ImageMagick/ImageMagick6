@@ -702,7 +702,7 @@ static Image *ReadEMFImage(const ImageInfo *image_info,
     *p;
 
   wchar_t
-    fileName[MaxTextExtent];
+    *path;
 
   assert(image_info != (const ImageInfo *) NULL);
   assert(image_info->signature == MagickCoreSignature);
@@ -714,14 +714,18 @@ static Image *ReadEMFImage(const ImageInfo *image_info,
   if (Gdiplus::GdiplusStartup(&token,&startup_input,NULL) != 
     Gdiplus::Status::Ok)
     ThrowReaderException(CoderError, "GdiplusStartupFailed");
-  MultiByteToWideChar(CP_UTF8,0,image->filename,-1,fileName,MaxTextExtent);
-  source=Gdiplus::Image::FromFile(fileName);
+  source=(Gdiplus::Image *) NULL;
+  path=NTCreateWidePath(image->filename);
+  if (path != (wchar_t *) NULL)
+    {
+      source=Gdiplus::Image::FromFile(path);
+      path=(wchar_t *) RelinquishMagickMemory(path);
+    }
   if (source == (Gdiplus::Image *) NULL)
     {
       Gdiplus::GdiplusShutdown(token);
       ThrowReaderException(FileOpenError,"UnableToOpenFile");
     }
-
   image->x_resolution=source->GetHorizontalResolution();
   image->y_resolution=source->GetVerticalResolution();
   image->columns=(size_t) source->GetWidth();

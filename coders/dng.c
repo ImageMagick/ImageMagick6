@@ -488,7 +488,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       wchar_t
         *path;
 
-      path=create_wchar_path(image->filename);
+      path=NTCreateWidePath(image->filename);
       if (path != (wchar_t *) NULL)
         {
           errcode=libraw_open_wfile(raw_info,path);
