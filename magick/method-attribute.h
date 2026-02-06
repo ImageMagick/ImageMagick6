@@ -24,7 +24,9 @@ extern "C" {
 
 #if defined(_DLL)
 #  define _MAGICKDLL_
-#  define _MAGICKLIB_
+#  if !defined(_MAGICKLIB_)
+#    define _MAGICKLIB_
+#  endif
 #  define MAGICKCORE_MODULES_SUPPORT
 #  undef MAGICKCORE_BUILD_MODULES
 #endif
