@@ -24,6 +24,9 @@
 #if defined(MAGICKCORE_HAVE_UTIME_H)
 #include <utime.h>
 #endif
+#if defined(__MINGW32__)
+#include <share.h>
+#endif
 
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
