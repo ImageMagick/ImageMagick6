@@ -3251,16 +3251,15 @@ MagickPrivate void NTWindowsGenesis(void)
     path=NTRegistryKeyLookup("LibPath");
     if (path != (unsigned char *) NULL)
       {
-        size_t
-          length;
-
         wchar_t
-          lib_path[MagickPathExtent];
+          *lib_path;
 
-        length=MultiByteToWideChar(CP_UTF8,0,(char *) path,-1,lib_path,
-          MagickPathExtent);
-        if (length != 0)
-          SetDllDirectoryW(lib_path);
+        lib_path=CreateWidePath((const char *) path);
+        if (lib_path != (wchar_t *) NULL)
+          {
+            SetDllDirectoryW(lib_path);
+            lib_path=(wchar_t *) RelinquishMagickMemory(lib_path);
+          }
         path=(unsigned char *) RelinquishMagickMemory(path);
       }
   }
