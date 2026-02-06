@@ -30,6 +30,56 @@ extern "C" {
 
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
 
+#if !defined(closedir)
+#  define closedir(directory)  NTCloseDirectory(directory)
+#endif
+#if !defined(MAGICKCORE_LTDL_DELEGATE)
+#if !defined(lt_dlclose)
+#  define lt_dlclose(handle)  NTCloseLibrary(handle)
+#endif
+#if !defined(lt_dlerror)
+#  define lt_dlerror()  NTGetLibraryError()
+#endif
+#if !defined(lt_dlopen)
+#  define lt_dlopen(filename)  NTOpenLibrary(filename)
+#endif
+#if !defined(lt_dlsym)
+#  define lt_dlsym(handle,name)  NTGetLibrarySymbol(handle,name)
+#endif
+#endif
+#if !defined(opendir)
+#  define opendir(directory)  NTOpenDirectory(directory)
+#endif
+#if !defined(read)
+#  define read(fd,buffer,count)  _read(fd,buffer,(unsigned int) count)
+#endif
+#if !defined(readdir)
+#  define readdir(directory)  NTReadDirectory(directory)
+#endif
+#if !defined(sysconf)
+#  define sysconf(name)  NTSystemConfiguration(name)
+#  define MAGICKCORE_HAVE_SYSCONF 1
+#endif
+#if !defined(write)
+#  define write(fd,buffer,count)  _write(fd,buffer,(unsigned int) count)
+#endif
+#if !defined(__MINGW32__)
+#  define fdopen  _fdopen
+#  define fileno  _fileno
+#  define fseek   _fseeki64
+#  define ftell   _ftelli64
+#  define getpid  _getpid
+#if !defined(getcwd)
+#  define getcwd  _getcwd
+#endif
+#  define lseek   _lseeki64
+#  define fstat   _fstat64
+#  define setmode _setmode
+#  define stat    _stat64
+#  define tell    _telli64
+#  define wstat   _wstat64
+#endif
+
 #if !defined(XS_VERSION)
 struct dirent
 {

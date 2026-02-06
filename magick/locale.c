@@ -66,8 +66,14 @@
 #if (defined(MAGICKCORE_HAVE_NEWLOCALE) || defined(MAGICKCORE_WINDOWS_SUPPORT)) && !defined(__MINGW32__)
 #  define MAGICKCORE_LOCALE_SUPPORT
 #endif
+
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+#  if !defined(locale_t)
+#    define locale_t _locale_t
+#  endif
+#endif
+
 #define LocaleFilename  "locale.xml"
-#define MaxRecursionDepth  200
 
 /*
   Static declarations.
@@ -280,7 +286,11 @@ static SplayTreeInfo *AcquireLocaleSplayTree(const char *filename,
 static void DestroyCLocale(void)
 {
   if (c_locale != (locale_t) NULL)
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+    _free_locale(c_locale);
+#else
     freelocale(c_locale);
+#endif
   c_locale=(locale_t) NULL;
 }
 #endif
@@ -365,7 +375,7 @@ MagickExport ssize_t FormatLocaleFileList(FILE *file,
       n=(ssize_t) vfprintf(file,format,operands);
     else
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
-      n=(ssize_t) vfprintf_l(file,format,locale,operands);
+      n=(ssize_t) _vfprintf_l(file,format,locale,operands);
 #else
       n=(ssize_t) vfprintf_l(file,locale,format,operands);
 #endif
@@ -456,7 +466,7 @@ MagickExport ssize_t FormatLocaleStringList(char *magick_restrict string,
       n=(ssize_t) vsnprintf(string,length,format,operands);
     else
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
-      n=(ssize_t) vsnprintf_l(string,length,format,locale,operands);
+      n=(ssize_t) _vsnprintf_l(string,length,format,locale,operands);
 #else
       n=(ssize_t) vsnprintf_l(string,length,locale,format,operands);
 #endif
@@ -1017,7 +1027,11 @@ MagickExport double InterpretLocaleValue(const char *magick_restrict string,
       if (locale == (locale_t) NULL)
         value=strtod(string,&q);
       else
+#if defined(MAGICKCORE_WINDOWS_SUPPORT)
+        value=_strtod_l(string,&q,locale);
+#else
         value=strtod_l(string,&q,locale);
+#endif
 #else
       value=strtod(string,&q);
 #endif
