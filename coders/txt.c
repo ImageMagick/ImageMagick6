@@ -276,6 +276,7 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
   if (status == MagickFalse)
     {
       draw_info=DestroyDrawInfo(draw_info);
+      texture=DestroyImageList(texture);
       ThrowReaderException(TypeError,"UnableToGetTypeMetrics");
     }
   page.y=CastDoubleToLong(ceil((double) page.y+metrics.ascent-0.5));
@@ -350,8 +351,7 @@ static Image *ReadTEXTImage(const ImageInfo *image_info,
       (void) SetImageProgressMonitor(image,progress_monitor,image->client_data);
     }
   (void) AnnotateImage(image,draw_info);
-  if (texture != (Image *) NULL)
-    texture=DestroyImageList(texture);
+  texture=DestroyImageList(texture);
   draw_info=DestroyDrawInfo(draw_info);
   if (CloseBlob(image) == MagickFalse)
     status=MagickFalse;
