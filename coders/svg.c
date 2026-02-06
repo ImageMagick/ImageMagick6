@@ -3853,6 +3853,7 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
+  entry->thread_support^=DecoderThreadSupport;
   entry->description=ConstantString("Scalable Vector Graphics");
   entry->mime_type=ConstantString("image/svg+xml");
   if (*version != '\0')
@@ -3867,6 +3868,7 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
+  entry->thread_support^=DecoderThreadSupport;
   entry->description=ConstantString("Compressed Scalable Vector Graphics");
   entry->mime_type=ConstantString("image/svg+xml");
   if (*version != '\0')
@@ -3881,6 +3883,7 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
+  entry->thread_support^=DecoderThreadSupport;
   entry->description=ConstantString("ImageMagick's own SVG internal renderer");
   entry->magick=(IsImageFormatHandler *) IsSVG;
   entry->magick_module=ConstantString("SVG");
