@@ -25,7 +25,7 @@ top_builddir='/home/cristy/ImageMagick-6'
 MAGICK_CODER_MODULE_PATH='/home/cristy/ImageMagick-6/coders'
 MAGICK_CONFIGURE_SRC_PATH='/home/cristy/ImageMagick-6/config'
 MAGICK_CONFIGURE_BUILD_PATH='/home/cristy/ImageMagick-6/config'
-MAGICK_CODER_FILTER_PATH='/home/cristy/ImageMagick-6/filters'
+MAGICK_FILTER_MODULE_PATH='/home/cristy/ImageMagick-6/filters'
 DIRSEP=':'
 
 PATH="${top_builddir}/utilities:${PATH}"
@@ -38,6 +38,6 @@ env \
   LD_LIBRARY_PATH="${top_builddir}/magick/.libs:${top_builddir}/wand/.libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
   MAGICK_CODER_MODULE_PATH="${MAGICK_CODER_MODULE_PATH}" \
   MAGICK_CONFIGURE_PATH="${MAGICK_CONFIGURE_BUILD_PATH}${DIRSEP}${MAGICK_CONFIGURE_SRC_PATH}" \
-  MAGICK_CODER_FILTER_PATH="${MAGICK_CODER_FILTER_PATH}" \
+  MAGICK_FILTER_MODULE_PATH="${MAGICK_FILTER_MODULE_PATH}" \
   PATH="${PATH}" \
   "$@"
