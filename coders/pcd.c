@@ -112,7 +112,7 @@ static MagickBooleanType
 %
 */
 static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
-  unsigned char *chroma1,unsigned char *chroma2)
+  unsigned char *chroma1,unsigned char *chroma2,ExceptionInfo *exception)
 {
 #define IsSync(sum)  ((sum & 0xffffff00UL) == 0xfffffe00UL)
 #define PCDGetBits(n) \
@@ -183,8 +183,8 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   unsigned char
     *buffer,
     *p,
-    *q;
-
+    *q,
+    *sentinel;
 
   /*
     Initialize Huffman tables.
@@ -263,6 +263,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   count=0;
   plane=0;
   row=0;
+  sentinel=luma+3*(image->columns+1)*image->rows;
   for (q=luma; EOFBlob(image) == MagickFalse; )
   {
     if (IsSync(sum) != 0)
@@ -326,6 +327,8 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
           PCDGetBits(1);
         continue;
       }
+    if ((q < luma) || (q >= sentinel))
+      break;
     if (r->key < 128)
       quantum=(ssize_t) (*q)+r->key;
     else
@@ -341,6 +344,8 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   for (i=0; i < pcd_count; i++)
     pcd_table[i]=(PCDTable *) RelinquishMagickMemory(pcd_table[i]);
   buffer=(unsigned char *) RelinquishMagickMemory(buffer);
+  if ((q < luma) || (q >= sentinel))
+    ThrowBinaryException(CorruptImageError,"CorruptImage",image->filename);
   return(MagickTrue);
 }
 
@@ -788,8 +793,8 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
       image->rows=1024;
       for (i=0; i < (4*0x800); i++)
         (void) ReadBlobByte(image);
-      status=DecodeImage(image,luma,chroma1,chroma2);
-      if ((scene >= 5) && status)
+      status=DecodeImage(image,luma,chroma1,chroma2,&image->exception);
+      if ((scene >= 5) && (status != MagickFalse))
         {
           /*
             Recover luminance deltas for 3072x2048 image.
@@ -800,7 +805,7 @@ static Image *ReadPCDImage(const ImageInfo *image_info,ExceptionInfo *exception)
           image->rows=2048;
           offset=TellBlob(image)/0x800+12;
           offset=SeekBlob(image,offset*0x800,SEEK_SET);
-          status=DecodeImage(image,luma,chroma1,chroma2);
+          status=DecodeImage(image,luma,chroma1,chroma2,&image->exception);
           if ((scene >= 6) && (status != MagickFalse))
             {
               /*
