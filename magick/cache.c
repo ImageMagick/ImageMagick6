@@ -4368,6 +4368,7 @@ MagickExport MagickBooleanType PersistPixelCache(Image *image,
   status=AcquireMagickResource(DiskResource,cache_info->length);
   if (status == MagickFalse)
     {
+      cache_info->type=UndefinedCache;
       (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
         "CacheResourcesExhausted","`%s'",image->filename);
       return(MagickFalse);
