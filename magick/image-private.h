@@ -82,7 +82,7 @@ static inline int CastDoubleToInt(const double x)
       errno=ERANGE;
       return(0);
     }
-  if (value > ((double) MAGICK_INT_MAX))
+  if (value >= ((double) MAGICK_INT_MAX))
     {
       errno=ERANGE;
       return(MAGICK_INT_MAX);
@@ -106,7 +106,7 @@ static inline ssize_t CastDoubleToLong(const double x)
       errno=ERANGE;
       return(MAGICK_SSIZE_MIN);
     }
-  if (value > ((double) MAGICK_SSIZE_MAX))
+  if (value >= ((double) MAGICK_SSIZE_MAX))
     {
       errno=ERANGE;
       return(MAGICK_SSIZE_MAX);
@@ -130,7 +130,7 @@ static inline QuantumAny CastDoubleToQuantumAny(const double x)
       errno=ERANGE;
       return(0);
     }
-  if (value > ((double) ((QuantumAny) ~0)))
+  if (value >= ((double) ((QuantumAny) ~0)))
     {
       errno=ERANGE;
       return((QuantumAny) ~0);
@@ -154,7 +154,7 @@ static inline size_t CastDoubleToUnsigned(const double x)
       errno=ERANGE;
       return(0);
     }
-  if (value > ((double) MAGICK_SIZE_MAX))
+  if (value >= ((double) MAGICK_SIZE_MAX))
     {
       errno=ERANGE;
       return(MAGICK_SIZE_MAX);
