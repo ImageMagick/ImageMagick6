@@ -2270,7 +2270,7 @@ static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   extent=(double) mvg_info->offset+pad+(PrimitiveExtentPad+1)*quantum;
   if (extent <= (double) *mvg_info->extent)
     return(MagickTrue);
-  if ((extent >= (double) MAGICK_SSIZE_MAX) || (IsNaN(extent) != 0))
+  if ((extent >= (double) GetMaxMemoryRequest()) || (IsNaN(extent) != 0))
     return(MagickFalse);
   if (mvg_info->offset > 0)
     {
@@ -6281,7 +6281,7 @@ static MagickBooleanType TraceBezier(MVGInfo *mvg_info,
     for (j=i+1; j < (ssize_t) number_coordinates; j++)
     {
       alpha=fabs(primitive_info[j].point.x-primitive_info[i].point.x);
-      if (alpha > (double) MAGICK_SSIZE_MAX)
+      if (alpha > (double) GetMaxMemoryRequest())
         {
           (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
             ResourceLimitError,"MemoryAllocationFailed","`%s'","");
@@ -6290,19 +6290,20 @@ static MagickBooleanType TraceBezier(MVGInfo *mvg_info,
       if (alpha > (double) quantum)
         quantum=(size_t) alpha;
       alpha=fabs(primitive_info[j].point.y-primitive_info[i].point.y);
-      if (alpha > (double) MAGICK_SSIZE_MAX)
-        {
-          (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
-            ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-          return(MagickFalse);
-        }
       if (alpha > (double) quantum)
         quantum=(size_t) alpha;
     }
   }
+  primitive_info=(*mvg_info->primitive_info)+mvg_info->offset;
+  quantum=MagickMin(quantum/number_coordinates,BezierQuantum);
+  if (quantum > (double) GetMaxMemoryRequest())
+    {
+      (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'","");
+      return(MagickFalse);
+    }
   coefficients=(double *) AcquireQuantumMemory(number_coordinates,
     sizeof(*coefficients));
-  quantum=MagickMin(quantum/number_coordinates,BezierQuantum);
   points=(PointInfo *) AcquireQuantumMemory(quantum,number_coordinates*
     sizeof(*points));
   if ((coefficients == (double *) NULL) || (points == (PointInfo *) NULL))
