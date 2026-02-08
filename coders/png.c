@@ -14217,21 +14217,19 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
 
   if (write_mng)
     {
-      while (GetPreviousImageInList(image) != (Image *) NULL)
-        image=GetPreviousImageInList(image);
       /*
         Write the MEND chunk.
       */
-      (void) WriteBlobMSBULong(image,0x00000000L);
+      (void) WriteBlobMSBULong(mng_info->image,0x00000000L);
       PNGType(chunk,mng_MEND);
       LogPNGChunk(logging,mng_MEND,0L);
-      (void) WriteBlob(image,4,chunk);
-      (void) WriteBlobMSBULong(image,crc32(0,chunk,4));
+      (void) WriteBlob(mng_info->image,4,chunk);
+      (void) WriteBlobMSBULong(mng_info->image,crc32(0,chunk,4));
     }
   /*
     Relinquish resources.
   */
-  (void) CloseBlob(image);
+  (void) CloseBlob(mng_info->image);
   mng_info=MngInfoFreeStruct(mng_info);
 
   if (logging != MagickFalse)
