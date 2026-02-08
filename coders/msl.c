@@ -675,7 +675,6 @@ static void MSLStartElement(void *context,const xmlChar *tag,
   */
   (void) LogMagickEvent(CoderEvent,GetMagickModule(),
     "  SAX.startElement(%s",tag);
-  exception=AcquireExceptionInfo();
   msl_info=(MSLInfo *) context;
   if (msl_info->depth++ > MagickMaxRecursionDepth)
     {        
@@ -684,6 +683,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
       xmlStopParser((xmlParserCtxtPtr) context);
       return;
     }
+  exception=AcquireExceptionInfo();
   n=msl_info->n;
   keyword=(const char *) NULL;
   value=(char *) NULL;
