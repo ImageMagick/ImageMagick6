@@ -263,7 +263,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
   count=0;
   plane=0;
   row=0;
-  sentinel=luma+3*(image->columns+1)*image->rows;
+  sentinel=luma+30*(image->columns+1)*image->rows;
   for (q=luma; EOFBlob(image) == MagickFalse; )
   {
     if (IsSync(sum) != 0)
