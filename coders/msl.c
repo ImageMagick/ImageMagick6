@@ -7896,7 +7896,8 @@ static MagickBooleanType ProcessMSLScript(const ImageInfo *image_info,
   /* the first slot is used to point to the MSL file image */
   *msl_info.image=msl_image;
   if (*image != (Image *) NULL)
-    MSLPushImage(&msl_info,*image);
+    MSLPushImage(&msl_info,CloneImage(*image,0,0,MagickTrue,exception));
+  *image=(Image *) NULL;
   xmlInitParser();
   (void) memset(&sax_modules,0,sizeof(sax_modules));
   sax_modules.internalSubset=MSLInternalSubset;
@@ -8422,6 +8423,7 @@ static MagickBooleanType WriteMSLImage(const ImageInfo *image_info,Image *image)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
   msl_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   status=ProcessMSLScript(image_info,&msl_image,&image->exception);
+  msl_image=DestroyImage(msl_image);
   return(status);
 }
 #endif
