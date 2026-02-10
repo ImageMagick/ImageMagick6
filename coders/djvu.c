@@ -329,7 +329,7 @@ get_page_image(LoadContext *lc, ddjvu_page_t *page, int x, int y, int w, int h, 
   Image
     *image;
 
-  int
+  size_t
     stride;
 
   unsigned char
