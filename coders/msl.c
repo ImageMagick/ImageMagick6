@@ -597,7 +597,7 @@ static ssize_t MSLPushImage(MSLInfo *msl_info,Image *image)
       (msl_info->attributes[n] == (Image *) NULL))
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   if (msl_info->number_groups != 0)
-    msl_info->group_info[msl_info->number_groups-1].numImages++;
+    msl_info->group_info[msl_info->number_groups].numImages++;
   return(n);
 }
 
@@ -3383,6 +3383,13 @@ static void MSLStartElement(void *context,const xmlChar *tag,
       msl_info->group_info=(MSLGroupInfo *) ResizeQuantumMemory(
         msl_info->group_info,msl_info->number_groups+1UL,
         sizeof(*msl_info->group_info));
+      if (msl_info->group_info == (MSLGroupInfo *) NULL)
+        {
+          ThrowMSLException(ResourceLimitFatalError,"UnableToInterpretMSLImage",
+            tag);
+          break;
+        }
+      msl_info->group_info[msl_info->number_groups].numImages=0;
       break;
     }
       ThrowMSLException(OptionError,"UnrecognizedElement",(const char *) tag);
