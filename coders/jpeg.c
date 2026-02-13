@@ -2661,7 +2661,7 @@ static MagickBooleanType WriteJPEGImage_(const ImageInfo *image_info,
             status=WriteJPEGImage(jpeg_info,jpeg_image);
             (void) RelinquishUniqueFileResource(jpeg_image->filename);
             if (status == MagickFalse)
-              continue;
+              break;
             if (GetBlobSize(jpeg_image) <= extent)
               minimum=jpeg_image->quality+1;
             else
