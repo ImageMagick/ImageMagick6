@@ -3892,7 +3892,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
-  entry->thread_support^=DecoderThreadSupport;
   entry->description=ConstantString("ImageMagick's own SVG internal renderer");
   entry->magick=(IsImageFormatHandler *) IsSVG;
   entry->magick_module=ConstantString("SVG");

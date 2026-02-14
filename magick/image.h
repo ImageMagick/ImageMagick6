@@ -483,9 +483,6 @@ struct _ImageInfo
 
   MagickBooleanType
     synchronize;
-
-  SemaphoreInfo
-    *semaphore;
 };
 
 extern MagickExport ExceptionType

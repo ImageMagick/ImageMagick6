@@ -1287,14 +1287,12 @@ MagickExport ImageInfo *DestroyImageInfo(ImageInfo *image_info)
   if (image_info->authenticate != (char *) NULL)
     image_info->authenticate=DestroyString(
       image_info->authenticate);
+  DestroyImageOptions(image_info);
   if (image_info->cache != (void *) NULL)
     image_info->cache=DestroyPixelCache(image_info->cache);
   if (image_info->profile != (StringInfo *) NULL)
     image_info->profile=(void *) DestroyStringInfo((StringInfo *)
       image_info->profile);
-  DestroyImageOptions(image_info);
-  if (image_info->semaphore != (SemaphoreInfo *) NULL)
-    DestroySemaphoreInfo(&image_info->semaphore);
   image_info->signature=(~MagickCoreSignature);
   image_info=(ImageInfo *) RelinquishMagickMemory(image_info);
   return(image_info);
@@ -1465,7 +1463,6 @@ MagickExport void GetImageInfo(ImageInfo *image_info)
   GetPixelPacketRGBA(TransparentColorRGBA,&image_info->transparent_color);
   image_info->debug=(GetLogEventMask() & ImageEvent) != 0 ? MagickTrue :
     MagickFalse;
-  image_info->semaphore=AllocateSemaphoreInfo();
   image_info->signature=MagickCoreSignature;
 }
 
