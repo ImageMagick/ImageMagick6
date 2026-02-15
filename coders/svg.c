@@ -1123,6 +1123,19 @@ static void SVGNotationDeclaration(void *context,const xmlChar *name,
         name,public_id,system_id);
 }
 
+static inline char *SVGEscapeString(const char* value)
+{
+  char
+    *escaped_value,
+    *p;
+
+  escaped_value=EscapeString(value,'\"');
+  for (p=escaped_value; *p != '\0'; p++)
+    if (*p == '\n')
+      *p=' ';
+  return(escaped_value);
+}
+
 static void SVGProcessStyleElement(void *context,const xmlChar *name,
   const char *style)
 {
@@ -1130,8 +1143,7 @@ static void SVGProcessStyleElement(void *context,const xmlChar *name,
     background[MagickPathExtent],
     *color,
     *keyword,
-    *units,
-    *value;
+    *units;
 
   char
     **tokens;
@@ -1153,10 +1165,10 @@ static void SVGProcessStyleElement(void *context,const xmlChar *name,
   for (i=0; i < ((ssize_t) number_tokens-1); i+=2)
   {
     keyword=(char *) tokens[i];
-    value=(char *) tokens[i+1];
     if (LocaleCompare(keyword,"font-size") != 0)
       continue;
-    svg_info->pointsize=GetUserSpaceCoordinateValue(svg_info,0,value);
+    svg_info->pointsize=GetUserSpaceCoordinateValue(svg_info,0,
+      (char *) tokens[i+1]);
     (void) FormatLocaleFile(svg_info->file,"font-size %g\n",
       svg_info->pointsize);
   }
@@ -1164,8 +1176,11 @@ static void SVGProcessStyleElement(void *context,const xmlChar *name,
   units=AcquireString("userSpaceOnUse");
   for (i=0; i < ((ssize_t) number_tokens-1); i+=2)
   {
+    char
+      *value;
+
     keyword=(char *) tokens[i];
-    value=(char *) tokens[i+1];
+    value=SVGEscapeString((const char *) tokens[i+1]);
     (void) LogMagickEvent(CoderEvent,GetMagickModule(),"    %s: %s",keyword,
       value);
     switch (*keyword)
@@ -1448,6 +1463,7 @@ static void SVGProcessStyleElement(void *context,const xmlChar *name,
       default:
         break;
     }
+    value=DestroyString(value);
   }
   if (units != (char *) NULL)
     units=DestroyString(units);
@@ -1570,8 +1586,7 @@ static void SVGStartElement(void *context,const xmlChar *name,
 
   const char
     *keyword,
-    *p,
-    *value;
+    *p;
 
   size_t
     number_tokens;
@@ -1611,7 +1626,6 @@ static void SVGStartElement(void *context,const xmlChar *name,
   *id='\0';
   *token='\0';
   *background='\0';
-  value=(const char *) NULL;
   if ((LocaleCompare((char *) name,"image") == 0) ||
       (LocaleCompare((char *) name,"pattern") == 0) ||
       (LocaleCompare((char *) name,"rect") == 0) ||
@@ -1624,8 +1638,11 @@ static void SVGStartElement(void *context,const xmlChar *name,
   if (attributes != (const xmlChar **) NULL)
     for (i=0; (attributes[i] != (const xmlChar *) NULL); i+=2)
     {
+      char
+        *value;
+
       keyword=(const char *) attributes[i];
-      value=(const char *) attributes[i+1];
+      value=SVGEscapeString((const char *) attributes[i+1]);
       switch (*keyword)
       {
         case 'C':
@@ -1752,6 +1769,7 @@ static void SVGStartElement(void *context,const xmlChar *name,
         default:
           break;
       }
+      value=DestroyString(value);
     }
   if (strchr((char *) name,':') != (char *) NULL)
     {
@@ -1976,8 +1994,11 @@ static void SVGStartElement(void *context,const xmlChar *name,
   if (attributes != (const xmlChar **) NULL)
     for (i=0; (attributes[i] != (const xmlChar *) NULL); i+=2)
     {
+      char
+        *value;
+
       keyword=(const char *) attributes[i];
-      value=(const char *) attributes[i+1];
+      value=SVGEscapeString((const char *) attributes[i+1]);
       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
         "    %s = %s",keyword,value);
       switch (*keyword)
@@ -2828,6 +2849,7 @@ static void SVGStartElement(void *context,const xmlChar *name,
         default:
           break;
       }
+      value=DestroyString(value);
     }
   if (LocaleCompare((const char *) name,"svg") == 0)
     {
@@ -2928,20 +2950,9 @@ static void SVGEndElement(void *context,const xmlChar *name)
         }
       if (LocaleCompare((const char *) name,"desc") == 0)
         {
-          char
-            *p;
-
           if (*svg_info->text == '\0')
             break;
-          (void) fputc('#',svg_info->file);
-          for (p=svg_info->text; *p != '\0'; p++)
-          {
-            (void) fputc(*p,svg_info->file);
-            if (*p == '\n')
-              (void) fputc('#',svg_info->file);
-          }
-          (void) fputc('\n',svg_info->file);
-          *svg_info->text='\0';
+          (void) FormatLocaleFile(svg_info->file,"# %s\n",svg_info->text);
           break;
         }
       break;
@@ -2990,7 +3001,6 @@ static void SVGEndElement(void *context,const xmlChar *name)
       if (LocaleCompare((const char *) name,"image") == 0)
         {
           char
-            *text,
             thread_filename[MagickPathExtent];
 
           Image
@@ -3022,12 +3032,10 @@ static void SVGEndElement(void *context,const xmlChar *name)
             image=DestroyImage(image);
           image_info=DestroyImageInfo(image_info);
           (void) DeleteNodeFromSplayTree(svg_tree,thread_filename);
-          text=EscapeString(svg_info->url,'\"');
           (void) FormatLocaleFile(svg_info->file,
             "image Over %g,%g %g,%g \"%s\"\n",svg_info->bounds.x,
             svg_info->bounds.y,svg_info->bounds.width,svg_info->bounds.height,
-            text);
-          text=DestroyString(text);
+            svg_info->url);
           (void) FormatLocaleFile(svg_info->file,"pop graphic-context\n");
           break;
         }
@@ -3240,15 +3248,11 @@ static void SVGEndElement(void *context,const xmlChar *name)
     {
       if (LocaleCompare((char *) name,"use") == 0)
         {
-          char
-            *text;
-
           if ((svg_info->bounds.x != 0.0) || (svg_info->bounds.y != 0.0))
             (void) FormatLocaleFile(svg_info->file,"translate %g,%g\n",
               svg_info->bounds.x,svg_info->bounds.y);
-          text=EscapeString(svg_info->url,'\"');
-          (void) FormatLocaleFile(svg_info->file,"use \"url(%s)\"\n",text);
-          text=DestroyString(text);
+          (void) FormatLocaleFile(svg_info->file,"use \"url(%s)\"\n",
+            svg_info->url);
           (void) FormatLocaleFile(svg_info->file,"pop graphic-context\n");
           break;
         }
@@ -3268,12 +3272,6 @@ static void SVGCharacters(void *context,const xmlChar *c,int length)
   char
     *text;
 
-  char
-    *p;
-
-  ssize_t
-    i;
-
   SVGInfo
     *svg_info;
 
@@ -3286,10 +3284,8 @@ static void SVGCharacters(void *context,const xmlChar *c,int length)
   text=(char *) AcquireQuantumMemory(length+1,sizeof(*text));
   if (text == (char *) NULL)
     return;
-  p=text;
-  for (i=0; i < (ssize_t) length; i++)
-    *p++=c[i];
-  *p='\0';
+  memcpy(text,c,length);
+  text[length] = '\0';
   SVGStripString(MagickFalse,text);
   if (svg_info->text == (char *) NULL)
     svg_info->text=text;
