@@ -196,6 +196,11 @@ typedef struct _SVGInfo
 /*    
   Global declarations.
 */
+#if defined(MAGICKCORE_RSVG_DELEGATE)
+static SemaphoreInfo
+  *rsvg_semaphore = (SemaphoreInfo *) NULL;
+#endif
+
 static SplayTreeInfo
   *svg_tree = (SplayTreeInfo *) NULL;
 
@@ -3792,7 +3797,11 @@ static Image *ReadSVGImage(const ImageInfo *image_info,ExceptionInfo *exception)
             }
         }
 #if defined(MAGICKCORE_RSVG_DELEGATE)
+      if (rsvg_semaphore == (SemaphoreInfo *) NULL)
+        ActivateSemaphoreInfo(&rsvg_semaphore);
+      LockSemaphoreInfo(rsvg_semaphore);
       image=RenderRSVGImage(image_info,image,exception);
+      UnlockSemaphoreInfo(rsvg_semaphore);
       return(image);
 #endif
     }
@@ -3857,7 +3866,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
-  entry->thread_support^=DecoderThreadSupport;
   entry->description=ConstantString("Scalable Vector Graphics");
   entry->mime_type=ConstantString("image/svg+xml");
   if (*version != '\0')
@@ -3872,7 +3880,6 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->encoder=(EncodeImageHandler *) WriteSVGImage;
   entry->seekable_stream=MagickFalse;
   entry->blob_support=MagickFalse;
-  entry->thread_support^=DecoderThreadSupport;
   entry->description=ConstantString("Compressed Scalable Vector Graphics");
   entry->mime_type=ConstantString("image/svg+xml");
   if (*version != '\0')
@@ -3880,6 +3887,18 @@ ModuleExport size_t RegisterSVGImage(void)
   entry->magick=(IsImageFormatHandler *) IsSVG;
   entry->magick_module=ConstantString("SVG");
   (void) RegisterMagickInfo(entry);
+#if defined(MAGICKCORE_RSVG_DELEGATE)
+  entry=SetMagickInfo("RSVG");
+  entry->decoder=(DecodeImageHandler *) ReadSVGImage;
+  entry->encoder=(EncodeImageHandler *) WriteSVGImage;
+  entry->seekable_stream=MagickFalse;
+  entry->blob_support=MagickFalse;
+  entry->thread_support^=DecoderThreadSupport;
+  entry->description=ConstantString("Librsvg SVG renderer");
+  entry->magick=(IsImageFormatHandler *) IsSVG;
+  entry->magick_module=ConstantString("SVG");
+  (void) RegisterMagickInfo(entry);
+#endif
   entry=SetMagickInfo("MSVG");
 #if defined(MAGICKCORE_XML_DELEGATE)
   entry->decoder=(DecodeImageHandler *) ReadSVGImage;
