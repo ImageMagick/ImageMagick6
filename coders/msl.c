@@ -89,6 +89,7 @@
 #include "magick/string_.h"
 #include "magick/string-private.h"
 #include "magick/transform.h"
+#include "magick/thread-private.h"
 #include "magick/threshold.h"
 #include "magick/utility.h"
 #include "magick/visual-effects.h"
@@ -153,6 +154,16 @@ typedef struct _MSLInfo
 */
 static SplayTreeInfo
   *msl_tree = (SplayTreeInfo *) NULL;
+
+/*
+  Helper methods.
+*/
+static inline void DecorateFilenameWithThreadId(const char *filename,
+  char *thread_filename)
+{ 
+  (void) FormatLocaleString(thread_filename,MagickPathExtent,"%.20g|%s",
+    (double) GetMagickThreadId(),filename);
+} 
 
 /*
   Forward declarations.
@@ -597,7 +608,7 @@ static ssize_t MSLPushImage(MSLInfo *msl_info,Image *image)
       (msl_info->attributes[n] == (Image *) NULL))
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   if (msl_info->number_groups != 0)
-    msl_info->group_info[msl_info->number_groups].numImages++;
+    msl_info->group_info[msl_info->number_groups-1].numImages++;
   return(n);
 }
 
@@ -3383,13 +3394,6 @@ static void MSLStartElement(void *context,const xmlChar *tag,
       msl_info->group_info=(MSLGroupInfo *) ResizeQuantumMemory(
         msl_info->group_info,msl_info->number_groups+1UL,
         sizeof(*msl_info->group_info));
-      if (msl_info->group_info == (MSLGroupInfo *) NULL)
-        {
-          ThrowMSLException(ResourceLimitFatalError,"UnableToInterpretMSLImage",
-            tag);
-          break;
-        }
-      msl_info->group_info[msl_info->number_groups].numImages=0;
       break;
     }
       ThrowMSLException(OptionError,"UnrecognizedElement",(const char *) tag);
@@ -4568,8 +4572,8 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                 {
                   if (LocaleCompare(keyword,"measure") == 0)
                     {
-                      option=ParseCommandOption(MagickBooleanOptions,
-                        MagickFalse,value);
+                      option=ParseCommandOption(MagickBooleanOptions,MagickFalse,
+                        value);
                       if (option < 0)
                         ThrowMSLException(OptionError,"UnrecognizedBooleanType",
                           value);
@@ -4617,12 +4621,6 @@ static void MSLStartElement(void *context,const xmlChar *tag,
           /*
             Query font metrics.
           */
-          if ((n < 1) || (msl_info->image[n] == (Image *) NULL))
-            {
-              ThrowMSLException(OptionError,"NoImagesDefined",
-                (const char *) tag);
-              break;
-            }
           draw_info=CloneDrawInfo(msl_info->image_info[n],
             msl_info->draw_info[n]);
           angle=0.0;
@@ -5094,25 +5092,28 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               {
                 if (LocaleCompare(keyword,"filename") == 0)
                   {
+                    char
+                      thread_filename[MagickPathExtent];
+
                     Image
                       *next = (Image *) NULL;
 
                     if (value == (char *) NULL)
                       break;
-                    if (GetValueFromSplayTree(msl_tree,value) != (const char *) NULL)
+                    DecorateFilenameWithThreadId(value,thread_filename);
+                    if (GetValueFromSplayTree(msl_tree,thread_filename) != (const char *) NULL)
                       {
                         (void) ThrowMagickException(msl_info->exception,
                           GetMagickModule(),DrawError,
                           "VectorGraphicsNestedTooDeeply","`%s'",value);
                         break;
                       }
-                    (void) AddValueToSplayTree(msl_tree,ConstantString(value),
-                      (void *) 1);
+                    (void) AddValueToSplayTree(msl_tree,ConstantString(
+                      thread_filename),(void *) 1);
                     *msl_info->image_info[n]->magick='\0';
                     (void) CopyMagickString(msl_info->image_info[n]->filename,
                       value,MagickPathExtent);
                     next=ReadImage(msl_info->image_info[n],exception);
-                    (void) DeleteNodeFromSplayTree(msl_tree,value);
                     CatchException(exception);
                     if (next == (Image *) NULL)
                       continue;
@@ -7515,8 +7516,19 @@ static void MSLEndElement(void *context,const xmlChar *tag)
     case 'i':
     {
       if (LocaleCompare((const char *) tag, "image") == 0)
-        MSLPopImage(msl_info);
-       break;
+        {
+          if (msl_info->image_info[msl_info->n] != (ImageInfo *) NULL)
+            {
+              char
+                thread_filename[MagickPathExtent];
+
+              DecorateFilenameWithThreadId(
+                msl_info->image_info[msl_info->n]->filename,thread_filename);
+              (void) DeleteNodeFromSplayTree(msl_tree,thread_filename);
+            }
+          MSLPopImage(msl_info);
+        }
+      break;
     }
     case 'L':
     case 'l':
@@ -7910,7 +7922,6 @@ static MagickBooleanType ProcessMSLScript(const ImageInfo *image_info,
   *msl_info.image=msl_image;
   if (*image != (Image *) NULL)
     MSLPushImage(&msl_info,*image);
-  *image=(Image *) NULL;
   xmlInitParser();
   (void) memset(&sax_modules,0,sizeof(sax_modules));
   sax_modules.internalSubset=MSLInternalSubset;
@@ -8012,9 +8023,6 @@ static Image *ReadMSLImage(const ImageInfo *image_info,ExceptionInfo *exception)
   Image
     *image;
 
-  MagickBooleanType
-    status;
-
   /*
     Open image file.
   */
@@ -8026,9 +8034,7 @@ static Image *ReadMSLImage(const ImageInfo *image_info,ExceptionInfo *exception)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",
       image_info->filename);
   image=(Image *) NULL;
-  status=ProcessMSLScript(image_info,&image,exception);
-  if ((status == MagickFalse) && (image != (Image *) NULL))
-    image=DestroyImage(image);
+  (void) ProcessMSLScript(image_info,&image,exception);
   return(GetFirstImageInList(image));
 }
 #endif

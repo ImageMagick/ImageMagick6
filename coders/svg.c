@@ -75,6 +75,7 @@
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
+#include "magick/thread-private.h"
 #include "magick/token.h"
 #include "magick/utility.h"
 
@@ -203,6 +204,16 @@ static SplayTreeInfo
 */
 static char
   SVGDensityGeometry[] = "96.0x96.0";
+
+/*
+  Helper methods.
+*/
+static inline void DecorateFilenameWithThreadId(const char *filename,
+  char *thread_filename)
+{ 
+  (void) FormatLocaleString(thread_filename,MagickPathExtent,"%.20g|%s",
+    (double) GetMagickThreadId(),filename);
+}
 
 /*
   Forward declarations.
@@ -2989,7 +3000,8 @@ static void SVGEndElement(void *context,const xmlChar *name)
       if (LocaleCompare((const char *) name,"image") == 0)
         {
           char
-            *text;
+            *text,
+            thread_filename[MagickPathExtent];
 
           Image
             *image;
@@ -3003,14 +3015,15 @@ static void SVGEndElement(void *context,const xmlChar *name)
               (void) FormatLocaleFile(svg_info->file,"pop graphic-context\n");
               break;
             }
-          if (GetValueFromSplayTree(svg_tree,svg_info->url) != (const char *) NULL)
+          DecorateFilenameWithThreadId(svg_info->url,thread_filename);
+          if (GetValueFromSplayTree(svg_tree,thread_filename) != (const char *) NULL)
             {
               image_info=DestroyImageInfo(image_info);
               (void) ThrowMagickException(svg_info->exception,GetMagickModule(),
                 DrawError,"VectorGraphicsNestedTooDeeply","`%s'",svg_info->url);
               break;
             }
-          (void) AddValueToSplayTree(svg_tree,ConstantString(svg_info->url),
+          (void) AddValueToSplayTree(svg_tree,ConstantString(thread_filename),
             (void *) 1);
           (void) CopyMagickString(image_info->filename,svg_info->url,
             MagickPathExtent);
@@ -3018,7 +3031,7 @@ static void SVGEndElement(void *context,const xmlChar *name)
           if (image != (Image *) NULL)
             image=DestroyImage(image);
           image_info=DestroyImageInfo(image_info);
-          (void) DeleteNodeFromSplayTree(svg_tree,svg_info->url);
+          (void) DeleteNodeFromSplayTree(svg_tree,thread_filename);
           text=EscapeString(svg_info->url,'\"');
           (void) FormatLocaleFile(svg_info->file,
             "image Over %g,%g %g,%g \"%s\"\n",svg_info->bounds.x,
