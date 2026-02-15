@@ -206,16 +206,6 @@ static char
   SVGDensityGeometry[] = "96.0x96.0";
 
 /*
-  Helper methods.
-*/
-static inline void DecorateFilenameWithThreadId(const char *filename,
-  char *thread_filename)
-{ 
-  (void) FormatLocaleString(thread_filename,MagickPathExtent,"%.20g|%s",
-    (double) GetMagickThreadId(),filename);
-}
-
-/*
   Forward declarations.
 */
 static MagickBooleanType

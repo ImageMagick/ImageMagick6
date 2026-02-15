@@ -156,16 +156,6 @@ static SplayTreeInfo
   *msl_tree = (SplayTreeInfo *) NULL;
 
 /*
-  Helper methods.
-*/
-static inline void DecorateFilenameWithThreadId(const char *filename,
-  char *thread_filename)
-{ 
-  (void) FormatLocaleString(thread_filename,MagickPathExtent,"%.20g|%s",
-    (double) GetMagickThreadId(),filename);
-} 
-
-/*
   Forward declarations.
 */
 #if defined(MAGICKCORE_XML_DELEGATE)
