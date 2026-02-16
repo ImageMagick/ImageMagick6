@@ -3713,10 +3713,13 @@ static void MSLStartElement(void *context,const xmlChar *tag,
             }
           quantize_info=AcquireQuantizeInfo(msl_info->image_info[n]);
           quantize_info->dither=dither;
-          (void) RemapImages(quantize_info,msl_info->image[n],
-            affinity_image);
+          if (affinity_image != (Image *) NULL)
+            {
+              (void) RemapImages(quantize_info,msl_info->image[n],
+                affinity_image);
+              affinity_image=DestroyImage(affinity_image);
+            }
           quantize_info=DestroyQuantizeInfo(quantize_info);
-          affinity_image=DestroyImage(affinity_image);
           break;
         }
       if (LocaleCompare((const char *) tag,"matte-floodfill") == 0)
