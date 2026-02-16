@@ -4461,7 +4461,7 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
       q=GetCacheViewAuthenticPixelQueue(image_view);
       indexes=GetCacheViewAuthenticIndexQueue(image_view);
     }
-  if (q == (Quantum *) NULL)
+  if (q == (PixelPacket *) NULL)
     return(0);
   ResetQuantumState((QuantumInfo *) quantum_info);
   extent=GetQuantumExtent(image,quantum_info,quantum_type);

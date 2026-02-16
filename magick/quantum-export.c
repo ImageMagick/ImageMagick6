@@ -3837,26 +3837,26 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
   const QuantumType quantum_type,unsigned char *magick_restrict pixels,
   ExceptionInfo *exception)
 {
-  MagickRealType
-    alpha;
-
-  MagickSizeType
-    number_pixels;
-
   const IndexPacket
     *magick_restrict indexes;
 
   const PixelPacket
     *magick_restrict p;
 
+  MagickRealType
+    alpha;
+
+  MagickSizeType
+    number_pixels;
+
+  size_t
+    extent;
+
   ssize_t
     x;
 
   unsigned char
     *magick_restrict q;
-
-  size_t
-    extent;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -3878,7 +3878,7 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
       p=GetCacheViewVirtualPixelQueue(image_view);
       indexes=GetCacheViewVirtualIndexQueue(image_view);
     }
-  if (p == (Quantum *) NULL)
+  if (p == (const PixelPacket *) NULL)
     return(0);
   if (quantum_info->alpha_type == AssociatedQuantumAlpha)
     {
