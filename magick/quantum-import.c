@@ -4421,23 +4421,23 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
   const QuantumInfo *quantum_info,const QuantumType quantum_type,
   const unsigned char *magick_restrict pixels,ExceptionInfo *exception)
 {
-  MagickSizeType
-    number_pixels;
-
   const unsigned char
     *magick_restrict p;
 
   IndexPacket
     *magick_restrict indexes;
 
-  ssize_t
-    x;
+  MagickSizeType
+    number_pixels;
 
   PixelPacket
     *magick_restrict q;
 
   size_t
     extent;
+
+  ssize_t
+    x;
 
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
@@ -4461,6 +4461,8 @@ MagickExport size_t ImportQuantumPixels(Image *image,CacheView *image_view,
       q=GetCacheViewAuthenticPixelQueue(image_view);
       indexes=GetCacheViewAuthenticIndexQueue(image_view);
     }
+  if (q == (Quantum *) NULL)
+    return(0);
   ResetQuantumState((QuantumInfo *) quantum_info);
   extent=GetQuantumExtent(image,quantum_info,quantum_type);
   switch (quantum_type)

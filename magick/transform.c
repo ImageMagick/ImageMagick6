@@ -2098,12 +2098,13 @@ MagickExport MagickBooleanType TransformImage(Image **image,
         }
       *image=transform_image;
     }
-  if (image_geometry == (const char *) NULL)
-    return(MagickTrue);
-
+  if (transform_image == (Image *) NULL)
+    return(MagickFalse);
   /*
     Scale image to a user specified size.
   */
+  if (image_geometry == (const char *) NULL)
+    return(MagickTrue);
   flags=ParseRegionGeometry(transform_image,image_geometry,&geometry,
     &(*image)->exception);
   (void) flags;

@@ -366,6 +366,8 @@ MagickExport void CloseMagickLog(void)
   exception=AcquireExceptionInfo();
   log_info=GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
+  if (log_info == (LogInfo *) NULL)
+    return;
   LockSemaphoreInfo(log_semaphore);
   if (log_info->file != (FILE *) NULL)
     {
@@ -1017,10 +1019,12 @@ static char *TranslateEvent(const LogEventType magick_unused(type),
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
+  text=AcquireString(event);
+  if (log_info == (LogInfo *) NULL)
+    return(text);
   seconds=GetMagickTime();
   elapsed_time=GetElapsedTime(&log_info->timer);
   user_time=GetUserTime(&log_info->timer);
-  text=AcquireString(event);
   if (log_info->format == (char *) NULL)
     return(text);
   extent=strlen(event)+MaxTextExtent;
@@ -1352,6 +1356,8 @@ MagickExport MagickBooleanType LogMagickEventList(const LogEventType type,
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
+  if (log_info == (LogInfo *) NULL)
+    return(MagickFalse);
   if (log_info->event_semaphore == (SemaphoreInfo *) NULL)
     ActivateSemaphoreInfo(&log_info->event_semaphore);
   LockSemaphoreInfo(log_info->event_semaphore);
@@ -1817,9 +1823,16 @@ MagickExport LogEventType SetLogEventMask(const char *events)
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
+  if (log_info == (LogInfo *) NULL)
+    return(NoEvents);
   option=ParseCommandOption(MagickLogEventOptions,MagickTrue,events);
   LockSemaphoreInfo(log_semaphore);
   log_info=(LogInfo *) GetValueFromLinkedList(log_cache,0);
+  if (log_info == (LogInfo *) NULL)
+    {
+      UnlockSemaphoreInfo(log_semaphore);
+      return(NoEvents);
+    }
   log_info->event_mask=(LogEventType) option;
   if (option == -1)
     log_info->event_mask=UndefinedEvents;
@@ -1861,6 +1874,8 @@ MagickExport void SetLogFormat(const char *format)
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
+  if (log_info == (LogInfo *) NULL)
+    return;
   LockSemaphoreInfo(log_semaphore);
   if (log_info->format != (char *) NULL)
     log_info->format=DestroyString(log_info->format);
@@ -1902,8 +1917,15 @@ MagickExport void SetLogMethod(MagickLogMethod method)
   exception=AcquireExceptionInfo();
   log_info=(LogInfo *) GetLogInfo("*",exception);
   exception=DestroyExceptionInfo(exception);
+  if (log_info == (LogInfo *) NULL)
+    return;
   LockSemaphoreInfo(log_semaphore);
   log_info=(LogInfo *) GetValueFromLinkedList(log_cache,0);
+  if (log_info == (LogInfo *) NULL)
+    {
+      UnlockSemaphoreInfo(log_semaphore);
+      return;
+    }
   log_info->handler_mask=(LogHandlerType) (log_info->handler_mask |
     MethodHandler);
   log_info->method=method;

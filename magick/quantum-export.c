@@ -3878,6 +3878,8 @@ MagickExport size_t ExportQuantumPixels(const Image *image,
       p=GetCacheViewVirtualPixelQueue(image_view);
       indexes=GetCacheViewVirtualIndexQueue(image_view);
     }
+  if (p == (Quantum *) NULL)
+    return(0);
   if (quantum_info->alpha_type == AssociatedQuantumAlpha)
     {
       PixelPacket
