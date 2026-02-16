@@ -1096,7 +1096,7 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
       bits_per_pixel,
       planes;
 
-    if ((next->columns > 255L) && (next->rows > 255L) &&
+    if ((next->columns > 256L) && (next->rows > 256L) &&
         ((next->compression == UndefinedCompression) ||
         (next->compression == ZipCompression)))
       {
@@ -1377,8 +1377,9 @@ static MagickBooleanType WriteICONImage(const ImageInfo *image_info,
         /*
           Write 40-byte version 3+ bitmap header.
         */
-        directory->icons[scene]->width=(unsigned char) width;
-        directory->icons[scene]->height=(unsigned char) height;
+        /* The value 0 is accepted as representing a width of 256 */
+        directory->icons[scene]->width=(unsigned char) width % 256;
+        directory->icons[scene]->height=(unsigned char) height % 256;
         directory->icons[scene]->colors=(unsigned char) number_colors;
         directory->icons[scene]->reserved=0;
         directory->icons[scene]->planes=planes;
