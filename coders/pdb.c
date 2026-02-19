@@ -621,9 +621,9 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
         *p=c;
         c=ReadBlobByte(image);
       }
-      *p='\0';
       if (comment == (char *) NULL)
         ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+      *p='\0';
       (void) SetImageProperty(image,"comment",comment);
       comment=DestroyString(comment);
     }
