@@ -210,6 +210,21 @@ ModuleExport void UnregisterHTMLImage(void)
 %
 */
 
+static void WriteHtmlEncodedString(Image *image,const char* value)
+{
+  char
+    *encoded_value;
+
+  encoded_value=AcquireString(value);
+  (void) SubstituteString(&encoded_value,"<","&lt;");
+  (void) SubstituteString(&encoded_value,">","&gt;");
+  (void) SubstituteString(&encoded_value,"&","&amp;");
+  (void) SubstituteString(&encoded_value,"\"","&quot;");
+  (void) SubstituteString(&encoded_value,"'","&apos;");
+  WriteBlobString(image,encoded_value);
+  encoded_value=DestroyString(encoded_value);
+}
+
 static ssize_t WriteURLComponent(Image *image,const int c)
 {
   char
@@ -320,29 +335,29 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
         "\"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n");
       (void) WriteBlobString(image,"<html>\n");
       (void) WriteBlobString(image,"<head>\n");
+      (void) WriteBlobString(image,"<title>");
       value=GetImageProperty(image,"label");
       if (value != (const char *) NULL)
-        (void) FormatLocaleString(buffer,MaxTextExtent,"<title>%s</title>\n",
-          value);
+        WriteHtmlEncodedString(image,value);
       else
         {
           GetPathComponent(filename,BasePath,basename);
-          (void) FormatLocaleString(buffer,MaxTextExtent,
-            "<title>%s</title>\n",basename);
+          WriteHtmlEncodedString(image,basename);
         }
-      (void) WriteBlobString(image,buffer);
+      (void) WriteBlobString(image,"</title>\n");
       (void) WriteBlobString(image,"</head>\n");
       (void) WriteBlobString(image,"<body style=\"text-align: center;\">\n");
-      (void) FormatLocaleString(buffer,MaxTextExtent,"<h1>%s</h1>\n",
-        image->filename);
-      (void) WriteBlobString(image,buffer);
+      (void) WriteBlobString(image,"<h1>");
+      WriteHtmlEncodedString(image,image->filename);
+      (void) WriteBlobString(image,"</h1>");
       (void) WriteBlobString(image,"<div>\n");
       (void) CopyMagickString(filename,image->filename,MaxTextExtent);
       AppendImageFormat("png",filename);
-      (void) FormatLocaleString(buffer,MaxTextExtent,"<img usemap=\"#%s\" "
-        "src=\"%s\" style=\"border: 0;\" alt=\"Image map\" />\n",mapname,
-        filename);
-      (void) WriteBlobString(image,buffer);
+      (void) WriteBlobString(image,"<img usemap=\"#");
+      WriteHtmlEncodedString(image,mapname);
+      (void) WriteBlobString(image,"\" src=\"");
+      WriteHtmlEncodedString(image,filename);
+      (void) WriteBlobString(image,"\" style=\"border: 0;\" alt=\"Image map\" />\n");
       /*
         Determine the size and location of each image tile.
       */
@@ -352,17 +367,18 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
       /*
         Write an image map.
       */
-      (void) FormatLocaleString(buffer,MaxTextExtent,
-        "<map id=\"%s\" name=\"%s\">\n",mapname,mapname);
-      (void) WriteBlobString(image,buffer);
-      (void) FormatLocaleString(buffer,MaxTextExtent,"  <area href=\"%s",url);
-      (void) WriteBlobString(image,buffer);
+      (void) WriteBlobString(image,"<map id=\"");
+      WriteHtmlEncodedString(image,mapname);
+      (void) WriteBlobString(image,"\" name=\"");
+      WriteHtmlEncodedString(image,mapname);
+      (void) WriteBlobString(image,"\">\n<area href=\"");
+      WriteHtmlEncodedString(image,url);
       if (image->directory == (char *) NULL)
         {
+          WriteHtmlEncodedString(image,image->filename);
           (void) FormatLocaleString(buffer,MaxTextExtent,
-            "%s\" shape=\"rect\" coords=\"0,0,%.20g,%.20g\" alt=\"\" />\n",
-            image->filename,(double) geometry.width-1,(double) geometry.height-
-            1);
+            "\" shape=\"rect\" coords=\"0,0,%.20g,%.20g\" alt=\"\" />\n",
+            (double) geometry.width-1,(double) geometry.height-1);
           (void) WriteBlobString(image,buffer);
         }
       else
@@ -378,9 +394,9 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
               (void) WriteBlobString(image,buffer);
               if (*(p+1) != '\0')
                 {
-                  (void) FormatLocaleString(buffer,MaxTextExtent,
-                    "  <area href=%s\"",url);
-                  (void) WriteBlobString(image,buffer);
+                  (void) WriteBlobString(image,"  <area href=\"");
+                  WriteHtmlEncodedString(image,url);
+                  (void) WriteBlobString(image,"\"");
                 }
               geometry.x+=(ssize_t) geometry.width;
               if ((geometry.x+4) >= (ssize_t) image->columns)
@@ -390,7 +406,6 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
                 }
             }
       (void) WriteBlobString(image,"</map>\n");
-      (void) CopyMagickString(filename,image->filename,MaxTextExtent);
       (void) WriteBlobString(image,"</div>\n");
       (void) WriteBlobString(image,"</body>\n");
       (void) WriteBlobString(image,"</html>\n");
@@ -398,7 +413,6 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
       /*
         Write the image as PNG.
       */
-      (void) CopyMagickString(image->filename,filename,MaxTextExtent);
       AppendImageFormat("png",image->filename);
       next=GetNextImageInList(image);
       image->next=NewImageList();
