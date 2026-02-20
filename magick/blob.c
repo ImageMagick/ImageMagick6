@@ -2741,7 +2741,8 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
       return(SetStreamBuffering(image_info,image));
     }
 #if defined(MAGICKCORE_HAVE_POPEN) && defined(MAGICKCORE_PIPES_SUPPORT)
-  if (*filename == '|')
+  if ((*filename == '|') && (strchr(filename,'`') == (char *) NULL) &&
+      (strchr(filename,'"') == (char *) NULL))
     {
       char
         fileMode[MagickPathExtent],
