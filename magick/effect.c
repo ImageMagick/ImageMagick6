@@ -90,7 +90,6 @@
 #include "magick/thread-private.h"
 #include "magick/transform.h"
 #include "magick/threshold.h"
-#include "magick/utility-private.h"
 
 #ifdef MAGICKCORE_CLPERFMARKER
 #include "CLPerfMarker.h"
@@ -3212,7 +3211,7 @@ MagickExport Image *PreviewImage(const Image *image,const PreviewType preview,
           preview_info->quality);
         file=AcquireUniqueFileResource(filename);
         if (file != -1)
-          file=close_utf8(file)-1;
+          file=close(file)-1;
         (void) FormatLocaleString(preview_image->filename,MaxTextExtent,
           "jpeg:%s",filename);
         status=WriteImage(preview_info,preview_image);

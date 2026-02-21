@@ -941,7 +941,7 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
             if (file != -1)
               {
                 write(file,binary_program[i],program_size);
-                file=close_utf8(file);
+                file=close(file);
               }
             else
               (void) ThrowMagickException(exception,GetMagickModule(),

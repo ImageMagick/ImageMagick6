@@ -633,7 +633,7 @@ static MagickBooleanType WriteVIDEOImage(const ImageInfo *image_info,
     return(MagickFalse);
   file=AcquireUniqueFileResource(basename);
   if (file != -1)
-    file=close_utf8(file)-1;
+    file=close(file)-1;
   (void) FormatLocaleString(clone_images->filename,MagickPathExtent,"%s",
     basename);
   count=0;

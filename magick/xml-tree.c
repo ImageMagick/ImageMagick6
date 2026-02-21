@@ -656,7 +656,7 @@ MagickPrivate char *FileToXML(const char *filename,const size_t extent)
           break;
       }
       if (LocaleCompare(filename,"-") != 0)
-        file=close_utf8(file);
+        file=close(file);
       if (xml == (char *) NULL)
         return((char *) NULL);
       if (file == -1)
@@ -674,7 +674,7 @@ MagickPrivate char *FileToXML(const char *filename,const size_t extent)
     xml=(char *) AcquireQuantumMemory(length+MaxTextExtent,sizeof(*xml));
   if (xml == (char *) NULL)
     {
-      file=close_utf8(file);
+      file=close(file);
       return((char *) NULL);
     }
   map=MapBlob(file,ReadMode,0,length);
@@ -698,14 +698,14 @@ MagickPrivate char *FileToXML(const char *filename,const size_t extent)
       }
       if (i < length)
         {
-          file=close_utf8(file)-1;
+          file=close(file)-1;
           xml=(char *) RelinquishMagickMemory(xml);
           return((char *) NULL);
         }
     }
   xml[length]='\0';
   if (LocaleCompare(filename,"-") != 0)
-    file=close_utf8(file);
+    file=close(file);
   if (file == -1)
     xml=(char *) RelinquishMagickMemory(xml);
   return(xml);

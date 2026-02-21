@@ -84,7 +84,6 @@
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
-#include "magick/utility-private.h"
 #include "coders/bytebuffer-private.h"
 #include "coders/ghostscript-private.h"
 
@@ -567,7 +566,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   if (write(file," ",1) != 1)
     { };
-  file=close_utf8(file)-1;
+  file=close(file)-1;
   /*
     Render Postscript with the Ghostscript delegate.
   */
