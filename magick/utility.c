@@ -114,7 +114,7 @@ MagickExport MagickBooleanType AcquireUniqueFilename(char *path)
   file=AcquireUniqueFileResource(path);
   if (file == -1)
     return(MagickFalse);
-  file=close(file)-1;
+  file=close_utf8(file)-1;
   return(MagickTrue);
 }
 
@@ -1965,6 +1965,6 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   }
   key=DestroyStringInfo(key);
   random_info=DestroyRandomInfo(random_info);
-  status=close(file);
+  status=close_utf8(file);
   return((status == -1 || i < passes) ? MagickFalse : MagickTrue);
 }
