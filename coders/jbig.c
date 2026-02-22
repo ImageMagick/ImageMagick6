@@ -203,6 +203,12 @@ static Image *ReadJBIGImage(const ImageInfo *image_info,
       length-=(ssize_t) count;
     }
   } while ((status == JBG_EAGAIN) || (status == JBG_EOK));
+  if (status != JBG_EOK)
+    {
+      jbg_dec_free(&jbig_info);
+      buffer=(unsigned char *) RelinquishMagickMemory(buffer);
+      ThrowReaderException(CorruptImageError,"UnableToReadImageData");
+    }
   /*
     Create colormap.
   */

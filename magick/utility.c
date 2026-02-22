@@ -114,7 +114,7 @@ MagickExport MagickBooleanType AcquireUniqueFilename(char *path)
   file=AcquireUniqueFileResource(path);
   if (file == -1)
     return(MagickFalse);
-  file=close(file)-1;
+  file=close_utf8(file)-1;
   return(MagickTrue);
 }
 
@@ -178,8 +178,13 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
     char
       *passes;
 
+    /*
+      Does policy permit symbolic links?
+    */
+    status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights |
+      WritePolicyRights,"follow");
     passes=GetPolicyValue("system:shred");
-    if (passes != (char *) NULL)
+    if ((passes != (char *) NULL) || (status == MagickFalse))
       passes=DestroyString(passes);
     else
       {
@@ -207,6 +212,9 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
       }
   }
 #endif
+  /*
+    Copy file from source to destination.
+  */
   destination_file=AcquireUniqueFileResource(destination);
   if (destination_file == -1)
     return(MagickFalse);
@@ -1965,6 +1973,6 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   }
   key=DestroyStringInfo(key);
   random_info=DestroyRandomInfo(random_info);
-  status=close(file);
+  status=close_utf8(file);
   return((status == -1 || i < passes) ? MagickFalse : MagickTrue);
 }

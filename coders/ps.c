@@ -79,6 +79,7 @@
 #include "magick/token.h"
 #include "magick/transform.h"
 #include "magick/utility.h"
+#include "magick/utility-private.h"
 #include "coders/bytebuffer-private.h"
 #include "coders/ghostscript-private.h"
 
@@ -762,7 +763,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
         strlen(translate_geometry));
     }
   (void) count;
-  file=close(file)-1;
+  file=close_utf8(file)-1;
   /*
     Render Postscript with the Ghostscript delegate.
   */

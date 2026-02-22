@@ -8869,7 +8869,7 @@ static Image *XMagickCommand(Display *display,XResourceInfo *resource_info,
         }
       value=GetImageProperty(*image,"comment");
       if (value == (char *) NULL)
-        unique_file=close(unique_file)-1;
+        unique_file=close_utf8(unique_file)-1;
       else
         {
           const char
