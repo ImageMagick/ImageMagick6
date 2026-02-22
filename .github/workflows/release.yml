@@ -304,12 +304,12 @@ jobs:
           msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
 
       - name: Sign executables and libraries
-        uses: ImageMagick/.github/actions/code-signing@757a0d61ad4171546b1056ac46263630037a4fc7
+        uses: ImageMagick/.github/actions/code-signing@e535c88db29bcffe05a25dcf3cc92b68ed171f05
         with:
-          client-id: ${{secrets.AZURE_CLIENT_ID}}
-          tenant-id: ${{secrets.AZURE_TENANT_ID}}
-          subscription-id: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-          directory: Artifacts\bin
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          directory: ${{ github.workspace }}\Artifacts\bin
 
       - name: Copy Files
         shell: pwsh
