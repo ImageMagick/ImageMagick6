@@ -2755,7 +2755,8 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
       flags=O_RDWR | O_CREAT | O_TRUNC | O_BINARY;
       type="w+b";
       status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow") &&
-        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow");
+        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow") ?
+        MagickTrue : MagickFalse;
       break;
     }
     case AppendBlobMode:
@@ -2770,7 +2771,8 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
       flags=O_RDWR | O_CREAT | O_APPEND | O_BINARY;
       type="a+b";
       status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow") &&
-        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow");
+        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow") ?
+        MagickTrue : MagickFalse;
       break;
     }
     default:
