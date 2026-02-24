@@ -545,7 +545,7 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if ((errcode != LIBRAW_SUCCESS) || 
         (raw_image == (libraw_processed_image_t *) NULL) ||
         (raw_image->type != LIBRAW_IMAGE_BITMAP) || (raw_image->bits != 16) ||
-        (raw_image->colors < 3) || (raw_image->colors > 4))
+        (raw_image->colors < 1) || (raw_image->colors > 4))
       {
         if (raw_image != (libraw_processed_image_t *) NULL)
           libraw_dcraw_clear_mem(raw_image);
@@ -588,9 +588,12 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
       for (x=0; x < (ssize_t) image->columns; x++)
       {
         SetPixelRed(q,ScaleShortToQuantum(*p++));
-        SetPixelGreen(q,ScaleShortToQuantum(*p++));
-        SetPixelBlue(q,ScaleShortToQuantum(*p++));
-        if (raw_image->colors > 3)
+        if (raw_image->colors > 2)
+          {
+            SetPixelGreen(q,ScaleShortToQuantum(*p++));
+            SetPixelBlue(q,ScaleShortToQuantum(*p++));
+          }
+        if ((raw_image->colors == 2) || (raw_image->colors > 3))
           SetPixelAlpha(q,ScaleShortToQuantum(*p++));
         q++;
       }
