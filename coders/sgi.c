@@ -1138,10 +1138,8 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
         extent=(2*(size_t) iris_info.columns+10);
         if (HeapOverflowSanityCheck(extent,image->rows) != MagickFalse)
           {
-            if (offsets != (ssize_t *) NULL)
-              offsets=(ssize_t *) RelinquishMagickMemory(offsets);
-            if (runlength != (size_t *) NULL)
-              runlength=(size_t *) RelinquishMagickMemory(runlength);
+            offsets=(ssize_t *) RelinquishMagickMemory(offsets);
+            runlength=(size_t *) RelinquishMagickMemory(runlength);
             ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
           }
         packet_info=AcquireVirtualMemory(extent*image->rows,4*sizeof(*packets));
@@ -1149,10 +1147,8 @@ static MagickBooleanType WriteSGIImage(const ImageInfo *image_info,Image *image)
             (runlength == (size_t *) NULL) ||
             (packet_info == (MemoryInfo *) NULL))
           {
-            if (offsets != (ssize_t *) NULL)
-              offsets=(ssize_t *) RelinquishMagickMemory(offsets);
-            if (runlength != (size_t *) NULL)
-              runlength=(size_t *) RelinquishMagickMemory(runlength);
+            offsets=(ssize_t *) RelinquishMagickMemory(offsets);
+            runlength=(size_t *) RelinquishMagickMemory(runlength);
             if (packet_info != (MemoryInfo *) NULL)
               packet_info=RelinquishVirtualMemory(packet_info);
             pixel_info=RelinquishVirtualMemory(pixel_info);
