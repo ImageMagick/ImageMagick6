@@ -745,9 +745,8 @@ static MagickBooleanType sixel_encode_impl(unsigned char *pixels, size_t width,s
     if (ncolors < 1) {
         return (MagickFalse);
     }
-    if (HeapOverflowSanityCheck(ncolors,width) != MagickFalse)
+    if (HeapOverflowSanityCheckGetSize(ncolors,width,&len) != MagickFalse)
       return(MagickFalse);
-    len = ncolors * width;
     context->active_palette = (-1);
 
     if ((map = (unsigned char *)AcquireQuantumMemory(len, sizeof(unsigned char))) == NULL) {
