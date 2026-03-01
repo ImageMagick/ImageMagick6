@@ -683,7 +683,8 @@ static Image *ReadDIBImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (HeapOverflowSanityCheckGetSize(image->columns,
       (size_t) dib_info.bits_per_pixel,&extent) != MagickFalse)
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
-  bytes_per_line=4*((extent+31)/32);
+  if (HeapOverflowSanityCheckGetSize(4,((extent+31)/32),&bytes_per_line) != MagickFalse)
+    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   if (HeapOverflowSanityCheckGetSize(bytes_per_line,image->rows,
       &length) != MagickFalse)
     ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
