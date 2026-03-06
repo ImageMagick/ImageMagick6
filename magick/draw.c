@@ -3475,6 +3475,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     (void) ThrowMagickException(&image->exception,
                       GetMagickModule(),ResourceLimitError,
                       "MemoryAllocationFailed","`%s'",image->filename);
+                    status=MagickFalse;
                     break;
                   }
                 graphic_context[n]=CloneDrawInfo((ImageInfo *) NULL,
@@ -3485,9 +3486,12 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     (void) CloneString(&graphic_context[n]->id,token);
                   }
                 if (n > MagickMaxRecursionDepth)
-                  (void) ThrowMagickException(&image->exception,
-                    GetMagickModule(),DrawError,"VectorGraphicsNestedTooDeeply",
-                    "`%s'",image->filename);
+                  {
+                    (void) ThrowMagickException(&image->exception,
+                      GetMagickModule(),DrawError,"VectorGraphicsNestedTooDeeply",
+                      "`%s'",image->filename);
+                      status=MagickFalse;
+                  }
                 break;
               }
             if (LocaleCompare("mask",token) == 0)
@@ -4148,6 +4152,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
             (void) ThrowMagickException(&image->exception,GetMagickModule(),
               ResourceLimitError,"MemoryAllocationFailed","`%s'",
               image->filename);
+            status=MagickFalse;
             break;
           }
         mvg_info.offset=i;
