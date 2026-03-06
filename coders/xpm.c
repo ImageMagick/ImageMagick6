@@ -62,6 +62,7 @@
 #include "magick/monitor-private.h"
 #include "magick/pixel-accessor.h"
 #include "magick/pixel-private.h"
+#include "magick/property.h"
 #include "magick/quantize.h"
 #include "magick/quantum-private.h"
 #include "magick/resize.h"
@@ -72,12 +73,6 @@
 #include "magick/threshold.h"
 #include "magick/token.h"
 #include "magick/utility.h"
-
-/*
-  Global declarations.
-*/
-static SplayTreeInfo
-  *xpm_symbolic = (SplayTreeInfo *) NULL;
 
 /*
   Forward declarations.
@@ -453,9 +448,15 @@ static Image *ReadXPMImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
       }
     StripString(target);
-    if (*symbolic != '\0')
-      (void) AddValueToSplayTree(xpm_symbolic,ConstantString(target),
-        ConstantString(symbolic));
+    if ((*symbolic != '\0') && (strlen(symbolic) > 2))
+      {
+        char
+          symbolic_key[MagickPathExtent];
+
+        (void) FormatLocaleString(symbolic_key,MagickPathExtent,"xpm:symbolic.%s",
+          target);
+        (void) SetImageProperty(image,symbolic_key,symbolic+2);
+      }
     grey=strstr(target,"grey");
     if (grey != (char *) NULL)
       grey[2]='a';
@@ -568,9 +569,6 @@ ModuleExport size_t RegisterXPMImage(void)
   MagickInfo
     *entry;
 
-  if (xpm_symbolic == (SplayTreeInfo *) NULL)
-    xpm_symbolic=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
-      RelinquishMagickMemory);
   entry=SetMagickInfo("PICON");
   entry->decoder=(DecodeImageHandler *) ReadXPMImage;
   entry->encoder=(EncodeImageHandler *) WritePICONImage;
@@ -621,8 +619,6 @@ ModuleExport void UnregisterXPMImage(void)
   (void) UnregisterMagickInfo("PICON");
   (void) UnregisterMagickInfo("PM");
   (void) UnregisterMagickInfo("XPM");
-  if (xpm_symbolic != (SplayTreeInfo *) NULL)
-    xpm_symbolic=DestroySplayTree(xpm_symbolic);
 }
 
 /*
@@ -880,6 +876,9 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
   GetMagickPixelPacket(image,&pixel);
   for (i=0; i < (ssize_t) colors; i++)
   {
+    char
+      symbolic_key[MaxTextExtent];
+
     const char
       *symbolic;
 
@@ -908,7 +907,9 @@ static MagickBooleanType WritePICONImage(const ImageInfo *image_info,
       symbol[j]=Cixel[k];
     }
     symbol[j]='\0';
-    symbolic=(const char *) GetValueFromSplayTree(xpm_symbolic,name);
+    (void) FormatLocaleString(symbolic_key,MaxTextExtent,"xpm:symbolic.%s",
+      name);
+    symbolic=GetImageProperty(image,symbolic_key);
     if (symbolic == (const char *) NULL)
       (void) FormatLocaleString(buffer,MaxTextExtent,"\"%.1024s c %.1024s\",\n",
         symbol,name);
