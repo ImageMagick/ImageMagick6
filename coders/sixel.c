@@ -1297,7 +1297,7 @@ static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,
   opacity=(-1);
   if (image->matte == MagickFalse)
     {
-      if ((image->storage_class == DirectClass) || (image->colors > 256))
+      if ((image->storage_class == DirectClass) || (image->colors > SIXEL_PALETTE_MAX))
         (void) SetImageType(image,PaletteType);
     }
   else
@@ -1309,7 +1309,7 @@ static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,
       /*
         Identify transparent colormap index.
       */
-      if ((image->storage_class == DirectClass) || (image->colors > 256))
+      if ((image->storage_class == DirectClass) || (image->colors > SIXEL_PALETTE_MAX))
         (void) SetImageType(image,PaletteBilevelMatteType);
       for (i=0; i < (ssize_t) image->colors; i++)
         if (image->colormap[i].opacity != OpaqueOpacity)
@@ -1348,6 +1348,8 @@ static MagickBooleanType WriteSIXELImage(const ImageInfo *image_info,
           image->colormap[opacity].blue=image->transparent_color.blue;
         }
     }
+  if (image->colors > SIXEL_PALETTE_MAX)
+    return(MagickFalse);
   /*
     SIXEL header.
   */
