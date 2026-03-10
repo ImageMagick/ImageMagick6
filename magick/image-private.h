@@ -54,6 +54,10 @@ extern "C" {
 #define MAGICK_SIZE_MAX  (SIZE_MAX)
 #define MAGICK_SSIZE_MAX  (SSIZE_MAX)
 #define MAGICK_SSIZE_MIN  (-SSIZE_MAX-1)
+#define MAGICK_UCHAR_MAX  (UCHAR_MAX)
+#define MAGICK_UINT_MAX  (UINT_MAX)
+#define MAGICK_ULONG_MAX  (ULONG_MAX)
+#define MAGICK_USHORT_MAX  (USHRT_MAX)
 #define MatteColor  "#bdbdbd"  /* gray */
 #define MatteColorRGBA  ScaleShortToQuantum(0xbdbd),\
   ScaleShortToQuantum(0xbdbd),ScaleShortToQuantum(0xbdbd),OpaqueOpacity
@@ -136,6 +140,54 @@ static inline QuantumAny CastDoubleToQuantumAny(const double x)
       return((QuantumAny) ~0);
     }
   return((QuantumAny) value);
+}
+
+static inline unsigned char CastDoubleToUChar(const double x)
+{
+  double
+    value;
+
+  if (IsNaN(x) != 0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < 0.0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  if (value >= ((double) MAGICK_UCHAR_MAX))
+    {
+      errno=ERANGE;
+      return(MAGICK_UCHAR_MAX);
+    }
+  return((unsigned short) value);
+}
+
+static inline unsigned short CastDoubleToUShort(const double x)
+{
+  double
+    value;
+
+  if (IsNaN(x) != 0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < 0.0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  if (value >= ((double) MAGICK_USHORT_MAX))
+    {
+      errno=ERANGE;
+      return(MAGICK_USHORT_MAX);
+    }
+  return((unsigned short) value);
 }
 
 static inline size_t CastDoubleToUnsigned(const double x)
