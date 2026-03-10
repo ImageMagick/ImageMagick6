@@ -475,19 +475,19 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
           }
           if (i < (ssize_t) image->colors)
             {
-              image->colormap[i].red=ScaleCharToQuantum((unsigned char) value);
+              image->colormap[i].red=ScaleCharToQuantum(CastDoubleToUChar(value));
               image->colormap[i].green=ScaleCharToQuantum((unsigned char)
                 value);
-              image->colormap[i].blue=ScaleCharToQuantum((unsigned char) value);
+              image->colormap[i].blue=ScaleCharToQuantum(CastDoubleToUChar(value));
             }
           else
             if (i < (ssize_t) (2*image->colors))
               image->colormap[i % image->colors].green=ScaleCharToQuantum(
-                (unsigned char) value);
+                CastDoubleToUChar(value));
             else
               if (i < (ssize_t) (3*image->colors))
                 image->colormap[i % image->colors].blue=ScaleCharToQuantum(
-                  (unsigned char) value);
+                  CastDoubleToUChar(value));
         }
         viff_colormap=(unsigned char *) RelinquishMagickMemory(viff_colormap);
         break;
