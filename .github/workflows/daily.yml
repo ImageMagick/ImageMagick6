@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -41,7 +41,7 @@ jobs:
           mv ChangeLog.md artifacts/ChangeLog.md
 
       - name: Upload ChangeLog.md
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f #v7.0.0
         with:
           name: ChangeLog
           path: artifacts
@@ -71,7 +71,7 @@ jobs:
           apt-get install -y autoconf gcc g++ libfontconfig1-dev libfreetype6-dev libltdl-dev make pkg-config
 
       - name: Clone msttcorefonts
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
         with:
           repository: ImageMagick/msttcorefonts
           ref: refs/heads/main
@@ -82,7 +82,7 @@ jobs:
           set -e
           ./install.sh
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
         with:
           persist-credentials: false
 
@@ -125,7 +125,7 @@ jobs:
 
     steps:
       - name: Clone ImageMagick
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
         with:
           path: ImageMagick
           persist-credentials: false
@@ -141,7 +141,7 @@ jobs:
           ImageMagick\.github\build\windows\download-dependencies.cmd windows-${{matrix.architecture}}-${{matrix.buildType}}-openMP.zip
 
       - name: Download ChangeLog.md
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3 #v8.0.0
         with:
           name: ChangeLog
           path: ImageMagick-Windows\ImageMagick
