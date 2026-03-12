@@ -149,7 +149,7 @@ static size_t poly_number_terms(double order)
   if ( order < 1 || order > 5 ||
        ( order != floor(order) && (order-1.5) > MagickEpsilon) )
     return 0; /* invalid polynomial order */
-  return((size_t) floor((order+1)*(order+2)/2));
+  return(CastDoubleToSizeT(floor((order+1.0)*(order+2.0)/2.0)));
 }
 
 static double poly_basis_fn(ssize_t n, double x, double y)
@@ -1050,7 +1050,7 @@ static double *GenerateCoefficients(const Image *image,
       /* first two coefficients hold polynomial order information */
       coeff[0] = arguments[0];
       coeff[1] = (double) poly_number_terms(arguments[0]);
-      nterms = (size_t) coeff[1];
+      nterms = CastDoubleToSizeT(coeff[1]);
 
       /* create matrix, a fake vectors matrix, and least sqs terms */
       matrix = AcquireMagickMatrix(nterms,nterms);
@@ -1713,8 +1713,8 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
             "Invalid number of args: 2 only");
           return((Image *) NULL);
         }
-      distort_image=DistortResizeImage(image,(size_t) arguments[0],
-        (size_t) arguments[1],exception);
+      distort_image=DistortResizeImage(image,CastDoubleToSizeT(arguments[0]),
+        CastDoubleToSizeT(arguments[1]),exception);
       return(distort_image);
     }
 
@@ -1883,9 +1883,9 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
          * for reversibility in a DePolar-Polar cycle */
         fix_bounds = MagickFalse;
         geometry.x = geometry.y = 0;
-        geometry.height = (size_t) ceil(coeff[0]-coeff[1]);
-        geometry.width = (size_t) ceil((coeff[0]-coeff[1])*
-          (coeff[5]-coeff[4])*0.5);
+        geometry.height = CastDoubleToSizeT(ceil(coeff[0]-coeff[1]));
+        geometry.width = CastDoubleToSizeT(ceil((coeff[0]-coeff[1])*
+          (coeff[5]-coeff[4])*0.5));
         /* correct scaling factors relative to new size */
         coeff[6]=(coeff[5]-coeff[4])*MagickSafeReciprocal(geometry.width); /* changed width */
         coeff[7]=(coeff[0]-coeff[1])*MagickSafeReciprocal(geometry.height); /* should be about 1.0 */
@@ -1897,8 +1897,8 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
          * center, or pixel edge. This allows for reversibility of the
          * distortion */
         geometry.x = geometry.y = 0;
-        geometry.width = (size_t) ceil( 2.0*coeff[1]*tan(coeff[0]/2.0) );
-        geometry.height = (size_t) ceil( 2.0*coeff[3]/cos(coeff[0]/2.0) );
+        geometry.width = CastDoubleToSizeT(ceil( 2.0*coeff[1]*tan(coeff[0]/2.0) ));
+        geometry.height = CastDoubleToSizeT(ceil( 2.0*coeff[3]/cos(coeff[0]/2.0) ));
         /* correct center of distortion relative to new size */
         coeff[4] = (double) geometry.width/2.0;
         coeff[5] = (double) geometry.height/2.0;
@@ -1910,8 +1910,8 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         /* direct calculation center is either pixel center, or pixel edge
          * so as to allow reversibility of the image distortion */
         geometry.x = geometry.y = 0;
-        geometry.width = (size_t) ceil(coeff[0]*coeff[1]);  /* FOV * radius */
-        geometry.height = (size_t) (2*coeff[3]);  /* input image height */
+        geometry.width = CastDoubleToSizeT(ceil(coeff[0]*coeff[1]));  /* FOV * radius */
+        geometry.height = CastDoubleToSizeT(2.0*coeff[3]);  /* input image height */
         /* correct center of distortion relative to new size */
         coeff[4] = (double) geometry.width/2.0;
         coeff[5] = (double) geometry.height/2.0;
@@ -1942,8 +1942,8 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
     if ( fix_bounds ) {
       geometry.x = (ssize_t) floor(min.x-0.5);
       geometry.y = (ssize_t) floor(min.y-0.5);
-      geometry.width=(size_t) ceil(max.x-geometry.x+0.5);
-      geometry.height=(size_t) ceil(max.y-geometry.y+0.5);
+      geometry.width=CastDoubleToSizeT(ceil(max.x-geometry.x+0.5));
+      geometry.height=CastDoubleToSizeT(ceil(max.y-geometry.y+0.5));
     }
 
   } /* end bestfit destination image calculations */
@@ -2134,7 +2134,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
       }
       case PolynomialDistortion:
       {
-        size_t nterms = (size_t) coeff[1];
+        size_t nterms = CastDoubleToSizeT(coeff[1]);
         (void) FormatLocaleFile(stderr,
           "Polynomial (order %lg, terms %lu), FX Equivalent\n",coeff[0],
           (unsigned long) nterms);
@@ -2303,10 +2303,10 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
     output_scaling = 1.0;
     if (artifact != (const char *) NULL) {
       output_scaling = fabs(StringToDouble(artifact,(char **) NULL));
-      geometry.width=(size_t) (output_scaling*geometry.width+0.5);
-      geometry.height=(size_t) (output_scaling*geometry.height+0.5);
-      geometry.x=(ssize_t) (output_scaling*geometry.x+0.5);
-      geometry.y=(ssize_t) (output_scaling*geometry.y+0.5);
+      geometry.width=CastDoubleToSizeT(output_scaling*geometry.width+0.5);
+      geometry.height=CastDoubleToSizeT(output_scaling*geometry.height+0.5);
+      geometry.x=CastDoubleToSsizeT(output_scaling*geometry.x+0.5);
+      geometry.y=CastDoubleToSsizeT(output_scaling*geometry.y+0.5);
       if ( output_scaling < 0.1 ) {
         coeff = (double *) RelinquishMagickMemory(coeff);
         (void) ThrowMagickException(exception,GetMagickModule(),

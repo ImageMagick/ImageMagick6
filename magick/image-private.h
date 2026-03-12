@@ -142,6 +142,54 @@ static inline QuantumAny CastDoubleToQuantumAny(const double x)
   return((QuantumAny) value);
 }
 
+static inline size_t CastDoubleToSizeT(const double x)
+{
+  double
+    value;
+
+  if (IsNaN(x) != 0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < 0.0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  if (value >= ((double) MAGICK_SIZE_MAX))
+    {
+      errno=ERANGE;
+      return(MAGICK_SIZE_MAX);
+    }
+  return((size_t) value);
+}
+
+static inline ssize_t CastDoubleToSsizeT(const double x)
+{
+  double
+    value;
+
+  if (IsNaN(x) != 0)
+    {
+      errno=ERANGE;
+      return(0);
+    }
+  value=(x < 0.0) ? ceil(x) : floor(x);
+  if (value < ((double) MAGICK_SSIZE_MIN))
+    {
+      errno=ERANGE;
+      return(MAGICK_SSIZE_MIN);
+    }
+  if (value >= ((double) MAGICK_SSIZE_MAX))
+    {
+      errno=ERANGE;
+      return(MAGICK_SSIZE_MAX);
+    }
+  return((ssize_t) value);
+}
+
 static inline unsigned char CastDoubleToUChar(const double x)
 {
   double

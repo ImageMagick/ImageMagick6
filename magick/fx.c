@@ -1491,7 +1491,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          *beta=(double) (~(size_t) *beta);
+          *beta=(double) (~CastDoubleToSizeT(*beta));
           FxReturn(*beta);
         }
         case '!':
@@ -1551,7 +1551,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           ClearMagickException(exception);
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          value=(double) ((size_t) (alpha+0.5) & (size_t) (*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) & CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1570,7 +1570,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           ClearMagickException(exception);
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          value=(double) ((size_t) (alpha+0.5) | (size_t) (*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) | CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1589,13 +1589,13 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           ClearMagickException(exception);
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          if ((size_t) (*beta+0.5) >= (8*sizeof(size_t)))
+          if (CastDoubleToSizeT(*beta+0.5) >= (8*sizeof(size_t)))
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          value=(double) ((size_t) (alpha+0.5) << (size_t) (*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) << CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1614,13 +1614,13 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           ClearMagickException(exception);
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          if ((size_t) (*beta+0.5) >= (8*sizeof(size_t)))
+          if (CastDoubleToSizeT(*beta+0.5) >= (8*sizeof(size_t)))
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          value=(double) ((size_t) (alpha+0.5) >> (size_t) (*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) >> CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1775,26 +1775,26 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           gamma=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          if ((size_t) (gamma+0.5) >= (8*sizeof(size_t)))
+          if (CastDoubleToSizeT(gamma+0.5) >= (8*sizeof(size_t)))
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          *beta=(double) ((size_t) (alpha+0.5) << (size_t) (gamma+0.5));
+          *beta=(double) (CastDoubleToSizeT(alpha+0.5) << CastDoubleToSizeT(gamma+0.5));
           FxReturn(*beta);
         }
         case RightShiftOperator:
         {
           gamma=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          if ((size_t) (gamma+0.5) >= (8*sizeof(size_t)))
+          if (CastDoubleToSizeT(gamma+0.5) >= (8*sizeof(size_t)))
             {
               (void) ThrowMagickException(exception,GetMagickModule(),
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          *beta=(double) ((size_t) (alpha+0.5) >> (size_t) (gamma+0.5));
+          *beta=(double) (CastDoubleToSizeT(alpha+0.5) >> CastDoubleToSizeT(gamma+0.5));
           FxReturn(*beta);
         }
         case '<':
@@ -1837,14 +1837,14 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
         {
           gamma=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          *beta=(double) ((size_t) (alpha+0.5) & (size_t) (gamma+0.5));
+          *beta=(double) (CastDoubleToSizeT(alpha+0.5) & CastDoubleToSizeT(gamma+0.5));
           FxReturn(*beta);
         }
         case '|':
         {
           gamma=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          *beta=(double) ((size_t) (alpha+0.5) | (size_t) (gamma+0.5));
+          *beta=(double) (CastDoubleToSizeT(alpha+0.5) | CastDoubleToSizeT(gamma+0.5));
           FxReturn(*beta);
         }
         case LogicalAndOperator:
@@ -1962,7 +1962,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
     {
       gamma=FxEvaluateSubexpression(fx_info,channel,x,y,expression+1,depth+1,
         beta,exception);
-      FxReturn((double) (~(size_t) (gamma+0.5)));
+      FxReturn((double) (~CastDoubleToSizeT(gamma+0.5)));
     }
     case 'A':
     case 'a':
