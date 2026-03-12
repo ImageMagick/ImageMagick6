@@ -41,7 +41,7 @@ jobs:
           mv ChangeLog.md artifacts/ChangeLog.md
 
       - name: Upload ChangeLog.md
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: ChangeLog
           path: artifacts
