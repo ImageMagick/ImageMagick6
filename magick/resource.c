@@ -243,8 +243,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case DiskResource:
     {
       limit=resource_info.disk_limit;
-      if (((MagickSizeType) resource_info.disk+request) >
-          (MagickSizeType) resource_info.disk)
+      if (resource_info.disk <= MagickOffsetMax-request)
         {
           resource_info.disk+=request;
           if ((limit == MagickResourceInfinity) ||
@@ -265,8 +264,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case FileResource:
     {
       limit=resource_info.file_limit;
-      if (((MagickSizeType) resource_info.file+request) >
-          (MagickSizeType) resource_info.file)
+      if (resource_info.file <= MagickOffsetMax-request)
         {
           resource_info.file+=request;
           if ((limit == MagickResourceInfinity) ||
@@ -313,8 +311,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case MapResource:
     {
       limit=resource_info.map_limit;
-      if (((MagickSizeType) resource_info.map+request) >
-          (MagickSizeType) resource_info.map)
+      if (resource_info.map <= MagickOffsetMax-request)
         {
           resource_info.map+=request;
           if ((limit == MagickResourceInfinity) ||
@@ -335,8 +332,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case MemoryResource:
     {
       limit=resource_info.memory_limit;
-      if (((MagickSizeType) resource_info.memory+request) >
-          (MagickSizeType) resource_info.memory)
+      if (resource_info.memory <= MagickOffsetMax-request)
         {
           resource_info.memory+=request;
           if ((limit == MagickResourceInfinity) ||
@@ -387,7 +383,7 @@ MagickExport MagickBooleanType AcquireMagickResource(const ResourceType type,
     case TimeResource:
     {
       limit=resource_info.time_limit;
-      if (((MagickSizeType) resource_info.time+request) > (MagickSizeType) resource_info.time)
+      if (resource_info.time <= MagickOffsetMax-request)
         {
           resource_info.time+=request;
           if ((limit == MagickResourceInfinity) ||
