@@ -686,7 +686,8 @@ MagickExport MagickBooleanType ClipImagePath(Image *image,const char *pathname,
 #define ClipImagePathTag  "ClipPath/Image"
 
   char
-    *property;
+    *property,
+    *sanitized_pathname;
 
   const char
     *value;
@@ -715,7 +716,11 @@ MagickExport MagickBooleanType ClipImagePath(Image *image,const char *pathname,
     }
   image_info=AcquireImageInfo();
   (void) CopyMagickString(image_info->filename,image->filename,MaxTextExtent);
-  (void) ConcatenateMagickString(image_info->filename,pathname,MaxTextExtent);
+  (void) ConcatenateMagickString(image_info->filename,"_",MagickPathExtent);
+  sanitized_pathname=SanitizeString(pathname);
+  (void) ConcatenateMagickString(image_info->filename,sanitized_pathname,
+    MagickPathExtent);
+  sanitized_pathname=DestroyString(sanitized_pathname);
   clip_mask=BlobToImage(image_info,value,strlen(value),&image->exception);
   image_info=DestroyImageInfo(image_info);
   if (clip_mask == (Image *) NULL)
