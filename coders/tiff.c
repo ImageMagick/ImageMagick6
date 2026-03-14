@@ -3501,9 +3501,13 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
     {
       case FloatingPointQuantumFormat:
       {
+        double
+          max = 1.0,
+          min = 0.0;
+
         (void) TIFFSetField(tiff,TIFFTAG_SAMPLEFORMAT,SAMPLEFORMAT_IEEEFP);
-        (void) TIFFSetField(tiff,TIFFTAG_SMINSAMPLEVALUE,quantum_info->minimum);
-        (void) TIFFSetField(tiff,TIFFTAG_SMAXSAMPLEVALUE,quantum_info->maximum);
+        (void) TIFFSetField(tiff,TIFFTAG_SMINSAMPLEVALUE,min);
+        (void) TIFFSetField(tiff,TIFFTAG_SMAXSAMPLEVALUE,max);
         break;
       }
       case SignedQuantumFormat:
