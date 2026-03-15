@@ -100,9 +100,9 @@ static inline size_t fact(size_t n)
   return(f);
 }
 #elif 1 /* glibc floating point alternatives */
-#define fact(n) (CastDoubleToSizeT(tgamma((double)n+1.0)))
+#define fact(n) (CastDoubleToSizeT(tgamma((double) n+1)))
 #else
-#define fact(n) (CastDoubleToSizeT(lgamma((double)n+1)))
+#define fact(n) (CastDoubleToSizeT(lgamma((double) n+1)))
 #endif
 
 /* Currently these are only internal to this module */
@@ -1058,7 +1058,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           A, B, R;
 
         if ( args->rho >= 1.0 )
-          kernel->width = CastDoubleToSizeT(args->rho*2.0+1.0);
+          kernel->width = CastDoubleToSizeT(args->rho)*2+1;
         else if ( (type != DoGKernel) || (sigma >= sigma2) )
           kernel->width = GetOptimalKernelWidth2D(args->rho,sigma);
         else
@@ -1149,7 +1149,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           alpha, beta;
 
         if ( args->rho >= 1.0 )
-          kernel->width = CastDoubleToSizeT(args->rho*2.0+1.0);
+          kernel->width = CastDoubleToSizeT(args->rho)*2+1;
         else
           kernel->width = GetOptimalKernelWidth1D(args->rho,sigma);
         kernel->height = 1;
@@ -1306,7 +1306,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
         if (args->rho < 1.0)
           kernel->width = kernel->height = 3;  /* default radius = 1 */
         else
-          kernel->width = kernel->height = (CastDoubleToSizeT(args->rho)*2.0+1.0);
+          kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
         kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
         order_f = fact(kernel->width-1);
@@ -1540,7 +1540,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
         if (args->rho < 1.0)
           kernel->width = kernel->height = 3;  /* default radius = 1 */
         else
-          kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+          kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
         kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
         kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -1567,7 +1567,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
             if (args->rho < 1.0)
               kernel->width = kernel->height = 3;  /* default radius = 1 */
             else
-              kernel->width = kernel->height = CastDoubleToSizeT(2.0*args->rho+1.0);
+              kernel->width = kernel->height = CastDoubleToSizeT(2*args->rho+1);
             kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
             scale = args->sigma;
           }
@@ -1602,7 +1602,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           if (args->rho < 1.0)
             kernel->width = kernel->height = 5;  /* default radius = 2 */
           else
-            kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+            kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
           kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
           kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -1623,12 +1623,12 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
       case DiskKernel:
         {
           ssize_t
-            limit = CastDoubleToSsizeT(args->rho*args->rho);
+            limit = (ssize_t)(args->rho*args->rho);
 
           if (args->rho < 0.4)           /* default radius approx 4.3 */
             kernel->width = kernel->height = 9L, limit = 18L;
           else
-            kernel->width = kernel->height = CastDoubleToSizeT(fabs(args->rho)*2.0+1.0);
+            kernel->width = kernel->height = CastDoubleToSizeT(fabs(args->rho)*2+1);
           kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
           kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -1650,7 +1650,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           if (args->rho < 1.0)
             kernel->width = kernel->height = 5;  /* default radius 2 */
           else
-            kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+            kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
           kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
           kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -1671,7 +1671,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           if (args->rho < 1.0)
             kernel->width = kernel->height = 5;  /* default radius 2 */
           else
-            kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+            kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
           kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
           kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -1700,15 +1700,15 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
 
           if (args->rho < args->sigma)
             {
-              kernel->width = CastDoubleToSizeT(args->sigma*2.0+1.0);
-              limit1 = CastDoubleToSsizeT(args->rho*args->rho);
-              limit2 = CastDoubleToSsizeT(args->sigma*args->sigma);
+              kernel->width = CastDoubleToSizeT(args->sigma)*2+1;
+              limit1 = (ssize_t)(args->rho*args->rho);
+              limit2 = (ssize_t)(args->sigma*args->sigma);
             }
           else
             {
-              kernel->width = CastDoubleToSizeT(args->rho*2.0+1.0);
-              limit1 = CastDoubleToSsizeT(args->sigma*args->sigma);
-              limit2 = CastDoubleToSsizeT(args->rho*args->rho);
+              kernel->width = CastDoubleToSizeT(args->rho)*2+1;
+              limit1 = (ssize_t)(args->sigma*args->sigma);
+              limit2 = (ssize_t)(args->rho*args->rho);
             }
           if ( limit2 <= 0 )
             kernel->width = 7L, limit1 = 7L, limit2 = 11L;
@@ -2086,7 +2086,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           if (args->rho < 1.0)
             kernel->width = kernel->height = 3;  /* default radius = 1 */
           else
-            kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+            kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
           kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
           kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -2106,7 +2106,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
           if (args->rho < 1.0)
             kernel->width = kernel->height = 3;  /* default radius = 1 */
           else
-            kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+            kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
           kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
           kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -2126,7 +2126,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
         if (args->rho < 2.0)
           kernel->width = kernel->height = 5;  /* default/minimum radius = 2 */
         else
-          kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+          kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
         kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
         kernel->values=(double *) AcquireAlignedMemory(kernel->width,
@@ -2151,7 +2151,7 @@ MagickExport KernelInfo *AcquireKernelBuiltIn(const KernelInfoType type,
         if (args->rho < 1.0)
           kernel->width = kernel->height = 3;  /* default radius = 1 */
         else
-          kernel->width = kernel->height = CastDoubleToSizeT(args->rho*2.0+1.0);
+          kernel->width = kernel->height = CastDoubleToSizeT(args->rho)*2+1;
         kernel->x = kernel->y = (ssize_t) (kernel->width-1)/2;
 
         kernel->values=(double *) AcquireAlignedMemory(kernel->width,
