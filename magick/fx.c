@@ -1570,7 +1570,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
           ClearMagickException(exception);
           *beta=FxEvaluateSubexpression(fx_info,channel,x,y,++p,depth+1,beta,
             exception);
-          value=(double) (CastDoubleToSizeT(alpha+0.5) | CastDoubleToSizeT(*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) |
+            CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1595,7 +1596,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          value=(double) (CastDoubleToSizeT(alpha+0.5) << CastDoubleToSizeT(*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) <<
+            CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1620,7 +1622,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          value=(double) (CastDoubleToSizeT(alpha+0.5) >> CastDoubleToSizeT(*beta+0.5));
+          value=(double) (CastDoubleToSizeT(alpha+0.5) >>
+            CastDoubleToSizeT(*beta+0.5));
           if (SetFxSymbolValue(fx_info,subexpression,value) == MagickFalse)
             return(0.0);
           FxReturn(*beta);
@@ -1781,7 +1784,8 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
                 OptionError,"ShiftCountOverflow","`%s'",subexpression);
               FxReturn(0.0);
             }
-          *beta=(double) (CastDoubleToSizeT(alpha+0.5) << CastDoubleToSizeT(gamma+0.5));
+          *beta=(double) (CastDoubleToSizeT(alpha+0.5) <<
+            CastDoubleToSizeT(gamma+0.5));
           FxReturn(*beta);
         }
         case RightShiftOperator:
