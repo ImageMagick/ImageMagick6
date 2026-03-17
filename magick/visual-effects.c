@@ -3513,7 +3513,8 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
     *pixels_info;
 
   size_t
-    max_channels;
+    max_channels,
+    number_levels = 5;
 
   ssize_t
     channel;
@@ -3562,6 +3563,9 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
   pixels=(float *) GetVirtualMemoryBlob(pixels_info);
   status=MagickTrue;
   number_pixels=image->columns*image->rows;
+  while ((number_levels > 0) &&
+        ((1UL << (number_levels-1)) >= MagickMin(image->columns,image->rows)))
+    number_levels--;
   max_channels=(size_t) (image->colorspace == CMYKColorspace ? 4 : 3);
   image_view=AcquireAuthenticCacheView(image,exception);
   noise_view=AcquireAuthenticCacheView(noise_image,exception);
@@ -3622,7 +3626,7 @@ MagickExport Image *WaveletDenoiseImage(const Image *image,
       have high values in the noisy parts of the signal.
     */
     high_pass=0;
-    for (level=0; level < 5; level++)
+    for (level=0; level < (ssize_t) number_levels; level++)
     {
       double
         magnitude;
