@@ -6640,7 +6640,7 @@ static DisplayCommand XImageWindowCommand(Display *display,
   KeySym key_symbol,Image **image)
 {
   static char
-    delta[MaxTextExtent] = "";
+    delta[MaxTextExtent+1] = "";
 
   static const char
     Digits[] = "01234567890";
