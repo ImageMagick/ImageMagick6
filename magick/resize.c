@@ -3077,15 +3077,11 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
   MagickOffsetType
     progress;
 
-  ssize_t
-    x;
-
-  ssize_t
-    *x_offset,
-    y;
-
   PointInfo
     sample_offset;
+
+  ssize_t
+    y;
 
   /*
     Initialize sampled image attributes.
@@ -3128,19 +3124,6 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
       }
   }
   /*
-    Allocate scan line buffer and column offset buffers.
-  */
-  x_offset=(ssize_t *) AcquireQuantumMemory((size_t) sample_image->columns,
-    sizeof(*x_offset));
-  if (x_offset == (ssize_t *) NULL)
-    {
-      sample_image=DestroyImage(sample_image);
-      ThrowImageException(ResourceLimitError,"MemoryAllocationFailed");
-    }
-  for (x=0; x < (ssize_t) sample_image->columns; x++)
-    x_offset[x]=(ssize_t) ((((double) x+sample_offset.x)*image->columns)/
-      sample_image->columns);
-  /*
     Sample each row.
   */
   status=MagickTrue;
@@ -3153,12 +3136,6 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
 #endif
   for (y=0; y < (ssize_t) sample_image->rows; y++)
   {
-    const IndexPacket
-      *magick_restrict indexes;
-
-    const PixelPacket
-      *magick_restrict p;
-
     IndexPacket
       *magick_restrict sample_indexes;
 
@@ -3168,33 +3145,46 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
     ssize_t
       x;
 
-    ssize_t
-      y_offset;
-
     if (status == MagickFalse)
       continue;
-    y_offset=(ssize_t) ((((double) y+sample_offset.y)*image->rows)/
-                                               sample_image->rows);
-    p=GetCacheViewVirtualPixels(image_view,0,y_offset,image->columns,1,
-      exception);
     q=QueueCacheViewAuthenticPixels(sample_view,0,y,sample_image->columns,1,
       exception);
-    if ((p == (const PixelPacket *) NULL) || (q == (PixelPacket *) NULL))
+    if (q == (PixelPacket *) NULL)
       {
         status=MagickFalse;
         continue;
       }
-    indexes=GetCacheViewAuthenticIndexQueue(image_view);
     sample_indexes=GetCacheViewAuthenticIndexQueue(sample_view);
     /*
       Sample each column.
     */
     for (x=0; x < (ssize_t) sample_image->columns; x++)
-      *q++=p[x_offset[x]];
-    if ((image->storage_class == PseudoClass) ||
-        (image->colorspace == CMYKColorspace))
-      for (x=0; x < (ssize_t) sample_image->columns; x++)
-        SetPixelIndex(sample_indexes+x,GetPixelIndex(indexes+x_offset[x]));
+    {
+      const IndexPacket
+        *magick_restrict indexes;
+
+      const PixelPacket
+        *magick_restrict p;
+
+      ssize_t
+        x_offset,
+        y_offset;
+
+      x_offset=(ssize_t) ((((double) x+sample_offset.x)*image->columns)/
+        sample_image->columns);
+      y_offset=(ssize_t) ((((double) y+sample_offset.y)*image->rows)/
+        sample_image->rows);
+      p=GetCacheViewVirtualPixels(image_view,x_offset,y_offset,1,1,
+        exception);
+      if (p == (const PixelPacket *) NULL)
+        {
+          status=MagickFalse;
+          continue;
+        }
+      *q++=(*p);
+      indexes=GetCacheViewAuthenticIndexQueue(image_view);
+      SetPixelIndex(sample_indexes+x,GetPixelIndex(indexes));
+    }
     if (SyncCacheViewAuthenticPixels(sample_view,exception) == MagickFalse)
       status=MagickFalse;
     if (image->progress_monitor != (MagickProgressMonitor) NULL)
@@ -3213,7 +3203,6 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
   }
   image_view=DestroyCacheView(image_view);
   sample_view=DestroyCacheView(sample_view);
-  x_offset=(ssize_t *) RelinquishMagickMemory(x_offset);
   sample_image->type=image->type;
   if (status == MagickFalse)
     sample_image=DestroyImage(sample_image);
