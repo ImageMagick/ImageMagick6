@@ -46,6 +46,7 @@
 #include "magick/exception.h"
 #include "magick/exception-private.h"
 #include "magick/cache.h"
+#include "magick/cache-private.h"
 #include "magick/client.h"
 #include "magick/coder.h"
 #include "magick/colorspace-private.h"
@@ -1189,6 +1190,7 @@ MagickExport MagickBooleanType WriteImage(const ImageInfo *image_info,
             image->endian=(*(char *) &lsb_first) == 1 ? LSBEndian : MSBEndian;
          }
     }
+  (void) SyncImagePixelCache(image,exception);
   (void) SyncImageProfiles(image);
   DisassociateImageStream(image);
   option=GetImageOption(image_info,"delegate:bimodal");
