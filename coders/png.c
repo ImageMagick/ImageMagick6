@@ -14015,7 +14015,7 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
 #ifdef PNG_WRITE_EMPTY_PLTE_SUPPORTED
      if ((need_local_plte == MagickFalse) &&
          (image->storage_class == PseudoClass) &&
-         (all_images_are_gray == MagickFalse))
+         (all_images_are_gray == MagickFalse) && (image->colors <= 256))
        {
          size_t
            data_length;
@@ -14068,7 +14068,8 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
             */
             mng_info->have_write_global_plte=mng_info->equal_palettes;
             mng_info->equal_palettes=PalettesAreEqual(image,image->next);
-            if (mng_info->equal_palettes && !mng_info->have_write_global_plte)
+            if ((mng_info->equal_palettes && !mng_info->have_write_global_plte) &&
+                (image->colors <= 256))
               {
                 /*
                   Write MNG PLTE chunk
