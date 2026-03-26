@@ -1993,8 +1993,15 @@ MagickExport XMLTreeInfo *NewXMLTree(const char *xml,ExceptionInfo *exception)
         "ParseError","UTF16 to UTF8 failed");
       return((XMLTreeInfo *) NULL);
     }
-  terminal=utf8[MagickMax(length-1,0)];
-  utf8[MagickMax(length-1,0)]='\0';
+  if (length == 0)
+    {
+      utf8=DestroyString(utf8);
+      (void) ThrowMagickException(exception,GetMagickModule(),OptionWarning,
+        "ParseError","root tag missing");
+      return((XMLTreeInfo *) NULL);
+    }
+  terminal=utf8[length-1];
+  utf8[length-1]='\0';
   p=utf8;
   while ((*p != '\0') && (*p != '<'))
     p++;
