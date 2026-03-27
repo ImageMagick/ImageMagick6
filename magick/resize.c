@@ -3182,8 +3182,12 @@ MagickExport Image *SampleImage(const Image *image,const size_t columns,
           continue;
         }
       *q++=(*p);
-      indexes=GetCacheViewAuthenticIndexQueue(image_view);
-      SetPixelIndex(sample_indexes+x,GetPixelIndex(indexes));
+      if ((image->storage_class == PseudoClass) ||
+          (image->colorspace == CMYKColorspace))
+        {
+          indexes=GetCacheViewVirtualIndexQueue(image_view);
+          SetPixelIndex(sample_indexes+x,GetPixelIndex(indexes));
+        }
     }
     if (SyncCacheViewAuthenticPixels(sample_view,exception) == MagickFalse)
       status=MagickFalse;
