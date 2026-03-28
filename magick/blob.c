@@ -261,7 +261,8 @@ MagickExport void AttachBlob(BlobInfo *blob_info,const void *blob,
 %
 %  A description of each parameter follows:
 %
-%    o filename: Write the blob to this file.
+%    o filename: Write the blob to this file. The filename buffer length must
+%      be a minimum of MagickPathExtent characters.
 %
 %    o blob: the address of a blob.
 %
