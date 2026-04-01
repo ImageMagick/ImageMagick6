@@ -543,7 +543,9 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         }
       step=(ssize_t) (first > last ? -1 : 1);
       for ( ; first != (last+step); first+=step)
-        object[first].merge=MagickFalse;
+        if ((first >= 0) &&
+           (first < (ssize_t) component_image->colors))
+         object[first].merge=MagickFalse;
     }
   artifact=GetImageArtifact(image,"connected-components:keep-top");
   if (artifact != (const char *) NULL)
@@ -570,7 +572,11 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
       qsort((void *) top_objects,component_image->colors,sizeof(*top_objects),
         CCObjectInfoCompare);
       for (i=top_ids+1; i < (ssize_t) component_image->colors; i++)
-        object[top_objects[i].id].merge=MagickTrue;
+      {
+        ssize_t id = (ssize_t) top_objects[i].id;
+        if ((id >= 0) && (id < (ssize_t) component_image->colors))
+          object[id].merge=MagickTrue;
+      }
       top_objects=(CCObjectInfo *) RelinquishMagickMemory(top_objects);
     }
   artifact=GetImageArtifact(image,"connected-components:remove-colors");
@@ -632,7 +638,9 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
         }
       step=(ssize_t) (first > last ? -1 : 1);
       for ( ; first != (last+step); first+=step)
-        object[first].merge=MagickTrue;
+        if ((first >= 0) &&
+           (first < (ssize_t) component_image->colors))
+         object[first].merge=MagickTrue;
     }
   /*
     Merge any object not within the min and max area threshold.
