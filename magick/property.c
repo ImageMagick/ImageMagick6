@@ -36,7 +36,7 @@
 %
 %
 */
-
+
 /*
   Include declarations.
 */
@@ -1899,27 +1899,38 @@ static MagickBooleanType GetXMPProperty(const Image *image,const char *property)
         while (node != (XMLTreeInfo *) NULL)
         {
           char
-            *xmp_namespace;
+            *property;
+
+          size_t
+            property_length;
 
           child=GetXMLTreeChild(node,(const char *) NULL);
           content=GetXMLTreeContent(node);
           if ((child == (XMLTreeInfo *) NULL) &&
               (SkipXMPValue(content) == MagickFalse))
             {
-              xmp_namespace=ConstantString(GetXMLTreeTag(node));
-              (void) SubstituteString(&xmp_namespace,"exif:","xmp:");
-              (void) AddValueToSplayTree((SplayTreeInfo *) image->properties,
-                xmp_namespace,ConstantString(content));
+              property=ConstantString(GetXMLTreeTag(node));
+              (void) SubstituteString(&property,"exif:","xmp:");
+              property_length=strlen(property);
+              if ((property_length <= 2) || (*(property+(property_length-2)) != ':') ||
+                  (*(property+(property_length-1)) != '*'))
+                (void) AddValueToSplayTree((SplayTreeInfo *) image->properties,
+                 ConstantString(property),ConstantString(content));
+              property=DestroyString(property);
             }
           while (child != (XMLTreeInfo *) NULL)
           {
             content=GetXMLTreeContent(child);
             if (SkipXMPValue(content) == MagickFalse)
               {
-                xmp_namespace=ConstantString(GetXMLTreeTag(node));
-                (void) SubstituteString(&xmp_namespace,"exif:","xmp:");
-                (void) AddValueToSplayTree((SplayTreeInfo *) image->properties,
-                  xmp_namespace,ConstantString(content));
+                property=ConstantString(GetXMLTreeTag(node));
+                (void) SubstituteString(&property,"exif:","xmp:");
+                property_length=strlen(property);
+                if ((property_length <= 2) || (*(property+(property_length-2)) != ':') ||
+                    (*(property+(property_length-1)) != '*'))
+                  (void) AddValueToSplayTree((SplayTreeInfo *) image->properties,
+                    ConstantString(property),ConstantString(content));
+                property=DestroyString(property);
               }
             child=GetXMLTreeSibling(child);
           }
