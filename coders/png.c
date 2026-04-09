@@ -14227,8 +14227,8 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
 
     if (status == MagickFalse)
       {
-        mng_info=MngInfoFreeStruct(mng_info);
         (void) CloseBlob(image);
+        mng_info=MngInfoFreeStruct(mng_info);
         return(MagickFalse);
       }
     (void) CatchImageException(image);
