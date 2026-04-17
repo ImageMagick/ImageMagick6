@@ -8440,7 +8440,7 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
     *volatile pixel_info;
 
   QuantumInfo
-    *quantum_info;
+    *volatile quantum_info;
 
   ssize_t
     i,
