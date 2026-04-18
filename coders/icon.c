@@ -452,7 +452,10 @@ static Image *ReadICONImage(const ImageInfo *image_info,
         read_info=DestroyImageInfo(read_info);
         png=(unsigned char *) RelinquishMagickMemory(png);
         if (icon_image == (Image *) NULL)
-          return(DestroyImageList(image));
+          {
+            directory=RelinquishIconDirectory(directory);
+            return(DestroyImageList(image));
+          }
         DestroyBlob(icon_image);
         icon_image->blob=ReferenceBlob(image->blob);
         ReplaceImageInList(&image,icon_image);
@@ -552,6 +555,7 @@ static Image *ReadICONImage(const ImageInfo *image_info,
         if (status == MagickFalse)
           {
             InheritException(exception,&image->exception);
+            directory=RelinquishIconDirectory(directory);
             return(DestroyImageList(image));
           }
         bytes_per_line=(((image->columns*bits_per_pixel)+31) &
