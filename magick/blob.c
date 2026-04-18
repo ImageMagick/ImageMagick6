@@ -1171,7 +1171,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
           return(NULL);
         }
 #if defined(O_NOFOLLOW)
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow");
       if (status == MagickFalse)
         flags|=O_NOFOLLOW;
 #endif
@@ -1404,7 +1404,7 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
         flags = O_RDONLY | O_BINARY;
 
 #if defined(O_NOFOLLOW)
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow");
       if (status == MagickFalse)
         flags|=O_NOFOLLOW;
 #endif
@@ -2738,7 +2738,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
     case ReadBlobMode:
     {
       flags=O_RDONLY;
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow");
       type="r";
       break;
     }
@@ -2746,22 +2746,22 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
     {
       flags=O_RDONLY | O_BINARY;
       type="rb";
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow");
       break;
     }
     case WriteBlobMode:
     {
       flags=O_WRONLY | O_CREAT | O_TRUNC;
       type="w";
-      status=IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"symlink::follow");
       break;
     }
     case WriteBinaryBlobMode:
     {
       flags=O_RDWR | O_CREAT | O_TRUNC | O_BINARY;
       type="w+b";
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow") &&
-        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow") ?
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow") &&
+        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"symlink::follow") ?
         MagickTrue : MagickFalse;
       break;
     }
@@ -2769,15 +2769,15 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
     {
       flags=O_WRONLY | O_CREAT | O_APPEND;
       type="a";
-      status=IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"symlink::follow");
       break;
     }
     case AppendBinaryBlobMode:
     {
       flags=O_RDWR | O_CREAT | O_APPEND | O_BINARY;
       type="a+b";
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow") &&
-        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"follow") ?
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow") &&
+        IsRightsAuthorized(SystemPolicyDomain,WritePolicyRights,"symlink::follow") ?
         MagickTrue : MagickFalse;
       break;
     }
@@ -2785,7 +2785,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
     {
       flags=O_RDONLY;
       type="r";
-      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"follow");
+      status=IsRightsAuthorized(SystemPolicyDomain,ReadPolicyRights,"symlink::follow");
       break;
     }
   }
