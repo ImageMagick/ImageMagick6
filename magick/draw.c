@@ -5792,6 +5792,8 @@ static MagickBooleanType DrawRoundLinecap(Image *image,
   ssize_t
     i;
 
+  if (primitive_info->coordinates < 4)
+    return(MagickFalse);
   for (i=0; i < 4; i++)
     linecap[i]=(*primitive_info);
   linecap[0].coordinates=4;
