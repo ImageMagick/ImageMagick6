@@ -13057,7 +13057,8 @@ static Image *XTileImage(Display *display,XResourceInfo *resource_info,
   if (id < 0)
     return((Image *) NULL);
   q=p;
-  while ((*q != '\xff') && (*q != '\0'))
+  while ((*q != '\xff') && (*q != '\0') &&
+         ((size_t) (q-p) < sizeof(filename)))
     q++;
   (void) CopyMagickString(filename,p,(size_t) (q-p+1));
   /*
@@ -13152,7 +13153,8 @@ static Image *XTileImage(Display *display,XResourceInfo *resource_info,
           *image_view;
 
         q=p;
-        while ((*q != '\xff') && (*q != '\0'))
+        while ((*q != '\xff') && (*q != '\0') &&
+               ((size_t) (q-p) < sizeof(filename)))
           q++;
         (void) CopyMagickString(filename,p,(size_t) (q-p+1));
         p=q;
