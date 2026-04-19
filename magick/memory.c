@@ -626,16 +626,21 @@ MagickExport void *AcquireMagickMemory(const size_t size)
 */
 MagickExport void *AcquireCriticalMemory(const size_t size)
 {
+  static const char fatal_message[] =
+    "ImageMagick: fatal error: unable to acquire critical memory\n";
+  
   void
     *memory;
-
+  
   /*
     Fail if memory request cannot be fulfilled.
   */
   memory=AcquireMagickMemory(size);
-  if (memory == (void *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
-  return(memory);
+  if (memory != (void *) NULL)
+    return(memory);
+  (void) write(STDERR_FILENO,fatal_message,sizeof(fatal_message)-1);
+  MagickCoreTerminus();
+  _exit(EXIT_FAILURE);
 }
 
 /*
