@@ -660,6 +660,152 @@ static MagickBooleanType GetFUZZSimilarity(const Image *image,
   return(status);
 }
 
+static MagickBooleanType GetPDCSimilarity(const Image *image,
+  const Image *reconstruct_image,const ChannelType channel,double *similarity,
+  ExceptionInfo *exception)
+{
+  CacheView
+    *image_view,
+    *reconstruct_view;
+
+  double
+    area,
+    fuzz;
+
+  MagickBooleanType
+    status = MagickTrue;
+
+  size_t
+    columns,
+    rows;
+
+  ssize_t
+    j,
+    y;
+
+  /*
+    Compute the absolute difference in pixels between two images.
+  */
+  fuzz=GetFuzzyColorDistance(image,reconstruct_image);
+  SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
+  image_view=AcquireVirtualCacheView(image,exception);
+  reconstruct_view=AcquireVirtualCacheView(reconstruct_image,exception);
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+  #pragma omp parallel for schedule(static) shared(similarity,status) \
+    magick_number_threads(image,image,rows,1)
+#endif
+  for (y=0; y < (ssize_t) rows; y++)
+  {
+    const IndexPacket
+      *magick_restrict indexes,
+      *magick_restrict reconstruct_indexes;
+
+    const PixelPacket
+      *magick_restrict p,
+      *magick_restrict q;
+
+    double
+      channel_similarity[CompositeChannels+1] = { 0.0 };
+
+    ssize_t
+      i,
+      x;
+
+    if (status == MagickFalse)
+      continue;
+    p=GetCacheViewVirtualPixels(image_view,0,y,columns,1,exception);
+    q=GetCacheViewVirtualPixels(reconstruct_view,0,y,columns,1,exception);
+    if ((p == (const PixelPacket *) NULL) || (q == (const PixelPacket *) NULL))
+      {
+        status=MagickFalse;
+        continue;
+      }
+    indexes=GetCacheViewVirtualIndexQueue(image_view);
+    reconstruct_indexes=GetCacheViewVirtualIndexQueue(reconstruct_view);
+    (void) memset(channel_similarity,0,sizeof(channel_similarity));
+    for (x=0; x < (ssize_t) columns; x++)
+    {
+      double
+        Da,
+        error,
+        Sa;
+
+      size_t
+        count = 0;
+
+      Sa=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(p) :
+        ((double) QuantumRange-(double) OpaqueOpacity));
+      Da=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(q) :
+        ((double) QuantumRange-(double) OpaqueOpacity));
+      if ((channel & RedChannel) != 0)
+        {
+          error=Sa*(double) GetPixelRed(p)-Da*(double)
+            GetPixelRed(q);
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
+            {
+              channel_similarity[RedChannel]++;
+              count++;
+            }
+        }
+      if ((channel & GreenChannel) != 0)
+        {
+          error=Sa*(double) GetPixelGreen(p)-Da*(double)
+            GetPixelGreen(q);
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
+            {
+              channel_similarity[GreenChannel]++;
+              count++;
+            }
+        }
+      if ((channel & BlueChannel) != 0)
+        {
+          error=Sa*(double) GetPixelBlue(p)-Da*(double)
+            GetPixelBlue(q);
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
+            {
+              channel_similarity[BlueChannel]++;
+              count++;
+            }
+        }
+      if (((channel & OpacityChannel) != 0) &&
+          (image->matte != MagickFalse))
+        {
+          error=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
+            {
+              channel_similarity[OpacityChannel]++;
+              count++;
+            }
+        }
+      if (((channel & IndexChannel) != 0) &&
+          (image->colorspace == CMYKColorspace))
+        {
+          error=Sa*(double) indexes[x]-Da*(double) reconstruct_indexes[x];
+          if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
+            {
+              channel_similarity[IndexChannel]++;
+              count++;
+            }
+        }
+      if (count != 0)
+        channel_similarity[CompositeChannels]++;
+      p++;
+      q++;
+    }
+#if defined(MAGICKCORE_OPENMP_SUPPORT)
+    #pragma omp critical (MagickCore_GetAESimilarity)
+#endif
+    for (i=0; i <= (ssize_t) CompositeChannels; i++)
+      similarity[i]+=channel_similarity[i];
+  }
+  reconstruct_view=DestroyCacheView(reconstruct_view);
+  image_view=DestroyCacheView(image_view);
+  area=MagickSafeReciprocal((double) columns*rows);
+  for (j=0; j <= CompositeChannels; j++)
+    similarity[j]*=area;
+  return(status);
+}
+
 static MagickBooleanType GetMAESimilarity(const Image *image,
   const Image *reconstruct_image,const ChannelType channel,
   double *similarity,ExceptionInfo *exception)
@@ -1704,6 +1850,12 @@ MagickExport MagickBooleanType GetImageChannelDistortion(Image *image,
         channel_similarity,exception);
       break;
     }
+    case PixelDifferenceCountErrorMetric:
+    {
+      status=GetPDCSimilarity(image,reconstruct_image,channel,
+        channel_similarity,exception);
+      break;
+    }
     case RootMeanSquaredErrorMetric:
     case UndefinedErrorMetric:
     default:
@@ -1856,6 +2008,12 @@ MagickExport double *GetImageChannelDistortions(Image *image,
     case PerceptualHashErrorMetric:
     {
       status=GetPHASHSimilarity(image,reconstruct_image,CompositeChannels,
+        similarity,exception);
+      break;
+    }
+    case PixelDifferenceCountErrorMetric:
+    {
+      status=GetPDCSimilarity(image,reconstruct_image,CompositeChannels,
         similarity,exception);
       break;
     }
@@ -2181,6 +2339,12 @@ static double GetSimilarityMetric(const Image *image,
     case PerceptualHashErrorMetric:
     {
       status=GetPHASHSimilarity(similarity_image,reconstruct_image,
+        CompositeChannels,channel_similarity,exception);
+      break;
+    }
+    case PixelDifferenceCountErrorMetric:
+    {
+      status=GetPDCSimilarity(similarity_image,reconstruct_image,
         CompositeChannels,channel_similarity,exception);
       break;
     }

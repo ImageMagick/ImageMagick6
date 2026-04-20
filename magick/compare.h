@@ -36,8 +36,9 @@ typedef enum
   RootMeanSquaredErrorMetric,
   NormalizedCrossCorrelationErrorMetric,
   FuzzErrorMetric,
+  PixelDifferenceCountErrorMetric,
   UndefinedErrorMetric = 0,
-  PerceptualHashErrorMetric = 0xff
+  PerceptualHashErrorMetric = 0xff,
 } MetricType;
 
 extern MagickExport double
