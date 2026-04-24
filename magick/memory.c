@@ -630,6 +630,9 @@ MagickExport void *AcquireCriticalMemory(const size_t size)
 #define STDERR_FILENO 2
 #endif
 
+  int
+    status;
+
   static const char fatal_message[] =
     "ImageMagick: fatal error: unable to acquire critical memory\n";
   
@@ -642,7 +645,8 @@ MagickExport void *AcquireCriticalMemory(const size_t size)
   memory=AcquireMagickMemory(size);
   if (memory != (void *) NULL)
     return(memory);
-  (void) write(STDERR_FILENO,fatal_message,sizeof(fatal_message)-1);
+  status=write(STDERR_FILENO,fatal_message,sizeof(fatal_message)-1);
+  (void) status;
   MagickCoreTerminus();
   _exit(EXIT_FAILURE);
 }
