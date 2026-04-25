@@ -338,6 +338,7 @@ static MagickBooleanType DecodeImage(Image *image,unsigned char *luma,
     PCDGetBits(r->length);
     count--;
   }
+  (void) count;
   /*
     Relinquish resources.
   */
