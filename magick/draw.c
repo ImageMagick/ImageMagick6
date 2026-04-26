@@ -2248,72 +2248,58 @@ MagickExport MagickBooleanType DrawGradientImage(Image *image,
 %
 */
 
-static MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
+static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   const double pad)
 {
-  char
-    **text = (char **) NULL;
-
-  double
-    extent;
+  PrimitiveInfo
+    *primitive_info;
 
   size_t
-    quantum;
+    extent;
 
   ssize_t
     i;
 
   /*
-    Check if there is enough storage for drawing primitives.
+    Pad is double, but extent must be element count.
   */
-  quantum=sizeof(**mvg_info->primitive_info);
-  extent=(double) mvg_info->offset+pad+(PrimitiveExtentPad+1)*quantum;
-  if (extent <= (double) *mvg_info->extent)
+  extent=(size_t) (mvg_info->offset+pad+PrimitiveExtentPad+1);
+  if (extent <= *mvg_info->extent)
     return(MagickTrue);
-  if ((((extent+1)*(double) quantum) >= (double) GetMaxMemoryRequest()) ||
-      (IsNaN(extent) != 0))
+  if (extent >= GetMaxMemoryRequest())
     return(MagickFalse);
-  if (mvg_info->offset > 0)
+  /*
+    Attempt to grow the primitive_info array.
+  */
+  primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
+    *mvg_info->primitive_info,extent,sizeof(PrimitiveInfo));
+  if (primitive_info == (PrimitiveInfo *) NULL)
     {
-      text=(char **) AcquireQuantumMemory(mvg_info->offset,sizeof(*text));
-      if (text == (char **) NULL)
-        return(MagickFalse);
-      for (i=0; i < mvg_info->offset; i++)
-        text[i]=(*mvg_info->primitive_info)[i].text;
-    }
-  *mvg_info->primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
-    *mvg_info->primitive_info,(size_t) (extent+1),quantum);
-  if (*mvg_info->primitive_info != (PrimitiveInfo *) NULL)
-    {
-      if (text != (char **) NULL)
-        text=(char **) RelinquishMagickMemory(text);
-      *mvg_info->extent=(size_t) extent;
-      for (i=mvg_info->offset+1; i <= (ssize_t) extent; i++)
-      {
-        (*mvg_info->primitive_info)[i].primitive=UndefinedPrimitive;
-        (*mvg_info->primitive_info)[i].text=(char *) NULL;
-      }
-      return(MagickTrue);
+      /*
+        Allocation failed: reset to minimal safe state
+      */
+      ThrowMagickException(mvg_info->exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'","");
+      primitive_info=(PrimitiveInfo *) AcquireCriticalMemory(
+        (PrimitiveExtentPad+1)*sizeof(PrimitiveInfo));
+      (void) memset(primitive_info,0,(PrimitiveExtentPad+1)*
+        sizeof(PrimitiveInfo));
+      *mvg_info->primitive_info=primitive_info;
+      *mvg_info->extent=PrimitiveExtentPad+1;
+      mvg_info->offset=0;
+      return(MagickFalse);
     }
   /*
-    Reallocation failed, allocate a primitive to facilitate unwinding.
+    Initialize newly allocated elements.
   */
-  if (text != (char **) NULL)
-    {
-      for (i=0; i < mvg_info->offset; i++)
-        if (text[i] != (char *) NULL)
-          text[i]=DestroyString(text[i]);
-      text=(char **) RelinquishMagickMemory(text);
-    }
-  (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
-    ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-  *mvg_info->primitive_info=(PrimitiveInfo *)  AcquireCriticalMemory((size_t)
-    (PrimitiveExtentPad+1)*quantum);
-  (void) memset(*mvg_info->primitive_info,0,(size_t) ((PrimitiveExtentPad+1)*
-    quantum));
-  *mvg_info->extent=1;
-  mvg_info->offset=0;
-  return(MagickFalse);
+  for (i=(ssize_t) *mvg_info->extent; i < (ssize_t) extent; i++)
+  {
+    primitive_info[i].primitive=UndefinedPrimitive;
+    primitive_info[i].text=(char *) NULL;
+  }
+  *mvg_info->primitive_info=primitive_info;
+  *mvg_info->extent=extent;
+  return(MagickTrue);
 }
 
 static inline double GetDrawValue(const char *magick_restrict string,
