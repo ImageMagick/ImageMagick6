@@ -95,7 +95,7 @@
 */
 #define AntialiasThreshold  (1.0/3.0)
 #define BezierQuantum  200
-#define PrimitiveExtentPad  4296.0
+#define PrimitiveExtentPad  4296
 #define MaxBezierCoordinates  67108864
 #define ThrowPointExpectedException(image,token) \
 { \
