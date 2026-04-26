@@ -291,6 +291,8 @@ MagickExport Image *CombineImages(const Image *image,const ChannelType channel,
     (void) TransformImageColorspace(combine_image,sRGBColorspace);
   if (status == MagickFalse)
     combine_image=DestroyImage(combine_image);
+  else
+    combine_image->type=UndefinedType;
   return(combine_image);
 }
 
