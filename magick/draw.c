@@ -2280,12 +2280,12 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
       */
       ThrowMagickException(mvg_info->exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'","");
-      primitive_info=(PrimitiveInfo *) AcquireCriticalMemory(
+      primitive_info=(PrimitiveInfo *) AcquireCriticalMemory((size_t)
         (PrimitiveExtentPad+1)*sizeof(PrimitiveInfo));
-      (void) memset(primitive_info,0,(PrimitiveExtentPad+1)*
+      (void) memset(primitive_info,0,(size_t) (PrimitiveExtentPad+1)*
         sizeof(PrimitiveInfo));
       *mvg_info->primitive_info=primitive_info;
-      *mvg_info->extent=PrimitiveExtentPad+1;
+      *mvg_info->extent=(size_t) (PrimitiveExtentPad+1);
       mvg_info->offset=0;
       return(MagickFalse);
     }
