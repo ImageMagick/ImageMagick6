@@ -334,7 +334,7 @@ jobs:
           name: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
           path: ImageMagick-${{needs.version.outputs.version}}-portable-${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}}.7z
 
-source:
+  source:
     name: Create source archive
     runs-on: ubuntu-24.04
     needs:
