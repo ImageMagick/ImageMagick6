@@ -412,6 +412,8 @@ jobs:
 
     permissions:
       contents: write
+      id-token: write
+      attestations: write
 
     steps:
       - name: Clone ImageMagick
@@ -425,6 +427,21 @@ jobs:
           path: artifacts
           merge-multiple: true
 
+      - name: Generate SLSA provenance
+        id: attest
+        uses: actions/attest@59d89421af93a897026c735860bf21b6eb4f7b26 #v4.1.0
+        with:
+          subject-path: |
+            ${{github.workspace}}/artifacts/*.7z
+            ${{github.workspace}}/artifacts/*.exe
+
+      - name: Save provenance as an artifact
+        env:
+          BUNDLE_PATH: ${{steps.attest.outputs.bundle-path}}
+          VERSION: ${{needs.version.outputs.version}}
+        run: |
+          cp "$BUNDLE_PATH" "${{github.workspace}}/artifacts/ImageMagick-$VERSION.intoto.jsonl"
+
       - name: Publish release
         env:
           GH_TOKEN: ${{github.token}}
@@ -432,4 +449,5 @@ jobs:
         run: |
           gh release create $VERSION --title "$VERSION" \
             ${{github.workspace}}/artifacts/*.7z \
-            ${{github.workspace}}/artifacts/*.exe
+            ${{github.workspace}}/artifacts/*.exe \
+            ${{github.workspace}}/artifacts/*.intoto.jsonl
