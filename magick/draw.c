@@ -3421,7 +3421,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 }
                 if ((q == (char *) NULL) || (*q == '\0') || 
                     (p == (char *) NULL) || ((q-4) < p) ||
-                    ((q-p+4+1) > MagickPathExtent))
+                    ((q-p+4+1) > extent))
                   {
                     status=MagickFalse;
                     break;
@@ -3476,9 +3476,9 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 if (n > MagickMaxRecursionDepth)
                   {
                     (void) ThrowMagickException(&image->exception,
-                      GetMagickModule(),DrawError,"VectorGraphicsNestedTooDeeply",
-                      "`%s'",image->filename);
-                      status=MagickFalse;
+                      GetMagickModule(),DrawError,
+                      "VectorGraphicsNestedTooDeeply","`%s'",image->filename);
+                    status=MagickFalse;
                   }
                 break;
               }
