@@ -4002,6 +4002,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     i=0;
     mvg_info.offset=i;
     j=0;
+    primitive_info[0].primitive=primitive_type;
     primitive_info[0].point.x=0.0;
     primitive_info[0].point.y=0.0;
     primitive_info[0].coordinates=0;
