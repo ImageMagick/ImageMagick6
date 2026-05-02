@@ -252,7 +252,7 @@ static Image *ReadSFWImage(const ImageInfo *image_info,ExceptionInfo *exception)
     Read image into a buffer.
   */
   extent=(size_t) GetBlobSize(image)+MagickPathExtent;
-  if (GetBlobSize(image) != extent)
+  if (extent < GetBlobSize(image))
     ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   if (GetBlobSize(image) < 141)
     ThrowReaderException(CorruptImageError,"ImproperImageHeader");
