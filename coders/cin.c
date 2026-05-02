@@ -726,6 +726,8 @@ static Image *ReadCINImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (void) CloseBlob(image);
       return(image);
     }
+  if (HeapOverflowSanityCheck(image->columns,3*image->depth) != MagickFalse)
+    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   if (((MagickSizeType) image->columns*image->rows/8) > GetBlobSize(image))
     ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   for ( ; offset < (MagickOffsetType) cin.file.image_offset; offset++)
