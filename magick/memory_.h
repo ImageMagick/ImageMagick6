@@ -20,6 +20,17 @@
 
 #include <errno.h>
 
+#define MAGICK_INT_MAX  (INT_MAX)
+#define MAGICK_PTRDIFF_MAX  (PTRDIFF_MAX)
+#define MAGICK_PTRDIFF_MIN  (-PTRDIFF_MAX-1)
+#define MAGICK_SIZE_MAX  (SIZE_MAX)
+#define MAGICK_SSIZE_MAX  (SSIZE_MAX)
+#define MAGICK_SSIZE_MIN  (-SSIZE_MAX-1)
+#define MAGICK_UCHAR_MAX  (UCHAR_MAX)
+#define MAGICK_UINT_MAX  (UINT_MAX)
+#define MAGICK_ULONG_MAX  (ULONG_MAX)
+#define MAGICK_USHORT_MAX  (USHRT_MAX)
+
 #if defined(__cplusplus) || defined(c_plusplus)
 extern "C" {
 #endif
@@ -72,7 +83,7 @@ static inline MagickBooleanType HeapOverflowSanityCheck(
 {
   if ((count == 0) || (quantum == 0))
     return(MagickTrue);
-  if (quantum != ((count*quantum)/count))
+  if (count > (MAGICK_SIZE_MAX/quantum))
     {
       errno=ENOMEM;
       return(MagickTrue);
@@ -83,19 +94,15 @@ static inline MagickBooleanType HeapOverflowSanityCheck(
 static inline MagickBooleanType HeapOverflowSanityCheckGetSize(
   const size_t count,const size_t quantum,size_t *const extent)
 {
-  size_t
-    length;
-
   if ((count == 0) || (quantum == 0))
     return(MagickTrue);
-  length=count*quantum;
-  if (quantum != (length/count))
+  if (count > (SIZE_MAX/quantum))
     {
       errno=ENOMEM;
       return(MagickTrue);
     }
   if (extent != (size_t *) NULL)
-    *extent=length;
+    *extent=count*quantum;
   return(MagickFalse);
 }
 
