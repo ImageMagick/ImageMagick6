@@ -390,7 +390,7 @@ coders_bgr_la_LIBADD       = $(MAGICKCORE_LIBS)
 coders_bmp_la_SOURCES      = coders/bmp.c
 coders_bmp_la_CPPFLAGS     = $(MAGICK_CODER_CPPFLAGS)
 coders_bmp_la_LDFLAGS      = $(MODULECOMMONFLAGS)
-coders_bmp_la_LIBADD       = $(MAGICKCORE_LIBS)
+coders_bmp_la_LIBADD       = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # BRAILLE coder module
 coders_braille_la_SOURCES  = coders/braille.c
@@ -468,7 +468,7 @@ coders_debug_la_LIBADD     = $(MAGICKCORE_LIBS)
 coders_dib_la_SOURCES      = coders/dib.c
 coders_dib_la_CPPFLAGS     = $(MAGICK_CODER_CPPFLAGS)
 coders_dib_la_LDFLAGS      = $(MODULECOMMONFLAGS)
-coders_dib_la_LIBADD       = $(MAGICKCORE_LIBS)
+coders_dib_la_LIBADD       = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # DJVU coder module
 coders_djvu_la_SOURCES     = coders/djvu.c
@@ -1041,13 +1041,13 @@ coders_video_la_LIBADD      = $(MAGICKCORE_LIBS)
 coders_viff_la_SOURCES     = coders/viff.c
 coders_viff_la_CPPFLAGS    = $(MAGICK_CODER_CPPFLAGS)
 coders_viff_la_LDFLAGS     = $(MODULECOMMONFLAGS)
-coders_viff_la_LIBADD      = $(MAGICKCORE_LIBS)
+coders_viff_la_LIBADD      = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # VIPS coder module
 coders_vips_la_SOURCES     = coders/vips.c
 coders_vips_la_CPPFLAGS    = $(MAGICK_CODER_CPPFLAGS)
 coders_vips_la_LDFLAGS     = $(MODULECOMMONFLAGS)
-coders_vips_la_LIBADD      = $(MAGICKCORE_LIBS)
+coders_vips_la_LIBADD      = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # WBMP coder module
 coders_wbmp_la_SOURCES     = coders/wbmp.c

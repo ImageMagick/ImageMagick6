@@ -449,7 +449,8 @@ coders_bgr_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(coders_bgr_la_LDFLAGS) $(LDFLAGS) -o $@
 @WITH_MODULES_TRUE@am_coders_bgr_la_rpath = -rpath $(codersdir)
-coders_bmp_la_DEPENDENCIES = $(MAGICKCORE_LIBS)
+am__DEPENDENCIES_1 =
+coders_bmp_la_DEPENDENCIES = $(MAGICKCORE_LIBS) $(am__DEPENDENCIES_1)
 am_coders_bmp_la_OBJECTS = coders/bmp_la-bmp.lo
 coders_bmp_la_OBJECTS = $(am_coders_bmp_la_OBJECTS)
 coders_bmp_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -464,7 +465,6 @@ coders_braille_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_CFLAGS) $(CFLAGS) $(coders_braille_la_LDFLAGS) $(LDFLAGS) \
 	-o $@
 @WITH_MODULES_TRUE@am_coders_braille_la_rpath = -rpath $(codersdir)
-am__DEPENDENCIES_1 =
 coders_cals_la_DEPENDENCIES = $(MAGICKCORE_LIBS) $(am__DEPENDENCIES_1)
 am_coders_cals_la_OBJECTS = coders/cals_la-cals.lo
 coders_cals_la_OBJECTS = $(am_coders_cals_la_OBJECTS)
@@ -551,7 +551,7 @@ coders_debug_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_CFLAGS) $(CFLAGS) $(coders_debug_la_LDFLAGS) $(LDFLAGS) \
 	-o $@
 @WITH_MODULES_TRUE@am_coders_debug_la_rpath = -rpath $(codersdir)
-coders_dib_la_DEPENDENCIES = $(MAGICKCORE_LIBS)
+coders_dib_la_DEPENDENCIES = $(MAGICKCORE_LIBS) $(am__DEPENDENCIES_1)
 am_coders_dib_la_OBJECTS = coders/dib_la-dib.lo
 coders_dib_la_OBJECTS = $(am_coders_dib_la_OBJECTS)
 coders_dib_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -1309,7 +1309,7 @@ coders_video_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_CFLAGS) $(CFLAGS) $(coders_video_la_LDFLAGS) $(LDFLAGS) \
 	-o $@
 @WITH_MODULES_TRUE@am_coders_video_la_rpath = -rpath $(codersdir)
-coders_viff_la_DEPENDENCIES = $(MAGICKCORE_LIBS)
+coders_viff_la_DEPENDENCIES = $(MAGICKCORE_LIBS) $(am__DEPENDENCIES_1)
 am_coders_viff_la_OBJECTS = coders/viff_la-viff.lo
 coders_viff_la_OBJECTS = $(am_coders_viff_la_OBJECTS)
 coders_viff_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -1317,7 +1317,7 @@ coders_viff_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_CFLAGS) $(CFLAGS) $(coders_viff_la_LDFLAGS) $(LDFLAGS) -o \
 	$@
 @WITH_MODULES_TRUE@am_coders_viff_la_rpath = -rpath $(codersdir)
-coders_vips_la_DEPENDENCIES = $(MAGICKCORE_LIBS)
+coders_vips_la_DEPENDENCIES = $(MAGICKCORE_LIBS) $(am__DEPENDENCIES_1)
 am_coders_vips_la_OBJECTS = coders/vips_la-vips.lo
 coders_vips_la_OBJECTS = $(am_coders_vips_la_OBJECTS)
 coders_vips_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
@@ -3915,7 +3915,7 @@ coders_bgr_la_LIBADD = $(MAGICKCORE_LIBS)
 coders_bmp_la_SOURCES = coders/bmp.c
 coders_bmp_la_CPPFLAGS = $(MAGICK_CODER_CPPFLAGS)
 coders_bmp_la_LDFLAGS = $(MODULECOMMONFLAGS)
-coders_bmp_la_LIBADD = $(MAGICKCORE_LIBS)
+coders_bmp_la_LIBADD = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # BRAILLE coder module
 coders_braille_la_SOURCES = coders/braille.c
@@ -3993,7 +3993,7 @@ coders_debug_la_LIBADD = $(MAGICKCORE_LIBS)
 coders_dib_la_SOURCES = coders/dib.c
 coders_dib_la_CPPFLAGS = $(MAGICK_CODER_CPPFLAGS)
 coders_dib_la_LDFLAGS = $(MODULECOMMONFLAGS)
-coders_dib_la_LIBADD = $(MAGICKCORE_LIBS)
+coders_dib_la_LIBADD = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # DJVU coder module
 coders_djvu_la_SOURCES = coders/djvu.c
@@ -4564,13 +4564,13 @@ coders_video_la_LIBADD = $(MAGICKCORE_LIBS)
 coders_viff_la_SOURCES = coders/viff.c
 coders_viff_la_CPPFLAGS = $(MAGICK_CODER_CPPFLAGS)
 coders_viff_la_LDFLAGS = $(MODULECOMMONFLAGS)
-coders_viff_la_LIBADD = $(MAGICKCORE_LIBS)
+coders_viff_la_LIBADD = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # VIPS coder module
 coders_vips_la_SOURCES = coders/vips.c
 coders_vips_la_CPPFLAGS = $(MAGICK_CODER_CPPFLAGS)
 coders_vips_la_LDFLAGS = $(MODULECOMMONFLAGS)
-coders_vips_la_LIBADD = $(MAGICKCORE_LIBS)
+coders_vips_la_LIBADD = $(MAGICKCORE_LIBS) $(MATH_LIBS)
 
 # WBMP coder module
 coders_wbmp_la_SOURCES = coders/wbmp.c
