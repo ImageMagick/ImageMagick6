@@ -2252,6 +2252,7 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   const double pad)
 {
   PrimitiveInfo
+    *clone_info,
     *primitive_info;
 
   size_t
@@ -2271,15 +2272,18 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   /*
     Attempt to grow the primitive_info array.
   */
-  primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
+  primitive_info=(*mvg_info->primitive_info);
+  clone_info=(PrimitiveInfo *) ResizeQuantumMemory(
     *mvg_info->primitive_info,extent,sizeof(PrimitiveInfo));
-  if (primitive_info == (PrimitiveInfo *) NULL)
+  if (clone_info != (PrimitiveInfo *) NULL)
     {
       /*
-        Allocation failed: reset to minimal safe state
+        Allocation failed: reset to minimal safe state.
       */
-      ThrowMagickException(mvg_info->exception,GetMagickModule(),
-        ResourceLimitError,"MemoryAllocationFailed","`%s'","");
+      for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++)
+        if (primitive_info[i].text != (char *) NULL)
+          primitive_info[i].text=DestroyString(primitive_info[i].text);
+      primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
       primitive_info=(PrimitiveInfo *) AcquireCriticalMemory((size_t)
         (PrimitiveExtentPad+1)*sizeof(PrimitiveInfo));
       (void) memset(primitive_info,0,(size_t) (PrimitiveExtentPad+1)*
@@ -2287,6 +2291,8 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
       *mvg_info->primitive_info=primitive_info;
       *mvg_info->extent=(size_t) (PrimitiveExtentPad+1);
       mvg_info->offset=0;
+      ThrowMagickException(mvg_info->exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'","");
       return(MagickFalse);
     }
   /*
