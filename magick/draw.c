@@ -95,7 +95,7 @@
 */
 #define AntialiasThreshold  (1.0/3.0)
 #define BezierQuantum  200
-#define PrimitiveExtentPad  4296
+#define PrimitiveExtentPad  4296.0
 #define MaxBezierCoordinates  67108864
 #define ThrowPointExpectedException(image,token) \
 { \
@@ -2252,51 +2252,41 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
   const double pad)
 {
   PrimitiveInfo
-    *clone_info,
     *primitive_info;
 
   size_t
-    extent;
+    extent,
+    proposed_extent;
 
   ssize_t
     i;
 
-  /*
-    Pad is double, but extent must be element count.
-  */
-  extent=(size_t) (mvg_info->offset+pad+PrimitiveExtentPad+1);
+  if ((mvg_info == (MVGInfo *) NULL) ||
+      (mvg_info->primitive_info == (PrimitiveInfo **) NULL) ||
+      (*mvg_info->primitive_info == (PrimitiveInfo *) NULL) ||
+      (mvg_info->extent == (size_t *) NULL))
+    return(MagickFalse);
+  proposed_extent=(double) mvg_info->offset+pad+PrimitiveExtentPad+1.0;
+  if ((proposed_extent <= 0.0) || (proposed_extent > (double) SIZE_MAX))
+    return(MagickFalse);
+  extent=(size_t) ceil(proposed_extent);
   if (extent <= *mvg_info->extent)
     return(MagickTrue);
-  if (extent >= GetMaxMemoryRequest())
+  if (extent > (GetMaxMemoryRequest()/sizeof(PrimitiveInfo)))
     return(MagickFalse);
-  /*
-    Attempt to grow the primitive_info array.
-  */
-  primitive_info=(*mvg_info->primitive_info);
-  clone_info=(PrimitiveInfo *) ResizeQuantumMemory(
+  primitive_info=(PrimitiveInfo *) ResizeQuantumMemory(
     *mvg_info->primitive_info,extent,sizeof(PrimitiveInfo));
-  if (clone_info != (PrimitiveInfo *) NULL)
+  if (primitive_info == (PrimitiveInfo *) NULL)
     {
       /*
-        Allocation failed: reset to minimal safe state.
+        Leave old buffer intact; report failure.
       */
-      for (i=0; primitive_info[i].primitive != UndefinedPrimitive; i++)
-        if (primitive_info[i].text != (char *) NULL)
-          primitive_info[i].text=DestroyString(primitive_info[i].text);
-      primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
-      primitive_info=(PrimitiveInfo *) AcquireCriticalMemory((size_t)
-        (PrimitiveExtentPad+1)*sizeof(PrimitiveInfo));
-      (void) memset(primitive_info,0,(size_t) (PrimitiveExtentPad+1)*
-        sizeof(PrimitiveInfo));
-      *mvg_info->primitive_info=primitive_info;
-      *mvg_info->extent=(size_t) (PrimitiveExtentPad+1);
-      mvg_info->offset=0;
-      ThrowMagickException(mvg_info->exception,GetMagickModule(),
+      ThrowMagickException(mvg_info->exception, GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'","");
       return(MagickFalse);
     }
   /*
-    Initialize newly allocated elements.
+    Commit updated buffer.
   */
   for (i=(ssize_t) *mvg_info->extent; i < (ssize_t) extent; i++)
   {
