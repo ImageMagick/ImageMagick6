@@ -2266,10 +2266,11 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
       (*mvg_info->primitive_info == (PrimitiveInfo *) NULL) ||
       (mvg_info->extent == (size_t *) NULL))
     return(MagickFalse);
-  proposed_extent=(double) mvg_info->offset+pad+PrimitiveExtentPad+1.0;
+  proposed_extent=CastDoubleToSizeT(mvg_info->offset+pad+PrimitiveExtentPad+
+    1.0);
   if ((proposed_extent <= 0.0) || (proposed_extent > (double) SIZE_MAX))
     return(MagickFalse);
-  extent=(size_t) ceil(proposed_extent);
+  extent=CastDoubleToSizeT(ceil(proposed_extent));
   if (extent <= *mvg_info->extent)
     return(MagickTrue);
   if (extent > (GetMaxMemoryRequest()/sizeof(PrimitiveInfo)))
