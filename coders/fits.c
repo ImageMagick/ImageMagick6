@@ -62,6 +62,7 @@
 #include "magick/pixel-accessor.h"
 #include "magick/pixel-private.h"
 #include "magick/property.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/statistic.h"
 #include "magick/string_.h"
@@ -419,6 +420,9 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
       if ((fits_info.simple != MagickFalse) && (fits_info.number_axes >= 1) &&
           (fits_info.number_axes <= 4) && (number_pixels != 0))
         break;
+      if (AcquireMagickResource(ListLengthResource,fits_info.number_planes) == MagickFalse)
+        ThrowFileException(exception,ResourceLimitError,"ListLengthExceedsLimit",
+          image->filename);
     }
     /*
       Verify that required image information is defined.
