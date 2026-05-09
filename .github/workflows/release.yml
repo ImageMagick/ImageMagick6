@@ -451,3 +451,33 @@ jobs:
             ${{github.workspace}}/artifacts/*.7z \
             ${{github.workspace}}/artifacts/*.exe \
             ${{github.workspace}}/artifacts/*.intoto.jsonl
+
+  update_website:
+    name: Update website
+    runs-on: ubuntu-24.04
+    needs:
+      - version
+      - release
+
+    steps:
+      - name: Clone Website6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
+        with:
+          repository: ImageMagick/Website6
+          token: ${{secrets.WEBSITE_UPDATE_TOKEN}}
+
+      - name: Update website version
+        env:
+          VERSION: ${{needs.version.outputs.version}}
+        run: |
+          ./update-version.h "$VERSION" "$(date -u +"%Y-%m-%d")"
+
+      - name: Commit and push changes
+        env:
+          VERSION: ${{needs.version.outputs.version}}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Update version to $VERSION"
+          git push
