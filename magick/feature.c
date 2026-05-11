@@ -801,11 +801,7 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       (sum == (ChannelStatistics *) NULL))
     {
       if (Q != (ChannelStatistics **) NULL)
-        {
-          for (i=0; i < (ssize_t) number_grays; i++)
-            Q[i]=(ChannelStatistics *) RelinquishMagickMemory(Q[i]);
-          Q=(ChannelStatistics **) RelinquishMagickMemory(Q);
-        }
+        Q=(ChannelStatistics **) RelinquishMagickMemory(Q);
       if (sum != (ChannelStatistics *) NULL)
         sum=(ChannelStatistics *) RelinquishMagickMemory(sum);
       if (density_y != (ChannelStatistics *) NULL)
@@ -815,13 +811,8 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
       if (density_x != (ChannelStatistics *) NULL)
         density_x=(ChannelStatistics *) RelinquishMagickMemory(density_x);
       if (cooccurrence != (ChannelStatistics **) NULL)
-        {
-          for (i=0; i < (ssize_t) number_grays; i++)
-            cooccurrence[i]=(ChannelStatistics *)
-              RelinquishMagickMemory(cooccurrence[i]);
-          cooccurrence=(ChannelStatistics **) RelinquishMagickMemory(
-            cooccurrence);
-        }
+        cooccurrence=(ChannelStatistics **) RelinquishMagickMemory(
+          cooccurrence);
       grays=(LongPixelPacket *) RelinquishMagickMemory(grays);
       channel_features=(ChannelFeatures *) RelinquishMagickMemory(
         channel_features);
