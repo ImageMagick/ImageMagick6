@@ -210,6 +210,8 @@ static Image *ReadVIDEOImage(const ImageInfo *image_info,
   images=(Image *) NULL;
   read_info=CloneImageInfo(image_info);
   delegate_info=GetDelegateInfo("video:decode",(char *) NULL,exception);
+  if (delegate_info == (const DelegateInfo *) NULL)
+    delegate_info=GetDelegateInfo("mpeg:decode",(char *) NULL,exception);
   if (delegate_info != (const DelegateInfo *) NULL)
     {
       char
@@ -714,6 +716,8 @@ static MagickBooleanType WriteVIDEOImage(const ImageInfo *image_info,
     Convert PAM to VIDEO.
   */
   delegate_info=GetDelegateInfo((char *) NULL,"video:encode",&image->exception);
+  if (delegate_info == (const DelegateInfo *) NULL)
+    delegate_info=GetDelegateInfo("mpeg:encode",(char *) NULL,&image->exception);
   if (delegate_info != (const DelegateInfo *) NULL)
     {
       char
