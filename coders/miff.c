@@ -2156,8 +2156,9 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
       packet_size+=quantum_info->depth/8;
     if (compression == RLECompression)
       packet_size++;
-    length=MagickMax(BZipMaxExtent(packet_size*image->columns),ZipMaxExtent(
-      packet_size*image->columns));
+    length=MagickMax(MagickMax(BZipMaxExtent(packet_size*
+      image->columns),LZMAMaxExtent(packet_size*image->columns)),
+      ZipMaxExtent(packet_size*image->columns));
     if ((compression == BZipCompression) || (compression == ZipCompression))
       if (length != (size_t) ((unsigned int) length))
         compression=NoCompression;
@@ -2544,7 +2545,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         lzma_info.allocator=&allocator;
         code=lzma_easy_encoder(&lzma_info,image->quality/10,LZMA_CHECK_SHA256);
         if (code != LZMA_OK)
-          status=MagickTrue;
+          status=MagickFalse;
         break;
       }
 #endif
