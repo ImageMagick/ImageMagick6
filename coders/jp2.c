@@ -938,11 +938,16 @@ static MagickBooleanType WriteJP2Image(const ImageInfo *image_info,Image *image)
       const char
         *p;
 
+      size_t
+        extent = sizeof(parameters->tcp_distoratio)/
+          sizeof(*parameters->tcp_distoratio);
+
       /*
         Set quality PSNR.
       */
       p=option;
-      for (i=0; sscanf(p,"%f",&parameters->tcp_distoratio[i]) == 1; i++)
+      for (i=0; (i < (ssize_t) (extent-1)) &&
+                (sscanf(p,"%f",&parameters->tcp_distoratio[i]) == 1); i++)
       {
         if (i >= 100)
           break;
@@ -976,11 +981,15 @@ static MagickBooleanType WriteJP2Image(const ImageInfo *image_info,Image *image)
       const char
         *p;
 
+      size_t
+        extent = sizeof(parameters->tcp_rates)/sizeof(*parameters->tcp_rates);
+
       /*
         Set compression rate.
       */
       p=option;
-      for (i=0; sscanf(p,"%f",&parameters->tcp_rates[i]) == 1; i++)
+      for (i=0; (i < (ssize_t) (extent-1)) &&
+                (sscanf(p,"%f",&parameters->tcp_rates[i]) == 1); i++)
       {
         if (i >= 100)
           break;
