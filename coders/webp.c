@@ -323,7 +323,10 @@ static int ReadSingleWEBPImage(const ImageInfo *image_info,Image *image,
 
     q=QueueAuthenticPixels(image,0,y,image->columns,1,exception);
     if (q == (PixelPacket *) NULL)
-      break;
+      {
+        webp_status=VP8_STATUS_USER_ABORT;
+        break;
+      }
     for (x=0; x < (ssize_t) image->columns; x++)
     {
       if ((x >= x_offset && x < (ssize_t) (x_offset+image_width)) &&
