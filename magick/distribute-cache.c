@@ -466,6 +466,87 @@ static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
   return(i);
 }
 
+static inline unsigned int CRC32(const unsigned char *message,const size_t length)
+{
+  ssize_t
+    i;
+
+  static MagickBooleanType
+    crc_initial = MagickFalse;
+
+  static unsigned int
+    crc_xor[256];
+
+  unsigned int
+    crc;
+
+  /*
+    Generate a 32-bit cyclic redundancy check for the message.
+  */
+  if (crc_initial == MagickFalse)
+    {
+      unsigned int
+        j;
+
+      unsigned int
+        alpha;
+
+      for (j=0; j < 256; j++)
+      {
+        ssize_t
+          k;
+
+        alpha=j;
+        for (k=0; k < 8; k++)
+          alpha=(alpha & 0x01) ? (0xEDB88320 ^ (alpha >> 1)) : (alpha >> 1);
+        crc_xor[j]=alpha;
+      }
+      crc_initial=MagickTrue;
+    }
+  crc=0xFFFFFFFF;
+  for (i=0; i < (ssize_t) length; i++)
+    crc=crc_xor[(crc ^ message[i]) & 0xff] ^ (crc >> 8);
+  return(crc ^ 0xFFFFFFFF);
+}
+
+static inline unsigned int GetMagickSignature(const StringInfo *nonce)
+{
+  unsigned char
+    *p;
+
+  StringInfo
+    *version;
+
+  unsigned int
+    signature;
+
+  version=AcquireStringInfo(MagickPathExtent);
+  p=GetStringInfoDatum(version);
+  signature=MAGICKCORE_QUANTUM_DEPTH;
+  (void) memcpy(p,&signature,sizeof(signature));
+  p+=(ptrdiff_t) sizeof(signature);
+  signature=MAGICKCORE_HDRI_ENABLE;
+  (void) memcpy(p,&signature,sizeof(signature));
+  p+=(ptrdiff_t) sizeof(signature);
+  signature=MagickLibInterface;
+  (void) memcpy(p,&signature,sizeof(signature));
+  p+=(ptrdiff_t) sizeof(signature);
+  signature=1;  /* endianness */
+  (void) memcpy(p,&signature,sizeof(signature));
+  p+=(ptrdiff_t) sizeof(signature);
+#if defined(MAGICKCORE_64BIT_CHANNEL_MASK_SUPPORT)
+  signature=sizeof(ChannelType);
+  (void) memcpy(p,&signature,sizeof(signature));
+  p+=(ptrdiff_t) sizeof(signature);
+#endif
+  SetStringInfoLength(version,(size_t) (p-GetStringInfoDatum(version)));
+  if (nonce != (const StringInfo *) NULL)
+    ConcatenateStringInfo(version,nonce);
+  signature=CRC32(GetStringInfoDatum(version),GetStringInfoLength(version));
+  version=DestroyStringInfo(version);
+  return(signature);
+}
+
 static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
   const size_t session_key,ExceptionInfo *exception)
 {
@@ -806,7 +887,7 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
     ThrowFatalException(CacheFatalError,"shared secret required");
   nonce=StringToStringInfo(shared_secret);
   shared_secret=DestroyString(shared_secret);
-  session_key=GetMagickCoreSignature(nonce);
+  session_key=GetMagickSignature(nonce);
   nonce=DestroyStringInfo(nonce);
   exception=AcquireExceptionInfo();
   /*
@@ -880,7 +961,6 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket)
 MagickExport void DistributePixelCacheServer(const int port,
   ExceptionInfo *exception)
 {
-#if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
   char
     service[MagickPathExtent];
 
@@ -893,7 +973,7 @@ MagickExport void DistributePixelCacheServer(const int port,
 
   pthread_t
     threads;
-#elif defined(MAGICKCORE_WINDOWS_SUPPORT)
+#elif defined(_MSC_VER)
   DWORD
     threadID;
 #else
@@ -919,8 +999,8 @@ MagickExport void DistributePixelCacheServer(const int port,
   assert(exception != (ExceptionInfo *) NULL);
   assert(exception->signature == MagickCoreSignature);
   magick_unreferenced(exception);
-#if defined(MAGICKCORE_WINDOWS_SUPPORT)
-  NTInitializeWinsock(MagickFalse);
+#if defined(MAGICKCORE_HAVE_WINSOCK2)
+  InitializeWinsock2(MagickFalse);
 #endif
   (void) memset(&hint,0,sizeof(hint));
   hint.ai_family=AF_INET;
@@ -981,18 +1061,13 @@ MagickExport void DistributePixelCacheServer(const int port,
       (void *) &client_socket);
     if (status == -1)
       ThrowFatalException(CacheFatalError,"UnableToCreateClientThread");
-#elif defined(MAGICKCORE_WINDOWS_SUPPORT)
+#elif defined(_MSC_VER)
     if (CreateThread(0,0,DistributePixelCacheClient,(void*) &client_socket,0,&threadID) == (HANDLE) NULL)
       ThrowFatalException(CacheFatalError,"UnableToCreateClientThread");
 #else
     Not implemented!
 #endif
   }
-#else
-  magick_unreferenced(port);
-  magick_unreferenced(exception);
-  ThrowFatalException(MissingDelegateError,"DelegateLibrarySupportNotBuiltIn");
-#endif
 }
 
 /*
