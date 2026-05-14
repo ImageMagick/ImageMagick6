@@ -505,14 +505,6 @@ static int ReadAnimatedWEBPImage(const ImageInfo *image_info,Image *image,
           (void) SetImageProperty(image,"webp:mux-blend",
             "AtopBackgroundAlphaBlend");
         image_count++;
-        if (AcquireMagickResource(ListLengthResource,image_count) == MagickFalse)
-          {
-            (void) ThrowMagickException(exception,GetMagickModule(),
-              ResourceLimitError,"ListLengthExceedsLimit","`%s'",
-              image_info->filename);
-            webp_status=VP8_STATUS_SUSPENDED;
-            break;
-          }
       } while (WebPDemuxNextFrame(&iter));
       WebPDemuxReleaseIterator(&iter);
     }
