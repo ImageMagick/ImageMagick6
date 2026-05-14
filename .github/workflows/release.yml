@@ -470,7 +470,7 @@ jobs:
         env:
           VERSION: ${{needs.version.outputs.version}}
         run: |
-          ./update-version.h "$VERSION" "$(date -u +"%Y-%m-%d")"
+          ./update-version.sh "$VERSION" "$(date -u +"%Y-%m-%d")"
 
       - name: Commit and push changes
         env:
