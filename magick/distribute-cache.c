@@ -723,6 +723,23 @@ static void *RelinquishImageRegistry(void *image)
   return((void *) DestroyImageList((Image *) image));
 }
 
+static inline MagickBooleanType ValidateDistributedPixelCache(
+  const RectangleInfo *region,const size_t per_pixel,
+  const MagickSizeType length)
+{   
+  size_t
+    extent = 0,
+    pixels = 0;
+
+  if (HeapOverflowSanityCheckGetSize(region->width,region->height,&pixels) != MagickFalse)
+    return(MagickFalse);
+  if (HeapOverflowSanityCheckGetSize(pixels,per_pixel,&extent) != MagickFalse)
+    return(MagickFalse);
+  if (length > (MagickSizeType) extent)
+    return(MagickFalse);
+  return(MagickTrue);
+}
+
 static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
   int file,const size_t session_key,ExceptionInfo *exception)
 {
@@ -739,7 +756,6 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
     count;
 
   MagickSizeType
-    extent,
     length;
 
   PixelPacket
@@ -747,6 +763,9 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
 
   RectangleInfo
     region;
+
+  size_t
+    per_pixel;
 
   unsigned char
     message[MagickPathExtent],
@@ -773,8 +792,8 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
   (void) memcpy(&region.y,p,sizeof(region.y));
   p+=(ptrdiff_t) sizeof(region.y);
   (void) memcpy(&length,p,sizeof(length));
-  extent=((MagickSizeType) region.width*region.height*sizeof(IndexPacket));
-  if (length > extent)
+  per_pixel=sizeof(IndexPacket);
+  if (ValidateDistributedPixelCache(&region,per_pixel,length) == MagickFalse)
     return(MagickFalse);
   p+=(ptrdiff_t) sizeof(length);
   q=GetAuthenticPixels(image,region.x,region.y,region.width,region.height,
@@ -801,7 +820,6 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
     count;
 
   MagickSizeType
-    extent,
     length;
 
   PixelPacket
@@ -809,6 +827,9 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
 
   RectangleInfo
     region;
+
+  size_t
+    per_pixel;
 
   unsigned char
     message[MagickPathExtent],
@@ -836,8 +857,8 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
   p+=(ptrdiff_t) sizeof(region.y);
   (void) memcpy(&length,p,sizeof(length));
   p+=(ptrdiff_t) sizeof(length);
-  extent=((MagickSizeType) region.width*region.height*sizeof(PixelPacket));
-  if (length > extent)
+  per_pixel=sizeof(PixelPacket);
+  if (ValidateDistributedPixelCache(&region,per_pixel,length) == MagickFalse)
     return(MagickFalse);
   q=GetAuthenticPixels(image,region.x,region.y,region.width,region.height,
     exception);
