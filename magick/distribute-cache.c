@@ -55,6 +55,7 @@
 #include "magick/cache.h"
 #include "magick/cache-private.h"
 #include "magick/distribute-cache.h"
+#include "magick/distribute-cache-private.h"
 #include "magick/exception.h"
 #include "magick/exception-private.h"
 #include "magick/geometry.h"
@@ -72,7 +73,6 @@
 #include "magick/string-private.h"
 #include "magick/version.h"
 #include "magick/version-private.h"
-#define SOCKET_TYPE int
 #undef MAGICKCORE_HAVE_DISTRIBUTE_CACHE
 #if defined(MAGICKCORE_HAVE_SOCKET) && defined(MAGICKCORE_THREAD_SUPPORT)
 #include <netinet/in.h>
@@ -85,7 +85,6 @@
 #define SOCKET_TYPE int
 #define LENGTH_TYPE size_t
 #define MAGICKCORE_HAVE_DISTRIBUTE_CACHE
-#include "magick/distribute-cache-private.h"
 #elif defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__) && !defined(__MINGW64__)
 #define CLOSE_SOCKET(socket) (void) closesocket(socket)
 #define HANDLER_RETURN_TYPE DWORD WINAPI
@@ -93,7 +92,6 @@
 #define SOCKET_TYPE SOCKET
 #define LENGTH_TYPE int
 #define MAGICKCORE_HAVE_DISTRIBUTE_CACHE
-#include "magick/distribute-cache-private.h"
 #else
 #ifdef __VMS
 #define CLOSE_SOCKET(socket) (void) close(socket)
