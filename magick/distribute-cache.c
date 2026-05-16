@@ -302,7 +302,6 @@ static inline uint64_t GenerateSessionKey(const char *shared_secret,
   return(SIPHash24(key,nonce,length));
 }
 
-
 static int ConnectPixelCacheServer(const char *hostname,const int port,
   uint64_t *session_key,ExceptionInfo *exception)
 {
@@ -389,7 +388,7 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
   *session_key=GenerateSessionKey(shared_secret,nonce,sizeof(nonce));
   shared_secret=DestroyString(shared_secret);
   /*
-    Send HMAC back to client.
+    Send HMAC back to server.
   */
   count=send(client_socket,(char *) session_key,sizeof(*session_key),
     MSG_NOSIGNAL);
@@ -659,6 +658,23 @@ static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
   return(status);
 }
 
+static inline MagickBooleanType ValidateDistributedPixelCache(
+  const RectangleInfo *region,const size_t per_pixel,
+  const MagickSizeType length)
+{   
+  size_t
+    extent = 0,
+    pixels = 0;
+
+  if (HeapOverflowSanityCheckGetSize(region->width,region->height,&pixels) != MagickFalse)
+    return(MagickFalse);
+  if (HeapOverflowSanityCheckGetSize(pixels,per_pixel,&extent) != MagickFalse)
+    return(MagickFalse);
+  if (length > (MagickSizeType) extent)
+    return(MagickFalse);
+  return(MagickTrue);
+}
+
 static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
   int file,const uint64_t session_key,ExceptionInfo *exception)
 {
@@ -682,6 +698,9 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
 
   RectangleInfo
     region;
+
+  size_t
+    per_pixel;
 
   unsigned char
     message[MagickPathExtent],
@@ -708,6 +727,9 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
   (void) memcpy(&region.y,q,sizeof(region.y));
   q+=(ptrdiff_t) sizeof(region.y);
   (void) memcpy(&length,q,sizeof(length));
+  per_pixel=sizeof(IndexPacket);
+  if (ValidateDistributedPixelCache(&region,per_pixel,length) == MagickFalse)
+    return(MagickFalse);
   q+=(ptrdiff_t) sizeof(length);
   p=GetVirtualPixels(image,region.x,region.y,region.width,region.height,
     exception);
@@ -741,6 +763,9 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
   RectangleInfo
     region;
 
+  size_t
+    per_pixel;
+
   unsigned char
     message[MagickPathExtent],
     *q;
@@ -767,6 +792,9 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
   q+=(ptrdiff_t) sizeof(region.y);
   (void) memcpy(&length,q,sizeof(length));
   q+=(ptrdiff_t) sizeof(length);
+  per_pixel=sizeof(PixelPacket);
+  if (ValidateDistributedPixelCache(&region,per_pixel,length) == MagickFalse)
+    return(MagickFalse);
   p=GetVirtualPixels(image,region.x,region.y,region.width,region.height,
     exception);
   if (p == (const PixelPacket *) NULL)
@@ -780,23 +808,6 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
 static void *RelinquishImageRegistry(void *image)
 {
   return((void *) DestroyImageList((Image *) image));
-}
-
-static inline MagickBooleanType ValidateDistributedPixelCache(
-  const RectangleInfo *region,const size_t per_pixel,
-  const MagickSizeType length)
-{   
-  size_t
-    extent = 0,
-    pixels = 0;
-
-  if (HeapOverflowSanityCheckGetSize(region->width,region->height,&pixels) != MagickFalse)
-    return(MagickFalse);
-  if (HeapOverflowSanityCheckGetSize(pixels,per_pixel,&extent) != MagickFalse)
-    return(MagickFalse);
-  if (length > (MagickSizeType) extent)
-    return(MagickFalse);
-  return(MagickTrue);
 }
 
 static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
