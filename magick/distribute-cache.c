@@ -302,7 +302,7 @@ static inline uint64_t GenerateSessionKey(const char *shared_secret,
   return(SIPHash24(key,nonce,length));
 }
 
-static SOCKET_TYPE ConnectPixelCacheServer(const char *hostname,const int port,
+static int ConnectPixelCacheServer(const char *hostname,const int port,
   uint64_t *session_key,ExceptionInfo *exception)
 {
 #if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
@@ -399,7 +399,7 @@ static SOCKET_TYPE ConnectPixelCacheServer(const char *hostname,const int port,
         "DistributedPixelCache","'%s': authentication failed",hostname);
       return(-1);
     }
-  return(client_socket);
+  return((int) client_socket);
 #else
   (void) ThrowMagickException(exception,GetMagickModule(),MissingDelegateError,
     "DelegateLibrarySupportNotBuiltIn","distributed pixel cache");
