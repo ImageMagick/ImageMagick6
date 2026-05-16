@@ -119,6 +119,14 @@
 #  define MSG_NOSIGNAL 0
 #endif
 
+#ifdef MAGICKCORE_HAVE_WINSOCK2
+static SemaphoreInfo
+  *winsock2_semaphore = (SemaphoreInfo *) NULL;
+
+static WSADATA
+  *wsaData = (WSADATA*) NULL;
+#endif
+
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
@@ -1162,7 +1170,7 @@ MagickExport void DistributePixelCacheServer(const int port,
       (socklen_t) sizeof(one));
     if (status != -1)
       {
-#if defined(MAGICKCORE_HAVE_WINSOCK2)
+#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__) && !defined(__MINGW64__)
         DWORD timeout = 5000; // ms
         status=setsockopt(server_socket,SOL_SOCKET,SO_RCVTIMEO,(const char *)
           &timeout,sizeof(timeout));
