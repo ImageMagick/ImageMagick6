@@ -867,7 +867,7 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
 }
 
 static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
-  int file,const size_t session_key,ExceptionInfo *exception)
+  int file,const uint64_t session_key,ExceptionInfo *exception)
 {
   Image
     *image;
