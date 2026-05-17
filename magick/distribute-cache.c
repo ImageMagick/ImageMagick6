@@ -1168,19 +1168,6 @@ MagickExport void DistributePixelCacheServer(const int port,
       continue;
     status=setsockopt(server_socket,SOL_SOCKET,SO_REUSEADDR,(char *) &one,
       (socklen_t) sizeof(one));
-    if (status != -1)
-      {
-#if defined(MAGICKCORE_WINDOWS_SUPPORT) && !defined(__MINGW32__) && !defined(__MINGW64__)
-        DWORD timeout = 5000; // ms
-        status=setsockopt(server_socket,SOL_SOCKET,SO_RCVTIMEO,(const char *)
-          &timeout,sizeof(timeout));
-#else
-        struct timeval tv;
-        tv.tv_sec=5;
-        tv.tv_usec=0;
-        status=setsockopt(server_socket,SOL_SOCKET,SO_RCVTIMEO,&tv,sizeof(tv));
-#endif
-      }
     if (status == -1)
       {
         CLOSE_SOCKET(server_socket);
