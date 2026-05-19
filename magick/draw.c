@@ -2510,6 +2510,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
     *macros;
 
   ssize_t
+    classDepth = 0,
     defsDepth,
     i,
     j,
@@ -2712,6 +2713,13 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 break;
             if (i <= n)
               break;
+            if (classDepth++ > MagickMaxRecursionDepth)
+              {
+                (void) ThrowMagickException(&image->exception,GetMagickModule(),
+                  DrawError,"VectorGraphicsNestedTooDeeply","`%s'",token);
+                status=MagickFalse;
+                break;
+              }
             mvg_class=(const char *) GetValueFromSplayTree(macros,token);
             if ((graphic_context[n]->render != MagickFalse) &&
                 (mvg_class != (const char *) NULL) && (p > primitive))
