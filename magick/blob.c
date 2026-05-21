@@ -2902,6 +2902,13 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
           SetApplicationType(filename,image_info->magick,'8BIM');
 #endif
         }
+      if (IsPathAuthorized(rights,filename) == MagickFalse)
+        {
+          errno=EPERM;
+          (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
+            "NotAuthorized","`%s'",filename);
+          return(MagickFalse);
+        }
     }
   if (image_info->file != (FILE *) NULL)
     {
@@ -3054,13 +3061,6 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
                   (void) SetStreamBuffering(image_info,image);
                 }
             }
-  if (IsPathAuthorized(rights,filename) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",filename);
-      return(MagickFalse);
-    }
   blob_info->status=0;
   blob_info->error_number=0;
   if (blob_info->type != UndefinedStream)
