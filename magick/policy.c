@@ -747,7 +747,6 @@ MagickExport MagickBooleanType IsRightsAuthorized(const PolicyDomain domain,
       {
         char
           *canonical_directory,
-          *canonical_path,
           directory[MagickPathExtent];
 
         GetPathComponent(pattern,HeadPath,directory);
@@ -758,11 +757,17 @@ MagickExport MagickBooleanType IsRightsAuthorized(const PolicyDomain domain,
               MagickFalse);
             canonical_directory=DestroyString(canonical_directory);
           }
-        canonical_path=realpath_utf8(pattern);
-        if ((canonical_path != (char *) NULL) && (match == MagickFalse))
+        if (match == MagickFalse)
           {
-            match=GlobExpression(canonical_path,policy->pattern,MagickFalse);
-            canonical_path=DestroyString(canonical_path);
+            char
+              *canonical_path;
+
+            canonical_path=realpath_utf8(pattern);
+            if (canonical_path != (char *) NULL)
+              {
+                match=GlobExpression(canonical_path,policy->pattern,MagickFalse);
+                canonical_path=DestroyString(canonical_path);
+              }
           }
       }
     if (match == MagickFalse)
