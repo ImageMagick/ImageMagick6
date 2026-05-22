@@ -63,6 +63,7 @@
 #include "magick/nt-base-private.h"
 #include "magick/option.h"
 #include "magick/policy.h"
+#include "magick/policy-private.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
 #include "magick/string_.h"
