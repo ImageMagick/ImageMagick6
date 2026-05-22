@@ -33,6 +33,10 @@ static const char
 </policymap>";
 #endif
 
+extern MagickPrivate MagickBooleanType
+  IsRightsAuthorizedByName(const PolicyDomain,const char *,const PolicyRights,
+    const char *);
+
 #if defined(__cplusplus) || defined(c_plusplus)
 }
 #endif
