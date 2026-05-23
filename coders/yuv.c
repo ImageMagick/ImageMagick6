@@ -128,6 +128,7 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
     y;
 
   size_t
+    extent,
     length,
     quantum;
 
@@ -147,6 +148,8 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
   image=AcquireImage(image_info);
   if ((image->columns == 0) || (image->rows == 0))
     ThrowReaderException(OptionError,"MustSpecifyImageSize");
+  if (HeapOverflowSanityCheckGetSize(image->columns,4,&extent) != MagickFalse)
+    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
