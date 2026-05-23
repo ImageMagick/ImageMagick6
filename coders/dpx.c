@@ -1146,8 +1146,6 @@ static Image *ReadDPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
-  if (HeapOverflowSanityCheck(image->columns,4*image->depth/8) != MagickFalse)
-    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
