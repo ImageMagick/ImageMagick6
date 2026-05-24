@@ -4391,6 +4391,8 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
     return(image);
   if (CloseBlob(image) == MagickFalse)
     status=MagickFalse;
+  if ((image->rows == 0) || (image->columns == 0))
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader")
   if (status == MagickFalse)
     return(DestroyImageList(image));
   return(GetFirstImageInList(image));
