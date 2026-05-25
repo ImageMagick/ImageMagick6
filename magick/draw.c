@@ -2283,7 +2283,7 @@ static inline MagickBooleanType CheckPrimitiveExtent(MVGInfo *mvg_info,
       /*
         Leave old buffer intact; report failure.
       */
-      ThrowMagickException(mvg_info->exception, GetMagickModule(),
+      ThrowMagickException(mvg_info->exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'","");
       return(MagickFalse);
     }
@@ -2438,9 +2438,10 @@ static inline MagickBooleanType IsPoint(const char *point)
 static inline MagickBooleanType TracePoint(PrimitiveInfo *primitive_info,
   const PointInfo point)
 {
+  primitive_info->point=point;
   primitive_info->coordinates=1;
   primitive_info->closed_subpath=MagickFalse;
-  primitive_info->point=point;
+  primitive_info->text=(char *) NULL;
   return(MagickTrue);
 }
 
