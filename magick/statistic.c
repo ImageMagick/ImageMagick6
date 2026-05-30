@@ -316,7 +316,7 @@ static MagickRealType ApplyEvaluateOperator(RandomInfo *random_info,
     }
     case LogEvaluateOperator:
     {
-      if ((QuantumScale*(MagickRealType) pixel) >= MagickLogEpsilon)
+      if ((QuantumScale*(MagickRealType) pixel) >= MagickEpsilon)
         result=(MagickRealType) QuantumRange*log((double) (QuantumScale*value*
           (MagickRealType) pixel+1.0))/log((double) (value+1.0));
       break;
@@ -2164,7 +2164,8 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     return((ChannelPerceptualHash *) NULL);
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].P[i]=(-MagickSafeLog10(moments[channel].I[i]));
+      perceptual_hash[channel].P[i]=(-MagickSafeLog10(fabs(
+        moments[channel].I[i])));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
     Blur then transform to HSB colorspace.
@@ -2194,7 +2195,8 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     }
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
-      perceptual_hash[channel].Q[i]=(-MagickSafeLog10(moments[channel].I[i]));
+      perceptual_hash[channel].Q[i]=(-MagickSafeLog10(fabs(
+        moments[channel].I[i])));
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }
