@@ -259,8 +259,10 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
 }
 #define ThrowMontageException(asperity,tag,option) \
 { \
-  (void) ThrowMagickException(exception,GetMagickModule(),asperity,tag,"`%s'", \
-    option); \
+  char *message = GetExceptionMessage(errno);     \
+  (void) ThrowMagickException(exception,GetMagickModule(),asperity,tag, \
+    "`%s'",option == (char *) NULL ? message : option); \
+  message=DestroyString(message); \
   DestroyMontage(); \
   return(MagickFalse); \
 }
@@ -355,7 +357,7 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
   status=ExpandFilenames(&argc,&argv);
   if (status == MagickFalse)
     ThrowMontageException(ResourceLimitError,"MemoryAllocationFailed",
-      GetExceptionMessage(errno));
+      (char *) NULL);
   for (i=1; i < ((ssize_t) argc-1); i++)
   {
     option=argv[i];
@@ -1848,7 +1850,7 @@ WandExport MagickBooleanType MontageImageCommand(ImageInfo *image_info,
           InheritException(exception,&montage_image->exception);
           if (text == (char *) NULL)
             ThrowMontageException(ResourceLimitError,"MemoryAllocationFailed",
-              GetExceptionMessage(errno));
+              (char *) NULL);
           (void) ConcatenateString(&(*metadata),text);
           text=DestroyString(text);
         }

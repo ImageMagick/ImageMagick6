@@ -185,8 +185,10 @@ WandExport MagickBooleanType IdentifyImageCommand(ImageInfo *image_info,
 }
 #define ThrowIdentifyException(asperity,tag,option) \
 { \
-  (void) ThrowMagickException(exception,GetMagickModule(),asperity,tag,"`%s'", \
-    option); \
+  char *message = GetExceptionMessage(errno);     \
+  (void) ThrowMagickException(exception,GetMagickModule(),asperity,tag, \
+    "`%s'",option == (char *) NULL ? message : option); \
+  message=DestroyString(message); \
   DestroyIdentify(); \
   return(MagickFalse); \
 }
@@ -267,7 +269,7 @@ WandExport MagickBooleanType IdentifyImageCommand(ImageInfo *image_info,
   status=ExpandFilenames(&argc,&argv);
   if (status == MagickFalse)
     ThrowIdentifyException(ResourceLimitError,"MemoryAllocationFailed",
-      GetExceptionMessage(errno));
+      (char *) NULL);
   image_info->ping=MagickTrue;
   for (i=1; i < (ssize_t) argc; i++)
   {
@@ -341,7 +343,7 @@ WandExport MagickBooleanType IdentifyImageCommand(ImageInfo *image_info,
               InheritException(exception,&image->exception);
               if (text == (char *) NULL)
                 ThrowIdentifyException(ResourceLimitError,
-                  "MemoryAllocationFailed",GetExceptionMessage(errno));
+                  "MemoryAllocationFailed",(char *) NULL);
               (void) ConcatenateString(&(*metadata),text);
               text=DestroyString(text);
             }
