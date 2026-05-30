@@ -2201,7 +2201,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     for (i=0; i < MaximumNumberOfImageMoments; i++)
     {
       double x = moments[channel].I[i];
-      double alpha = (x > 0.0 ? 1.0 : (x < 0.0 ? -1.0 : 0.0))*
+      double alpha = -(x > 0.0 ? 1.0 : (x < 0.0 ? -1.0 : 0.0))*
         log10(fabs(x)+MagickEpsilon);
 
       if (alpha < mn)
@@ -2213,7 +2213,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     for (i=0; i < MaximumNumberOfImageMoments; i++)
     {
       double x = moments[channel].I[i];
-      double alpha = (x > 0.0 ? 1.0 : (x < 0.0 ? -1.0 : 0.0))*
+      double alpha = -(x > 0.0 ? 1.0 : (x < 0.0 ? -1.0 : 0.0))*
         log10(fabs(x)+MagickEpsilon);
       double scaled = 255.0*(alpha-mn)*MagickSafeReciprocal(mx-mn);
       perceptual_hash[channel].Q[i]=MagickMin(MagickMax(scaled,0.0),
