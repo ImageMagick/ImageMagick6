@@ -2132,10 +2132,6 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
   ChannelPerceptualHash
     *perceptual_hash;
 
-  double
-    mn = DBL_MAX,
-    mx = -DBL_MAX;
-
   Image
     *hash_image;
 
@@ -2198,6 +2194,11 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       return((ChannelPerceptualHash *) NULL);
     }
   for (channel=0; channel <= CompositeChannels; channel++)
+  {
+    double
+      mn = DBL_MAX,
+      mx = -DBL_MAX;
+
     for (i=0; i < MaximumNumberOfImageMoments; i++)
     {
       double x = moments[channel].I[i];
@@ -2209,7 +2210,6 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       if (alpha > mx)
         mx=alpha;
     }
-  for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfImageMoments; i++)
     {
       double x = moments[channel].I[i];
@@ -2219,6 +2219,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       perceptual_hash[channel].Q[i]=MagickMin(MagickMax(scaled,0.0),
         255.0);
     }
+  }
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }
