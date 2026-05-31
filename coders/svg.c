@@ -472,6 +472,11 @@ static Image *RenderRSVGImage(const ImageInfo *image_info,Image *image,
 #if defined(MAGICKCORE_CAIRO_DELEGATE)
   apply_density=MagickTrue;
   rsvg_handle_get_dimensions(svg_handle,&dimension_info);
+  if ((dimension_info.width == 0) || (dimension_info.height == 0))
+    {
+      g_object_unref(svg_handle);
+      ThrowReaderException(CorruptImageError,"NegativeOrZeroImageSize");
+    }
   if ((image->x_resolution > 0.0) && (image->y_resolution > 0.0))
     {
       RsvgDimensionData
