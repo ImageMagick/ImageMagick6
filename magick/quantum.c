@@ -756,7 +756,7 @@ MagickExport MagickBooleanType SetQuantumEndian(const Image *image,
 %    o quantum_info: the quantum info.
 %
 */
-MagickPrivate MagickBooleanType SetQuantumExtent(const Image *image,
+MagickExport MagickBooleanType SetQuantumExtent(const Image *image,
   QuantumInfo *quantum_info)
 {
   size_t

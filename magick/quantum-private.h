@@ -89,7 +89,7 @@ struct _QuantumInfo
     signature;
 };
 
-extern MagickPrivate MagickBooleanType
+extern MagickExport MagickBooleanType
   SetQuantumExtent(const Image *,QuantumInfo *);
 
 extern MagickPrivate void
