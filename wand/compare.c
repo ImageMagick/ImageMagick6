@@ -1269,6 +1269,7 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
     }
     case PerceptualHashErrorMetric:
     {
+      scale=1.0;
       if (subimage_search == MagickFalse)
         {
           double

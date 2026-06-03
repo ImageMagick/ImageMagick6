@@ -1582,8 +1582,6 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
   const Image *reconstruct_image,const ChannelType channel,double *similarity,
   ExceptionInfo *exception)
 {
-#define PHASHNormalizationFactor  389.373723242
-
   ChannelPerceptualHash
     *image_phash,
     *reconstruct_phash;
@@ -1617,7 +1615,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
         error=reconstruct_phash[RedChannel].P[i]-image_phash[RedChannel].P[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[RedChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1627,7 +1625,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
           image_phash[GreenChannel].P[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[GreenChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1636,7 +1634,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
         error=reconstruct_phash[BlueChannel].P[i]-image_phash[BlueChannel].P[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[BlueChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1647,7 +1645,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
           image_phash[OpacityChannel].P[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[OpacityChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1659,7 +1657,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
           image_phash[IndexChannel].P[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[IndexChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1677,7 +1675,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
         error=reconstruct_phash[RedChannel].Q[i]-image_phash[RedChannel].Q[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[RedChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1687,7 +1685,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
           image_phash[GreenChannel].Q[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[GreenChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1696,7 +1694,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
         error=reconstruct_phash[BlueChannel].Q[i]-image_phash[BlueChannel].Q[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[BlueChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1707,7 +1705,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
           image_phash[OpacityChannel].Q[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[OpacityChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
@@ -1719,7 +1717,7 @@ static MagickBooleanType GetPHASHSimilarity(const Image *image,
           image_phash[IndexChannel].Q[i];
         if (IsNaN(error) != 0)
           error=0.0;
-        difference=error*error/PHASHNormalizationFactor;
+        difference=error*error;
         similarity[IndexChannel]+=difference;
         similarity[CompositeChannels]+=difference;
       }
