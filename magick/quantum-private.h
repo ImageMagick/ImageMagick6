@@ -89,6 +89,9 @@ struct _QuantumInfo
     signature;
 };
 
+extern MagickPrivate MagickBooleanType
+  SetQuantumExtent(const Image *,QuantumInfo *);
+
 extern MagickPrivate void
   ResetQuantumState(QuantumInfo *);
 
