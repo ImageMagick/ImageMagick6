@@ -2180,7 +2180,10 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
     compress_pixels=(unsigned char *) AcquireQuantumMemory(length,
       sizeof(*compress_pixels));
     if (compress_pixels == (unsigned char *) NULL)
-      ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+      {
+        quantum_info=DestroyQuantumInfo(quantum_info);
+        ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+      }
     /*
       Write MIFF header.
     */
@@ -2469,7 +2472,10 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         colormap=(unsigned char *) AcquireQuantumMemory(image->colors,
           packet_size*sizeof(*colormap));
         if (colormap == (unsigned char *) NULL)
-          ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+          {
+            quantum_info=DestroyQuantumInfo(quantum_info);
+            ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+          }
         /*
           Write colormap to file.
         */
