@@ -231,6 +231,8 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
           {
+            scanline=(unsigned char *) RelinquishMagickMemory(scanline);
+            chroma_image=DestroyImage(chroma_image);
             image=DestroyImageList(image);
             return((Image *) NULL);
           }
@@ -357,6 +359,8 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
         status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
         if (status == MagickFalse)
           {
+            scanline=(unsigned char *) RelinquishMagickMemory(scanline);
+            chroma_image=DestroyImage(chroma_image);
             image=DestroyImageList(image);
             return((Image *) NULL);
           }
@@ -403,6 +407,8 @@ static Image *ReadYUVImage(const ImageInfo *image_info,ExceptionInfo *exception)
           status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
           if (status == MagickFalse)
             {
+              scanline=(unsigned char *) RelinquishMagickMemory(scanline);
+              chroma_image=DestroyImage(chroma_image);
               image=DestroyImageList(image);
               return((Image *) NULL);
             }
