@@ -12921,7 +12921,11 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
             &image->exception);
 
           if (status == MagickFalse)
-            ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+            {
+              jpeg_image=DestroyImage(jpeg_image);
+              jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+              ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+            }
 
           (void) CopyMagickString(jpeg_image_info->magick,"JPEG",MaxTextExtent);
           (void) CopyMagickString(jpeg_image->magick,"JPEG",MaxTextExtent);
