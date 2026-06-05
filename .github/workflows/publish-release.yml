@@ -17,16 +17,28 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd #v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Install autoconf
         run: |
           curl -fsSL -o autoconf_2.72.deb https://archive.ubuntu.com/ubuntu/pool/main/a/autoconf/autoconf_2.72-3.1ubuntu1_all.deb
           sudo dpkg -i autoconf_2.72.deb
 
+      - name: Create release token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 #v3.2.0
+        id: app-token
+        with:
+          client-id: ${{vars.APP_CLIENT_ID}}
+          private-key: ${{secrets.APP_PRIVATE_KEY}}
+          permission-contents: write
+
       - name: Configure git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name '${{steps.app-token.outputs.app-slug}}[bot]'
+          git config --global user.email '${{vars.APP_USER_ID}}+${{steps.app-token.outputs.app-slug}}[bot]@users.noreply.github.com'
+          gh auth setup-git
+        env:
+          GH_TOKEN: ${{steps.app-token.outputs.token}}
 
       - name: Create release commit
         run: |
