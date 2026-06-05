@@ -10,16 +10,13 @@ jobs:
     name: Publish release
     runs-on: ubuntu-24.04
 
-    permissions:
-      contents: write
-
     steps:
       - name: Install autoconf
         run: |
           curl -fsSL -o autoconf_2.72.deb https://archive.ubuntu.com/ubuntu/pool/main/a/autoconf/autoconf_2.72-3.1ubuntu1_all.deb
           sudo dpkg -i autoconf_2.72.deb
 
-      - name: Create release token
+      - name: Create GitHub app token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 #v3.2.0
         id: app-token
         with:
