@@ -2446,10 +2446,12 @@ MagickExport MagickBooleanType TransformRGBImage(Image *image,
         logmap[i]=QuantumRange;
       if (image->storage_class == PseudoClass)
         {
-          if (SyncImage(image) == MagickFalse)
-            return(MagickFalse);
-          if (SetImageStorageClass(image,DirectClass) == MagickFalse)
-            return(MagickFalse);
+          if ((SyncImage(image) == MagickFalse) ||
+              (SetImageStorageClass(image,DirectClass) == MagickFalse))
+            {
+              logmap=(Quantum *) RelinquishMagickMemory(logmap);
+              return(MagickFalse);
+            }
         }
       image_view=AcquireAuthenticCacheView(image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
