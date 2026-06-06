@@ -3758,8 +3758,6 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 for (x=0; IsValidPoint(token) != MagickFalse; x++)
                 {
                   (void) GetNextToken(p,&p,extent,token);
-                  if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
-                    ThrowPointExpectedException(image,token);
                   if (*token == ',')
                     (void) GetNextToken(p,&p,extent,token);
                 }
