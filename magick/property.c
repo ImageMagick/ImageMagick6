@@ -1651,7 +1651,7 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
                   (void) FormatLocaleString(key,MaxTextExtent,"%s",
                     description);
                   if (level == 2)
-                    (void) SubstituteString(&key,"exif:","exif:thumbnail:");
+                    (void) SubstituteString(&key,"exif:","exif:Thumbnail.");
                   break;
                 }
                 case 2:
@@ -1670,7 +1670,7 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
                 default:
                 {
                   if (level == 2)
-                    (void) SubstituteString(&key,"exif:","exif:thumbnail:");
+                    (void) SubstituteString(&key,"exif:","exif:Thumbnail.");
                 }
               }
               p=(const char *) NULL;
