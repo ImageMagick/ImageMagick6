@@ -6962,7 +6962,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                   }
 
                 n=GetAuthenticPixels(image,0,0,image->columns,1,exception);
-                (void) memcpy(next,n,length);
+                (void) memcpy(next,n,length*sizeof(*next));
 
                 for (y=0; y < (ssize_t) image->rows; y++)
                 {
@@ -6989,7 +6989,7 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                     {
                       n=GetAuthenticPixels(image,0,y+1,image->columns,1,
                         exception);
-                      (void) memcpy(next,n,length);
+                      (void) memcpy(next,n,length*sizeof(*next));
                     }
 
                   for (i=0; i < m; i++, yy++)
