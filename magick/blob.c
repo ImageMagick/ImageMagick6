@@ -1156,12 +1156,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
   *length=0;
   if (IsPathAuthorized(ReadPolicyRights,filename) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",filename);
-      return(NULL);
-    }
+    ThrowPolicyException(filename,(unsigned char *) NULL);
   file=fileno(stdin);
   if (LocaleCompare(filename,"-") != 0)
     {
@@ -1184,10 +1179,7 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
   if (IsPathAuthorized(ReadPolicyRights,filename) == MagickFalse)
     {
       file=close_utf8(file)-1;
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",filename);
-      return(NULL);
+      ThrowPolicyException(filename,(unsigned char *) NULL);
     }
   offset=(MagickOffsetType) lseek(file,0,SEEK_END);
   count=0;
@@ -1363,6 +1355,9 @@ static inline ssize_t WriteBlobStream(Image *image,const size_t length,
 
 MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
 {
+  ExceptionInfo
+    *exception;
+
   int
     file;
 
@@ -1384,13 +1379,9 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
   assert(filename != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",filename);
+  exception=(&image->exception);
   if (IsPathAuthorized(ReadPolicyRights,filename) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        PolicyError,"NotAuthorized","`%s'",filename);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(filename,MagickFalse);
   file=fileno(stdin);
   if (LocaleCompare(filename,"-") != 0)
     {
@@ -1401,17 +1392,11 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
     }
   if (file == -1)
     {
-      ThrowFileException(&image->exception,BlobError,"UnableToOpenBlob",
-        filename);
+      ThrowFileException(exception,BlobError,"UnableToOpenBlob",filename);
       return(MagickFalse);
     }
   if (IsPathAuthorized(ReadPolicyRights,filename) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        PolicyError,"NotAuthorized","`%s'",filename);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(filename,MagickFalse);
   quantum=(size_t) MagickMaxBufferExtent;
   if ((fstat(file,&file_stats) == 0) && (file_stats.st_size > 0))
     quantum=(size_t) MagickMin(file_stats.st_size,MagickMaxBufferExtent);
@@ -1419,8 +1404,8 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
   if (blob == (unsigned char *) NULL)
     {
       file=close_utf8(file);
-      ThrowFileException(&image->exception,ResourceLimitError,
-        "MemoryAllocationFailed",filename);
+      ThrowFileException(exception,ResourceLimitError,"MemoryAllocationFailed",
+        filename);
       return(MagickFalse);
     }
   for ( ; ; )
@@ -1436,15 +1421,13 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
     count=WriteBlobStream(image,length,blob);
     if (count != (ssize_t) length)
       {
-        ThrowFileException(&image->exception,BlobError,"UnableToWriteBlob",
-          filename);
+        ThrowFileException(exception,BlobError,"UnableToWriteBlob",filename);
         break;
       }
   }
   file=close_utf8(file);
   if (file == -1)
-    ThrowFileException(&image->exception,BlobError,"UnableToWriteBlob",
-      filename);
+    ThrowFileException(exception,BlobError,"UnableToWriteBlob",filename);
   blob=(unsigned char *) RelinquishMagickMemory(blob);
   return(MagickTrue);
 }
@@ -2786,12 +2769,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
   if (*type == 'w')
     rights=WritePolicyRights;
   if (IsPathAuthorized(rights,filename) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",filename);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(filename,MagickFalse);
   if ((LocaleCompare(filename,"-") == 0) ||
       ((*filename == '\0') && (image_info->file == (FILE *) NULL)))
     {
@@ -2904,12 +2882,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
 #endif
         }
       if (IsPathAuthorized(rights,filename) == MagickFalse)
-        {
-          errno=EPERM;
-          (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-            "NotAuthorized","`%s'",filename);
-          return(MagickFalse);
-        }
+        ThrowPolicyException(filename,MagickFalse);
     }
   if (image_info->file != (FILE *) NULL)
     {
@@ -3063,12 +3036,7 @@ MagickExport MagickBooleanType OpenBlob(const ImageInfo *image_info,
                 }
             }
   if (IsPathAuthorized(rights,filename) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",filename);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(filename,MagickFalse);
   blob_info->status=0;
   blob_info->error_number=0;
   if (blob_info->type != UndefinedStream)

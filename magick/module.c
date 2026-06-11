@@ -992,12 +992,7 @@ MagickExport MagickBooleanType InvokeDynamicImageFilter(const char *tag,
       (*images)->filename);
   rights=ReadPolicyRights;
   if (IsRightsAuthorized(FilterPolicyDomain,rights,tag) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",tag);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(tag,MagickFalse);
 #if !defined(MAGICKCORE_BUILD_MODULES)
   {
     MagickBooleanType
@@ -1292,12 +1287,7 @@ MagickExport MagickBooleanType OpenModule(const char *module,
   LocaleUpper(module_name);
   rights=(PolicyRights) (ReadPolicyRights | WritePolicyRights);
   if (IsRightsAuthorized(ModulePolicyDomain,rights,module_name) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",module);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(module_name,MagickFalse);
   if (GetValueFromSplayTree(module_list,module_name) != (void *) NULL)
     return(MagickTrue);  /* module already opened, return */
   /*
@@ -1688,12 +1678,7 @@ MagickExport MagickBooleanType InvokeDynamicImageFilter(const char *tag,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",(*image)->filename);
   rights=ReadPolicyRights;
   if (IsRightsAuthorized(FilterPolicyDomain,rights,tag) == MagickFalse)
-    {
-      errno=EPERM;
-      (void) ThrowMagickException(exception,GetMagickModule(),PolicyError,
-        "NotAuthorized","`%s'",tag);
-      return(MagickFalse);
-    }
+    ThrowPolicyException(tag,MagickFalse);
 #if defined(MAGICKCORE_BUILD_MODULES)
   (void) tag;
   (void) argc;
