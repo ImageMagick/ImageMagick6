@@ -1370,8 +1370,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
 
 #define ThrowFreetypeErrorException(tag,ft_status,value) \
 { \
-  const char \
-    *error_string=FreetypeErrorMessage(ft_status); \
+  const char *error_string = FreetypeErrorMessage(ft_status); \
   if (error_string != (const char *) NULL) \
     (void) ThrowMagickException(exception,GetMagickModule(),TypeError, \
       tag,"`%s (%s)'",value, error_string); \
@@ -1487,8 +1486,11 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   exception=(&image->exception);
   ft_status=FT_Init_FreeType(&library);
   if (ft_status != 0)
-    ThrowFreetypeErrorException("UnableToInitializeFreetypeLibrary",ft_status,
-      image->filename);
+    {
+      ThrowFreetypeErrorException("UnableToInitializeFreetypeLibrary",
+        ft_status,image->filename);
+      return(MagickFalse);
+    }
   face_index=(FT_Long) draw_info->face;
   /*
     Open font face.
