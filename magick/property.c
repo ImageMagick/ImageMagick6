@@ -650,7 +650,6 @@ static MagickBooleanType Get8BIMProperty(const Image *image,const char *key)
     count=(ssize_t) ReadPropertyByte(&info,&length);
     if ((count != 0) && ((size_t) count <= length))
       {
-        resource=(char *) NULL;
         if (~((size_t) count) >= (MaxTextExtent-1))
           resource=(char *) AcquireQuantumMemory((size_t) count+MaxTextExtent,
             sizeof(*resource));
@@ -669,8 +668,9 @@ static MagickBooleanType Get8BIMProperty(const Image *image,const char *key)
         length=0;
         continue;
       }
-    macroman_resource=(char *) ConvertMacRomanToUTF8((unsigned char *)
-      resource);
+    if (resource != (char *) NULL)
+      macroman_resource=(char *) ConvertMacRomanToUTF8((unsigned char *)
+        resource);
     if ((*name != '\0') && (*name != '#'))
       if ((resource == (char *) NULL) || (macroman_resource == (char *) NULL) ||
           ((LocaleCompare(name,resource) != 0) &&
