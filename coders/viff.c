@@ -635,7 +635,7 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
             if (value < 0)
               value=0;
         }
-      *p=(unsigned char) ((Quantum) value);
+      *p=CastDoubleToUChar(ClampToQuantum(value));
       p++;
     }
     /*
@@ -1256,7 +1256,7 @@ static MagickBooleanType WriteVIFFImage(const ImageInfo *image_info,
                 break;
               for (x=0; x < (ssize_t) image->columns; x++)
               {
-                *q++=(unsigned char) ClampToQuantum(GetPixelLuma(image,p));
+                *q++=CastDoubleToUChar(ClampToQuantum(GetPixelLuma(image,p)));
                 p++;
               }
               if (image->previous == (Image *) NULL)
