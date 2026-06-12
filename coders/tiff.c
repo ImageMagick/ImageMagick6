@@ -1125,6 +1125,9 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
     rows_per_strip,
     width;
 
+  uint64
+    dng_version;
+
   unsigned char
     *pixels;
 
@@ -1164,6 +1167,37 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
       TIFFClose(tiff);
       image=DestroyImageList(image);
       return((Image *) NULL);
+    }
+  if (TIFFGetField(tiff,TIFFTAG_DNGVERSION,&dng_version) == 1)
+    {
+      Image
+        *dng_image = (Image *) NULL;
+
+      /*
+        Redirect to DNG image reader.
+      */
+      ImageInfo *read_info = CloneImageInfo(image_info);
+      (void) CopyMagickString(read_info->magick,"DNG",MagickPathExtent);
+      if (*read_info->filename != '\0')
+        dng_image=ReadImage(read_info,exception);
+      else
+        {
+          status=OpenBlob(image_info,image,ReadBinaryBlobMode,exception);
+          if (status != MagickFalse)
+            {
+              status=ImageToFile(image,read_info->filename,exception);
+              if (status != MagickFalse)
+                dng_image=ReadImage(read_info,exception);
+              (void) RelinquishUniqueFileResource(read_info->filename);
+            }
+        }
+      read_info=DestroyImageInfo(read_info);
+      if (dng_image != (Image *) NULL)
+        {
+          image=DestroyImageList(image);
+          TIFFClose(tiff);
+          return(dng_image);
+        }
     }
   if (image_info->number_scenes != 0)
     {
