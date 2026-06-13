@@ -158,6 +158,9 @@ static Image *ReadVICARImage(const ImageInfo *image_info,
     status,
     value_expected;
 
+  MagickSizeType
+    number_pixels;
+
   QuantumInfo
     *quantum_info;
 
@@ -290,6 +293,9 @@ static Image *ReadVICARImage(const ImageInfo *image_info,
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
+  number_pixels=(MagickSizeType) image->columns*image->rows;
+  if (number_pixels > GetBlobSize(image))
+    ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   status=SetImageExtent(image,image->columns,image->rows);
   if (status == MagickFalse)
     {
