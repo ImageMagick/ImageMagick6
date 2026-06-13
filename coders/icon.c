@@ -264,6 +264,8 @@ static Image *Read1XImage(Image *image,ExceptionInfo *exception)
       }
       if (SyncAuthenticPixels(image,exception) == MagickFalse)
         break;
+      if (EOFBlob(image) != MagickFalse)
+        break;
     }
   }
   if (SyncImage(image) == MagickFalse)
@@ -594,6 +596,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
                 (void) ReadBlobByte(image);
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
                 break;
+              if (EOFBlob(image) != MagickFalse)
+                break;
               if (image->previous == (Image *) NULL)
                 {
                   status=SetImageProgress(image,LoadImageTag,image->rows-y-1,
@@ -630,6 +634,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
                 (void) ReadBlobByte(image);
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
                 break;
+              if (EOFBlob(image) != MagickFalse)
+                break;
               if (image->previous == (Image *) NULL)
                 {
                   status=SetImageProgress(image,LoadImageTag,image->rows-y-1,
@@ -659,6 +665,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
               for (x=0; x < (ssize_t) scanline_pad; x++)
                 (void) ReadBlobByte(image);
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
+                break;
+              if (EOFBlob(image) != MagickFalse)
                 break;
               if (image->previous == (Image *) NULL)
                 {
@@ -690,6 +698,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
               for (x=0; x < (ssize_t) scanline_pad; x++)
                 (void) ReadBlobByte(image);
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
+                break;
+              if (EOFBlob(image) != MagickFalse)
                 break;
               if (image->previous == (Image *) NULL)
                 {
@@ -729,6 +739,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
                 for (x=0; x < (ssize_t) scanline_pad; x++)
                   (void) ReadBlobByte(image);
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
+                break;
+              if (EOFBlob(image) != MagickFalse)
                 break;
               if (image->previous == (Image *) NULL)
                 {
@@ -774,6 +786,8 @@ static Image *ReadICONImage(const ImageInfo *image_info,
                 for (x=0; x < (ssize_t) ((32-(image->columns % 32))/8); x++)
                   (void) ReadBlobByte(image);
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
+                break;
+              if (EOFBlob(image) != MagickFalse)
                 break;
             }
           }
