@@ -511,6 +511,8 @@ static Image *ReadFITSImage(const ImageInfo *image_info,
             if (status == MagickFalse)
               break;
           }
+        if (EOFBlob(image) != MagickFalse)
+          break;
       }
       if (EOFBlob(image) != MagickFalse)
         {
