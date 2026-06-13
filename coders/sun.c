@@ -317,6 +317,8 @@ static Image *ReadSUNImage(const ImageInfo *image_info,ExceptionInfo *exception)
     sun_info.type=ReadBlobMSBLong(image);
     sun_info.maptype=ReadBlobMSBLong(image);
     sun_info.maplength=ReadBlobMSBLong(image);
+    if (EOFBlob(image) != MagickFalse)
+      ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
     if (sun_info.maplength > GetBlobSize(image))
       ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
     if (HeapOverflowSanityCheckGetSize(sun_info.width,sun_info.height,&extent) != MagickFalse)
@@ -440,7 +442,7 @@ static Image *ReadSUNImage(const ImageInfo *image_info,ExceptionInfo *exception)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     if (HeapOverflowSanityCheckGetSize(sun_info.width,sun_info.depth,&bytes_per_line) != MagickFalse)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
-    if ((sun_info.type != RT_ENCODED) && (sun_info.length > GetBlobSize(image)))
+    if (sun_info.length > GetBlobSize(image))
       ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
     sun_data=(unsigned char *) AcquireQuantumMemory(sun_info.length,
       sizeof(*sun_data));
@@ -499,12 +501,6 @@ static Image *ReadSUNImage(const ImageInfo *image_info,ExceptionInfo *exception)
       }
     else
       {
-        if (EOFBlob(image) != MagickFalse)
-          {
-            ThrowFileException(exception,CorruptImageError,
-              "UnexpectedEndOfFile",image->filename);
-            break;
-          }
         if (sun_info.length > (pixels_length+image->rows))
           {
             sun_data=(unsigned char *) RelinquishMagickMemory(sun_data);
@@ -632,6 +628,12 @@ static Image *ReadSUNImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (image->storage_class == PseudoClass)
       (void) SyncImage(image);
     sun_pixels=(unsigned char *) RelinquishMagickMemory(sun_pixels);
+    if (EOFBlob(image) != MagickFalse)
+      {
+        ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
+          image->filename);
+        break;
+      }
     /*
       Proceed to next image.
     */
