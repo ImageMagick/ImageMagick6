@@ -62,6 +62,7 @@
 #include "magick/nt-base-private.h"
 #include "magick/option.h"
 #include "magick/policy.h"
+#include "magick/policy-private.h"
 #include "magick/property.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
@@ -1691,7 +1692,8 @@ static MagickBooleanType IsDelegateCacheInstantiated(ExceptionInfo *exception)
 */
 
 static MagickBooleanType CopyDelegateFile(const char *source,
-  const char *destination,const MagickBooleanType overwrite)
+  const char *destination,const MagickBooleanType overwrite,
+  ExceptionInfo *exception)
 {
   int
     destination_file,
@@ -1727,6 +1729,8 @@ static MagickBooleanType CopyDelegateFile(const char *source,
       if (status != MagickFalse)
         return(MagickTrue);
     }
+  if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
+    ThrowPolicyException(destination,MagickFalse);
   destination_file=open_utf8(destination,O_WRONLY | O_BINARY | O_CREAT,S_MODE);
   if (destination_file == -1)
     return(MagickFalse);
@@ -1929,6 +1933,13 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
   (void) CopyMagickString(input_filename,image->filename,MaxTextExtent);
   for (i=0; commands[i] != (char *) NULL; i++)
   {
+    if (IsPathAuthorized(WritePolicyRights,output_filename) == MagickFalse)
+      {
+        errno=EPERM;
+        (void) ThrowMagickException(exception,GetMagickModule(),PolicyError, \
+          "NotAuthorized","`%s'",output_filename);
+        break;
+      } 
     status=AcquireUniqueSymbolicLink(output_filename,image_info->filename);
     if (AcquireUniqueFilename(image_info->unique) == MagickFalse)
       {
@@ -1978,11 +1989,11 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
       }
     if (LocaleCompare(decode,"SCAN") != 0)
       {
-        if (CopyDelegateFile(image->filename,input_filename,MagickFalse) == MagickFalse)
+        if (CopyDelegateFile(image->filename,input_filename,MagickFalse,&image->exception) == MagickFalse)
           (void) RelinquishUniqueFileResource(input_filename);
       }
     if ((strcmp(input_filename,output_filename) != 0) &&
-        (CopyDelegateFile(image_info->filename,output_filename,MagickTrue) == MagickFalse))
+        (CopyDelegateFile(image_info->filename,output_filename,MagickTrue,&image->exception) == MagickFalse))
       (void) RelinquishUniqueFileResource(output_filename);
     if (image_info->temporary != MagickFalse)
       (void) RelinquishUniqueFileResource(image_info->filename);
