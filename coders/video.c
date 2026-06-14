@@ -55,6 +55,8 @@
 #include "magick/memory_.h"
 #include "magick/module.h"
 #include "magick/option.h"
+#include "magick/policy.h"
+#include "magick/policy-private.h"
 #include "magick/resource_.h"
 #include "magick/quantum-private.h"
 #include "magick/static.h"
@@ -511,7 +513,7 @@ ModuleExport void UnregisterVIDEOImage(void)
 %
 */
 static MagickBooleanType CopyDelegateFile(const char *source,
-  const char *destination)
+  const char *destination,ExceptionInfo *exception)
 {
   int
     destination_file,
@@ -536,6 +538,8 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   /*
     Copy source file to destination.
   */
+  if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
+    ThrowPolicyException(destination,MagickFalse);
   if (strcmp(destination,"-") == 0)
     destination_file=fileno(stdout);
   else
@@ -753,7 +757,7 @@ static MagickBooleanType WriteVIDEOImage(const ImageInfo *image_info,
         {
           (void) FormatLocaleString(filename,MagickPathExtent,"%s.%s",
             write_info->unique,image_info->magick);
-          status=CopyDelegateFile(filename,image->filename);
+          status=CopyDelegateFile(filename,image->filename,&image->exception);
           (void) RelinquishUniqueFileResource(filename);
         }
       else
