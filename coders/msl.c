@@ -7700,11 +7700,7 @@ static void MSLWarning(void *context,const char *format,...)
   (void) LogMagickEvent(CoderEvent,GetMagickModule(),format,operands);
   msl_info=(MSLInfo *) context;
   (void) msl_info;
-#if !defined(MAGICKCORE_HAVE_VSNPRINTF)
-  (void) vsprintf(reason,format,operands);
-#else
   (void) vsnprintf(reason,MaxTextExtent,format,operands);
-#endif
   message=GetExceptionMessage(errno);
   ThrowMSLException(CoderError,reason,message);
   message=DestroyString(message);
@@ -7734,11 +7730,7 @@ static void MSLError(void *context,const char *format,...)
   (void) LogMagickEvent(CoderEvent,GetMagickModule(),format,operands);
   msl_info=(MSLInfo *) context;
   (void) msl_info;
-#if !defined(MAGICKCORE_HAVE_VSNPRINTF)
-  (void) vsprintf(reason,format,operands);
-#else
   (void) vsnprintf(reason,MaxTextExtent,format,operands);
-#endif
   ThrowMSLException(DelegateFatalError,reason,"SAX error");
   va_end(operands);
   xmlStopParser(msl_info->parser);
