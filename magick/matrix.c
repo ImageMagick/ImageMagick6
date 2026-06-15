@@ -47,6 +47,7 @@
 #include "magick/image-private.h"
 #include "magick/matrix.h"
 #include "magick/memory_.h"
+#include "magick/memory-private.h"
 #include "magick/pixel-private.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
@@ -232,14 +233,15 @@ MagickExport MatrixInfo *AcquireMatrixInfo(const size_t columns,
   matrix_info->type=MemoryCache;
   status=AcquireMagickResource(AreaResource,matrix_info->length);
   if ((status != MagickFalse) &&
-      (matrix_info->length == (MagickSizeType) ((size_t) matrix_info->length)))
+      (matrix_info->length == (MagickSizeType) ((size_t) matrix_info->length)) &&
+      ((size_t) matrix_info->length <= GetMaxMemoryRequest()))
     {
       status=AcquireMagickResource(MemoryResource,matrix_info->length);
       if (status != MagickFalse)
         {
           matrix_info->mapped=MagickFalse;
-          matrix_info->elements=AcquireAlignedMemory((size_t)
-            matrix_info->length,1);
+          matrix_info->elements=MagickAssumeAligned(AcquireAlignedMemory(1,
+            (size_t) matrix_info->length));
           if (matrix_info->elements == NULL)
             {
               matrix_info->mapped=MagickTrue;
