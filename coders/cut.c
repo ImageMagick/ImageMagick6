@@ -64,6 +64,8 @@
 #include "magick/magick.h"
 #include "magick/memory_.h"
 #include "magick/pixel-accessor.h"
+#include "magick/policy.h"
+#include "magick/policy-private.h"
 #include "magick/quantum-private.h"
 #include "magick/static.h"
 #include "magick/string_.h"
@@ -348,6 +350,7 @@ static Image *ReadCUTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   Image *image,*palette;
   ImageInfo *clone_info;
   MagickBooleanType status;
+  MagickBooleanType authorized;
 
   MagickOffsetType
     offset;
@@ -452,6 +455,9 @@ static Image *ReadCUTImage(const ImageInfo *image_info,ExceptionInfo *exception)
         }
     }
 
+  authorized=IsPathAuthorized(ReadPolicyRights,clone_info->filename);
+  if (authorized == MagickFalse)
+    ThrowCUTReaderException(PolicyError,"NotAuthorized");
   (void) CopyMagickString(clone_info->filename+i,".PAL",(size_t)
     (MaxTextExtent-i));
   if((clone_info->file=fopen_utf8(clone_info->filename,"rb"))==NULL)
@@ -460,8 +466,14 @@ static Image *ReadCUTImage(const ImageInfo *image_info,ExceptionInfo *exception)
         (MaxTextExtent-i));
       if((clone_info->file=fopen_utf8(clone_info->filename,"rb"))==NULL)
         {
+         authorized=IsPathAuthorized(ReadPolicyRights,clone_info->filename);
+          if (authorized == MagickFalse)
+            ThrowCUTReaderException(PolicyError,"NotAuthorized");
           clone_info->filename[i]='\0';
-          if((clone_info->file=fopen_utf8(clone_info->filename,"rb"))==NULL)
+          authorized=IsPathAuthorized(ReadPolicyRights,clone_info->filename);
+          if (authorized == MagickFalse)
+            ThrowCUTReaderException(PolicyError,"NotAuthorized");
+          if ((clone_info->file=fopen_utf8(clone_info->filename,"rb"))==NULL)
             {
               clone_info=DestroyImageInfo(clone_info);
               clone_info=NULL;
