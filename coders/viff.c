@@ -342,13 +342,6 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
     image->depth=viff_info.x_bits_per_pixel <= 8 ? 8UL :
       MAGICKCORE_QUANTUM_DEPTH;
     image->matte=viff_info.number_data_bands == 4 ? MagickTrue : MagickFalse;
-    status=SetImageExtent(image,image->columns,image->rows);
-    if (status == MagickFalse)
-      {
-        InheritException(exception,&image->exception);
-        return(DestroyImageList(image));
-      }
-    (void) SetImageBackgroundColor(image);
     /*
       Verify that we can read this VIFF image.
     */
@@ -380,6 +373,13 @@ static Image *ReadVIFFImage(const ImageInfo *image_info,
       ThrowReaderException(CoderError,"NumberOfImagesIsNotSupported");
     if (viff_info.map_rows == 0)
       viff_info.map_scheme=VFF_MS_NONE;
+    status=SetImageExtent(image,image->columns,image->rows);
+    if (status == MagickFalse)
+      {
+        InheritException(exception,&image->exception);
+        return(DestroyImageList(image));
+      }
+    (void) SetImageBackgroundColor(image);
     switch ((int) viff_info.map_scheme)
     {
       case VFF_MS_NONE:
