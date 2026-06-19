@@ -69,6 +69,7 @@
 #include "magick/pixel-accessor.h"
 #include "magick/pixel-private.h"
 #include "magick/policy.h"
+#include "magick/policy-private.h"
 #include "magick/property.h"
 #include "magick/quantum-private.h"
 #include "magick/resource_.h"
@@ -3670,6 +3671,9 @@ static Image *RenderMSVGImage(const ImageInfo *image_info,Image *image,
         message,n,image->filename);
       if (svg_info->parser != (xmlParserCtxtPtr) NULL)
         {
+          PolicyRights
+            rights = (PolicyRights) (ReadPolicyRights | WritePolicyRights);
+
           const char *option = GetImageOption(image_info,"svg:parse-huge");
           if (option == (char *) NULL)
             option=GetImageOption(image_info,"svg:xml-parse-huge");
@@ -3679,7 +3683,7 @@ static Image *RenderMSVGImage(const ImageInfo *image_info,Image *image,
           option=GetImageOption(image_info,"svg:substitute-entities");
           if ((option != (char *) NULL) &&
               (IsStringTrue(option) != MagickFalse) &&
-(IsRightsAuthorizedByName(SystemPolicyDomain,"svg",ReadPolicyRights | WritePolicyRights,"substitute-entities") != MagickFalse))
+              (IsRightsAuthorizedByName(SystemPolicyDomain,"svg",rights,"substitute-entities") != MagickFalse))
             (void) xmlCtxtUseOptions(svg_info->parser,XML_PARSE_NOENT);
           while ((n=ReadBlob(image,MaxTextExtent-1,message)) != 0)
           {
