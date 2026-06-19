@@ -3678,7 +3678,8 @@ static Image *RenderMSVGImage(const ImageInfo *image_info,Image *image,
             (void) xmlCtxtUseOptions(svg_info->parser,XML_PARSE_HUGE);
           option=GetImageOption(image_info,"svg:substitute-entities");
           if ((option != (char *) NULL) &&
-              (IsStringTrue(option) != MagickFalse))
+              (IsStringTrue(option) != MagickFalse) &&
+(IsRightsAuthorizedByName(SystemPolicyDomain,"svg",ReadPolicyRights | WritePolicyRights,"substitute-entities") != MagickFalse))
             (void) xmlCtxtUseOptions(svg_info->parser,XML_PARSE_NOENT);
           while ((n=ReadBlob(image,MaxTextExtent-1,message)) != 0)
           {
