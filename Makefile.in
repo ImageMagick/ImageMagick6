@@ -1454,18 +1454,18 @@ am__magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES_D
 	magick/compare-private.h magick/composite.c magick/composite.h \
 	magick/composite-private.h magick/compress.c magick/compress.h \
 	magick/configure.c magick/configure.h magick/constitute.c \
-	magick/constitute.h magick/decorate.c magick/decorate.h \
-	magick/distribute-cache.c magick/distribute-cache.h \
-	magick/distribute-cache-private.h magick/delegate.c \
-	magick/delegate.h magick/delegate-private.h magick/deprecate.c \
-	magick/deprecate.h magick/display.c magick/display.h \
-	magick/display-private.h magick/distort.c magick/distort.h \
-	magick/draw.c magick/draw.h magick/draw-private.h \
-	magick/effect.c magick/effect.h magick/enhance.c \
-	magick/enhance.h magick/exception.c magick/exception.h \
-	magick/exception-private.h magick/feature.c magick/feature.h \
-	magick/fourier.c magick/fourier.h magick/fx.c magick/fx.h \
-	magick/fx-private.h magick/gem.c magick/gem.h \
+	magick/constitute.h magick/constitute-private.h \
+	magick/decorate.c magick/decorate.h magick/distribute-cache.c \
+	magick/distribute-cache.h magick/distribute-cache-private.h \
+	magick/delegate.c magick/delegate.h magick/delegate-private.h \
+	magick/deprecate.c magick/deprecate.h magick/display.c \
+	magick/display.h magick/display-private.h magick/distort.c \
+	magick/distort.h magick/draw.c magick/draw.h \
+	magick/draw-private.h magick/effect.c magick/effect.h \
+	magick/enhance.c magick/enhance.h magick/exception.c \
+	magick/exception.h magick/exception-private.h magick/feature.c \
+	magick/feature.h magick/fourier.c magick/fourier.h magick/fx.c \
+	magick/fx.h magick/fx-private.h magick/gem.c magick/gem.h \
 	magick/gem-private.h magick/geometry.c magick/geometry.h \
 	magick/geometry-private.h magick/hashmap.c magick/hashmap.h \
 	magick/hashmap-private.h magick/histogram.c magick/histogram.h \
@@ -4747,6 +4747,7 @@ MAGICK_BASE_SRCS = \
   magick/configure.h \
   magick/constitute.c \
   magick/constitute.h \
+  magick/constitute-private.h \
   magick/decorate.c \
   magick/decorate.h \
   magick/distribute-cache.c \
@@ -5059,6 +5060,7 @@ MAGICK_NOINST_HDRS = \
   magick/colorspace-private.h \
   magick/compare-private.h \
   magick/composite-private.h \
+  magick/constitute-private.h \
   magick/delegate-private.h \
   magick/display-private.h \
   magick/distribute-cache-private.h \

@@ -128,6 +128,7 @@ MAGICK_BASE_SRCS = \
   magick/configure.h \
   magick/constitute.c \
   magick/constitute.h \
+  magick/constitute-private.h \
   magick/decorate.c \
   magick/decorate.h \
   magick/distribute-cache.c \
@@ -445,6 +446,7 @@ MAGICK_NOINST_HDRS = \
   magick/colorspace-private.h \
   magick/compare-private.h \
   magick/composite-private.h \
+  magick/constitute-private.h \
   magick/delegate-private.h \
   magick/display-private.h \
   magick/distribute-cache-private.h \
