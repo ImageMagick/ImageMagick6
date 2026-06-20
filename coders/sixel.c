@@ -756,10 +756,10 @@ static MagickBooleanType sixel_encode_impl(unsigned char *pixels, size_t width,s
 
     if (context->has_8bit_control) {
         nwrite=FormatLocaleString((char *) context->buffer,
-          sizeof(context->buffer),"\x90" "0;0;0" "q");
+          sizeof(context->buffer),"\x90" "0;1;0" "q");
     } else {
         nwrite=FormatLocaleString((char *) context->buffer,
-          sizeof(context->buffer),"\x1bP" "0;0;0" "q");
+          sizeof(context->buffer),"\x1bP" "0;1;0" "q");
     }
     if (nwrite <= 0) {
         return (MagickFalse);
