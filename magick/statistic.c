@@ -2204,12 +2204,8 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     }
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfPerceptualHashes; i++)
-    {
       perceptual_hash[channel].Q[i]=(-MagickSafeLog10(fabs(
         moments[channel].I[i])));
-      perceptual_hash[CompositeChannels].Q[i]=(-MagickSafeLog10(fabs(
-        moments[CompositeChannels].I[i])))/(double) number_channels;
-    }
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }
