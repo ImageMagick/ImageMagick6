@@ -2138,11 +2138,12 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
   MagickBooleanType
     status;
 
-  ssize_t
-    i;
+  size_t
+    number_channels;
 
   ssize_t
-    channel;
+    channel,
+    i;
 
   /*
     Blur then transform to xyY colorspace.
@@ -2155,6 +2156,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
   if (status == MagickFalse)
     return((ChannelPerceptualHash *) NULL);
   moments=GetImageChannelMoments(hash_image,exception);
+  number_channels=GetNumberChannels(hash_image,DefaultChannels);
   hash_image=DestroyImage(hash_image);
   if (moments == (ChannelMoments *) NULL)
     return((ChannelPerceptualHash *) NULL);
@@ -2162,10 +2164,16 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     CompositeChannels+1UL,sizeof(*perceptual_hash));
   if (perceptual_hash == (ChannelPerceptualHash *) NULL)
     return((ChannelPerceptualHash *) NULL);
+  (void) memset(perceptual_hash,0,(CompositeChannels+1UL)*
+    sizeof(*perceptual_hash));
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfPerceptualHashes; i++)
+    {
       perceptual_hash[channel].P[i]=(-MagickSafeLog10(fabs(
         moments[channel].I[i])));
+      perceptual_hash[CompositeChannels].P[i]=(-MagickSafeLog10(fabs(
+        moments[CompositeChannels].I[i])))/(double) number_channels;
+    }
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
     Blur then transform to HSB colorspace.
@@ -2186,6 +2194,7 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       return((ChannelPerceptualHash *) NULL);
     }
   moments=GetImageChannelMoments(hash_image,exception);
+  number_channels=GetNumberChannels(hash_image,DefaultChannels);
   hash_image=DestroyImage(hash_image);
   if (moments == (ChannelMoments *) NULL)
     {
@@ -2195,8 +2204,12 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     }
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfPerceptualHashes; i++)
+    {
       perceptual_hash[channel].Q[i]=(-MagickSafeLog10(fabs(
         moments[channel].I[i])));
+      perceptual_hash[CompositeChannels].Q[i]=(-MagickSafeLog10(fabs(
+        moments[CompositeChannels].I[i])))/(double) number_channels;
+    }
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   return(perceptual_hash);
 }

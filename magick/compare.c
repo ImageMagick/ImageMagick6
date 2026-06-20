@@ -122,25 +122,6 @@ MagickExport Image *CompareImages(Image *image,const Image *reconstruct_image,
   return(highlight_image);
 }
 
-static size_t GetNumberChannels(const Image *image,const ChannelType channel)
-{
-  size_t
-    channels;
-
-  channels=0;
-  if ((channel & RedChannel) != 0)
-    channels++;
-  if ((channel & GreenChannel) != 0)
-    channels++;
-  if ((channel & BlueChannel) != 0)
-    channels++;
-  if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
-    channels++;
-  if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
-    channels++;
-  return(channels == 0 ? 1UL : channels);
-}
-
 static inline MagickBooleanType ValidateImageMorphology(
   const Image *magick_restrict image,
   const Image *magick_restrict reconstruct_image)

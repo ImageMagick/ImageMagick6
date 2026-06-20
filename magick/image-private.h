@@ -257,6 +257,26 @@ static inline double DegreesToRadians(const double degrees)
   return((double) (MagickPI*degrees/180.0));
 }
 
+static inline size_t GetNumberChannels(const Image *image,
+  const ChannelType channel)
+{
+  size_t
+    channels;
+
+  channels=0;
+  if ((channel & RedChannel) != 0)
+    channels++;
+  if ((channel & GreenChannel) != 0)
+    channels++;
+  if ((channel & BlueChannel) != 0)
+    channels++;
+  if (((channel & OpacityChannel) != 0) && (image->matte != MagickFalse))
+    channels++;
+  if (((channel & IndexChannel) != 0) && (image->colorspace == CMYKColorspace))
+    channels++;
+  return(channels == 0 ? 1UL : channels);
+}
+
 static inline MagickRealType RadiansToDegrees(const MagickRealType radians)
 {
   return((MagickRealType) (180.0*radians/MagickPI));
