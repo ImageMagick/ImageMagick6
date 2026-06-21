@@ -468,6 +468,7 @@ jobs:
         with:
           client-id: ${{vars.APP_CLIENT_ID}}
           private-key: ${{secrets.APP_PRIVATE_KEY}}
+          repositories: Website6
           permission-contents: write
 
       - name: Clone Website6
