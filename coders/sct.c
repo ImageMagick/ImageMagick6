@@ -146,24 +146,23 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   IndexPacket
     *indexes;
 
-  ssize_t
-    i,
-    x;
-
   PixelPacket
     *q;
 
+  size_t
+    number_pixels,
+    separations,
+    separations_mask,
+    units;
+
   ssize_t
     count,
+    i,
+    x,
     y;
 
   unsigned char
     buffer[768];
-
-  size_t
-    separations,
-    separations_mask,
-    units;
 
   /*
     Open image file.
@@ -237,17 +236,19 @@ static Image *ReadSCTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
-  status=SetImageExtent(image,image->columns,image->rows);
-  if (status == MagickFalse)
-    {
-      InheritException(exception,&image->exception);
-      return(DestroyImageList(image));
-    }
-  extent=(MagickSizeType) image->rows*image->columns*separations;
+  if (HeapOverflowSanityCheckGetSize(image->columns,image->rows,&number_pixels) != MagickFalse)
+    ThrowReaderException(ResourceLimitError,"MemoryAllocationFailed");
+  extent=(MagickSizeType) number_pixels*separations;
   if (extent > GetBlobSize(image))
     {
       ThrowFileException(exception,CorruptImageError,"UnexpectedEndOfFile",
         image->filename);
+      return(DestroyImageList(image));
+    }
+  status=SetImageExtent(image,image->columns,image->rows);
+  if (status == MagickFalse)
+    {
+      InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
   /*
