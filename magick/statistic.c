@@ -43,7 +43,7 @@
 #include "magick/studio.h"
 #include "magick/accelerate-private.h"
 #include "magick/animate.h"
-#include "magick/animate.h"
+#include "magick/attribute.h"
 #include "magick/blob.h"
 #include "magick/blob-private.h"
 #include "magick/cache.h"
@@ -2138,9 +2138,6 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
   MagickBooleanType
     status;
 
-  size_t
-    number_channels;
-
   ssize_t
     channel,
     i;
@@ -2151,12 +2148,19 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
   hash_image=BlurImage(image,0.0,1.0,exception);
   if (hash_image == (Image *) NULL)
     return((ChannelPerceptualHash *) NULL);
-  hash_image->depth=8;
   status=TransformImageColorspace(hash_image,xyYColorspace);
   if (status == MagickFalse)
-    return((ChannelPerceptualHash *) NULL);
+    {
+      hash_image=DestroyImage(hash_image);
+      return((ChannelPerceptualHash *) NULL);
+    }
+  status=SetImageDepth(hash_image,8);
+  if (status == MagickFalse)
+    {
+      hash_image=DestroyImage(hash_image);
+      return((ChannelPerceptualHash *) NULL);
+    }
   moments=GetImageChannelMoments(hash_image,exception);
-  number_channels=GetNumberChannels(hash_image,DefaultChannels);
   hash_image=DestroyImage(hash_image);
   if (moments == (ChannelMoments *) NULL)
     return((ChannelPerceptualHash *) NULL);
@@ -2168,12 +2172,8 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
     sizeof(*perceptual_hash));
   for (channel=0; channel <= CompositeChannels; channel++)
     for (i=0; i < MaximumNumberOfPerceptualHashes; i++)
-    {
       perceptual_hash[channel].P[i]=(-MagickSafeLog10(fabs(
         moments[channel].I[i])));
-      perceptual_hash[CompositeChannels].P[i]=(-MagickSafeLog10(fabs(
-        moments[CompositeChannels].I[i])))/(double) number_channels;
-    }
   moments=(ChannelMoments *) RelinquishMagickMemory(moments);
   /*
     Blur then transform to HSB colorspace.
@@ -2185,16 +2185,23 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
         perceptual_hash);
       return((ChannelPerceptualHash *) NULL);
     }
-  hash_image->depth=8;
   status=TransformImageColorspace(hash_image,HSBColorspace);
   if (status == MagickFalse)
     {
+      hash_image=DestroyImage(hash_image);
+      perceptual_hash=(ChannelPerceptualHash *) RelinquishMagickMemory(
+        perceptual_hash);
+      return((ChannelPerceptualHash *) NULL);
+    }
+  status=SetImageDepth(hash_image,8);
+  if (status == MagickFalse)
+    {
+      hash_image=DestroyImage(hash_image);
       perceptual_hash=(ChannelPerceptualHash *) RelinquishMagickMemory(
         perceptual_hash);
       return((ChannelPerceptualHash *) NULL);
     }
   moments=GetImageChannelMoments(hash_image,exception);
-  number_channels=GetNumberChannels(hash_image,DefaultChannels);
   hash_image=DestroyImage(hash_image);
   if (moments == (ChannelMoments *) NULL)
     {
