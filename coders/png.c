@@ -13611,7 +13611,7 @@ static MagickBooleanType WriteMNGImage(const ImageInfo *image_info,Image *image)
     defined(PNG_MNG_FEATURES_SUPPORTED)
       all_images_are_gray=MagickTrue;
       mng_info->equal_palettes=MagickFalse;
-      need_local_plte=MagickFalse;
+      need_local_plte=MagickTrue;
 #endif
       for (next_image=image; next_image != (Image *) NULL; )
       {
