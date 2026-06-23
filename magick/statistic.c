@@ -2154,12 +2154,6 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       hash_image=DestroyImage(hash_image);
       return((ChannelPerceptualHash *) NULL);
     }
-  status=SetImageDepth(hash_image,8);
-  if (status == MagickFalse)
-    {
-      hash_image=DestroyImage(hash_image);
-      return((ChannelPerceptualHash *) NULL);
-    }
   moments=GetImageChannelMoments(hash_image,exception);
   hash_image=DestroyImage(hash_image);
   if (moments == (ChannelMoments *) NULL)
@@ -2186,14 +2180,6 @@ MagickExport ChannelPerceptualHash *GetImageChannelPerceptualHash(
       return((ChannelPerceptualHash *) NULL);
     }
   status=TransformImageColorspace(hash_image,HSBColorspace);
-  if (status == MagickFalse)
-    {
-      hash_image=DestroyImage(hash_image);
-      perceptual_hash=(ChannelPerceptualHash *) RelinquishMagickMemory(
-        perceptual_hash);
-      return((ChannelPerceptualHash *) NULL);
-    }
-  status=SetImageDepth(hash_image,8);
   if (status == MagickFalse)
     {
       hash_image=DestroyImage(hash_image);
