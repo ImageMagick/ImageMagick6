@@ -408,6 +408,10 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
       (void) CloseBlob(image);
       return(GetFirstImageInList(image));
     }
+  packets=(bits_per_pixel*image->columns+7)/8;
+  if (((packets+257UL) > GetBlobSize(image)) ||
+      (image->rows > GetBlobSize(image)))
+    ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   status=SetImageExtent(image,image->columns,image->rows);
   if (status != MagickFalse)
     status=ResetImagePixels(image,exception);
@@ -416,10 +420,6 @@ static Image *ReadPDBImage(const ImageInfo *image_info,ExceptionInfo *exception)
       InheritException(exception,&image->exception);
       return(DestroyImageList(image));
     }
-  packets=(bits_per_pixel*image->columns+7)/8;
-  if (((packets+257UL) > GetBlobSize(image)) ||
-      (image->rows > GetBlobSize(image)))
-    ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   pixels=(unsigned char *) AcquireQuantumMemory(packets+257UL,image->rows*
     sizeof(*pixels));
   if (pixels == (unsigned char *) NULL)
