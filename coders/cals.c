@@ -253,23 +253,27 @@ static Image *ReadCALSImage(const ImageInfo *image_info,
   file=(FILE *) NULL;
   unique_file=AcquireUniqueFileResource(filename);
   if (unique_file != -1)
-    file=fdopen(unique_file,"wb");
+    file=fdopen(unique_file,"rb+");
   if ((unique_file == -1) || (file == (FILE *) NULL))
     ThrowImageException(FileOpenError,"UnableToCreateTemporaryFile");
   while ((c=ReadBlobByte(image)) != EOF)
     if (fputc(c,file) != c)
       break;
-  (void) fclose(file);
+  if (fflush(file) != 0)
+    ThrowImageException(FileOpenError,"UnableToCreateTemporaryFile");
+  if (fseek(file,0,SEEK_SET) != 0)
+    ThrowImageException(FileOpenError,"UnableToCreateTemporaryFile");
   (void) CloseBlob(image);
   image=DestroyImage(image);
   read_info=CloneImageInfo(image_info);
+  read_info->file=file;
   SetImageInfoBlob(read_info,(void *) NULL,0);
-  (void) FormatLocaleString(read_info->filename,MaxTextExtent,"group4:%s",
+  (void) FormatLocaleString(read_info->filename,MagickPathExtent,"group4:%s",
     filename);
-  (void) FormatLocaleString(message,MaxTextExtent,"%lux%lu",width,height);
-  read_info->size=ConstantString(message);
-  (void) FormatLocaleString(message,MaxTextExtent,"%lu",density);
-  read_info->density=ConstantString(message);
+  (void) FormatLocaleString(message,MagickPathExtent,"%lux%lu",width,height);
+  (void) CloneString(&read_info->size,message);
+  (void) FormatLocaleString(message,MagickPathExtent,"%lu",density);
+  (void) CloneString(&read_info->density,message);
   read_info->orientation=(OrientationType) orientation;
   image=ReadImage(read_info,exception);
   if (image != (Image *) NULL)
