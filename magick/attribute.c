@@ -1664,7 +1664,6 @@ MagickExport MagickBooleanType SetImageType(Image *image,const ImageType type)
       if (image->matte == MagickFalse)
         (void) SetImageAlphaChannel(image,OpaqueAlphaChannel);
       quantize_info=AcquireQuantizeInfo(image_info);
-      quantize_info->colorspace=TransparentColorspace;
       status=QuantizeImage(quantize_info,image);
       quantize_info=DestroyQuantizeInfo(quantize_info);
       break;
