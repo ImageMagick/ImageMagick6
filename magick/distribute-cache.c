@@ -590,18 +590,6 @@ MagickPrivate DistributeCacheInfo *DestroyDistributeCacheInfo(
 %
 */
 
-static MagickBooleanType DestroyDistributeCache(SplayTreeInfo *registry,
-  const uint64_t session_key)
-{
-  MagickAddressType
-    key = (MagickAddressType) session_key;
-
-  /*
-    Destroy distributed pixel cache.
-  */
-  return(DeleteNodeFromSplayTree(registry,(const void *) key));
-}
-
 #if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
 static inline MagickOffsetType dpc_send(int magick_unused(file),
   const MagickSizeType magick_unused(length),
@@ -642,6 +630,18 @@ static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
 #endif
 
 #if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
+static MagickBooleanType DestroyDistributeCache(SplayTreeInfo *registry,
+  const uint64_t session_key)
+{
+  MagickAddressType
+    key = (MagickAddressType) session_key;
+
+  /*
+    Destroy distributed pixel cache.
+  */
+  return(DeleteNodeFromSplayTree(registry,(const void *) key));
+}
+
 static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
   const uint64_t session_key,ExceptionInfo *exception)
 {
