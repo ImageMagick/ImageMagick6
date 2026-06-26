@@ -150,6 +150,17 @@ static WSADATA
 %
 */
 
+#if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
+static inline MagickOffsetType dpc_read(int magick_unused(file),
+  const MagickSizeType magick_unused(length),
+  unsigned char *magick_restrict magick_unused(message))
+{
+  magick_unreferenced(file);
+  magick_unreferenced(length);
+  magick_unreferenced(message);
+  return(-1);
+}
+#else
 static inline MagickOffsetType dpc_read(int file,const MagickSizeType length,
   unsigned char *magick_restrict message)
 {
@@ -159,10 +170,6 @@ static inline MagickOffsetType dpc_read(int file,const MagickSizeType length,
   ssize_t
     count;
 
-#if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
-  magick_unreferenced(file);
-  magick_unreferenced(message);
-#endif
   count=0;
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
@@ -177,6 +184,7 @@ static inline MagickOffsetType dpc_read(int file,const MagickSizeType length,
   }
   return(i);
 }
+#endif
 
 #if defined(MAGICKCORE_HAVE_WINSOCK2)
 static void InitializeWinsock2(MagickBooleanType use_lock)
@@ -594,6 +602,17 @@ static MagickBooleanType DestroyDistributeCache(SplayTreeInfo *registry,
   return(DeleteNodeFromSplayTree(registry,(const void *) key));
 }
 
+#if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
+static inline MagickOffsetType dpc_send(int magick_unused(file),
+  const MagickSizeType magick_unused(length),
+  const void *magick_restrict magick_unused(message))
+{
+  magick_unreferenced(file);
+  magick_unreferenced(length);
+  magick_unreferenced(message);
+  return(-1);
+}
+#else
 static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
   const void *magick_restrict message)
 {
@@ -602,11 +621,6 @@ static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
 
   MagickOffsetType
     i;
-
-#if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
-  magick_unreferenced(file);
-  magick_unreferenced(message);
-#endif
 
   /*
     Ensure a complete message is sent.
@@ -625,7 +639,9 @@ static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
   }
   return(i);
 }
+#endif
 
+#if defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
 static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
   const uint64_t session_key,ExceptionInfo *exception)
 {
@@ -1113,7 +1129,17 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket_arg)
   registry=DestroySplayTree(registry);
   return(HANDLER_RETURN_VALUE);
 }
+#endif
 
+#if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
+MagickExport void DistributePixelCacheServer(const int magick_unused(port),
+  ExceptionInfo *magick_unused(exception))
+{
+  magick_unreferenced(port);
+  magick_unreferenced(exception);
+  ThrowFatalException(MissingDelegateError,"DelegateLibrarySupportNotBuiltIn");
+}
+#else
 MagickExport void DistributePixelCacheServer(const int port,
   ExceptionInfo *exception)
 {
@@ -1240,6 +1266,7 @@ MagickExport void DistributePixelCacheServer(const int port,
 #endif
   }
 }
+#endif
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
