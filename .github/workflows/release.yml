@@ -206,6 +206,7 @@ jobs:
 
   windows_source:
     name: Windows source
+    if: github.event_name != 'pull_request'
     runs-on: windows-2025
     needs:
       - changelog
