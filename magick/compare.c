@@ -360,7 +360,6 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     *reconstruct_view;
 
   double
-    area,
     fuzz;
 
   MagickBooleanType
@@ -371,7 +370,6 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     rows;
 
   ssize_t
-    j,
     y;
 
   /*
@@ -421,9 +419,6 @@ static MagickBooleanType GetAESimilarity(const Image *image,
         error,
         Sa;
 
-      size_t
-        count = 0;
-
       Sa=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(p) :
         ((double) QuantumRange-(double) OpaqueOpacity));
       Da=QuantumScale*(image->matte != MagickFalse ? (double) GetPixelAlpha(q) :
@@ -434,8 +429,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
             GetPixelRed(q);
           if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
-              channel_similarity[RedChannel]++;
-              count++;
+              channel_similarity[RedChannel]+=fabs(error);
+              channel_similarity[CompositeChannels]+=fabs(error);
             }
         }
       if ((channel & GreenChannel) != 0)
@@ -444,8 +439,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
             GetPixelGreen(q);
           if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
-              channel_similarity[GreenChannel]++;
-              count++;
+              channel_similarity[GreenChannel]+=fabs(error);
+              channel_similarity[CompositeChannels]+=fabs(error);
             }
         }
       if ((channel & BlueChannel) != 0)
@@ -454,8 +449,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
             GetPixelBlue(q);
           if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
-              channel_similarity[BlueChannel]++;
-              count++;
+              channel_similarity[BlueChannel]+=fabs(error);
+              channel_similarity[CompositeChannels]+=fabs(error);
             }
         }
       if (((channel & OpacityChannel) != 0) &&
@@ -464,8 +459,8 @@ static MagickBooleanType GetAESimilarity(const Image *image,
           error=(double) GetPixelOpacity(p)-(double) GetPixelOpacity(q);
           if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
-              channel_similarity[OpacityChannel]++;
-              count++;
+              channel_similarity[OpacityChannel]+=fabs(error);
+              channel_similarity[CompositeChannels]+=fabs(error);
             }
         }
       if (((channel & IndexChannel) != 0) &&
@@ -474,12 +469,10 @@ static MagickBooleanType GetAESimilarity(const Image *image,
           error=Sa*(double) indexes[x]-Da*(double) reconstruct_indexes[x];
           if (MagickSafeSignificantError(error*error,fuzz) != MagickFalse)
             {
-              channel_similarity[IndexChannel]++;
-              count++;
+              channel_similarity[IndexChannel]+=fabs(error);
+              channel_similarity[CompositeChannels]+=fabs(error);
             }
         }
-      if (count != 0)
-        channel_similarity[CompositeChannels]++;
       p++;
       q++;
     }
@@ -489,11 +482,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     for (i=0; i <= (ssize_t) CompositeChannels; i++)
       similarity[i]+=channel_similarity[i];
   }
+  similarity[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  area=MagickSafeReciprocal((double) columns*rows);
-  for (j=0; j <= CompositeChannels; j++)
-    similarity[j]*=area;
   return(status);
 }
 
