@@ -469,14 +469,6 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     for (depth=1; ((double) GetQuantumRange(depth)+1) < max_value; depth++) ;
     image->depth=depth;
-    status=SetImageExtent(image,image->columns,image->rows);
-    if (status != MagickFalse)
-      status=ResetImagePixels(image,&image->exception);
-    if (status == MagickFalse)
-      {
-        InheritException(exception,&image->exception);
-        return(DestroyImageList(image));
-      }
     LocaleLower(colorspace);
     i=(ssize_t) strlen(colorspace)-1;
     image->matte=MagickFalse;
@@ -489,6 +481,14 @@ static Image *ReadTXTImage(const ImageInfo *image_info,ExceptionInfo *exception)
     if (type < 0)
       ThrowReaderException(CorruptImageError,"ImproperImageHeader");
     image->colorspace=(ColorspaceType) type;
+    status=SetImageExtent(image,image->columns,image->rows);
+    if (status != MagickFalse)
+      status=ResetImagePixels(image,&image->exception);
+    if (status == MagickFalse)
+      {
+        InheritException(exception,&image->exception);
+        return(DestroyImageList(image));
+      }
     (void) memset(&pixel,0,sizeof(pixel));
     (void) SetImageBackgroundColor(image);
     range=GetQuantumRange(image->depth);
