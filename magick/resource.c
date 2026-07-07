@@ -698,7 +698,7 @@ MagickExport int AcquireUniqueFileResource(char *path)
   LockSemaphoreInfo(resource_semaphore[FileResource]);
   if (temporary_resources == (SplayTreeInfo *) NULL)
     temporary_resources=NewSplayTree(CompareSplayTreeString,
-      DestroyTemporaryResources,(void *(*)(void *)) NULL);
+      DestroyTemporaryResources,RelinquishMagickMemory);
   UnlockSemaphoreInfo(resource_semaphore[FileResource]);
   attributes=(struct stat *) AcquireCriticalMemory(sizeof(struct stat));
   status=GetPathAttributes(path,attributes);
