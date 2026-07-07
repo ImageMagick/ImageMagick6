@@ -2978,7 +2978,7 @@ MagickExport int XCommandWidget(Display *display,XWindows *windows,
       if (selection_info == (XWidgetInfo *) NULL)
         ThrowXWindowFatalException(ResourceLimitFatalError,
           "MemoryAllocationFailed","...");
-      state|=UpdateConfigurationState | RedrawWidgetState;
+      state|=(int) UpdateConfigurationState | (int) RedrawWidgetState;
     }
   /*
     Wait for next event.
