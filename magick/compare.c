@@ -360,6 +360,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     *reconstruct_view;
 
   double
+    area,
     fuzz;
 
   MagickBooleanType
@@ -370,6 +371,7 @@ static MagickBooleanType GetAESimilarity(const Image *image,
     rows;
 
   ssize_t
+    j,
     y;
 
   /*
@@ -485,6 +487,9 @@ static MagickBooleanType GetAESimilarity(const Image *image,
   similarity[CompositeChannels]/=(double) GetNumberChannels(image,channel);
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
+  area=MagickSafeReciprocal((double) columns*rows);
+  for (j=0; j <= CompositeChannels; j++)
+    similarity[j]*=area;
   return(status);
 }
 
