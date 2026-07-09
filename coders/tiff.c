@@ -1873,14 +1873,14 @@ static Image *ReadTIFFImage(const ImageInfo *image_info,
                   size=TIFFReadEncodedStrip(tiff,strip_id,strip_pixels,
                     strip_size);
                   (void) size;
-                  if (strip_size == -1)
+                  if (size == -1)
                     break;
                   rows_remaining=rows_per_strip;
                   p=strip_pixels;
                   strip_id++;
                 }
-              (void) ImportQuantumPixels(image,(CacheView *) NULL,
-                quantum_info,quantum_type,p,exception);
+              (void) ImportQuantumPixels(image,(CacheView *) NULL,quantum_info,
+                quantum_type,p,exception);
               p+=(ptrdiff_t) stride;
               rows_remaining--;
               if (SyncAuthenticPixels(image,exception) == MagickFalse)

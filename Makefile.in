@@ -1498,10 +1498,10 @@ am__magick_libMagickCore_@MAGICK_MAJOR_VERSION@_@MAGICK_ABI_SUFFIX@_la_SOURCES_D
 	magick/random-private.h magick/registry.c magick/registry.h \
 	magick/resample.c magick/resample.h magick/resample-private.h \
 	magick/resize.c magick/resize.h magick/resize-private.h \
-	magick/resource.c magick/resource_.h magick/segment.c \
-	magick/segment.h magick/semaphore.c magick/semaphore.h \
-	magick/semaphore-private.h magick/shear.c magick/shear.h \
-	magick/signature.c magick/signature.h \
+	magick/resource.c magick/resource_.h magick/resource-private.h \
+	magick/segment.c magick/segment.h magick/semaphore.c \
+	magick/semaphore.h magick/semaphore-private.h magick/shear.c \
+	magick/shear.h magick/signature.c magick/signature.h \
 	magick/signature-private.h magick/splay-tree.c \
 	magick/splay-tree.h magick/static.c magick/static.h \
 	magick/statistic.c magick/statistic.h \
@@ -4880,6 +4880,7 @@ MAGICK_BASE_SRCS = \
   magick/resize-private.h \
   magick/resource.c \
   magick/resource_.h \
+  magick/resource-private.h \
   magick/segment.c \
   magick/segment.h \
   magick/semaphore.c \
@@ -5089,6 +5090,7 @@ MAGICK_NOINST_HDRS = \
   magick/random-private.h \
   magick/resample-private.h \
   magick/resize-private.h \
+  magick/resource-private.h \
   magick/semaphore-private.h \
   magick/signature-private.h \
   magick/statistic-private.h \

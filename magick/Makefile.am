@@ -261,6 +261,7 @@ MAGICK_BASE_SRCS = \
   magick/resize-private.h \
   magick/resource.c \
   magick/resource_.h \
+  magick/resource-private.h \
   magick/segment.c \
   magick/segment.h \
   magick/semaphore.c \
@@ -475,6 +476,7 @@ MAGICK_NOINST_HDRS = \
   magick/random-private.h \
   magick/resample-private.h \
   magick/resize-private.h \
+  magick/resource-private.h \
   magick/semaphore-private.h \
   magick/signature-private.h \
   magick/statistic-private.h \

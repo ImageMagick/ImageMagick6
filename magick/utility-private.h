@@ -32,6 +32,8 @@
 extern "C" {
 #endif
 
+#define MagickPathTemplate "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"  /* min 6 X's */
+
 extern MagickPrivate MagickBooleanType
   ShredFile(const char *);
 
