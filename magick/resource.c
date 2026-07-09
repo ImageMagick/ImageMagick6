@@ -56,6 +56,7 @@
 #include "magick/random_.h"
 #include "magick/registry.h"
 #include "magick/resource_.h"
+#include "magick/resource-private.h"
 #include "magick/semaphore.h"
 #include "magick/signature-private.h"
 #include "magick/string_.h"
