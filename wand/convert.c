@@ -46,6 +46,7 @@
 #include "wand/MagickWand.h"
 #include "wand/mogrify-private.h"
 #include "magick/exception-private.h"
+#include <magick/policy-private.h>
 #include "magick/string-private.h"
 #include "magick/utility-private.h"
 
@@ -102,6 +103,8 @@ static MagickBooleanType ConcatenateImages(int argc,char **argv,
   /*
     Open output file.
   */
+  if (IsPathAuthorized(WritePolicyRights,argv[argc-1]) == MagickFalse)
+    ThrowPolicyException(argv[argc-1],MagickFalse);
   output=fopen_utf8(argv[argc-1],"wb");
   if (output == (FILE *) NULL)
     {
@@ -112,6 +115,8 @@ static MagickBooleanType ConcatenateImages(int argc,char **argv,
   status=MagickTrue;
   for (i=2; i < ((ssize_t) argc-1); i++)
   {
+    if (IsPathAuthorized(ReadPolicyRights,argv[i]) == MagickFalse)
+      ThrowPolicyException(argv[i],MagickFalse);
     input=fopen_utf8(argv[i],"rb");
     if (input == (FILE *) NULL)
       {
