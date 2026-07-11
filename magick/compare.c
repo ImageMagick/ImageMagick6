@@ -2388,6 +2388,10 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
   SimilarityInfo
     similarity_info = { 0 };
 
+  size_t
+    columns,
+    rows;
+
   ssize_t
     y;
 
@@ -2411,8 +2415,8 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
         OptionWarning,"GeometryDoesNotContainImage","`%s'",image->filename);
       return((Image *) NULL);
     }
-  similarity_image=CloneImage(image,image->columns-reconstruct->columns+1,
-    image->rows-reconstruct->rows+1,MagickTrue,exception);
+  SetImageCompareBounds(image,reconstruct,&columns,&rows);
+  similarity_image=CloneImage(image,columns,rows,MagickTrue,exception);
   if (similarity_image == (Image *) NULL)
     return((Image *) NULL);
   similarity_image->depth=32;
