@@ -213,7 +213,7 @@ ptrcheck:
 	$(MAKE) MEMCHECK='valgrind --tool=exp-ptrcheck --quiet $(VALGRIND_EXTRA_OPTS)' check
 
 # Non-Automake subdirectories to distribute
-DISTDIRS = images scripts www PerlMagick
+DISTDIRS = scripts www PerlMagick
 dist-hook:
 	( \
 	  builddir=`pwd` ; \
@@ -233,7 +233,7 @@ dist-hook:
 # Install HTML files
 pkgdocdir = $(DOCUMENTATION_PATH)
 DOCDIRSDOXYGEN = www/api/MagickCore www/api/MagickWand
-DOCDIRSMANUAL = images images/patterns www www/assets www/api www/source www/Magick++
+DOCDIRSMANUAL = www www/assets www/api www/source www/magick++
 DOCDIRS= $(DOCDIRSMANUAL) $(DOCDIRSDOXYGEN)
 
 if INSTALL_DOC
@@ -243,7 +243,7 @@ endif
 install-data-html:
 	$(mkinstalldirs) $(DESTDIR)$(pkgdocdir)
 	$(INSTALL_DATA) $(srcdir)/index.html $(DESTDIR)$(pkgdocdir)
-	for dir in $(DOCDIRS) ; do \
+	for dir in $$(find www -type d) ; do \
 	  $(mkinstalldirs) $(DESTDIR)$(pkgdocdir)/$$dir && \
 	  if test -d $(builddir)/$$dir ; then \
   		docsrcdir=$(builddir)/$$dir; \
@@ -262,7 +262,7 @@ install-data-html:
 HTML_UNINSTALL_DATA_TARGETS = uninstall-data-html
 uninstall-data-html:
 	rm -f $(DESTDIR)$(pkgdocdir)/index.html
-	for dir in $(DOCDIRS) ; do \
+	for dir in $$(find www -type d) ; do \
 	  rm -f -r $(DESTDIR)$(pkgdocdir)/$$dir ; \
 	done
 
