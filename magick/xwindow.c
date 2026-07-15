@@ -2004,9 +2004,9 @@ MagickExport void XDisplayImageInfo(Display *display,
     undo_image=GetPreviousImageInList(undo_image);
   }
   (void) FormatLocaleFile(file,"Undo Edit Cache\n  levels: %u\n",levels);
-  (void) FormatLocaleFile(file,"  bytes: %.20gmb\n",(double)
+  (void) FormatLocaleFile(file,"  bytes: %.17gmb\n",(double)
     ((bytes+(1 << 19)) >> 20));
-  (void) FormatLocaleFile(file,"  limit: %.20gmb\n\n",(double)
+  (void) FormatLocaleFile(file,"  limit: %.17gmb\n\n",(double)
     resource_info->undo_cache);
   /*
     Write info about the image to a file.
@@ -5856,7 +5856,7 @@ static void XMakeImageLSBFirst(const XResourceInfo *resource_info,
         resource_info->image_info->texture != (char *) NULL ?
         resource_info->image_info->texture : "pattern:checkerboard",
         MaxTextExtent);
-      (void) FormatLocaleString(size,MaxTextExtent,"%.20gx%.20g",(double)
+      (void) FormatLocaleString(size,MaxTextExtent,"%.17gx%.17g",(double)
         image->columns,(double) image->rows);
       image_info->size=ConstantString(size);
       pattern=ReadImage(image_info,&image->exception);
@@ -6465,7 +6465,7 @@ static void XMakeImageMSBFirst(const XResourceInfo *resource_info,
         resource_info->image_info->texture != (char *) NULL ?
         resource_info->image_info->texture : "pattern:checkerboard",
         MaxTextExtent);
-      (void) FormatLocaleString(size,MaxTextExtent,"%.20gx%.20g",(double)
+      (void) FormatLocaleString(size,MaxTextExtent,"%.17gx%.17g",(double)
         image->columns,(double) image->rows);
       image_info->size=ConstantString(size);
       pattern=ReadImage(image_info,&image->exception);
@@ -7088,7 +7088,7 @@ MagickExport void XMakeMagnifyImage(Display *display,XWindows *windows)
       while ((1 << i) <= (int) magnify)
         i++;
       (void) FormatLocaleString(windows->magnify.name,MaxTextExtent,
-        "Magnify %.20gX",(double) i);
+        "Magnify %.17gX",(double) i);
       status=XStringListToTextProperty(&windows->magnify.name,1,&window_name);
       if (status != False)
         {
@@ -9074,7 +9074,7 @@ MagickPrivate MagickBooleanType XRenderImage(Image *image,
           atan2(draw_info->affine.rx,draw_info->affine.sx);
     }
   (void) FormatLocaleString(annotate_info.geometry,MaxTextExtent,
-    "%.20gx%.20g%+.20g%+.20g",(double) width,(double) height,
+    "%.17gx%.17g%+.20g%+.20g",(double) width,(double) height,
     ceil(offset->x-0.5),ceil(offset->y-metrics->ascent-metrics->descent+
     draw_info->interline_spacing-0.5));
   pixel.pen_color.red=ScaleQuantumToShort(draw_info->fill.red);
@@ -9491,7 +9491,7 @@ MagickExport void XUserPreferences(XResourceInfo *resource_info)
   value=resource_info->gamma_correct ? "True" : "False";
   XrmPutStringResource(&preferences_database,specifier,(char *) value);
   (void) FormatLocaleString(specifier,MaxTextExtent,"%s.undoCache",client_name);
-  (void) FormatLocaleString(cache,MaxTextExtent,"%.20g",(double)
+  (void) FormatLocaleString(cache,MaxTextExtent,"%.17g",(double)
     resource_info->undo_cache);
   XrmPutStringResource(&preferences_database,specifier,cache);
   (void) FormatLocaleString(specifier,MaxTextExtent,"%s.usePixmap",client_name);

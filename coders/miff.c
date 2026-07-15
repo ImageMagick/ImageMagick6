@@ -2189,12 +2189,12 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
     */
     (void) WriteBlobString(image,"id=ImageMagick  version=1.0\n");
     (void) FormatLocaleString(buffer,MaxTextExtent,
-      "class=%s  colors=%.20g  matte=%s\n",CommandOptionToMnemonic(
+      "class=%s  colors=%.17g  matte=%s\n",CommandOptionToMnemonic(
       MagickClassOptions,image->storage_class),(double) image->colors,
       CommandOptionToMnemonic(MagickBooleanOptions,(ssize_t) image->matte));
     (void) WriteBlobString(image,buffer);
-    (void) FormatLocaleString(buffer,MaxTextExtent,"columns=%.20g  rows=%.20g  "
-      "depth=%.20g\n",(double) image->columns,(double) image->rows,(double)
+    (void) FormatLocaleString(buffer,MaxTextExtent,"columns=%.17g  rows=%.17g  "
+      "depth=%.17g\n",(double) image->columns,(double) image->rows,(double)
       image->depth);
     (void) WriteBlobString(image,buffer);
     if (image->type != UndefinedType)
@@ -2225,7 +2225,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
     if (compression != UndefinedCompression)
       {
         (void) FormatLocaleString(buffer,MaxTextExtent,"compression=%s  "
-          "quality=%.20g\n",CommandOptionToMnemonic(MagickCompressOptions,
+          "quality=%.17g\n",CommandOptionToMnemonic(MagickCompressOptions,
           compression),(double) image->quality);
         (void) WriteBlobString(image,buffer);
       }
@@ -2244,7 +2244,7 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
     if ((image->page.width != 0) || (image->page.height != 0))
       {
         (void) FormatLocaleString(buffer,MaxTextExtent,
-          "page=%.20gx%.20g%+.20g%+.20g\n",(double) image->page.width,(double)
+          "page=%.17gx%.17g%+.20g%+.20g\n",(double) image->page.width,(double)
           image->page.height,(double) image->page.x,(double) image->page.y);
         (void) WriteBlobString(image,buffer);
       }
@@ -2265,12 +2265,12 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
         (GetPreviousImageInList(image) != (Image *) NULL))
       {
         if (image->scene == 0)
-          (void) FormatLocaleString(buffer,MaxTextExtent,"iterations=%.20g  "
-            "delay=%.20g  ticks-per-second=%.20g\n",(double) image->iterations,
+          (void) FormatLocaleString(buffer,MaxTextExtent,"iterations=%.17g  "
+            "delay=%.17g  ticks-per-second=%.17g\n",(double) image->iterations,
             (double) image->delay,(double) image->ticks_per_second);
         else
-          (void) FormatLocaleString(buffer,MaxTextExtent,"scene=%.20g  "
-            "iterations=%.20g  delay=%.20g  ticks-per-second=%.20g\n",(double)
+          (void) FormatLocaleString(buffer,MaxTextExtent,"scene=%.17g  "
+            "iterations=%.17g  delay=%.17g  ticks-per-second=%.17g\n",(double)
             image->scene,(double) image->iterations,(double) image->delay,
             (double) image->ticks_per_second);
         (void) WriteBlobString(image,buffer);
@@ -2279,26 +2279,26 @@ static MagickBooleanType WriteMIFFImage(const ImageInfo *image_info,
       {
         if (image->scene != 0)
           {
-            (void) FormatLocaleString(buffer,MaxTextExtent,"scene=%.20g\n",
+            (void) FormatLocaleString(buffer,MaxTextExtent,"scene=%.17g\n",
               (double) image->scene);
             (void) WriteBlobString(image,buffer);
           }
         if (image->iterations != 0)
           {
-            (void) FormatLocaleString(buffer,MaxTextExtent,"iterations=%.20g\n",
+            (void) FormatLocaleString(buffer,MaxTextExtent,"iterations=%.17g\n",
               (double) image->iterations);
             (void) WriteBlobString(image,buffer);
           }
         if (image->delay != 0)
           {
-            (void) FormatLocaleString(buffer,MaxTextExtent,"delay=%.20g\n",
+            (void) FormatLocaleString(buffer,MaxTextExtent,"delay=%.17g\n",
               (double) image->delay);
             (void) WriteBlobString(image,buffer);
           }
         if (image->ticks_per_second != UndefinedTicksPerSecond)
           {
             (void) FormatLocaleString(buffer,MaxTextExtent,
-              "ticks-per-second=%.20g\n",(double) image->ticks_per_second);
+              "ticks-per-second=%.17g\n",(double) image->ticks_per_second);
             (void) WriteBlobString(image,buffer);
           }
       }

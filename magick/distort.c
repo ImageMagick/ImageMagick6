@@ -441,7 +441,7 @@ static double *GenerateCoefficients(const Image *image,
       if ((number_arguments < (1+i*cp_size)) ||
           (((number_arguments-1) % cp_size) != 0)) {
         (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
-               "InvalidArgument", "%s : 'require at least %.20g CPs'",
+               "InvalidArgument", "%s : 'require at least %.17g CPs'",
                "Polynomial", (double) i);
         return((double *) NULL);
       }
@@ -519,7 +519,7 @@ static double *GenerateCoefficients(const Image *image,
       if ( number_arguments%cp_size != 0 ||
            number_arguments < cp_size ) {
         (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
-               "InvalidArgument", "%s : 'require at least %.20g CPs'",
+               "InvalidArgument", "%s : 'require at least %.17g CPs'",
                "Affine", 1.0);
         coeff=(double *) RelinquishMagickMemory(coeff);
         return((double *) NULL);
@@ -796,7 +796,7 @@ static double *GenerateCoefficients(const Image *image,
       if ( number_arguments%cp_size != 0 ||
            number_arguments < cp_size*4 ) {
         (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
-              "InvalidArgument", "%s : 'require at least %.20g CPs'",
+              "InvalidArgument", "%s : 'require at least %.17g CPs'",
               CommandOptionToMnemonic(MagickDistortOptions, *method), 4.0);
         coeff=(double *) RelinquishMagickMemory(coeff);
         return((double *) NULL);
@@ -914,7 +914,7 @@ static double *GenerateCoefficients(const Image *image,
       if ( number_arguments%cp_size != 0 ||
            number_arguments < cp_size*4 ) {
         (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
-              "InvalidArgument", "%s : 'require at least %.20g CPs'",
+              "InvalidArgument", "%s : 'require at least %.17g CPs'",
               CommandOptionToMnemonic(MagickDistortOptions, *method), 4.0);
         coeff=(double *) RelinquishMagickMemory(coeff);
         return((double *) NULL);
@@ -1988,7 +1988,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
 
     /* Set destination image size and virtual offset */
     if ( bestfit || viewport_given ) {
-      (void) FormatLocaleString(image_gen, MaxTextExtent,"  -size %.20gx%.20g "
+      (void) FormatLocaleString(image_gen, MaxTextExtent,"  -size %.17gx%.17g "
         "-page %+.20g%+.20g xc: +insert \\\n",(double) geometry.width,
         (double) geometry.height,(double) geometry.x,(double) geometry.y);
       lookup="v.p{ xx-v.page.x-.5, yy-v.page.y-.5 }";
@@ -2179,7 +2179,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         (void) FormatLocaleFile(stderr,"Arc Distort, Internal Coefficients:\n");
         for (i=0; i < 5; i++)
           (void) FormatLocaleFile(stderr,
-            "  c%.20g = %+lf\n",(double) i,coeff[i]);
+            "  c%.17g = %+lf\n",(double) i,coeff[i]);
         (void) FormatLocaleFile(stderr,"Arc Distort, FX Equivalent:\n");
         (void) FormatLocaleFile(stderr,"%s", image_gen);
         (void) FormatLocaleFile(stderr,"  -fx 'ii=i+page.x; jj=j+page.y;\n");
@@ -2197,7 +2197,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
       {
         (void) FormatLocaleFile(stderr,"Polar Distort, Internal Coefficients\n");
         for (i=0; i < 8; i++)
-          (void) FormatLocaleFile(stderr,"  c%.20g = %+lf\n",(double) i,
+          (void) FormatLocaleFile(stderr,"  c%.17g = %+lf\n",(double) i,
             coeff[i]);
         (void) FormatLocaleFile(stderr,"Polar Distort, FX Equivalent:\n");
         (void) FormatLocaleFile(stderr,"%s", image_gen);
@@ -2218,7 +2218,7 @@ MagickExport Image *DistortImage(const Image *image,DistortImageMethod method,
         (void) FormatLocaleFile(stderr,
           "DePolar Distort, Internal Coefficients\n");
         for (i=0; i < 8; i++)
-          (void) FormatLocaleFile(stderr,"  c%.20g = %+lf\n",(double) i,
+          (void) FormatLocaleFile(stderr,"  c%.17g = %+lf\n",(double) i,
             coeff[i]);
         (void) FormatLocaleFile(stderr,"DePolar Distort, FX Equivalent:\n");
         (void) FormatLocaleFile(stderr,"%s", image_gen);

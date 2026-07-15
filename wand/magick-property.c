@@ -2553,7 +2553,7 @@ WandExport MagickBooleanType MagickSetPage(MagickWand *wand,
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  (void) FormatLocaleString(geometry,MaxTextExtent,"%.20gx%.20g%+.20g%+.20g",
+  (void) FormatLocaleString(geometry,MaxTextExtent,"%.17gx%.17g%+.20g%+.20g",
     (double) width,(double) height,(double) x,(double) y);
   (void) CloneString(&wand->image_info->page,geometry);
   return(MagickTrue);
@@ -2893,7 +2893,7 @@ WandExport MagickBooleanType MagickSetSize(MagickWand *wand,
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  (void) FormatLocaleString(geometry,MaxTextExtent,"%.20gx%.20g",(double)
+  (void) FormatLocaleString(geometry,MaxTextExtent,"%.17gx%.17g",(double)
     columns,(double) rows);
   (void) CloneString(&wand->image_info->size,geometry);
   return(MagickTrue);
@@ -2940,7 +2940,7 @@ WandExport MagickBooleanType MagickSetSizeOffset(MagickWand *wand,
   assert(wand->signature == WandSignature);
   if (wand->debug != MagickFalse)
     (void) LogMagickEvent(WandEvent,GetMagickModule(),"%s",wand->name);
-  (void) FormatLocaleString(geometry,MaxTextExtent,"%.20gx%.20g%+.20g",
+  (void) FormatLocaleString(geometry,MaxTextExtent,"%.17gx%.17g%+.20g",
     (double) columns,(double) rows,(double) offset);
   (void) CloneString(&wand->image_info->size,geometry);
   return(MagickTrue);

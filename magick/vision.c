@@ -877,7 +877,7 @@ MagickExport Image *ConnectedComponentsImage(const Image *image,
 
             GetColorTuple(&object[i].color,MagickFalse,mean_color);
             (void) fprintf(stdout,
-              "  %.20g: %.20gx%.20g%+.20g%+.20g %.1f,%.1f %.20g %s\n",(double)
+              "  %.17g: %.17gx%.17g%+.20g%+.20g %.1f,%.1f %.17g %s\n",(double)
               object[i].id,(double) object[i].bounding_box.width,(double)
               object[i].bounding_box.height,(double) object[i].bounding_box.x,
               (double) object[i].bounding_box.y,object[i].centroid.x,

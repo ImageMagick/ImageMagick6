@@ -1091,7 +1091,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               }
             }
           (void) FormatLocaleString(text,MaxTextExtent,
-            "%.20gx%.20g%+.20g%+.20g",(double) geometry.width,(double)
+            "%.17gx%.17g%+.20g%+.20g",(double) geometry.width,(double)
             geometry.height,(double) geometry.x,(double) geometry.y);
           CloneString(&draw_info->geometry,text);
           draw_info->affine.sx=affine.sx*current.sx+affine.ry*current.rx;
@@ -2083,7 +2083,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
             }
           image=msl_info->image[n];
           (void) FormatLocaleString(composite_geometry,MaxTextExtent,
-            "%.20gx%.20g%+.20g%+.20g",(double) composite_image->columns,
+            "%.17gx%.17g%+.20g%+.20g",(double) composite_image->columns,
             (double) composite_image->rows,(double) geometry.x,(double)
             geometry.y);
           flags=ParseGravityGeometry(image,composite_geometry,&geometry,
@@ -2718,7 +2718,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               }
             }
           (void) FormatLocaleString(text,MaxTextExtent,
-            "%.20gx%.20g%+.20g%+.20g",(double) geometry.width,(double)
+            "%.17gx%.17g%+.20g%+.20g",(double) geometry.width,(double)
             geometry.height,(double) geometry.x,(double) geometry.y);
           CloneString(&draw_info->geometry,text);
           draw_info->affine.sx=affine.sx*current.sx+affine.ry*current.rx;
@@ -3345,7 +3345,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               {
                 if (LocaleCompare(keyword,"height") == 0)
                   {
-                    (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
+                    (void) FormatLocaleString(value,MaxTextExtent,"%.17g",
                       (double) msl_info->image[n]->rows);
                     (void) SetImageProperty(msl_info->attributes[n],key,value);
                     break;
@@ -3358,7 +3358,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               {
                 if (LocaleCompare(keyword,"width") == 0)
                   {
-                    (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
+                    (void) FormatLocaleString(value,MaxTextExtent,"%.17g",
                       (double) msl_info->image[n]->columns);
                     (void) SetImageProperty(msl_info->attributes[n],key,value);
                     break;
@@ -4924,7 +4924,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
               }
             }
           (void) FormatLocaleString(text,MaxTextExtent,
-            "%.20gx%.20g%+.20g%+.20g",(double) geometry.width,(double)
+            "%.17gx%.17g%+.20g%+.20g",(double) geometry.width,(double)
             geometry.height,(double) geometry.x,(double) geometry.y);
           CloneString(&draw_info->geometry,text);
           draw_info->affine.sx=affine.sx*current.sx+affine.ry*current.rx;
@@ -6227,11 +6227,11 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                 if (image_option != (const char *) NULL)
                   flags=ParseAbsoluteGeometry(image_option,&geometry);
                 flags=ParseAbsoluteGeometry(value,&geometry);
-                (void) FormatLocaleString(page,MaxTextExtent,"%.20gx%.20g",
+                (void) FormatLocaleString(page,MaxTextExtent,"%.17gx%.17g",
                   (double) geometry.width,(double) geometry.height);
                 if (((flags & XValue) != 0) || ((flags & YValue) != 0))
                   (void) FormatLocaleString(page,MaxTextExtent,
-                    "%.20gx%.20g%+.20g%+.20g",(double) geometry.width,
+                    "%.17gx%.17g%+.20g%+.20g",(double) geometry.width,
                     (double) geometry.height,(double) geometry.x,(double)
                     geometry.y);
                 (void) SetImageOption(msl_info->image_info[n],keyword,page);

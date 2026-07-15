@@ -746,7 +746,7 @@ static MagickBooleanType WriteHDRImage(const ImageInfo *image_info,Image *image)
   (void) WriteBlob(image,(size_t) count,(unsigned char *) header);
   length=CopyMagickString(header,"FORMAT=32-bit_rle_rgbe\n\n",MaxTextExtent);
   (void) WriteBlob(image,length,(unsigned char *) header);
-  count=FormatLocaleString(header,MaxTextExtent,"-Y %.20g +X %.20g\n",
+  count=FormatLocaleString(header,MaxTextExtent,"-Y %.17g +X %.17g\n",
     (double) image->rows,(double) image->columns);
   (void) WriteBlob(image,(size_t) count,(unsigned char *) header);
   /*

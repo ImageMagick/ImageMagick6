@@ -3976,7 +3976,7 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
 
       if ( verbose != MagickFalse )
         (void) (void) FormatLocaleFile(stderr,
-          "%s:%.20g.%.20g #%.20g => Changed %.20g\n",
+          "%s:%.17g.%.17g #%.17g => Changed %.17g\n",
           CommandOptionToMnemonic(MagickMorphologyOptions, method),
           1.0,0.0,1.0, (double) changed);
 
@@ -4122,11 +4122,11 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
         /* Extra information for debugging compound operations */
         if ( verbose != MagickFalse ) {
           if ( stage_limit > 1 )
-            (void) FormatLocaleString(v_info,MaxTextExtent,"%s:%.20g.%.20g -> ",
+            (void) FormatLocaleString(v_info,MaxTextExtent,"%s:%.17g.%.17g -> ",
              CommandOptionToMnemonic(MagickMorphologyOptions,method),(double)
              method_loop,(double) stage_loop);
           else if ( primitive != method )
-            (void) FormatLocaleString(v_info, MaxTextExtent, "%s:%.20g -> ",
+            (void) FormatLocaleString(v_info, MaxTextExtent, "%s:%.17g -> ",
               CommandOptionToMnemonic(MagickMorphologyOptions, method),(double)
               method_loop);
           else
@@ -4163,7 +4163,7 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
             if ( kernel_loop > 1 )
               (void) FormatLocaleFile(stderr, "\n"); /* add end-of-line from previous */
             (void) (void) FormatLocaleFile(stderr,
-              "%s%s%s:%.20g.%.20g #%.20g => Changed %.20g",
+              "%s%s%s:%.17g.%.17g #%.17g => Changed %.17g",
               v_info,CommandOptionToMnemonic(MagickMorphologyOptions,
               primitive),(this_kernel == rflt_kernel ) ? "*" : "",
               (double) (method_loop+kernel_loop-1),(double) kernel_number,
@@ -4185,7 +4185,7 @@ MagickExport Image *MorphologyApply(const Image *image, const ChannelType
         } /* End Loop 4: Iterate the kernel with primitive */
 
         if ( verbose != MagickFalse && kernel_changed != (size_t)changed )
-          (void) FormatLocaleFile(stderr, "   Total %.20g",(double) kernel_changed);
+          (void) FormatLocaleFile(stderr, "   Total %.17g",(double) kernel_changed);
         if ( verbose != MagickFalse && stage_loop < stage_limit )
           (void) FormatLocaleFile(stderr, "\n"); /* add end-of-line before looping */
 

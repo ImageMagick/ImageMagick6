@@ -797,7 +797,7 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
     if (LocaleCompare(image_info->magick,"SPARSE-COLOR") != 0)
       {
         (void) FormatLocaleString(buffer,MaxTextExtent,
-          "# ImageMagick pixel enumeration: %.20g,%.20g,%.20g,%s\n",(double)
+          "# ImageMagick pixel enumeration: %.17g,%.17g,%.17g,%s\n",(double)
           image->columns,(double) image->rows,(double)
           GetQuantumRange(image->depth),colorspace);
         (void) WriteBlobString(image,buffer);
@@ -822,7 +822,7 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
                 (GetPixelOpacity(p) == (Quantum) OpaqueOpacity))
               {
                 GetColorTuple(&pixel,MagickFalse,tuple);
-                (void) FormatLocaleString(buffer,MaxTextExtent,"%.20g,%.20g,",
+                (void) FormatLocaleString(buffer,MaxTextExtent,"%.17g,%.17g,",
                   (double) x,(double) y);
                 (void) WriteBlobString(image,buffer);
                 (void) WriteBlobString(image,tuple);
@@ -831,7 +831,7 @@ static MagickBooleanType WriteTXTImage(const ImageInfo *image_info,Image *image)
             p++;
             continue;
           }
-        (void) FormatLocaleString(buffer,MaxTextExtent,"%.20g,%.20g: ",(double)
+        (void) FormatLocaleString(buffer,MaxTextExtent,"%.17g,%.17g: ",(double)
           x,(double) y);
         (void) WriteBlobString(image,buffer);
         (void) CopyMagickString(tuple,"(",MaxTextExtent);

@@ -1051,6 +1051,6 @@ void Magick::Options::setOption(const char *name,const double value_)
   char
     option[MaxTextExtent];
 
-  (void) FormatLocaleString(option,MaxTextExtent,"%.20g",value_);
+  (void) FormatLocaleString(option,MaxTextExtent,"%.17g",value_);
   (void) SetImageOption(_imageInfo,name,option);
 }

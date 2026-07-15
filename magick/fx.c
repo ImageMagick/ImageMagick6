@@ -402,7 +402,7 @@ static double FxChannelStatistics(FxInfo *fx_info,const Image *image,
       if (option >= 0)
         channel=(ChannelType) option;
     }
-  (void) FormatLocaleString(key,MaxTextExtent,"%p.%.20g.%s",(void *) image,
+  (void) FormatLocaleString(key,MaxTextExtent,"%p.%.17g.%s",(void *) image,
     (double) channel,symbol);
   value=GetFxSymbolValue(fx_info,key);
   if (value != (const double *) NULL)
@@ -2147,7 +2147,7 @@ static double FxEvaluateSubexpression(FxInfo *fx_info,const ChannelType channel,
             subexpression[length-1]='\0';
           if (fx_info->file != (FILE *) NULL)
             (void) FormatLocaleFile(fx_info->file,
-              "%s[%.20g,%.20g].%s: %s=%.*g\n",fx_info->images->filename,
+              "%s[%.17g,%.17g].%s: %s=%.*g\n",fx_info->images->filename,
               (double) x,(double) y,type,subexpression,GetMagickPrecision(),
               (double) alpha);
           FxReturn(alpha);

@@ -636,7 +636,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image geometry, canvas and offset  %Wx%H+%X+%Y.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20gx%.20g%+.20g%+.20g",
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17gx%.17g%+.20g%+.20g",
         (double) image->page.width,(double) image->page.height,
         (double) image->page.x,(double) image->page.y);
       break;
@@ -646,7 +646,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image height (current).
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         (image->rows != 0 ? image->rows : image->magick_rows));
       break;
     }
@@ -671,7 +671,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Number of images in the list.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         GetImageListLength(image));
       break;
     }
@@ -688,7 +688,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image index in current image list -- As 'n' OBSOLETE.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         GetImageIndexInList(image));
       break;
     }
@@ -697,7 +697,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Quantum depth of image in memory.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         MAGICKCORE_QUANTUM_DEPTH);
       break;
     }
@@ -724,10 +724,10 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
         Image scene number.
       */
       if (image_info->number_scenes != 0)
-        (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+        (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
           image_info->scene);
       else
-        (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+        (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
           image->scene);
       break;
     }
@@ -752,7 +752,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image width (current).
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         (image->columns != 0 ? image->columns : image->magick_columns));
       break;
     }
@@ -761,7 +761,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image horizontal resolution.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",
         fabs(image->x_resolution) > MagickEpsilon ? image->x_resolution :
         image->units == PixelsPerCentimeterResolution ? DefaultResolution/2.54 :
         DefaultResolution);
@@ -772,7 +772,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image vertical resolution.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",
         fabs(image->y_resolution) > MagickEpsilon ? image->y_resolution :
         image->units == PixelsPerCentimeterResolution ? DefaultResolution/2.54 :
         DefaultResolution);
@@ -783,7 +783,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image depth.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         image->depth);
       break;
     }
@@ -829,7 +829,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image size as geometry = "%wx%h".
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20gx%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17gx%.17g",(double)
         image->magick_columns,(double) image->magick_rows);
       break;
     }
@@ -838,7 +838,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Layer canvas height.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         image->page.height);
       break;
     }
@@ -847,7 +847,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image iterations for animations.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         image->iterations);
       break;
     }
@@ -873,7 +873,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Layer canvas page size = "%Wx%H".
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20gx%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17gx%.17g",(double)
         image->page.width,(double) image->page.height);
       break;
     }
@@ -882,7 +882,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         BPG Image compression quality.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         (100-(image->quality == 0 ? 42 : image->quality))/2);
       break;
     }
@@ -891,7 +891,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image compression quality.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         (image->quality == 0 ? 92 : image->quality));
       break;
     }
@@ -904,7 +904,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
         string="2147483647";
       else
         {
-          (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+          (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
             image_info->scene+image_info->number_scenes);
         }
       break;
@@ -914,7 +914,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Image time delay for animations.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         image->delay);
       break;
     }
@@ -933,7 +933,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
       /*
         Layer canvas width.
       */
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17g",(double)
         image->page.width);
       break;
     }
@@ -972,7 +972,7 @@ static char *GetMagickPropertyLetter(const ImageInfo *image_info,Image *image,
         Image bounding box.
       */
       page=GetImageBoundingBox(image,&image->exception);
-      (void) FormatLocaleString(value,MaxTextExtent,"%.20gx%.20g%+.20g%+.20g",
+      (void) FormatLocaleString(value,MaxTextExtent,"%.17gx%.17g%+.20g%+.20g",
         (double) page.width,(double) page.height,(double) page.x,(double)
         page.y);
       break;

@@ -214,7 +214,7 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
     if (image->matte != MagickFalse)
       (void) ConcatenateMagickString(colorspace,"a",MaxTextExtent);
     (void) FormatLocaleString(buffer,MaxTextExtent,
-      "# ImageMagick pixel debugging: %.20g,%.20g,%.20g,%s\n",(double)
+      "# ImageMagick pixel debugging: %.17g,%.17g,%.17g,%s\n",(double)
       image->columns,(double) image->rows,(double) ((MagickOffsetType)
       GetQuantumRange(image->depth)),colorspace);
     (void) WriteBlobString(image,buffer);
@@ -227,18 +227,18 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
       indexes=GetVirtualIndexQueue(image);
       for (x=0; x < (ssize_t) image->columns; x++)
       {
-        (void) FormatLocaleString(buffer,MaxTextExtent,"%.20g,%.20g: ",(double)
+        (void) FormatLocaleString(buffer,MaxTextExtent,"%.17g,%.17g: ",(double)
           x,(double) y);
         (void) WriteBlobString(image,buffer);
         SetMagickPixelPacket(image,p,indexes+x,&pixel);
-        (void) FormatLocaleString(tuple,MaxTextExtent,"%.20g,%.20g,%.20g ",
+        (void) FormatLocaleString(tuple,MaxTextExtent,"%.17g,%.17g,%.17g ",
           (double) pixel.red,(double) pixel.green,(double) pixel.blue);
         if (pixel.colorspace == CMYKColorspace)
           {
             char
               black[MaxTextExtent];
 
-            (void) FormatLocaleString(black,MaxTextExtent,",%.20g ",
+            (void) FormatLocaleString(black,MaxTextExtent,",%.17g ",
               (double) pixel.index);
             (void) ConcatenateMagickString(tuple,black,MaxTextExtent);
           }
@@ -247,7 +247,7 @@ static MagickBooleanType WriteDEBUGImage(const ImageInfo *image_info,
             char
               alpha[MaxTextExtent];
 
-            (void) FormatLocaleString(alpha,MaxTextExtent,",%.20g ",
+            (void) FormatLocaleString(alpha,MaxTextExtent,",%.17g ",
               (double) QuantumRange-pixel.opacity);
             (void) ConcatenateMagickString(tuple,alpha,MaxTextExtent);
           }

@@ -377,7 +377,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
         {
           WriteHtmlEncodedString(image,image->filename);
           (void) FormatLocaleString(buffer,MaxTextExtent,
-            "\" shape=\"rect\" coords=\"0,0,%.20g,%.20g\" alt=\"\" />\n",
+            "\" shape=\"rect\" coords=\"0,0,%.17g,%.17g\" alt=\"\" />\n",
             (double) geometry.width-1,(double) geometry.height-1);
           (void) WriteBlobString(image,buffer);
         }
@@ -388,7 +388,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
           else
             {
               (void) FormatLocaleString(buffer,MaxTextExtent,"\" shape="
-                "\"rect\" coords=\"%.20g,%.20g,%.20g,%.20g\" alt=\"\" />\n",
+                "\"rect\" coords=\"%.17g,%.17g,%.17g,%.17g\" alt=\"\" />\n",
                 (double) geometry.x,(double) geometry.y,(double) (geometry.x+
                 geometry.width-1),(double) (geometry.y+geometry.height-1));
               (void) WriteBlobString(image,buffer);
@@ -453,7 +453,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
     {
       (void) WriteHtmlEncodedString(image,image->filename);
       (void) FormatLocaleString(buffer,MaxTextExtent,
-        "\" shape=\"rect\" coords=\"0,0,%.20g,%.20g\" alt=\"\" />\n",
+        "\" shape=\"rect\" coords=\"0,0,%.17g,%.17g\" alt=\"\" />\n",
         (double) geometry.width-1,(double) geometry.height-1);
       (void) WriteBlobString(image,buffer);
     }
@@ -464,7 +464,7 @@ static MagickBooleanType WriteHTMLImage(const ImageInfo *image_info,
       else
         {
           (void) FormatLocaleString(buffer,MaxTextExtent,"\" shape=\"rect\""
-            " coords=\"%.20g,%.20g,%.20g,%.20g\" alt=\"\" />\n",
+            " coords=\"%.17g,%.17g,%.17g,%.17g\" alt=\"\" />\n",
             (double) geometry.x,(double) geometry.y,geometry.x+(double)
             geometry.width-1,geometry.y+(double) geometry.height-1);
           (void) WriteBlobString(image,buffer);

@@ -323,9 +323,9 @@ static Image *ReadJNXImage(const ImageInfo *image_info,ExceptionInfo *exception)
         continue;
       tile_image->depth=8;
       (void) CopyMagickString(tile_image->magick,image->magick,MaxTextExtent);
-      (void) FormatImageProperty(tile_image,"jnx:northeast","%.20g,%.20g",
+      (void) FormatImageProperty(tile_image,"jnx:northeast","%.17g,%.17g",
         northeast.x,northeast.y);
-      (void) FormatImageProperty(tile_image,"jnx:southwest","%.20g,%.20g",
+      (void) FormatImageProperty(tile_image,"jnx:southwest","%.17g,%.17g",
         southwest.x,southwest.y);
       AppendImageToList(&images,tile_image);
     }

@@ -3967,7 +3967,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
     }
   source_info=(*cache_info);
   source_info.file=(-1);
-  (void) FormatLocaleString(cache_info->filename,MaxTextExtent,"%s[%.20g]",
+  (void) FormatLocaleString(cache_info->filename,MaxTextExtent,"%s[%.17g]",
     image->filename,(double) image->scene);
   cache_info->storage_class=image->storage_class;
   cache_info->colorspace=image->colorspace;
@@ -4058,7 +4058,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
                   type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
                     cache_info->type);
                   (void) FormatLocaleString(message,MaxTextExtent,
-                    "open %s (%s %s, %.20gx%.20g %s)",cache_info->filename,
+                    "open %s (%s %s, %.17gx%.17g %s)",cache_info->filename,
                     cache_info->mapped != MagickFalse ? "Anonymous" : "Heap",
                     type,(double) cache_info->columns,(double) cache_info->rows,
                     format);
@@ -4128,7 +4128,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
                   type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
                     cache_info->type);
                   (void) FormatLocaleString(message,MaxTextExtent,
-                    "open %s (%s[%d], %s, %.20gx%.20g %s)",cache_info->filename,
+                    "open %s (%s[%d], %s, %.17gx%.17g %s)",cache_info->filename,
                     cache_info->cache_filename,GetDistributeCacheFile(
                     (DistributeCacheInfo *) cache_info->server_info),type,
                     (double) cache_info->columns,(double) cache_info->rows,
@@ -4234,7 +4234,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
                   type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
                     cache_info->type);
                   (void) FormatLocaleString(message,MaxTextExtent,
-                     "open %s (%s[%d], %s, %.20gx%.20g %s)",
+                     "open %s (%s[%d], %s, %.17gx%.17g %s)",
                      cache_info->filename,cache_info->cache_filename,
                      cache_info->file,type,(double) cache_info->columns,
                      (double) cache_info->rows,format);
@@ -4265,7 +4265,7 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
       type=CommandOptionToMnemonic(MagickCacheOptions,(ssize_t)
         cache_info->type);
       (void) FormatLocaleString(message,MaxTextExtent,
-        "open %s (%s[%d], %s, %.20gx%.20g %s)",cache_info->filename,
+        "open %s (%s[%d], %s, %.17gx%.17g %s)",cache_info->filename,
         cache_info->cache_filename,cache_info->file,type,(double)
         cache_info->columns,(double) cache_info->rows,format);
       (void) LogMagickEvent(CacheEvent,GetMagickModule(),"%s",message);
@@ -4825,7 +4825,7 @@ static MagickBooleanType ReadPixelCacheIndexes(
   if ((cache_info->debug != MagickFalse) &&
       (CacheTick(nexus_info->region.y,cache_info->rows) != MagickFalse))
     (void) LogMagickEvent(CacheEvent,GetMagickModule(),
-      "%s[%.20gx%.20g%+.20g%+.20g]",cache_info->filename,(double)
+      "%s[%.17gx%.17g%+.20g%+.20g]",cache_info->filename,(double)
       nexus_info->region.width,(double) nexus_info->region.height,(double)
       nexus_info->region.x,(double) nexus_info->region.y);
   return(MagickTrue);
@@ -4998,7 +4998,7 @@ static MagickBooleanType ReadPixelCachePixels(
   if ((cache_info->debug != MagickFalse) &&
       (CacheTick(nexus_info->region.y,cache_info->rows) != MagickFalse))
     (void) LogMagickEvent(CacheEvent,GetMagickModule(),
-      "%s[%.20gx%.20g%+.20g%+.20g]",cache_info->filename,(double)
+      "%s[%.17gx%.17g%+.20g%+.20g]",cache_info->filename,(double)
       nexus_info->region.width,(double) nexus_info->region.height,(double)
       nexus_info->region.x,(double) nexus_info->region.y);
   return(MagickTrue);
@@ -5948,7 +5948,7 @@ static MagickBooleanType WritePixelCacheIndexes(CacheInfo *cache_info,
   if ((cache_info->debug != MagickFalse) &&
       (CacheTick(nexus_info->region.y,cache_info->rows) != MagickFalse))
     (void) LogMagickEvent(CacheEvent,GetMagickModule(),
-      "%s[%.20gx%.20g%+.20g%+.20g]",cache_info->filename,(double)
+      "%s[%.17gx%.17g%+.20g%+.20g]",cache_info->filename,(double)
       nexus_info->region.width,(double) nexus_info->region.height,(double)
       nexus_info->region.x,(double) nexus_info->region.y);
   return(MagickTrue);
@@ -6114,7 +6114,7 @@ static MagickBooleanType WritePixelCachePixels(CacheInfo *cache_info,
   if ((cache_info->debug != MagickFalse) &&
       (CacheTick(nexus_info->region.y,cache_info->rows) != MagickFalse))
     (void) LogMagickEvent(CacheEvent,GetMagickModule(),
-      "%s[%.20gx%.20g%+.20g%+.20g]",cache_info->filename,(double)
+      "%s[%.17gx%.17g%+.20g%+.20g]",cache_info->filename,(double)
       nexus_info->region.width,(double) nexus_info->region.height,(double)
       nexus_info->region.x,(double) nexus_info->region.y);
   return(MagickTrue);

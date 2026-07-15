@@ -366,7 +366,7 @@ void Magick::Image::attenuate(const double attenuate_)
     value[MaxTextExtent];
 
   modifyImage();
-  FormatLocaleString(value,MaxTextExtent,"%.20g",attenuate_);
+  FormatLocaleString(value,MaxTextExtent,"%.17g",attenuate_);
   (void) SetImageArtifact(image(),"attenuate",value);
 }
 
@@ -1558,7 +1558,7 @@ void Magick::Image::strokeWidth(const double strokeWidth_)
 
   modifyImage();
   options()->strokeWidth(strokeWidth_);
-  FormatLocaleString(value,MaxTextExtent,"%.20g",strokeWidth_);
+  FormatLocaleString(value,MaxTextExtent,"%.17g",strokeWidth_);
   (void) SetImageArtifact(image(),"strokewidth",value);
 }
 

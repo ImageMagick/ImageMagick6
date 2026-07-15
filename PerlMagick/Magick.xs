@@ -961,7 +961,7 @@ static Image *GetList(pTHX_ SV *reference,SV ***reference_vector,
     default:
       break;
   }
-  (void) fprintf(stderr,"GetList: UnrecognizedType %.20g\n",
+  (void) fprintf(stderr,"GetList: UnrecognizedType %.17g\n",
     (double) SvTYPE(reference));
   return((Image *) NULL);
 }
@@ -4025,46 +4025,46 @@ Features(ref,...)
   {
 #define ChannelFeatures(channel,direction) \
 { \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].angular_second_moment[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].contrast[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].contrast[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].variance_sum_of_squares[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].inverse_difference_moment[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].sum_average[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].sum_variance[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].sum_entropy[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].entropy[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].difference_variance[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].difference_entropy[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].measure_of_correlation_1[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].measure_of_correlation_2[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_features[channel].maximum_correlation_coefficient[direction]); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
 }
@@ -4650,7 +4650,7 @@ Get(ref,...)
             {
               if (image == (Image *) NULL)
                 break;
-              (void) FormatLocaleString(color,MaxTextExtent,"%.20g,%.20g",
+              (void) FormatLocaleString(color,MaxTextExtent,"%.17g,%.17g",
                 image->chromaticity.blue_primary.x,
                 image->chromaticity.blue_primary.y);
               s=newSVpv(color,0);
@@ -4681,7 +4681,7 @@ Get(ref,...)
                 break;
               page=GetImageBoundingBox(image,&image->exception);
               (void) FormatLocaleString(geometry,MaxTextExtent,
-                "%.20gx%.20g%+.20g%+.20g",(double) page.width,(double)
+                "%.17gx%.17g%+.20g%+.20g",(double) page.width,(double)
                 page.height,(double) page.x,(double) page.y);
               s=newSVpv(geometry,0);
               PUSHs(s ? sv_2mortal(s) : &sv_undef);
@@ -4833,7 +4833,7 @@ Get(ref,...)
 
               if (image == (Image *) NULL)
                 break;
-              (void) FormatLocaleString(geometry,MaxTextExtent,"%.20gx%.20g",
+              (void) FormatLocaleString(geometry,MaxTextExtent,"%.17gx%.17g",
                 image->x_resolution,image->y_resolution);
               s=newSVpv(geometry,0);
               PUSHs(s ? sv_2mortal(s) : &sv_undef);
@@ -5027,7 +5027,7 @@ Get(ref,...)
             {
               if (image == (Image *) NULL)
                 break;
-              (void) FormatLocaleString(color,MaxTextExtent,"%.20g,%.20g",
+              (void) FormatLocaleString(color,MaxTextExtent,"%.17g,%.17g",
                 image->chromaticity.green_primary.x,
                 image->chromaticity.green_primary.y);
               s=newSVpv(color,0);
@@ -5098,7 +5098,7 @@ Get(ref,...)
                   static ssize_t
                     id = 0;
 
-                  (void) FormatLocaleString(key,MaxTextExtent,"%.20g\n",(double)
+                  (void) FormatLocaleString(key,MaxTextExtent,"%.17g\n",(double)
                     id);
                   status=SetImageRegistry(ImageRegistryType,key,image,
                     &image->exception);
@@ -5360,7 +5360,7 @@ Get(ref,...)
                     geometry[MaxTextExtent];
 
                   (void) FormatLocaleString(geometry,MaxTextExtent,
-                    "%.20gx%.20g%+.20g%+.20g",(double) image->page.width,
+                    "%.17gx%.17g%+.20g%+.20g",(double) image->page.width,
                     (double) image->page.height,(double) image->page.x,(double)
                     image->page.y);
                   s=newSVpv(geometry,0);
@@ -5488,7 +5488,7 @@ Get(ref,...)
             {
               if (image == (Image *) NULL)
                 break;
-              (void) FormatLocaleString(color,MaxTextExtent,"%.20g,%.20g",
+              (void) FormatLocaleString(color,MaxTextExtent,"%.17g,%.17g",
                 image->chromaticity.red_primary.x,
                 image->chromaticity.red_primary.y);
               s=newSVpv(color,0);
@@ -5731,7 +5731,7 @@ Get(ref,...)
             {
               if (image == (Image *) NULL)
                 break;
-              (void) FormatLocaleString(color,MaxTextExtent,"%.20g,%.20g",
+              (void) FormatLocaleString(color,MaxTextExtent,"%.17g,%.17g",
                 image->chromaticity.white_point.x,
                 image->chromaticity.white_point.y);
               s=newSVpv(color,0);
@@ -6380,7 +6380,7 @@ Histogram(ref,...)
         (void) FormatLocaleString(message,MaxTextExtent,QuantumFormat,
           histogram[i].pixel.opacity);
         PUSHs(sv_2mortal(newSVpv(message,0)));
-        (void) FormatLocaleString(message,MaxTextExtent,"%.20g",(double)
+        (void) FormatLocaleString(message,MaxTextExtent,"%.17g",(double)
           histogram[i].count);
         PUSHs(sv_2mortal(newSVpv(message,0)));
       }
@@ -7879,7 +7879,7 @@ Mogrify(ref,...)
       {
         default:
         {
-          (void) FormatLocaleString(message,MaxTextExtent,"%.20g",(double) ix);
+          (void) FormatLocaleString(message,MaxTextExtent,"%.17g",(double) ix);
           ThrowPerlException(exception,OptionError,
             "UnrecognizedPerlMagickMethod",message);
           goto PerlException;
@@ -8759,7 +8759,7 @@ Mogrify(ref,...)
             Composite two images (normal composition).
           */
           (void) FormatLocaleString(composite_geometry,MaxTextExtent,
-            "%.20gx%.20g%+.20g%+.20g",(double) composite_image->columns,
+            "%.17gx%.17g%+.20g%+.20g",(double) composite_image->columns,
             (double) composite_image->rows,(double) geometry.x,(double)
             geometry.y);
           flags=ParseGravityGeometry(image,composite_geometry,&geometry,
@@ -9066,7 +9066,7 @@ Mogrify(ref,...)
           if (attribute_flag[0] == 0)
             {
               (void) FormatLocaleString(message,MaxTextExtent,
-                "%.20g,%.20g,%.20g",(double) argument_list[2].real_reference,
+                "%.17g,%.17g,%.17g",(double) argument_list[2].real_reference,
                 (double) argument_list[3].real_reference,
                 (double) argument_list[4].real_reference);
               argument_list[0].string_reference=message;
@@ -9177,7 +9177,7 @@ Mogrify(ref,...)
               geometry_info.rho=argument_list[6].real_reference;
               SetImageArtifact(image,"modulate:colorspace","HWB");
             }
-          (void) FormatLocaleString(modulate,MaxTextExtent,"%.20g,%.20g,%.20g",
+          (void) FormatLocaleString(modulate,MaxTextExtent,"%.17g,%.17g,%.17g",
             geometry_info.rho,geometry_info.sigma,geometry_info.xi);
           (void) ModulateImage(image,modulate);
           break;
@@ -12445,7 +12445,7 @@ QueryFont(ref,...)
       else
         PUSHs(sv_2mortal(newSVpv(CommandOptionToMnemonic(MagickStretchOptions,
           type_info->stretch),0)));
-      (void) FormatLocaleString(message,MaxTextExtent,"%.20g",(double)
+      (void) FormatLocaleString(message,MaxTextExtent,"%.17g",(double)
         type_info->weight);
       PUSHs(sv_2mortal(newSVpv(message,0)));
       if (type_info->encoding == (char *) NULL)
@@ -12855,7 +12855,7 @@ QueryFontMetrics(ref,...)
       {
         draw_info->geometry=AcquireString((char *) NULL);
         (void) FormatLocaleString(draw_info->geometry,MaxTextExtent,
-          "%.20g,%.20g",x,y);
+          "%.17g,%.17g",x,y);
       }
     status=GetTypeMetrics(image,draw_info,&metrics);
     (void) CatchImageException(image);
@@ -13228,7 +13228,7 @@ QueryMultilineFontMetrics(ref,...)
       {
         draw_info->geometry=AcquireString((char *) NULL);
         (void) FormatLocaleString(draw_info->geometry,MaxTextExtent,
-          "%.20g,%.20g",x,y);
+          "%.17g,%.17g",x,y);
       }
     status=GetMultilineTypeMetrics(image,draw_info,&metrics);
     (void) CatchImageException(image);
@@ -14178,28 +14178,28 @@ Statistics(ref,...)
   {
 #define ChannelStatistics(channel) \
 { \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     (double) channel_statistics[channel].depth); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].minima/scale); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].maxima/scale); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].mean/scale); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].standard_deviation/scale); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].kurtosis); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].skewness); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
-  (void) FormatLocaleString(message,MaxTextExtent,"%.20g", \
+  (void) FormatLocaleString(message,MaxTextExtent,"%.17g", \
     channel_statistics[channel].entropy); \
   PUSHs(sv_2mortal(newSVpv(message,0))); \
 }

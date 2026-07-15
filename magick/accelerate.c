@@ -578,7 +578,7 @@ static Image *ComputeBlurImage(const Image* image,const ChannelType channel,
 
   /* create processing kernel */
   {
-    (void) FormatLocaleString(geometry,MaxTextExtent,"blur:%.20gx%.20g;blur:%.20gx%.20g+90",radius,sigma,radius,sigma);
+    (void) FormatLocaleString(geometry,MaxTextExtent,"blur:%.17gx%.17g;blur:%.17gx%.17g+90",radius,sigma,radius,sigma);
     kernel=AcquireKernelInfo(geometry);
     if (kernel == (KernelInfo *) NULL)
     {
@@ -4679,7 +4679,7 @@ static Image *ComputeUnsharpMaskImage(const Image *image,
 
   /* create the blur kernel */
   {
-    (void) FormatLocaleString(geometry,MaxTextExtent,"blur:%.20gx%.20g;blur:%.20gx%.20g+90",radius,sigma,radius,sigma);
+    (void) FormatLocaleString(geometry,MaxTextExtent,"blur:%.17gx%.17g;blur:%.17gx%.17g+90",radius,sigma,radius,sigma);
     kernel=AcquireKernelInfo(geometry);
     if (kernel == (KernelInfo *) NULL)
     {
@@ -4945,7 +4945,7 @@ static Image *ComputeUnsharpMaskImageSingle(const Image *image,
 
   /* create the blur kernel */
   {
-    (void) FormatLocaleString(geometry,MaxTextExtent,"blur:%.20gx%.20g;blur:%.20gx%.20g+90",radius,sigma,radius,sigma);
+    (void) FormatLocaleString(geometry,MaxTextExtent,"blur:%.17gx%.17g;blur:%.17gx%.17g+90",radius,sigma,radius,sigma);
     kernel=AcquireKernelInfo(geometry);
     if (kernel == (KernelInfo *) NULL)
     {
