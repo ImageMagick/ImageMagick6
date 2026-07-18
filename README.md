@@ -43,7 +43,7 @@ Here are just a few [examples](https://legacy.imagemagick.org/script/examples.ph
 * [Convex hull](https://legacy.imagemagick.org/script/convex-hull.php) smallest area convex polygon containing the image foreground objects. In addition, the minimum bounding box and unrotate angle are also generated.
 * [Decorate](https://legacy.imagemagick.org/Usage/crop/): add a border or frame to an image.
 * [Delineate image features](https://legacy.imagemagick.org/Usage/transform/#vision): Canny edge detection, mean-shift, Hough lines.
-* [Discrete Fourier transform](https://legacy.imagemagick.org/Usage/fourier/): implements the forward and inverse [DFT](http://en.wikipedia.org/wiki/Discrete_Fourier_transform).
+* [Discrete Fourier transform](https://legacy.imagemagick.org/Usage/fourier/): implements the forward and inverse [DFT](https://en.wikipedia.org/wiki/Discrete_Fourier_transform).
 * [Distributed pixel cache](https://legacy.imagemagick.org/script/distribute-pixel-cache.php): offload intermediate pixel storage to one or more remote servers.
 * [Draw](https://legacy.imagemagick.org/Usage/draw/): add shapes or text to an image.
 * [Encipher or decipher an image](https://legacy.imagemagick.org/script/cipher.php): convert ordinary images into unintelligible gibberish and back again.
@@ -63,7 +63,7 @@ Here are just a few [examples](https://legacy.imagemagick.org/script/examples.ph
 * [Motion picture support](https://legacy.imagemagick.org/script/motion-picture.php): read and write the common image formats used in digital film work.
 * [Multispectral imagery](https://legacy.imagemagick.org/script/multispectral-imagery.php): support multispectral imagery up to 64 bands.
 * [Noise and color reduction](https://legacy.imagemagick.org/Usage/transform/#vision) Kuwahara Filter, mean-shift.
-* [Perceptual hash](http://www.fmwconcepts.com/misc_tests/perceptual_hash_test_results_510/index.html): maps visually identical images to the same or similar hash-- useful in image retrieval, authentication, indexing, or copy detection as well as digital watermarking.
+* [Perceptual hash](https://www.fmwconcepts.com/misc_tests/perceptual_hash_test_results_510/index.html): maps visually identical images to the same or similar hash-- useful in image retrieval, authentication, indexing, or copy detection as well as digital watermarking.
 * [Special effects](https://legacy.imagemagick.org/Usage/blur/): blur, sharpen, threshold, or tint an image.
 * [Text & comments](https://legacy.imagemagick.org/Usage/text/): insert descriptive or artistic text in an image.
 * [Threads of execution support](https://legacy.imagemagick.org/script/architecture.php#threads): ImageMagick is thread safe and most internal algorithms are OpenMP-enabled to take advantage of speed-ups offered by multicore processor chips.
@@ -71,7 +71,7 @@ Here are just a few [examples](https://legacy.imagemagick.org/script/examples.ph
 * [Transparency](https://legacy.imagemagick.org/Usage/masking/): render portions of an image invisible.
 * [Virtual pixel support](https://legacy.imagemagick.org/script/architecture.php#virtual-pixels): convenient access to pixels outside the image region.
 
-[Examples of ImageMagick Usage](https://legacy.imagemagick.org/Usage/), demonstrates how to use the software from the [command line](https://legacy.imagemagick.org/script/command-line-processing.php) to achieve various effects. There are also several scripts available on the website called [Fred's ImageMagick Scripts](http://www.fmwconcepts.com/imagemagick/), which can be used to apply geometric transforms, blur and sharpen images, remove noise, and perform other operations. Additionally, there is a tool called [Magick.NET](https://github.com/dlemstra/Magick.NET) that allows users to access the functionality of ImageMagick without having to install the software on their own systems. Finally, the website also includes a [Cookbook](http://im.snibgo.com/) with tips and examples for using ImageMagick on Windows systems.
+[Examples of ImageMagick Usage](https://legacy.imagemagick.org/Usage/), demonstrates how to use the software from the [command line](https://legacy.imagemagick.org/script/command-line-processing.php) to achieve various effects. There are also several scripts available on the website called [Fred's ImageMagick Scripts](https://www.fmwconcepts.com/imagemagick/), which can be used to apply geometric transforms, blur and sharpen images, remove noise, and perform other operations. Additionally, there is a tool called [Magick.NET](https://github.com/dlemstra/Magick.NET) that allows users to access the functionality of ImageMagick without having to install the software on their own systems. Finally, the website also includes a [Cookbook](https://im.snibgo.com/) with tips and examples for using ImageMagick on Windows systems.
 
 ## News
 
@@ -82,7 +82,7 @@ Want more performance from ImageMagick? Try these options:
 
 * add more memory to your system, see the [pixel cache](https://legacy.imagemagick.org/script/architecture.php#cache);
 * add more cores to your system, see [threads of execution support](https://legacy.imagemagick.org/script/architecture.php#threads);
-* reduce lock contention with the [tcmalloc](http://goog-perftools.sourceforge.net/doc/tcmalloc.html) memory allocation library;
+* reduce lock contention with the [tcmalloc](https://goog-perftools.sourceforge.net/doc/tcmalloc.html) memory allocation library;
 * push large images to a solid-state drive, see [large image support](https://legacy.imagemagick.org/script/architecture.php#tera-pixel).
 
 If these options are prohibitive, you can reduce the quality of the image results. The default build is Q16. If you enable [HDRI](https://legacy.imagemagick.org/script/high-dynamic-range.php), you use twice the memory and instead of predominantly integer operations, you use the typically less efficient floating-point operations. The tradeoff is increased precision and you can process out of range pixel values (e.g. negative). If you instead build the Q8 non-HDRI version of ImageMagick, you can reduce the memory requirements in half-- and once again there is a tradeoff, even less precision and no out of range pixel values. For a Q8 non-HDRI build of ImageMagick, use these configure script options: **--with-quantum-depth=8**.
