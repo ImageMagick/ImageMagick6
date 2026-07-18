@@ -826,12 +826,12 @@ static MagickBooleanType ClonePixelCacheOnDisk(
   if (buffer == (unsigned char *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   extent=0;
-  while ((count=read(cache_info->file,buffer,quantum)) > 0)
+  while ((count=MagickRead(cache_info->file,buffer,quantum)) > 0)
   {
     ssize_t
       number_bytes;
 
-    number_bytes=write(clone_info->file,buffer,(size_t) count);
+    number_bytes=MagickWrite(clone_info->file,buffer,(size_t) count);
     if (number_bytes != count)
       break;
     extent+=(size_t) number_bytes;
@@ -3825,25 +3825,14 @@ static inline MagickOffsetType WritePixelCacheRegion(
   ssize_t
     count = 0;
 
-#if !defined(MAGICKCORE_HAVE_PWRITE)
   if (lseek(cache_info->file,offset,SEEK_SET) < 0)
     return((MagickOffsetType) -1);
-#endif
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
-#if !defined(MAGICKCORE_HAVE_PWRITE)
-    count=write(cache_info->file,buffer+i,(size_t) MagickMin(length-
+    count=MagickWrite(cache_info->file,buffer+i,(size_t) MagickMin(length-
       (MagickSizeType) i,MagickMaxBufferExtent));
-#else
-    count=pwrite(cache_info->file,buffer+i,(size_t) MagickMin(length-
-      (MagickSizeType) i,MagickMaxBufferExtent),offset+i);
-#endif
     if (count <= 0)
-      {
-        count=0;
-        if (errno != EINTR)
-          break;
-      }
+      break;
   }
   return(i);
 }
@@ -4665,25 +4654,14 @@ static inline MagickOffsetType ReadPixelCacheRegion(
   ssize_t
     count = 0;
 
-#if !defined(MAGICKCORE_HAVE_PREAD)
   if (lseek(cache_info->file,offset,SEEK_SET) < 0)
     return((MagickOffsetType) -1);
-#endif
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
-#if !defined(MAGICKCORE_HAVE_PREAD)
-    count=read(cache_info->file,buffer+i,(size_t) MagickMin(length-
+    count=MagickRead(cache_info->file,buffer+i,(size_t) MagickMin(length-
       (MagickSizeType) i,(size_t) MagickMaxBufferExtent));
-#else
-    count=pread(cache_info->file,buffer+i,(size_t) MagickMin(length-
-      (MagickSizeType) i,(size_t) MagickMaxBufferExtent),offset+i);
-#endif
     if (count <= 0)
-      {
-        count=0;
-        if (errno != EINTR)
-          break;
-      }
+      break;
   }
   return(i);
 }

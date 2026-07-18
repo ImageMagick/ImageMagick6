@@ -299,14 +299,10 @@ MagickExport MagickBooleanType BlobToFile(char *filename,const void *blob,
     }
   for (i=0; i < length; i+=(size_t) count)
   {
-    count=write(file,(const char *) blob+i,MagickMin(length-i,(size_t)
+    count=MagickWrite(file,(const char *) blob+i,MagickMin(length-i,(size_t)
       MagickMaxBufferExtent));
     if (count <= 0)
-      {
-        count=0;
-        if (errno != EINTR)
-          break;
-      }
+      break;
   }
   file=close_utf8(file);
   if ((file == -1) || (i < length))
@@ -1198,13 +1194,9 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
       blob=(unsigned char *) AcquireQuantumMemory(quantum,sizeof(*blob));
       for (i=0; blob != (unsigned char *) NULL; i+=count)
       {
-        count=read(file,blob+i,quantum);
+        count=MagickRead(file,blob+i,quantum);
         if (count <= 0)
-          {
-            count=0;
-            if (errno != EINTR)
-              break;
-          }
+          break;
         if (~((size_t) i) < (count+quantum+1))
           {
             blob=(unsigned char *) RelinquishMagickMemory(blob);
@@ -1257,14 +1249,10 @@ MagickExport unsigned char *FileToBlob(const char *filename,const size_t extent,
       (void) lseek(file,0,SEEK_SET);
       for (i=0; i < *length; i+=count)
       {
-        count=read(file,blob+i,(size_t) MagickMin(*length-i,(size_t)
+        count=MagickRead(file,blob+i,(size_t) MagickMin(*length-i,(size_t)
           MagickMaxBufferExtent));
         if (count <= 0)
-          {
-            count=0;
-            if (errno != EINTR)
-              break;
-          }
+          break;
       }
       if (i < *length)
         {
@@ -1406,13 +1394,9 @@ MagickExport MagickBooleanType FileToImage(Image *image,const char *filename)
     }
   for ( ; ; )
   {
-    count=read(file,blob,quantum);
+    count=MagickRead(file,blob,quantum);
     if (count <= 0)
-      {
-        count=0;
-        if (errno != EINTR)
-          break;
-      }
+      break;
     length=(size_t) count;
     count=WriteBlobStream(image,length,blob);
     if (count != (ssize_t) length)
@@ -1940,13 +1924,9 @@ MagickExport MagickBooleanType ImageToFile(Image *image,char *filename,
     length=(size_t) count;
     for (i=0; i < length; i+=count)
     {
-      count=write(file,p+i,(size_t) (length-i));
+      count=MagickWrite(file,p+i,(size_t) (length-i));
       if (count <= 0)
-        {
-          count=0;
-          if (errno != EINTR)
-            break;
-        }
+        break;
     }
     if (i < length)
       break;

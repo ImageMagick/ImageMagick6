@@ -646,7 +646,7 @@ MagickExport void *AcquireCriticalMemory(const size_t size)
   memory=AcquireMagickMemory(size);
   if (memory != (void *) NULL)
     return(memory);
-  status=write(STDERR_FILENO,fatal_message,sizeof(fatal_message)-1);
+  status=MagickWrite(STDERR_FILENO,fatal_message,sizeof(fatal_message)-1);
   (void) status;
   MagickCoreTerminus();
   _exit(EXIT_FAILURE);
