@@ -646,7 +646,6 @@ static MagickBooleanType GetPDCSimilarity(const Image *image,
     *reconstruct_view;
 
   double
-    area,
     fuzz;
 
   MagickBooleanType
@@ -657,11 +656,10 @@ static MagickBooleanType GetPDCSimilarity(const Image *image,
     rows;
 
   ssize_t
-    j,
     y;
 
   /*
-    Compute the absolute difference in pixels between two images.
+    Compute the pixel difference count in pixels between two images.
   */
   fuzz=GetFuzzyColorDistance(image,reconstruct_image);
   SetImageCompareBounds(image,reconstruct_image,&columns,&rows);
@@ -777,9 +775,6 @@ static MagickBooleanType GetPDCSimilarity(const Image *image,
   }
   reconstruct_view=DestroyCacheView(reconstruct_view);
   image_view=DestroyCacheView(image_view);
-  area=MagickSafeReciprocal((double) columns*rows);
-  for (j=0; j <= CompositeChannels; j++)
-    similarity[j]*=area;
   return(status);
 }
 
