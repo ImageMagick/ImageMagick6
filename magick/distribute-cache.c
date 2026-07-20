@@ -92,6 +92,7 @@
 #define SOCKET_TYPE SOCKET
 #define LENGTH_TYPE int
 #define MAGICKCORE_HAVE_DISTRIBUTE_CACHE
+#define MAGICKCORE_HAVE_WINSOCK2 1
 #else
 #ifdef __VMS
 #define CLOSE_SOCKET(socket) (void) close(socket)
