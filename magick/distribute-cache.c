@@ -460,7 +460,7 @@ static char *GetHostname(int *port,ExceptionInfo *exception)
   (void) SubstituteString(&hosts,","," ");
   hostlist=StringToArgv(hosts,&argc);
   hosts=DestroyString(hosts);
-  if (hostlist == (char **) NULL)
+  if ((hostlist == (char **) NULL) || ((argc-1) == 0))
     {
       *port=DPCPort;
       return(AcquireString(DPCHostname));
