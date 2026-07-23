@@ -6,3 +6,7 @@ updates:
       default-days: 7
     schedule:
       interval: "daily"
+    groups:
+      codeql-action:
+        patterns:
+          - "github/codeql-action/*"
