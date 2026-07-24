@@ -2715,7 +2715,7 @@ static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
     Image
       *clone_image;
 
-    ssize_t
+    size_t
       i;
 
     clone_image=CloneImage(next,0,0,MagickFalse,exception);
@@ -2731,7 +2731,7 @@ static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
     resolution.y=next->y_resolution;
     for (i=0; (columns > min_base) && (rows > min_base); i++)
     {
-      if (i > (ssize_t) max_levels)
+      if (i > max_levels)
         break;
       columns/=2;
       rows/=2;
@@ -2758,6 +2758,8 @@ static MagickBooleanType WritePTIFImage(const ImageInfo *image_info,
       images=GetFirstImageInList(images);
       write_info=CloneImageInfo(image_info);
       write_info->adjoin=MagickTrue;
+      (void) CopyMagickString(write_info->magick,"PTIF",MagickPathExtent);
+      (void) CopyMagickString(images->magick,"TIFF",MagickPathExtent);
       status=WriteTIFFImage(write_info,images);
       images=DestroyImageList(images);
       write_info=DestroyImageInfo(write_info);
@@ -3130,7 +3132,7 @@ static void TIFFSetProperties(TIFF *tiff,const ImageInfo *image_info,
   value=GetImageProperty(image,"comment");
   if (value != (const char *) NULL)
     (void) TIFFSetField(tiff,TIFFTAG_IMAGEDESCRIPTION,value);
-  value=GetImageArtifact(image,"tiff:subfiletype");
+  value=GetImageProperty(image,"tiff:subfiletype");
   if (value != (const char *) NULL)
     {
       if (LocaleCompare(value,"REDUCEDIMAGE") == 0)
@@ -3787,13 +3789,15 @@ static MagickBooleanType WriteTIFFImage(const ImageInfo *image_info,
       uint16
         page,
         pages;
-
+    
       page=(uint16) scene;
       pages=(uint16) number_scenes;
       if ((LocaleCompare(image_info->magick,"PTIF") != 0) &&
           (image_info->adjoin != MagickFalse) && (pages > 1))
-        (void) TIFFSetField(tiff,TIFFTAG_SUBFILETYPE,FILETYPE_PAGE);
-      (void) TIFFSetField(tiff,TIFFTAG_PAGENUMBER,page,pages);
+        {
+          (void) TIFFSetField(tiff,TIFFTAG_SUBFILETYPE,FILETYPE_PAGE);
+          (void) TIFFSetField(tiff,TIFFTAG_PAGENUMBER,page,pages);
+        }
     }
     (void) TIFFSetProperties(tiff,image_info,image);
     /*
