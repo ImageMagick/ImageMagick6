@@ -13242,7 +13242,10 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
 
   jpeg_image=CloneImage(image,0,0,MagickTrue,&image->exception);
   if (jpeg_image == (Image *) NULL)
-    ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+    {
+      jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+      ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+    }
   (void) CopyMagickString(jpeg_image->magick,"JPEG",MaxTextExtent);
 
   (void) AcquireUniqueFilename(jpeg_image->filename);
@@ -13259,7 +13262,11 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
       (double) jpeg_image->rows);
 
   if (status == MagickFalse)
-    ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+    {
+      jpeg_image=DestroyImage(jpeg_image);
+      jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+      ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+    }
 
   if (jng_color_type == 8 || jng_color_type == 12)
     jpeg_image_info->type=GrayscaleType;
@@ -13278,10 +13285,8 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
 
   if (blob == (unsigned char *) NULL)
     {
-      if (jpeg_image != (Image *)NULL)
-        jpeg_image=DestroyImage(jpeg_image);
-      if (jpeg_image_info != (ImageInfo *)NULL)
-        jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+      jpeg_image=DestroyImage(jpeg_image);
+      jpeg_image_info=DestroyImageInfo(jpeg_image_info);
       return(MagickFalse);
     }
 
