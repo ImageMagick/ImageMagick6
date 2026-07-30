@@ -11149,11 +11149,12 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
   if ((!mng_info->write_mng) || (!png_get_valid(ping,ping_info,PNG_INFO_sRGB)))
 #endif
     {
-      if (ping_exclude_gAMA == MagickFalse &&
+      if (mng_info->exclude_gAMA == MagickFalse &&
           ping_have_iCCP == MagickFalse &&
-          ping_have_sRGB != MagickFalse &&
-          (ping_exclude_sRGB == MagickFalse ||
-          (image->gamma < .45 || image->gamma > .46)))
+          ((ping_have_sRGB != MagickFalse &&
+            mng_info->exclude_sRGB == MagickFalse) ||
+           (ping_have_sRGB == MagickFalse &&
+            (image->gamma < 0.45 || image->gamma > 0.46))))
       {
       if ((mng_info->have_write_global_gama == 0) && (image->gamma != 0.0))
         {
