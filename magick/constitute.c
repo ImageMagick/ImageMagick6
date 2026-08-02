@@ -1064,7 +1064,7 @@ static MagickBooleanType GetImplicitDataImageType(const char *data_url,
     (void) memmove(magick,magick+2,strlen(magick+2)+1);
   magick_info=GetMagickInfo(magick,exception);
   if ((magick_info == (const MagickInfo *) NULL) ||
-      (GetMagickExplicitAllowed(magick_info) != MagickFalse))
+      (GetMagickExplicitAllowed(magick_info) == MagickFalse))
     return(MagickFalse);
   return(MagickTrue);
 }
