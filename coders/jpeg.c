@@ -1479,7 +1479,7 @@ static Image *ReadJPEGImage_(const ImageInfo *image_info,
       (jpeg_info->output_components != 3) && (jpeg_info->output_components != 4))
     {
       jpeg_destroy_decompress(jpeg_info);
-      ThrowJPEGReaderException(CorruptImageError,"ImageTypeNotSupported");
+      ThrowJPEGReaderException(ImageError,"ImageTypeNotSupported");
     }
   memory_info=AcquireVirtualMemory((size_t) image->columns,
     jpeg_info->output_components*sizeof(*jpeg_pixels));

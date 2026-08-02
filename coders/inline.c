@@ -327,7 +327,7 @@ static MagickBooleanType WriteINLINEImage(const ImageInfo *image_info,
       (GetMagickMimeType(magick_info) == (const char *) NULL))
     {
       write_info=DestroyImageInfo(write_info);
-      ThrowWriterException(CorruptImageError,"ImageTypeNotSupported");
+      ThrowWriterException(ImageError,"ImageTypeNotSupported");
     }
   (void) CopyMagickString(image->filename,write_info->filename,MaxTextExtent);
   blob_length=2048;

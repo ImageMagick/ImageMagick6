@@ -2157,7 +2157,7 @@ static MagickBooleanType ReadUncompressedRGB(Image *image, DDSInfo *dds_info,
     (void) SetImageType(image,GrayscaleType);
   else if (dds_info->pixelformat.rgb_bitcount == 16 && !IsBitMask(
     dds_info->pixelformat,0xf800,0x07e0,0x001f,0x0000))
-    ThrowBinaryException(CorruptImageError,"ImageTypeNotSupported",
+    ThrowBinaryException(ImageError,"ImageTypeNotSupported",
       image->filename);
 
   for (y = 0; y < (ssize_t) dds_info->height; y++)
@@ -2230,7 +2230,7 @@ static MagickBooleanType ReadUncompressedRGBA(Image *image, DDSInfo *dds_info,
       else if (IsBitMask(dds_info->pixelformat,0x0f00,0x00f0,0x000f,0xf000))
         alphaBits=4;
       else
-        ThrowBinaryException(CorruptImageError,"ImageTypeNotSupported",
+        ThrowBinaryException(ImageError,"ImageTypeNotSupported",
           image->filename);
     }
 

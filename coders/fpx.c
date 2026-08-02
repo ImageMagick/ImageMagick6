@@ -270,7 +270,7 @@ static Image *ReadFPXImage(const ImageInfo *image_info,ExceptionInfo *exception)
     {
       FPXRelinquishSummaryInfo(&summary_info);
       FPX_ClearSystem();
-      ThrowReaderException(CorruptImageError,"ImageTypeNotSupported");
+      ThrowReaderException(ImageError,"ImageTypeNotSupported");
     }
   option=image_info->view;
   if (option == (const char *) NULL)
