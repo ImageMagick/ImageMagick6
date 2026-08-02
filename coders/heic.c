@@ -662,7 +662,7 @@ static Image *ReadHEICImage(const ImageInfo *image_info,
     ThrowReaderException(CorruptImageError,"InsufficientImageDataInFile");
   filetype_check=heif_check_filetype(magic,sizeof(magic));
   if (filetype_check == heif_filetype_no)
-    ThrowReaderException(CoderError,"ImageTypeNotSupported");
+    ThrowReaderException(CorruptImageError,"ImageTypeNotSupported");
   (void) CloseBlob(image);
 #if LIBHEIF_NUMERIC_VERSION >= HEIC_COMPUTE_NUMERIC_VERSION(1,11,0)
   if (heif_has_compatible_brand(magic,sizeof(magic), "avif") == 1)
