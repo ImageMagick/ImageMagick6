@@ -247,6 +247,9 @@ static Image *ReadCALSImage(const ImageInfo *image_info,
       }
     }
   }
+  if ((width == 0) || (height == 0) || (type != 1) ||
+      (orientation == 0) || (density == 0))
+    ThrowReaderException(CorruptImageError,"ImproperImageHeader");
   /*
     Read CALS pixels.
   */
