@@ -682,20 +682,14 @@ static MagickBooleanType TIFFSetImageProperties(TIFF *tiff,Image *image,
   const char *tag)
 {
   char
-    filename[MagickPathExtent],
-    *line = (char *) NULL;
+    buffer[MagickPathExtent],
+    filename[MagickPathExtent];
 
   FILE
     *file;
 
   int
     unique_file;
-
-  size_t
-    length;
-
-  ssize_t
-    count;
 
   /*
     Set EXIF or GPS image properties.
@@ -707,29 +701,29 @@ static MagickBooleanType TIFFSetImageProperties(TIFF *tiff,Image *image,
   if ((unique_file == -1) || (file == (FILE *) NULL))
     {
       (void) RelinquishUniqueFileResource(filename);
-      (void) ThrowMagickException(&image->exception,GetMagickModule(),
-        FileOpenError,"UnableToCreateTemporaryFile","`%s'",filename);
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),WandError,
+        "UnableToCreateTemporaryFile","`%s'",filename);
       return(MagickFalse);
     }
   TIFFPrintDirectory(tiff,file,0);
   (void) fseek(file,0,SEEK_SET);
-  while ((count=getline(&line,&length,file)) != -1)
+  while (fgets(buffer,(int) sizeof(buffer),file) != NULL)
   {
     char
       *p,
-      property[MagickPathExtent];
+      property[MagickPathExtent],
+      value[MagickPathExtent];
 
-    (void) StripString(line);
-    p=strchr(line,':');
+    StripString(buffer);
+    p=strchr(buffer,':');
     if (p == (char *) NULL)
       continue;
-    *p++='\0';
-    (void) FormatLocaleString(property,MagickPathExtent,"%s%s",tag,line);
-    (void) StripString(p);
-    (void) SetImageProperty(image,property,p);
+    *p='\0';
+    (void) FormatLocaleString(property,MagickPathExtent,"%s%s",tag,buffer);
+    (void) FormatLocaleString(value,MagickPathExtent,"%s",p+1);
+    StripString(value);
+    (void) SetImageProperty(image,property,value);
   }
-  if (line != (char *) NULL)
-    free(line);
   (void) fclose(file);
   (void) RelinquishUniqueFileResource(filename);
   return(MagickTrue);
