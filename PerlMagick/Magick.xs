@@ -7189,7 +7189,7 @@ Layers(ref,...)
         /*
           Split image sequence at the first 'NULL:' image.
         */
-        source=image;
+        source=CloneImageList(image,exception);
         while (source != (Image *) NULL)
         {
           source=GetNextImageInList(source);
