@@ -313,24 +313,24 @@ static Image *ReadBGRImage(const ImageInfo *image_info,
           }
         for (y=0; y < (ssize_t) image->extract_info.height; y++)
         {
-          const PixelPacket
-            *magick_restrict p;
-
-          PixelPacket
-            *magick_restrict q;
-
-          ssize_t
-            x;
-
-          if (count != (ssize_t) length)
-            {
-              status=MagickFalse;
-              ThrowFileException(exception,CorruptImageError,
-                "UnexpectedEndOfFile",image->filename);
-              break;
-            }
           for (i=0; i < (ssize_t) (image->matte != MagickFalse ? 4 : 3); i++)
           {
+            const PixelPacket
+              *magick_restrict p;
+
+            PixelPacket
+              *magick_restrict q;
+
+            ssize_t
+              x;
+
+            if (count != (ssize_t) length)
+              {
+                status=MagickFalse;
+                ThrowFileException(exception,CorruptImageError,
+                  "UnexpectedEndOfFile",image->filename);
+                break;
+              }
             quantum_type=quantum_types[i];
             q=GetAuthenticPixels(canvas_image,0,0,canvas_image->columns,1,
               exception);
