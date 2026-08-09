@@ -9155,9 +9155,6 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
      if (mng_info->write_png8 == MagickFalse &&
          ping_exclude_bKGD == MagickFalse)
        {
-         /* Add the background color to the palette, if it
-          * isn't already there.
-          */
           if (logging != MagickFalse)
             {
               (void) LogMagickEvent(CoderEvent,GetMagickModule(),
@@ -9166,31 +9163,6 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
                   (int) image->background_color.green,
                   (int) image->background_color.blue);
             }
-          if (number_opaque < 259)
-            {
-              for (i=0; i<number_opaque; i++)
-              {
-                 if (opaque[i].red == image->background_color.red &&
-                     opaque[i].green == image->background_color.green &&
-                     opaque[i].blue == image->background_color.blue)
-                   break;
-              }
-              if (i == number_opaque)
-                {
-                   opaque[i] = image->background_color;
-                   ping_background.index = i;
-                   number_opaque++;
-                   if (logging != MagickFalse)
-                     {
-                       (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                           "      background_color index is %d",(int) i);
-                     }
-
-                }
-            }
-          else if (logging != MagickFalse)
-              (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                  "      No room in the colormap to add background color");
        }
 
      image_colors=number_opaque+number_transparent+number_semitransparent;
