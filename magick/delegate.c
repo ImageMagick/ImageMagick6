@@ -1695,6 +1695,9 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   const char *destination,const MagickBooleanType overwrite,
   ExceptionInfo *exception)
 {
+  char
+    filename[MagickPathExtent];
+
   int
     destination_file,
     source_file;
@@ -1729,11 +1732,14 @@ static MagickBooleanType CopyDelegateFile(const char *source,
       if (status != MagickFalse)
         return(MagickTrue);
     }
-  if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
-    ThrowPolicyException(destination,MagickFalse);
-  destination_file=open_utf8(destination,O_WRONLY | O_BINARY | O_CREAT,S_MODE);
+  destination_file=AcquireUniqueFileResource(filename);
   if (destination_file == -1)
     return(MagickFalse);
+  if (IsPathAuthorized(ReadPolicyRights,source) == MagickFalse)
+    {
+      (void) close_utf8(destination_file);
+      ThrowPolicyException(source,MagickFalse);
+    }
   source_file=open_utf8(source,O_RDONLY | O_BINARY,0);
   if (source_file == -1)
     {
@@ -1764,6 +1770,10 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   (void) close(destination_file);
   (void) close(source_file);
   buffer=(unsigned char *) RelinquishMagickMemory(buffer);
+  if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
+    ThrowPolicyException(destination,MagickFalse);
+  if (rename_utf8(filename,destination) != 0)
+    return(MagickFalse);
   return(i != 0 ? MagickTrue : MagickFalse);
 }
 
@@ -1933,13 +1943,6 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
   (void) CopyMagickString(input_filename,image->filename,MaxTextExtent);
   for (i=0; commands[i] != (char *) NULL; i++)
   {
-    if (IsPathAuthorized(WritePolicyRights,output_filename) == MagickFalse)
-      {
-        errno=EPERM;
-        (void) ThrowMagickException(exception,GetMagickModule(),PolicyError, \
-          "NotAuthorized","`%s'",output_filename);
-        break;
-      } 
     status=AcquireUniqueSymbolicLink(output_filename,image_info->filename);
     if (AcquireUniqueFilename(image_info->unique) == MagickFalse)
       {
@@ -1990,11 +1993,17 @@ MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
     if (LocaleCompare(decode,"SCAN") != 0)
       {
         if (CopyDelegateFile(image->filename,input_filename,MagickFalse,&image->exception) == MagickFalse)
-          (void) RelinquishUniqueFileResource(input_filename);
+          {
+            (void) RelinquishUniqueFileResource(input_filename);
+            status=MagickFalse;
+          }
       }
     if ((strcmp(input_filename,output_filename) != 0) &&
         (CopyDelegateFile(image_info->filename,output_filename,MagickTrue,&image->exception) == MagickFalse))
-      (void) RelinquishUniqueFileResource(output_filename);
+      {
+        (void) RelinquishUniqueFileResource(output_filename);
+        status=MagickFalse;
+      }
     if (image_info->temporary != MagickFalse)
       (void) RelinquishUniqueFileResource(image_info->filename);
     (void) RelinquishUniqueFileResource(image_info->unique);

@@ -695,9 +695,9 @@ MagickExport MagickBooleanType IsPathAuthorized(const PolicyRights rights,
   MagickBooleanType symlink_follow_allowed = IsRightsAuthorizedByName(
     SystemPolicyDomain,"symlink",rights,"follow");
   MagickBooleanType status =
-   ((IsRightsAuthorized(PathPolicyDomain,rights,path) != MagickFalse) &&
-   ((symlink_follow_allowed != MagickFalse) ||
-    (is_symlink_utf8(path) == MagickFalse))) ? MagickTrue : MagickFalse;
+    ((IsRightsAuthorized(PathPolicyDomain,rights,path) != MagickFalse) &&
+    ((symlink_follow_allowed != MagickFalse) ||
+     (is_symlink_utf8(path) == MagickFalse))) ? MagickTrue : MagickFalse;
   if ((status != MagickFalse) && (symlink_follow_allowed == MagickFalse))
     {
       if ((is_symlink_utf8(path) != MagickFalse) ||
@@ -954,11 +954,11 @@ MagickExport MagickBooleanType ListPolicyInfo(FILE *file,
   const PolicyInfo
     **policy_info;
 
-  ssize_t
-    i;
-
   size_t
     number_policies;
+
+  ssize_t
+    i;
 
   /*
     List name and attributes of each policy in the list.
