@@ -1695,8 +1695,9 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   const char *destination,const MagickBooleanType overwrite,
   ExceptionInfo *exception)
 {
-  char
-    filename[MagickPathExtent];
+#if !defined(O_NOFOLLOW)
+#define O_NOFOLLOW 0
+#endif
 
   int
     destination_file,
@@ -1706,17 +1707,15 @@ static MagickBooleanType CopyDelegateFile(const char *source,
     status;
 
   size_t
-    i;
-
-  size_t
     length,
     quantum;
 
   ssize_t
-    count;
+    count,
+    i;
 
   struct stat
-    attributes;
+    attributes = { 0 };
 
   unsigned char
     *buffer;
@@ -1732,7 +1731,10 @@ static MagickBooleanType CopyDelegateFile(const char *source,
       if (status != MagickFalse)
         return(MagickTrue);
     }
-  destination_file=AcquireUniqueFileResource(filename);
+  if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
+    ThrowPolicyException(source,MagickFalse);
+  destination_file=open_utf8(destination,O_WRONLY | O_BINARY | O_CREAT |
+    O_NOFOLLOW,S_MODE);
   if (destination_file == -1)
     return(MagickFalse);
   if (IsPathAuthorized(ReadPolicyRights,source) == MagickFalse)
@@ -1743,7 +1745,7 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   source_file=open_utf8(source,O_RDONLY | O_BINARY,0);
   if (source_file == -1)
     {
-      (void) close(destination_file);
+      (void) close_utf8(destination_file);
       return(MagickFalse);
     }
   quantum=(size_t) MagickMaxBufferExtent;
@@ -1752,12 +1754,12 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   buffer=(unsigned char *) AcquireQuantumMemory(quantum,sizeof(*buffer));
   if (buffer == (unsigned char *) NULL)
     {
-      (void) close(source_file);
-      (void) close(destination_file);
+      (void) close_utf8(source_file);
+      (void) close_utf8(destination_file);
       return(MagickFalse);
     }
   length=0;
-  for (i=0; ; i+=count)
+  for (i=0; ; i+=(ssize_t) count)
   {
     count=(ssize_t) read(source_file,buffer,quantum);
     if (count <= 0)
@@ -1767,13 +1769,11 @@ static MagickBooleanType CopyDelegateFile(const char *source,
     if ((size_t) count != length)
       break;
   }
-  (void) close(destination_file);
-  (void) close(source_file);
+  (void) close_utf8(destination_file);
+  (void) close_utf8(source_file);
   buffer=(unsigned char *) RelinquishMagickMemory(buffer);
   if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
     ThrowPolicyException(destination,MagickFalse);
-  if (rename_utf8(filename,destination) != 0)
-    return(MagickFalse);
   return(i != 0 ? MagickTrue : MagickFalse);
 }
 
