@@ -1707,12 +1707,10 @@ static MagickBooleanType CopyDelegateFile(const char *source,
     status;
 
   size_t
-    length,
     quantum;
 
   ssize_t
-    count,
-    i;
+    count;
 
   struct stat
     attributes = { 0 };
@@ -1725,12 +1723,9 @@ static MagickBooleanType CopyDelegateFile(const char *source,
   */
   assert(source != (const char *) NULL);
   assert(destination != (char *) NULL);
-  if (overwrite == MagickFalse)
-    {
-      status=GetPathAttributes(destination,&attributes);
-      if (status != MagickFalse)
-        return(MagickTrue);
-    }
+  if ((overwrite == MagickFalse) &&
+      (GetPathAttributes(destination,&attributes) != MagickFalse))
+    return(MagickTrue);
   if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
     ThrowPolicyException(source,MagickFalse);
   destination_file=open_utf8(destination,O_WRONLY | O_BINARY | O_CREAT |
@@ -1758,23 +1753,23 @@ static MagickBooleanType CopyDelegateFile(const char *source,
       (void) close_utf8(destination_file);
       return(MagickFalse);
     }
-  length=0;
-  for (i=0; ; i+=(ssize_t) count)
+  while ((count=read(source_file,buffer,quantum)) > 0)
   {
-    count=(ssize_t) read(source_file,buffer,quantum);
-    if (count <= 0)
-      break;
-    length=(size_t) count;
-    count=(ssize_t) write(destination_file,buffer,length);
-    if ((size_t) count != length)
-      break;
+    ssize_t written = write(destination_file,buffer,(size_t) count);
+    if (written != count)
+      {
+        status=MagickFalse;
+        break;
+      }
   }
+  if (count < 0)
+    status=MagickFalse;
   (void) close_utf8(destination_file);
   (void) close_utf8(source_file);
   buffer=(unsigned char *) RelinquishMagickMemory(buffer);
   if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
     ThrowPolicyException(destination,MagickFalse);
-  return(i != 0 ? MagickTrue : MagickFalse);
+  return(status);
 }
 
 MagickExport MagickBooleanType InvokeDelegate(ImageInfo *image_info,
