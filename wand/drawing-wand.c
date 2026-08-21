@@ -913,6 +913,7 @@ WandExport MagickBooleanType DrawComposite(DrawingWand *wand,
     return(MagickFalse);
   image_info=AcquireImageInfo();
   (void) CopyMagickString(image_info->magick,"MIFF",MaxTextExtent);
+  media_type=MagickToMime(image_info->magick);
   blob_length=2048;
   blob=(unsigned char *) ImageToBlob(image_info,clone_image,&blob_length,
     wand->exception);
@@ -935,7 +936,6 @@ WandExport MagickBooleanType DrawComposite(DrawingWand *wand,
       return(MagickFalse);
     }
   mode=CommandOptionToMnemonic(MagickComposeOptions,(ssize_t) compose);
-  media_type=MagickToMime(image->magick);
   (void) MVGPrintf(wand,"image %s %.17g %.17g %.17g %.17g 'data:%s;base64,\n",
     mode,x,y,width,height,media_type);
   p=base64;
