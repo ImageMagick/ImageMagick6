@@ -1969,10 +1969,7 @@ static QuantizationTable *GetQuantizationTable(const char *filename,
       xml=DestroyString(xml);
       return(table);
     }
-  table=(QuantizationTable *) AcquireMagickMemory(sizeof(*table));
-  if (table == (QuantizationTable *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,
-      "UnableToAcquireQuantizationTable");
+  table=(QuantizationTable *) AcquireCriticalMemory(sizeof(*table));
   table->slot=(char *) NULL;
   table->description=(char *) NULL;
   table->levels=(unsigned int *) NULL;
@@ -2058,8 +2055,12 @@ static QuantizationTable *GetQuantizationTable(const char *filename,
   table->levels=(unsigned int *) AcquireQuantumMemory(length,
     sizeof(*table->levels));
   if (table->levels == (unsigned int *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,
-      "UnableToAcquireQuantizationTable");
+    {
+      quantization_tables=DestroyXMLTree(quantization_tables);
+      table=DestroyQuantizationTable(table);
+      xml=DestroyString(xml);
+      return(table);
+    }
   for (i=0; i < (ssize_t) (table->width*table->height); i++)
   {
     table->levels[i]=(unsigned int) (InterpretLocaleValue(content,&p)/
@@ -2293,7 +2294,7 @@ static char **SamplingFactorToList(const char *text)
   textlist=(char **) AcquireQuantumMemory((size_t) MAX_COMPONENTS,
     sizeof(*textlist));
   if (textlist == (char **) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"UnableToConvertText");
+    return((char **) NULL);
   p=text;
   for (i=0; i < (ssize_t) MAX_COMPONENTS; i++)
   {
@@ -2303,7 +2304,15 @@ static char **SamplingFactorToList(const char *text)
     textlist[i]=(char *) AcquireQuantumMemory((size_t) (q-p)+MaxTextExtent,
       sizeof(*textlist[i]));
     if (textlist[i] == (char *) NULL)
-      ThrowFatalException(ResourceLimitFatalError,"UnableToConvertText");
+      {
+        ssize_t
+          j;
+
+        for (j=0; j < i; j++)
+          textlist[j]=DestroyString(textlist[j]);
+        textlist=(char **) RelinquishMagickMemory(textlist);
+        return(textlist);
+      }
     (void) CopyMagickString(textlist[i],p,(size_t) (q-p+1));
     if (*q == '\r')
       q++;

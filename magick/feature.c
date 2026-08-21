@@ -679,7 +679,11 @@ MagickExport ChannelFeatures *GetImageChannelFeatures(const Image *image,
   channel_features=(ChannelFeatures *) AcquireQuantumMemory(length,
     sizeof(*channel_features));
   if (channel_features == (ChannelFeatures *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
+      return(channel_features);
+    }
   (void) memset(channel_features,0,length*
     sizeof(*channel_features));
   /*

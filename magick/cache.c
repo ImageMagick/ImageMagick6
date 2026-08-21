@@ -824,7 +824,7 @@ static MagickBooleanType ClonePixelCacheOnDisk(
     }
   buffer=(unsigned char *) AcquireQuantumMemory(quantum,sizeof(*buffer));
   if (buffer == (unsigned char *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+    return(MagickTrue);
   extent=0;
   while ((count=MagickRead(cache_info->file,buffer,quantum)) > 0)
   {

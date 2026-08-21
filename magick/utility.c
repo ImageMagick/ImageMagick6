@@ -1489,7 +1489,7 @@ MagickExport char **GetPathComponents(const char *path,
   components=(char **) AcquireQuantumMemory((size_t) *number_components+1UL,
     sizeof(*components));
   if (components == (char **) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+    return((char **) NULL);
   p=path;
   for (i=0; i < (ssize_t) *number_components; i++)
   {
@@ -1499,7 +1499,15 @@ MagickExport char **GetPathComponents(const char *path,
     components[i]=(char *) AcquireQuantumMemory((size_t) (q-p)+MaxTextExtent,
       sizeof(**components));
     if (components[i] == (char *) NULL)
-      ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+      {
+        ssize_t
+          j;
+
+        for (j=0; j < i; j++)
+          components[j]=DestroyString(components[j]);
+        components=(char **) RelinquishMagickMemory(components);
+        return((char **) NULL);
+      }
     (void) CopyMagickString(components[i],p,(size_t) (q-p+1));
     p=q+1;
   }
