@@ -513,8 +513,9 @@ static MagickBooleanType WriteFLIFImage(const ImageInfo *image_info,
           flif_image_write_row_RGBA8(flifimage,y,pixels,length);
         }
     }
-    flif_image_set_frame_delay(flifimage,image->delay*100/
-      image->ticks_per_second);
+    if (image->ticks_er_second != 0)
+     flif_image_set_frame_delay(flifimage,(uint32_t) (100*image->delay/
+       image->ticks_per_second));
     flif_encoder_add_image(flifenc,flifimage);
     if (GetNextImageInList(image) == (Image *) NULL)
       break;
