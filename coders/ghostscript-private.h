@@ -16,6 +16,8 @@
 #ifndef MAGICK_GHOSTSCRIPT_BUFFER_PRIVATE_H
 #define MAGICK_GHOSTSCRIPT_BUFFER_PRIVATE_H
 
+#include "magick/delegate.h"
+#include "magick/delegate-private.h"
 #include "coders/bytebuffer-private.h"
 
 #if defined(MAGICKCORE_GS_DELEGATE) || defined(MAGICKCORE_WINDOWS_SUPPORT)
@@ -196,7 +198,7 @@ static inline MagickBooleanType InvokeGhostscriptDelegate(
 #endif
 }
 
-static MagickBooleanType IsGhostscriptRendered(const char *path)
+static inline MagickBooleanType IsGhostscriptRendered(const char *path)
 {
   MagickBooleanType
     status;
@@ -266,6 +268,50 @@ static inline void ReadGhostScriptXMPProfile(MagickByteBuffer *buffer,
       }
   }
   SetStringInfoLength(*profile,(size_t) count);
+}
+
+static inline char *EscapeParenthesis(const char *source)
+{
+  char
+    *destination;
+
+  char
+    *q;
+
+  const char
+    *p;
+
+  size_t
+    length;
+
+  assert(source != (const char *) NULL);
+  length=0;
+  for (p=source; *p != '\0'; p++)
+  {
+    if ((*p == '\\') || (*p == '(') || (*p == ')'))
+      {
+        if (~length < 1)
+          ThrowFatalException(ResourceLimitFatalError,"UnableToEscapeString");
+        length++;
+      }
+    length++;
+  }
+  destination=(char *) NULL;
+  if (~length >= (MaxTextExtent-1))
+    destination=(char *) AcquireQuantumMemory(length+MaxTextExtent,
+      sizeof(*destination));
+  if (destination == (char *) NULL)
+    ThrowFatalException(ResourceLimitFatalError,"UnableToEscapeString");
+  *destination='\0';
+  q=destination;
+  for (p=source; *p != '\0'; p++)
+  {
+    if ((*p == '\\') || (*p == '(') || (*p == ')'))
+      *q++='\\';
+    *q++=(*p);
+  }
+  *q='\0';
+  return(destination);
 }
 
 #endif
