@@ -18,6 +18,7 @@
 
 #include "magick/delegate.h"
 #include "magick/delegate-private.h"
+#include "magick/exception-private.h"
 #include "coders/bytebuffer-private.h"
 
 #if defined(MAGICKCORE_GS_DELEGATE) || defined(MAGICKCORE_WINDOWS_SUPPORT)
