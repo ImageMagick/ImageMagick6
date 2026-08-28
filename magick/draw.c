@@ -4611,11 +4611,11 @@ static MagickBooleanType RenderMVGContent(Image *image,
 MagickExport MagickBooleanType DrawImage(Image *image,const DrawInfo *draw_info)
 {
   MagickBooleanType
-    status;               
-                        
-  size_t                
+    status;
+
+  size_t
     macro_expansion = 0;
-                    
+
   ((DrawInfo *) draw_info)->macro_expansion=(&macro_expansion);
   status=RenderMVGContent(image,draw_info,0);
   ((DrawInfo *) draw_info)->macro_expansion=(size_t *) NULL;
