@@ -1519,7 +1519,7 @@ MagickExport MagickBooleanType WriteImages(const ImageInfo *image_info,
         p->client_data);
     status&=WriteImage(write_info,p);
     if (write_info->blob != (void *) NULL)
-      SyncImagesBlob(write_info,p,images);
+      SyncBlobStream(write_info,p,images);
     GetImageException(p,exception);
     if (number_images != 1)
       (void) SetImageProgressMonitor(p,progress_monitor,p->client_data);

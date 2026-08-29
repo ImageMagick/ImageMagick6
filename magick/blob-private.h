@@ -148,7 +148,7 @@ extern MagickExport void
 
 extern MagickPrivate void
   DisassociateBlob(Image *),
-  SyncImagesBlob(ImageInfo *,const Image *,Image *);
+  SyncBlobStream(ImageInfo *,Image *,Image *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }
