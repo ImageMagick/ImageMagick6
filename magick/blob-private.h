@@ -147,7 +147,8 @@ extern MagickExport void
   MSBOrderShort(unsigned char *,const size_t);
 
 extern MagickPrivate void
-  DisassociateBlob(Image *);
+  DisassociateBlob(Image *),
+  SyncImagesBlob(ImageInfo *,const Image *,Image *);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

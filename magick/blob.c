@@ -2042,6 +2042,7 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
           images->blob->exempt=MagickTrue;
           *images->filename='\0';
           status=WriteImages(blob_info,images,images->filename,exception);
+          SyncImagesBlob(blob_info,images,images);
           *length=images->blob->length;
           blob=DetachBlob(images->blob);
           if (blob != (void *) NULL)
@@ -4822,6 +4823,73 @@ static int SyncBlob(const Image *image)
       break;
   }
   return(status);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
++  S y n c I m a g e s B l o b                                                %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  SyncImagesBlob() re-synchronizes the in-memory blob stream that is shared
+%  by an image list.  An encoder may grow the blob with SetBlobExtent(), which
+%  reallocates (and therefore frees) the buffer that AttachBlob() previously
+%  handed to the other images of the list and to image_info->blob.  This method
+%  replaces every stale reference to that buffer with the current one so that a
+%  subsequent AttachBlob(), write, or free never touches freed memory.
+%
+%  The format of the SyncImagesBlob method is:
+%
+%      void SyncImagesBlob(ImageInfo *image,const Image *image,Image *images)
+%
+%  A description of each parameter follows:
+%
+%    o image_info: the image info whose blob member is updated; may be NULL.
+%
+%    o image: the image that was just written (owner of the live blob).
+%
+%    o images: the head of the image list that is being synchronized.
+%
+*/
+MagickPrivate void SyncImagesBlob(ImageInfo *image_info,const Image *image,
+  Image *images)
+{
+  Image
+    *p;
+
+  unsigned char
+    *current,
+    *stale;
+
+  assert(image != (const Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
+  if ((image->blob == (BlobInfo *) NULL) || (image->blob->type != BlobStream))
+    return;
+  current=image->blob->data;
+  stale=(unsigned char *) (image_info != (ImageInfo *) NULL ?
+    image_info->blob : (void *) NULL);
+  if (image_info != (ImageInfo *) NULL)
+    {
+      image_info->blob=(void *) current;
+      image_info->length=image->blob->length;
+    }
+  if ((stale == (unsigned char *) NULL) || (stale == current))
+    return;  /* nothing was reallocated */
+  for (p=images; p != (Image *) NULL; p=GetNextImageInList(p))
+  {
+    if ((p == image) || (p->blob == (BlobInfo *) NULL))
+      continue;
+    if ((p->blob->type != BlobStream) || (p->blob->data != stale))
+      continue;
+    p->blob->data=current;
+    p->blob->extent=image->blob->extent;
+    p->blob->length=image->blob->length;
+  }
 }
 
 /*
