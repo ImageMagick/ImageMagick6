@@ -160,6 +160,8 @@ static int PNMComment(Image *image,CommentInfo *comment_info)
   /*
     Read comment.
   */
+  if (comment_info->comment == (char *) NULL)
+    return(-1);
   p=comment_info->comment+strlen(comment_info->comment);
   for (c='#'; (c != EOF) && (c != (int) '\n') && (c != (int) '\r'); p++)
   {
@@ -1369,9 +1371,12 @@ static Image *ReadPNMImage(const ImageInfo *image_info,ExceptionInfo *exception)
       default:
         ThrowPNMException(CorruptImageError,"ImproperImageHeader");
     }
-    if (*comment_info.comment != '\0')
-      (void) SetImageProperty(image,"comment",comment_info.comment);
-    comment_info.comment=DestroyString(comment_info.comment);
+    if (comment_info.comment != (char*)NULL)
+      {
+        if (*comment_info.comment != '\0')
+          (void) SetImageProperty(image,"comment",comment_info.comment);
+        comment_info.comment=DestroyString(comment_info.comment);
+      }
     if (y < (ssize_t) image->rows)
       ThrowPNMException(CorruptImageError,"UnableToReadImageData");
     /*
