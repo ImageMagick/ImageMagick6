@@ -167,7 +167,7 @@ static Image *ReadURLImage(const ImageInfo *image_info,ExceptionInfo *exception)
       if (status != MagickFalse)
         {
           (void) FormatLocaleString(read_info->filename,MagickPathExtent,
-            "%s.dat",read_info->unique);
+            "%s.bin",read_info->unique);
           *read_info->magick='\0';
           images=ReadImage(read_info,exception);
           (void) RelinquishUniqueFileResource(read_info->filename);
