@@ -3943,8 +3943,8 @@ static MagickBooleanType OpenPixelCache(Image *image,const MapMode mode,
     ThrowBinaryException(CacheError,"NoPixelsDefinedInCache",image->filename);
   cache_info=(CacheInfo *) image->cache;
   assert(cache_info->signature == MagickCoreSignature);
-  if (((MagickSizeType) image->columns >= cache_info->width_limit) ||
-      ((MagickSizeType) image->rows >= cache_info->height_limit))
+  if (((MagickSizeType) image->columns > cache_info->width_limit) ||
+      ((MagickSizeType) image->rows > cache_info->height_limit))
     ThrowBinaryException(ImageError,"WidthOrHeightExceedsLimit",
       image->filename);
   if (GetMagickResourceLimit(ListLengthResource) != MagickResourceInfinity)
@@ -5256,8 +5256,8 @@ static PixelPacket *SetPixelCacheNexusPixels(
         "NoPixelsDefinedInCache","`%s'",cache_info->filename);
       return((PixelPacket *) NULL);
     }
-  if (((MagickSizeType) width >= cache_info->width_limit) ||
-      ((MagickSizeType) height >= cache_info->height_limit))
+  if (((MagickSizeType) width > cache_info->width_limit) ||
+      ((MagickSizeType) height > cache_info->height_limit))
     {
       (void) ThrowMagickException(exception,GetMagickModule(),ImageError,
         "WidthOrHeightExceedsLimit","`%s'",cache_info->filename);
@@ -5303,7 +5303,13 @@ static PixelPacket *SetPixelCacheNexusPixels(
   /*
     Pixels are stored in a staging region until they are synced to the cache.
   */
-  number_pixels=(MagickSizeType) width*height;
+  if (CacheOverflowSanityCheckGetSize(width,height,&number_pixels) != MagickFalse)
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'",
+        cache_info->filename);
+      return((PixelPacket *) NULL);
+    }
   {
     MagickSizeType
       extent,
