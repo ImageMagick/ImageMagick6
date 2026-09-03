@@ -795,7 +795,7 @@ static MagickBooleanType WritePS2Image(const ImageInfo *image_info,Image *image)
           char
             *escape;
 
-          escape=EscapeParenthesis(labels[i]);
+          escape=EscapeParenthesis(labels[i],510,&image->exception);
           (void) FormatLocaleString(buffer,MagickPathExtent,"%s \n",escape);
           escape=DestroyString(escape);
           (void) WriteBlobString(image,buffer);

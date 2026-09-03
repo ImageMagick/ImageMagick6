@@ -1456,7 +1456,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
         (void) CopyMagickString(create_date,value,MaxTextExtent);
       (void) FormatMagickTime(GetMagickTime(),MaxTextExtent,timestamp);
       url=(char *) MagickAuthoritativeURL;
-      escape=EscapeParenthesis(basename);
+      escape=EscapeParenthesis(basename,MAGICK_SIZE_MAX,&image->exception);
       i=FormatLocaleString(xmp_profile,MaxTextExtent,XMPProfile,
         XMPProfileMagick,modify_date,create_date,timestamp,url,escape,url);
       escape=DestroyString(escape);
@@ -1726,7 +1726,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
           (double) geometry.x,(double) (geometry.y+geometry.height+i*pointsize+
           12));
         (void) WriteBlobString(image,buffer);
-        escape=EscapeParenthesis(labels[i]);
+        escape=EscapeParenthesis(labels[i],MAGICK_SIZE_MAX,&image->exception);
         (void) FormatLocaleString(buffer,MaxTextExtent,"(%s) Tj\n",escape);
         escape=DestroyString(escape);
         (void) WriteBlobString(image,buffer);
@@ -2948,7 +2948,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
   (void) WriteBlobString(image,"<<\n");
   if (LocaleCompare(image_info->magick,"PDFA") == 0)
     {
-      escape=EscapeParenthesis(basename);
+      escape=EscapeParenthesis(basename,MAGICK_SIZE_MAX,&image->exception);
       (void) FormatLocaleString(buffer,MagickPathExtent,"/Title (%s)\n",
         escape);
       escape=DestroyString(escape);
@@ -3004,7 +3004,7 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
   (void) FormatLocaleString(buffer,MaxTextExtent,"/ModDate (%s)\n",date);
   (void) WriteBlobString(image,buffer);
   url=(char *) MagickAuthoritativeURL;
-  escape=EscapeParenthesis(url);
+  escape=EscapeParenthesis(url,MAGICK_SIZE_MAX,&image->exception);
   (void) FormatLocaleString(buffer,MaxTextExtent,"/Producer (%s)\n",escape);
   escape=DestroyString(escape);
   (void) WriteBlobString(image,buffer);

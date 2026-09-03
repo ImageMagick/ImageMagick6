@@ -271,7 +271,8 @@ static inline void ReadGhostScriptXMPProfile(MagickByteBuffer *buffer,
   SetStringInfoLength(*profile,(size_t) count);
 }
 
-static inline char *EscapeParenthesis(const char *source)
+static inline char *EscapeParenthesis(const char *source,
+  const size_t max_length,ExceptionInfo *exception)
 {
   char
     *destination;
@@ -280,6 +281,7 @@ static inline char *EscapeParenthesis(const char *source)
     *q;
 
   const char
+    *end,
     *p;
 
   size_t
@@ -287,25 +289,30 @@ static inline char *EscapeParenthesis(const char *source)
 
   assert(source != (const char *) NULL);
   length=0;
+  end=source;
   for (p=source; *p != '\0'; p++)
   {
-    if ((*p == '\\') || (*p == '(') || (*p == ')'))
-      {
-        if (~length < 1)
-          ThrowFatalException(ResourceLimitFatalError,"UnableToEscapeString");
-        length++;
-      }
-    length++;
+    size_t
+      count;
+
+    count=((*p == '\\') || (*p == '(') || (*p == ')')) ? 2 : 1;
+    if ((~length < count) || ((length+count) > max_length))
+      break;
+    length+=count;
+    end=p+1;
   }
+  if (*end != '\0')
+    (void) ThrowMagickException(exception,GetMagickModule(),CoderWarning,
+      "LabelTruncated","`%g'",(double) max_length);
   destination=(char *) NULL;
-  if (~length >= (MaxTextExtent-1))
-    destination=(char *) AcquireQuantumMemory(length+MaxTextExtent,
+  if (~length >= (MagickPathExtent-1))
+    destination=(char *) AcquireQuantumMemory(length+MagickPathExtent,
       sizeof(*destination));
   if (destination == (char *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToEscapeString");
   *destination='\0';
   q=destination;
-  for (p=source; *p != '\0'; p++)
+  for (p=source; p < end; p++)
   {
     if ((*p == '\\') || (*p == '(') || (*p == ')'))
       *q++='\\';
