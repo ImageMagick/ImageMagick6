@@ -161,6 +161,9 @@ static MagickBooleanType WriteINFOImage(const ImageInfo *image_info,
   const char
     *format;
 
+  FILE
+    *file;
+
   MagickBooleanType
     status;
 
@@ -182,6 +185,14 @@ static MagickBooleanType WriteINFOImage(const ImageInfo *image_info,
   status=OpenBlob(image_info,image,WriteBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
+  file=GetBlobFileHandle(image);
+  if (file == (FILE *) NULL)
+    {
+      (void) CloseBlob(image);
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),CoderError,
+        "CoderDoesNotSupportThisStreamType","`%s'",image->filename);
+      return(MagickFalse);
+    }
   scene=0;
   number_scenes=GetImageListLength(image);
   do
@@ -193,8 +204,7 @@ static MagickBooleanType WriteINFOImage(const ImageInfo *image_info,
           MaxTextExtent);
         image->magick_columns=image->columns;
         image->magick_rows=image->rows;
-        (void) IdentifyImage(image,GetBlobFileHandle(image),
-          image_info->verbose);
+        (void) IdentifyImage(image,file,image_info->verbose);
       }
     else
       {

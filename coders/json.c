@@ -1792,6 +1792,9 @@ static MagickBooleanType EncodeImageAttributes(Image *image,FILE *file)
 static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
   Image *image)
 {
+  FILE
+    *file;
+
   MagickBooleanType
     status;
 
@@ -1813,6 +1816,14 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
   status=OpenBlob(image_info,image,WriteBlobMode,&image->exception);
   if (status == MagickFalse)
     return(status);
+  file=GetBlobFileHandle(image);
+  if (file == (FILE *) NULL)
+    {
+      (void) CloseBlob(image);
+      (void) ThrowMagickException(&image->exception,GetMagickModule(),CoderError,
+        "CoderDoesNotSupportThisStreamType","`%s'",image->filename);
+      return(MagickFalse);
+    }
   scene=0;
   number_scenes=GetImageListLength(image);
   do
@@ -1823,7 +1834,7 @@ static MagickBooleanType WriteJSONImage(const ImageInfo *image_info,
       MaxTextExtent);
     image->magick_columns=image->columns;
     image->magick_rows=image->rows;
-    status=EncodeImageAttributes(image,GetBlobFileHandle(image));
+    status=EncodeImageAttributes(image,file);
     if (status == MagickFalse)
       break;
     if (GetNextImageInList(image) == (Image *) NULL)
