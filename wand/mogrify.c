@@ -4032,21 +4032,26 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
               clone_image=DestroyImageList(clone_image);
             }
         }
-        if (status != MagickFalse)
+       if (status != MagickFalse)
           {
-            MagickBooleanType
-               preserve_timestamp;
+            {
+              MagickBooleanType
+                preserve_timestamp;
 
-            preserve_timestamp=IsStringTrue(GetImageOption(image_info,
-              "preserve-timestamp"));
-            if (preserve_timestamp != MagickFalse)
-              (void) set_file_timestamp(image->filename,&properties);
+              preserve_timestamp=IsStringTrue(GetImageOption(image_info,
+                "preserve-timestamp"));
+              if (preserve_timestamp != MagickFalse)
+                (void) set_file_timestamp(image->filename,&properties);
+            }
             if (*backup_filename != '\0')
-              (void) remove_utf8(backup_filename);
+              {
+                if (rename_utf8(backup_filename,image->filename) != 0)
+                  status=MagickFalse;
+              }
           }
         else
           if (*backup_filename != '\0')
-            (void) rename_utf8(backup_filename,image->filename);
+            (void) remove_utf8(backup_filename);
         RemoveAllImageStack();
         continue;
       }
