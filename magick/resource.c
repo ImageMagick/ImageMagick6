@@ -515,13 +515,6 @@ static void *DestroyTemporaryResources(void *temporary_resource)
 
 MagickExport int AcquireUniqueFileResource(char *path)
 {
-#if !defined(O_NOFOLLOW)
-#define O_NOFOLLOW 0
-#endif
-#if !defined(TMP_MAX)
-# define TMP_MAX  238328
-#endif
-
   int
     c,
     file;

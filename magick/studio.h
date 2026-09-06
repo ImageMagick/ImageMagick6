@@ -364,8 +364,16 @@ extern int vsnprintf(char *,size_t,const char *,va_list);
 #define O_BINARY  0x00
 #endif
 
+#if !defined(O_NOFOLLOW)
+#define O_NOFOLLOW 0
+#endif
+
 #if !defined(PATH_MAX)
 #define PATH_MAX  4096
+#endif
+
+#if !defined(TMP_MAX)
+# define TMP_MAX  238328
 #endif
 
 #if defined(MAGICKCORE_LTDL_DELEGATE) || (defined(MAGICKCORE_WINDOWS_SUPPORT) && defined(_DLL) && !defined(_LIB))

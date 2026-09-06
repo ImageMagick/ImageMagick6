@@ -3979,29 +3979,59 @@ WandExport MagickBooleanType MogrifyImageCommand(ImageInfo *image_info,
         if ((LocaleCompare(image->filename,"-") != 0) &&
             (IsPathWritable(image->filename) != MagickFalse))
           {
-            ssize_t
-              i;
+            int
+              file = -1;
+
+            RandomInfo
+              *random_info;
 
             /*
-              Rename image file as backup.
+              Generate a temporary filename to write the new image to.
             */
+            random_info=AcquireRandomInfo();
             (void) CopyMagickString(backup_filename,image->filename,
-              MaxTextExtent);
-            for (i=0; i < 6; i++)
+              MagickPathExtent);
+            for (j=0; j < TMP_MAX; j++)
             {
-              (void) ConcatenateMagickString(backup_filename,"~",MaxTextExtent);
-              if (IsPathAccessible(backup_filename) == MagickFalse)
+              StringInfo
+                *key_info;
+
+              unsigned char
+                *key_bytes;
+
+              key_info=GetRandomKey(random_info,4);
+              if (key_info == (StringInfo *) NULL)
+                break;
+              key_bytes=GetStringInfoDatum(key_info);
+              (void) FormatLocaleString(backup_filename,MagickPathExtent,
+                "%s-%02x%02x%02x%02x~",image->filename,key_bytes[0],
+                key_bytes[1],key_bytes[2],key_bytes[3]);
+              key_info=DestroyStringInfo(key_info);
+              file=open_utf8(backup_filename,O_RDWR | O_CREAT | O_EXCL |
+                O_BINARY | O_NOFOLLOW,S_MODE);
+              if ((file >= 0) || (errno != EEXIST))
                 break;
             }
-            if ((IsPathAccessible(backup_filename) != MagickFalse) ||
-                (rename_utf8(image->filename,backup_filename) != 0))
+            random_info=DestroyRandomInfo(random_info);
+            if (file < 0)
               *backup_filename='\0';
+            else
+              file=close_utf8(file)-1;
           }
         /*
           Write transmogrified image to disk.
         */
         image_info->synchronize=MagickTrue;
-        status&=WriteImages(image_info,image,image->filename,exception);
+        {
+          Image *clone_image = CloneImageList(image,exception);
+          if (clone_image != (Image *) NULL)
+            {
+              status&=(MagickStatusType) WriteImages(image_info,clone_image,
+                (*backup_filename != '\0') ? backup_filename :
+                clone_image->filename,exception);
+              clone_image=DestroyImageList(clone_image);
+            }
+        }
         if (status != MagickFalse)
           {
             MagickBooleanType
