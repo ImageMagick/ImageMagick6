@@ -1236,16 +1236,41 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
     (void) CopyMagickString(keyword,token,MaxTextExtent);
     if (LocaleNCompare(keyword,"<!DOCTYPE",9) == 0)
       {
+        int
+          bracket_depth = 0,
+          quote = 0;
+
         /*
-          Doctype element.
+          DOCTYPE element.
         */
-        while ((LocaleNCompare(q,"]>",2) != 0) && (*q != '\0'))
+        for ( ; *q != '\0'; q++)
         {
-          (void) GetNextToken(q,&q,extent,token);
-          while (isspace((int) ((unsigned char) *q)) != 0)
-            q++;
+          if (quote != 0)
+            {
+              if (*q == quote)
+                quote=0;
+            }
+          else
+            {
+              if ((*q == '"') || (*q == '\''))
+                quote=(*q);
+              else
+                if (*q == '[')
+                  bracket_depth++;
+                else
+                  if (*q == ']')
+                    {
+                      if (bracket_depth > 0)
+                        bracket_depth--;
+                    }
+                  else
+                    if ((*q == '>') && (bracket_depth == 0))
+                      {
+                        q++;   /* consume final '>' */
+                        break;
+                      }
+            }
         }
-        continue;
       }
     if (LocaleNCompare(keyword,"<!--",4) == 0)
       {
