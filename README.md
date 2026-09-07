@@ -10,7 +10,8 @@
 
 [ImageMagick®](https://legacy.imagemagick.org/) is a free and [open-source](https://legacy.imagemagick.org/script/license.php) software suite, used for editing and manipulating digital images. It can be used to create, edit, compose, or convert bitmap images, and supports a wide range of file [formats](https://legacy.imagemagick.org/script/formats.php), including JPEG, PNG, GIF, TIFF, and PDF.
 
-### _We recommend upgrading your legacy version of ImageMagick to [version 7](https://imagemagick.org/)_.
+> [!IMPORTANT]
+> End-of-Life Notice: ImageMagick 6 will reach end of life on April 1, 2029. [Learn more](https://github-stories.com/2026/imagemagick-6-end-of-life-announcement/). We recommend upgrading your legacy version of ImageMagick to [version 7](https://imagemagick.org/).
 
 ## What is ImageMagick?
 
