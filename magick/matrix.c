@@ -153,9 +153,7 @@ static inline MagickOffsetType WriteMatrixElements(
     if (count <= 0)
       break;
   }
-#if !defined(MAGICKCORE_HAVE_PWRITE)
   UnlockSemaphoreInfo(matrix_info->semaphore);
-#endif
   return(i);
 }
 
