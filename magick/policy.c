@@ -1116,56 +1116,11 @@ static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
     (void) CopyMagickString(keyword,token,MagickPathExtent);
     if (LocaleNCompare(keyword,"<!DOCTYPE",9) == 0)
       {
-        char
-          quote = '\0';
-    
-        ssize_t
-          subset_depth = 0;
-    
         /*
-          Skip to the end of the DOCTYPE declaration.
+          Doctype element.
         */
-        while (*q != '\0')
-        {
-          if (quote != '\0')
-            {
-              if (*q == quote)
-                quote='\0';
-              q++;
-              continue;
-            }
-          if ((*q == '\'') || (*q == '"'))
-            {
-              quote=(*q);
-              q++;
-              continue;
-            }
-          if (*q == '[')
-            {
-              subset_depth++;
-              q++;
-              continue;
-            }
-          if ((*q == ']') && (subset_depth > 0))
-            {
-              subset_depth--;
-              q++;
-              continue;
-            }
-          if ((*q == '>') && (subset_depth == 0))
-            {
-              q++;
-              break;
-            }
-          q++;
-        }
-        if (*q == '\0')
-          {
-            ThrowMagickException(exception,GetMagickModule(),
-              ConfigureError,"UnterminatedDOCTYPE","`%s'",filename);
-            policy_cache=DestroyLinkedList(policy_cache,DestroyPolicyElement);
-            return(MagickFalse);
-          }
+        while ((LocaleNCompare(q,"]>",2) != 0) && (*q != '>') && (*q != '\0'))
+          (void) GetNextToken(q,&q,extent,token);
         continue;
       }
     if (LocaleNCompare(keyword,"<!--",4) == 0)

@@ -1239,7 +1239,7 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
         /*
           Doctype element.
         */
-        while ((LocaleNCompare(q,"]>",2) != 0) && (*q != '\0'))
+        while ((LocaleNCompare(q,"]>",2) != 0) && (*q != '>') && (*q != '\0'))
         {
           (void) GetNextToken(q,&q,extent,token);
           while (isspace((int) ((unsigned char) *q)) != 0)
