@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE policymap [
   <!ELEMENT policymap (policy)*>
-  <!ATTLIST policymap xmlns CDATA #FIXED "">
+  <!ATTLIST policymap
+    xmlns CDATA #FIXED ""
+  >
+
   <!ELEMENT policy EMPTY>
-  <!ATTLIST policy xmlns CDATA #FIXED "">
-  <!ATTLIST policy domain NMTOKEN #REQUIRED>
-  <!ATTLIST policy name NMTOKEN #IMPLIED>
-  <!ATTLIST policy pattern CDATA #IMPLIED>
-  <!ATTLIST policy rights NMTOKEN #IMPLIED>
-  <!ATTLIST policy stealth NMTOKEN #IMPLIED>
-  <!ATTLIST policy value CDATA #IMPLIED>
+  <!ATTLIST policy
+    xmlns   CDATA   #FIXED ""
+    domain  NMTOKEN #REQUIRED
+    name    NMTOKEN #IMPLIED
+    pattern CDATA   #IMPLIED
+    rights  NMTOKEN #IMPLIED
+    stealth NMTOKEN #IMPLIED
+    value   CDATA   #IMPLIED
+  >
 ]>
 <!--
   Creating a security policy that fits your specific local environment
@@ -17,7 +22,8 @@
   setting up this policy at https://imagemagick.org/script/security-policy.php,
   and it's important to verify your policy using the validation tool located
   at https://imagemagick-secevaluator.doyensec.com/. We also strongly
-  recommend that all users validate their security assumptions by testing their   configurations after making any policy changes. This helps ensure that the 
+  recommend that all users validate their security assumptions by testing their
+  configurations after making any policy changes. This helps ensure that the 
   intended restrictions are functioning as expected in their specific 
   deployment environment.
 
