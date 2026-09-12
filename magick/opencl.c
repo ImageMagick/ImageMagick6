@@ -937,7 +937,7 @@ static void saveBinaryCLProgram(MagickCLEnv clEnv,MagickOpenCLProgram prog,
             program_size=*(program_sizes+i);
             if (program_size < 1)
               continue;
-            file=open_utf8(filename,O_WRONLY | O_CREAT | O_BINARY,S_MODE);
+            file=open_utf8(filename,O_WRONLY | O_CLOEXEC | O_CREAT | O_BINARY,S_MODE);
             if (file != -1)
               {
                 write(file,binary_program[i],program_size);
