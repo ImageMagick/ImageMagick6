@@ -454,7 +454,7 @@ static void ReadPSInfo(const ImageInfo *image_info,Image *image,PSInfo *ps_info)
                 }
               datum[i]=(unsigned char) c;
             }
-            SetStringInfoLength(ps_info->icc_profile,(size_t) i+1);
+            SetStringInfoLength(ps_info->icc_profile,(size_t) i);
             if (c == EOF)
               break;
           }
