@@ -166,6 +166,9 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
   ssize_t
     count;
 
+  static ssize_t
+    passes = -1;
+
   struct stat
     attributes;
 
@@ -176,20 +179,14 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
   assert(destination != (char *) NULL);
 #if defined(MAGICKCORE_HAVE_SYMLINK)
   {
-    char
-      *passes;
-
     /*
       Does policy permit symbolic links?
     */
     status=IsRightsAuthorizedByName(SystemPolicyDomain,"symlink",(PolicyRights)
       (ReadPolicyRights | WritePolicyRights),"follow");
-    passes=GetPolicyValue("system:shred");
-    if (passes == (char *) NULL)
-      passes=GetEnvironmentValue("MAGICK_SHRED_PASSES");
-    if ((passes != (char *) NULL) || (status == MagickFalse))
-      passes=DestroyString(passes);
-    else
+    if (passes == -1)
+      passes=GetShredPasses();
+    if ((passes == 0) && (status != MagickFalse))
       {
         (void) AcquireUniqueFilename(destination);
         (void) RelinquishUniqueFileResource(destination);
@@ -2032,24 +2029,7 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   if ((path == (const char *) NULL) || (*path == '\0'))
     return(MagickFalse);
   if (passes == -1)
-    {
-      char
-        *property;
-          
-      passes=0;
-      property=GetEnvironmentValue("MAGICK_SHRED_PASSES");
-      if (property != (char *) NULL)
-        {
-          passes=(ssize_t) StringToInteger(property);
-          property=DestroyString(property);
-        }
-      property=GetPolicyValue("system:shred");
-      if (property != (char *) NULL)
-        {
-          passes=(ssize_t) StringToInteger(property);
-          property=DestroyString(property);
-        }
-    }
+    passes=GetShredPasses();
   if (passes == 0)
     return(MagickTrue);
   file=open_utf8(path,O_WRONLY | O_CLOEXEC | O_EXCL | O_BINARY,S_MODE);

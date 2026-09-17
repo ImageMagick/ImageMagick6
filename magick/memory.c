@@ -89,6 +89,7 @@
 #include "magick/memory_.h"
 #include "magick/memory-private.h"
 #include "magick/policy.h"
+#include "magick/policy-private.h"
 #include "magick/random_.h"
 #include "magick/resource_.h"
 #include "magick/semaphore.h"
@@ -1642,24 +1643,7 @@ MagickPrivate MagickBooleanType ShredMagickMemory(void *memory,
   if ((memory == NULL) || (length == 0))
     return(MagickFalse);
   if (passes == -1)
-    {
-      char
-        *property;
-          
-      passes=0;
-      property=GetEnvironmentValue("MAGICK_SHRED_PASSES");
-      if (property != (char *) NULL)
-        {
-          passes=(ssize_t) StringToInteger(property);
-          property=DestroyString(property);
-        }
-      property=GetPolicyValue("system:shred");
-      if (property != (char *) NULL)
-        {
-          passes=(ssize_t) StringToInteger(property);
-          property=DestroyString(property);
-        }
-    }
+    passes=GetShredPasses();
   if (passes == 0)
     return(MagickTrue);
   /*
