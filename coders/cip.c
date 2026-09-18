@@ -63,6 +63,7 @@
 #include "magick/string_.h"
 #include "magick/module.h"
 #include "magick/utility.h"
+#include "magick/xml-tree.h"
 
 /*
   Forward declarations.
@@ -159,7 +160,8 @@ ModuleExport void UnregisterCIPImage(void)
 static MagickBooleanType WriteCIPImage(const ImageInfo *image_info,Image *image)
 {
   char
-    buffer[MaxTextExtent];
+    buffer[MaxTextExtent],
+    *escaped;
 
   const char
     *value;
@@ -194,18 +196,17 @@ static MagickBooleanType WriteCIPImage(const ImageInfo *image_info,Image *image)
     return(status);
   (void) WriteBlobString(image,"<CiscoIPPhoneImage>\n");
   value=GetImageProperty(image,"label");
-  if (value != (const char *) NULL)
-    (void) FormatLocaleString(buffer,MaxTextExtent,"<Title>%s</Title>\n",value);
-  else
+  if (value == (const char *) NULL)
     {
-      char
-        basename[MaxTextExtent];
-
-      GetPathComponent(image->filename,BasePath,basename);
-      (void) FormatLocaleString(buffer,MaxTextExtent,"<Title>%s</Title>\n",
-        basename);
+      GetPathComponent(image->filename,BasePath,buffer);
+      value=buffer;
     }
-  (void) WriteBlobString(image,buffer);
+  escaped=CanonicalXMLContent(value,MagickFalse);
+  (void) WriteBlobString(image,"<Title>");
+  if (escaped != (char*)NULL)
+    (void) WriteBlobString(image,escaped);
+  (void) WriteBlobString(image,"</Title>\n");
+  escaped=DestroyString(escaped);
   (void) FormatLocaleString(buffer,MaxTextExtent,
     "<LocationX>%.17g</LocationX>\n",(double) image->page.x);
   (void) WriteBlobString(image,buffer);
