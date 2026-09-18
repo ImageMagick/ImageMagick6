@@ -1495,9 +1495,17 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
       kid_image=image;
       for ( ; GetNextImageInList(kid_image) != (Image *) NULL; count+=ObjectsPerImage)
       {
+        CompressionType
+          kid_compression;
+
         page_count++;
+        kid_compression=kid_image->compression;
+        if (image_info->compression != UndefinedCompression)
+          kid_compression=image_info->compression;
         icc_profile=GetCompatibleColorProfile(kid_image);
-        if (icc_profile != (StringInfo *) NULL)
+        if ((icc_profile != (StringInfo *) NULL) &&
+            ((kid_compression != JPEG2000Compression) ||
+             (IssRGBCompatibleColorspace(kid_image->colorspace) != MagickFalse)))
           count+=2;
         (void) FormatLocaleString(buffer,MaxTextExtent,"%.17g 0 R ",(double)
           count);
@@ -1519,7 +1527,6 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
   number_scenes=GetImageListLength(image);
   do
   {
-    icc_profile=GetCompatibleColorProfile(image);
     compression=image->compression;
     if (image_info->compression != UndefinedCompression)
       compression=image_info->compression;
@@ -1580,7 +1587,8 @@ static MagickBooleanType WritePDFImage(const ImageInfo *image_info,Image *image)
     }
     if (compression == JPEG2000Compression)
       if (IssRGBCompatibleColorspace(image->colorspace) == MagickFalse)
-      (void) TransformImageColorspace(image,sRGBColorspace);
+        (void) TransformImageColorspace(image,sRGBColorspace);
+    icc_profile=GetCompatibleColorProfile(image);
     /*
       Scale relative to dots-per-inch.
     */
