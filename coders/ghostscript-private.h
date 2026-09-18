@@ -269,6 +269,7 @@ static inline void ReadGhostScriptXMPProfile(MagickByteBuffer *buffer,
       }
   }
   SetStringInfoLength(*profile,(size_t) count);
+  GetStringInfoDatum(*profile)[count]='\0';
 }
 
 static inline char *EscapeParenthesis(const char *source,
