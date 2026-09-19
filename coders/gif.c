@@ -1229,6 +1229,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 else if (magick != MagickFalse)
                   {
                     (void) CopyMagickString(name,"magick",sizeof(name));
+                    info[info_length]='\0';
                     meta_image->gamma=StringToDouble((char *) info+6,
                       (char **) NULL);
                   }
