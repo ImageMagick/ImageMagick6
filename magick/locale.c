@@ -1271,6 +1271,7 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
                       }
             }
         }
+        continue;
       }
     if (LocaleNCompare(keyword,"<!--",4) == 0)
       {
