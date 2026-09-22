@@ -713,7 +713,10 @@ static MagickBooleanType WriteYUVImage(const ImageInfo *image_info,Image *image)
     chroma_image=ResizeImage(image,width/horizontal_factor,
       height/vertical_factor,TriangleFilter,1.0,&image->exception);
     if (chroma_image == (Image *) NULL)
-      ThrowWriterException(ResourceLimitError,image->exception.reason);
+      {
+        yuv_image=DestroyImage(yuv_image);
+        ThrowWriterException(ResourceLimitError,image->exception.reason);
+      }
     (void) TransformImageColorspace(chroma_image,YCbCrColorspace);
     if (interlace == NoInterlace)
       {
@@ -880,6 +883,8 @@ static MagickBooleanType WriteYUVImage(const ImageInfo *image_info,Image *image)
     if (status == MagickFalse)
       break;
   } while (image_info->adjoin != MagickFalse);
+  if (chroma_image != (Image *) NULL)
+    chroma_image=DestroyImage(chroma_image);
   if (CloseBlob(image) == MagickFalse)
     status=MagickFalse;
   return(status);
