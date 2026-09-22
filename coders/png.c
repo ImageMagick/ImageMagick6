@@ -9862,7 +9862,6 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 #endif
   if (ping == (png_struct *) NULL)
     {
-      image_info=DestroyImageInfo(image_info);
       image=DestroyImage(image);
       ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
     }
@@ -9871,7 +9870,6 @@ static MagickBooleanType WriteOnePNGImage(MngInfo *mng_info,
 
   if (ping_info == (png_info *) NULL)
     {
-      image_info=DestroyImageInfo(image_info);
       image=DestroyImage(image);
       png_destroy_write_struct(&ping,(png_info **) NULL);
       ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
