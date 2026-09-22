@@ -202,9 +202,6 @@ typedef struct _SVGInfo
 static SemaphoreInfo
   *rsvg_semaphore = (SemaphoreInfo *) NULL;
 #endif
-
-static SplayTreeInfo
-  *svg_tree = (SplayTreeInfo *) NULL;
 
 /*
   Static declarations.
@@ -3030,9 +3027,6 @@ static void SVGEndElement(void *context,const xmlChar *name)
     {
       if (LocaleCompare((const char *) name,"image") == 0)
         {
-          char
-            thread_filename[MagickPathExtent];
-
           Image
             *image = (Image *) NULL;
 
@@ -3045,16 +3039,6 @@ static void SVGEndElement(void *context,const xmlChar *name)
               (void) FormatLocaleFile(svg_info->file,"pop graphic-context\n");
               break;
             }
-          GetMagickThreadFilename(svg_info->url,thread_filename);
-          if (GetValueFromSplayTree(svg_tree,thread_filename) != (const char *) NULL)
-            {
-              image_info=DestroyImageInfo(image_info);
-              (void) ThrowMagickException(svg_info->exception,GetMagickModule(),
-                DrawError,"VectorGraphicsNestedTooDeeply","`%s'",svg_info->url);
-              break;
-            }
-          (void) AddValueToSplayTree(svg_tree,ConstantString(thread_filename),
-            (void *) 1);
           (void) CopyMagickString(image_info->filename,svg_info->url,
             MagickPathExtent);
           if (LocaleNCompare(image_info->filename,"data:",5) == 0)
@@ -3064,7 +3048,6 @@ static void SVGEndElement(void *context,const xmlChar *name)
           if (image != (Image *) NULL)
             image=DestroyImage(image);
           image_info=DestroyImageInfo(image_info);
-          (void) DeleteNodeFromSplayTree(svg_tree,thread_filename);
           (void) FormatLocaleFile(svg_info->file,
             "image Over %g,%g %g,%g \"%s\"\n",svg_info->bounds.x,
             svg_info->bounds.y,svg_info->bounds.width,svg_info->bounds.height,
@@ -3868,9 +3851,6 @@ ModuleExport size_t RegisterSVGImage(void)
   MagickInfo
     *entry;
 
-  if (svg_tree == (SplayTreeInfo *) NULL)
-    svg_tree=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
-      (void *(*)(void *)) NULL);
   *version='\0';
 #if defined(LIBXML_DOTTED_VERSION)
   (void) CopyMagickString(version,"XML " LIBXML_DOTTED_VERSION,MaxTextExtent);
@@ -3961,8 +3941,6 @@ ModuleExport void UnregisterSVGImage(void)
   (void) UnregisterMagickInfo("SVGZ");
   (void) UnregisterMagickInfo("SVG");
   (void) UnregisterMagickInfo("MSVG");
-  if (svg_tree != (SplayTreeInfo *) NULL)
-    svg_tree=DestroySplayTree(svg_tree);
 }
 
 /*

@@ -483,6 +483,9 @@ struct _ImageInfo
 
   MagickBooleanType
     synchronize;
+
+  size_t
+    coder_depth;
 };
 
 extern MagickExport ExceptionType

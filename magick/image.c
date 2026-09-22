@@ -1024,6 +1024,7 @@ MagickExport ImageInfo *CloneImageInfo(const ImageInfo *image_info)
   clone_info->subimage=image_info->scene;  /* deprecated */
   clone_info->subrange=image_info->number_scenes;  /* deprecated */
   clone_info->channel=image_info->channel;
+  clone_info->coder_depth=image_info->coder_depth;
   clone_info->debug=image_info->debug;
   clone_info->signature=image_info->signature;
   return(clone_info);
@@ -1466,6 +1467,7 @@ MagickExport void GetImageInfo(ImageInfo *image_info)
   GetPixelPacketRGBA(BorderColorRGBA,&image_info->border_color);
   GetPixelPacketRGBA(MatteColorRGBA,&image_info->matte_color);
   GetPixelPacketRGBA(TransparentColorRGBA,&image_info->transparent_color);
+  image_info->coder_depth=0;
   image_info->debug=(GetLogEventMask() & ImageEvent) != 0 ? MagickTrue :
     MagickFalse;
   image_info->signature=MagickCoreSignature;
