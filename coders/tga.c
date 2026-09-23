@@ -199,7 +199,7 @@ static Image *ReadTGAImage(const ImageInfo *image_info,ExceptionInfo *exception)
     y;
 
   TGAInfo
-    tga_info;
+    tga_info = { 0 };
 
   unsigned char
     j,
