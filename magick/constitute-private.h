@@ -46,17 +46,18 @@ static inline MagickBooleanType IsAllowedCoder(const char *coder)
   return(MagickFalse);
 }
 
-static inline Image *StrictReadImage(const ImageInfo *image_info,
+static inline Image *StrictReadImage(ImageInfo *image_info,
   ExceptionInfo *exception)
 {
   char
     magic[MagickPathExtent];
 
-  if (((ImageInfo *) image_info)->coder_depth++ > MagickMaxRecursionDepth)
+  if (image_info->coder_depth >= MagickMaxRecursionDepth)
 
     {
-      (void) ThrowMagickException(exception,GetMagickModule(),
-        OptionError,"ImageNestedTooDeeply","`%s'",image_info->filename);
+      errno=EPERM;
+      (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
+        "ImageNestedTooDeeply","`%s'",image_info->filename);
       return((Image *) NULL);
     }
   (void) GetPathComponent(image_info->filename,MagickPath,magic);
@@ -70,7 +71,14 @@ static inline Image *StrictReadImage(const ImageInfo *image_info,
           return((Image *) NULL);
         }
       else
-        return(ReadImage(image_info,exception));
+        {
+          Image
+            *image;
+
+          image_info->coder_depth++;
+          image=ReadImage(image_info,exception));
+          image_info->coder_depth--;
+        }
     }
   if (IsPathAccessible(image_info->filename) == MagickFalse)
     {

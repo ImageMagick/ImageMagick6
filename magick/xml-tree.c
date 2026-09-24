@@ -562,7 +562,7 @@ static XMLTreeInfo *DestroyXMLTree_(XMLTreeInfo *xml_info,
          (((XMLTreeRoot *) xml_info)->signature == MagickCoreSignature));
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
-  if (depth > MagickMaxRecursionDepth)
+  if (depth >= MagickMaxRecursionDepth)
     return((XMLTreeInfo *) NULL);
   DestroyXMLTreeChild(xml_info,depth+1);
   DestroyXMLTreeOrdered(xml_info,depth+1);
@@ -1583,7 +1583,7 @@ static MagickBooleanType ValidateEntities(char *tag,char *xml,
   /*
     Check for circular entity references.
   */
-  if (depth > MagickMaxRecursionDepth)
+  if (depth >= MagickMaxRecursionDepth)
     return(MagickFalse);
   for ( ; ; xml++)
   {

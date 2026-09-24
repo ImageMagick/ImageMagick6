@@ -674,7 +674,7 @@ static void MSLStartElement(void *context,const xmlChar *tag,
   (void) LogMagickEvent(CoderEvent,GetMagickModule(),
     "  SAX.startElement(%s",tag);
   msl_info=(MSLInfo *) context;
-  if (msl_info->depth++ > MagickMaxRecursionDepth)
+  if (msl_info->depth++ >= MagickMaxRecursionDepth)
     {        
       (void) ThrowMagickException(msl_info->exception,GetMagickModule(),
         DrawError,"VectorGraphicsNestedTooDeeply","`%s'",tag);
