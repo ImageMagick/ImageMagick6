@@ -76,7 +76,7 @@ static inline Image *StrictReadImage(ImageInfo *image_info,
             *image;
 
           image_info->coder_depth++;
-          image=ReadImage(image_info,exception));
+          image=ReadImage(image_info,exception);
           image_info->coder_depth--;
         }
     }
