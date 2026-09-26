@@ -3601,7 +3601,7 @@ static Image *RenderMSVGImage(const ImageInfo *image_info,Image *image,
   svg_info->file=file;
   svg_info->exception=exception;
   svg_info->image=image;
-  svg_info->image_info=image_info;
+  svg_info->image_info=(ImageInfo *) image_info;
   svg_info->bounds.width=image->columns;
   svg_info->bounds.height=image->rows;
   svg_info->svgDepth=0;
