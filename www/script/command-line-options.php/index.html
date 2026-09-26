@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="auto">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -13,6 +13,7 @@
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4">
   <link rel="shortcut icon" href="../../image/wand.png" type="image/png">
   <link rel="apple-touch-icon" href="../../image/wand.png" type="image/png">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net/">
   <link rel="preconnect" href="https://localhost/">
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" as="style" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous">
@@ -22,6 +23,15 @@
     html {
       scroll-padding-top: 110px;
     }
+
+    iframe {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 400px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
     a.nav-link:hover,
     a.dropdown-item:hover {
       color: #ffc107 !important;
@@ -42,14 +52,23 @@
     :root {
       --bs-code-color: revert;
     }
+    .table {
+      table-layout: fixed;   /* force equal distribution of width */
+      width: 100%;           /* table spans full container */
+    }
+
+    .table td, .table th {
+      white-space: normal;     /* allow wrapping */
+      word-break: break-word;  /* break long words/strings */
+    }
   </style>
 
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="ImageMagick: Legacy | Command-line Options">
   <meta property="og:description" content="ImageMagick is a powerful open-source software suite for creating, editing, converting, and manipulating images in over 200 formats. Ideal for developers, designers, and researchers.">
-  <meta property="og:image" content="/image/logo.png">
-  <meta property="og:logo" content="/image/logo.png">
-  <meta property="og:url" content="https://legacy.imagemagick.org/script/command-line-options.php/">
+  <meta property="og:image" content="../../image/logo.png">
+  <meta property="og:logo" content="../../image/logo.png">
+  <meta property="og:url" content="index.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ImageMagick: Legacy">
   <meta property="og:locale" content="en_us">
@@ -60,7 +79,7 @@
   <meta name="twitter:creator" content="@imagemagick: legacy">
   <meta name="twitter:title" content="ImageMagick: Legacy | Command-line Options">
   <meta name="twitter:description" content="ImageMagick is a powerful open-source software suite for creating, editing, converting, and manipulating images in over 200 formats. Ideal for developers, designers, and researchers.">
-  <meta name="twitter:image" content="/image/logo.png">
+  <meta name="twitter:image" content="../../image/logo.png">
   <meta name="twitter:image:alt" content="ImageMagick: Legacy logo and tag line">
 
   <!-- JSON-LD Structured Data -->
@@ -74,7 +93,7 @@
     "description": "ImageMagick is a powerful open-source software suite for creating, editing, converting, and manipulating images in over 200 formats. Ideal for developers, designers, and researchers.",
     "applicationCategory": "Multimedia",
     "operatingSystem": "Windows, macOS, Linux, Unix",
-    "softwareVersion": "6.9.13-52",
+    "softwareVersion": "6.9.13-56",
     "license": "https://imagemagick.org/license/",
     "creator": {
       "@type": "Organization",
@@ -199,8 +218,8 @@
   </header>
 
   <main role="main" class="container">
-    <div class="row g-5">
-      <div class="col-md-9">
+    <div class="row g-4">
+      <div class="col-lg-9 col-12">
 <div>
 <h1 class="text-center">Annotated List of Command-line Options</h1>
 <p class="text-center">
@@ -674,7 +693,7 @@ matrix determinant has a sufficiently small absolute value it is rejected.</p>
 <p>Used to set a flag on an image indicating whether or not to use existing alpha
 channel data, to create an alpha channel, or to perform other operations on the alpha channel.  Choose the argument <var>type</var> from the list below.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
     <dt class="col-md-4">activate</dt>
     <dd class="col-md-8">
@@ -934,7 +953,7 @@ href="#auto-orient" >-auto-orient</a> operator will do nothing. </p>
 
 <p>Here are the valid methods:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">Undefined</dt><dd class="col-md-8">0:  No method specified (equivalent to '<code>OTSU</code>').</dd>
 <dt class="col-md-4">Kapur</dt><dd class="col-md-8">maximum entropy thresholding.</dd>
@@ -1144,7 +1163,7 @@ ignored. </p>
 
 <p>As of IM 6.7.8-8, the <var>geometry</var> arguments behave as follows:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4"><var>value</var></dt>
 <dd class="col-md-8">value is added to both left/right and top/bottom</dd>
@@ -1759,8 +1778,8 @@ Undefined
 
 <p>For a more accurate color conversion to or from the linear RGB, CMYK, or grayscale colorspaces, use the <a href="#profile">-profile</a> option.  Note, ImageMagick assumes the sRGB colorspace if the image format does not indicate otherwise.  For colorspace conversion, the gamma function is first removed to produce linear RGB.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
         <caption>Conversion of RGB to Other Color Spaces</caption>
         <tr><th valign="middle">CMY</th></tr>
         <tr><td valign="middle">C=<var>QuantumRange</var>−R</td></tr>
@@ -2511,7 +2530,7 @@ animation is to be overlaid onto the display. </p>
 
 <p>Here are the valid methods:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">Undefined</dt><dd class="col-md-8">0:  No disposal specified (equivalent to '<code>none</code>').</dd>
 <dt class="col-md-4">None</dt><dd class="col-md-8">1:  Do not dispose, just overlay next frame image.</dd>
@@ -2566,8 +2585,8 @@ and meaning of the floating point values depends on the distortion <var>method</
 
 <p>Choose from these distortion types:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
   <tr>
     <th style="width: 8%">Method</th>
     <th>Description</th>
@@ -3013,7 +3032,7 @@ operations.</p>
 
 <p>The shape primitives:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">point</dt><dd class="col-md-8">          x,y</dd>
 <dt class="col-md-4">line</dt><dd class="col-md-8">           x0,y0 x1,y1</dd>
@@ -3048,7 +3067,7 @@ scope to the <a href="#draw">-draw</a> option in which it appears.</p>
 
 <p>The transformation primitives:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">rotate</dt><dd class="col-md-8">degrees</dd>
 <dt class="col-md-4">translate</dt><dd class="col-md-8">dx,dy</dd>
@@ -3060,7 +3079,7 @@ scope to the <a href="#draw">-draw</a> option in which it appears.</p>
 
 <p>The pixel operation primitives:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">color</dt><dd class="col-md-8">x0,y0 method</dd>
 <dt class="col-md-4">matte</dt><dd class="col-md-8">x0,y0 method</dd>
@@ -3349,8 +3368,8 @@ a "normalized pixel" is that number divided by the maximum
 normalized pixels are used, they are restored, following the other
 calculations, to the full range by multiplying by <var>QuantumRange</var>.)</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
   <col width="25%" />
   <col width="75%" />
   <thead>
@@ -3752,8 +3771,8 @@ filter</a> option.</p>
 use of these expert settings (see also <a href="#define" >-define</a> and <a
 href="#set" >-set</a>):-</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
   <tr>
     <td>-define filter:blur=<var>factor</var></td>
     <td>Scale the X axis of the filter (and its window). Use &gt; 1.0 for
@@ -4078,7 +4097,7 @@ Arctan
 <p>To print a complete list of <a href="#function">-function</a> operators,
 use <a href="#list">-list function</a>. Descriptions follow.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
   <dt class="col-md-4">Polynomial</dt>
   <dd class="col-md-8"><p>The <code>Polynomial</code> function takes an arbitrary number of parameters,
@@ -4102,8 +4121,8 @@ polynomials) of the <a href="#evaluate">-evaluate</a> operator. The <a
 href="#level">-level</a> operator also affects channels linearly. Some
 correspondences follow.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
   <tr>
         <td>-evaluate Set <var>value</var> </td>
         <td>-function Polynomial <var>value</var></td>
@@ -4165,8 +4184,8 @@ is 0.</p>
 <code>Cos</code> of the <a href="#evaluate">-evaluate</a> operator by allowing
 varying amplitude, phase and bias. The correspondence is as follows.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
   <tr>
         <td>-evaluate Sin <var>freq</var> </td>
         <td>-function Sinusoid <var>freq</var>,0 </td>
@@ -4622,7 +4641,7 @@ an image with red, green, and blue pixel components. Typically the
 the pixel values to linear-RGB or non-linear sRGB colorspace before
 being applied to calculate the final greyscale value. </p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">Rec601Luma</dt><dd class="col-md-8">      0.298839R' + 0.586811G'+ 0.114350B'</dd>
 <dt class="col-md-4">Rec601Luminance</dt><dd class="col-md-8"> 0.298839R + 0.586811G + 0.114350B</dd>
@@ -4640,7 +4659,7 @@ R',G',B' are sRGB non-linear values. </p>
 current value in the images respective R,G,B channel regardless of
 what that is, or what colorspace the image is currently using.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">Average</dt><dd class="col-md-8">(R' + G' + B') / 3.0</dd>
 <dt class="col-md-4">MS</dt><dd class="col-md-8">(R'^2 + G'^2 + B'^2) / 3.0</dd>
@@ -4756,7 +4775,7 @@ image. This setting determines how the color is determined from the colors of
 the pixels surrounding that point.  That is how to determine the color of a
 point that falls between two, or even four different colored pixels. </p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
   <dt class="col-md-4">average</dt>
   <dd class="col-md-8">The average color of the surrounding four pixels</dd>
@@ -4897,8 +4916,8 @@ the local background color, from which to separate the foreground color. </p>
 which may represent either a set of overlaid 'image layers', a GIF disposal
 animation, or a fully-'coalesced' animation sequence. </p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
-<table class="table table-sm table-hover table-striped table-responsive">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
+<table class="table table-sm table-hover table-striped">
   <tbody>
   <tr>
     <th style="width: 8%">Method</th>
@@ -5471,7 +5490,7 @@ href="#debug">-debug</a> option is active.</p>
 <p>You can display the following components by embedding special format
 characters:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">%d</dt><dd class="col-md-8">domain</dd>
 <dt class="col-md-4">%e</dt><dd class="col-md-8">event</dd>
@@ -5548,7 +5567,7 @@ the type and <code>display</code> searches the list of colormap types in
 
 <p>Here are the valid components of a map:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">r</dt><dd class="col-md-8">  red pixel component</dd>
 <dt class="col-md-4">g</dt><dd class="col-md-8">  green pixel component</dd>
@@ -5619,7 +5638,7 @@ name. </p>
 
 <p>Choose from:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">AE</dt><dd class="col-md-8">    absolute error count, number of different pixels (-fuzz affected)</dd>
 <dt class="col-md-4">DSSIM</dt><dd class="col-md-8">  structural dissimilarity index</dd>
@@ -6267,7 +6286,7 @@ compression.</p>
 <p>If filter-type is 4 or less, the specified PNG filter-type is used for
 all scanlines:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">0</dt><dd class="col-md-8">none</dd>
 <dt class="col-md-4">1</dt><dd class="col-md-8">sub</dd>
@@ -7066,7 +7085,7 @@ exposing a photographic film to light during the development process.</p>
 <p class="lead"> color the given image using the specified points of color, and filling the other intervening colors using the given methods. </p>
 
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
     <dt class="col-md-4">barycentric</dt>
     <dd class="col-md-8">three point triangle of color given 3 points.
@@ -7156,7 +7175,7 @@ blend.</p>
 
 <p>Choose from these statistic types:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">Gradient</dt><dd class="col-md-8">maximum difference (max - min) value in neighborhood</dd>
 <dt class="col-md-4">Maximum</dt><dd class="col-md-8">maximum value per channel in neighborhood</dd>
@@ -7195,7 +7214,7 @@ this information to recover the steganographic image (e.g. display -size
 
 <p class="lead">Pixel storage type.  Here are the valid types:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">char</dt><dd class="col-md-8">unsigned characters</dd>
 <dt class="col-md-4">double</dt><dd class="col-md-8">doubles</dd>
@@ -7681,7 +7700,7 @@ a radius of 0 to have the method select a suitable radius.</p>
 
 <p>The parameters are:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">radius</dt>
 <dd class="col-md-8">The radius of the Gaussian, in pixels,  not counting the center pixel (default 0).</dd>
@@ -7736,7 +7755,7 @@ image, but could also be set to a specify background color. </p>
 
 <p>Choose from these methods:</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">background</dt><dd class="col-md-8">the area surrounding the image is the background color</dd>
 <dt class="col-md-4">black</dt><dd class="col-md-8">the area surrounding the image is black</dd>
@@ -7822,7 +7841,7 @@ percentage, which defaults to 100 percent (no color change). </p>
 the currently selected font family. Use a positive integer for
 <var>fontWeight</var> or select from the following.</p>
 
-<div class="overflow-auto p-3 mb-2 text-body-secondary bg-body-tertiary" style="max-height:75svh;">
+<div style="max-height:75svh; overflow-y:auto; overflow-x:hidden;">
 <dl class="row">
 <dt class="col-md-4">Thin </dt>
 <dd class="col-md-8">Same as <var>fontWeight</var> = 100.</dd>
@@ -7927,12 +7946,12 @@ but with strict boolean masking. </p>
 </div>
 
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-12 ps-lg-4 border-start d-flex flex-column align-items-center align-items-lg-start">
         <div class="container text-center my-3">
           <a href="../../image/wizard.png" rel="noopener noreferrer" target="_blank">
-            <img alt="The Tao of the Spiritual Warrior" class="img-fluid img-thumbnail" height="1468" loading="lazy" src="../../image/wizard.png" width="1104">
+            <img alt="ImageMagick Wizard" class="img-fluid img-thumbnail" height="351" loading="lazy" src="../../image/wizard.jpg" width="264">
           </a>
-          <p class="mt-2"><iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border: 0;"></iframe></p>
+          <p class="mt-2"><iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border:0 !important; width:107px !important; height:35px !important;"></iframe></p>
         </div>
         <div class="container text-center my-3">
           <script async src="https://localhost/pagead/js/adsbygoogle.js?client=ca-pub-3129977114552745"
@@ -7957,7 +7976,7 @@ but with strict boolean masking. </p>
       <a href="../security-policy.php/index.html">Security</a> •
       <a href="../news.php/index.html">News</a>
     &nbsp;
-      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../../image/wand.ico"></a>
+      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../../image/wand.png"></a>
     &nbsp;
       <a href="../links.php/index.html">Related</a> •
       <a href="../sitemap.php/index.html">Sitemap</a>

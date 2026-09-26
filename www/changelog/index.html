@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="auto">
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -13,6 +13,7 @@
   <meta name="google-site-verification" content="_bMOCDpkx9ZAzBwb2kF3PRHbfUUdFj2uO8Jd1AXArz4">
   <link rel="shortcut icon" href="../image/wand.png" type="image/png">
   <link rel="apple-touch-icon" href="../image/wand.png" type="image/png">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net/">
   <link rel="preconnect" href="https://localhost/">
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" as="style" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" crossorigin="anonymous">
@@ -22,6 +23,15 @@
     html {
       scroll-padding-top: 110px;
     }
+
+    iframe {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 400px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
     a.nav-link:hover,
     a.dropdown-item:hover {
       color: #ffc107 !important;
@@ -42,14 +52,23 @@
     :root {
       --bs-code-color: revert;
     }
+    .table {
+      table-layout: fixed;   /* force equal distribution of width */
+      width: 100%;           /* table spans full container */
+    }
+
+    .table td, .table th {
+      white-space: normal;     /* allow wrapping */
+      word-break: break-word;  /* break long words/strings */
+    }
   </style>
 
   <!-- Open Graph Meta Tags -->
   <meta property="og:title" content="ImageMagick: Legacy | Changelog">
   <meta property="og:description" content="ImageMagick is a powerful open-source software suite for creating, editing, converting, and manipulating images in over 200 formats. Ideal for developers, designers, and researchers.">
-  <meta property="og:image" content="/image/logo.png">
-  <meta property="og:logo" content="/image/logo.png">
-  <meta property="og:url" content="https://legacy.imagemagick.org/changelog/">
+  <meta property="og:image" content="../image/logo.png">
+  <meta property="og:logo" content="../image/logo.png">
+  <meta property="og:url" content="index.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ImageMagick: Legacy">
   <meta property="og:locale" content="en_us">
@@ -60,7 +79,7 @@
   <meta name="twitter:creator" content="@imagemagick: legacy">
   <meta name="twitter:title" content="ImageMagick: Legacy | Changelog">
   <meta name="twitter:description" content="ImageMagick is a powerful open-source software suite for creating, editing, converting, and manipulating images in over 200 formats. Ideal for developers, designers, and researchers.">
-  <meta name="twitter:image" content="/image/logo.png">
+  <meta name="twitter:image" content="../image/logo.png">
   <meta name="twitter:image:alt" content="ImageMagick: Legacy logo and tag line">
 
   <!-- JSON-LD Structured Data -->
@@ -74,7 +93,7 @@
     "description": "ImageMagick is a powerful open-source software suite for creating, editing, converting, and manipulating images in over 200 formats. Ideal for developers, designers, and researchers.",
     "applicationCategory": "Multimedia",
     "operatingSystem": "Windows, macOS, Linux, Unix",
-    "softwareVersion": "6.9.13-52",
+    "softwareVersion": "6.9.13-56",
     "license": "https://imagemagick.org/license/",
     "creator": {
       "@type": "Organization",
@@ -199,8 +218,8 @@
   </header>
 
   <main role="main" class="container">
-    <div class="row g-5">
-      <div class="col-md-9">
+    <div class="row g-4">
+      <div class="col-lg-9 col-12">
 <h1 id="changelog">Changelog</h1>
 
 <p>All notable changes to this project will be documented in this file.</p>
@@ -208,16 +227,204 @@
 <p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 
-<h2 id="6913-52---2026-07-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-51...6.9.13-52">6.9.13-52</a> - 2026-07-05</h2>
+<h2 id="6913-56---2026-09-03"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-55...6.9.13-56">6.9.13-56</a> - 2026-09-03</h2>
 
 <h3 id="merged">Merged</h3>
+
+<ul>
+  <li>build(deps): bump the codeql-action group with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/466"><code class="language-plaintext highlighter-rouge">#466</code></a></li>
+  <li>build(deps): bump the codeql-action group with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/463"><code class="language-plaintext highlighter-rouge">#463</code></a></li>
+</ul>
+
+<h3 id="commits">Commits</h3>
+
+<ul>
+  <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/70f9956d66b9fbacd3495a351ba67b987e7e5f1f"><code class="language-plaintext highlighter-rouge">70f9956</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-4gg2-hfgh-6f5c <a href="https://github.com/ImageMagick/ImageMagick6/commit/1e91833e30a88c104276dcfbc01bb68ac4528514"><code class="language-plaintext highlighter-rouge">1e91833</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-r868-pmwh-fv2c <a href="https://github.com/ImageMagick/ImageMagick6/commit/ad178e41fce2afa6be2b91fb4e7f41c4c5448117"><code class="language-plaintext highlighter-rouge">ad178e4</code></a></li>
+  <li>eliminate compiler exception <a href="https://github.com/ImageMagick/ImageMagick6/commit/9625680bf37338a2bc9c0614eadecbd8351241f2"><code class="language-plaintext highlighter-rouge">9625680</code></a></li>
+  <li>Fixed the policy check for coders (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-vcjj-32hg-qpx5) <a href="https://github.com/ImageMagick/ImageMagick6/commit/ac85c8e0a319b1eaf4c3d05d326605f5bae723d6"><code class="language-plaintext highlighter-rouge">ac85c8e</code></a></li>
+  <li>More fixes for https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-vcjj-32hg-qpx5. <a href="https://github.com/ImageMagick/ImageMagick6/commit/c54667bfe605ebdc17c23cb70a26dbe00b338222"><code class="language-plaintext highlighter-rouge">c54667b</code></a></li>
+  <li>Corrected the call to CheckPrimitiveExtent to fix the use of uninitialized heap memory (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-6xf5-c3jx-rp39) <a href="https://github.com/ImageMagick/ImageMagick6/commit/bfe0117fd9742b3970383e000978d64e5e04372d"><code class="language-plaintext highlighter-rouge">bfe0117</code></a></li>
+  <li>Moved EscapeParenthesis to the ghostscript-private.h header file. <a href="https://github.com/ImageMagick/ImageMagick6/commit/65370ae883ab22a182588da685073ce6d347d195"><code class="language-plaintext highlighter-rouge">65370ae</code></a></li>
+  <li>Escape the labels to prevent code injection (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-5rg6-j44q-q892) <a href="https://github.com/ImageMagick/ImageMagick6/commit/879489740daa44dd72e9405b26c845e8aa3d2f53"><code class="language-plaintext highlighter-rouge">8794897</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-qr53-hc3p-fc62 <a href="https://github.com/ImageMagick/ImageMagick6/commit/49560a1641f72a127e413b9861eca0997fde2b96"><code class="language-plaintext highlighter-rouge">49560a1</code></a></li>
+  <li>Added missing include. <a href="https://github.com/ImageMagick/ImageMagick6/commit/d1f0bf164e3adbe78e9dce3d234cd14be455ed91"><code class="language-plaintext highlighter-rouge">d1f0bf1</code></a></li>
+  <li>Whitespace. <a href="https://github.com/ImageMagick/ImageMagick6/commit/480164fba4d14f002fcd864f8b3a8b600124780f"><code class="language-plaintext highlighter-rouge">480164f</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-89wq-f8f6-2j2v <a href="https://github.com/ImageMagick/ImageMagick6/commit/4332e26659c849bf126aecb215482de1eed73308"><code class="language-plaintext highlighter-rouge">4332e26</code></a></li>
+  <li>Added missing null check to avoid a null pointer dereference (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-92rw-c5mw-27v4) <a href="https://github.com/ImageMagick/ImageMagick6/commit/3b124bb81d3c53ec7d2b46f5ea04c00c4b07b9b3"><code class="language-plaintext highlighter-rouge">3b124bb</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-3rjr-534c-8v67 <a href="https://github.com/ImageMagick/ImageMagick6/commit/3e0ff6b63c37844732a4f79700bc58ac5370fa25"><code class="language-plaintext highlighter-rouge">3e0ff6b</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-3rjr-534c-8v67 <a href="https://github.com/ImageMagick/ImageMagick6/commit/742ee222f6df8e7512755a8939b16b90a034a9a7"><code class="language-plaintext highlighter-rouge">742ee22</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8930 <a href="https://github.com/ImageMagick/ImageMagick6/commit/649b1057bfc1b8bb172f49e21e797a9209dbf538"><code class="language-plaintext highlighter-rouge">649b105</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8930 <a href="https://github.com/ImageMagick/ImageMagick6/commit/4399be94d44be9931c7059ba2e38ed66b850a50f"><code class="language-plaintext highlighter-rouge">4399be9</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8930 <a href="https://github.com/ImageMagick/ImageMagick6/commit/b1ef1bd9cfbddd8b4a26dd3403a3d1f1452edc55"><code class="language-plaintext highlighter-rouge">b1ef1bd</code></a></li>
+  <li>only create symbolic link if input file exists <a href="https://github.com/ImageMagick/ImageMagick6/commit/37453bf331b852b167646cd25d53a6f300fc0d01"><code class="language-plaintext highlighter-rouge">37453bf</code></a></li>
+  <li>More fixes for https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-89wq-f8f6-2j2v <a href="https://github.com/ImageMagick/ImageMagick6/commit/0d768346a13b63e4d791be4b798482abd1e050d5"><code class="language-plaintext highlighter-rouge">0d76834</code></a></li>
+  <li>Updated the dependencies. <a href="https://github.com/ImageMagick/ImageMagick6/commit/70b14503761508857cc4ec08f58dc1ec6bcb2d56"><code class="language-plaintext highlighter-rouge">70b1450</code></a></li>
+  <li>More fixes for https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-5rg6-j44q-q892. <a href="https://github.com/ImageMagick/ImageMagick6/commit/d5750d7309ef5a8cd561430d932a183e4168f484"><code class="language-plaintext highlighter-rouge">d5750d7</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-jvjm-9f73-fhpq <a href="https://github.com/ImageMagick/ImageMagick6/commit/91f4ed74a1fd8326ade11a1153de110f22d89aa1"><code class="language-plaintext highlighter-rouge">91f4ed7</code></a></li>
+  <li>check &gt;= limit <a href="https://github.com/ImageMagick/ImageMagick6/commit/6776cbdc6156e40a770e2522fbfd5b7f66451df6"><code class="language-plaintext highlighter-rouge">6776cbd</code></a></li>
+  <li>extra check not needed <a href="https://github.com/ImageMagick/ImageMagick6/commit/4f5e61617c7d66f1a94baa73254384dd9827a248"><code class="language-plaintext highlighter-rouge">4f5e616</code></a></li>
+  <li>revert <a href="https://github.com/ImageMagick/ImageMagick6/commit/7a77ff973b3f55b10e609516df65dae1ddaf2cbc"><code class="language-plaintext highlighter-rouge">7a77ff9</code></a></li>
+  <li>Trim labels to prevent code injection (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-p6j5-2qwh-6486) <a href="https://github.com/ImageMagick/ImageMagick6/commit/350da106fa180fcbc5704d5a89a47e9d0ec7470b"><code class="language-plaintext highlighter-rouge">350da10</code></a></li>
+  <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/2f16e94c5ecb1256496a20d1ecdcaf53aeb1a4ce"><code class="language-plaintext highlighter-rouge">2f16e94</code></a></li>
+</ul>
+
+<h2 id="6913-55---2026-08-23"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-54...6.9.13-55">6.9.13-55</a> - 2026-08-23</h2>
+
+<h3 id="merged-1">Merged</h3>
+
+<ul>
+  <li>build(deps): bump the codeql-action group with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/461"><code class="language-plaintext highlighter-rouge">#461</code></a></li>
+  <li>build(deps): bump the codeql-action group with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/459"><code class="language-plaintext highlighter-rouge">#459</code></a></li>
+  <li>build(deps): bump the codeql-action group with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/457"><code class="language-plaintext highlighter-rouge">#457</code></a></li>
+  <li>build(deps): bump actions/attest from 4.2.1 to 4.2.2 <a href="https://github.com/ImageMagick/ImageMagick6/pull/458"><code class="language-plaintext highlighter-rouge">#458</code></a></li>
+  <li>build(deps): bump the codeql-action group with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/456"><code class="language-plaintext highlighter-rouge">#456</code></a></li>
+  <li>build(deps): bump actions/attest from 4.2.0 to 4.2.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/454"><code class="language-plaintext highlighter-rouge">#454</code></a></li>
+  <li>build(deps): bump the codeql-action group across 1 directory with 2 updates <a href="https://github.com/ImageMagick/ImageMagick6/pull/452"><code class="language-plaintext highlighter-rouge">#452</code></a></li>
+</ul>
+
+<h3 id="commits-1">Commits</h3>
+
+<ul>
+  <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/07795d7d83f4e68755c8a1fe0dfa51bfb9cd879d"><code class="language-plaintext highlighter-rouge">07795d7</code></a></li>
+  <li>Patches for https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-99w9-hv66-rfv7. <a href="https://github.com/ImageMagick/ImageMagick6/commit/e7c22e0f547035d5d8890afcacf82f6a553005a8"><code class="language-plaintext highlighter-rouge">e7c22e0</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8893 <a href="https://github.com/ImageMagick/ImageMagick6/commit/7aa6970fedc1ef4dd187c54f41a73771652698f9"><code class="language-plaintext highlighter-rouge">7aa6970</code></a></li>
+  <li>eliminate compiler exception <a href="https://github.com/ImageMagick/ImageMagick6/commit/13341599944b3867458bae38a76105c9cf4b0c4f"><code class="language-plaintext highlighter-rouge">1334159</code></a></li>
+  <li>check for supported inline image formats <a href="https://github.com/ImageMagick/ImageMagick6/commit/999a6953bd802e709185f8f6e9793aabae9ee8da"><code class="language-plaintext highlighter-rouge">999a695</code></a></li>
+  <li>revert <a href="https://github.com/ImageMagick/ImageMagick6/commit/8f61c41eecff0b3151dc18836e612e16c3f3f932"><code class="language-plaintext highlighter-rouge">8f61c41</code></a></li>
+  <li>fix exception tag <a href="https://github.com/ImageMagick/ImageMagick6/commit/d755a06586776780ff9e3c992164db97dca20d31"><code class="language-plaintext highlighter-rouge">d755a06</code></a></li>
+  <li>revert <a href="https://github.com/ImageMagick/ImageMagick6/commit/f6a2af9b8f2ac1dbc13b27a2167a5a8b9b5eb185"><code class="language-plaintext highlighter-rouge">f6a2af9</code></a></li>
+  <li>correct exception tag <a href="https://github.com/ImageMagick/ImageMagick6/commit/f68fa1024c48a16010b4dd80f4c8b47d3a1a2a99"><code class="language-plaintext highlighter-rouge">f68fa10</code></a></li>
+  <li>deny inline implicit image formats <a href="https://github.com/ImageMagick/ImageMagick6/commit/d5309478f8c189e94f19f75a43d04b97e6b16456"><code class="language-plaintext highlighter-rouge">d530947</code></a></li>
+  <li>eliminate compiler exception <a href="https://github.com/ImageMagick/ImageMagick6/commit/e160e83fbbad8b8ccd2197c61e0116d5d7f02e87"><code class="language-plaintext highlighter-rouge">e160e83</code></a></li>
+  <li>revert <a href="https://github.com/ImageMagick/ImageMagick6/commit/14e72e538fede78837b2c45e5eaeac546f99c7bc"><code class="language-plaintext highlighter-rouge">14e72e5</code></a></li>
+  <li>refactor <a href="https://github.com/ImageMagick/ImageMagick6/commit/3d4f66491b943d62885160cb426eefa41eb9e895"><code class="language-plaintext highlighter-rouge">3d4f664</code></a></li>
+  <li>flip conditional <a href="https://github.com/ImageMagick/ImageMagick6/commit/45fbed728a34f26b7f09346dae95615e5962de84"><code class="language-plaintext highlighter-rouge">45fbed7</code></a></li>
+  <li>refactor <a href="https://github.com/ImageMagick/ImageMagick6/commit/2b6bda4c84fb30e53931b3709831da3b88b60d5e"><code class="language-plaintext highlighter-rouge">2b6bda4</code></a></li>
+  <li>get properties that might exceed 4096 characters <a href="https://github.com/ImageMagick/ImageMagick6/commit/4116a0b3df57008831ebe1c128a6be4251658283"><code class="language-plaintext highlighter-rouge">4116a0b</code></a></li>
+  <li>initialize buffer to null <a href="https://github.com/ImageMagick/ImageMagick6/commit/4a52f91f056f5acabad1069520f645a7bdc5e06b"><code class="language-plaintext highlighter-rouge">4a52f91</code></a></li>
+  <li>revert <a href="https://github.com/ImageMagick/ImageMagick6/commit/b70bcb29a9dd78dc90a7e62ec34859d8619f58af"><code class="language-plaintext highlighter-rouge">b70bcb2</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-wxw6-98rj-hjfr <a href="https://github.com/ImageMagick/ImageMagick6/commit/0ca580238abba18910cfee0fcc3159621fec0dee"><code class="language-plaintext highlighter-rouge">0ca5802</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-chf5-8rv9-gjqr <a href="https://github.com/ImageMagick/ImageMagick6/commit/e006a69e03f3aff34e9a7af90a0793ec6d879b48"><code class="language-plaintext highlighter-rouge">e006a69</code></a></li>
+  <li>Apply the fix for GHSA-7rgw-xg25-prjm. <a href="https://github.com/ImageMagick/ImageMagick6/commit/91cac2dedb53f993ba8d9f04c072e9711c9f15b4"><code class="language-plaintext highlighter-rouge">91cac2d</code></a></li>
+  <li>Updated configure. <a href="https://github.com/ImageMagick/ImageMagick6/commit/cf210bab85210805fa7d5dc5537e6e5e4bcc4b98"><code class="language-plaintext highlighter-rouge">cf210ba</code></a></li>
+  <li>latest autoconf/automake update <a href="https://github.com/ImageMagick/ImageMagick6/commit/3605af6c3de68572a7989adc5d311864f604f4bb"><code class="language-plaintext highlighter-rouge">3605af6</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8890 <a href="https://github.com/ImageMagick/ImageMagick6/commit/3f345bfc902bae2ce691278342dd0415e564e6dc"><code class="language-plaintext highlighter-rouge">3f345bf</code></a></li>
+  <li>Updated the dependencies. <a href="https://github.com/ImageMagick/ImageMagick6/commit/a08f960794a06fad1813a73703a9701748f98cdb"><code class="language-plaintext highlighter-rouge">a08f960</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-9x6f-98x9-rx6g <a href="https://github.com/ImageMagick/ImageMagick6/commit/0b47fb7e3d5650b2be88fd3a8c15096765970ce3"><code class="language-plaintext highlighter-rouge">0b47fb7</code></a></li>
+  <li>rename() does not work across partitions <a href="https://github.com/ImageMagick/ImageMagick6/commit/71065f981df17cdc1f07a6e01c21c87985809cec"><code class="language-plaintext highlighter-rouge">71065f9</code></a></li>
+  <li>explicitly checks for read() and write() errors <a href="https://github.com/ImageMagick/ImageMagick6/commit/d3c9b606e9f49d7104ada9cfb77e918db49051de"><code class="language-plaintext highlighter-rouge">d3c9b60</code></a></li>
+  <li>earlier check for authorized path <a href="https://github.com/ImageMagick/ImageMagick6/commit/792bbaeb75bb114127fa47b1475c471d52b7f186"><code class="language-plaintext highlighter-rouge">792bbae</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-5m9j-96ff-j6qc <a href="https://github.com/ImageMagick/ImageMagick6/commit/ed44f0ba6e2ab57983a6d030c868d009514dc470"><code class="language-plaintext highlighter-rouge">ed44f0b</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-3j4w-pvxj-fpjc <a href="https://github.com/ImageMagick/ImageMagick6/commit/7d8e0eb11804a5ce5322ea317dfd3557cded4e7b"><code class="language-plaintext highlighter-rouge">7d8e0eb</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-x8g2-7r3w-h44p <a href="https://github.com/ImageMagick/ImageMagick6/commit/aa1b34e9941df71a2a722508e060a3d7dd675493"><code class="language-plaintext highlighter-rouge">aa1b34e</code></a></li>
+  <li>Updated the dependencies. <a href="https://github.com/ImageMagick/ImageMagick6/commit/144729997de631fbec18357d432704ade37989cf"><code class="language-plaintext highlighter-rouge">1447299</code></a></li>
+  <li>Correct the media type of the image that is added to the wand. <a href="https://github.com/ImageMagick/ImageMagick6/commit/a9ba81ca038bba84e1bc71c7fe08912be2aadeb4"><code class="language-plaintext highlighter-rouge">a9ba81c</code></a></li>
+  <li>Fixed double free in non cairo builds (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-f2r2-qw7g-3c8x) <a href="https://github.com/ImageMagick/ImageMagick6/commit/04a4c5b89c034cf2c93bb0a10044332d941b4fa5"><code class="language-plaintext highlighter-rouge">04a4c5b</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-4mwf-mggw-29vp <a href="https://github.com/ImageMagick/ImageMagick6/commit/29f17f3fe5008fc56f00c1fbc96adf46169db245"><code class="language-plaintext highlighter-rouge">29f17f3</code></a></li>
+  <li>Don’t throw a fatal exception when hitting a recursion depth (https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-27m9-54jx-fgvq). <a href="https://github.com/ImageMagick/ImageMagick6/commit/6ba345f88a14fcce35c723c231914ae054c4281a"><code class="language-plaintext highlighter-rouge">6ba345f</code></a></li>
+  <li>Use AcquireCriticalMemory instead. <a href="https://github.com/ImageMagick/ImageMagick6/commit/8df34a5f5ca066a9c2e63c244a0ffe88c4f4053c"><code class="language-plaintext highlighter-rouge">8df34a5</code></a></li>
+  <li>Report errors or return null instead of exiting the process. <a href="https://github.com/ImageMagick/ImageMagick6/commit/b1af646261d214d0f53e615ab50ce71cc1738281"><code class="language-plaintext highlighter-rouge">b1af646</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-4jv7-q6xw-6f4x <a href="https://github.com/ImageMagick/ImageMagick6/commit/d56cab9f2253373e57c2e77809ab12abbbbdd680"><code class="language-plaintext highlighter-rouge">d56cab9</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8918 <a href="https://github.com/ImageMagick/ImageMagick6/commit/80b90fe8de777943ee4e401df364053dc7a83e86"><code class="language-plaintext highlighter-rouge">80b90fe</code></a></li>
+  <li>use omp_set_max_active_levels on MSYS2 build instead <a href="https://github.com/ImageMagick/ImageMagick6/commit/58953b59e82f726acb8f6a0961df304ea0de258e"><code class="language-plaintext highlighter-rouge">58953b5</code></a></li>
+  <li>latest autoconf/automake updates <a href="https://github.com/ImageMagick/ImageMagick6/commit/44c58acad71ea705703baf82744edd73e561b807"><code class="language-plaintext highlighter-rouge">44c58ac</code></a></li>
+  <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/96c8a2e0f7d85639d7232bf02632b2edca707df1"><code class="language-plaintext highlighter-rouge">96c8a2e</code></a></li>
+</ul>
+
+<h2 id="6913-54---2026-07-27"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-53...6.9.13-54">6.9.13-54</a> - 2026-07-27</h2>
+
+<h3 id="commits-2">Commits</h3>
+
+<ul>
+  <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/d01e277161439cccf1a5af05930002f2521ce7f7"><code class="language-plaintext highlighter-rouge">d01e277</code></a></li>
+  <li>Updated the dependencies. <a href="https://github.com/ImageMagick/ImageMagick6/commit/45ed310af22f605b20f17f746d6dd2339a97bf78"><code class="language-plaintext highlighter-rouge">45ed310</code></a></li>
+  <li>Removed checks for values from tif_config.h that are not included, libtiff will report errors itself now. <a href="https://github.com/ImageMagick/ImageMagick6/commit/560f9178ce59c8077ad0239e2eca643a8527fdc2"><code class="language-plaintext highlighter-rouge">560f917</code></a></li>
+  <li>Added missing typecast. <a href="https://github.com/ImageMagick/ImageMagick6/commit/4f9d300cc2ac0415ae60e3d10e374cf5a96e6a21"><code class="language-plaintext highlighter-rouge">4f9d300</code></a></li>
+  <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/be4df273c3b828a4566717817ff49490929a11d8"><code class="language-plaintext highlighter-rouge">be4df27</code></a></li>
+</ul>
+
+<h2 id="6913-53---2026-07-26"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-52...6.9.13-53">6.9.13-53</a> - 2026-07-26</h2>
+
+<h3 id="merged-2">Merged</h3>
+
+<ul>
+  <li>build(deps): bump actions/checkout from 7.0.0 to 7.0.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/451"><code class="language-plaintext highlighter-rouge">#451</code></a></li>
+  <li>build(deps): bump actions/attest from 4.1.1 to 4.2.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/448"><code class="language-plaintext highlighter-rouge">#448</code></a></li>
+  <li>build(deps): bump github/codeql-action/analyze from 4.37.0 to 4.37.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/450"><code class="language-plaintext highlighter-rouge">#450</code></a></li>
+  <li>build(deps): bump github/codeql-action/init from 4.37.0 to 4.37.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/449"><code class="language-plaintext highlighter-rouge">#449</code></a></li>
+  <li>build(deps): bump github/codeql-action/analyze from 4.36.3 to 4.37.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/445"><code class="language-plaintext highlighter-rouge">#445</code></a></li>
+  <li>build(deps): bump github/codeql-action/init from 4.36.3 to 4.37.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/444"><code class="language-plaintext highlighter-rouge">#444</code></a></li>
+  <li>build(deps): bump github/codeql-action/analyze from 4.36.2 to 4.36.3 <a href="https://github.com/ImageMagick/ImageMagick6/pull/442"><code class="language-plaintext highlighter-rouge">#442</code></a></li>
+  <li>build(deps): bump github/codeql-action/init from 4.36.2 to 4.36.3 <a href="https://github.com/ImageMagick/ImageMagick6/pull/443"><code class="language-plaintext highlighter-rouge">#443</code></a></li>
+</ul>
+
+<h3 id="commits-3">Commits</h3>
+
+<ul>
+  <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/943bdcb7a538c8467be40b9f844f3366c401e9d9"><code class="language-plaintext highlighter-rouge">943bdcb</code></a></li>
+  <li>normalize AE metric <a href="https://github.com/ImageMagick/ImageMagick6/commit/21bd3d7bd8f454b7434cdd61bd198e54346c2648"><code class="language-plaintext highlighter-rouge">21bd3d7</code></a></li>
+  <li>improve formatting <a href="https://github.com/ImageMagick/ImageMagick6/commit/618589ff4b6472cedd90325bd6cec82c4c27f58d"><code class="language-plaintext highlighter-rouge">618589f</code></a></li>
+  <li>time-of-check to time-of-use check <a href="https://github.com/ImageMagick/ImageMagick6/commit/49a9144e2c30c33caf34b5c732c786036ec97868"><code class="language-plaintext highlighter-rouge">49a9144</code></a></li>
+  <li>relinquish memory in the splay-tree <a href="https://github.com/ImageMagick/ImageMagick6/commit/e98bfd7b07f99f4ecb46debcd735f0f2e0acda5c"><code class="language-plaintext highlighter-rouge">e98bfd7</code></a></li>
+  <li>normalize AE metric <a href="https://github.com/ImageMagick/ImageMagick6/commit/26e2bb67510dd58ea7cbd1ce95d61575aa9dbb25"><code class="language-plaintext highlighter-rouge">26e2bb6</code></a></li>
+  <li>if path attributes fail relinquish memory <a href="https://github.com/ImageMagick/ImageMagick6/commit/dce42092f408bf481b456bf60b4337c2689ca45d"><code class="language-plaintext highlighter-rouge">dce4209</code></a></li>
+  <li>ensure file resource identify is valid <a href="https://github.com/ImageMagick/ImageMagick6/commit/8cf11cc9108745066df62bbc6b8f2e2a181b0903"><code class="language-plaintext highlighter-rouge">8cf11cc</code></a></li>
+  <li>include resource-private.h <a href="https://github.com/ImageMagick/ImageMagick6/commit/ff16bfc7498727e0f4f6e4668b533310868e2848"><code class="language-plaintext highlighter-rouge">ff16bfc</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick6/issues/437 <a href="https://github.com/ImageMagick/ImageMagick6/commit/23e702eb584d8371f5aaefbb3e73f6f8e9fd83e8"><code class="language-plaintext highlighter-rouge">23e702e</code></a></li>
+  <li>Added patches for https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-82mp-vp5c-9pf7. <a href="https://github.com/ImageMagick/ImageMagick6/commit/f48a0e2bad74c4cd42624e95205c3befd64062d8"><code class="language-plaintext highlighter-rouge">f48a0e2</code></a></li>
+  <li>revert similarity image patch <a href="https://github.com/ImageMagick/ImageMagick6/commit/303c2434e2ee19f23572a32a7160c1120d5f66ee"><code class="language-plaintext highlighter-rouge">303c243</code></a></li>
+  <li>if compare:virtual-pixels is present and false then min bounds <a href="https://github.com/ImageMagick/ImageMagick6/commit/572fbb651a49849d33fa381b4ae5f45feef953bd"><code class="language-plaintext highlighter-rouge">572fbb6</code></a></li>
+  <li>include file mode when validating file identity <a href="https://github.com/ImageMagick/ImageMagick6/commit/08444809afc24deb10e9580d5db493b64179ceb4"><code class="language-plaintext highlighter-rouge">0844480</code></a></li>
+  <li>eliminate compiler exception <a href="https://github.com/ImageMagick/ImageMagick6/commit/664cfbd103562c9924ac5723911b90a3459ffe9c"><code class="language-plaintext highlighter-rouge">664cfbd</code></a></li>
+  <li>define POSIX file type and permission macros <a href="https://github.com/ImageMagick/ImageMagick6/commit/eebd65ecbfbaf46a1525d0aa9ca6d94737de42ae"><code class="language-plaintext highlighter-rouge">eebd65e</code></a></li>
+  <li>localize defines <a href="https://github.com/ImageMagick/ImageMagick6/commit/a2aa7c4b91b5b9c445b401a5e5b5abcfc12d2e5b"><code class="language-plaintext highlighter-rouge">a2aa7c4</code></a></li>
+  <li>define S_IWUSR <a href="https://github.com/ImageMagick/ImageMagick6/commit/a8dedf8efc94a7d89c277b19c895e25f6914c451"><code class="language-plaintext highlighter-rouge">a8dedf8</code></a></li>
+  <li>Check for the correct number of colors in the IsPaletteImage check. <a href="https://github.com/ImageMagick/ImageMagick6/commit/9c98b5107ceda46a0e2173897f9d929c8ae3ceb6"><code class="language-plaintext highlighter-rouge">9c98b51</code></a></li>
+  <li>latest ImageMagick documentation <a href="https://github.com/ImageMagick/ImageMagick6/commit/0da84933f82c265be1d2d94276d8225d685ba835"><code class="language-plaintext highlighter-rouge">0da8493</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/pull/8860 <a href="https://github.com/ImageMagick/ImageMagick6/commit/dc2f31539524363b2f49cb95264ddee3994b6f1c"><code class="language-plaintext highlighter-rouge">dc2f315</code></a></li>
+  <li>Restored icon. <a href="https://github.com/ImageMagick/ImageMagick6/commit/96a36e8ea116373067f1dd557044455e16e1084a"><code class="language-plaintext highlighter-rouge">96a36e8</code></a></li>
+  <li>Updated configure. <a href="https://github.com/ImageMagick/ImageMagick6/commit/5dc06aa231f0eb1fce33e67027ad62a489982d6b"><code class="language-plaintext highlighter-rouge">5dc06aa</code></a></li>
+  <li>Updated configure. <a href="https://github.com/ImageMagick/ImageMagick6/commit/fa84ad07e1666a7e1c7b6f776f67a2ecc706c05a"><code class="language-plaintext highlighter-rouge">fa84ad0</code></a></li>
+  <li>Correct archive name and use max compression for all archives. <a href="https://github.com/ImageMagick/ImageMagick6/commit/26f6277cb98803f03456c07818e2e2eef077750b"><code class="language-plaintext highlighter-rouge">26f6277</code></a></li>
+  <li>guarantee round-trip fidelity for IEEE‑754 doubles without printing spurious digits <a href="https://github.com/ImageMagick/ImageMagick6/commit/efbd5cb55e99178cc7173ecb7848f33e2f62a5d1"><code class="language-plaintext highlighter-rouge">efbd5cb</code></a></li>
+  <li>no longer inline the method to reduce the local stack size. <a href="https://github.com/ImageMagick/ImageMagick6/commit/be19a7b0d330754e4c2b58811a5e200cc4c44ae3"><code class="language-plaintext highlighter-rouge">be19a7b</code></a></li>
+  <li>introduce image:frames define <a href="https://github.com/ImageMagick/ImageMagick6/commit/9472a784b8967db92a0ef4be449592fd4366c67e"><code class="language-plaintext highlighter-rouge">9472a78</code></a></li>
+  <li>eliminate compiler warning <a href="https://github.com/ImageMagick/ImageMagick6/commit/5ff638c4c3099c9805473b8160f10b15b56cf9ab"><code class="language-plaintext highlighter-rouge">5ff638c</code></a></li>
+  <li>FILE_READ_ATTRIBUTES is preferred over GENERIC_READ <a href="https://github.com/ImageMagick/ImageMagick6/commit/ba0319e3d5524905ca5ff8b7ee3cb066bd127800"><code class="language-plaintext highlighter-rouge">ba0319e</code></a></li>
+  <li>prefer https <a href="https://github.com/ImageMagick/ImageMagick6/commit/73a251a49731bcdc7b2b2d3f0dd48a9c7ce059c3"><code class="language-plaintext highlighter-rouge">73a251a</code></a></li>
+  <li>Updated the dependencies. <a href="https://github.com/ImageMagick/ImageMagick6/commit/0c07ae376e1773c3af31006b496aca4a132bbf12"><code class="language-plaintext highlighter-rouge">0c07ae3</code></a></li>
+  <li>safe read/write <a href="https://github.com/ImageMagick/ImageMagick6/commit/7eb6ff3a86b95dc51cd0c8e5ee9ef782fcaa9f47"><code class="language-plaintext highlighter-rouge">7eb6ff3</code></a></li>
+  <li>use 1mb chunks <a href="https://github.com/ImageMagick/ImageMagick6/commit/1a91111deccc68e29ade7c6be2c5d34a309d0041"><code class="language-plaintext highlighter-rouge">1a91111</code></a></li>
+  <li>use parens in macro <a href="https://github.com/ImageMagick/ImageMagick6/commit/a926969a6186e9b61ab324a01ca3b0a2b1093d48"><code class="language-plaintext highlighter-rouge">a926969</code></a></li>
+  <li>eliminate compile warning <a href="https://github.com/ImageMagick/ImageMagick6/commit/22e2bd3fc29d01598e0f7d22929d2e97983e568e"><code class="language-plaintext highlighter-rouge">22e2bd3</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/issues/8436 <a href="https://github.com/ImageMagick/ImageMagick6/commit/1884fe457c89bf0277c037114929866e30e3d091"><code class="language-plaintext highlighter-rouge">1884fe4</code></a></li>
+  <li>avoid division by 0 <a href="https://github.com/ImageMagick/ImageMagick6/commit/4b00090a08b77e1c040f5bf730172a924be3912e"><code class="language-plaintext highlighter-rouge">4b00090</code></a></li>
+  <li>cosmetic <a href="https://github.com/ImageMagick/ImageMagick6/commit/d39b6b3fdd38553dd7087edf89ee5123b54578c8"><code class="language-plaintext highlighter-rouge">d39b6b3</code></a></li>
+  <li>revert <a href="https://github.com/ImageMagick/ImageMagick6/commit/d5e17073129a212d746129fa7bff7c314c1f3214"><code class="language-plaintext highlighter-rouge">d5e1707</code></a></li>
+  <li>permit floating point work factor <a href="https://github.com/ImageMagick/ImageMagick6/commit/58b276fceb46c3b594d95f1e9d793997ac2c541c"><code class="language-plaintext highlighter-rouge">58b276f</code></a></li>
+  <li>fix PDC metric <a href="https://github.com/ImageMagick/ImageMagick6/commit/fd3cb131b83985d04282bee44ef405d30ac678e9"><code class="language-plaintext highlighter-rouge">fd3cb13</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/security/advisories/GHSA-6rvv-36hw-5rgf <a href="https://github.com/ImageMagick/ImageMagick6/commit/6729ffd68494337c537f6a7e63922ed0a7f59b58"><code class="language-plaintext highlighter-rouge">6729ffd</code></a></li>
+  <li>winsock define <a href="https://github.com/ImageMagick/ImageMagick6/commit/fb06cebbf1eed1be46be1dcaa9ef602b905af425"><code class="language-plaintext highlighter-rouge">fb06ceb</code></a></li>
+  <li>set socket timeout <a href="https://github.com/ImageMagick/ImageMagick6/commit/9ba1c3c2c95ac1ea038b6c8f2f4880473f336102"><code class="language-plaintext highlighter-rouge">9ba1c3c</code></a></li>
+  <li>Group codeql-action in dependabot. <a href="https://github.com/ImageMagick/ImageMagick6/commit/9681ae332edfb9a645583ab872374967ef9f7c3b"><code class="language-plaintext highlighter-rouge">9681ae3</code></a></li>
+  <li>https://github.com/ImageMagick/ImageMagick/pull/8884 <a href="https://github.com/ImageMagick/ImageMagick6/commit/c54d5b21c5925ac0d9ac6bc6cc57d0b0690de353"><code class="language-plaintext highlighter-rouge">c54d5b2</code></a></li>
+  <li>normalize PDC metric <a href="https://github.com/ImageMagick/ImageMagick6/commit/67cf6803df25c0d6bc03cfcf5aef1c520308bba8"><code class="language-plaintext highlighter-rouge">67cf680</code></a></li>
+  <li>Updated the dependencies. <a href="https://github.com/ImageMagick/ImageMagick6/commit/e3a875e8b8db5c71a65ad8cda6539697e823f83f"><code class="language-plaintext highlighter-rouge">e3a875e</code></a></li>
+  <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/d29cd357bf448ed61f1d0d298ba69f3922bb0144"><code class="language-plaintext highlighter-rouge">d29cd35</code></a></li>
+</ul>
+
+<h2 id="6913-52---2026-07-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-51...6.9.13-52">6.9.13-52</a> - 2026-07-05</h2>
+
+<h3 id="merged-3">Merged</h3>
 
 <ul>
   <li>build(deps): bump actions/attest from 4.1.0 to 4.1.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/440"><code class="language-plaintext highlighter-rouge">#440</code></a></li>
   <li>build(deps): bump actions/checkout from 6.0.3 to 7.0.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/436"><code class="language-plaintext highlighter-rouge">#436</code></a></li>
 </ul>
 
-<h3 id="commits">Commits</h3>
+<h3 id="commits-4">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ed0b8b534e99c810346e4f729721152714dbf0dd"><code class="language-plaintext highlighter-rouge">ed0b8b5</code></a></li>
@@ -254,7 +461,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-51---2026-06-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-50...6.9.13-51">6.9.13-51</a> - 2026-06-21</h2>
 
-<h3 id="merged-1">Merged</h3>
+<h3 id="merged-4">Merged</h3>
 
 <ul>
   <li>build(deps): bump msys2/setup-msys2 from 2.31.1 to 2.32.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/435"><code class="language-plaintext highlighter-rouge">#435</code></a></li>
@@ -263,7 +470,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>build(deps): bump actions/checkout from 6.0.2 to 6.0.3 <a href="https://github.com/ImageMagick/ImageMagick6/pull/432"><code class="language-plaintext highlighter-rouge">#432</code></a></li>
 </ul>
 
-<h3 id="commits-1">Commits</h3>
+<h3 id="commits-5">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/1ca779ea5a47abadb604bc25f9e43a1031b619f5"><code class="language-plaintext highlighter-rouge">1ca779e</code></a></li>
@@ -355,13 +562,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-50---2026-06-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-49...6.9.13-50">6.9.13-50</a> - 2026-06-05</h2>
 
-<h3 id="merged-2">Merged</h3>
+<h3 id="merged-5">Merged</h3>
 
 <ul>
   <li>build(deps): bump github/codeql-action from 4.35.5 to 4.36.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/431"><code class="language-plaintext highlighter-rouge">#431</code></a></li>
 </ul>
 
-<h3 id="commits-2">Commits</h3>
+<h3 id="commits-6">Commits</h3>
 
 <ul>
   <li>trigger a release build <a href="https://github.com/ImageMagick/ImageMagick6/commit/d4da46250ff5592fb93f91abe23601758ea83b58"><code class="language-plaintext highlighter-rouge">d4da462</code></a></li>
@@ -401,13 +608,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-49---2026-05-26"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-48...6.9.13-49">6.9.13-49</a> - 2026-05-26</h2>
 
-<h3 id="merged-3">Merged</h3>
+<h3 id="merged-6">Merged</h3>
 
 <ul>
   <li>build(deps): bump github/codeql-action from 4.35.4 to 4.35.5 <a href="https://github.com/ImageMagick/ImageMagick6/pull/428"><code class="language-plaintext highlighter-rouge">#428</code></a></li>
 </ul>
 
-<h3 id="commits-3">Commits</h3>
+<h3 id="commits-7">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/31d6632e83f896b94e782ee325715f3ad3b6bd82"><code class="language-plaintext highlighter-rouge">31d6632</code></a></li>
@@ -449,13 +656,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-48---2026-05-17"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-47...6.9.13-48">6.9.13-48</a> - 2026-05-17</h2>
 
-<h3 id="merged-4">Merged</h3>
+<h3 id="merged-7">Merged</h3>
 
 <ul>
   <li>build(deps): bump github/codeql-action from 4.35.3 to 4.35.4 <a href="https://github.com/ImageMagick/ImageMagick6/pull/426"><code class="language-plaintext highlighter-rouge">#426</code></a></li>
 </ul>
 
-<h3 id="commits-4">Commits</h3>
+<h3 id="commits-8">Commits</h3>
 
 <ul>
   <li>lastest autoconf/automake updates <a href="https://github.com/ImageMagick/ImageMagick6/commit/4c05e20014584a3e32b14d032d3c108e69651050"><code class="language-plaintext highlighter-rouge">4c05e20</code></a></li>
@@ -494,7 +701,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-47---2026-05-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-46...6.9.13-47">6.9.13-47</a> - 2026-05-12</h2>
 
-<h3 id="merged-5">Merged</h3>
+<h3 id="merged-8">Merged</h3>
 
 <ul>
   <li>build(deps): bump github/codeql-action from 4.35.2 to 4.35.3 <a href="https://github.com/ImageMagick/ImageMagick6/pull/424"><code class="language-plaintext highlighter-rouge">#424</code></a></li>
@@ -503,7 +710,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>build(deps): bump github/codeql-action from 4.35.1 to 4.35.2 <a href="https://github.com/ImageMagick/ImageMagick6/pull/418"><code class="language-plaintext highlighter-rouge">#418</code></a></li>
 </ul>
 
-<h3 id="commits-5">Commits</h3>
+<h3 id="commits-9">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/cbb8c6b8c9c9aaf7b12614fed205aceffceca238"><code class="language-plaintext highlighter-rouge">cbb8c6b</code></a></li>
@@ -552,7 +759,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-46---2026-04-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-45...6.9.13-46">6.9.13-46</a> - 2026-04-21</h2>
 
-<h3 id="commits-6">Commits</h3>
+<h3 id="commits-10">Commits</h3>
 
 <ul>
   <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/4ca94382e849a3c618200c6475ddaa019861d446"><code class="language-plaintext highlighter-rouge">4ca9438</code></a></li>
@@ -560,7 +767,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-45---2026-04-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-44...6.9.13-45">6.9.13-45</a> - 2026-04-21</h2>
 
-<h3 id="commits-7">Commits</h3>
+<h3 id="commits-11">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/a648a751bda02dfc99b18a5b3a4d5ec3ac60f360"><code class="language-plaintext highlighter-rouge">a648a75</code></a></li>
@@ -597,7 +804,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-44---2026-04-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-43...6.9.13-44">6.9.13-44</a> - 2026-04-12</h2>
 
-<h3 id="merged-6">Merged</h3>
+<h3 id="merged-9">Merged</h3>
 
 <ul>
   <li>build(deps): bump ImageMagick/code-signing-action from 1.0.0 to 1.0.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/412"><code class="language-plaintext highlighter-rouge">#412</code></a></li>
@@ -606,7 +813,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>Bump actions/download-artifact from 8.0.0 to 8.0.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/409"><code class="language-plaintext highlighter-rouge">#409</code></a></li>
 </ul>
 
-<h3 id="commits-8">Commits</h3>
+<h3 id="commits-12">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/bfdc9dd50295650be9af4862843781df9898c8dc"><code class="language-plaintext highlighter-rouge">bfdc9dd</code></a></li>
@@ -639,13 +846,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-43---2026-03-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-42...6.9.13-43">6.9.13-43</a> - 2026-03-22</h2>
 
-<h3 id="merged-7">Merged</h3>
+<h3 id="merged-10">Merged</h3>
 
 <ul>
   <li>Bump github/codeql-action from 4.32.2 to 4.32.6 <a href="https://github.com/ImageMagick/ImageMagick6/pull/403"><code class="language-plaintext highlighter-rouge">#403</code></a></li>
 </ul>
 
-<h3 id="commits-9">Commits</h3>
+<h3 id="commits-13">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/18b864a9e3b507318e6d9b7def91308776e592d7"><code class="language-plaintext highlighter-rouge">18b864a</code></a></li>
@@ -673,14 +880,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-42---2026-03-15"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-41...6.9.13-42">6.9.13-42</a> - 2026-03-15</h2>
 
-<h3 id="merged-8">Merged</h3>
+<h3 id="merged-11">Merged</h3>
 
 <ul>
   <li>Bump actions/download-artifact from 7 to 8 <a href="https://github.com/ImageMagick/ImageMagick6/pull/401"><code class="language-plaintext highlighter-rouge">#401</code></a></li>
   <li>Bump actions/upload-artifact from 6 to 7 <a href="https://github.com/ImageMagick/ImageMagick6/pull/400"><code class="language-plaintext highlighter-rouge">#400</code></a></li>
 </ul>
 
-<h3 id="commits-10">Commits</h3>
+<h3 id="commits-14">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/92c0cab91568a2f83ec50a1e7ecd56f276858d11"><code class="language-plaintext highlighter-rouge">92c0cab</code></a></li>
@@ -707,13 +914,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-41---2026-03-08"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-40...6.9.13-41">6.9.13-41</a> - 2026-03-08</h2>
 
-<h3 id="merged-9">Merged</h3>
+<h3 id="merged-12">Merged</h3>
 
 <ul>
   <li>coders/stegano.c: destroy watermark image prior to throwing exception <a href="https://github.com/ImageMagick/ImageMagick6/pull/398"><code class="language-plaintext highlighter-rouge">#398</code></a></li>
 </ul>
 
-<h3 id="commits-11">Commits</h3>
+<h3 id="commits-15">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/88b649563ceac77d3e6d9ab18f73f63ef27a8731"><code class="language-plaintext highlighter-rouge">88b6495</code></a></li>
@@ -754,7 +961,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-40---2026-02-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-39...6.9.13-40">6.9.13-40</a> - 2026-02-22</h2>
 
-<h3 id="commits-12">Commits</h3>
+<h3 id="commits-16">Commits</h3>
 
 <ul>
   <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/1a7a0276812cfdaac05cf88b811091ba2ff957f9"><code class="language-plaintext highlighter-rouge">1a7a027</code></a></li>
@@ -762,7 +969,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-39---2026-02-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-38...6.9.13-39">6.9.13-39</a> - 2026-02-22</h2>
 
-<h3 id="commits-13">Commits</h3>
+<h3 id="commits-17">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/9d48f422ac13519c37425bbb74773e2d47b8f3bb"><code class="language-plaintext highlighter-rouge">9d48f42</code></a></li>
@@ -894,7 +1101,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-38---2026-01-19"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-37...6.9.13-38">6.9.13-38</a> - 2026-01-19</h2>
 
-<h3 id="commits-14">Commits</h3>
+<h3 id="commits-18">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ea08ad76eda78bd3d5cf3691dc32a872af747c2a"><code class="language-plaintext highlighter-rouge">ea08ad7</code></a></li>
@@ -922,7 +1129,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-37---2025-12-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-36...6.9.13-37">6.9.13-37</a> - 2025-12-28</h2>
 
-<h3 id="merged-10">Merged</h3>
+<h3 id="merged-13">Merged</h3>
 
 <ul>
   <li>Bump msys2/setup-msys2 from 2.29.0 to 2.30.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/389"><code class="language-plaintext highlighter-rouge">#389</code></a></li>
@@ -930,7 +1137,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>Bump actions/upload-artifact from 5 to 6 <a href="https://github.com/ImageMagick/ImageMagick6/pull/391"><code class="language-plaintext highlighter-rouge">#391</code></a></li>
 </ul>
 
-<h3 id="commits-15">Commits</h3>
+<h3 id="commits-19">Commits</h3>
 
 <ul>
   <li>Use macos-14 instead of macos-13 for the MacOS build. <a href="https://github.com/ImageMagick/ImageMagick6/commit/7b8c2eb4faf487526e16f2829edabbcfbbd04555"><code class="language-plaintext highlighter-rouge">7b8c2eb</code></a></li>
@@ -950,7 +1157,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-36---2025-12-14"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-35...6.9.13-36">6.9.13-36</a> - 2025-12-14</h2>
 
-<h3 id="commits-16">Commits</h3>
+<h3 id="commits-20">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/fab0592b552267bfe15184e3c39534a565760af7"><code class="language-plaintext highlighter-rouge">fab0592</code></a></li>
@@ -959,13 +1166,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-35---2025-12-07"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-34...6.9.13-35">6.9.13-35</a> - 2025-12-07</h2>
 
-<h3 id="merged-11">Merged</h3>
+<h3 id="merged-14">Merged</h3>
 
 <ul>
   <li>Bump actions/checkout from 5 to 6 <a href="https://github.com/ImageMagick/ImageMagick6/pull/388"><code class="language-plaintext highlighter-rouge">#388</code></a></li>
 </ul>
 
-<h3 id="commits-17">Commits</h3>
+<h3 id="commits-21">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/b7491323fbd687eb8f2f13924939c8eb1d4d2fc4"><code class="language-plaintext highlighter-rouge">b749132</code></a></li>
@@ -978,13 +1185,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-34---2025-11-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-33...6.9.13-34">6.9.13-34</a> - 2025-11-30</h2>
 
-<h3 id="merged-12">Merged</h3>
+<h3 id="merged-15">Merged</h3>
 
 <ul>
   <li>Fix memory corrution in ClonePixelWands <a href="https://github.com/ImageMagick/ImageMagick6/pull/384"><code class="language-plaintext highlighter-rouge">#384</code></a></li>
 </ul>
 
-<h3 id="commits-18">Commits</h3>
+<h3 id="commits-22">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/4843c34f29ac1531dd65134c4ade702d8c66fd4e"><code class="language-plaintext highlighter-rouge">4843c34</code></a></li>
@@ -1017,7 +1224,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-33---2025-10-26"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-32...6.9.13-33">6.9.13-33</a> - 2025-10-26</h2>
 
-<h3 id="commits-19">Commits</h3>
+<h3 id="commits-23">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ffc9d2a5daca0800a87c7d0e78c0819125e74c3b"><code class="language-plaintext highlighter-rouge">ffc9d2a</code></a></li>
@@ -1029,13 +1236,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-32---2025-10-14"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-31...6.9.13-32">6.9.13-32</a> - 2025-10-14</h2>
 
-<h3 id="merged-13">Merged</h3>
+<h3 id="merged-16">Merged</h3>
 
 <ul>
   <li>Bump github/codeql-action from 3 to 4 <a href="https://github.com/ImageMagick/ImageMagick6/pull/381"><code class="language-plaintext highlighter-rouge">#381</code></a></li>
 </ul>
 
-<h3 id="commits-20">Commits</h3>
+<h3 id="commits-24">Commits</h3>
 
 <ul>
   <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e0c34a2f8c8bf60cc3a4602ae1f5e21be4ce71b4"><code class="language-plaintext highlighter-rouge">e0c34a2</code></a></li>
@@ -1043,7 +1250,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-31---2025-10-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-30...6.9.13-31">6.9.13-31</a> - 2025-10-12</h2>
 
-<h3 id="commits-21">Commits</h3>
+<h3 id="commits-25">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e6cd82b93cdbe276e7d19097efa94c36446d5c76"><code class="language-plaintext highlighter-rouge">e6cd82b</code></a></li>
@@ -1055,7 +1262,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-30---2025-10-06"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-29...6.9.13-30">6.9.13-30</a> - 2025-10-06</h2>
 
-<h3 id="commits-22">Commits</h3>
+<h3 id="commits-26">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/72ec0ad5695c78f42d5d5f2337e1348cf41caa3e"><code class="language-plaintext highlighter-rouge">72ec0ad</code></a></li>
@@ -1083,7 +1290,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-29---2025-08-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-28...6.9.13-29">6.9.13-29</a> - 2025-08-30</h2>
 
-<h3 id="commits-23">Commits</h3>
+<h3 id="commits-27">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/12b8a33af67931b1be75afcbb3c6502d03af562e"><code class="language-plaintext highlighter-rouge">12b8a33</code></a></li>
@@ -1098,13 +1305,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-28---2025-08-24"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-27...6.9.13-28">6.9.13-28</a> - 2025-08-24</h2>
 
-<h3 id="merged-14">Merged</h3>
+<h3 id="merged-17">Merged</h3>
 
 <ul>
   <li>Bump actions/checkout from 4 to 5 <a href="https://github.com/ImageMagick/ImageMagick6/pull/379"><code class="language-plaintext highlighter-rouge">#379</code></a></li>
 </ul>
 
-<h3 id="commits-24">Commits</h3>
+<h3 id="commits-28">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/cb718e800c2dc6b7b7bdab0b618ce302d7001db0"><code class="language-plaintext highlighter-rouge">cb718e8</code></a></li>
@@ -1126,13 +1333,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-27---2025-08-11"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-26...6.9.13-27">6.9.13-27</a> - 2025-08-11</h2>
 
-<h3 id="merged-15">Merged</h3>
+<h3 id="merged-18">Merged</h3>
 
 <ul>
   <li>Bump actions/download-artifact from 4 to 5 <a href="https://github.com/ImageMagick/ImageMagick6/pull/377"><code class="language-plaintext highlighter-rouge">#377</code></a></li>
 </ul>
 
-<h3 id="commits-25">Commits</h3>
+<h3 id="commits-29">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/16ea12adca0284c61620ef7cb79d447eecff808d"><code class="language-plaintext highlighter-rouge">16ea12a</code></a></li>
@@ -1181,7 +1388,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-26---2025-07-13"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-25...6.9.13-26">6.9.13-26</a> - 2025-07-13</h2>
 
-<h3 id="commits-26">Commits</h3>
+<h3 id="commits-30">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/b9366d0ba14baea2d095b5baf839ce2c3995af7d"><code class="language-plaintext highlighter-rouge">b9366d0</code></a></li>
@@ -1386,7 +1593,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-25---2025-03-29"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-24...6.9.13-25">6.9.13-25</a> - 2025-03-29</h2>
 
-<h3 id="commits-27">Commits</h3>
+<h3 id="commits-31">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/920f9168e1d5f29e88cbc8755e049d3260f34902"><code class="language-plaintext highlighter-rouge">920f916</code></a></li>
@@ -1410,7 +1617,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-24---2025-03-18"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-23...6.9.13-24">6.9.13-24</a> - 2025-03-18</h2>
 
-<h3 id="commits-28">Commits</h3>
+<h3 id="commits-32">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/2247c2cb107117c55ac6d8002c49d888ae56c9d9"><code class="language-plaintext highlighter-rouge">2247c2c</code></a></li>
@@ -1433,7 +1640,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-23---2025-03-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-22...6.9.13-23">6.9.13-23</a> - 2025-03-09</h2>
 
-<h3 id="commits-29">Commits</h3>
+<h3 id="commits-33">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/f6071496a6ae14066ed57fd6acf74b7b19019715"><code class="language-plaintext highlighter-rouge">f607149</code></a></li>
@@ -1449,13 +1656,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-22---2025-02-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-21...6.9.13-22">6.9.13-22</a> - 2025-02-22</h2>
 
-<h3 id="merged-16">Merged</h3>
+<h3 id="merged-19">Merged</h3>
 
 <ul>
   <li>Bump azure/trusted-signing-action from 0.5.0 to 0.5.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/359"><code class="language-plaintext highlighter-rouge">#359</code></a></li>
 </ul>
 
-<h3 id="commits-30">Commits</h3>
+<h3 id="commits-34">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/5d6cb68c7edee14367bc7c789c3a3eff9573e207"><code class="language-plaintext highlighter-rouge">5d6cb68</code></a></li>
@@ -1501,7 +1708,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-21---2024-12-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-19...6.9.13-21">6.9.13-21</a> - 2024-12-22</h2>
 
-<h3 id="commits-31">Commits</h3>
+<h3 id="commits-35">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/34b08cc1bf6ec1d6a58ccc9320f3702518041537"><code class="language-plaintext highlighter-rouge">34b08cc</code></a></li>
@@ -1535,7 +1742,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-19---2024-11-16"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-18...6.9.13-19">6.9.13-19</a> - 2024-11-16</h2>
 
-<h3 id="commits-32">Commits</h3>
+<h3 id="commits-36">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/94750b021707cec7aaf019d445c6d907300bcf33"><code class="language-plaintext highlighter-rouge">94750b0</code></a></li>
@@ -1559,14 +1766,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-18---2024-11-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-17...6.9.13-18">6.9.13-18</a> - 2024-11-09</h2>
 
-<h3 id="merged-17">Merged</h3>
+<h3 id="merged-20">Merged</h3>
 
 <ul>
   <li>Fix missing ‘tiff:endian’ image property <a href="https://github.com/ImageMagick/ImageMagick6/pull/347"><code class="language-plaintext highlighter-rouge">#347</code></a></li>
   <li>Bump azure/trusted-signing-action from 0.4.0 to 0.5.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/346"><code class="language-plaintext highlighter-rouge">#346</code></a></li>
 </ul>
 
-<h3 id="commits-33">Commits</h3>
+<h3 id="commits-37">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/aa4efd0a11dc9dc440be0a8e1ccc93f798015591"><code class="language-plaintext highlighter-rouge">aa4efd0</code></a></li>
@@ -1602,13 +1809,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-17---2024-10-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-16...6.9.13-17">6.9.13-17</a> - 2024-10-05</h2>
 
-<h3 id="merged-18">Merged</h3>
+<h3 id="merged-21">Merged</h3>
 
 <ul>
   <li>Add missing Threshold command to command array of Region of Interest mode <a href="https://github.com/ImageMagick/ImageMagick6/pull/339"><code class="language-plaintext highlighter-rouge">#339</code></a></li>
 </ul>
 
-<h3 id="commits-34">Commits</h3>
+<h3 id="commits-38">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/068d8ce2a3f331733333bd8e5fc0761c2fc06da8"><code class="language-plaintext highlighter-rouge">068d8ce</code></a></li>
@@ -1629,7 +1836,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-16---2024-09-01"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-15...6.9.13-16">6.9.13-16</a> - 2024-09-01</h2>
 
-<h3 id="commits-35">Commits</h3>
+<h3 id="commits-39">Commits</h3>
 
 <ul>
   <li>properly set image byte order <a href="https://github.com/ImageMagick/ImageMagick6/commit/4b6bc43e0ce0a953a0885bf35fc5488883d9c667"><code class="language-plaintext highlighter-rouge">4b6bc43</code></a></li>
@@ -1645,13 +1852,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-15---2024-08-24"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-14...6.9.13-15">6.9.13-15</a> - 2024-08-24</h2>
 
-<h3 id="merged-19">Merged</h3>
+<h3 id="merged-22">Merged</h3>
 
 <ul>
   <li>Bump azure/trusted-signing-action from 0.3.20 to 0.4.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/334"><code class="language-plaintext highlighter-rouge">#334</code></a></li>
 </ul>
 
-<h3 id="commits-36">Commits</h3>
+<h3 id="commits-40">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/655750564a7451bf0d036c598497b996c8ada242"><code class="language-plaintext highlighter-rouge">6557505</code></a></li>
@@ -1673,7 +1880,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-14---2024-07-27"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-13...6.9.13-14">6.9.13-14</a> - 2024-07-27</h2>
 
-<h3 id="commits-37">Commits</h3>
+<h3 id="commits-41">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/2ebf5b1dd82467435f03c08504522c6078feaeac"><code class="language-plaintext highlighter-rouge">2ebf5b1</code></a></li>
@@ -1693,13 +1900,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-13---2024-07-14"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-12...6.9.13-13">6.9.13-13</a> - 2024-07-14</h2>
 
-<h3 id="merged-20">Merged</h3>
+<h3 id="merged-23">Merged</h3>
 
 <ul>
   <li>Fixed typo in README.md <a href="https://github.com/ImageMagick/ImageMagick6/pull/328"><code class="language-plaintext highlighter-rouge">#328</code></a></li>
 </ul>
 
-<h3 id="commits-38">Commits</h3>
+<h3 id="commits-42">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/3a5f770778f01cb6546de71daa0ff79a3de745c3"><code class="language-plaintext highlighter-rouge">3a5f770</code></a></li>
@@ -1714,14 +1921,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-12---2024-06-23"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-11...6.9.13-12">6.9.13-12</a> - 2024-06-23</h2>
 
-<h3 id="merged-21">Merged</h3>
+<h3 id="merged-24">Merged</h3>
 
 <ul>
   <li>Bump azure/trusted-signing-action from 0.3.19 to 0.3.20 <a href="https://github.com/ImageMagick/ImageMagick6/pull/325"><code class="language-plaintext highlighter-rouge">#325</code></a></li>
   <li>Bump azure/trusted-signing-action from 0.3.18 to 0.3.19 <a href="https://github.com/ImageMagick/ImageMagick6/pull/324"><code class="language-plaintext highlighter-rouge">#324</code></a></li>
 </ul>
 
-<h3 id="commits-39">Commits</h3>
+<h3 id="commits-43">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/5447874c46959a15399d2fc657fd6a0b6d734027"><code class="language-plaintext highlighter-rouge">5447874</code></a></li>
@@ -1739,7 +1946,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-11---2024-05-25"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-10...6.9.13-11">6.9.13-11</a> - 2024-05-25</h2>
 
-<h3 id="commits-40">Commits</h3>
+<h3 id="commits-44">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e7e4c011e6166113c3af7423c922286fc974261d"><code class="language-plaintext highlighter-rouge">e7e4c01</code></a></li>
@@ -1777,7 +1984,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-10---2024-05-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-9...6.9.13-10">6.9.13-10</a> - 2024-05-05</h2>
 
-<h3 id="commits-41">Commits</h3>
+<h3 id="commits-45">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/8f6186e4e4df5a0c18b2f64ade6cdd4f44113300"><code class="language-plaintext highlighter-rouge">8f6186e</code></a></li>
@@ -1797,7 +2004,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-9---2024-04-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-8...6.9.13-9">6.9.13-9</a> - 2024-04-21</h2>
 
-<h3 id="commits-42">Commits</h3>
+<h3 id="commits-46">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/f27bd22abe14a6782def42f6521aa7cd96cfcd89"><code class="language-plaintext highlighter-rouge">f27bd22</code></a></li>
@@ -1814,7 +2021,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-8---2024-04-07"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-7...6.9.13-8">6.9.13-8</a> - 2024-04-07</h2>
 
-<h3 id="merged-22">Merged</h3>
+<h3 id="merged-25">Merged</h3>
 
 <ul>
   <li>Bump azure/azure-code-signing-action from 0.3.0 to 0.3.1 <a href="https://github.com/ImageMagick/ImageMagick6/pull/318"><code class="language-plaintext highlighter-rouge">#318</code></a></li>
@@ -1828,7 +2035,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>Use (PixelPacket *)NULL instead to resolve #319. <a href="https://github.com/ImageMagick/ImageMagick6/issues/319"><code class="language-plaintext highlighter-rouge">#319</code></a></li>
 </ul>
 
-<h3 id="commits-43">Commits</h3>
+<h3 id="commits-47">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/6a29d86ed26161ce4c9c6b97d94c48778b02fcf0"><code class="language-plaintext highlighter-rouge">6a29d86</code></a></li>
@@ -1874,7 +2081,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-7---2024-02-25"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-6...6.9.13-7">6.9.13-7</a> - 2024-02-25</h2>
 
-<h3 id="commits-44">Commits</h3>
+<h3 id="commits-48">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/f72e54c3e9793c03d774cfdb8258913c7f18594f"><code class="language-plaintext highlighter-rouge">f72e54c</code></a></li>
@@ -1902,14 +2109,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-6---2024-02-11"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-5...6.9.13-6">6.9.13-6</a> - 2024-02-11</h2>
 
-<h3 id="merged-23">Merged</h3>
+<h3 id="merged-26">Merged</h3>
 
 <ul>
   <li>Bump azure/azure-code-signing-action from 0.2.26 to 0.3.0 <a href="https://github.com/ImageMagick/ImageMagick6/pull/307"><code class="language-plaintext highlighter-rouge">#307</code></a></li>
   <li>Bump azure/azure-code-signing-action from 0.2.22 to 0.2.26 <a href="https://github.com/ImageMagick/ImageMagick6/pull/306"><code class="language-plaintext highlighter-rouge">#306</code></a></li>
 </ul>
 
-<h3 id="commits-45">Commits</h3>
+<h3 id="commits-49">Commits</h3>
 
 <ul>
   <li>beta releas e <a href="https://github.com/ImageMagick/ImageMagick6/commit/86e1e68c215caa39dfceb51a6886ce0ea40c94ef"><code class="language-plaintext highlighter-rouge">86e1e68</code></a></li>
@@ -1942,13 +2149,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-5---2024-01-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-4...6.9.13-5">6.9.13-5</a> - 2024-01-21</h2>
 
-<h3 id="merged-24">Merged</h3>
+<h3 id="merged-27">Merged</h3>
 
 <ul>
   <li>fix PKG_CONFIG_LIBDIR <a href="https://github.com/ImageMagick/ImageMagick6/pull/303"><code class="language-plaintext highlighter-rouge">#303</code></a></li>
 </ul>
 
-<h3 id="commits-46">Commits</h3>
+<h3 id="commits-50">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/bc79cf09b1512dcc96d1f8d5a2603ac1c733aff1"><code class="language-plaintext highlighter-rouge">bc79cf0</code></a></li>
@@ -1957,7 +2164,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-4---2024-01-07"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-3...6.9.13-4">6.9.13-4</a> - 2024-01-07</h2>
 
-<h3 id="commits-47">Commits</h3>
+<h3 id="commits-51">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/6d2a3fc72829d366155b0ab2684689f74c63390a"><code class="language-plaintext highlighter-rouge">6d2a3fc</code></a></li>
@@ -1987,13 +2194,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-3---2023-12-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-2...6.9.13-3">6.9.13-3</a> - 2023-12-30</h2>
 
-<h3 id="merged-25">Merged</h3>
+<h3 id="merged-28">Merged</h3>
 
 <ul>
   <li>configure.ac: fixup LFS check for autoconf-2.72 <a href="https://github.com/ImageMagick/ImageMagick6/pull/300"><code class="language-plaintext highlighter-rouge">#300</code></a></li>
 </ul>
 
-<h3 id="commits-48">Commits</h3>
+<h3 id="commits-52">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/844f1d7d7e681fd3830dc4d3c9461b4b00d477b2"><code class="language-plaintext highlighter-rouge">844f1d7</code></a></li>
@@ -2015,13 +2222,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-2---2023-12-25"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-1...6.9.13-2">6.9.13-2</a> - 2023-12-25</h2>
 
-<h3 id="merged-26">Merged</h3>
+<h3 id="merged-29">Merged</h3>
 
 <ul>
   <li>configure: drop backported ac_func_fseeko.m4 for autoconf-2.72 compat… <a href="https://github.com/ImageMagick/ImageMagick6/pull/297"><code class="language-plaintext highlighter-rouge">#297</code></a></li>
 </ul>
 
-<h3 id="commits-49">Commits</h3>
+<h3 id="commits-53">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/52f9b0211d539d12ecd360719f1a1a3552d63591"><code class="language-plaintext highlighter-rouge">52f9b02</code></a></li>
@@ -2059,13 +2266,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-1---2023-12-10"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.13-0...6.9.13-1">6.9.13-1</a> - 2023-12-10</h2>
 
-<h3 id="merged-27">Merged</h3>
+<h3 id="merged-30">Merged</h3>
 
 <ul>
   <li>configure.ac: Fix bashism <a href="https://github.com/ImageMagick/ImageMagick6/pull/292"><code class="language-plaintext highlighter-rouge">#292</code></a></li>
 </ul>
 
-<h3 id="commits-50">Commits</h3>
+<h3 id="commits-54">Commits</h3>
 
 <ul>
   <li>eliminate compiler warning <a href="https://github.com/ImageMagick/ImageMagick6/commit/7d556fa61e44bbc51192f9d47f5c22473ceb1661"><code class="language-plaintext highlighter-rouge">7d556fa</code></a></li>
@@ -2165,7 +2372,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6913-0---2023-10-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-99...6.9.13-0">6.9.13-0</a> - 2023-10-28</h2>
 
-<h3 id="commits-51">Commits</h3>
+<h3 id="commits-55">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/20a3c58f9f4f269985a1bbaa46e1630d76b51de0"><code class="language-plaintext highlighter-rouge">20a3c58</code></a></li>
@@ -2188,13 +2395,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-99---2023-10-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-98...6.9.12-99">6.9.12-99</a> - 2023-10-21</h2>
 
-<h3 id="merged-28">Merged</h3>
+<h3 id="merged-31">Merged</h3>
 
 <ul>
   <li>Add the up to date “Artifex” name to Ghostscript list <a href="https://github.com/ImageMagick/ImageMagick6/pull/281"><code class="language-plaintext highlighter-rouge">#281</code></a></li>
 </ul>
 
-<h3 id="commits-52">Commits</h3>
+<h3 id="commits-56">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/72c96a81cb4f022b558849e4b03d404e6b834e9e"><code class="language-plaintext highlighter-rouge">72c96a8</code></a></li>
@@ -2239,7 +2446,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-98---2023-10-08"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-97...6.9.12-98">6.9.12-98</a> - 2023-10-08</h2>
 
-<h3 id="commits-53">Commits</h3>
+<h3 id="commits-57">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/148a129da39795b3d60088aa6388fa5b7b9a943f"><code class="language-plaintext highlighter-rouge">148a129</code></a></li>
@@ -2262,7 +2469,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-97---2023-09-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-96...6.9.12-97">6.9.12-97</a> - 2023-09-30</h2>
 
-<h3 id="commits-54">Commits</h3>
+<h3 id="commits-58">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/51d428243c40e9c7cd770e0896e015f323f3d661"><code class="language-plaintext highlighter-rouge">51d4282</code></a></li>
@@ -2287,7 +2494,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-96---2023-09-23"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-95...6.9.12-96">6.9.12-96</a> - 2023-09-23</h2>
 
-<h3 id="commits-55">Commits</h3>
+<h3 id="commits-59">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/cf44454e8274d800baba6675e0a560ff22f92655"><code class="language-plaintext highlighter-rouge">cf44454</code></a></li>
@@ -2303,13 +2510,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-95---2023-09-19"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-94...6.9.12-95">6.9.12-95</a> - 2023-09-19</h2>
 
-<h3 id="merged-29">Merged</h3>
+<h3 id="merged-32">Merged</h3>
 
 <ul>
   <li>fix type cast <a href="https://github.com/ImageMagick/ImageMagick6/pull/269"><code class="language-plaintext highlighter-rouge">#269</code></a></li>
 </ul>
 
-<h3 id="commits-56">Commits</h3>
+<h3 id="commits-60">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ffb46b1ebccc0d8eb62eae5f280d7f951bcf1d11"><code class="language-plaintext highlighter-rouge">ffb46b1</code></a></li>
@@ -2323,13 +2530,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-94---2023-09-17"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-93...6.9.12-94">6.9.12-94</a> - 2023-09-17</h2>
 
-<h3 id="merged-30">Merged</h3>
+<h3 id="merged-33">Merged</h3>
 
 <ul>
   <li>Backport the ClosestColor improvement from 7.1.0-58 to ImageMagick-6. <a href="https://github.com/ImageMagick/ImageMagick6/pull/257"><code class="language-plaintext highlighter-rouge">#257</code></a></li>
 </ul>
 
-<h3 id="commits-57">Commits</h3>
+<h3 id="commits-61">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ad92edb6c5a707f44c856963c11f8f2ee9343b4e"><code class="language-plaintext highlighter-rouge">ad92edb</code></a></li>
@@ -2424,7 +2631,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-93---2023-07-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-92...6.9.12-93">6.9.12-93</a> - 2023-07-30</h2>
 
-<h3 id="commits-58">Commits</h3>
+<h3 id="commits-62">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/b913dba39bbb1ee3bf99dca071fcb53c2930c4a3"><code class="language-plaintext highlighter-rouge">b913dba</code></a></li>
@@ -2438,7 +2645,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-92---2023-07-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-91...6.9.12-92">6.9.12-92</a> - 2023-07-22</h2>
 
-<h3 id="commits-59">Commits</h3>
+<h3 id="commits-63">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/eaef997c19e71231fa20a4066392d56534779253"><code class="language-plaintext highlighter-rouge">eaef997</code></a></li>
@@ -2451,7 +2658,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-91---2023-07-16"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-90...6.9.12-91">6.9.12-91</a> - 2023-07-16</h2>
 
-<h3 id="commits-60">Commits</h3>
+<h3 id="commits-64">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/dbc3926185b9b5481bdfeda2f8e0924f3efd162f"><code class="language-plaintext highlighter-rouge">dbc3926</code></a></li>
@@ -2475,7 +2682,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-90---2023-06-25"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-89...6.9.12-90">6.9.12-90</a> - 2023-06-25</h2>
 
-<h3 id="merged-31">Merged</h3>
+<h3 id="merged-34">Merged</h3>
 
 <ul>
   <li>Fix the max memory request initial value in memory.c and comparison in jpeg.c <a href="https://github.com/ImageMagick/ImageMagick6/pull/251"><code class="language-plaintext highlighter-rouge">#251</code></a></li>
@@ -2487,7 +2694,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>Also check image-&gt;exception to resolve #213. <a href="https://github.com/ImageMagick/ImageMagick6/issues/213"><code class="language-plaintext highlighter-rouge">#213</code></a></li>
 </ul>
 
-<h3 id="commits-61">Commits</h3>
+<h3 id="commits-65">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/81042afd7ba3f966611afd9911e1256c27835d26"><code class="language-plaintext highlighter-rouge">81042af</code></a></li>
@@ -2510,7 +2717,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-89---2023-05-29"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-88...6.9.12-89">6.9.12-89</a> - 2023-05-29</h2>
 
-<h3 id="commits-62">Commits</h3>
+<h3 id="commits-66">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/953059bfa3cc5ce54776fca0c962fc0038905cde"><code class="language-plaintext highlighter-rouge">953059b</code></a></li>
@@ -2534,7 +2741,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-88---2023-05-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-87...6.9.12-88">6.9.12-88</a> - 2023-05-21</h2>
 
-<h3 id="commits-63">Commits</h3>
+<h3 id="commits-67">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/c3da0e40d175ce9095ead9db1edbf6409bc3b3b7"><code class="language-plaintext highlighter-rouge">c3da0e4</code></a></li>
@@ -2552,7 +2759,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-87---2023-05-14"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-86...6.9.12-87">6.9.12-87</a> - 2023-05-14</h2>
 
-<h3 id="commits-64">Commits</h3>
+<h3 id="commits-68">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/f9db3e392f69a7c14218296d98dbd016b2892eb8"><code class="language-plaintext highlighter-rouge">f9db3e3</code></a></li>
@@ -2567,7 +2774,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-86---2023-04-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-85...6.9.12-86">6.9.12-86</a> - 2023-04-22</h2>
 
-<h3 id="commits-65">Commits</h3>
+<h3 id="commits-69">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/d056e7de327c4a64fe257bb1dda182c37ea63366"><code class="language-plaintext highlighter-rouge">d056e7d</code></a></li>
@@ -2579,7 +2786,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-85---2023-04-16"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-84...6.9.12-85">6.9.12-85</a> - 2023-04-16</h2>
 
-<h3 id="commits-66">Commits</h3>
+<h3 id="commits-70">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/62d65ad5a8fab580a94d58c2b3805bd11972d2d4"><code class="language-plaintext highlighter-rouge">62d65ad</code></a></li>
@@ -2622,7 +2829,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-84---2023-04-02"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-83...6.9.12-84">6.9.12-84</a> - 2023-04-02</h2>
 
-<h3 id="commits-67">Commits</h3>
+<h3 id="commits-71">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/519f510150994c6890c360463f0fff4ff945009b"><code class="language-plaintext highlighter-rouge">519f510</code></a></li>
@@ -2642,7 +2849,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-83---2023-03-26"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-82...6.9.12-83">6.9.12-83</a> - 2023-03-26</h2>
 
-<h3 id="commits-68">Commits</h3>
+<h3 id="commits-72">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/58beb7316569f896aaa1418e7419bc80412b3eef"><code class="language-plaintext highlighter-rouge">58beb73</code></a></li>
@@ -2659,7 +2866,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-82---2023-03-18"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-81...6.9.12-82">6.9.12-82</a> - 2023-03-18</h2>
 
-<h3 id="commits-69">Commits</h3>
+<h3 id="commits-73">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/708c453fd0dbb4c181f16088972273c42d7c62a0"><code class="language-plaintext highlighter-rouge">708c453</code></a></li>
@@ -2679,7 +2886,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-81---2023-03-11"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-80...6.9.12-81">6.9.12-81</a> - 2023-03-11</h2>
 
-<h3 id="commits-70">Commits</h3>
+<h3 id="commits-74">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/fd996c61bc7213535026e61aced30205d3554618"><code class="language-plaintext highlighter-rouge">fd996c6</code></a></li>
@@ -2690,7 +2897,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-80---2023-03-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-79...6.9.12-80">6.9.12-80</a> - 2023-03-09</h2>
 
-<h3 id="commits-71">Commits</h3>
+<h3 id="commits-75">Commits</h3>
 
 <ul>
   <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/6614dfa0002158a40bacd9887a5089fd7fedcb06"><code class="language-plaintext highlighter-rouge">6614dfa</code></a></li>
@@ -2699,7 +2906,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-79---2023-03-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-78...6.9.12-79">6.9.12-79</a> - 2023-03-09</h2>
 
-<h3 id="commits-72">Commits</h3>
+<h3 id="commits-76">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/b396ff0282ed5fefb55a675b63c5d48fa448d83f"><code class="language-plaintext highlighter-rouge">b396ff0</code></a></li>
@@ -2709,7 +2916,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-78---2023-03-08"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-77...6.9.12-78">6.9.12-78</a> - 2023-03-08</h2>
 
-<h3 id="commits-73">Commits</h3>
+<h3 id="commits-77">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/59eb78450cfa6374a1f2f0b3387ab5b41d045a43"><code class="language-plaintext highlighter-rouge">59eb784</code></a></li>
@@ -2740,7 +2947,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-77---2023-02-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-76...6.9.12-77">6.9.12-77</a> - 2023-02-12</h2>
 
-<h3 id="commits-74">Commits</h3>
+<h3 id="commits-78">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/32913d3aa5c48e13ca703d5e182f0b7413f933a4"><code class="language-plaintext highlighter-rouge">32913d3</code></a></li>
@@ -2757,7 +2964,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-76---2023-02-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-75...6.9.12-76">6.9.12-76</a> - 2023-02-05</h2>
 
-<h3 id="commits-75">Commits</h3>
+<h3 id="commits-79">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/59c25fdc011a9ba3c79dd6cb9f42556816e86992"><code class="language-plaintext highlighter-rouge">59c25fd</code></a></li>
@@ -2789,7 +2996,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-75---2023-01-29"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-74...6.9.12-75">6.9.12-75</a> - 2023-01-29</h2>
 
-<h3 id="commits-76">Commits</h3>
+<h3 id="commits-80">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/378756d8fe0e18ff62c42c223e0d4f5e17df096b"><code class="language-plaintext highlighter-rouge">378756d</code></a></li>
@@ -2799,7 +3006,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-74---2023-01-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-73...6.9.12-74">6.9.12-74</a> - 2023-01-28</h2>
 
-<h3 id="commits-77">Commits</h3>
+<h3 id="commits-81">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/a3b062524ed5cb8af12c116f7acb3b3d998c469b"><code class="language-plaintext highlighter-rouge">a3b0625</code></a></li>
@@ -2826,7 +3033,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-73---2023-01-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-72...6.9.12-73">6.9.12-73</a> - 2023-01-22</h2>
 
-<h3 id="commits-78">Commits</h3>
+<h3 id="commits-82">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/4836de6c3167320fba188ee4594baafd41e624ff"><code class="language-plaintext highlighter-rouge">4836de6</code></a></li>
@@ -2864,7 +3071,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-72---2022-12-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-71...6.9.12-72">6.9.12-72</a> - 2022-12-30</h2>
 
-<h3 id="commits-79">Commits</h3>
+<h3 id="commits-83">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/850fb00d9296669fd31a7a234242eacc330fcbb3"><code class="language-plaintext highlighter-rouge">850fb00</code></a></li>
@@ -2876,7 +3083,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-71---2022-12-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-70...6.9.12-71">6.9.12-71</a> - 2022-12-28</h2>
 
-<h3 id="commits-80">Commits</h3>
+<h3 id="commits-84">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/926e972cceeb93415728c98883711b88bc59167a"><code class="language-plaintext highlighter-rouge">926e972</code></a></li>
@@ -2896,7 +3103,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-70---2022-12-17"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-69...6.9.12-70">6.9.12-70</a> - 2022-12-17</h2>
 
-<h3 id="commits-81">Commits</h3>
+<h3 id="commits-85">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/7ab57d516ed17f18a9cf92bc58dbb9f9d62c2d63"><code class="language-plaintext highlighter-rouge">7ab57d5</code></a></li>
@@ -2913,7 +3120,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-69---2022-12-10"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-68...6.9.12-69">6.9.12-69</a> - 2022-12-10</h2>
 
-<h3 id="commits-82">Commits</h3>
+<h3 id="commits-86">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/2c289b93ca37888e34b4df05274d86f692282cac"><code class="language-plaintext highlighter-rouge">2c289b9</code></a></li>
@@ -2930,7 +3137,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-68---2022-12-04"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-67...6.9.12-68">6.9.12-68</a> - 2022-12-04</h2>
 
-<h3 id="commits-83">Commits</h3>
+<h3 id="commits-87">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/d9616546f5acecd284074b2f70a46f4284a076f5"><code class="language-plaintext highlighter-rouge">d961654</code></a></li>
@@ -2995,14 +3202,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-67---2022-11-06"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-66...6.9.12-67">6.9.12-67</a> - 2022-11-06</h2>
 
-<h3 id="merged-32">Merged</h3>
+<h3 id="merged-35">Merged</h3>
 
 <ul>
   <li>coders: Enable opening https files in mingw <a href="https://github.com/ImageMagick/ImageMagick6/pull/201"><code class="language-plaintext highlighter-rouge">#201</code></a></li>
   <li>utilities: Enable support for unicode paths in mingw <a href="https://github.com/ImageMagick/ImageMagick6/pull/200"><code class="language-plaintext highlighter-rouge">#200</code></a></li>
 </ul>
 
-<h3 id="commits-84">Commits</h3>
+<h3 id="commits-88">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e8d6fb4a13e18a267a63083942a2b2c4cd0f870c"><code class="language-plaintext highlighter-rouge">e8d6fb4</code></a></li>
@@ -3037,7 +3244,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-66---2022-10-16"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-65...6.9.12-66">6.9.12-66</a> - 2022-10-16</h2>
 
-<h3 id="commits-85">Commits</h3>
+<h3 id="commits-89">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ab1b97a63832d7a40318ca74de27f6d8ec859777"><code class="language-plaintext highlighter-rouge">ab1b97a</code></a></li>
@@ -3051,7 +3258,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-65---2022-10-08"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-64...6.9.12-65">6.9.12-65</a> - 2022-10-08</h2>
 
-<h3 id="commits-86">Commits</h3>
+<h3 id="commits-90">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ebaecd5d5c09e950ef121d8ce7508aeae4c343c4"><code class="language-plaintext highlighter-rouge">ebaecd5</code></a></li>
@@ -3073,7 +3280,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-64---2022-09-24"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-63...6.9.12-64">6.9.12-64</a> - 2022-09-24</h2>
 
-<h3 id="commits-87">Commits</h3>
+<h3 id="commits-91">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/a61afe1d45dae992ff80d22036f3791ad953dd8d"><code class="language-plaintext highlighter-rouge">a61afe1</code></a></li>
@@ -3090,7 +3297,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-63---2022-09-11"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-62...6.9.12-63">6.9.12-63</a> - 2022-09-11</h2>
 
-<h3 id="commits-88">Commits</h3>
+<h3 id="commits-92">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/fff48fd2f05be1ed83c58b4f27351061c824ad0a"><code class="language-plaintext highlighter-rouge">fff48fd</code></a></li>
@@ -3124,7 +3331,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-62---2022-08-27"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-61...6.9.12-62">6.9.12-62</a> - 2022-08-27</h2>
 
-<h3 id="commits-89">Commits</h3>
+<h3 id="commits-93">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/56306282250c38a60fa99d0d3eec5637c21f6ed3"><code class="language-plaintext highlighter-rouge">5630628</code></a></li>
@@ -3143,7 +3350,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-61---2022-08-17"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-60...6.9.12-61">6.9.12-61</a> - 2022-08-17</h2>
 
-<h3 id="commits-90">Commits</h3>
+<h3 id="commits-94">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/d86fcd37750cc1ee791bbdb0ccf04e53d1810e07"><code class="language-plaintext highlighter-rouge">d86fcd3</code></a></li>
@@ -3165,7 +3372,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-60---2022-07-31"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-59...6.9.12-60">6.9.12-60</a> - 2022-07-31</h2>
 
-<h3 id="commits-91">Commits</h3>
+<h3 id="commits-95">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/93a4cb0925af6d5bd79e14719d9ff89c513e8418"><code class="language-plaintext highlighter-rouge">93a4cb0</code></a></li>
@@ -3190,7 +3397,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-59---2022-07-24"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-58...6.9.12-59">6.9.12-59</a> - 2022-07-24</h2>
 
-<h3 id="commits-92">Commits</h3>
+<h3 id="commits-96">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/ecc4153d3c8998a073e0781b13c11e421933e081"><code class="language-plaintext highlighter-rouge">ecc4153</code></a></li>
@@ -3215,7 +3422,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-58---2022-07-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-57...6.9.12-58">6.9.12-58</a> - 2022-07-09</h2>
 
-<h3 id="commits-93">Commits</h3>
+<h3 id="commits-97">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/1da2b52a3629ea0daa9a8af4f28b61b6c6bff4ba"><code class="language-plaintext highlighter-rouge">1da2b52</code></a></li>
@@ -3226,7 +3433,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-57---2022-07-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-56...6.9.12-57">6.9.12-57</a> - 2022-07-09</h2>
 
-<h3 id="commits-94">Commits</h3>
+<h3 id="commits-98">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/5f44691a5bf010a322ca661374aaf57dbc95ef70"><code class="language-plaintext highlighter-rouge">5f44691</code></a></li>
@@ -3236,7 +3443,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-56---2022-07-06"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-55...6.9.12-56">6.9.12-56</a> - 2022-07-06</h2>
 
-<h3 id="commits-95">Commits</h3>
+<h3 id="commits-99">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e304c92801d940c593169e903acb3761f04e3038"><code class="language-plaintext highlighter-rouge">e304c92</code></a></li>
@@ -3252,7 +3459,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-55---2022-07-03"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-54...6.9.12-55">6.9.12-55</a> - 2022-07-03</h2>
 
-<h3 id="commits-96">Commits</h3>
+<h3 id="commits-100">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e76b0f83395178375fbd35280f453a6c40ac825c"><code class="language-plaintext highlighter-rouge">e76b0f8</code></a></li>
@@ -3288,7 +3495,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-54---2022-06-20"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-53...6.9.12-54">6.9.12-54</a> - 2022-06-20</h2>
 
-<h3 id="commits-97">Commits</h3>
+<h3 id="commits-101">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/a31b89a3f0d848a73b52842e00b0693c2ce5e0e8"><code class="language-plaintext highlighter-rouge">a31b89a</code></a></li>
@@ -3297,7 +3504,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-53---2022-06-19"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-52...6.9.12-53">6.9.12-53</a> - 2022-06-19</h2>
 
-<h3 id="commits-98">Commits</h3>
+<h3 id="commits-102">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/2b152c1243264b25b44c515ca95fa1827aeee423"><code class="language-plaintext highlighter-rouge">2b152c1</code></a></li>
@@ -3351,7 +3558,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-52---2022-06-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-51...6.9.12-52">6.9.12-52</a> - 2022-06-05</h2>
 
-<h3 id="commits-99">Commits</h3>
+<h3 id="commits-103">Commits</h3>
 
 <ul>
   <li>release <a href="https://github.com/ImageMagick/ImageMagick6/commit/e27754aed20fed12e1e5f6e7159f083947130f3c"><code class="language-plaintext highlighter-rouge">e27754a</code></a></li>
@@ -3372,7 +3579,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-51---2022-05-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-50...6.9.12-51">6.9.12-51</a> - 2022-05-30</h2>
 
-<h3 id="commits-100">Commits</h3>
+<h3 id="commits-104">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/c4073a51fdacfaf26781b4aaac39e4751e11adef"><code class="language-plaintext highlighter-rouge">c4073a5</code></a></li>
@@ -3384,7 +3591,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-50---2022-05-16"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-49...6.9.12-50">6.9.12-50</a> - 2022-05-16</h2>
 
-<h3 id="commits-101">Commits</h3>
+<h3 id="commits-105">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/2225cde3e76dbe3f1aa4cba8f4fcc3c92c2fc229"><code class="language-plaintext highlighter-rouge">2225cde</code></a></li>
@@ -3394,14 +3601,14 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-49---2022-05-15"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-48...6.9.12-49">6.9.12-49</a> - 2022-05-15</h2>
 
-<h3 id="merged-33">Merged</h3>
+<h3 id="merged-36">Merged</h3>
 
 <ul>
   <li>Fix various redefinition warnings in mingw <a href="https://github.com/ImageMagick/ImageMagick6/pull/180"><code class="language-plaintext highlighter-rouge">#180</code></a></li>
   <li>Fix build with -Werror <a href="https://github.com/ImageMagick/ImageMagick6/pull/177"><code class="language-plaintext highlighter-rouge">#177</code></a></li>
 </ul>
 
-<h3 id="commits-102">Commits</h3>
+<h3 id="commits-106">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/3f25da103a2139e41d282183b8ffde22e4f09946"><code class="language-plaintext highlighter-rouge">3f25da1</code></a></li>
@@ -3422,7 +3629,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-48---2022-05-07"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-47...6.9.12-48">6.9.12-48</a> - 2022-05-07</h2>
 
-<h3 id="commits-103">Commits</h3>
+<h3 id="commits-107">Commits</h3>
 
 <ul>
   <li>beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/79631d042400c496843378ed0196a4b406c4250d"><code class="language-plaintext highlighter-rouge">79631d0</code></a></li>
@@ -3435,7 +3642,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-47---2022-04-30"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-46...6.9.12-47">6.9.12-47</a> - 2022-04-30</h2>
 
-<h3 id="commits-104">Commits</h3>
+<h3 id="commits-108">Commits</h3>
 
 <ul>
   <li>prep Beta release <a href="https://github.com/ImageMagick/ImageMagick6/commit/4731b113f0b6d52574ded6c97e54d90a771534d7"><code class="language-plaintext highlighter-rouge">4731b11</code></a></li>
@@ -3472,7 +3679,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-46---2022-04-23"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-45...6.9.12-46">6.9.12-46</a> - 2022-04-23</h2>
 
-<h3 id="commits-105">Commits</h3>
+<h3 id="commits-109">Commits</h3>
 
 <ul>
   <li>https://github.com/ImageMagick/ImageMagick/issues/4973 <a href="https://github.com/ImageMagick/ImageMagick6/commit/629154d99c33e09c35ed0e2cb147212c5425b6b1"><code class="language-plaintext highlighter-rouge">629154d</code></a></li>
@@ -3495,7 +3702,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-45---2022-04-16"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-44...6.9.12-45">6.9.12-45</a> - 2022-04-16</h2>
 
-<h3 id="commits-106">Commits</h3>
+<h3 id="commits-110">Commits</h3>
 
 <ul>
   <li>prep next release <a href="https://github.com/ImageMagick/ImageMagick6/commit/df41269a8f39e276a0da4c5a2ad1bfc7e938c506"><code class="language-plaintext highlighter-rouge">df41269</code></a></li>
@@ -3540,7 +3747,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-44---2022-03-27"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-43...6.9.12-44">6.9.12-44</a> - 2022-03-27</h2>
 
-<h3 id="commits-107">Commits</h3>
+<h3 id="commits-111">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/2095de7a1ffeb72fbb8b3dd72e70c2c23c534991"><code class="language-plaintext highlighter-rouge">2095de7</code></a></li>
@@ -3569,7 +3776,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-43---2022-03-20"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-42...6.9.12-43">6.9.12-43</a> - 2022-03-20</h2>
 
-<h3 id="commits-108">Commits</h3>
+<h3 id="commits-112">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/96d197f14932d4ba8a116e06fe306403ea1e32f1"><code class="language-plaintext highlighter-rouge">96d197f</code></a></li>
@@ -3592,7 +3799,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-42---2022-03-04"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-41...6.9.12-42">6.9.12-42</a> - 2022-03-04</h2>
 
-<h3 id="commits-109">Commits</h3>
+<h3 id="commits-113">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/8f1f6c32bfb13ac1e8b8a7ce2f59a28ef06cb18b"><code class="language-plaintext highlighter-rouge">8f1f6c3</code></a></li>
@@ -3617,7 +3824,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-41---2022-02-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-40...6.9.12-41">6.9.12-41</a> - 2022-02-21</h2>
 
-<h3 id="commits-110">Commits</h3>
+<h3 id="commits-114">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/ba6e51f8e3b49c3d5015df5c4d152e07a37007aa"><code class="language-plaintext highlighter-rouge">ba6e51f</code></a></li>
@@ -3655,7 +3862,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-40---2022-02-15"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-39...6.9.12-40">6.9.12-40</a> - 2022-02-15</h2>
 
-<h3 id="commits-111">Commits</h3>
+<h3 id="commits-115">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/4fd78b838c09c88ff3acf43a0799a002d2f873cf"><code class="language-plaintext highlighter-rouge">4fd78b8</code></a></li>
@@ -3676,7 +3883,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-39---2022-02-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-38...6.9.12-39">6.9.12-39</a> - 2022-02-12</h2>
 
-<h3 id="commits-112">Commits</h3>
+<h3 id="commits-116">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/e5ab86b9f52a8452fb00099f29a51763a5b114ff"><code class="language-plaintext highlighter-rouge">e5ab86b</code></a></li>
@@ -3702,7 +3909,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-38---2022-02-05"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-37...6.9.12-38">6.9.12-38</a> - 2022-02-05</h2>
 
-<h3 id="commits-113">Commits</h3>
+<h3 id="commits-117">Commits</h3>
 
 <ul>
   <li>check if image extent is NaN <a href="https://github.com/ImageMagick/ImageMagick6/commit/0608714e4b8df32180359ba502990693ccfe3115"><code class="language-plaintext highlighter-rouge">0608714</code></a></li>
@@ -3722,7 +3929,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-37---2022-01-29"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-36...6.9.12-37">6.9.12-37</a> - 2022-01-29</h2>
 
-<h3 id="commits-114">Commits</h3>
+<h3 id="commits-118">Commits</h3>
 
 <ul>
   <li>bump patch level version <a href="https://github.com/ImageMagick/ImageMagick6/commit/e662b69dd2cb3209339aff3c277493ef18f72a92"><code class="language-plaintext highlighter-rouge">e662b69</code></a></li>
@@ -3735,7 +3942,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-36---2022-01-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-35...6.9.12-36">6.9.12-36</a> - 2022-01-28</h2>
 
-<h3 id="commits-115">Commits</h3>
+<h3 id="commits-119">Commits</h3>
 
 <ul>
   <li>It’s a new dawn; It’s a new day; It’s a new life; For ImageMagick <a href="https://github.com/ImageMagick/ImageMagick6/commit/49ea804be9295c12b457843271042e2e3521750e"><code class="language-plaintext highlighter-rouge">49ea804</code></a></li>
@@ -3754,7 +3961,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-35---2022-01-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-34...6.9.12-35">6.9.12-35</a> - 2022-01-22</h2>
 
-<h3 id="commits-116">Commits</h3>
+<h3 id="commits-120">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/e8b78e7bae67150667f3037932d0b3f1bc00434d"><code class="language-plaintext highlighter-rouge">e8b78e7</code></a></li>
@@ -3795,7 +4002,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-34---2021-12-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-33...6.9.12-34">6.9.12-34</a> - 2021-12-22</h2>
 
-<h3 id="commits-117">Commits</h3>
+<h3 id="commits-121">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/39b8934f42179a4a79b41d3fa141b8fac7064ea2"><code class="language-plaintext highlighter-rouge">39b8934</code></a></li>
@@ -3809,7 +4016,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-33---2021-12-18"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-32...6.9.12-33">6.9.12-33</a> - 2021-12-18</h2>
 
-<h3 id="commits-118">Commits</h3>
+<h3 id="commits-122">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/3deb89958f6787deca910570ff5fb8d27210b554"><code class="language-plaintext highlighter-rouge">3deb899</code></a></li>
@@ -3832,7 +4039,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-32---2021-12-04"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-31...6.9.12-32">6.9.12-32</a> - 2021-12-04</h2>
 
-<h3 id="commits-119">Commits</h3>
+<h3 id="commits-123">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/60be1a6c9698fc970c087b5384da19829b8fb386"><code class="language-plaintext highlighter-rouge">60be1a6</code></a></li>
@@ -3858,7 +4065,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-31---2021-11-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-30...6.9.12-31">6.9.12-31</a> - 2021-11-21</h2>
 
-<h3 id="commits-120">Commits</h3>
+<h3 id="commits-124">Commits</h3>
 
 <ul>
   <li>eliminate possible divide by zero <a href="https://github.com/ImageMagick/ImageMagick6/commit/8c80027ca8d6c84c3ed815059bbf353eb8dc2d58"><code class="language-plaintext highlighter-rouge">8c80027</code></a></li>
@@ -3870,7 +4077,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-30---2021-11-20"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-29...6.9.12-30">6.9.12-30</a> - 2021-11-20</h2>
 
-<h3 id="commits-121">Commits</h3>
+<h3 id="commits-125">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/3b2a005a5a58698d9cb99e48d46ce19d19abfd39"><code class="language-plaintext highlighter-rouge">3b2a005</code></a></li>
@@ -3894,7 +4101,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-29---2021-11-14"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-28...6.9.12-29">6.9.12-29</a> - 2021-11-14</h2>
 
-<h3 id="commits-122">Commits</h3>
+<h3 id="commits-126">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/c66229fb1a73213f392752050d49084d32032aec"><code class="language-plaintext highlighter-rouge">c66229f</code></a></li>
@@ -3913,7 +4120,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-28---2021-10-29"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-27...6.9.12-28">6.9.12-28</a> - 2021-10-29</h2>
 
-<h3 id="commits-123">Commits</h3>
+<h3 id="commits-127">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/dd1dc3392ee1ec775f9d53d2fe306e458dadaef2"><code class="language-plaintext highlighter-rouge">dd1dc33</code></a></li>
@@ -3930,7 +4137,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-27---2021-10-25"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-26...6.9.12-27">6.9.12-27</a> - 2021-10-25</h2>
 
-<h3 id="commits-124">Commits</h3>
+<h3 id="commits-128">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/60fcc24991c45628286b8a88ccd5983d4979626d"><code class="language-plaintext highlighter-rouge">60fcc24</code></a></li>
@@ -3939,7 +4146,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-26---2021-10-24"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-25...6.9.12-26">6.9.12-26</a> - 2021-10-24</h2>
 
-<h3 id="commits-125">Commits</h3>
+<h3 id="commits-129">Commits</h3>
 
 <ul>
   <li>:1 <a href="https://github.com/ImageMagick/ImageMagick6/commit/cc765107a9c7e19607e7fd18feb89a22a563ebb4"><code class="language-plaintext highlighter-rouge">cc76510</code></a></li>
@@ -3968,7 +4175,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-25---2021-10-10"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-24...6.9.12-25">6.9.12-25</a> - 2021-10-10</h2>
 
-<h3 id="commits-126">Commits</h3>
+<h3 id="commits-130">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/cfcd23ee92152228ba36ac12d6fc0a6ec34d41c0"><code class="language-plaintext highlighter-rouge">cfcd23e</code></a></li>
@@ -3985,7 +4192,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-24---2021-10-03"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-23...6.9.12-24">6.9.12-24</a> - 2021-10-03</h2>
 
-<h3 id="commits-127">Commits</h3>
+<h3 id="commits-131">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/f4277c460e804659535de8e2d8dd9507ab50bb2f"><code class="language-plaintext highlighter-rouge">f4277c4</code></a></li>
@@ -4013,7 +4220,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-23---2021-09-18"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-22...6.9.12-23">6.9.12-23</a> - 2021-09-18</h2>
 
-<h3 id="commits-128">Commits</h3>
+<h3 id="commits-132">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/a9b45b47282987cd0df488ed597e7b95179960c9"><code class="language-plaintext highlighter-rouge">a9b45b4</code></a></li>
@@ -4029,7 +4236,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-22---2021-09-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-21...6.9.12-22">6.9.12-22</a> - 2021-09-12</h2>
 
-<h3 id="commits-129">Commits</h3>
+<h3 id="commits-133">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/75e83721e27b60c7354cb3ec58205a9458999dd5"><code class="language-plaintext highlighter-rouge">75e8372</code></a></li>
@@ -4067,7 +4274,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-21---2021-09-04"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-20...6.9.12-21">6.9.12-21</a> - 2021-09-04</h2>
 
-<h3 id="commits-130">Commits</h3>
+<h3 id="commits-134">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/397b5c32487efdc5eb7daf206c6317fb670bad16"><code class="language-plaintext highlighter-rouge">397b5c3</code></a></li>
@@ -4090,7 +4297,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-20---2021-08-22"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-19...6.9.12-20">6.9.12-20</a> - 2021-08-22</h2>
 
-<h3 id="commits-131">Commits</h3>
+<h3 id="commits-135">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/aebaac62a29393e35d3c20715056cb74f6792e13"><code class="language-plaintext highlighter-rouge">aebaac6</code></a></li>
@@ -4128,7 +4335,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-19---2021-07-18"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-18...6.9.12-19">6.9.12-19</a> - 2021-07-18</h2>
 
-<h3 id="commits-132">Commits</h3>
+<h3 id="commits-136">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/45df407647856e7b5750767e49885b2f32a29c36"><code class="language-plaintext highlighter-rouge">45df407</code></a></li>
@@ -4152,13 +4359,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-18---2021-07-17"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-17...6.9.12-18">6.9.12-18</a> - 2021-07-17</h2>
 
-<h3 id="merged-34">Merged</h3>
+<h3 id="merged-37">Merged</h3>
 
 <ul>
   <li>uses the PerceptibleReciprocal() to prevent the divide-by-zero from occurring <a href="https://github.com/ImageMagick/ImageMagick6/pull/3194"><code class="language-plaintext highlighter-rouge">#3194</code></a></li>
 </ul>
 
-<h3 id="commits-133">Commits</h3>
+<h3 id="commits-137">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/74f450e153dccb64bc254fca89318b00f6dd0eda"><code class="language-plaintext highlighter-rouge">74f450e</code></a></li>
@@ -4183,7 +4390,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-17---2021-06-25"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-16...6.9.12-17">6.9.12-17</a> - 2021-06-25</h2>
 
-<h3 id="commits-134">Commits</h3>
+<h3 id="commits-138">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/801ffbdc1a221e7a9947d22efb81101ce7fb2289"><code class="language-plaintext highlighter-rouge">801ffbd</code></a></li>
@@ -4195,7 +4402,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-16---2021-06-20"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-15...6.9.12-16">6.9.12-16</a> - 2021-06-20</h2>
 
-<h3 id="commits-135">Commits</h3>
+<h3 id="commits-139">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/dafa983fea7c9b0160c375435c53e83bc436b3c8"><code class="language-plaintext highlighter-rouge">dafa983</code></a></li>
@@ -4213,7 +4420,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-15---2021-06-12"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-14...6.9.12-15">6.9.12-15</a> - 2021-06-12</h2>
 
-<h3 id="commits-136">Commits</h3>
+<h3 id="commits-140">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/ece4978c35d73eee4eda064b8f429a6ad42a3bec"><code class="language-plaintext highlighter-rouge">ece4978</code></a></li>
@@ -4234,7 +4441,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-14---2021-05-31"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-12...6.9.12-14">6.9.12-14</a> - 2021-05-31</h2>
 
-<h3 id="commits-137">Commits</h3>
+<h3 id="commits-141">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/14ea8946956a0b2be3c2c4acc73442ddfddee95a"><code class="language-plaintext highlighter-rouge">14ea894</code></a></li>
@@ -4273,7 +4480,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-12---2021-05-09"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-11...6.9.12-12">6.9.12-12</a> - 2021-05-09</h2>
 
-<h3 id="commits-138">Commits</h3>
+<h3 id="commits-142">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/5ec7ae6d969667bb78d238649dd422e8f8441436"><code class="language-plaintext highlighter-rouge">5ec7ae6</code></a></li>
@@ -4288,7 +4495,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-11---2021-05-04"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-10...6.9.12-11">6.9.12-11</a> - 2021-05-04</h2>
 
-<h3 id="commits-139">Commits</h3>
+<h3 id="commits-143">Commits</h3>
 
 <ul>
   <li>Add full threshold map <a href="https://github.com/ImageMagick/ImageMagick6/commit/c9753f9113014a3d0283e8e4332447e7d1e5ed52"><code class="language-plaintext highlighter-rouge">c9753f9</code></a></li>
@@ -4318,7 +4525,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-10---2021-04-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-9...6.9.12-10">6.9.12-10</a> - 2021-04-28</h2>
 
-<h3 id="merged-35">Merged</h3>
+<h3 id="merged-38">Merged</h3>
 
 <ul>
   <li>Fix line endings in Geometry.h to LF. <a href="https://github.com/ImageMagick/ImageMagick6/pull/149"><code class="language-plaintext highlighter-rouge">#149</code></a></li>
@@ -4331,7 +4538,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>Fix incorrect client_data pointer being set in libjpeg context. (#152) <a href="https://github.com/ImageMagick/ImageMagick6/issues/150"><code class="language-plaintext highlighter-rouge">#150</code></a> <a href="https://github.com/ImageMagick/ImageMagick6/issues/151"><code class="language-plaintext highlighter-rouge">#151</code></a></li>
 </ul>
 
-<h3 id="commits-140">Commits</h3>
+<h3 id="commits-144">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/c770f508dea2e72791845e745696092f3e794a58"><code class="language-plaintext highlighter-rouge">c770f50</code></a></li>
@@ -4343,7 +4550,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-9---2021-04-24"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-8...6.9.12-9">6.9.12-9</a> - 2021-04-24</h2>
 
-<h3 id="commits-141">Commits</h3>
+<h3 id="commits-145">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/99b82feded146a666b808c977db248c0e78bc757"><code class="language-plaintext highlighter-rouge">99b82fe</code></a></li>
@@ -4363,7 +4570,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-8---2021-04-17"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-7...6.9.12-8">6.9.12-8</a> - 2021-04-17</h2>
 
-<h3 id="commits-142">Commits</h3>
+<h3 id="commits-146">Commits</h3>
 
 <ul>
   <li>latest automake/autoconf <a href="https://github.com/ImageMagick/ImageMagick6/commit/1fb5916a9010c993a6e77613310828e950c8959f"><code class="language-plaintext highlighter-rouge">1fb5916</code></a></li>
@@ -4381,13 +4588,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-7---2021-04-11"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-6...6.9.12-7">6.9.12-7</a> - 2021-04-11</h2>
 
-<h3 id="merged-36">Merged</h3>
+<h3 id="merged-39">Merged</h3>
 
 <ul>
   <li>fix perl syntax <a href="https://github.com/ImageMagick/ImageMagick6/pull/144"><code class="language-plaintext highlighter-rouge">#144</code></a></li>
 </ul>
 
-<h3 id="commits-143">Commits</h3>
+<h3 id="commits-147">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/b9a79ba19226ea0d5f81b61bb06b4b84f1bb7bcd"><code class="language-plaintext highlighter-rouge">b9a79ba</code></a></li>
@@ -4412,7 +4619,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-6---2021-04-03"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-5...6.9.12-6">6.9.12-6</a> - 2021-04-03</h2>
 
-<h3 id="commits-144">Commits</h3>
+<h3 id="commits-148">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/312df44858c91c2b43c07f7bd7b61cea7332d31f"><code class="language-plaintext highlighter-rouge">312df44</code></a></li>
@@ -4433,7 +4640,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-5---2021-03-28"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-4...6.9.12-5">6.9.12-5</a> - 2021-03-28</h2>
 
-<h3 id="commits-145">Commits</h3>
+<h3 id="commits-149">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/9a4bc34b4b985e7cf604dc58691e64c576d8c3bd"><code class="language-plaintext highlighter-rouge">9a4bc34</code></a></li>
@@ -4453,7 +4660,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-4---2021-03-20"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-3...6.9.12-4">6.9.12-4</a> - 2021-03-20</h2>
 
-<h3 id="commits-146">Commits</h3>
+<h3 id="commits-150">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/b7ed95d47f9a22fac2ab45769d7144fa988429ed"><code class="language-plaintext highlighter-rouge">b7ed95d</code></a></li>
@@ -4474,7 +4681,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-3---2021-03-06"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-2...6.9.12-3">6.9.12-3</a> - 2021-03-06</h2>
 
-<h3 id="commits-147">Commits</h3>
+<h3 id="commits-151">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/522b4a3e5bd272873cdc81aa5fdffdc4c520d588"><code class="language-plaintext highlighter-rouge">522b4a3</code></a></li>
@@ -4498,7 +4705,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-2---2021-02-27"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-1...6.9.12-2">6.9.12-2</a> - 2021-02-27</h2>
 
-<h3 id="commits-148">Commits</h3>
+<h3 id="commits-152">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/d945f43d0a103ec4af50816aab54ab3d3b574543"><code class="language-plaintext highlighter-rouge">d945f43</code></a></li>
@@ -4525,7 +4732,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-1---2021-02-21"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.12-0...6.9.12-1">6.9.12-1</a> - 2021-02-21</h2>
 
-<h3 id="commits-149">Commits</h3>
+<h3 id="commits-153">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/7854805a0e012213dad5b813e0de78799348f255"><code class="language-plaintext highlighter-rouge">7854805</code></a></li>
@@ -4542,7 +4749,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="6912-0---2021-02-13"><a href="https://github.com/ImageMagick/ImageMagick6/compare/6.9.11-62...6.9.12-0">6.9.12-0</a> - 2021-02-13</h2>
 
-<h3 id="commits-150">Commits</h3>
+<h3 id="commits-154">Commits</h3>
 
 <ul>
   <li>… <a href="https://github.com/ImageMagick/ImageMagick6/commit/efb5ce8710604e7b86014a70e91d0372a3930b5b"><code class="language-plaintext highlighter-rouge">efb5ce8</code></a></li>
@@ -4560,12 +4767,12 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </ul>
 
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-12 ps-lg-4 border-start d-flex flex-column align-items-center align-items-lg-start">
         <div class="container text-center my-3">
           <a href="../image/wizard.png" rel="noopener noreferrer" target="_blank">
-            <img alt="The Tao of the Spiritual Warrior" class="img-fluid img-thumbnail" height="1468" loading="lazy" src="../image/wizard.png" width="1104">
+            <img alt="ImageMagick Wizard" class="img-fluid img-thumbnail" height="351" loading="lazy" src="../image/wizard.jpg" width="264">
           </a>
-          <p class="mt-2"><iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border: 0;"></iframe></p>
+          <p class="mt-2"><iframe src="https://github.com/sponsors/ImageMagick/button" title="Sponsor ImageMagick" height="35" width="107" style="border:0 !important; width:107px !important; height:35px !important;"></iframe></p>
         </div>
         <div class="container text-center my-3">
           <script async src="https://localhost/pagead/js/adsbygoogle.js?client=ca-pub-3129977114552745"
@@ -4590,7 +4797,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
       <a href="../script/security-policy.php/index.html">Security</a> •
       <a href="../script/news.php/index.html">News</a>
     &nbsp;
-      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../image/wand.ico"></a>
+      <a href="#"><img class="d-inline" id="wand" alt="And Now a Touch of Magick" width="16" height="16" src="../image/wand.png"></a>
     &nbsp;
       <a href="../script/links.php/index.html">Related</a> •
       <a href="../script/sitemap.php/index.html">Sitemap</a>
