@@ -49,10 +49,12 @@ static inline MagickBooleanType IsAllowedCoder(const char *coder)
 static inline Image *StrictReadImage(ImageInfo *image_info,
   ExceptionInfo *exception)
 {
+#define MagickMaxCoderDepth  250
+
   char
     magic[MagickPathExtent];
 
-  if (image_info->coder_depth >= MagickMaxRecursionDepth)
+  if (image_info->coder_depth++ >= MagickMaxCoderDepth)
 
     {
       errno=EPERM;
@@ -64,21 +66,13 @@ static inline Image *StrictReadImage(ImageInfo *image_info,
   if (*magic != '\0')
     {
       LocaleUpper(magic);
-      if (IsAllowedCoder(magic) == MagickFalse)
+      if (IsAllowedCoder(magic) != MagickFalse)
+        return(ReadImage(image_info,exception));
+      else
         {
           (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
             "ExplicitCoderNotAllowed","`%s'",image_info->filename);
           return((Image *) NULL);
-        }
-      else
-        {
-          Image
-            *image;
-
-          image_info->coder_depth++;
-          image=ReadImage(image_info,exception);
-          image_info->coder_depth--;
-          return(image);
         }
     }
   if (IsPathAccessible(image_info->filename) == MagickFalse)

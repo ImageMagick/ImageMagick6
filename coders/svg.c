@@ -140,7 +140,7 @@ typedef struct _SVGInfo
   Image
     *image;
 
-  const ImageInfo
+  ImageInfo
     *image_info;
 
   AffineMatrix
@@ -3041,10 +3041,12 @@ static void SVGEndElement(void *context,const xmlChar *name)
             }
           (void) CopyMagickString(image_info->filename,svg_info->url,
             MagickPathExtent);
+          image_info->coder_depth=svg_info->image_info->coder_depth;
           if (LocaleNCompare(image_info->filename,"data:",5) == 0)
             image=ReadInlineImage(image_info,svg_info->url,svg_info->exception);
           else
             image=StrictReadImage(image_info,svg_info->exception);
+          svg_info->image_info->coder_depth=image_info->coder_depth;
           if (image != (Image *) NULL)
             image=DestroyImage(image);
           image_info=DestroyImageInfo(image_info);
