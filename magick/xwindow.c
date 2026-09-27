@@ -7916,7 +7916,11 @@ MagickExport void XMakeStandardColormap(Display *display,
               break;
             indexes=GetCacheViewAuthenticIndexQueue(image_view);
             for (x=(int) image->columns-1; x >= 0; x--)
-              diversity[(ssize_t) GetPixelIndex(indexes+x)].count++;
+            {
+              ssize_t index = GetPixelIndex(indexes+x);
+              if (index< image->colors)
+                diversity[index].count++;
+            }
           }
           image_view=DestroyCacheView(image_view);
           /*
