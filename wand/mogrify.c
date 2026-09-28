@@ -1004,6 +1004,7 @@ WandExport MagickBooleanType MogrifyImage(ImageInfo *image_info,const int argc,
             if (color_correction_collection == (char *) NULL)
               break;
             (void) ColorDecisionListImage(*image,color_correction_collection);
+            color_correction_collection=DestroyString(color_correction_collection);
             InheritException(exception,&(*image)->exception);
             break;
           }
