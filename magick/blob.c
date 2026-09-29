@@ -3421,9 +3421,11 @@ MagickExport ssize_t ReadBlob(Image *image,const size_t length,
       int
         status;
 
-     ssize_t
+      ssize_t
         i;
 
+      if (blob_info->status != 0)
+        break;
       for (i=0; i < (ssize_t) length; i+=count)
       {
         count=(ssize_t) BZ2_bzread(blob_info->file_info.bzfile,q+i,
