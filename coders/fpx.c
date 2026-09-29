@@ -790,6 +790,17 @@ static void SetSaturation(double saturation,FPXColorTwistMatrix *color_twist)
 
 static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
 {
+#define ThrowFPXException(severity,tag) \
+{ \
+  if (quantum_info != (QuantumInfo *) NULL) \
+    quantum_info=DestroyQuantumInfo(quantum_info); \
+  if (flashpix != (FPXImageHandle *) NULL) \
+    (void) FPX_CloseImage(flashpix); \
+  FPXRelinquishSummaryInfo(&summary_info); \
+  FPX_ClearSystem(); \
+  ThrowWriterException(severity,tag); \
+}   
+
   FPXBackground
     background_color;
 
@@ -817,19 +828,19 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
     fpx_info;
 
   FPXImageHandle
-    *flashpix;
+    *flashpix = (FPXImageHandle *) NULL;
 
   FPXStatus
     fpx_status;
 
   FPXSummaryInformation
-    summary_info;
+    summary_info = { 0 };
 
   MagickBooleanType
     status;
 
   QuantumInfo
-    *quantum_info;
+    *quantum_info = (QuantumInfo *) NULL;
 
   QuantumType
     quantum_type;
@@ -875,7 +886,7 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
   memory_limit=20000000;
   fpx_status=FPX_SetToolkitMemoryLimit(&memory_limit);
   if (fpx_status != FPX_OK)
-    ThrowWriterException(DelegateError,"UnableToInitializeFPXLibrary");
+    ThrowFPXrException(DelegateError,"UnableToInitializeFPXLibrary");
   tile_width=64;
   tile_height=64;
   colorspace.numberOfComponents=3;
@@ -919,7 +930,7 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
       fpx_status=FPX_SetJPEGCompression(flashpix,(unsigned short)
         image->quality == UndefinedCompressionQuality ? 75 : image->quality);
       if (fpx_status != FPX_OK)
-        ThrowWriterException(DelegateError,"UnableToSetJPEGLevel");
+        ThrowFPXrException(DelegateError,"UnableToSetJPEGLevel");
     }
   /*
     Set image summary info.
@@ -941,7 +952,7 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
         summary_info.title.ptr=(unsigned char *) AcquireQuantumMemory(
           length+MaxTextExtent,sizeof(*summary_info.title.ptr));
       if (summary_info.title.ptr == (unsigned char *) NULL)
-        ThrowWriterException(DelegateError,"UnableToSetImageTitle");
+        ThrowFPXrException(DelegateError,"UnableToSetImageTitle");
       (void) CopyMagickString((char *) summary_info.title.ptr,label,
         MaxTextExtent);
     }
@@ -957,13 +968,13 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
     }
   fpx_status=FPX_SetSummaryInformation(flashpix,&summary_info);
   if (fpx_status != FPX_OK)
-    ThrowWriterException(DelegateError,"UnableToSetSummaryInfo");
+    ThrowFPXrException(DelegateError,"UnableToSetSummaryInfo");
   /*
     Initialize FlashPix image description.
   */
   quantum_info=AcquireQuantumInfo(image_info,image);
   if (quantum_info == (QuantumInfo *) NULL)
-    ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+    ThrowFPXrException(ResourceLimitError,"MemoryAllocationFailed");
   pixels=GetQuantumPixels(quantum_info);
   fpx_info.numberOfComponents=(unsigned int) colorspace.numberOfComponents;
   for (i=0; i < (ssize_t) fpx_info.numberOfComponents; i++)
@@ -1102,37 +1113,37 @@ static MagickBooleanType WriteFPXImage(const ImageInfo *image_info,Image *image)
         {
           fpx_status=FPX_SetImageAffineMatrix(flashpix,&affine);
           if (fpx_status != FPX_OK)
-            ThrowWriterException(DelegateError,"UnableToSetAffineMatrix");
+            ThrowFPXrException(DelegateError,"UnableToSetAffineMatrix");
         }
       if (aspect_ratio_valid != MagickFalse)
         {
           fpx_status=FPX_SetImageResultAspectRatio(flashpix,&aspect_ratio);
           if (fpx_status != FPX_OK)
-            ThrowWriterException(DelegateError,"UnableToSetAspectRatio");
+            ThrowFPXrException(DelegateError,"UnableToSetAspectRatio");
         }
       if (color_twist_valid != MagickFalse)
         {
           fpx_status=FPX_SetImageColorTwistMatrix(flashpix,&color_twist);
           if (fpx_status != FPX_OK)
-            ThrowWriterException(DelegateError,"UnableToSetColorTwist");
+            ThrowFPXrException(DelegateError,"UnableToSetColorTwist");
         }
       if (contrast_valid != MagickFalse)
         {
           fpx_status=FPX_SetImageContrastAdjustment(flashpix,&contrast);
           if (fpx_status != FPX_OK)
-            ThrowWriterException(DelegateError,"UnableToSetContrast");
+            ThrowFPXrException(DelegateError,"UnableToSetContrast");
         }
       if (sharpen_valid != MagickFalse)
         {
           fpx_status=FPX_SetImageFilteringValue(flashpix,&sharpen);
           if (fpx_status != FPX_OK)
-            ThrowWriterException(DelegateError,"UnableToSetFilteringValue");
+            ThrowFPXrException(DelegateError,"UnableToSetFilteringValue");
         }
       if (view_rect_valid != MagickFalse)
         {
           fpx_status=FPX_SetImageROI(flashpix,&view_rect);
           if (fpx_status != FPX_OK)
-            ThrowWriterException(DelegateError,"UnableToSetRegionOfInterest");
+            ThrowFPXrException(DelegateError,"UnableToSetRegionOfInterest");
         }
     }
   (void) FPX_CloseImage(flashpix);
