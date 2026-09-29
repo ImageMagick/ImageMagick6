@@ -476,6 +476,11 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
       for (y=0; y < (ssize_t) image->rows; y++)
       {
         q=pixels+y*width;
+        if (q < pixels)
+          {
+            status=MagickFalse;
+            break;
+          }
         number_pixels=bytes_per_line;
         count=ReadBlob(blob,(size_t) number_pixels,scanline);
         if (count != (ssize_t) number_pixels)
@@ -502,6 +507,11 @@ static unsigned char *DecodeImage(Image *blob,Image *image,
   for (y=0; y < (ssize_t) image->rows; y++)
   {
     q=pixels+y*width;
+    if (q < pixels)
+      {
+        status=MagickFalse;
+        break;
+      }
     if (bytes_per_line > 250)
       scanline_length=ReadBlobMSBShort(blob);
     else
