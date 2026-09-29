@@ -12796,11 +12796,17 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
 
       status=SeparateImageChannel(jpeg_image,OpacityChannel);
       if (status == MagickFalse)
-        ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+        {
+          jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+          ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+        }
 
       status=NegateImage(jpeg_image,MagickFalse);
       if (status == MagickFalse)
-        ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+        {
+          jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+          ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+        }
 
       jpeg_image->matte=MagickFalse;
 
@@ -12864,7 +12870,11 @@ static MagickBooleanType WriteOneJNGImage(MngInfo *mng_info,
           status=OpenBlob(jpeg_image_info,jpeg_image,WriteBinaryBlobMode,
             &image->exception);
           if (status == MagickFalse)
-            ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+            {
+              jpeg_image=DestroyImage(jpeg_image);
+              jpeg_image_info=DestroyImageInfo(jpeg_image_info);
+              ThrowWriterException(ResourceLimitError,"MemoryAllocationFailed");
+            }
 
           length=0;
 
