@@ -695,6 +695,72 @@ static SVGInfo *DestroySVGInfo(SVGInfo *svg_info)
   return((SVGInfo *) RelinquishMagickMemory(svg_info));
 }
 
+static char *EscapeSVGAttributeValue(const char *string)
+{
+  char
+    *destination;
+
+  const unsigned char
+    *p;
+
+  size_t
+    length;
+
+  /*
+    XML encode text written into SVG attribute/style value contexts.
+  */
+  if (string == (const char *) NULL)
+    return(AcquireString(""));
+  length=strlen(string);
+  destination=(char *) AcquireQuantumMemory(6UL*length+1UL,
+    sizeof(*destination));
+  if (destination == (char *) NULL)
+    return(AcquireString(""));
+  *destination='\0';
+  for (p=(const unsigned char *) string; *p != '\0'; p++)
+  {
+    switch (*p)
+    {
+      case '&':
+      {
+        (void) ConcatenateMagickString(destination,"&amp;",6UL*length+1UL);
+        break;
+      }
+      case '<':
+      {
+        (void) ConcatenateMagickString(destination,"&lt;",6UL*length+1UL);
+        break;
+      }
+      case '>':
+      {
+        (void) ConcatenateMagickString(destination,"&gt;",6UL*length+1UL);
+        break;
+      }
+      case '"':
+      {
+        (void) ConcatenateMagickString(destination,"&quot;",6UL*length+1UL);
+        break;
+      }
+      case '\'':
+      {
+        (void) ConcatenateMagickString(destination,"&apos;",6UL*length+1UL);
+        break;
+      }
+      default:
+      {
+        char
+          c[2];
+
+        c[0]=(char) *p;
+        c[1]='\0';
+        (void) ConcatenateMagickString(destination,c,6UL*length+1UL);
+        break;
+      }
+    }
+  }
+  return(destination);
+}
+
 static double GetUserSpaceCoordinateValue(const SVGInfo *svg_info,int type,
   const char *string)
 {
@@ -4228,6 +4294,7 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
     affine;
 
   char
+    *escaped_token,
     keyword[MaxTextExtent],
     message[MaxTextExtent],
     name[MaxTextExtent],
@@ -4415,24 +4482,30 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("clip-path",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "clip-path:url(#%s);",token);
+              "clip-path:url(#%s);",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("clip-rule",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"clip-rule:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("clip-units",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"clipPathUnits=%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4460,8 +4533,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("decorate",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "text-decoration:%s;",token);
+              "text-decoration:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4485,63 +4560,80 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("fill",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
-            (void) FormatLocaleString(message,MaxTextExtent,"fill:%s;",token);
+            escaped_token=EscapeSVGAttributeValue(token);
+            (void) FormatLocaleString(message,MaxTextExtent,"fill:%s;",
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("fill-rule",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"fill-rule:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("fill-opacity",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"fill-opacity:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("font-family",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"font-family:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("font-stretch",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"font-stretch:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("font-style",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"font-style:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("font-size",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"font-size:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("font-weight",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"font-weight:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4559,16 +4651,20 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("text-align",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"text-align %s ",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("text-anchor",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent, "text-anchor %s ",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4593,8 +4689,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("kerning",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MagickPathExtent,"kerning:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4606,8 +4704,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("letter-spacing",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MagickPathExtent,
-              "letter-spacing:%s;",token);
+              "letter-spacing:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4636,8 +4736,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("opacity",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"opacity %s ",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4694,7 +4796,8 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
                   {
                     token=DestroyString(token);
                     if (primitive_info != (PrimitiveInfo *) NULL)
-                      primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
+                      primitive_info=(PrimitiveInfo *)
+                        RelinquishMagickMemory(primitive_info);
                     ThrowWriterException(DrawError,
                       "UnbalancedGraphicContextPushPop");
                   }
@@ -4724,8 +4827,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             if (LocaleCompare("clip-path",token) == 0)
               {
                 (void) GetNextToken(q,&q,extent,token);
+                escaped_token=EscapeSVGAttributeValue(token);
                 (void) FormatLocaleString(message,MaxTextExtent,
-                  "<clipPath id=\"%s\">\n",token);
+                  "<clipPath id=\"%s\">\n",escaped_token);
+                escaped_token=DestroyString(escaped_token);
                 (void) WriteBlobString(image,message);
                 break;
               }
@@ -4788,7 +4893,8 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
                   {
                     token=DestroyString(token);
                     if (primitive_info != (PrimitiveInfo *) NULL)
-                      primitive_info=(PrimitiveInfo *) RelinquishMagickMemory(primitive_info);
+                      primitive_info=(PrimitiveInfo *)
+                        RelinquishMagickMemory(primitive_info);
                     ThrowWriterException(DrawError,
                       "VectorGraphicsNestedTooDeeply");
                   }
@@ -4852,8 +4958,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("rotate",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"rotate(%s) ",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4876,14 +4984,20 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("skewX",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
-            (void) FormatLocaleString(message,MaxTextExtent,"skewX(%s) ",token);
+            escaped_token=EscapeSVGAttributeValue(token);
+            (void) FormatLocaleString(message,MaxTextExtent,"skewX(%s) ",
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("skewY",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
-            (void) FormatLocaleString(message,MaxTextExtent,"skewY(%s) ",token);
+            escaped_token=EscapeSVGAttributeValue(token);
+            (void) FormatLocaleString(message,MaxTextExtent,"skewY(%s) ",
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4895,23 +5009,31 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             (void) GetNextToken(q,&q,extent,token);
             (void) CopyMagickString(color,token,MaxTextExtent);
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "  <stop offset=\"%s\" stop-color=\"%s\" />\n",token,color);
+              "  <stop offset=\"%s\" stop-color=\"%s\" />\n",escaped_token,
+              color);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
-            (void) FormatLocaleString(message,MaxTextExtent,"stroke:%s;",token);
+            escaped_token=EscapeSVGAttributeValue(token);
+            (void) FormatLocaleString(message,MaxTextExtent,"stroke:%s;",
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-antialias",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-antialias:%s;",token);
+              "stroke-antialias:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -4930,63 +5052,80 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
                 for (j=0; j < k; j++)
                 {
                   (void) GetNextToken(q,&q,extent,token);
-                  (void) FormatLocaleString(message,MaxTextExtent,"%s ",token);
+                  escaped_token=EscapeSVGAttributeValue(token);
+                  (void) FormatLocaleString(message,MaxTextExtent,"%s ",
+                    escaped_token);
+                  escaped_token=DestroyString(escaped_token);
                   (void) WriteBlobString(image,message);
                 }
                 (void) WriteBlobString(image,";");
                 break;
               }
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-dasharray:%s;",token);
+              "stroke-dasharray:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-dashoffset",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-dashoffset:%s;",token);
+              "stroke-dashoffset:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-linecap",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-linecap:%s;",token);
+              "stroke-linecap:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-linejoin",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-linejoin:%s;",token);
+              "stroke-linejoin:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-miterlimit",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-miterlimit:%s;",token);
+              "stroke-miterlimit:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-opacity",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "stroke-opacity:%s;",token);
+              "stroke-opacity:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
         if (LocaleCompare("stroke-width",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,"stroke-width:%s;",
-              token);
+              escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             continue;
           }
@@ -5004,8 +5143,10 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
         if (LocaleCompare("text-antialias",keyword) == 0)
           {
             (void) GetNextToken(q,&q,extent,token);
+            escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
-              "text-antialias:%s;",token);
+              "text-antialias:%s;",escaped_token);
+            escaped_token=DestroyString(escaped_token);
             (void) WriteBlobString(image,message);
             break;
           }
@@ -5368,11 +5509,13 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             break;
           }
         (void) GetNextToken(q,&q,extent,token);
+        escaped_token=EscapeSVGAttributeValue(token);
         (void) FormatLocaleString(message,MaxTextExtent,
           "  <image x=\"%g\" y=\"%g\" width=\"%g\" height=\"%g\" "
           "href=\"%s\"/>\n",primitive_info[j].point.x,
           primitive_info[j].point.y,primitive_info[j+1].point.x,
-          primitive_info[j+1].point.y,token);
+          primitive_info[j+1].point.y,escaped_token);
+        escaped_token=DestroyString(escaped_token);
         (void) WriteBlobString(image,message);
         break;
       }
