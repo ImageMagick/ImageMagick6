@@ -4842,9 +4842,13 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             if (LocaleCompare("gradient",token) == 0)
               {
                 (void) GetNextToken(q,&q,extent,token);
-                (void) CopyMagickString(name,token,MaxTextExtent);
+                escaped_token=EscapeSVGAttributeValue(token);
+                (void) CopyMagickString(name,escaped_token,MaxTextExtent);
+                escaped_token=DestroyString(escaped_token);
                 (void) GetNextToken(q,&q,extent,token);
-                (void) CopyMagickString(type,token,MaxTextExtent);
+                escaped_token=EscapeSVGAttributeValue(token);
+                (void) CopyMagickString(type,escaped_token,MaxTextExtent);
+                escaped_token=DestroyString(escaped_token);
                 (void) GetNextToken(q,&q,extent,token);
                 svg_info.segment.x1=StringToDouble(token,&next_token);
                 svg_info.element.cx=StringToDouble(token,&next_token);
@@ -4909,7 +4913,9 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
             if (LocaleCompare("pattern",token) == 0)
               {
                 (void) GetNextToken(q,&q,extent,token);
-                (void) CopyMagickString(name,token,MaxTextExtent);
+                escaped_token=EscapeSVGAttributeValue(token);
+                (void) CopyMagickString(name,escaped_token,MaxTextExtent);
+                escaped_token=DestroyString(escaped_token);
                 (void) GetNextToken(q,&q,extent,token);
                 svg_info.bounds.x=StringToDouble(token,&next_token);
                 (void) GetNextToken(q,&q,extent,token);
@@ -5007,7 +5013,9 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
               color[MaxTextExtent];
 
             (void) GetNextToken(q,&q,extent,token);
-            (void) CopyMagickString(color,token,MaxTextExtent);
+            escaped_token=EscapeSVGAttributeValue(token);
+            (void) CopyMagickString(color,escaped_token,MaxTextExtent);
+            escaped_token=DestroyString(escaped_token);
             (void) GetNextToken(q,&q,extent,token);
             escaped_token=EscapeSVGAttributeValue(token);
             (void) FormatLocaleString(message,MaxTextExtent,
@@ -5450,7 +5458,9 @@ static MagickBooleanType WriteSVGImage(const ImageInfo *image_info,Image *image)
               }
           }
         (void) WriteBlobString(image,"  <path d=\"");
-        (void) WriteBlobString(image,token);
+        escaped_token=EscapeSVGAttributeValue(token);
+        (void) WriteBlobString(image,escaped_token);
+        escaped_token=DestroyString(escaped_token);
         (void) WriteBlobString(image,"\"/>\n");
         break;
       }
