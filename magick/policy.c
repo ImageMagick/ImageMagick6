@@ -809,14 +809,14 @@ MagickExport MagickBooleanType IsRightsAuthorizedByName(
     *exception;
 
   MagickBooleanType
-    canonical_matched_any = MagickFalse,
     matched_any = MagickFalse,
     paths_provisioned = MagickFalse,
+    resolved_matched_any = MagickFalse,
     status;
 
   PolicyRights
-    canonical_allowed_accumulator = AllPolicyRights,
-    effective_rights = AllPolicyRights;
+    effective_rights = AllPolicyRights,
+    resolved_rights = AllPolicyRights;
 
   /*
     Load policies.
@@ -839,8 +839,11 @@ MagickExport MagickBooleanType IsRightsAuthorizedByName(
       return(MagickTrue);
     }
   /*
-    Evaluate policies in order; the last matching lexical or canonical policy
-    wins.
+    Evaluate policies in order; the last matching policy wins.  A path is
+    evaluated twice: once by the name it was given (lexical, canonical
+    directory, or canonical directory plus basename) and once by its fully
+    resolved path.  Both evaluations must authorize the request, so a symbolic
+    link inside an allowed directory cannot reach a target the policy denies.
   */
   LockSemaphoreInfo(policy_semaphore);
   ResetLinkedListIterator(policy_cache);
@@ -851,8 +854,7 @@ MagickExport MagickBooleanType IsRightsAuthorizedByName(
       *policy = (PolicyInfo *) p->value;
 
     MagickBooleanType
-      match = MagickFalse,
-      matched_canonical = MagickFalse;
+      match = MagickFalse;
 
     if (policy->domain != domain)
       continue;
@@ -885,50 +887,28 @@ MagickExport MagickBooleanType IsRightsAuthorizedByName(
             canonical_path=realpath_utf8(pattern);
           }
         /*
-          Match against directory, basename, and canonical path.
+          Match the given name against the directory and basename forms.
         */
         if ((canonical_directory != (char *) NULL) && (match == MagickFalse))
           match=GlobExpression(canonical_directory,policy->pattern,MagickFalse);
         if ((canonical_candidate != (char *) NULL) && (match == MagickFalse))
           match=GlobExpression(canonical_candidate,policy->pattern,MagickFalse);
-        if ((canonical_path != (char *) NULL) && (match == MagickFalse))
-          match=GlobExpression(canonical_path,policy->pattern,MagickFalse);
+        /*
+          Match the fully resolved path on its own.
+        */
         if ((canonical_path != (char *) NULL) &&
             (GlobExpression(canonical_path,policy->pattern,MagickFalse) != MagickFalse))
-          matched_canonical=MagickTrue;
-        else
-          if ((canonical_candidate != (char *) NULL) &&
-              (GlobExpression(canonical_candidate,policy->pattern,MagickFalse) != MagickFalse))
-            matched_canonical=MagickTrue;
-          else
-           if ((canonical_directory != (char *) NULL) &&
-               (GlobExpression(canonical_directory,policy->pattern,MagickFalse) != MagickFalse))
-             matched_canonical=MagickTrue;
+          {
+            resolved_matched_any=MagickTrue;
+            resolved_rights=policy->rights;
+          }
       }
     if (match == MagickFalse)
       continue;
     matched_any=MagickTrue;
     effective_rights=policy->rights;
-    if (matched_canonical != MagickFalse)
-      {
-        /*
-          If this matched a canonical form, retain the last matching rights.
-        */
-        canonical_matched_any=MagickTrue;
-        if (policy->domain != PathPolicyDomain)
-          canonical_allowed_accumulator=policy->rights;
-        else
-          canonical_allowed_accumulator=(PolicyRights) ((int)
-            canonical_allowed_accumulator & (int) policy->rights);
-      }
   }
   UnlockSemaphoreInfo(policy_semaphore);
-  if (canonical_directory != (char *) NULL)
-    canonical_directory=DestroyString(canonical_directory);
-  if (canonical_candidate != (char *) NULL)
-    canonical_candidate=DestroyString(canonical_candidate);
-  if (canonical_path != (char *) NULL)
-    canonical_path=DestroyString(canonical_path);
   /*
     Is rights authorized?
   */
@@ -945,16 +925,31 @@ MagickExport MagickBooleanType IsRightsAuthorizedByName(
           ((effective_rights & ExecutePolicyRights) == 0))
         status=MagickFalse;
     }
-  /*
-    Enforce sticky canonical denies.
-  */
-  if (canonical_matched_any != MagickFalse)
+  if (resolved_matched_any != MagickFalse)
     {
-      PolicyRights canonical_denied_mask = (PolicyRights) ((int)
-        AllPolicyRights & (int) ~canonical_allowed_accumulator);
-      if ((canonical_denied_mask & rights) != 0)
+      if (((rights & ReadPolicyRights) != 0) &&
+          ((resolved_rights & ReadPolicyRights) == 0))
+        status=MagickFalse;
+      if (((rights & WritePolicyRights) != 0) &&
+          ((resolved_rights & WritePolicyRights) == 0))
+        status=MagickFalse;
+      if (((rights & ExecutePolicyRights) != 0) &&
+          ((resolved_rights & ExecutePolicyRights) == 0))
         status=MagickFalse;
     }
+  /*
+    A symbolic link that does not resolve (dangling or looping) has no target
+    to evaluate; following it on write could create a file anywhere.
+  */
+  if ((paths_provisioned != MagickFalse) && (canonical_path == (char *) NULL) &&
+      (is_symlink_utf8(pattern) != MagickFalse))
+    status=MagickFalse;
+  if (canonical_directory != (char *) NULL)
+    canonical_directory=DestroyString(canonical_directory);
+  if (canonical_candidate != (char *) NULL)
+    canonical_candidate=DestroyString(canonical_candidate);
+  if (canonical_path != (char *) NULL)
+    canonical_path=DestroyString(canonical_path);
   if ((GetLogEventMask() & PolicyEvent) != 0)
     (void) LogMagickEvent(PolicyEvent,GetMagickModule(),
       "  authorized: %s",status == MagickFalse ? "false" : "true");
