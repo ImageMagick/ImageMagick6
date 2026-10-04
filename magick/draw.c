@@ -98,6 +98,7 @@
 #define BezierQuantum  200
 #define PrimitiveExtentPad  4296.0
 #define MaxBezierCoordinates  67108864
+#define MaxVectorRecursionDepth  400
 #define MacroExpansionLimit  262144
 #define ThrowPointExpectedException(image,token) \
 { \
@@ -194,7 +195,7 @@ typedef struct _PathInfo
 */
 static Image
   *DrawClippingMask(Image *,const DrawInfo *,const char *,const char *,
-    ExceptionInfo *);
+    const size_t,ExceptionInfo *);
 
 static MagickBooleanType
   DrawStrokePolygon(Image *,const DrawInfo *,const PrimitiveInfo *),
@@ -1518,8 +1519,9 @@ static MagickBooleanType DrawBoundingRectangles(Image *image,
 %    o id: the clip path id.
 %
 */
-MagickExport MagickBooleanType DrawClipPath(Image *image,
-  const DrawInfo *draw_info,const char *id)
+
+MagickExport MagickBooleanType DrawClipPath_(Image *image,
+  const DrawInfo *draw_info,const char *id,const size_t depth)
 {
   const char
     *clip_path;
@@ -1534,12 +1536,18 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
   if (clip_path == (const char *) NULL)
     return(MagickFalse);
   clipping_mask=DrawClippingMask(image,draw_info,draw_info->clip_mask,clip_path,
-    &image->exception);
+    depth+1,&image->exception);
   if (clipping_mask == (Image *) NULL)
     return(MagickFalse);
   status=SetImageClipMask(image,clipping_mask);
   clipping_mask=DestroyImage(clipping_mask);
   return(status);
+}
+
+MagickExport MagickBooleanType DrawClipPath(Image *image,
+  const DrawInfo *draw_info,const char *id)
+{
+  return(DrawClipPath_(image,draw_info,id,0));
 }
 
 /*
@@ -1559,7 +1567,8 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
 %  The format of the DrawClippingMask method is:
 %
 %      Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
-%        const char *id,const char *clip_path,ExceptionInfo *exception)
+%        const char *id,const char *clip_path,const size_t depth,
+%        ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1571,11 +1580,14 @@ MagickExport MagickBooleanType DrawClipPath(Image *image,
 %
 %    o clip_path: the clip path.
 %
+%    o depth: the max vector depth.
+%
 %    o exception: return any errors or warnings in this structure.
 %
 */
 static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
-  const char *id,const char *clip_path,ExceptionInfo *exception)
+  const char *id,const char *clip_path,const size_t depth,
+  ExceptionInfo *exception)
 {
   DrawInfo
     *clone_info;
@@ -1617,7 +1629,7 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
   clone_info->stroke_width=0.0;
   clone_info->opacity=OpaqueOpacity;
   clone_info->clip_path=MagickTrue;
-  status=RenderMVGContent(clip_mask,clone_info,0);
+  status=RenderMVGContent(clip_mask,clone_info,depth+1);
   clone_info=DestroyDrawInfo(clone_info);
   status&=SeparateImageChannel(clip_mask,TrueAlphaChannel);
   if (draw_info->compliance != SVGCompliance)
@@ -1645,7 +1657,8 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
 %  The format of the DrawCompositeMask method is:
 %
 %      Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
-%        const char *id,const char *mask_path,ExceptionInfo *exception)
+%        const char *id,const char *mask_path,const size_t depth,
+%        ExceptionInfo *exception)
 %
 %  A description of each parameter follows:
 %
@@ -1657,11 +1670,14 @@ static Image *DrawClippingMask(Image *image,const DrawInfo *draw_info,
 %
 %    o mask_path: the mask path.
 %
+%    o depth: the max vector depth.
+%
 %    o exception: return any errors or warnings in this structure.
 %
 */
 static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
-  const char *id,const char *mask_path,ExceptionInfo *exception)
+  const char *id,const char *mask_path,const size_t depth,
+  ExceptionInfo *exception)
 {
   Image
     *composite_mask;
@@ -1700,7 +1716,7 @@ static Image *DrawCompositeMask(Image *image,const DrawInfo *draw_info,
     exception);
   clone_info->stroke_width=0.0;
   clone_info->opacity=OpaqueOpacity;
-  status=RenderMVGContent(composite_mask,clone_info,0);
+  status=RenderMVGContent(composite_mask,clone_info,depth+1);
   clone_info=DestroyDrawInfo(clone_info);
   status&=SeparateImageChannel(composite_mask,TrueAlphaChannel);
   status&=NegateImage(composite_mask,MagickFalse);
@@ -2409,7 +2425,7 @@ static SplayTreeInfo *GetMVGMacros(const char *primitive,
                 }
               if (LocaleCompare(token,"push") == 0)
                 {
-                  if (n++ >= MagickMaxRecursionDepth)
+                  if (n++ >= MaxVectorRecursionDepth)
                     {
                       (void) ThrowMagickException(exception,GetMagickModule(),
                         DrawError,"VectorGraphicsNestedTooDeeply","`%s'",token);
@@ -2570,7 +2586,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
   assert(draw_info->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  if (depth >= MagickMaxRecursionDepth)
+  if (depth >= MaxVectorRecursionDepth)
     ThrowBinaryImageException(DrawError,"VectorGraphicsNestedTooDeeply",
       image->filename);
   if ((draw_info->primitive == (char *) NULL) ||
@@ -2767,7 +2783,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                 break;
             if (i <= n)
               break;
-            if (classDepth++ >= MagickMaxRecursionDepth)
+            if (classDepth++ >= MaxVectorRecursionDepth)
               {
                 (void) ThrowMagickException(&image->exception,GetMagickModule(),
                   DrawError,"VectorGraphicsNestedTooDeeply","`%s'",token);
@@ -2822,7 +2838,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
                   graphic_context[n]->clipping_mask=
                     DestroyImage(graphic_context[n]->clipping_mask);
                 graphic_context[n]->clipping_mask=DrawClippingMask(image,
-                  graphic_context[n],token,clip_path,&image->exception);
+                  graphic_context[n],token,clip_path,depth+1,
+                  &image->exception);
                 if (graphic_context[n]->compliance != SVGCompliance)
                   {
                     const char
@@ -2833,8 +2850,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     if (clip_path != (const char *) NULL)
                       (void) SetImageArtifact(image,
                         graphic_context[n]->clip_mask,clip_path);
-                    status&=DrawClipPath(image,graphic_context[n],
-                      graphic_context[n]->clip_mask);
+                    status&=DrawClipPath_(image,graphic_context[n],
+                      graphic_context[n]->clip_mask,depth+1);
                   }
               }
             break;
@@ -3235,7 +3252,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                   graphic_context[n]->composite_mask=
                     DestroyImage(graphic_context[n]->composite_mask);
                 graphic_context[n]->composite_mask=DrawCompositeMask(image,
-                  graphic_context[n],token,mask_path,&image->exception);
+                  graphic_context[n],token,mask_path,depth+1,&image->exception);
                 if (graphic_context[n]->compliance != SVGCompliance)
                   status=SetImageMask(image,graphic_context[n]->composite_mask);
               }
@@ -3541,7 +3558,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     (void) GetNextToken(q,&q,extent,token);
                     (void) CloneString(&graphic_context[n]->id,token);
                   }
-                if (n >= MagickMaxRecursionDepth)
+                if (n >= MaxVectorRecursionDepth)
                   {
                     (void) ThrowMagickException(&image->exception,
                       GetMagickModule(),DrawError,
@@ -4574,8 +4591,8 @@ static MagickBooleanType RenderMVGContent(Image *image,
             if (clip_path != (const char *) NULL)
               (void) SetImageArtifact(image,graphic_context[n]->clip_mask,
                 clip_path);
-            status&=DrawClipPath(image,graphic_context[n],
-              graphic_context[n]->clip_mask);
+            status&=DrawClipPath_(image,graphic_context[n],
+              graphic_context[n]->clip_mask,depth+1);
           }
         status&=DrawPrimitive(image,graphic_context[n],primitive_info);
       }
