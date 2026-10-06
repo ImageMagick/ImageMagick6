@@ -1204,10 +1204,14 @@ static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
                       if (LoadPolicyCache(cache,xml,path,depth+1,exception) == MagickFalse)
                         status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
+                      if (status == MagickFalse)
+                        break;
                     }
                 }
             }
         }
+        if (status == MagickFalse)
+          break;
         continue;
       }
     if (LocaleCompare(keyword,"<policy") == 0)

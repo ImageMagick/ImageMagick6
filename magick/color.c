@@ -2299,10 +2299,14 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
                       if (LoadColorCache(cache,xml,path,depth+1,exception) == MagickFalse)
                         status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
+                      if (status == MagickFalse)
+                        break;
                     }
                 }
             }
         }
+        if (status == MagickFalse)
+          break;
         continue;
       }
     if (LocaleCompare(keyword,"<color") == 0)

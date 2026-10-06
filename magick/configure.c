@@ -1221,10 +1221,14 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
                       if (LoadConfigureCache(cache,xml,path,depth+1,exception) == MagickFalse)
                         status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
+                      if (status == MagickFalse)
+                        break;
                     }
                 }
             }
         }
+        if (status == MagickFalse)
+          break;
         continue;
       }
     if (LocaleCompare(keyword,"<configure") == 0)

@@ -1186,10 +1186,14 @@ static MagickBooleanType LoadTypeCache(SplayTreeInfo *cache,const char *xml,
                       if (LoadTypeCache(cache,xml,path,depth+1,exception) == MagickFalse)
                         status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
+                      if (status == MagickFalse)
+                        break;
                     }
                 }
             }
         }
+        if (status == MagickFalse)
+          break;
         continue;
       }
     if (LocaleCompare(keyword,"<type") == 0)

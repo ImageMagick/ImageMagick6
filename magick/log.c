@@ -1604,10 +1604,14 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
                       if (LoadLogCache(cache,xml,path,depth+1,exception) == MagickFalse)
                         status=MagickFalse;
                       xml=DestroyString(xml);
+                      if (status == MagickFalse)
+                        break;
                     }
                 }
             }
         }
+        if (status == MagickFalse)
+          break;
         continue;
       }
     if (LocaleCompare(keyword,"<logmap>") == 0)
