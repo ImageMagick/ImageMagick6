@@ -26,10 +26,8 @@ extern MagickPrivate char
   *FileToXML(const char *,const size_t);
 
 extern MagickPrivate MagickBooleanType
+  SkipXMLComment(const char **),
   SkipXMLDocType(const char **);
-
-extern MagickPrivate void
-  SkipXMLComment(const char **);
 
 #if defined(__cplusplus) || defined(c_plusplus)
 }

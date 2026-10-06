@@ -1201,7 +1201,7 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
   LocaleInfo
     *locale_info;
 
-  MagickStatusType
+  MagickBooleanType
     status;
 
   char
@@ -1230,6 +1230,13 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
     /*
       Interpret XML.
     */
+    if (SkipXMLComment(&q) == MagickFalse)
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          ConfigureError,"UnterminatedComment","`%s'",filename);
+        status=MagickFalse;
+        break;
+      }
     (void) GetNextToken(q,&q,extent,token);
     if (*token == '\0')
       break;
@@ -1243,16 +1250,9 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
             */
             (void) ThrowMagickException(exception,GetMagickModule(),
               ConfigureError,"UnterminatedDOCTYPE","`%s'",filename);
+            status=MagickFalse;
             break;
           }
-        continue;
-      }
-    if (LocaleNCompare(keyword,"<!--",4) == 0)
-      {
-        /*
-          Comment element.
-        */
-        SkipXMLComment(&q);
         continue;
       }
     if (LocaleCompare(keyword,"<include") == 0)
@@ -1296,8 +1296,8 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
                   xml=FileToXML(path,~0UL);
                   if (xml != (char *) NULL)
                     {
-                      status&=LoadLocaleCache(cache,xml,path,locale,
-                        depth+1,exception);
+                      if (LoadLocaleCache(cache,xml,path,locale,depth+1,exception) == MagickFalse)
+                        status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
                     }
                 }
@@ -1406,7 +1406,7 @@ static MagickBooleanType LoadLocaleCache(SplayTreeInfo *cache,const char *xml,
   }
   token=(char *) RelinquishMagickMemory(token);
   (void) SetFatalErrorHandler(fatal_handler);
-  return(status != 0 ? MagickTrue : MagickFalse);
+  return(status);
 }
 
 /*

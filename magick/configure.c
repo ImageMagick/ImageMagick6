@@ -1139,7 +1139,7 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
   const char
     *q;
 
-  MagickStatusType
+  MagickBooleanType
     status;
 
   size_t
@@ -1159,6 +1159,13 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
     /*
       Interpret XML.
     */
+    if (SkipXMLComment(&q) == MagickFalse)
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          ConfigureError,"UnterminatedComment","`%s'",filename);
+        status=MagickFalse;
+        break;
+      }
     (void) GetNextToken(q,&q,extent,token);
     if (*token == '\0')
       break;
@@ -1172,16 +1179,9 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
             */
             (void) ThrowMagickException(exception,GetMagickModule(),
               ConfigureError,"UnterminatedDOCTYPE","`%s'",filename);
+            status=MagickFalse;
             break;
           }
-        continue;
-      }
-    if (LocaleNCompare(keyword,"<!--",4) == 0)
-      {
-        /*
-          Comment element.
-        */
-        SkipXMLComment(&q);
         continue;
       }
     if (LocaleCompare(keyword,"<include") == 0)
@@ -1218,8 +1218,8 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
                   xml=FileToXML(path,~0UL);
                   if (xml != (char *) NULL)
                     {
-                      status&=LoadConfigureCache(cache,xml,path,
-                        depth+1,exception);
+                      if (LoadConfigureCache(cache,xml,path,depth+1,exception) == MagickFalse)
+                        status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
                     }
                 }
@@ -1300,6 +1300,6 @@ static MagickBooleanType LoadConfigureCache(LinkedListInfo *cache,
     }
   }
   token=(char *) RelinquishMagickMemory(token);
-  return(status != 0 ? MagickTrue : MagickFalse);
+  return(status);
 }
 #endif

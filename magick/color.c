@@ -858,8 +858,9 @@ static LinkedListInfo *AcquireColorCache(const char *filename,
     option=(const StringInfo *) GetNextValueInLinkedList(options);
     while (option != (const StringInfo *) NULL)
     {
-      status&=LoadColorCache(cache,(const char *) GetStringInfoDatum(option),
-        GetStringInfoPath(option),0,exception);
+      if (LoadColorCache(cache,(const char *) GetStringInfoDatum(option),
+          GetStringInfoPath(option),0,exception) == MagickFalse)
+        status=MagickFalse;
       option=(const StringInfo *) GetNextValueInLinkedList(options);
     }
     options=DestroyConfigureOptions(options);
@@ -899,7 +900,8 @@ static LinkedListInfo *AcquireColorCache(const char *filename,
     color_info->compliance=(ComplianceType) p->compliance;
     color_info->exempt=MagickTrue;
     color_info->signature=MagickCoreSignature;
-    status&=AppendValueToLinkedList(cache,color_info);
+    if (AppendValueToLinkedList(cache,color_info) == MagickFalse)
+      status=MagickFalse;
     if (status == MagickFalse)
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",color_info->name);
@@ -2213,7 +2215,7 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
   const char
     *q;
 
-  MagickStatusType
+  MagickBooleanType
     status;
 
   size_t
@@ -2235,6 +2237,13 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
     /*
       Interpret XML.
     */
+    if (SkipXMLComment(&q) == MagickFalse)
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          ConfigureError,"UnterminatedComment","`%s'",filename);
+        status=MagickFalse;
+        break;
+      }
     (void) GetNextToken(q,&q,extent,token);
     if (*token == '\0')
       break;
@@ -2248,16 +2257,9 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
             */
             (void) ThrowMagickException(exception,GetMagickModule(),
               ConfigureError,"UnterminatedDOCTYPE","`%s'",filename);
+            status=MagickFalse;
             break;
           }
-        continue;
-      }
-    if (LocaleNCompare(keyword,"<!--",4) == 0)
-      {
-        /*
-          Comment element.
-        */
-        SkipXMLComment(&q);
         continue;
       }
     if (LocaleCompare(keyword,"<include") == 0)
@@ -2294,7 +2296,8 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
                   xml=FileToXML(path,~0UL);
                   if (xml != (char *) NULL)
                     {
-                      status&=LoadColorCache(cache,xml,path,depth+1,exception);
+                      if (LoadColorCache(cache,xml,path,depth+1,exception) == MagickFalse)
+                        status=MagickFalse;
                       xml=(char *) RelinquishMagickMemory(xml);
                     }
                 }
@@ -2386,7 +2389,7 @@ static MagickBooleanType LoadColorCache(LinkedListInfo *cache,const char *xml,
     }
   }
   token=(char *) RelinquishMagickMemory(token);
-  return(status != 0 ? MagickTrue : MagickFalse);
+  return(status);
 }
 #endif
 

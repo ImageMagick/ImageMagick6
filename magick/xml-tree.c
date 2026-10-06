@@ -1943,18 +1943,25 @@ static inline MagickBooleanType IsSkipTag(const char *tag)
   return(MagickFalse);
 }
 
-MagickPrivate void SkipXMLComment(const char **xml)
+MagickPrivate MagickBooleanType SkipXMLComment(const char **xml)
 {
   const char
     *p;
 
-  for (p=*xml; *p != '\0'; p++)
-    if ((p[0] == '-') && (p[1] == '-') && (p[2] == '>'))
-      {
-        *xml=p+3;
-        return;
-      }
+  for (p=*xml; ; )
+  {
+    while (isspace((int) ((unsigned char) *p)) != 0)
+      p++;
+    if (strncmp(p,"<!--",4) != 0)
+      break;
+    *xml=p;
+    p=strstr(p+4,"-->");
+    if (p == (const char *) NULL)
+      return(MagickFalse);
+    p+=3;
+  }
   *xml=p;
+  return(MagickTrue);
 }
 
 MagickPrivate MagickBooleanType SkipXMLDocType(const char **xml)
@@ -1968,18 +1975,12 @@ MagickPrivate MagickBooleanType SkipXMLDocType(const char **xml)
 
   bracket_depth=0;
   quote=0;
-  for (p=*xml; *p != '\0'; p++)
+  for (p=*xml; *p != '\0'; )
   {
-    if ((quote == 0) && (p[0] == '<') && (p[1] == '!') &&
-        (p[2] == '-') && (p[3] == '-'))
+    if ((quote == 0) && (strncmp(p,"<!--",4) == 0))
       {
-        p+=4;
-        while ((*p != '\0') && !((p[0] == '-') && (p[1] == '-') &&
-               (p[2] == '>')))
-          p++;
-        if (*p == '\0')
+        if (SkipXMLComment(&p) == MagickFalse)
           break;
-        p+=2;
         continue;
       }
     if (quote != 0)
@@ -2007,6 +2008,7 @@ MagickPrivate MagickBooleanType SkipXMLDocType(const char **xml)
                   return(MagickTrue);
                 }
       }
+    p++;
   }
   *xml=p;
   return(MagickFalse);

@@ -268,7 +268,7 @@ static LinkedListInfo *AcquireLogCache(const char *filename,
   LinkedListInfo
     *cache;
 
-  MagickStatusType
+  MagickBooleanType
     status;
 
   ssize_t
@@ -293,8 +293,9 @@ static LinkedListInfo *AcquireLogCache(const char *filename,
     option=(const StringInfo *) GetNextValueInLinkedList(options);
     while (option != (const StringInfo *) NULL)
     {
-      status&=LoadLogCache(cache,(const char *) GetStringInfoDatum(option),
-        GetStringInfoPath(option),0,exception);
+      if (LoadLogCache(cache,(const char *) GetStringInfoDatum(option),
+          GetStringInfoPath(option),0,exception) == MagickFalse)
+        status=MagickFalse;
       option=(const StringInfo *) GetNextValueInLinkedList(options);
     }
     options=DestroyConfigureOptions(options);
@@ -327,7 +328,8 @@ static LinkedListInfo *AcquireLogCache(const char *filename,
     log_info->filename=ConstantString(p->filename);
     log_info->format=ConstantString(p->format);
     log_info->signature=MagickCoreSignature;
-    status&=AppendValueToLinkedList(cache,log_info);
+    if (AppendValueToLinkedList(cache,log_info) == MagickFalse)
+      status=MagickFalse;
     if (status == MagickFalse)
       (void) ThrowMagickException(exception,GetMagickModule(),
         ResourceLimitError,"MemoryAllocationFailed","`%s'",log_info->name);
@@ -1521,7 +1523,7 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
   LogInfo
     *log_info = (LogInfo *) NULL;
 
-  MagickStatusType
+  MagickBooleanType
     status;
 
   size_t
@@ -1540,6 +1542,13 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
     /*
       Interpret XML.
     */
+    if (SkipXMLComment(&q) == MagickFalse)
+      {
+        (void) ThrowMagickException(exception,GetMagickModule(),
+          ConfigureError,"UnterminatedComment","`%s'",filename);
+        status=MagickFalse;
+        break;
+      }
     (void) GetNextToken(q,&q,extent,token);
     if (*token == '\0')
       break;
@@ -1553,16 +1562,9 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
             */
             (void) ThrowMagickException(exception,GetMagickModule(),
               ConfigureError,"UnterminatedDOCTYPE","`%s'",filename);
+            status=MagickFalse;
             break;
           }
-        continue;
-      }
-    if (LocaleNCompare(keyword,"<!--",4) == 0)
-      {
-        /*
-          Comment element.
-        */
-        SkipXMLComment(&q);
         continue;
       }
     if (LocaleCompare(keyword,"<include") == 0)
@@ -1599,8 +1601,8 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
                   xml=FileToXML(path,~0UL);
                   if (xml != (char *) NULL)
                     {
-                      status&=LoadLogCache(cache,xml,path,depth+1,
-                        exception);
+                      if (LoadLogCache(cache,xml,path,depth+1,exception) == MagickFalse)
+                        status=MagickFalse;
                       xml=DestroyString(xml);
                     }
                 }
@@ -1720,7 +1722,7 @@ static MagickBooleanType LoadLogCache(LinkedListInfo *cache,const char *xml,
   token=DestroyString(token);
   if (cache == (LinkedListInfo *) NULL)
     return(MagickFalse);
-  return(status != 0 ? MagickTrue : MagickFalse);
+  return(status);
 }
 #endif
 
