@@ -1310,6 +1310,8 @@ static MagickBooleanType LoadPolicyCache(LinkedListInfo *cache,const char *xml,
         break;
     }
   }
+  if (policy_info != (PolicyInfo *) NULL)
+    (void) DestroyPolicyElement(policy_info);
   token=(char *) RelinquishMagickMemory(token);
   if (status == MagickFalse)
     CatchException(exception);
