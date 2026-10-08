@@ -2027,17 +2027,18 @@ MagickExport char **StringToArgv(const char *text,int *argc)
 
   const char
     *p,
-    *q;
+    *q,
+    *shell_operators = ";&|><";
 
   ssize_t
     i;
 
-  *argc=0;
-  if (text == (char *) NULL)
-    return((char **) NULL);
   /*
     Determine the number of arguments.
   */
+  *argc=0;
+  if (text == (char *) NULL)
+    return((char **) NULL);
   for (p=text; *p != '\0'; )
   {
     while (isspace((int) ((unsigned char) *p)) != 0)
@@ -2046,14 +2047,25 @@ MagickExport char **StringToArgv(const char *text,int *argc)
       break;
     (*argc)++;
     if (*p == '"')
-      for (p++; (*p != '"') && (*p != '\0'); p++) ;
+      for (p++; (*p != '"') && (*p != '\0'); p++);
     if (*p == '\'')
-      for (p++; (*p != '\'') && (*p != '\0'); p++) ;
+      for (p++; (*p != '\'') && (*p != '\0'); p++);
+    /*
+      Advance to end of token, but stop immediately if we hit a shell operator.
+    */
+    q=p;
     while ((isspace((int) ((unsigned char) *p)) == 0) && (*p != '\0'))
+    {
+      if (strchr(shell_operators,(int) ((unsigned char) *p)) != (char *) NULL)
+        break;
+      p++;
+    }
+    if ((p == q) && (*p != '\0') &&
+        (strchr(shell_operators,(int) ((unsigned char) *p)) != (char *) NULL))
       p++;
   }
   (*argc)++;
-  argv=(char **) AcquireQuantumMemory((size_t) (*argc+1UL),sizeof(*argv));
+  argv=(char **) AcquireQuantumMemory((size_t) *argc+1UL,sizeof(*argv));
   if (argv == (char **) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToConvertStringToARGV");
   /*
@@ -2079,27 +2091,24 @@ MagickExport char **StringToArgv(const char *text,int *argc)
         }
       else
         while ((isspace((int) ((unsigned char) *q)) == 0) && (*q != '\0'))
+        {
+          if (strchr(shell_operators,(int) ((unsigned char) *q)) != (char *) NULL)
+            break;
           q++;
-    argv[i]=(char *) AcquireQuantumMemory((size_t) (q-p)+MaxTextExtent,
-      sizeof(**argv));
-    if (argv[i] == (char *) NULL)
-      {
-        for (i--; i >= 0; i--)
-          argv[i]=DestroyString(argv[i]);
-        argv=(char **) RelinquishMagickMemory(argv);
-        ThrowFatalException(ResourceLimitFatalError,
-          "UnableToConvertStringToARGV");
-      }
-    (void) memcpy(argv[i],p,(size_t) (q-p));
-    argv[i][q-p]='\0';
+        }
+    argv[i]=AcquireString(p);
+    (void) CopyMagickString(argv[i],p,(size_t) (q-p+1));
+    if ((*q == '"') || (*q == '\''))
+      q++;
+    else
+      if ((p == q) && (*q != '\0') &&
+          (strchr(shell_operators,(int) ((unsigned char) *q)) != (char *) NULL))
+        q++;
     p=q;
-    while ((isspace((int) ((unsigned char) *p)) == 0) && (*p != '\0'))
-      p++;
   }
   argv[i]=(char *) NULL;
   return(argv);
 }
-
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                             %
