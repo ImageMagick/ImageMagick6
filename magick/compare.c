@@ -2375,7 +2375,9 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
     *similarity_image = (Image *) NULL;
 
   MagickBooleanType
-    status;
+    status,
+    threshold_trigger = MagickFalse;
+
 
   MagickOffsetType
     progress;
@@ -2436,16 +2438,13 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
   progress=0;
   similarity_view=AcquireVirtualCacheView(similarity_image,exception);
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
-  #pragma omp parallel for schedule(static) shared(status,similarity_info) \
+  #pragma omp parallel for schedule(static) shared(status,similarity_info,threshold_trigger) \
     magick_number_threads(image,reconstruct,similarity_image->rows << 2,1)
 #endif    
   for (y=0; y < (ssize_t) similarity_image->rows; y++)
   {
     double
       similarity;
-
-    MagickBooleanType
-      threshold_trigger = MagickFalse;
 
     PixelPacket
       *magick_restrict q;
