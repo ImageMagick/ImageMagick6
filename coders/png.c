@@ -6786,8 +6786,14 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                    magnified_width += mng_info->magn_mr;
 
                 if (image->columns > 2)
-                   magnified_width += (size_t)
-                      ((image->columns-2)*(mng_info->magn_mx));
+                  {
+                    size_t extra_width;
+                    if (HeapOverflowSanityCheckGetSize(image->columns-2,mng_info->magn_mx,&extra_width) != MagickFalse)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    if (((size_t) MAGICK_SSIZE_MAX-magnified_width) < extra_width)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    magnified_width+=extra_width;
+                  }
               }
 
             else
@@ -6801,8 +6807,14 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                    magnified_width += mng_info->magn_mr-1;
 
                 if (image->columns > 3)
-                   magnified_width += (size_t)
-                      ((image->columns-3)*(mng_info->magn_mx-1));
+                  {
+                    size_t extra_width;
+                    if (HeapOverflowSanityCheckGetSize(image->columns-3,mng_info->magn_mx-1,&extra_width) != MagickFalse)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    if (((size_t) MAGICK_SSIZE_MAX-magnified_width) < extra_width)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    magnified_width+=extra_width;
+                  }
               }
 
             if (mng_info->magn_methy == 1)
@@ -6813,8 +6825,14 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                    magnified_height += mng_info->magn_mb;
 
                 if (image->rows > 2)
-                   magnified_height += (size_t)
-                      ((image->rows-2)*(mng_info->magn_my));
+                  {
+                    size_t extra_height;
+                    if (HeapOverflowSanityCheckGetSize(image->rows-2,mng_info->magn_my,&extra_height) != MagickFalse)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    if (((size_t) MAGICK_SSIZE_MAX-magnified_height) < extra_height)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    magnified_height+=extra_height;
+                  }
               }
 
             else
@@ -6828,8 +6846,14 @@ static Image *ReadOneMNGImage(MngInfo* mng_info, const ImageInfo *image_info,
                    magnified_height += mng_info->magn_mb-1;
 
                 if (image->rows > 3)
-                   magnified_height += (size_t)
-                      ((image->rows-3)*(mng_info->magn_my-1));
+                  {
+                    size_t extra_height;
+                    if (HeapOverflowSanityCheckGetSize(image->rows-3,mng_info->magn_my-1,&extra_height) != MagickFalse)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    if (((size_t) MAGICK_SSIZE_MAX-magnified_height) < extra_height)
+                      ThrowReaderException(CorruptImageError,"ImproperImageHeader");
+                    magnified_height+=extra_height;
+                  }
               }
 
             if (magnified_height > image->rows ||
