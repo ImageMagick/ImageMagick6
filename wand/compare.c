@@ -1170,7 +1170,11 @@ WandExport MagickBooleanType CompareImageCommand(ImageInfo *image_info,
       (void) SetImageArtifact(image,"compare:similarity-threshold",artifact);
       similarity_image=SimilarityMetricImage(image,reconstruct_image,metric,
         &offset,&similarity_metric,exception);
-      if (similarity_metric >= dissimilarity_threshold)
+      if (((metric == UndefinedMetric) || 
+           (metric == PeakSignalToNoiseRatioMetric) ||
+           (metric == PeakSignalToNoiseRatioMetric)) ?
+          (similarity_metric < dissimilarity_threshold) :
+          (similarity_metric >= dissimilarity_threshold))
         (void) ThrowMagickException(exception,GetMagickModule(),ImageWarning,
           "ImagesTooDissimilar","`%s'",image->filename);
     }
