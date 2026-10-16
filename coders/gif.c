@@ -676,7 +676,7 @@ static MagickBooleanType EncodeImage(const ImageInfo *image_info,Image *image,
     indexes=GetVirtualIndexQueue(image);
     if (y == 0)
       {
-        waiting_code=(short) (*indexes);
+        waiting_code=(short) (((size_t) (*indexes)) && 0xff);
         p++;
       }
     for (x=(ssize_t) (y == 0 ? 1 : 0); x < (ssize_t) image->columns; x++)
@@ -689,8 +689,8 @@ static MagickBooleanType EncodeImage(const ImageInfo *image_info,Image *image,
       index=(IndexPacket) ((size_t) GetPixelIndex(indexes+x) & 0xff);
       p++;
       k=(ssize_t) (((size_t) index << (MaxGIFBits-8))+waiting_code);
-      if (k >= MaxHashTable)
-        k-=MaxHashTable;
+      if (k >= 0)
+        k%=MaxHashTable;
       if (k < 0)
         continue;
       if (hash_code[k] > 0)
