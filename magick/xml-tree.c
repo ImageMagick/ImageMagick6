@@ -55,6 +55,7 @@
 #include "magick/image-private.h"
 #include "magick/log.h"
 #include "magick/memory_.h"
+#include "magick/resource_.h"
 #include "magick/semaphore.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
@@ -1358,6 +1359,9 @@ static char *ParseEntities(char *xml,char **entities,int state)
     byte,
     c;
 
+  MagickSizeType
+    entity_memory = 0;
+
   size_t
     extent,
     length;
@@ -1399,9 +1403,9 @@ static char *ParseEntities(char *xml,char **entities,int state)
           Character reference.
         */
         if (xml[2] != 'x')
-          c=strtol(xml+2,&entity,10);  /* base 10 */
+          c=(int) strtol(xml+2,&entity,10);  /* base 10 */
         else
-          c=strtol(xml+3,&entity,16);  /* base 16 */
+          c=(int) strtol(xml+3,&entity,16);  /* base 16 */
         if ((c == 0) || (*entity != ';'))
           {
             /*
@@ -1411,7 +1415,7 @@ static char *ParseEntities(char *xml,char **entities,int state)
             continue;
           }
         if (c < 0x80)
-          *(xml++)=c;
+          *(xml++)=(char) c;
         else
           {
             /*
@@ -1453,11 +1457,27 @@ static char *ParseEntities(char *xml,char **entities,int state)
                 */
                 length=strlen(entities[i]);
                 entity=strchr(xml,';');
-                if ((entity != (char *) NULL) && 
+                if ((entity != (char *) NULL) &&
                     ((length-1L) >= (size_t) (entity-xml)))
                   {
+                    MagickSizeType
+                      allocation;
+
                     offset=(ssize_t) (xml-p);
-                    extent=(size_t) (offset+length+strlen(entity));
+                    extent=((size_t) offset+length+strlen(entity));
+                    /*
+                      Account for additional memory required by entity expansion.
+                    */
+                    allocation=(MagickSizeType) ((extent > strlen(p)) ?
+                      (extent-strlen(p)) : 0);
+                    if ((allocation != 0) &&
+                        (AcquireMagickResource(MemoryResource,allocation) == MagickFalse))
+                      {
+                        RelinquishMagickResource(MemoryResource,entity_memory);
+                        ThrowFatalException(ResourceLimitFatalError,
+                          "MemoryAllocationFailed");
+                      }
+                    entity_memory+=allocation;
                     if (p != q)
                       {
                         p=(char *) ResizeQuantumMemory(p,extent+1,sizeof(*p));
@@ -1480,8 +1500,12 @@ static char *ParseEntities(char *xml,char **entities,int state)
                         p=extent_xml;
                       }
                     if (p == (char *) NULL)
-                      ThrowFatalException(ResourceLimitFatalError,
-                        "MemoryAllocationFailed");
+                      {
+                        RelinquishMagickResource(MemoryResource,
+                          entity_memory);
+                        ThrowFatalException(ResourceLimitFatalError,
+                          "MemoryAllocationFailed");
+                      }
                     xml=p+offset;
                     entity=strchr(xml,';');
                   }
@@ -1492,14 +1516,13 @@ static char *ParseEntities(char *xml,char **entities,int state)
         }
       else
         if (((state == ' ') || (state == '*')) &&
-            (isspace((int) ((unsigned char) *xml) != 0)))
+            (isspace((int) ((unsigned char) *xml)) != 0))
           *(xml++)=' ';
         else
           xml++;
   }
   if (state == '*')
     {
-     
       /*
         Normalize spaces for non-CDATA attributes.
       */
@@ -1520,6 +1543,8 @@ static char *ParseEntities(char *xml,char **entities,int state)
       if ((xml >= p) && (*xml == ' '))
         *xml='\0';
     }
+  if (entity_memory != 0)
+    RelinquishMagickResource(MemoryResource,entity_memory);
   return(p == q ? ConstantString(p) : p);
 }
 
