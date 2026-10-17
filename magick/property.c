@@ -419,7 +419,8 @@ static char
   *TraceSVGClippath(const unsigned char *,size_t,const size_t,
     const size_t);
 
-static MagickBooleanType GetIPTCProperty(const Image *image,const char *key)
+static MagickBooleanType GetIPTCProperty(const Image *image,const char *key,
+  ExceptionInfo *exception)
 {
   char
     *attribute;
@@ -585,7 +586,8 @@ static inline signed short ReadPropertyMSBShort(const unsigned char **p,
   return(quantum.signed_value);
 }
 
-static MagickBooleanType Get8BIMProperty(const Image *image,const char *key)
+static MagickBooleanType Get8BIMProperty(const Image *image,const char *key,
+  ExceptionInfo *exception)
 {
   char
     *attribute,
@@ -843,7 +845,7 @@ static inline unsigned short ReadPropertyUnsignedShort(const EndianType endian,
 }
 
 static MagickBooleanType GetEXIFProperty(const Image *image,
-  const char *property)
+  const char *property,ExceptionInfo *exception)
 {
 #define MaxDirectoryStack  16
 #define EXIF_DELIMITER  "\n"
@@ -1747,7 +1749,8 @@ static MagickBooleanType GetEXIFProperty(const Image *image,
   return(status);
 }
 
-static MagickBooleanType GetICCProperty(const Image *image)
+static MagickBooleanType GetICCProperty(const Image *image,
+  ExceptionInfo *exception)
 {
   const StringInfo
     *profile;
@@ -1852,25 +1855,21 @@ static MagickBooleanType SkipXMPValue(const char *value)
   return(MagickTrue);
 }
 
-static MagickBooleanType GetXMPProperty(const Image *image,const char *property)
+static MagickBooleanType GetXMPProperty(const Image *image,const char *property,
+  ExceptionInfo *exception)
 {
   char
     *xmp_profile;
 
   const char
-    *content;
+    *content,
+    *p;
 
   const StringInfo
     *profile;
 
-  ExceptionInfo
-    *exception;
-
   MagickBooleanType
     status;
-
-  const char
-    *p;
 
   XMLTreeInfo
     *child,
@@ -1892,10 +1891,8 @@ static MagickBooleanType GetXMPProperty(const Image *image,const char *property)
   for (p=xmp_profile; *p != '\0'; p++)
     if ((*p == '<') && (*(p+1) == 'x'))
       break;
-  exception=AcquireExceptionInfo();
   xmp=NewXMLTree((char *) p,exception);
   xmp_profile=DestroyString(xmp_profile);
-  exception=DestroyExceptionInfo(exception);
   if (xmp == (XMLTreeInfo *) NULL)
     return(MagickFalse);
   status=MagickFalse;
@@ -2363,7 +2360,7 @@ MagickExport const char *GetImageProperty(const Image *image,
     {
       if (LocaleNCompare("8bim:",property,5) == 0)
         {
-          (void) Get8BIMProperty(image,property);
+          (void) Get8BIMProperty(image,property,exception);
           break;
         }
       break;
@@ -2373,7 +2370,7 @@ MagickExport const char *GetImageProperty(const Image *image,
     {
       if (LocaleNCompare("exif:",property,5) == 0)
         {
-          (void) GetEXIFProperty(image,property);
+          (void) GetEXIFProperty(image,property,exception);
           break;
         }
       break;
@@ -2451,12 +2448,12 @@ MagickExport const char *GetImageProperty(const Image *image,
       if ((LocaleNCompare("icc:",property,4) == 0) ||
           (LocaleNCompare("icm:",property,4) == 0))
         {
-          (void) GetICCProperty(image);
+          (void) GetICCProperty(image,exception);
           break;
         }
       if (LocaleNCompare("iptc:",property,5) == 0)
         {
-          (void) GetIPTCProperty(image,property);
+          (void) GetIPTCProperty(image,property,exception);
           break;
         }
       break;
@@ -2518,7 +2515,7 @@ MagickExport const char *GetImageProperty(const Image *image,
     {
       if (LocaleNCompare("xmp:",property,4) == 0)
         {
-          (void) GetXMPProperty(image,property);
+          (void) GetXMPProperty(image,property,exception);
           break;
         }
       break;
