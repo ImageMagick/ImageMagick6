@@ -201,6 +201,7 @@ typedef struct _MemoryPool
 */
 static size_t
   max_memory_request = 0,
+  max_profile_size = 0,
   virtual_anonymous_memory = 0;
 
 #if defined _MSC_VER
