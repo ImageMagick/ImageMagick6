@@ -1082,6 +1082,51 @@ MagickExport size_t GetMaxMemoryRequest(void)
 %                                                                             %
 %                                                                             %
 %                                                                             %
++   G e t M a x P r o f i l e S i z e                                         %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  GetMaxProfileSize() returns the max profile size value.
+%
+%  The format of the GetMaxMemoryRequest method is:
+%
+%      size_t GetMaxProfileSize(void)
+%
+*/
+static size_t GetMaxProfileSizeFromPolicy(void)
+{
+  char
+    *value;
+
+  size_t
+    max=(size_t) MAGICK_SSIZE_MAX;
+
+  value=GetPolicyValue("system:max-profile-size");
+  if (value != (char *) NULL)
+    {
+      /*
+        The security policy sets a max profile size limit.
+      */
+      max=StringToSizeType(value,100.0);
+      value=DestroyString(value);
+    }
+  return(MagickMin(max,(size_t) MAGICK_SSIZE_MAX));
+}
+
+MagickExport size_t GetMaxProfileSize(void)
+{
+  if (max_profile_size == 0)
+    max_profile_size=GetMaxProfileSizeFromPolicy();
+  return(max_profile_size);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
 %   G e t V i r t u a l M e m o r y B l o b                                   %
 %                                                                             %
 %                                                                             %
