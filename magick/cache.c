@@ -949,7 +949,7 @@ static MagickBooleanType ClonePixelCacheRepository(
     if (status == MagickFalse)
       continue;
     pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y,
-      clone_info->columns,1,MagickFalse,clone_nexus[id],exception);
+      clone_info->columns,1,MagickTrue,clone_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
       continue;
     (void) memset(clone_nexus[id]->pixels,0,(size_t) clone_nexus[id]->length);
@@ -988,7 +988,7 @@ static MagickBooleanType ClonePixelCacheRepository(
         if (status == MagickFalse)
           continue;
         pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y,
-          clone_info->columns,1,MagickFalse,clone_nexus[id],exception);
+          clone_info->columns,1,MagickTrue,clone_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
           continue;
         (void) memcpy(clone_nexus[id]->indexes,cache_nexus[id]->indexes,length);
@@ -5174,6 +5174,8 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
   const CacheInfo *magick_restrict cache_info,const MagickSizeType length,
   NexusInfo *magick_restrict nexus_info,ExceptionInfo *exception)
 {
+  nexus_info->length=0;
+  nexus_info->mapped=MagickFalse;
   if (length != (MagickSizeType) ((size_t) length))
     {
       (void) ThrowMagickException(exception,GetMagickModule(),
@@ -5181,8 +5183,6 @@ static inline MagickBooleanType AcquireCacheNexusPixels(
         cache_info->filename);
       return(MagickFalse);
     }
-  nexus_info->length=0;
-  nexus_info->mapped=MagickFalse;
   if (cache_anonymous_memory <= 0)
     {
       nexus_info->cache=(PixelPacket *) MagickAssumeAligned(
