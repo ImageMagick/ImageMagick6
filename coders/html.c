@@ -137,6 +137,7 @@ ModuleExport size_t RegisterHTMLImage(void)
   entry->description=ConstantString(
     "Hypertext Markup Language and a client-side image map");
   entry->magick_module=ConstantString("HTML");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("HTML");
   entry->encoder=(EncodeImageHandler *) WriteHTMLImage;
@@ -145,6 +146,7 @@ ModuleExport size_t RegisterHTMLImage(void)
   entry->description=ConstantString(
     "Hypertext Markup Language and a client-side image map");
   entry->magick_module=ConstantString("HTML");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   entry=SetMagickInfo("SHTML");
   entry->encoder=(EncodeImageHandler *) WriteHTMLImage;
@@ -153,6 +155,7 @@ ModuleExport size_t RegisterHTMLImage(void)
   entry->description=ConstantString(
     "Hypertext Markup Language and a client-side image map");
   entry->magick_module=ConstantString("HTML");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
