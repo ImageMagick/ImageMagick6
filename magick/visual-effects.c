@@ -1279,6 +1279,7 @@ MagickExport Image *MorphImages(const Image *image,
         {
           InheritException(exception,&morph_image->exception);
           morph_image=DestroyImage(morph_image);
+          morph_images=DestroyImageList(morph_images);
           return((Image *) NULL);
         }
       AppendImageToList(&morph_images,morph_image);

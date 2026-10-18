@@ -1404,11 +1404,15 @@ MagickExport Image *UniqueImageColors(const Image *image,
     return((Image *) NULL);
   unique_image=CloneImage(image,cube_info->colors,1,MagickTrue,exception);
   if (unique_image == (Image *) NULL)
-    return(unique_image);
+    {
+      cube_info=DestroyHCubeInfo(image,cube_info);
+      return(unique_image);
+    }
   if (SetImageStorageClass(unique_image,DirectClass) == MagickFalse)
     {
       InheritException(exception,&unique_image->exception);
       unique_image=DestroyImage(unique_image);
+      cube_info=DestroyHCubeInfo(image,cube_info);
       return((Image *) NULL);
     }
   unique_view=AcquireVirtualCacheView(unique_image,exception);

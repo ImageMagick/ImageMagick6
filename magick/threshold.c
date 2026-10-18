@@ -1964,6 +1964,7 @@ printf("DEBUG levels  r=%u g=%u b=%u a=%u i=%u\n",
     if (SetImageStorageClass(image,DirectClass) == MagickFalse)
       {
         InheritException(exception,&image->exception);
+        map=DestroyThresholdMap(map);
         return(MagickFalse);
       }
     status=MagickTrue;
