@@ -97,6 +97,7 @@ ModuleExport size_t RegisterTHUMBNAILImage(void)
   entry->encoder=(EncodeImageHandler *) WriteTHUMBNAILImage;
   entry->description=ConstantString("EXIF Profile Thumbnail");
   entry->magick_module=ConstantString("THUMBNAIL");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

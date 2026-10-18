@@ -196,6 +196,7 @@ ModuleExport size_t RegisterNULLImage(void)
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Constant image of uniform color");
   entry->magick_module=ConstantString("NULL");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

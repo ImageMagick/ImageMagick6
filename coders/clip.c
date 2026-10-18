@@ -160,6 +160,7 @@ ModuleExport size_t RegisterCLIPImage(void)
   entry->encoder=(EncodeImageHandler *) WriteCLIPImage;
   entry->description=ConstantString("Image Clip Mask");
   entry->magick_module=ConstantString("CLIP");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

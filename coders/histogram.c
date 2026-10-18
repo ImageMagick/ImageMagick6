@@ -108,6 +108,7 @@ ModuleExport size_t RegisterHISTOGRAMImage(void)
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Histogram of the image");
   entry->magick_module=ConstantString("HISTOGRAM");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

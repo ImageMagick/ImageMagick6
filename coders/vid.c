@@ -270,6 +270,7 @@ ModuleExport size_t RegisterVIDImage(void)
   entry->format_type=ImplicitFormatType;
   entry->description=ConstantString("Visual Image Directory");
   entry->magick_module=ConstantString("VID");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }

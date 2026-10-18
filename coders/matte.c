@@ -98,6 +98,7 @@ ModuleExport size_t RegisterMATTEImage(void)
   entry->format_type=ExplicitFormatType;
   entry->description=ConstantString("MATTE format");
   entry->magick_module=ConstantString("MATTE");
+  entry->blob_support=MagickFalse;
   (void) RegisterMagickInfo(entry);
   return(MagickImageCoderSignature);
 }
