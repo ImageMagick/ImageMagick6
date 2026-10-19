@@ -13224,7 +13224,9 @@ static MagickBooleanType WriteMAGICKImage(const ImageInfo *image_info,
   Image *image)
 {
   char
-    buffer[MaxTextExtent];
+    buffer[MaxTextExtent],
+    *p,
+    *sanitized_filename;
 
   const char
     *value;
@@ -13240,9 +13242,6 @@ static MagickBooleanType WriteMAGICKImage(const ImageInfo *image_info,
 
   size_t
     length;
-
-  char
-    *p;
 
   ssize_t
     i;
@@ -13300,8 +13299,11 @@ static MagickBooleanType WriteMAGICKImage(const ImageInfo *image_info,
       return(status);
     }
   (void) WriteBlobString(image,"/*\n");
+  sanitized_filename=AcquireString(image->filename);
+  (void) SubstituteString(&sanitized_filename,"*/","??");
   (void) FormatLocaleString(buffer,MaxTextExtent,"  %s (%s).\n",
-    image->filename,write_info->magick);
+    sanitized_filename,write_info->magick);
+  sanitized_filename=DestroyString(sanitized_filename);
   (void) DestroyImageInfo(write_info);
   (void) WriteBlobString(image,buffer);
   (void) WriteBlobString(image,"*/\n");
