@@ -85,6 +85,9 @@ struct _StreamInfo
   StorageType
     storage_type;
 
+  size_t
+    length;
+
   unsigned char
     *pixels;
 
@@ -1187,7 +1190,7 @@ static size_t WriteStreamImage(const Image *image,const void *pixels,
   assert(cache_info->signature == MagickCoreSignature);
   packet_size*=strlen(stream_info->map);
   length=packet_size*cache_info->columns*cache_info->rows;
-  if (image != stream_info->image)
+  if ((image != stream_info->image) || (length > stream_info->length))
     {
       ImageInfo
         *write_info;
@@ -1201,6 +1204,7 @@ static size_t WriteStreamImage(const Image *image,const void *pixels,
       if (stream_info->pixels == (unsigned char *) NULL)
         return(0);
       (void) memset(stream_info->pixels,0,length);
+      stream_info->length=length;
       stream_info->image=image;
       write_info=CloneImageInfo(stream_info->image_info);
       (void) SetImageInfo(write_info,1,stream_info->exception);
