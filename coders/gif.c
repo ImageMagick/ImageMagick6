@@ -1163,13 +1163,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   reserved_length;
 
                 MagickBooleanType
-                  i8bim,
-                  icc,
-                  iptc,
-                  magick;
-
-                StringInfo
-                  *profile;
+                  magick = MagickFalse;
 
                 unsigned char
                   *info;
@@ -1177,23 +1171,24 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
                 /*
                   Store GIF application extension as a generic profile.
                 */
-                icc=LocaleNCompare((char *) buffer,"ICCRGBG1012",11) == 0 ?
-                  MagickTrue : MagickFalse;
-                magick=LocaleNCompare((char *) buffer,"ImageMagick",11) == 0 ?
-                  MagickTrue : MagickFalse;
-                i8bim=LocaleNCompare((char *) buffer,"MGK8BIM0000",11) == 0 ?
-                  MagickTrue : MagickFalse;
-                iptc=LocaleNCompare((char *) buffer,"MGKIPTC0000",11) == 0 ?
-                  MagickTrue : MagickFalse;
-                (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                  "    Reading GIF application extension");
+                if (LocaleNCompare((char *) buffer,"ImageMagick",11) == 0)
+                  magick=MagickTrue;
+                else if (LocaleNCompare((char *) buffer,"ICCRGBG1012",11) == 0)
+                  (void) CopyMagickString(name,"icc",sizeof(name));
+                else if (LocaleNCompare((char *) buffer,"MGK8BIM0000",11) == 0)
+                  (void) CopyMagickString(name,"8bim",sizeof(name));
+                else if (LocaleNCompare((char *) buffer,"MGKIPTC0000",11) == 0)
+                  (void) CopyMagickString(name,"iptc",sizeof(name));
+                else
+                  (void) FormatLocaleString(name,sizeof(name),"gif:%.11s",
+                    buffer);
                 reserved_length=256;
                 info=(unsigned char *) AcquireQuantumMemory((size_t)
                   reserved_length,sizeof(*info));
                 if (info == (unsigned char *) NULL)
                   ThrowGIFException(ResourceLimitError,
                     "MemoryAllocationFailed");
-                (void) memset(info,0,reserved_length*sizeof(*info));
+                (void) memset(info,0,(size_t) reserved_length*sizeof(*info));
                 for (info_length=0; ; )
                 {
                   block_length=(int) ReadBlobBlock(image,info+info_length);
@@ -1213,41 +1208,33 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
                         }
                     }
                 }
-                profile=BlobToStringInfo(info,(size_t) info_length);
-                if (profile == (StringInfo *) NULL)
+                if (info_length == 0)
                   {
-                    info=(unsigned char *) RelinquishMagickMemory(info);
-                    ThrowGIFException(ResourceLimitError,
-                      "MemoryAllocationFailed");
+                    info=(unsigned char*) RelinquishMagickMemory(info);
+                    break;
                   }
-                if (i8bim != MagickFalse)
-                  (void) CopyMagickString(name,"8bim",sizeof(name));
-                else if (icc != MagickFalse)
-                  (void) CopyMagickString(name,"icc",sizeof(name));
-                else if (iptc != MagickFalse)
-                  (void) CopyMagickString(name,"iptc",sizeof(name));
-                else if (magick != MagickFalse)
+                if (magick != MagickFalse)
                   {
-                    (void) CopyMagickString(name,"magick",sizeof(name));
                     info[info_length]='\0';
                     meta_image->gamma=StringToDouble((char *) info+6,
                       (char **) NULL);
                   }
                 else
-                  (void) FormatLocaleString(name,sizeof(name),"gif:%.11s",
-                    buffer);
-                info=(unsigned char *) RelinquishMagickMemory(info);
-                (void) LogMagickEvent(CoderEvent,GetMagickModule(),
-                  "      profile name=%s",name);
-                if (magick != MagickFalse)
-                  profile=DestroyStringInfo(profile);
-                else
                   {
-                    if (profiles == (LinkedListInfo *) NULL)
-                      profiles=NewLinkedList(0);
-                    SetStringInfoName(profile,name);
-                    (void) AppendValueToLinkedList(profiles,profile);
+                    StringInfo
+                      *profile;
+
+                    (void) LogMagickEvent(CoderEvent,GetMagickModule(),
+                      "      profile name=%s",name);
+                    profile=BlobToStringInfo(info,(size_t) info_length);
+                    if (profile != (StringInfo *) NULL)
+                      {
+                        if (profiles == (LinkedListInfo *) NULL)
+                          profiles=NewLinkedList(0);
+                        (void) AppendValueToLinkedList(profiles,profile);
+                      }
                   }
+                info=(unsigned char *) RelinquishMagickMemory(info);
               }
             break;
           }
