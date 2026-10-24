@@ -55,6 +55,7 @@
 #include "magick/monitor-private.h"
 #include "magick/option.h"
 #include "magick/option-private.h"
+#include "magick/policy.h"
 #include "magick/profile.h"
 #include "magick/property.h"
 #include "magick/quantum.h"
@@ -89,6 +90,12 @@ static MagickBooleanType
 
 static void
   WriteTo8BimProfile(Image *,const char*,const StringInfo *);
+
+/*
+  Global declarations.
+*/
+static size_t
+  max_profile_count = 0;
 
 /*
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -274,6 +281,51 @@ MagickExport const StringInfo *GetImageProfile(const Image *image,
   profile=(const StringInfo *) GetValueFromSplayTree((SplayTreeInfo *)
     image->profiles,name);
   return(profile);
+}
+
+/*
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                                             %
+%                                                                             %
+%                                                                             %
++   G e t M a x P r o f i l e C o u n t                                       %
+%                                                                             %
+%                                                                             %
+%                                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  GetMaxProfileCount() returns the max profile count value.
+%
+%  The format of the GetMaxProfileCount method is:
+%
+%      size_t GetMaxProfileCount(void)
+%
+*/
+static size_t GetMaxProfileCountFromPolicy(void)
+{
+  char
+    *value;
+
+  size_t
+    max=(size_t) MAGICK_SSIZE_MAX;
+
+  value=GetPolicyValue("system:max-profile-count");
+  if (value != (char *) NULL)
+    {
+      /*
+        The security policy sets a max profile count limit.
+      */
+      max=StringToSizeType(value,100.0);
+      value=DestroyString(value);
+    }
+  return(MagickMin(max,(size_t) MAGICK_SSIZE_MAX));
+}
+
+MagickExport size_t GetMaxProfileCount(void)
+{
+  if (max_profile_count == 0)
+    max_profile_count=GetMaxProfileCountFromPolicy();
+  return(max_profile_count);
 }
 
 /*

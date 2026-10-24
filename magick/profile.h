@@ -62,6 +62,9 @@ extern MagickExport MagickBooleanType
   SetImageProfile(Image *,const char *,const StringInfo *),
   SyncImageProfiles(Image *);
 
+extern MagickExport size_t
+  GetMaxProfileCount(void);
+
 extern MagickExport StringInfo
   *RemoveImageProfile(Image *,const char *);
 
