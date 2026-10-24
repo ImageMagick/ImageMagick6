@@ -1804,6 +1804,9 @@ static MagickBooleanType SetImageProfileInternal(Image *image,const char *name,
   assert(image->signature == MagickCoreSignature);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
+  if ((image->profiles != (SplayTreeInfo*) NULL) &&
+      (GetNumberOfNodesInSplayTree((SplayTreeInfo*) image->profiles) >= GetMaxProfileCount()))
+    return(MagickFalse);
   if ((LocaleCompare(name,"xmp") == 0) &&
       (ValidateXMPProfile(image,profile) == MagickFalse))
     return(MagickTrue);
