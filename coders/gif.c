@@ -1005,7 +1005,8 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
     global_colors,
     image_count,
     local_colors,
-    one;
+    one,
+    remaining_profiles;
 
   ssize_t
     count,
@@ -1069,6 +1070,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   duration=0;
   opacity=(-1);
   image_count=0;
+  remaining_profiles=GetMaxProfileCount();
   for ( ; ; )
   {
     count=ReadBlob(image,1,&c);
@@ -1229,6 +1231,13 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
                     profile=BlobToStringInfo(info,(size_t) info_length);
                     if (profile != (StringInfo *) NULL)
                       {
+                        if (remaining_profiles == 0)
+                          {
+                            info=(unsigned char *) RelinquishMagickMemory(info);
+                            ThrowGIFException(ResourceLimitError,
+                              "MaximumProfilesExceeded");
+                          }
+                        remaining_profiles--;
                         if (profiles == (LinkedListInfo *) NULL)
                           profiles=NewLinkedList(0);
                         (void) AppendValueToLinkedList(profiles,profile);
