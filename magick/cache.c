@@ -4464,14 +4464,6 @@ MagickExport PixelPacket *QueueAuthenticPixelCacheNexus(Image *image,
         "PixelsAreNotAuthentic","`%s'",image->filename);
       return((PixelPacket *) NULL);
     }
-  if ((columns == 0) || (rows == 0) ||
-      ((MagickSizeType) columns > (MagickSizeType) (cache_info->columns-x)) ||
-      ((MagickSizeType) rows > (MagickSizeType) (cache_info->rows-y)))
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
-        "PixelsAreNotAuthentic","`%s'",image->filename);
-      return((PixelPacket *) NULL);
-    }
   if (IsValidPixelOffset(y,cache_info->columns) == MagickFalse)
     return((PixelPacket *) NULL);
   offset=y*(MagickOffsetType) cache_info->columns+x;
