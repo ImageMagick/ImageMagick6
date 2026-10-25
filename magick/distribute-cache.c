@@ -152,7 +152,7 @@ static WSADATA
 */
 
 #if !defined(MAGICKCORE_HAVE_DISTRIBUTE_CACHE)
-static inline MagickOffsetType dpc_read(int magick_unused(file),
+static inline MagickOffsetType dpc_receive(SOCKET_TYPE magick_unused(file),
   const MagickSizeType magick_unused(length),
   unsigned char *magick_restrict magick_unused(message))
 {
@@ -161,25 +161,118 @@ static inline MagickOffsetType dpc_read(int magick_unused(file),
   magick_unreferenced(message);
   return(-1);
 }
+
+static inline MagickOffsetType dpc_receive_deadline(SOCKET_TYPE
+  magick_unused(file),const MagickSizeType magick_unused(length),
+  unsigned char *magick_restrict magick_unused(message),
+  double magick_unused(deadline))
+{
+  magick_unreferenced(file);
+  magick_unreferenced(length);
+  magick_unreferenced(message);
+  magick_unreferenced(deadline);
+  return(-1);
+}
 #else
-static inline MagickOffsetType dpc_read(SOCKET_TYPE file,
+static void SetSocketReceiveTimeout(SOCKET_TYPE file,double seconds)
+{
+  /*
+    Set a receive timeout.
+  */
+#if defined(MAGICKCORE_HAVE_WINSOCK2)
+  {
+    DWORD timeout = (DWORD) (seconds*1000.0);
+    (void) setsockopt(file,SOL_SOCKET,SO_RCVTIMEO,
+      (const char *) &timeout,sizeof(timeout));
+  }
+#else
+  {
+    struct timeval tv;
+    tv.tv_sec=(int) seconds;
+    tv.tv_usec=(int) ((seconds-(double) tv.tv_sec)*1000000.0);
+    (void) setsockopt(file,SOL_SOCKET,SO_RCVTIMEO,&tv,sizeof(tv));
+  }
+#endif
+}
+
+static inline MagickOffsetType dpc_receive(SOCKET_TYPE file,
   const MagickSizeType length,unsigned char *magick_restrict message)
 {
   MagickOffsetType offset = 0;
   while (offset < (MagickOffsetType) length)
   {
-    MagickSizeType remaining = length-(MagickSizeType) offset;
-    ssize_t count = recv(file,(char *) message+offset,(LENGTH_TYPE)
-      MagickMin(remaining,(MagickSizeType) MagickMaxBufferExtent),0);
+    size_t chunk = MagickMin(length-offset,(size_t) MagickMaxBufferExtent);
+    ssize_t count = recv(file,(char *) message+offset,(LENGTH_TYPE) chunk,0);
     if (count > 0)
       offset+=(MagickOffsetType) count;
     else
       if (count == 0)
-        break;
+        return(0);
       else
         {
-          if (errno != EINTR)
-            break;
+#ifdef MAGICKCORE_HAVE_WINSOCK2
+          int wsa_err = WSAGetLastError();
+          if ((wsa_err == WSAEINTR) || (wsa_err == WSAEWOULDBLOCK))
+            continue;
+          if (wsa_err == WSAECONNRESET)
+            return(-2);
+#else
+          if ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK))
+            continue;
+          if (errno == ECONNRESET)
+            return(-2);
+#endif
+          return(-1);
+        }
+  }
+  return(offset);
+}
+
+static inline MagickOffsetType dpc_receive_deadline(SOCKET_TYPE file,
+  MagickSizeType length,unsigned char *message,double deadline)
+{
+  /*
+    Enforce an absolute deadline for authentication reads.
+  */
+  MagickOffsetType offset = 0;
+  while (offset < (MagickOffsetType) length)
+  {
+    double
+      now = (double) time((time_t *) NULL),
+      remaining = deadline-now;
+
+    size_t
+      chunk;
+
+    ssize_t
+      count;
+
+    if (now >= deadline)
+      return(-1);
+    if (remaining < 0.001)
+      remaining=0.001;
+    SetSocketReceiveTimeout(file,remaining);
+    chunk=MagickMin(length-offset,(size_t) MagickMaxBufferExtent);
+    count=recv(file,(char *) message+offset,(LENGTH_TYPE) chunk,0);
+    if (count > 0)
+      offset+=(MagickOffsetType) count;
+    else
+      if (count == 0)
+        return(0);
+      else
+        {
+#ifdef _WIN32
+          int wsa_err = WSAGetLastError();
+          if ((wsa_err == WSAEINTR) || (wsa_err == WSAEWOULDBLOCK))
+            continue;
+          if (wsa_err == WSAECONNRESET)
+            return(-2);
+          return(-1);
+#else
+          if ((errno == EINTR) || (errno == EAGAIN) || (errno == EWOULDBLOCK))
+            continue;
+          return(-1);
+#endif
         }
   }
   return(offset);
@@ -297,7 +390,7 @@ static inline void DeriveSipKeyFromSecret(const char *shared_secret,
   for (i=0; i < length; i++)
   {
     uint8_t 
-      b = shared_secret[i];
+      b = (uint8_t) shared_secret[i];
     
     k0^=b;
     k0*=0x100000001b3ULL;   
@@ -484,7 +577,7 @@ static char *GetHostname(int *port,ExceptionInfo *exception)
   if (hostlist[2] == (char *) NULL)
     *port=DPCPort;
   else
-    *port=StringToLong(hostlist[2]);
+    *port=(int) StringToLong(hostlist[2]);
   for (i=0; i < (ssize_t) argc; i++)
     hostlist[i]=DestroyString(hostlist[i]);
   hostlist=(char **) RelinquishMagickMemory(hostlist);
@@ -616,7 +709,7 @@ static inline MagickOffsetType dpc_send(int file,const MagickSizeType length,
   count=0;
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
-    count=(MagickOffsetType) send(file,(char *) message+i,(LENGTH_TYPE)
+    count=(MagickOffsetType) send(file,(const char *) message+i,(LENGTH_TYPE)
       MagickMin(length-i,(MagickSizeType) MagickMaxBufferExtent),MSG_NOSIGNAL);
     if (count <= 0)
       {
@@ -672,7 +765,7 @@ static MagickBooleanType OpenDistributeCache(SplayTreeInfo *registry,int file,
     return(MagickFalse);
   length=sizeof(image->storage_class)+sizeof(image->colorspace)+
     sizeof(image->channels)+sizeof(image->columns)+sizeof(image->rows);
-  count=dpc_read(file,length,message);
+  count=dpc_receive(file,length,message);
   if (count != (MagickOffsetType) length)
     {
       image=DestroyImage(image);
@@ -762,7 +855,7 @@ static MagickBooleanType ReadDistributeCacheIndexes(SplayTreeInfo *registry,
     return(MagickFalse);
   length=sizeof(region.width)+sizeof(region.height)+sizeof(region.x)+
     sizeof(region.y)+sizeof(length);
-  count=dpc_read(file,length,message);
+  count=dpc_receive(file,length,message);
   if (count != (MagickOffsetType) length)
     return(MagickFalse);
   q=message;
@@ -826,7 +919,7 @@ static MagickBooleanType ReadDistributeCachePixels(SplayTreeInfo *registry,
     return(MagickFalse);
   length=sizeof(region.width)+sizeof(region.height)+sizeof(region.x)+
     sizeof(region.y)+sizeof(length);
-  count=dpc_read(file,length,message);
+  count=dpc_receive(file,length,message);
   if (count != (MagickOffsetType) length)
     return(MagickFalse);
   q=message;
@@ -897,7 +990,7 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
     return(MagickFalse);
   length=sizeof(region.width)+sizeof(region.height)+sizeof(region.x)+
     sizeof(region.y)+sizeof(length);
-  count=dpc_read(file,length,message);
+  count=dpc_receive(file,length,message);
   if (count != (MagickOffsetType) length)
     return(MagickFalse);
   p=message;
@@ -919,7 +1012,7 @@ static MagickBooleanType WriteDistributeCacheIndexes(SplayTreeInfo *registry,
   if (q == (PixelPacket *) NULL)
     return(MagickFalse);
   indexes=GetAuthenticIndexQueue(image);
-  count=dpc_read(file,length,(unsigned char *) indexes);
+  count=dpc_receive(file,length,(unsigned char *) indexes);
   if (count != (MagickOffsetType) length)
     return(MagickFalse);
   return(SyncAuthenticPixels(image,exception));
@@ -961,7 +1054,7 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
     return(MagickFalse);
   length=sizeof(region.width)+sizeof(region.height)+sizeof(region.x)+
     sizeof(region.y)+sizeof(length);
-  count=dpc_read(file,length,message);
+  count=dpc_receive(file,length,message);
   if (count != (MagickOffsetType) length)
     return(MagickFalse);
   p=message;
@@ -982,7 +1075,7 @@ static MagickBooleanType WriteDistributeCachePixels(SplayTreeInfo *registry,
     exception);
   if (q == (PixelPacket *) NULL)
     return(MagickFalse);
-  count=dpc_read(file,length,(unsigned char *) q);
+  count=dpc_receive(file,length,(unsigned char *) q);
   if (count != (MagickOffsetType) length)
     return(MagickFalse);
   return(SyncAuthenticPixels(image,exception));
@@ -1056,7 +1149,8 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket_arg)
   /*
     Receive client's keyed hash.
   */
-  count=dpc_read(client_socket,sizeof(key),(unsigned char *) &key);
+  count=dpc_receive_deadline(client_socket,sizeof(key),(unsigned char *) &key,
+    (double) time((time_t *) NULL)+5.0);
   if ((count != (MagickOffsetType) sizeof(key)) || (key != session_key))
     {
       CLOSE_SOCKET(client_socket);
@@ -1073,10 +1167,10 @@ static HANDLER_RETURN_TYPE DistributePixelCacheClient(void *socket_arg)
     /*
       Each command must echo the authenticated session key.
     */
-    count=dpc_read(client_socket,1,(unsigned char *) &command);
+    count=dpc_receive(client_socket,1,(unsigned char *) &command);
     if (count <= 0)
       break;
-    count=dpc_read(client_socket,sizeof(key),(unsigned char *) &key);
+    count=dpc_receive(client_socket,sizeof(key),(unsigned char *) &key);
     if ((count != (MagickOffsetType) sizeof(key)) || (key != session_key))
       break;
     switch (command)
@@ -1452,7 +1546,7 @@ MagickPrivate MagickBooleanType OpenDistributePixelCache(
   if (count != (MagickOffsetType) (p-message))
     return(MagickFalse);
   status=MagickFalse;
-  count=dpc_read(server_info->file,sizeof(status),(unsigned char *) &status);
+  count=dpc_receive(server_info->file,sizeof(status),(unsigned char *) &status);
   if (count != (MagickOffsetType) sizeof(status))
     return(MagickFalse);
   return(status);
@@ -1528,7 +1622,7 @@ MagickPrivate MagickOffsetType ReadDistributePixelCacheIndexes(
   count=dpc_send(server_info->file,p-message,message);
   if (count != (MagickOffsetType) (p-message))
     return(-1);
-  return(dpc_read(server_info->file,length,indexes));
+  return(dpc_receive(server_info->file,length,indexes));
 }
 
 /*
@@ -1601,7 +1695,7 @@ MagickPrivate MagickOffsetType ReadDistributePixelCachePixels(
   count=dpc_send(server_info->file,p-message,message);
   if (count != (MagickOffsetType) (p-message))
     return(-1);
-  return(dpc_read(server_info->file,length,pixels));
+  return(dpc_receive(server_info->file,length,pixels));
 }
 
 /*
@@ -1654,7 +1748,7 @@ MagickPrivate MagickBooleanType RelinquishDistributePixelCache(
   if (count != (MagickOffsetType) (p-message))
     return(MagickFalse);
   status=MagickFalse;
-  count=dpc_read(server_info->file,sizeof(status),(unsigned char *) &status);
+  count=dpc_receive(server_info->file,sizeof(status),(unsigned char *) &status);
   if (count != (MagickOffsetType) sizeof(status))
     return(MagickFalse);
   return(status);
