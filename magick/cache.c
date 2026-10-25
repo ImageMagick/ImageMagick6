@@ -2945,12 +2945,12 @@ static inline ssize_t EdgeY(const ssize_t y,const size_t rows)
 
 static inline MagickBooleanType IsOffsetOverflow(const ssize_t x,
   const ssize_t y)
-{             
+{
   if (((y > 0) && (x > (MAGICK_SSIZE_MAX-y))) ||
       ((y < 0) && (x < (MAGICK_SSIZE_MIN-y))))
     return(MagickFalse);
   return(MagickTrue);
-}     
+}
 
 static inline ssize_t RandomX(RandomInfo *random_info,const size_t columns)
 {
@@ -4463,6 +4463,14 @@ MagickExport PixelPacket *QueueAuthenticPixelCacheNexus(Image *image,
       (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
         "PixelsAreNotAuthentic","`%s'",image->filename);
       return((PixelPacket *) NULL);
+    }
+  if ((columns == 0) || (rows == 0) ||
+      ((MagickSizeType) columns > (MagickSizeType) (cache_info->columns-x)) ||
+      ((MagickSizeType) rows > (MagickSizeType) (cache_info->rows-y)))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "PixelsAreNotAuthentic","`%s'",image->filename);
+      return((Quantum *) NULL);
     }
   if (IsValidPixelOffset(y,cache_info->columns) == MagickFalse)
     return((PixelPacket *) NULL);
