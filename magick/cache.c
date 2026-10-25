@@ -4470,7 +4470,7 @@ MagickExport PixelPacket *QueueAuthenticPixelCacheNexus(Image *image,
     {
       (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
         "PixelsAreNotAuthentic","`%s'",image->filename);
-      return((Quantum *) NULL);
+      return((PixelPacket *) NULL);
     }
   if (IsValidPixelOffset(y,cache_info->columns) == MagickFalse)
     return((PixelPacket *) NULL);
