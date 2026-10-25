@@ -521,7 +521,8 @@ static MagickBooleanType WriteXBMImage(const ImageInfo *image_info,Image *image)
 {
   char
     basename[MaxTextExtent],
-    buffer[MaxTextExtent];
+    buffer[MaxTextExtent],
+    *sanitized_filename;
 
   MagickBooleanType
     status;
@@ -558,14 +559,16 @@ static MagickBooleanType WriteXBMImage(const ImageInfo *image_info,Image *image)
     Write X bitmap header.
   */
   GetPathComponent(image->filename,BasePath,basename);
+  sanitized_filename=SanitizeStringForIdentifier(basename);
   (void) FormatLocaleString(buffer,MaxTextExtent,"#define %s_width %.17g\n",
-    basename,(double) image->columns);
+    sanitized_filename,(double) image->columns);
   (void) WriteBlob(image,strlen(buffer),(unsigned char *) buffer);
   (void) FormatLocaleString(buffer,MaxTextExtent,"#define %s_height %.17g\n",
-    basename,(double) image->rows);
+    sanitized_filename,(double) image->rows);
   (void) WriteBlob(image,strlen(buffer),(unsigned char *) buffer);
   (void) FormatLocaleString(buffer,MaxTextExtent,
-    "static char %s_bits[] = {\n",basename);
+    "static char %s_bits[] = {\n",sanitized_filename);
+  sanitized_filename=DestroyString(sanitized_filename);
   (void) WriteBlob(image,strlen(buffer),(unsigned char *) buffer);
   (void) CopyMagickString(buffer," ",MaxTextExtent);
   (void) WriteBlob(image,strlen(buffer),(unsigned char *) buffer);
