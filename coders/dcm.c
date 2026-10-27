@@ -3054,7 +3054,6 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
   int
     *bluemap,
-    datum,
     *greenmap,
     *graymap,
     *redmap;
@@ -3090,6 +3089,9 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
   unsigned char
     *data;
+
+  unsigned int
+    datum;
 
   unsigned short
     group,
