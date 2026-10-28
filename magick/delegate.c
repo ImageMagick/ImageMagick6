@@ -1742,7 +1742,7 @@ static MagickBooleanType CopyDelegateFile(const char *source,
     source_file;
 
   MagickBooleanType
-    status;
+    status = MagickTrue;
 
   size_t
     quantum;
