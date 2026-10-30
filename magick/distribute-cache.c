@@ -76,6 +76,7 @@
 #undef MAGICKCORE_HAVE_DISTRIBUTE_CACHE
 #if defined(MAGICKCORE_HAVE_SOCKET) && defined(MAGICKCORE_THREAD_SUPPORT)
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <netdb.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -174,6 +175,18 @@ static inline MagickOffsetType dpc_receive_deadline(SOCKET_TYPE
   return(-1);
 }
 #else
+static void SetSocketNoDelay(SOCKET_TYPE file)
+{
+  int
+    one = 1;
+
+  /*
+    Disable Nagle.
+  */
+  (void) setsockopt(file,IPPROTO_TCP,TCP_NODELAY,(const char *) &one,
+    (socklen_t) sizeof(one));
+}
+
 static void SetSocketReceiveTimeout(SOCKET_TYPE file,double seconds)
 {
   /*
@@ -477,6 +490,7 @@ static int ConnectPixelCacheServer(const char *hostname,const int port,
       message=DestroyString(message);
       return(-1);
     }
+  SetSocketNoDelay(client_socket);
   /*
     Receive server nonce.
   */
@@ -1360,6 +1374,7 @@ MagickExport void DistributePixelCacheServer(const int port,
         sizeof(tv));
     }
 #endif
+    SetSocketNoDelay(*client_socket_ptr);
     if (status == -1)
       {
         CLOSE_SOCKET(*client_socket_ptr);
