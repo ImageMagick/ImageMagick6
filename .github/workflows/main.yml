@@ -51,7 +51,7 @@ jobs:
           CXXFLAGS: -Wno-deprecated-declarations
         run: |
           autoreconf -fiv
-          ./configure --with-quantum-depth=16 --enable-hdri=no --with-perl --prefix=/usr
+          ./configure --with-quantum-depth=16 --enable-hdri=no --without-perl --prefix=/usr
 
       - name: Build ImageMagick
         run: |
@@ -87,7 +87,7 @@ jobs:
           export CFLAGS="-Wno-deprecated-declarations"
           export LDFLAGS=$(pkg-config --libs libjpeg)
           autoreconf -fiv
-          ./configure --with-quantum-depth=16 --enable-hdri=no --with-perl
+          ./configure --with-quantum-depth=16 --enable-hdri=no --without-perl
 
       - name: Build ImageMagick
         run: |

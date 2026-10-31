@@ -68,7 +68,7 @@ jobs:
           set -e
           export DEBIAN_FRONTEND=noninteractive
           apt update
-          apt-get install -y autoconf gcc g++ libfontconfig1-dev libfreetype6-dev libltdl-dev make pkg-config
+          apt-get install -y autoconf gcc g++ libfontconfig1-dev libfreetype6-dev libltdl-dev make perl pkg-config
 
       - name: Clone msttcorefonts
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 #v7.0.1
@@ -89,17 +89,22 @@ jobs:
       - name: Configure ImageMagick
         run: |
           export CFLAGS="-Wno-deprecated-declarations"
-          ./configure --with-quantum-depth=${{matrix.quantum}} --enable-hdri=${{matrix.hdri}} --${{matrix.modules}}
+          ./configure --with-perl --with-quantum-depth=${{matrix.quantum}} --enable-hdri=${{matrix.hdri}} --${{matrix.modules}}
 
       - name: Build ImageMagick
         run: |
-          make
+          make install
 
       - name: Test ImageMagick
         run: |
           make check || exit_code=$?
           if [ "$exit_code" != "0" ] ; then cat ./test-suite.log ; fi
           exit $exit_code
+
+      - name: Test PerlMagick
+        run: |
+          cd PerlMagick
+          make test TEST_VERBOSE=1
 
   build_windows:
     name: Windows ${{matrix.quantum}}${{matrix.hdri_flag}}-${{matrix.architecture}} (${{matrix.buildType}})
