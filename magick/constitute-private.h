@@ -46,22 +46,29 @@ static inline MagickBooleanType IsAllowedCoder(const char *coder)
   return(MagickFalse);
 }
 
-static inline Image *StrictReadImage(ImageInfo *image_info,
+static inline MagickBooleanType CheckCoderDepth(ImageInfo *image_info,
   ExceptionInfo *exception)
 {
 #define MagickMaxCoderDepth  250
 
-  char
-    magic[MagickPathExtent];
-
   if (image_info->coder_depth++ >= MagickMaxCoderDepth)
-
     {
       errno=EPERM;
       (void) ThrowMagickException(exception,GetMagickModule(),OptionError,
         "ImageNestedTooDeeply","`%s'",image_info->filename);
-      return((Image *) NULL);
+      return(MagickFalse);
     }
+  return(MagickTrue);
+}
+
+static inline Image *StrictReadImage(ImageInfo *image_info,
+  ExceptionInfo *exception)
+{
+  char
+    magic[MagickPathExtent];
+
+  if (CheckCoderDepth(image_info,exception) == MagickFalse)
+    return((Image *) NULL);
   (void) GetPathComponent(image_info->filename,MagickPath,magic);
   if (*magic != '\0')
     {
@@ -82,6 +89,14 @@ static inline Image *StrictReadImage(ImageInfo *image_info,
       return((Image *) NULL);
     }
   return(ReadImage(image_info,exception));
+}
+
+static inline Image *StrictReadInlineImage(ImageInfo *image_info,
+  const char *content,ExceptionInfo *exception)
+{
+  if (CheckCoderDepth(image_info,exception) == MagickFalse)
+    return((Image *) NULL);
+  return(ReadInlineImage(image_info,content,exception));
 }
 
 #if defined(__cplusplus) || defined(c_plusplus)
