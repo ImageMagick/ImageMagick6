@@ -1344,9 +1344,16 @@ static void SetAttribute(pTHX_ struct PackageInfo *info,Image *image,
       if (LocaleCompare(attribute,"comment") == 0)
         {
           for ( ; image; image=image->next)
-            (void) SetImageProperty(image,"Comment",InterpretImageProperties(
-              info ? info->image_info : (ImageInfo *) NULL,image,
-              SvPV(sval,na)));
+            {
+              char
+                *property;
+
+              property=InterpretImageProperties(info ? info->image_info :
+                (ImageInfo *) NULL,image,SvPV(sval,na));
+              (void) SetImageProperty(image,"comment",property);
+              if (property != (char *) NULL)
+                property=(char *) RelinquishMagickMemory(property);
+            }
           break;
         }
       if (LocaleCompare(attribute,"compression") == 0)
@@ -1716,9 +1723,16 @@ static void SetAttribute(pTHX_ struct PackageInfo *info,Image *image,
       if (LocaleCompare(attribute,"label") == 0)
         {
           for ( ; image; image=image->next)
-            (void) SetImageProperty(image,"label",InterpretImageProperties(
-              info ? info->image_info : (ImageInfo *) NULL,image,
-              SvPV(sval,na)));
+            {
+              char
+                *property;
+
+              property=InterpretImageProperties(info ? info->image_info :
+                (ImageInfo *) NULL,image,SvPV(sval,na));
+              (void) SetImageProperty(image,"label",property);
+              if (property != (char *) NULL)
+                property=(char *) RelinquishMagickMemory(property);
+            }
           break;
         }
       if (LocaleCompare(attribute,"loop") == 0)
@@ -7913,20 +7927,32 @@ Mogrify(ref,...)
         }
         case 1:  /* Comment */
         {
+          char
+            *property;
+
           if (attribute_flag[0] == 0)
             argument_list[0].string_reference=(char *) NULL;
-          (void) SetImageProperty(image,"comment",InterpretImageProperties(
+          property=InterpretImageProperties(
             info ? info->image_info : (ImageInfo *) NULL,image,
-            argument_list[0].string_reference));
+            argument_list[0].string_reference);
+          (void) SetImageProperty(image,"comment",property);
+          if (property != (char *) NULL)
+            property=(char *) RelinquishMagickMemory(property);
           break;
         }
         case 2:  /* Label */
         {
+          char
+            *property;
+
           if (attribute_flag[0] == 0)
             argument_list[0].string_reference=(char *) NULL;
-          (void) SetImageProperty(image,"label",InterpretImageProperties(
+          property=InterpretImageProperties(
             info ? info->image_info : (ImageInfo *) NULL,image,
-            argument_list[0].string_reference));
+            argument_list[0].string_reference);
+          (void) SetImageProperty(image,"label",property);
+          if (property != (char *) NULL)
+            property=(char *) RelinquishMagickMemory(property);
           break;
         }
         case 3:  /* AddNoise */
@@ -11528,9 +11554,16 @@ Montage(ref,...)
           if (LocaleCompare(attribute,"label") == 0)
             {
               for (next=image; next; next=next->next)
-                (void) SetImageProperty(next,"label",InterpretImageProperties(
-                  info ? info->image_info : (ImageInfo *) NULL,next,
-                  SvPV(ST(i),na)));
+                {
+                  char
+                    *property;
+
+                  property=InterpretImageProperties(info ? info->image_info :
+                    (ImageInfo *) NULL,next,SvPV(ST(i),na));
+                  (void) SetImageProperty(next,"label",property);
+                  if (property != (char *) NULL)
+                    property=(char *) RelinquishMagickMemory(property);
+                }
               break;
             }
           ThrowPerlException(exception,OptionError,"UnrecognizedAttribute",
