@@ -1043,11 +1043,24 @@ sub testMontage {
     # $montage->Display();
     $signature=$montage->GetAttribute('signature');
     if ( defined( $signature ) ) {
-      if ( $signature ne $ref_signature ) {
+      my $signature_matches = 0;
+      if (ref($ref_signature) eq 'ARRAY') {
+        foreach my $expected (@$ref_signature) {
+          if ($signature eq $expected) {
+            $signature_matches = 1;
+            last;
+          }
+        }
+      } else {
+        $signature_matches = $signature eq $ref_signature;
+      }
+      if ( ! $signature_matches ) {
+        my $expected_signatures = ref($ref_signature) eq 'ARRAY' ?
+          join(' or ',@$ref_signature) : $ref_signature;
         print "ReadImage()\n";
         print "Test $test, signatures do not match.\n";
-      	print "     Expected: $ref_signature\n";
-      	print "     Computed: $signature\n";
+        print "     Expected: $expected_signatures\n";
+        print "     Computed: $signature\n";
         print "     Depth:    ", Image::Magick->new()->QuantumDepth, "\n";
         $status = $montage->Write("test_${test}_out.miff");
         warn "Write: $status" if "$status";

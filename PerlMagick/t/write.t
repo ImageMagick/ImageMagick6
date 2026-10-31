@@ -72,14 +72,14 @@ print("CompuServe graphics interchange format ...\n");
 testReadWrite( 'GIF:input.gif',
   'GIF:output.gif',
   q//,
-  '5a25065144213cd0230b7572bd9aef0e447c23a0622193a94ae62c9895c44bf7' );
+  '62b21e492cd5e49b5135e315f9ff465e52161ce4dbc655a63fb03865a30119f7' );
 
 print("CompuServe graphics interchange format (1987) ...\n");
 ++$test;
 testReadWrite( 'GIF87:input.gif87',
   'GIF87:output.gif87',
   q//,
-  '0138e1e5c9a7ed1604ec5bbe8c22378b84fcd9abb8c36e984b051f9efc14d54e' );
+  'a6fac4f2660a523c49da020960a9c8d29370490384a6564934fea2c6bbbe1414' );
 
 print("Magick image file format ...\n");
 ++$test;

@@ -142,19 +142,21 @@ testMontage( q//,
 testMontage( q/bordercolor=>'blue', mattecolor=>'red'/, 
   q/background=>'#696e7e',, tile=>'4x4', geometry=>'90x80+3+3>', frame=>'8x10',
   borderwidth=>'0', gravity=>'Center', background=>'gray'/,
-  '5110ae8eb21ded2d8e6b6d3f5cc80317a6c58304f84731810a318bd76473427a',
+  '07c738faa16d85f140e11a0cf407a4cb8dfe9a1f339b97ac878f1faa49121d31',
   'eadda2683d38109f1432faa08a7c92cf62d13730e33044041ef4ac8bf68c96b2',
   '1419b60478f8f0d6f4da5fb87b0df3f16313a1e89a3192d9feeda2cdf2ac9860');
 
 #
 # 12) Test Framed Montage with drop-shadows
 #
+# Q16 HDRI and non-HDRI builds produce different signatures.
 ++$test;
 testMontage( q/bordercolor=>'blue', mattecolor=>'red'/, 
   q/background=>'#696e7e',, tile=>'4x4', geometry=>'90x80+6+6>', frame=>'8x10',
   borderwidth=>'0', gravity=>'Center', shadow=>'True',background=>'gray'/,
-  'd4de864f9004b185297c9c2351f811aaeb779095bdd8fd5f29bcfbee79f09da4',
-  'e86e823d2b2158dd688d4c0797465a0176e4a378a222ab19403ecd2fc3404460',
+  '5822d11ad5b4f881b1f04bbab9a1d40cc81cbca3f9aa0a7dbb1ec31e3f4d74e8',
+  ['e86e823d2b2158dd688d4c0797465a0176e4a378a222ab19403ecd2fc3404460',
+   '1228bfeb109e22d89e382394f8da80aee93978e7a3be9ca8769f2aefec017284'],
   '803c926764df2ad940f36fbbeea274e05467d729bfdfb2f28c479cfd27245a85');
 
 #
@@ -164,8 +166,9 @@ testMontage( q/bordercolor=>'blue', mattecolor=>'red'/,
 testMontage( q/bordercolor=>'blue', mattecolor=>'red'/, 
   q/background=>'#696e7e',, tile=>'4x4', geometry=>'90x80+6+6>', frame=>'8x10',
   borderwidth=>'0', gravity=>'Center', shadow=>'True', texture=>'granite:'/,
-  '8418407b6d56d2c1b67bc735004794d9eb20609d30115a93255eefcad3499e95',
-  '3596f0f7b843955a6c4e54a83714c0d7b87244a290a348143ed9b875290e5035',
+  '04f374597b415755d359bf49a3c0a05d7904e65773cb4932ec262d673db47f20',
+  ['3596f0f7b843955a6c4e54a83714c0d7b87244a290a348143ed9b875290e5035',
+   '8908c2b5f7d6af5a4064c84f79a60cd34d7c394b59d50846be5bebbd335388d2'],
   '5793a1de15b5d73df297968af79fa01a110c1585cccd46dcbef794674ab5f174');
 
 #
