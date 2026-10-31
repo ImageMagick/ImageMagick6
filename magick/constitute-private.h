@@ -49,7 +49,7 @@ static inline MagickBooleanType IsAllowedCoder(const char *coder)
 static inline MagickBooleanType CheckCoderDepth(ImageInfo *image_info,
   ExceptionInfo *exception)
 {
-#define MagickMaxCoderDepth  250
+#define MagickMaxCoderDepth  128
 
   if (image_info->coder_depth++ >= MagickMaxCoderDepth)
     {
