@@ -777,7 +777,7 @@ static StringInfo *ParseImageResourceBlocks(Image *image,
       break;
     p=PushLongPixel(MSBEndian,p,&count);
     offset=(ssize_t) count;
-    if ((offset <= 0) || ((p+offset) > (blocks+length)) ||
+    if ((offset < 0) || ((p+offset) > (blocks+length)) ||
         (((size_t) (p-blocks)+(size_t) offset) > (size_t) length))
       {
         (void) ThrowMagickException(&image->exception,GetMagickModule(),
