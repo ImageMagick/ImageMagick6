@@ -207,12 +207,16 @@ MagickExport Image *FrameImage(const Image *image,const FrameInfo *frame_info,
   assert(frame_info != (FrameInfo *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",image->filename);
-  if ((frame_info->outer_bevel < 0) || (frame_info->inner_bevel < 0))
+  if ((frame_info->outer_bevel < 0) || (frame_info->inner_bevel < 0) ||
+      (frame_info->x < 0) || (frame_info->y < 0))
     ThrowImageException(OptionError,"FrameIsLessThanImageSize");
   bevel_width=(size_t) (frame_info->outer_bevel+frame_info->inner_bevel);
-  x=(ssize_t) frame_info->width-frame_info->x-bevel_width;
-  y=(ssize_t) frame_info->height-frame_info->y-bevel_width;
-  if ((x < (ssize_t) image->columns) || (y < (ssize_t) image->rows))
+  if (((size_t) frame_info->x < bevel_width) ||
+      ((size_t) frame_info->y < bevel_width) ||
+      (frame_info->width < image->columns) ||
+      (frame_info->height < image->rows) ||
+      ((size_t) frame_info->width < (image->columns+frame_info->x+bevel_width)) ||
+      ((size_t) frame_info->height < (image->rows+frame_info->y+bevel_width)))
     ThrowImageException(OptionError,"FrameIsLessThanImageSize");
   /*
     Initialize framed image attributes.
