@@ -1818,6 +1818,8 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                       if ((attribute != (const char *) NULL)  &&
                           (LocaleCompare(attribute,value) == 0))
                         {
+                          if (msl_info->image[j] == (Image *) NULL)
+                            break;
                           composite_image=CloneImage(msl_info->image[j],0,0,
                             MagickFalse,exception);
                           break;
@@ -3700,6 +3702,8 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                       if ((attribute != (const char *) NULL)  &&
                           (LocaleCompare(attribute,value) == 0))
                         {
+                          if (msl_info->image[j] == (Image *) NULL)
+                            break;
                           affinity_image=CloneImage(msl_info->image[j],0,0,
                             MagickFalse,exception);
                           break;
@@ -7234,6 +7238,8 @@ static void MSLStartElement(void *context,const xmlChar *tag,
                       if ((attribute != (const char *) NULL)  &&
                           (LocaleCompare(attribute,value) == 0))
                         {
+                          if (msl_info->image[j] == (Image *) NULL)
+                            break;
                           texture_image=CloneImage(msl_info->image[j],0,0,
                             MagickFalse,exception);
                           break;
