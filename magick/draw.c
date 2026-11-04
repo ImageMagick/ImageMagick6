@@ -6632,6 +6632,29 @@ static MagickBooleanType TraceLine(PrimitiveInfo *primitive_info,
   return(MagickTrue);
 }
 
+static MagickBooleanType GetArcFlag(const char **path,MagickBooleanType *flag)
+{
+  const char
+    *p;
+
+  /*
+    An arc flag is a single 0 or 1 and need not be separated from the next
+    value, e.g. "a4 4 0 010 8".
+  */
+  p=(*path);
+  while (isspace((int) ((unsigned char) *p)) != 0)
+    p++;
+  if (*p == ',')
+    p++;
+  while (isspace((int) ((unsigned char) *p)) != 0)
+    p++;
+  if ((*p != '0') && (*p != '1'))
+    return(MagickFalse);
+  *flag=(*p == '1') ? MagickTrue : MagickFalse;
+  *path=p+1;
+  return(MagickTrue);
+}
+
 static ssize_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
 {
   char
@@ -6716,67 +6739,56 @@ static ssize_t TracePath(Image *image,MVGInfo *mvg_info,const char *path)
         */
         do
         {
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
+          (void) GetNextToken(p,&p,MagickPathExtent,token);
           if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
             ThrowPointExpectedException(image,token);
           if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MagickPathExtent,token);
           arc.x=GetDrawValue(token,&next_token);
           if (token == next_token)
             ThrowPointExpectedException(image,token);
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
+          (void) GetNextToken(p,&p,MagickPathExtent,token);
           if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
             ThrowPointExpectedException(image,token);
           if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MagickPathExtent,token);
           arc.y=GetDrawValue(token,&next_token);
           if (token == next_token)
             ThrowPointExpectedException(image,token);
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
+          (void) GetNextToken(p,&p,MagickPathExtent,token);
           if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
             ThrowPointExpectedException(image,token);
           if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MagickPathExtent,token);
           angle=GetDrawValue(token,&next_token);
           if (token == next_token)
             ThrowPointExpectedException(image,token);
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
+          if (GetArcFlag(&p,&large_arc) == MagickFalse)
+            ThrowPointExpectedException(image,token);
+          if (GetArcFlag(&p,&sweep) == MagickFalse)
+            ThrowPointExpectedException(image,token);
+          (void) GetNextToken(p,&p,MagickPathExtent,token);
           if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
             ThrowPointExpectedException(image,token);
           if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
-          large_arc=StringToLong(token) != 0 ? MagickTrue : MagickFalse;
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
-            ThrowPointExpectedException(image,token);
-          if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
-          sweep=StringToLong(token) != 0 ? MagickTrue : MagickFalse;
-          if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
-            ThrowPointExpectedException(image,token);
-          if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
-          if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
-            ThrowPointExpectedException(image,token);
-          if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MagickPathExtent,token);
           x=GetDrawValue(token,&next_token);
           if (token == next_token)
             ThrowPointExpectedException(image,token);
-          (void) GetNextToken(p,&p,MaxTextExtent,token);
+          (void) GetNextToken(p,&p,MagickPathExtent,token);
           if (IsValidListChar((int) ((unsigned char) *token)) == MagickFalse)
             ThrowPointExpectedException(image,token);
           if (*token == ',')
-            (void) GetNextToken(p,&p,MaxTextExtent,token);
+            (void) GetNextToken(p,&p,MagickPathExtent,token);
           y=GetDrawValue(token,&next_token);
           if (token == next_token)
             ThrowPointExpectedException(image,token);
           end.x=(double) (attribute == (int) 'A' ? x : point.x+x);
           end.y=(double) (attribute == (int) 'A' ? y : point.y+y);
-          status&=TraceArcPath(mvg_info,point,end,arc,angle,large_arc,sweep);
+          if (TraceArcPath(mvg_info,point,end,arc,angle,large_arc,sweep) == MagickFalse)
+            return(-1);
           q=(*mvg_info->primitive_info)+mvg_info->offset;
-          mvg_info->offset+=q->coordinates;
+          mvg_info->offset+=(ssize_t) q->coordinates;
           q+=(ptrdiff_t) q->coordinates;
           point=end;
           while (isspace((int) ((unsigned char) *p)) != 0)
