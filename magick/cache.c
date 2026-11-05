@@ -139,6 +139,9 @@ static PixelPacket
     const size_t,ExceptionInfo *),
   *QueueAuthenticPixelsCache(Image *,const ssize_t,const ssize_t,const size_t,
     const size_t,ExceptionInfo *),
+  *QueueAuthenticPixelCacheNexusInternal(Image *,const ssize_t,const ssize_t,
+    const size_t,const size_t,const MagickBooleanType,NexusInfo **,
+    ExceptionInfo *),
   *SetPixelCacheNexusPixels(const CacheInfo *magick_restrict,const MapMode,
     const ssize_t,const ssize_t,const size_t,const size_t,
     const MagickBooleanType,NexusInfo *magick_restrict,ExceptionInfo *)
@@ -1498,8 +1501,8 @@ MagickExport PixelPacket *GetAuthenticPixelCacheNexus(Image *image,
   */
   assert(image != (Image *) NULL);
   assert(image->signature == MagickCoreSignature);
-  pixels=QueueAuthenticPixelCacheNexus(image,x,y,columns,rows,MagickTrue,
-    nexus_info,exception);
+  pixels=QueueAuthenticPixelCacheNexusInternal(image,x,y,columns,rows,MagickTrue,
+    &nexus_info,exception);
   if (pixels == (PixelPacket *) NULL)
     return((PixelPacket *) NULL);
   cache_info=(CacheInfo *) image->cache;
@@ -4449,6 +4452,136 @@ MagickExport MagickBooleanType PersistPixelCache(Image *image,
 %    o exception: return any errors or warnings in this structure.
 %
 */
+
+static inline ssize_t GetPixelCacheNexusIndex(
+  const CacheInfo *magick_restrict cache_info,
+  const NexusInfo *magick_restrict nexus_info)
+{
+  const NexusInfo
+    *magick_restrict base;
+
+  size_t
+    number_nexus;
+
+  /*
+    Return the index of nexus_info within the nexus array owned by cache_info.
+  */
+  if ((cache_info == (const CacheInfo *) NULL) ||
+      (cache_info->nexus_info == (NexusInfo **) NULL) ||
+      (nexus_info == (const NexusInfo *) NULL))
+    return(-1);
+  base=(*cache_info->nexus_info);
+  number_nexus=2*cache_info->number_threads;
+  if ((nexus_info < base) || (nexus_info >= (base+number_nexus)))
+    return(-1);
+  if (cache_info->nexus_info[nexus_info-base] != nexus_info)
+    return(-1);
+  return((ssize_t) (nexus_info-base));
+}
+
+static PixelPacket *QueueAuthenticPixelCacheNexusInternal(Image *image,
+  const ssize_t x,const ssize_t y,const size_t columns,const size_t rows,
+  const MagickBooleanType clone,NexusInfo **nexus_info,ExceptionInfo *exception)
+{
+  CacheInfo
+    *magick_restrict cache_info,
+    *magick_restrict source_info;
+
+  MagickOffsetType
+    offset;
+
+  MagickSizeType
+    number_pixels;
+
+  PixelPacket
+    *magick_restrict pixels;
+
+  size_t
+    source_threads;
+
+  ssize_t
+    nexus_index;
+
+  /*
+    Validate pixel cache geometry.
+  */
+  assert(image != (const Image *) NULL);
+  assert(image->signature == MagickCoreSignature);
+  assert(image->cache != (Cache) NULL);
+  assert(nexus_info != (NexusInfo **) NULL);
+  source_info=(CacheInfo *) image->cache;
+  source_threads=source_info->number_threads;
+  nexus_index=GetPixelCacheNexusIndex(source_info,*nexus_info);
+  cache_info=(CacheInfo *) GetImagePixelCache(image,clone,exception);
+  if (cache_info == (Cache) NULL)
+    {
+      if ((nexus_index >= 0) && ((CacheInfo *) image->cache != source_info))
+        *nexus_info=(NexusInfo *) NULL;  /* never hand back a stale nexus */
+      return((PixelPacket *) NULL);
+    }
+  assert(cache_info->signature == MagickCoreSignature);
+  if ((nexus_index >= 0) && (cache_info != source_info))
+    {
+      NexusInfo
+        *magick_restrict live_nexus;
+
+      /*
+        The cache was replaced: resolve the nexus from the live cache.
+      */
+      live_nexus=(NexusInfo *) NULL;
+      if ((cache_info->nexus_info != (NexusInfo **) NULL) &&
+          (source_threads <= cache_info->number_threads))
+        {
+          if (nexus_index < (ssize_t) source_threads)
+            live_nexus=cache_info->nexus_info[nexus_index];
+          else
+            live_nexus=cache_info->nexus_info[nexus_index-(ssize_t)
+              source_threads]->virtual_nexus;
+        }
+      *nexus_info=live_nexus;
+      if (live_nexus == (NexusInfo *) NULL)
+        {
+          (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+            "UnableToGetCacheNexus","`%s'",image->filename);
+          return((PixelPacket *) NULL);
+        }
+    }
+  if (*nexus_info == (NexusInfo *) NULL)
+    return((PixelPacket *) NULL);
+  if ((columns == 0) || (rows == 0) ||
+      (cache_info->columns == 0) || (cache_info->rows == 0) ||
+      (x < 0) || (y < 0) ||
+      (x >= (ssize_t) cache_info->columns) ||
+      (y >= (ssize_t) cache_info->rows))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
+        "PixelsAreNotAuthentic","`%s'",image->filename);
+      return((PixelPacket *) NULL);
+    }
+  if (IsValidPixelOffset(y,cache_info->columns) == MagickFalse)
+    return((PixelPacket *) NULL);
+  offset=y*(MagickOffsetType) cache_info->columns;
+  if (IsOffsetOverflow(offset,(MagickOffsetType) x) == MagickFalse)
+    return((PixelPacket *) NULL);
+  offset+=x;
+  if (offset < 0)
+    return((PixelPacket *) NULL);
+  number_pixels=(MagickSizeType) cache_info->columns*cache_info->rows;
+  offset+=((MagickOffsetType) rows-1)*(MagickOffsetType) cache_info->columns;
+  if (IsOffsetOverflow(offset,(MagickOffsetType) columns-1) == MagickFalse)
+    return((PixelPacket *) NULL);
+  offset+=(MagickOffsetType) columns-1;
+  if ((MagickSizeType) offset >= number_pixels)
+    return((PixelPacket *) NULL);
+  /*
+    Return pixel cache.
+  */
+  pixels=SetPixelCacheNexusPixels(cache_info,WriteMode,x,y,columns,rows,
+    (image->clip_mask != (Image *) NULL) || (image->mask != (Image *) NULL) ?
+    MagickTrue : MagickFalse,*nexus_info,exception);
+  return(pixels);
+}
+
 MagickExport PixelPacket *QueueAuthenticPixel(Image *image,const ssize_t x,
   const ssize_t y,const size_t columns,const size_t rows,
   const MagickBooleanType clone,NexusInfo *nexus_info,
@@ -4462,54 +4595,8 @@ MagickExport PixelPacket *QueueAuthenticPixelCacheNexus(Image *image,
   const ssize_t x,const ssize_t y,const size_t columns,const size_t rows,
   const MagickBooleanType clone,NexusInfo *nexus_info,ExceptionInfo *exception)
 {
-  CacheInfo
-    *magick_restrict cache_info;
-
-  MagickOffsetType
-    offset;
-
-  MagickSizeType
-    number_pixels;
-
-  PixelPacket
-    *magick_restrict pixels;
-
-  /*
-    Validate pixel cache geometry.
-  */
-  assert(image != (const Image *) NULL);
-  assert(image->signature == MagickCoreSignature);
-  assert(image->cache != (Cache) NULL);
-  cache_info=(CacheInfo *) GetImagePixelCache(image,clone,exception);
-  if (cache_info == (Cache) NULL)
-    return((PixelPacket *) NULL);
-  assert(cache_info->signature == MagickCoreSignature);
-  if ((columns == 0) || (rows == 0) ||
-      (cache_info->columns == 0) || (cache_info->rows == 0) ||
-      (x < 0) || (y < 0) || (x >= (ssize_t) cache_info->columns) ||
-      (y >= (ssize_t) cache_info->rows))
-    {
-      (void) ThrowMagickException(exception,GetMagickModule(),CacheError,
-        "PixelsAreNotAuthentic","`%s'",image->filename);
-      return((PixelPacket *) NULL);
-    }
-  if (IsValidPixelOffset(y,cache_info->columns) == MagickFalse)
-    return((PixelPacket *) NULL);
-  offset=y*(MagickOffsetType) cache_info->columns+x;
-  if (offset < 0)
-    return((PixelPacket *) NULL);
-  number_pixels=(MagickSizeType) cache_info->columns*cache_info->rows;
-  offset+=((MagickOffsetType) rows-1)*(MagickOffsetType) cache_info->columns+
-    (MagickOffsetType) columns-1;
-  if ((MagickSizeType) offset >= number_pixels)
-    return((PixelPacket *) NULL);
-  /*
-    Return pixel cache.
-  */
-  pixels=SetPixelCacheNexusPixels(cache_info,WriteMode,x,y,columns,rows,
-    (image->clip_mask != (Image *) NULL) || (image->mask != (Image *) NULL) ?
-    MagickTrue : MagickFalse,nexus_info,exception);
-  return(pixels);
+  return(QueueAuthenticPixelCacheNexusInternal(image,x,y,columns,rows,clone,
+    &nexus_info,exception));
 }
 
 /*
