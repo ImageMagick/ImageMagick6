@@ -17,7 +17,7 @@
 %                                 March 2000                                  %
 %                                                                             %
 %                                                                             %
-%  Copyright 1999 ImageMagick Studio LLC, a non-profit organization           %
+%  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization         %
 %  dedicated to making software imaging solutions freely available.           %
 %                                                                             %
 %  You may not use this file except in compliance with the License.  You may  %
@@ -50,6 +50,8 @@
 #include "magick/registry.h"
 #include "magick/splay-tree.h"
 #include "magick/string_.h"
+#include "magick/string-private.h"
+#include "magick/timer-private.h"
 #include "magick/utility.h"
 
 /*
@@ -107,20 +109,20 @@ MagickExport MagickBooleanType DefineImageRegistry(const RegistryType type,
   const char *option,ExceptionInfo *exception)
 {
   char
-    key[MaxTextExtent],
-    value[MaxTextExtent];
+    key[MagickPathExtent],
+    value[MagickPathExtent];
 
   char
     *p;
 
   assert(option != (const char *) NULL);
-  (void) CopyMagickString(key,option,MaxTextExtent);
+  (void) CopyMagickString(key,option,MagickPathExtent);
   for (p=key; *p != '\0'; p++)
     if (*p == '=')
       break;
   *value='\0';
   if (*p == '=')
-    (void) CopyMagickString(value,p+1,MaxTextExtent);
+    (void) CopyMagickString(value,p+1,MagickPathExtent);
   *p='\0';
   return(SetImageRegistry(type,key,value,exception));
 }
@@ -149,12 +151,20 @@ MagickExport MagickBooleanType DefineImageRegistry(const RegistryType type,
 */
 MagickExport MagickBooleanType DeleteImageRegistry(const char *key)
 {
+  MagickBooleanType
+    status;
+
   assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (registry == (void *) NULL)
     return(MagickFalse);
-  return(DeleteNodeFromSplayTree(registry,key));
+  if (registry_semaphore == (SemaphoreInfo *) NULL)
+    ActivateSemaphoreInfo(&registry_semaphore);
+  LockSemaphoreInfo(registry_semaphore);
+  status=DeleteNodeFromSplayTree(registry,key);
+  UnlockSemaphoreInfo(registry_semaphore);
+  return(status);
 }
 
 /*
@@ -198,9 +208,15 @@ MagickExport void *GetImageRegistry(const RegistryType type,const char *key,
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (registry == (void *) NULL)
     return((void *) NULL);
+  if (registry_semaphore == (SemaphoreInfo *) NULL)
+    ActivateSemaphoreInfo(&registry_semaphore);
+  LockSemaphoreInfo(registry_semaphore);
   registry_info=(RegistryInfo *) GetValueFromSplayTree(registry,key);
   if (registry_info == (void *) NULL)
-    return((void *) NULL);
+    {
+      UnlockSemaphoreInfo(registry_semaphore);
+      return((void *) NULL);
+    }
   value=(void *) NULL;
   switch (type)
   {
@@ -245,6 +261,7 @@ MagickExport void *GetImageRegistry(const RegistryType type,const char *key,
     default:
       break;
   }
+  UnlockSemaphoreInfo(registry_semaphore);
   return(value);
 }
 
@@ -356,12 +373,20 @@ MagickExport void RegistryComponentTerminus(void)
 */
 MagickExport void *RemoveImageRegistry(const char *key)
 {
+  void
+    *value;
+
   assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
   if (registry == (void *) NULL)
     return((void *) NULL);
-  return(RemoveNodeFromSplayTree(registry,key));
+  if (registry_semaphore == (SemaphoreInfo *) NULL)
+    ActivateSemaphoreInfo(&registry_semaphore);
+  LockSemaphoreInfo(registry_semaphore);
+  value=RemoveNodeFromSplayTree(registry,key);
+  UnlockSemaphoreInfo(registry_semaphore);
+  return(value);
 }
 
 /*
@@ -381,7 +406,7 @@ MagickExport void *RemoveImageRegistry(const char *key)
 %
 %  The format of the ResetImageRegistryIterator method is:
 %
-%      ResetImageRegistryIterator(void)
+%      void ResetImageRegistryIterator(void)
 %
 */
 MagickExport void ResetImageRegistryIterator(void)
@@ -460,6 +485,9 @@ MagickExport MagickBooleanType SetImageRegistry(const RegistryType type,
   void
     *clone_value;
 
+  MagickBooleanType
+    status;
+
   assert(key != (const char *) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"%s",key);
@@ -518,15 +546,13 @@ MagickExport MagickBooleanType SetImageRegistry(const RegistryType type,
   registry_info->type=type;
   registry_info->value=clone_value;
   registry_info->signature=MagickCoreSignature;
+  if (registry_semaphore == (SemaphoreInfo *) NULL)
+    ActivateSemaphoreInfo(&registry_semaphore);
+  LockSemaphoreInfo(registry_semaphore);
   if (registry == (SplayTreeInfo *) NULL)
-    {
-      if (registry_semaphore == (SemaphoreInfo *) NULL)
-        ActivateSemaphoreInfo(&registry_semaphore);
-      LockSemaphoreInfo(registry_semaphore);
-      if (registry == (SplayTreeInfo *) NULL)
-        registry=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
-          DestroyRegistryNode);
-      UnlockSemaphoreInfo(registry_semaphore);
-    }
-  return(AddValueToSplayTree(registry,ConstantString(key),registry_info));
+    registry=NewSplayTree(CompareSplayTreeString,RelinquishMagickMemory,
+      DestroyRegistryNode);
+  status=AddValueToSplayTree(registry,ConstantString(key),registry_info);
+  UnlockSemaphoreInfo(registry_semaphore);
+  return(status);
 }
