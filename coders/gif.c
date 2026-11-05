@@ -1240,6 +1240,7 @@ static Image *ReadGIFImage(const ImageInfo *image_info,ExceptionInfo *exception)
                         remaining_profiles--;
                         if (profiles == (LinkedListInfo *) NULL)
                           profiles=NewLinkedList(0);
+                        SetStringInfoName(profile,name);
                         (void) AppendValueToLinkedList(profiles,profile);
                       }
                   }
