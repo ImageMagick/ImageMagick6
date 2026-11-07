@@ -500,7 +500,7 @@ MagickExport MagickBooleanType ConcatenateString(
     source_length;
 
   assert(destination != (char **) NULL);
-  if (source == (const char *) NULL)
+  if ((source == (const char *) NULL) || (*source == '\0'))
     return(MagickTrue);
   if (*destination == (char *) NULL)
     {
@@ -519,8 +519,7 @@ MagickExport MagickBooleanType ConcatenateString(
     OverAllocateMemory(length+MaxTextExtent),sizeof(**destination));
   if (*destination == (char *) NULL)
     ThrowFatalException(ResourceLimitFatalError,"UnableToConcatenateString");
-  if (source_length != 0)
-    (void) memcpy((*destination)+destination_length,source,source_length);
+  (void) memcpy((*destination)+destination_length,source,source_length);
   (*destination)[length]='\0';
   return(MagickTrue);
 }
