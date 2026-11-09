@@ -160,7 +160,6 @@ static inline void ConvertXYZToRGB(const double X,const double Y,const double Z,
   double
     b,
     g,
-    min,
     r;
 
   assert(red != (Quantum *) NULL);
@@ -169,13 +168,6 @@ static inline void ConvertXYZToRGB(const double X,const double Y,const double Z,
   r=(3.240969941904521*X)+(-1.537383177570093*Y)+(-0.498610760293*Z);
   g=(-0.96924363628087*X)+(1.87596750150772*Y)+(0.041555057407175*Z);
   b=(0.055630079696993*X)+(-0.20397695888897*Y)+(1.056971514242878*Z);
-  min=MagickMin(r,MagickMin(g,b));
-  if (min < 0.0)
-    {
-      r-=min;
-      g-=min;
-      b-=min;
-    }
   *red=ClampToQuantum((MagickRealType) EncodePixelGamma((MagickRealType)
     QuantumRange*r));
   *green=ClampToQuantum((MagickRealType) EncodePixelGamma((MagickRealType)
