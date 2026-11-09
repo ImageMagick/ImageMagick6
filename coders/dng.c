@@ -608,7 +608,8 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
     /*
       Set DNG image metadata.
     */
-    if (raw_info->color.profile != NULL)
+    if ((raw_info->color.profile != NULL) &&
+        ((MagickOffsetType) raw_info->color.profile_length <= GetBlobSize(image)))
       {
         profile=BlobToStringInfo(raw_info->color.profile,
           raw_info->color.profile_length);
@@ -619,7 +620,8 @@ static Image *ReadDNGImage(const ImageInfo *image_info,ExceptionInfo *exception)
           }
       }
 #if LIBRAW_COMPILE_CHECK_VERSION_NOTLESS(0,18)
-    if (raw_info->idata.xmpdata != NULL)
+    if ((raw_info->idata.xmpdata != NULL) &&
+        ((MagickOffsetType) raw_info->idata.xmplen <= GetBlobSize(image)))
       {
         profile=BlobToStringInfo(raw_info->idata.xmpdata,
           raw_info->idata.xmplen);
