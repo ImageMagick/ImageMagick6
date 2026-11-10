@@ -219,12 +219,17 @@ static Image *ReadMACImage(const ImageInfo *image_info,ExceptionInfo *exception)
                   bit=0;
               }
               if (SyncAuthenticPixels(image,exception) == MagickFalse)
-                break;
+                {
+                  status=MagickFalse;
+                  break;
+                }
               offset=0;
               p=pixels;
               y++;
             }
         }
+        if (status == MagickFalse)
+          break;
         continue;
       }
     count++;
@@ -254,12 +259,17 @@ static Image *ReadMACImage(const ImageInfo *image_info,ExceptionInfo *exception)
               bit=0;
           }
           if (SyncAuthenticPixels(image,exception) == MagickFalse)
-            break;
+            {
+              status=MagickFalse;
+              break;
+            }
           offset=0;
           p=pixels;
           y++;
         }
     }
+    if (status == MagickFalse)
+      break;
   }
   pixels=(unsigned char *) RelinquishMagickMemory(pixels);
   (void) SyncImage(image);
