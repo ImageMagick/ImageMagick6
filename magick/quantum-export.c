@@ -3168,6 +3168,8 @@ static void ExportRGBQuantum(QuantumInfo *quantum_info,
             }
             q=PopShortPixel(quantum_info->endian,(unsigned short) (pixel << 4),
               q);
+            if ((x % 3) == 2)
+              q+=(ptrdiff_t) quantum_info->pad;
             switch ((x+1) % 3)
             {
               default:
@@ -3190,7 +3192,8 @@ static void ExportRGBQuantum(QuantumInfo *quantum_info,
             }
             q=PopShortPixel(quantum_info->endian,(unsigned short) (pixel << 4),
               q);
-            q+=(ptrdiff_t) quantum_info->pad;
+            if (((x+1) % 3) == 2)
+              q+=(ptrdiff_t) quantum_info->pad;
           }
           for (bit=0; bit < (ssize_t) (3*number_pixels % 2); bit++)
           {
@@ -3216,7 +3219,8 @@ static void ExportRGBQuantum(QuantumInfo *quantum_info,
             }
             q=PopShortPixel(quantum_info->endian,(unsigned short) (pixel << 4),
               q);
-            q+=(ptrdiff_t) quantum_info->pad;
+            if (((x+bit) % 3) == 2)
+              q+=(ptrdiff_t) quantum_info->pad;
           }
           if (bit != 0)
             p++;
