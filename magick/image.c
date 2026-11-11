@@ -1844,7 +1844,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         pattern[extent]='\0';
         if (image != NULL)
           {
-            option=GetImageProperty(image,pattern,exception);
+            option=GetImageProperty(image,pattern,&image->exception);
             if (option == (const char *) NULL)
               option=GetImageArtifact(image,pattern);
           }
