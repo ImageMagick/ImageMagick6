@@ -2730,8 +2730,8 @@ namespace Magick
       *imageInfo;
 
     imageInfo=options.imageInfo();
-    imageSpec_.copy(imageInfo->filename,MaxTextExtent-1);
-    imageInfo->filename[imageSpec_.length()] = 0;
+    size_t n = imageSpec_.copy(imageInfo->filename,MaxTextExtent-1);
+    imageInfo->filename[n] = 0;
     GetPPException;
     images=MagickCore::ReadImage(imageInfo,exceptionInfo);
     insertImages(sequence_,images);
