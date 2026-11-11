@@ -1722,7 +1722,7 @@ static void SanitizeFilenameProperty(const char *source,char *destination,
   p=destination;
   for (q=source; *q != '\0' && (size_t) (p-destination) < (destination_size-1); q++)
   {
-    if ((*q == '/') || (*q == '\\'))
+    if ((*q == '/') || (*q == '\\') || (*q == ':'))
       *p++='_';
     else
       if ((*q == '.') && (*(q+1) == '.') && ((*(q+2) == '/') ||
@@ -1844,7 +1844,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         pattern[extent]='\0';
         if (image != NULL)
           {
-            option=GetImageProperty(image,pattern,&image->exception);
+            option=GetImageProperty(image,pattern);
             if (option == (const char *) NULL)
               option=GetImageArtifact(image,pattern);
           }
