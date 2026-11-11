@@ -1704,6 +1704,45 @@ static inline MagickBooleanType IsValidFormatSpecifier(const char *start,
   return(MagickFalse);
 }
 
+static void SanitizeFilenameProperty(const char *source,char *destination,
+  const size_t destination_size)
+{
+  char
+    *p;
+
+  const char
+    *q;
+
+  if (source == (const char *) NULL)
+    {
+      if (destination_size > 0)
+        destination[0]='\0';
+      return;
+    }
+  p=destination;
+  for (q=source; *q != '\0' && (size_t) (p-destination) < (destination_size-1); q++)
+  {
+    if ((*q == '/') || (*q == '\\'))
+      *p++='_';
+    else
+      if ((*q == '.') && (*(q+1) == '.') && ((*(q+2) == '/') ||
+          (*(q+2) == '\\') || (*(q+2) == '\0')))
+        {
+          if ((size_t) (p-destination) < (destination_size-2))
+            {
+              *p++='_';
+              *p++='_';
+            }
+          else
+            *p++='_';
+          q++;
+        }
+      else
+        *p++=(*q);
+  }
+  *p='\0';
+}
+
 MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   Image *image,const char *format,int value,char *filename)
 {
@@ -1788,11 +1827,14 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         const char
           *end = strchr(cursor,']'),
           *option = (const char *) NULL;
-
+    
         size_t
           extent,
           option_length;
 
+        char
+          sanitized_option[MagickPathExtent];
+    
         if (end == (const char *) NULL)
           continue;
         extent=(size_t) (end-cursor-1);
@@ -1802,7 +1844,7 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
         pattern[extent]='\0';
         if (image != NULL)
           {
-            option=GetImageProperty(image,pattern);
+            option=GetImageProperty(image,pattern,exception);
             if (option == (const char *) NULL)
               option=GetImageArtifact(image,pattern);
           }
@@ -1811,10 +1853,14 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
           option=GetImageOption(image_info,pattern);
         if (option == (const char *) NULL)
           continue;
+        SanitizeFilenameProperty(option,sanitized_option,
+          sizeof(sanitized_option));
+        option=sanitized_option;
         option_length=strlen(option);
-        if ((p-filename+option_length) >= MagickPathExtent)
+        if ((p-filename+(ssize_t) option_length) >= MagickPathExtent)
           return(0);
-        (void) CopyMagickString(p,option,MagickPathExtent-(p-filename));
+        (void) CopyMagickString(p,option,(size_t) (MagickPathExtent-(p-
+          filename)));
         p+=option_length;
         cursor=end+1;
         continue;
