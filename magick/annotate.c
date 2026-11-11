@@ -1486,7 +1486,7 @@ static MagickBooleanType RenderFreetype(Image *image,const DrawInfo *draw_info,
   */
   exception=(&image->exception);
   if ((draw_info->font != (char *) NULL) && (*draw_info->font == '@') &&
-      (IsRightsAuthorized(PathPolicyDomain,ReadPolicyRights,draw_info->font) == MagickFalse))
+      (IsRightsAuthorized(PathPolicyDomain,ReadPolicyRights,*draw_info->font == '@' ? draw_info->font+1 : draw_info->font) == MagickFalse))
     ThrowPolicyException(draw_info->font,MagickFalse);
   ft_status=FT_Init_FreeType(&library);
   if (ft_status != 0)
