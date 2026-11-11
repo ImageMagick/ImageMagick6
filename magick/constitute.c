@@ -607,6 +607,7 @@ MagickExport Image *ReadImage(const ImageInfo *image_info,
         UnlockSemaphoreInfo(delegate_info->semaphore);
       image=DestroyImageList(image);
       read_info->temporary=MagickTrue;
+      (void) DeleteImageOption(read_info,"filename:literal");
       if (status != MagickFalse)
         (void) SetImageInfo(read_info,0,exception);
       magick_info=GetMagickInfo(read_info->magick,exception);
