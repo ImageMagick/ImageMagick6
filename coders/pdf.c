@@ -630,7 +630,6 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) CopyMagickString(filename,read_info->filename,MaxTextExtent);
   (void) AcquireUniqueFilename(filename);
   (void) RelinquishUniqueFileResource(filename);
-  (void) ConcatenateMagickString(filename,"%d",MaxTextExtent);
   (void) FormatLocaleString(command,MaxTextExtent,
     GetDelegateCommands(delegate_info),
     read_info->antialias != MagickFalse ? 4 : 1,
@@ -647,8 +646,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (status == MagickFalse)
     for (i=1; ; i++)
     {
-      (void) InterpretImageFilename(image_info,image,filename,(int) i,
-        read_info->filename);
+      (void) AppendImageFilenameScene(filename,(int) i,read_info->filename);
       if (IsGhostscriptRendered(read_info->filename) == MagickFalse)
         break;
       (void) RelinquishUniqueFileResource(read_info->filename);
@@ -658,8 +656,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
       next=(Image *) NULL;
       for (i=1; ; i++)
       {
-        (void) InterpretImageFilename(image_info,image,filename,(int) i,
-          read_info->filename);
+        (void) AppendImageFilenameScene(filename,(int) i,read_info->filename);
         if (IsGhostscriptRendered(read_info->filename) == MagickFalse)
           break;
         read_info->blob=NULL;
@@ -678,8 +675,7 @@ static Image *ReadPDFImage(const ImageInfo *image_info,ExceptionInfo *exception)
 
           for (j=i+1; ; j++)
             {
-              (void) InterpretImageFilename(image_info,image,filename,(int) j,
-                read_info->filename);
+              (void) AppendImageFilenameScene(filename,(int) j,read_info->filename);
               if (IsGhostscriptRendered(read_info->filename) == MagickFalse)
                 break;
               (void) RelinquishUniqueFileResource(read_info->filename);

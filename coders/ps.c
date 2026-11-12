@@ -818,7 +818,6 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) CopyMagickString(filename,read_info->filename,MaxTextExtent);
   (void) AcquireUniqueFilename(filename);
   (void) RelinquishUniqueFileResource(filename);
-  (void) ConcatenateMagickString(filename,"%d",MaxTextExtent);
   (void) FormatLocaleString(command,MaxTextExtent,
     GetDelegateCommands(delegate_info),
     read_info->antialias != MagickFalse ? 4 : 1,
@@ -829,8 +828,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   *message='\0';
   status=InvokeGhostscriptDelegate(read_info->verbose,command,message,
     exception);
-  (void) InterpretImageFilename(image_info,image,filename,1,
-    read_info->filename);
+  (void) AppendImageFilenameScene(filename,1,read_info->filename);
   if ((status == MagickFalse) ||
       (IsGhostscriptRendered(read_info->filename) == MagickFalse))
     {
@@ -844,8 +842,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (status == MagickFalse)
     for (i=1; ; i++)
     {
-      (void) InterpretImageFilename(image_info,image,filename,(int) i,
-        read_info->filename);
+      (void) AppendImageFilenameScene(filename,(int) i,read_info->filename);
       if (IsGhostscriptRendered(read_info->filename) == MagickFalse)
         break;
       (void) RelinquishUniqueFileResource(read_info->filename);
@@ -853,8 +850,7 @@ static Image *ReadPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   else
     for (i=1; ; i++)
     {
-      (void) InterpretImageFilename(image_info,image,filename,(int) i,
-        read_info->filename);
+      (void) AppendImageFilenameScene(filename,(int) i,read_info->filename);
       if (IsGhostscriptRendered(read_info->filename) == MagickFalse)
         break;
       read_info->blob=NULL;

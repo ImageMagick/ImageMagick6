@@ -300,7 +300,6 @@ static Image *ReadXPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
     }
   (void) AcquireUniqueFilename(read_info->filename);
   (void) RelinquishUniqueFileResource(read_info->filename);
-  (void) ConcatenateMagickString(read_info->filename,"%d",MagickPathExtent);
   (void) CopyMagickString(filename,read_info->filename,MagickPathExtent);
   (void) FormatLocaleString(command,MagickPathExtent,
     GetDelegateCommands(delegate_info),
@@ -317,8 +316,7 @@ static Image *ReadXPSImage(const ImageInfo *image_info,ExceptionInfo *exception)
   if (status == MagickFalse)
     for (i=1; ; i++)
     {
-      (void) InterpretImageFilename(image_info,image,filename,(int) i,
-        read_info->filename);
+      (void) AppendImageFilenameScene(filename,(int) i,read_info->filename);
       if (IsGhostscriptRendered(read_info->filename) == MagickFalse)
         break;
       read_info->blob=NULL;
