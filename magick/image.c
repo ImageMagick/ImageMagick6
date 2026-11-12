@@ -82,6 +82,7 @@
 #include "magick/paint.h"
 #include "magick/pixel-accessor.h"
 #include "magick/pixel-private.h"
+#include "magick/policy.h"
 #include "magick/profile.h"
 #include "magick/property.h"
 #include "magick/quantize.h"
@@ -1704,49 +1705,11 @@ static inline MagickBooleanType IsValidFormatSpecifier(const char *start,
   return(MagickFalse);
 }
 
-static void SanitizeFilenameProperty(const char *source,char *destination,
-  const size_t destination_size)
-{
-  char
-    *p;
-
-  const char
-    *q;
-
-  if (source == (const char *) NULL)
-    {
-      if (destination_size > 0)
-        destination[0]='\0';
-      return;
-    }
-  p=destination;
-  for (q=source; *q != '\0' && (size_t) (p-destination) < (destination_size-1); q++)
-  {
-    if ((*q == '/') || (*q == '\\') || (*q == ':'))
-      *p++='_';
-    else
-      if ((*q == '.') && (*(q+1) == '.') && ((*(q+2) == '/') ||
-          (*(q+2) == '\\') || (*(q+2) == '\0')))
-        {
-          if ((size_t) (p-destination) < (destination_size-2))
-            {
-              *p++='_';
-              *p++='_';
-            }
-          else
-            *p++='_';
-          q++;
-        }
-      else
-        *p++=(*q);
-  }
-  *p='\0';
-}
-
 MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
   Image *image,const char *format,int value,char *filename)
 {
   char
+    *literal,
     *p = filename,
     pattern[MagickPathExtent];
 
@@ -1755,11 +1718,19 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
 
   assert(format != (const char *) NULL);
   assert(filename != (char *) NULL);
-  if (IsStringTrue(GetImageOption(image_info,"filename:literal")) != MagickFalse)
+  literal=GetPolicyValue("system:filename:literal");
+  if (literal == (char *) NULL)
+    literal=(char *) GetImageRegistry(StringRegistryType,"filename:literal",
+      &image->exception);
+  if (IsStringTrue(literal) != MagickFalse)
     {
+      if (literal != (char *) NULL)
+        literal=DestroyString(literal);
       (void) CopyMagickString(filename,format,MagickPathExtent);
       return(strlen(filename));
     }
+  if (literal != (char *) NULL)
+    literal=DestroyString(literal);
   while ((*cursor != '\0') && ((p-filename) < ((ssize_t) MagickPathExtent-1)))
   {
     const char
@@ -1832,9 +1803,6 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
           extent,
           option_length;
 
-        char
-          sanitized_option[MagickPathExtent];
-    
         if (end == (const char *) NULL)
           continue;
         extent=(size_t) (end-cursor-1);
@@ -1853,9 +1821,6 @@ MagickExport size_t InterpretImageFilename(const ImageInfo *image_info,
           option=GetImageOption(image_info,pattern);
         if (option == (const char *) NULL)
           continue;
-        SanitizeFilenameProperty(option,sanitized_option,
-          sizeof(sanitized_option));
-        option=sanitized_option;
         option_length=strlen(option);
         if ((p-filename+(ssize_t) option_length) >= MagickPathExtent)
           return(0);
