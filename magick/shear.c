@@ -1282,6 +1282,8 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
         /*
           Transfer pixels right-to-left.
         */
+        if (step > (ssize_t) image->columns-x_offset-(ssize_t) width)
+          break;
         p+=(ptrdiff_t) width;
         indexes+=width;
         q=p+step;
@@ -1292,8 +1294,6 @@ static MagickBooleanType XShearImage(Image *image,const MagickRealType degrees,
           indexes--;
           q--;
           shear_indexes--;
-          if ((size_t) (x_offset+width+step-i) > image->columns)
-            continue;
           SetMagickPixelPacket(image,p,indexes,&source);
           MagickPixelCompositeAreaBlend(&pixel,(MagickRealType) pixel.opacity,
             &source,(MagickRealType) GetPixelOpacity(p),area,&destination);
@@ -1504,6 +1504,8 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
         /*
           Transfer pixels bottom-to-top.
         */
+        if (step > (ssize_t) image->rows-y_offset-(ssize_t) height)
+          break;
         p+=(ptrdiff_t) height;
         indexes+=height;
         q=p+step;
@@ -1514,8 +1516,6 @@ static MagickBooleanType YShearImage(Image *image,const MagickRealType degrees,
           indexes--;
           q--;
           shear_indexes--;
-          if ((size_t) (y_offset+height+step-i) > image->rows)
-            continue;
           SetMagickPixelPacket(image,p,indexes,&source);
           MagickPixelCompositeAreaBlend(&pixel,(MagickRealType) pixel.opacity,
             &source,(MagickRealType) GetPixelOpacity(p),area,&destination);
@@ -1791,8 +1791,7 @@ MagickExport Image *ShearRotateImage(const Image *image,const double degrees,
   bounds.height=CastDoubleToUnsigned(fabs((double) bounds.width*shear.y)+height+0.5);
   shear_width=CastDoubleToUnsigned(fabs((double) bounds.height*shear.x)+
     bounds.width+0.5);
-  bounds.x=CastDoubleToLong(floor((double) ((shear_width > bounds.width) ?
-    width : bounds.width-shear_width+2)/2.0+0.5));
+  bounds.x=CastDoubleToLong(floor(((double) shear_width-width+2)/2.0+0.5));
   bounds.y=CastDoubleToLong(floor(((double) bounds.height-height+2)/2.0+0.5));
   /*
     Surround image with a border.
