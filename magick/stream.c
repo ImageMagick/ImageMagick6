@@ -687,7 +687,8 @@ static const PixelPacket *GetVirtualPixelStream(const Image *image,
     number_pixels;
 
   size_t
-    length;
+    length,
+    packet_size;
 
   magick_unreferenced(virtual_pixel_method);
 
@@ -713,10 +714,17 @@ static const PixelPacket *GetVirtualPixelStream(const Image *image,
   */
   cache_info->active_index_channel=((image->storage_class == PseudoClass) ||
     (image->colorspace == CMYKColorspace)) ? MagickTrue : MagickFalse;
-  number_pixels=(MagickSizeType) columns*rows;
-  length=(size_t) number_pixels*sizeof(PixelPacket);
+  packet_size=sizeof(PixelPacket);
   if (cache_info->active_index_channel != MagickFalse)
-    length+=number_pixels*sizeof(IndexPacket);
+    packet_size+=sizeof(IndexPacket);
+  if ((HeapOverflowSanityCheckGetSize(columns,rows,&length) != MagickFalse) ||
+      (HeapOverflowSanityCheckGetSize(length,packet_size,&length) != MagickFalse))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
+      return((PixelPacket *) NULL);
+    }
+  number_pixels=(MagickSizeType) columns*rows;
   if (cache_info->pixels == (PixelPacket *) NULL)
     {
       cache_info->length=length;
@@ -851,7 +859,8 @@ static PixelPacket *QueueAuthenticPixelsStream(Image *image,const ssize_t x,
     number_pixels;
 
   size_t
-    length;
+    length,
+    packet_size;
 
   StreamHandler
     stream_handler;
@@ -897,10 +906,17 @@ static PixelPacket *QueueAuthenticPixelsStream(Image *image,const ssize_t x,
     (image->colorspace == CMYKColorspace)) ? MagickTrue : MagickFalse;
   cache_info->columns=columns;
   cache_info->rows=rows;
-  number_pixels=(MagickSizeType) columns*rows;
-  length=(size_t) number_pixels*sizeof(PixelPacket);
+  packet_size=sizeof(PixelPacket);
   if (cache_info->active_index_channel != MagickFalse)
-    length+=number_pixels*sizeof(IndexPacket);
+    packet_size+=sizeof(IndexPacket);
+  if ((HeapOverflowSanityCheckGetSize(columns,rows,&length) != MagickFalse) ||
+      (HeapOverflowSanityCheckGetSize(length,packet_size,&length) != MagickFalse))
+    {
+      (void) ThrowMagickException(exception,GetMagickModule(),
+        ResourceLimitError,"MemoryAllocationFailed","`%s'",image->filename);
+      return((PixelPacket *) NULL);
+    }
+  number_pixels=(MagickSizeType) columns*rows;
   if (cache_info->pixels == (PixelPacket *) NULL)
     {
       cache_info->length=length;
