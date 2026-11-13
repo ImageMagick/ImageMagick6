@@ -2058,7 +2058,7 @@ static MagickBooleanType WriteDPXImage(const ImageInfo *image_info,
    default:
       break;
   }
-  extent=GetBytesPerRow(image->columns,samples_per_pixel,image->depth,
+  extent=GetBytesPerRow(image->columns,samples_per_pixel,quantum_info->depth,
     dpx.image.image_element[0].packing == 0 ? MagickFalse : MagickTrue);
   pixels=GetQuantumPixels(quantum_info);
   for (y=0; y < (ssize_t) image->rows; y++)
