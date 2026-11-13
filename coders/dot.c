@@ -57,6 +57,7 @@
 #include "magick/pixel-accessor.h"
 #include "magick/quantum-private.h"
 #include "magick/resource_.h"
+#include "magick/semaphore.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/module.h"
@@ -67,6 +68,9 @@
 #include <gvc.h>
 static GVC_t
   *graphic_context = (GVC_t *) NULL;
+
+static SemaphoreInfo
+  *dot_semaphore = (SemaphoreInfo *) NULL;
 #endif
 
 #if defined(MAGICKCORE_GVC_DELEGATE)
@@ -137,6 +141,7 @@ static Image *ReadDOTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   (void) AcquireUniqueFilename(read_info->filename);
   (void) FormatLocaleString(command,MaxTextExtent,"-Tsvg -o%s %s",
     read_info->filename,image_info->filename);
+  LockSemaphoreInfo(dot_semaphore);
 #if !defined(WITH_CGRAPH)
   graph=agread(GetBlobFileHandle(image));
 #else
@@ -144,6 +149,7 @@ static Image *ReadDOTImage(const ImageInfo *image_info,ExceptionInfo *exception)
 #endif
   if (graph == (graph_t *) NULL)
     {
+      UnlockSemaphoreInfo(dot_semaphore);
       (void) RelinquishUniqueFileResource(read_info->filename);
       read_info=DestroyImageInfo(read_info);
       return(DestroyImageList(image));
@@ -156,6 +162,7 @@ static Image *ReadDOTImage(const ImageInfo *image_info,ExceptionInfo *exception)
   gvRenderFilename(graphic_context,graph,(char *) "svg",read_info->filename);
   gvFreeLayout(graphic_context,graph);
   agclose(graph);
+  UnlockSemaphoreInfo(dot_semaphore);
   image=DestroyImageList(image);
   /*
     Read SVG graph.
@@ -215,6 +222,7 @@ ModuleExport size_t RegisterDOTImage(void)
   entry->magick_module=ConstantString("DOT");
   (void) RegisterMagickInfo(entry);
 #if defined(MAGICKCORE_GVC_DELEGATE)
+  dot_semaphore=AllocateSemaphoreInfo();
   graphic_context=gvContext();
 #endif
   return(MagickImageCoderSignature);
@@ -249,5 +257,7 @@ ModuleExport void UnregisterDOTImage(void)
       gvFreeContext(graphic_context);
       graphic_context=(GVC_t *) NULL;
     }
+  if (dot_semaphore != (SemaphoreInfo *) NULL)
+    DestroySemaphoreInfo(&dot_semaphore);
 #endif
 }
