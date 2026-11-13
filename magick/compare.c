@@ -2511,6 +2511,17 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
       SetPixelGreen(q,GetPixelRed(q));
       SetPixelBlue(q,GetPixelRed(q));
       q++;
+      if (image->progress_monitor != (MagickProgressMonitor) NULL)
+        {
+          MagickBooleanType
+            proceed;
+
+          progress++;
+          proceed=SetImageProgress(image,SimilarityImageTag,progress,
+            (MagickSizeType) image->columns*image->rows);
+          if (proceed == MagickFalse)
+            status=MagickFalse;
+        }
     }
 #if defined(MAGICKCORE_OPENMP_SUPPORT)
     #pragma omp critical (MagickCore_SimilarityMetricImage)
@@ -2545,7 +2556,8 @@ MagickExport Image *SimilarityMetricImage(Image *image,const Image *reconstruct,
           proceed;
 
         progress++;
-        proceed=SetImageProgress(image,SimilarityImageTag,progress,image->rows);
+        proceed=SetImageProgress(image,SimilarityImageTag,progress,
+          (MagickSizeType) image->columns*image->rows);
         if (proceed == MagickFalse)
           status=MagickFalse;
       }
