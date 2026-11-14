@@ -63,6 +63,7 @@
 #include "magick/nt-feature.h"
 #include "magick/pixel-accessor.h"
 #include "magick/quantum-private.h"
+#include "magick/resource_.h"
 #include "magick/static.h"
 #include "magick/string_.h"
 #include "magick/string-private.h"
@@ -145,6 +146,10 @@ static Image *ReadJBIGImage(const ImageInfo *image_info,
     byte,
     *p;
 
+  unsigned long
+    columns,
+    rows;
+
   /*
     Open image file.
   */
@@ -169,8 +174,11 @@ static Image *ReadJBIGImage(const ImageInfo *image_info,
       (image->rows != (unsigned long) image->rows))
     ThrowReaderException(ImageError,"WidthOrHeightExceedsLimit");
   jbg_dec_init(&jbig_info);
-  jbg_dec_maxsize(&jbig_info,(unsigned long) image->columns,(unsigned long)
-    image->rows);
+  columns=(unsigned long) MagickMin(image->columns != 0 ?  image->columns :
+    GetMagickResourceLimit(WidthResource),ULONG_MAX);
+  rows=(unsigned long) MagickMin(image->rows != 0 ?  image->rows :
+    GetMagickResourceLimit(HeightResource),ULONG_MAX);
+  jbg_dec_maxsize(&jbig_info,columns,rows);
   image->columns=jbg_dec_getwidth(&jbig_info);
   image->rows=jbg_dec_getheight(&jbig_info);
   image->depth=8;
