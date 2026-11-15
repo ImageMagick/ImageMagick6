@@ -1353,7 +1353,7 @@ static inline ssize_t WriteBlobStream(Image *image,const size_t length,
   if (extent >= blob_info->extent)
     {
       extent+=blob_info->quantum+length;
-      if (blob_info->quantum <= (SIZE_MAX >> 1))
+      if (blob_info->quantum <= (MAGICK_SIZE_MAX >> 1))
         blob_info->quantum<<=1;
       if (SetBlobExtent(image,extent) == MagickFalse)
         return(0);
@@ -1893,7 +1893,7 @@ MagickExport unsigned char *ImageToBlob(const ImageInfo *image_info,
               if (status == MagickFalse)
                 InheritException(exception,&image->exception);
               else
-                blob=FileToBlob(unique,SIZE_MAX,length,exception);
+                blob=FileToBlob(unique,MAGICK_SIZE_MAX,length,exception);
             }
           (void) RelinquishUniqueFileResource(unique);
         }
@@ -2156,7 +2156,7 @@ MagickExport unsigned char *ImagesToBlob(const ImageInfo *image_info,
               if (status == MagickFalse)
                 InheritException(exception,&images->exception);
               else
-                blob=FileToBlob(unique,SIZE_MAX,length,exception);
+                blob=FileToBlob(unique,MAGICK_SIZE_MAX,length,exception);
             }
           (void) RelinquishUniqueFileResource(unique);
         }
@@ -3271,8 +3271,8 @@ MagickExport Image *PingBlob(const ImageInfo *image_info,const void *blob,
 %
 %  ReadBlob() reads data from the blob or image file and returns it.  It
 %  returns the number of bytes read. If length is zero, ReadBlob() returns
-%  zero and has no other results. If length is greater than MAGICK_SSIZE_MAX, the
-%  result is unspecified.
+%  zero and has no other results. If length is greater than MAGICK_SSIZE_MAX,
+%  the result is unspecified.
 %
 %  The format of the ReadBlob method is:
 %
