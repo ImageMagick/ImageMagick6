@@ -545,10 +545,11 @@ MagickExport MagickBooleanType CacheComponentGenesis(void)
 */
 MagickExport void CacheComponentTerminus(void)
 {
-  if (cache_semaphore == (SemaphoreInfo *) NULL)
-    ActivateSemaphoreInfo(&cache_semaphore);
-  /* no op-- nothing to destroy */
-  DestroySemaphoreInfo(&cache_semaphore);
+  if (cache_semaphore != (SemaphoreInfo *) NULL)
+    {
+      ActivateSemaphoreInfo(&cache_semaphore);
+      DestroySemaphoreInfo(&cache_semaphore);
+    }
 }
 
 /*
@@ -949,19 +950,29 @@ static MagickBooleanType ClonePixelCacheRepository(
     pixels=SetPixelCacheNexusPixels(cache_info,ReadMode,0,y,
       cache_info->columns,1,MagickFalse,cache_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
-      continue;
-    status=ReadPixelCachePixels(cache_info,cache_nexus[id],exception);
-    if (status == MagickFalse)
-      continue;
+      {
+        status=MagickFalse;
+        continue;
+      }
+    if (ReadPixelCachePixels(cache_info,cache_nexus[id],exception) == MagickFalse)
+      {
+        status=MagickFalse;
+        continue;
+      }
     pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y,
       clone_info->columns,1,MagickTrue,clone_nexus[id],exception);
     if (pixels == (PixelPacket *) NULL)
-      continue;
+      {
+        status=MagickFalse;
+        continue;
+      }
     (void) memset(clone_nexus[id]->pixels,0,(size_t) clone_nexus[id]->length);
     (void) memcpy(clone_nexus[id]->pixels,cache_nexus[id]->pixels,length);
-    status=WritePixelCachePixels(clone_info,clone_nexus[id],exception);
+    if (WritePixelCachePixels(clone_info,clone_nexus[id],exception) == MagickFalse)
+      status=MagickFalse;
   }
-  if ((cache_info->active_index_channel != MagickFalse) &&
+  if ((status != MagickFalse) &&
+      (cache_info->active_index_channel != MagickFalse) &&
       (clone_info->active_index_channel != MagickFalse))
     {
       /*
@@ -988,16 +999,27 @@ static MagickBooleanType ClonePixelCacheRepository(
         pixels=SetPixelCacheNexusPixels(cache_info,ReadMode,0,y,
           cache_info->columns,1,MagickFalse,cache_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
-          continue;
-        status=ReadPixelCacheIndexes(cache_info,cache_nexus[id],exception);
-        if (status == MagickFalse)
-          continue;
+          {
+            status=MagickFalse;
+            continue;
+          }
+        if (ReadPixelCacheIndexes(cache_info,cache_nexus[id],exception) == MagickFalse)
+          {
+            status=MagickFalse;
+            continue;
+          }
         pixels=SetPixelCacheNexusPixels(clone_info,WriteMode,0,y,
           clone_info->columns,1,MagickTrue,clone_nexus[id],exception);
         if (pixels == (PixelPacket *) NULL)
-          continue;
+          {
+            status=MagickFalse;
+            continue;
+          }
+        (void) memset(clone_nexus[id]->indexes,0,
+          clone_info->columns*sizeof(*clone_info->indexes));
         (void) memcpy(clone_nexus[id]->indexes,cache_nexus[id]->indexes,length);
-        status=WritePixelCacheIndexes(clone_info,clone_nexus[id],exception);
+        if (WritePixelCacheIndexes(clone_info,clone_nexus[id],exception) == MagickFalse)
+          status=MagickFalse;
       }
     }
   clone_nexus=DestroyPixelCacheNexus(clone_nexus,clone_info->number_threads);
@@ -3182,7 +3204,12 @@ MagickExport const PixelPacket *GetVirtualPixelCacheNexus(const Image *image,
             case RandomVirtualPixelMethod:
             {
               if (cache_info->random_info == (RandomInfo *) NULL)
-                cache_info->random_info=AcquireRandomInfo();
+                {
+                  LockSemaphoreInfo(cache_info->semaphore);
+                  if (cache_info->random_info == (RandomInfo *) NULL)
+                    cache_info->random_info=AcquireRandomInfo();
+                  UnlockSemaphoreInfo(cache_info->semaphore);
+                }
               p=GetVirtualPixelCacheNexus(image,virtual_pixel_method,
                 RandomX(cache_info->random_info,cache_info->columns),
                 RandomY(cache_info->random_info,cache_info->rows),1UL,1UL,
@@ -3856,12 +3883,26 @@ static inline MagickOffsetType WritePixelCacheRegion(
   ssize_t
     count = 0;
 
-  if (lseek(cache_info->file,offset,SEEK_SET) < 0)
-    return((MagickOffsetType) -1);
+#if !defined(MAGICKCORE_HAVE_PWRITE)
+   if (lseek(cache_info->file,offset,SEEK_SET) < 0)
+     return((MagickOffsetType) -1);
+#endif
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
-    count=MagickWrite(cache_info->file,buffer+i,(size_t) MagickMin(length-
-      (MagickSizeType) i,MagickMaxBufferExtent));
+    size_t
+      extent;
+
+    extent=(size_t) MagickMin(length-(MagickSizeType) i,MagickMaxBufferExtent);
+#if defined(MAGICKCORE_HAVE_PWRITE)
+    count=pwrite(cache_info->file,buffer+i,extent,(off_t) (offset+i));
+    if ((count < 0) && (errno == EINTR))
+      {
+        count=0;
+        continue;
+      }
+#else
+    count=MagickWrite(cache_info->file,buffer+i,extent);
+#endif
     if (count <= 0)
       break;
   }
@@ -3905,7 +3946,7 @@ static MagickBooleanType SetPixelCacheExtent(Image *image,MagickSizeType length)
         return(MagickFalse);
 #if defined(MAGICKCORE_HAVE_POSIX_FALLOCATE)
       if (cache_info->synchronize != MagickFalse)
-        if (posix_fallocate(cache_info->file,offset+1,extent-offset) != 0)
+        if (posix_fallocate(cache_info->file,offset,extent-offset) != 0)
           return(MagickFalse);
 #endif
     }
@@ -4771,12 +4812,27 @@ static inline MagickOffsetType ReadPixelCacheRegion(
   ssize_t
     count = 0;
 
+#if !defined(MAGICKCORE_HAVE_PREAD)
   if (lseek(cache_info->file,offset,SEEK_SET) < 0)
     return((MagickOffsetType) -1);
+#endif
   for (i=0; i < (MagickOffsetType) length; i+=count)
   {
-    count=MagickRead(cache_info->file,buffer+i,(size_t) MagickMin(length-
-      (MagickSizeType) i,(size_t) MagickMaxBufferExtent));
+    size_t
+      extent;
+
+    extent=(size_t) MagickMin(length-(MagickSizeType) i,
+      (size_t) MagickMaxBufferExtent);
+#if defined(MAGICKCORE_HAVE_PREAD)
+    count=pread(cache_info->file,buffer+i,extent,(off_t) (offset+i));
+    if ((count < 0) && (errno == EINTR))
+      {
+        count=0;
+        continue;
+      }
+#else
+    count=MagickRead(cache_info->file,buffer+i,extent);
+#endif
     if (count <= 0)
       break;
   }
@@ -5235,17 +5291,17 @@ MagickExport void SetPixelCacheMethods(Cache cache,CacheMethods *cache_methods)
     cache_info->methods.get_authentic_indexes_from_handler=
       cache_methods->get_authentic_indexes_from_handler;
   get_one_virtual_pixel_from_handler=
-    cache_info->methods.get_one_virtual_pixel_from_handler;
+    cache_methods->get_one_virtual_pixel_from_handler;
   if (get_one_virtual_pixel_from_handler !=
       (GetOneVirtualPixelFromHandler) NULL)
     cache_info->methods.get_one_virtual_pixel_from_handler=
-      cache_methods->get_one_virtual_pixel_from_handler;
+      get_one_virtual_pixel_from_handler;
   get_one_authentic_pixel_from_handler=
     cache_methods->get_one_authentic_pixel_from_handler;
   if (get_one_authentic_pixel_from_handler !=
       (GetOneAuthenticPixelFromHandler) NULL)
     cache_info->methods.get_one_authentic_pixel_from_handler=
-      cache_methods->get_one_authentic_pixel_from_handler;
+      get_one_authentic_pixel_from_handler;
 }
 
 /*
