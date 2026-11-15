@@ -77,6 +77,34 @@
 */
 static const char
   Base64[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+/*
+  O(1) ASCII-to-Base64 reverse lookup table:
+    0..63 : valid Base64 sextet value
+    -1    : invalid character
+    -2    : ASCII whitespace (' ', '\t', '\n', '\r', '\v', '\f')
+    -3    : padding character ('=')
+*/
+static const signed char
+  Base64DecodeTable[256] =
+  {
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-2,-2,-2,-2,-2,-1,-1,  /* 0x00..0x0F */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0x10..0x1F */
+    -2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,62,-1,-1,-1,63,  /* 0x20..0x2F (' ', '+', '/') */
+    52,53,54,55,56,57,58,59,60,61,-1,-1,-1,-3,-1,-1,  /* 0x30..0x3F ('0'-'9', '=') */
+    -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,  /* 0x40..0x4F ('A'-'O') */
+    15,16,17,18,19,20,21,22,23,24,25,-1,-1,-1,-1,-1,  /* 0x50..0x5F ('P'-'Z') */
+    -1,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,  /* 0x60..0x6F ('a'-'o') */
+    41,42,43,44,45,46,47,48,49,50,51,-1,-1,-1,-1,-1,  /* 0x70..0x7F ('p'-'z') */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0x80..0x8F */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0x90..0x9F */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0xA0..0xAF */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0xB0..0xBF */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0xC0..0xCF */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0xD0..0xDF */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,  /* 0xE0..0xEF */
+    -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1   /* 0xF0..0xFF */
+  };
 
 /*
   Forward declaration.
@@ -115,7 +143,7 @@ MagickExport MagickBooleanType AcquireUniqueFilename(char *path)
   file=AcquireUniqueFileResource(path);
   if (file == -1)
     return(MagickFalse);
-  file=close_utf8(file)-1;
+  (void) close_utf8(file);
   return(MagickTrue);
 }
 
@@ -188,7 +216,8 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
       passes=GetShredPasses();
     if ((passes == 0) && (status != MagickFalse))
       {
-        (void) AcquireUniqueFilename(destination);
+        if (AcquireUniqueFilename(destination) == MagickFalse)
+          return(MagickFalse);
         (void) RelinquishUniqueFileResource(destination);
         if (*source == *DirectorySeparator)
           {
@@ -202,6 +231,9 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
 
             *path='\0';
             if (getcwd(path,MaxTextExtent) == (char *) NULL)
+              return(MagickFalse);
+            if ((strlen(path)+strlen(DirectorySeparator)+strlen(source)) >=
+                MaxTextExtent)
               return(MagickFalse);
             (void) ConcatenateMagickString(path,DirectorySeparator,
               MaxTextExtent);
@@ -240,18 +272,49 @@ MagickExport MagickBooleanType AcquireUniqueSymbolicLink(const char *source,
   for (length=0; ; )
   {
     count=(ssize_t) read(source_file,buffer,quantum);
-    if (count <= 0)
-      break;
-    length=(size_t) count;
-    count=(ssize_t) write(destination_file,buffer,length);
-    if ((size_t) count != length)
+    if (count < 0)
       {
+        if (errno == EINTR)
+          continue;
         (void) RelinquishUniqueFileResource(destination);
         status=MagickFalse;
         break;
       }
+    if (count == 0)
+      break;
+    length=(size_t) count;
+    {
+      size_t
+        written;
+
+      written=0;
+      while (written < length)
+      {
+        count=(ssize_t) write(destination_file,buffer+written,length-written);
+        if (count < 0)
+          {
+            if (errno == EINTR)
+              continue;
+            break;
+          }
+        if (count == 0)
+          break;
+        written+=(size_t) count;
+      }
+      if (written != length)
+        {
+          (void) RelinquishUniqueFileResource(destination);
+          status=MagickFalse;
+          break;
+        }
+    }
   }
-  (void) close(destination_file);
+  if (close(destination_file) != 0)
+    {
+      if (status != MagickFalse)
+        (void) RelinquishUniqueFileResource(destination);
+      status=MagickFalse;
+    }
   (void) close(source_file);
   buffer=(unsigned char *) RelinquishMagickMemory(buffer);
   return(status);
@@ -355,11 +418,11 @@ MagickExport unsigned char *Base64Decode(const char *source,size_t *length)
     state;
 
   const char
-    *p,
-    *q;
+    *p;
 
   size_t
-    i;
+    i,
+    source_length;
 
   unsigned char
     *decode;
@@ -369,7 +432,10 @@ MagickExport unsigned char *Base64Decode(const char *source,size_t *length)
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
   *length=0;
-  decode=(unsigned char *) AcquireQuantumMemory((strlen(source)+3)/4,
+  source_length=strlen(source);
+  if (source_length > (SIZE_MAX-3))
+    return((unsigned char *) NULL);
+  decode=(unsigned char *) AcquireQuantumMemory((source_length+3)/4,
     3*sizeof(*decode));
   if (decode == (unsigned char *) NULL)
     return((unsigned char *) NULL);
@@ -377,12 +443,15 @@ MagickExport unsigned char *Base64Decode(const char *source,size_t *length)
   state=0;
   for (p=source; *p != '\0'; p++)
   {
-    if (isspace((int) ((unsigned char) *p)) != 0)
+    signed char
+      value;
+
+    value=Base64DecodeTable[(unsigned char) *p];
+    if (value == -2)
       continue;
-    if (*p == '=')
+    if (value == -3)
       break;
-    q=strchr(Base64,*p);
-    if (q == (char *) NULL)
+    if (value < 0)
       {
         decode=(unsigned char *) RelinquishMagickMemory(decode);
         return((unsigned char *) NULL);  /* non-Base64 character */
@@ -391,27 +460,27 @@ MagickExport unsigned char *Base64Decode(const char *source,size_t *length)
     {
       case 0:
       {
-        decode[i]=(q-Base64) << 2;
+        decode[i]=(unsigned char) (value << 2);
         state++;
         break;
       }
       case 1:
       {
-        decode[i++]|=(q-Base64) >> 4;
-        decode[i]=((q-Base64) & 0x0f) << 4;
+        decode[i++]|=(unsigned char) (value >> 4);
+        decode[i]=(unsigned char) ((value & 0x0f) << 4);
         state++;
         break;
       }
       case 2:
       {
-        decode[i++]|=(q-Base64) >> 2;
-        decode[i]=((q-Base64) & 0x03) << 6;
+        decode[i++]|=(unsigned char) (value >> 2);
+        decode[i]=(unsigned char) ((value & 0x03) << 6);
         state++;
         break;
       }
       case 3:
       {
-        decode[i++]|=(q-Base64);
+        decode[i++]|=(unsigned char) value;
         state=0;
         break;
       }
@@ -445,7 +514,7 @@ MagickExport unsigned char *Base64Decode(const char *source,size_t *length)
         case 2:
         {
           for ( ; *p != '\0'; p++)
-            if (isspace((int) ((unsigned char) *p)) == 0)
+            if (Base64DecodeTable[(unsigned char) *p] != -2)
               break;
           if (*p != '=')
             {
@@ -453,11 +522,12 @@ MagickExport unsigned char *Base64Decode(const char *source,size_t *length)
               return((unsigned char *) NULL);
             }
           p++;
+          magick_fallthrough;
         }
         case 3:
         {
           for ( ; *p != '\0'; p++)
-            if (isspace((int) ((unsigned char) *p)) == 0)
+            if (Base64DecodeTable[(unsigned char) *p] != -2)
               {
                 decode=(unsigned char *) RelinquishMagickMemory(decode);
                 return((unsigned char *) NULL);
@@ -512,12 +582,11 @@ MagickExport char *Base64Encode(const unsigned char *blob,
     *encode;
 
   const unsigned char
+    *end,
     *p;
 
   size_t
-    i;
-
-  size_t
+    i,
     remainder;
 
   assert(blob != (const unsigned char *) NULL);
@@ -530,14 +599,15 @@ MagickExport char *Base64Encode(const unsigned char *blob,
   if (encode == (char *) NULL)
     return((char *) NULL);
   i=0;
-  for (p=blob; p < (blob+blob_length-2); p+=(ptrdiff_t) 3)
+  remainder=blob_length % 3;
+  end=blob+(blob_length-remainder);
+  for (p=blob; p < end; p+=(ptrdiff_t) 3)
   {
     encode[i++]=Base64[(int) (*p >> 2)];
     encode[i++]=Base64[(int) (((*p & 0x03) << 4)+(*(p+1) >> 4))];
     encode[i++]=Base64[(int) (((*(p+1) & 0x0f) << 2)+(*(p+2) >> 6))];
     encode[i++]=Base64[(int) (*(p+2) & 0x3f)];
   }
-  remainder=blob_length % 3;
   if (remainder != 0)
     {
       ssize_t
@@ -680,7 +750,7 @@ MagickExport void ExpandFilename(char *path)
         pwd;
 
       entry=(struct passwd *) NULL;
-      if (getpwnam_r(username,&pwd,buffer,sizeof(buffer),&entry) < 0)
+      if (getpwnam_r(username,&pwd,buffer,sizeof(buffer),&entry) != 0)
         return;
 #endif
       if (entry == (struct passwd *) NULL)
@@ -781,7 +851,8 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
     j;
 
   size_t
-    number_files;
+    number_files,
+    vector_capacity;
 
   ssize_t
     count,
@@ -794,8 +865,10 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
   assert(arguments != (char ***) NULL);
   if (IsEventLogging() != MagickFalse)
     (void) LogMagickEvent(TraceEvent,GetMagickModule(),"...");
-  vector=(char **) AcquireQuantumMemory((size_t) (*number_arguments+1),
-    sizeof(*vector));
+  if (*number_arguments < 0)
+    return(MagickFalse);
+  vector_capacity=(size_t) *number_arguments+1;
+  vector=(char **) AcquireQuantumMemory(vector_capacity,sizeof(*vector));
   if (vector == (char **) NULL)
     ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
   /*
@@ -822,6 +895,14 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
     *filename='\0';
     *subimage='\0';
     number_files=0;
+    if ((size_t) (count+1) >= vector_capacity)
+      {
+        vector_capacity=(size_t) count+2;
+        vector=(char **) ResizeQuantumMemory(vector,vector_capacity,
+          sizeof(*vector));
+        if (vector == (char **) NULL)
+          ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+      }
     vector[count++]=ConstantString(option);
     destroy=MagickTrue;
     parameters=ParseCommandOption(MagickCommandOptions,MagickFalse,option);
@@ -836,6 +917,15 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
           if (i == (ssize_t) *number_arguments)
             break;
           option=(*arguments)[i];
+          if ((size_t) (count+1) >= vector_capacity)
+            {
+              vector_capacity=(size_t) count+2;
+              vector=(char **) ResizeQuantumMemory(vector,vector_capacity,
+                sizeof(*vector));
+              if (vector == (char **) NULL)
+                ThrowFatalException(ResourceLimitFatalError,
+                  "MemoryAllocationFailed");
+            }
           vector[count++]=ConstantString(option);
         }
         continue;
@@ -886,19 +976,40 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
         if (files == (char *) NULL)
           continue;
         filelist=StringToArgv(files,&length);
+        files=DestroyString(files);
         if (filelist == (char **) NULL)
           continue;
-        files=DestroyString(files);
+        if (length <= 1)
+          {
+            if (length == 1)
+              filelist[0]=DestroyString(filelist[0]);
+            filelist=(char **) RelinquishMagickMemory(filelist);
+            continue;
+          }
         filelist[0]=DestroyString(filelist[0]);
         for (j=0; j < (ssize_t) (length-1); j++)
           filelist[j]=filelist[j+1];
-        number_files=(size_t) length-1;
+        number_files=(size_t) (length-1);
       }
     if (filelist == (char **) NULL)
       continue;
     for (j=0; j < (ssize_t) number_files; j++)
-      if (IsPathDirectory(filelist[j]) <= 0)
+    {
+      char
+        candidate[MaxTextExtent];
+
+      if (*path != '\0')
+        {
+          (void) CopyMagickString(candidate,path,MaxTextExtent);
+          (void) ConcatenateMagickString(candidate,DirectorySeparator,
+            MaxTextExtent);
+          (void) ConcatenateMagickString(candidate,filelist[j],MaxTextExtent);
+        }
+      else
+        (void) CopyMagickString(candidate,filelist[j],MaxTextExtent);
+      if (IsPathDirectory(candidate) <= 0)
         break;
+    }
     if (j == (ssize_t) number_files)
       {
         for (j=0; j < (ssize_t) number_files; j++)
@@ -909,14 +1020,20 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
     /*
       Transfer file list to argument vector.
     */
-    vector=(char **) ResizeQuantumMemory(vector,(size_t) *number_arguments+
-      count+number_files+1,sizeof(*vector));
-    if (vector == (char **) NULL)
+    if (((size_t) count+number_files+((size_t) *number_arguments-(size_t) i)) >=
+        vector_capacity)
       {
-        for (j=0; j < (ssize_t) number_files; j++)
-          filelist[j]=DestroyString(filelist[j]);
-        filelist=(char **) RelinquishMagickMemory(filelist);
-        return(MagickFalse);
+        vector_capacity=(size_t) count+number_files+
+          ((size_t) *number_arguments-(size_t) i)+1;
+        vector=(char **) ResizeQuantumMemory(vector,vector_capacity,
+          sizeof(*vector));
+        if (vector == (char **) NULL)
+          {
+            for (j=0; j < (ssize_t) number_files; j++)
+              filelist[j]=DestroyString(filelist[j]);
+            filelist=(char **) RelinquishMagickMemory(filelist);
+            return(MagickFalse);
+          }
       }
     for (j=0; j < (ssize_t) number_files; j++)
     {
@@ -930,14 +1047,21 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
           /*
             Do not expand command option parameters.
           */
-          vector[count++]=ConstantString(option);
+          if (destroy != MagickFalse)
+            {
+              count--;
+              vector[count]=DestroyString(vector[count]);
+              destroy=MagickFalse;
+            }
+          vector[count++]=option;
+          filelist[j]=(char *) NULL;
           for (k=0; k < parameters; k++)
           {
             j++;
             if (j == (ssize_t) number_files)
               break;
-            option=filelist[j];
-            vector[count++]=ConstantString(option);
+            vector[count++]=filelist[j];
+            filelist[j]=(char *) NULL;
           }
           continue;
         }
@@ -953,22 +1077,22 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
       if (IsPathDirectory(filename) <= 0)
         {
           char
-            path[MaxTextExtent];
+            file_path[MaxTextExtent];
 
-          *path='\0';
+          *file_path='\0';
           if (*magick != '\0')
             {
-              (void) ConcatenateMagickString(path,magick,MaxTextExtent);
-              (void) ConcatenateMagickString(path,":",MaxTextExtent);
+              (void) ConcatenateMagickString(file_path,magick,MaxTextExtent);
+              (void) ConcatenateMagickString(file_path,":",MaxTextExtent);
             }
-          (void) ConcatenateMagickString(path,filename,MaxTextExtent);
+          (void) ConcatenateMagickString(file_path,filename,MaxTextExtent);
           if (*subimage != '\0')
             {
-              (void) ConcatenateMagickString(path,"[",MaxTextExtent);
-              (void) ConcatenateMagickString(path,subimage,MaxTextExtent);
-              (void) ConcatenateMagickString(path,"]",MaxTextExtent);
+              (void) ConcatenateMagickString(file_path,"[",MaxTextExtent);
+              (void) ConcatenateMagickString(file_path,subimage,MaxTextExtent);
+              (void) ConcatenateMagickString(file_path,"]",MaxTextExtent);
             }
-          if (strlen(path) >= (MaxTextExtent-1))
+          if (strlen(file_path) >= (MaxTextExtent-1))
             ThrowFatalException(OptionFatalError,"FilenameTruncated");
           if (destroy != MagickFalse)
             {
@@ -976,7 +1100,7 @@ MagickExport MagickBooleanType ExpandFilenames(int *number_arguments,
               vector[count]=DestroyString(vector[count]);
               destroy=MagickFalse;
             }
-          vector[count++]=ConstantString(path);
+          vector[count++]=ConstantString(file_path);
         }
     }
     filelist=(char **) RelinquishMagickMemory(filelist);
@@ -1113,19 +1237,20 @@ MagickExport MagickBooleanType GetExecutionPath(char *path,const size_t extent)
     if (*program_invocation_name != '/')
       {
         size_t
-          extent;
+          name_extent;
 
-        extent=strlen(directory)+strlen(program_name)+2;
-        program_name=AcquireQuantumMemory(extent,sizeof(*program_name));
+        name_extent=strlen(directory)+strlen(program_name)+2;
+        program_name=(char *) AcquireQuantumMemory(name_extent,
+          sizeof(*program_name));
         if (program_name == (char *) NULL)
           program_name=program_invocation_name;
         else
-          count=FormatLocaleString(program_name,extent,"%s/%s",directory,
+          count=FormatLocaleString(program_name,name_extent,"%s/%s",directory,
             program_invocation_name);
       }
     if (count != -1)
       {
-       char
+        char
           *real_path = realpath_utf8(program_name);
 
         if (real_path != (char *) NULL)
@@ -1260,12 +1385,11 @@ MagickExport void GetPathComponent(const char *path,PathType type,
   char *component)
 {
   char
+    *p,
     *q;
 
-  char
-    *p;
-
   size_t
+    component_length,
     magick_length,
     subimage_offset,
     subimage_length;
@@ -1280,12 +1404,13 @@ MagickExport void GetPathComponent(const char *path,PathType type,
       return;
     }
   (void) CopyMagickString(component,path,MagickPathExtent);
+  component_length=strlen(component);
   subimage_length=0;
   subimage_offset=0;
   if (type != SubcanonicalPath)
     {
-      p=component+strlen(component)-1;
-      if ((strlen(component) > 2) && (*p == ']'))
+      p=component+component_length-1;
+      if ((component_length > 2) && (*p == ']'))
         {
           q=strrchr(component,'[');
           if (q != (char *) NULL)
@@ -1318,7 +1443,7 @@ MagickExport void GetPathComponent(const char *path,PathType type,
     }
   magick_length=0;
 #if defined(__OS2__)
-  if (path[1] != ":")
+  if (path[1] != ':')
 #endif
   for (p=component; *p != '\0'; p++)
   {
@@ -1494,6 +1619,8 @@ MagickExport char **GetPathComponents(const char *path,
   ssize_t
     i;
 
+  assert(number_components != (size_t *) NULL);
+  *number_components=0;
   if (path == (char *) NULL)
     return((char **) NULL);
   *number_components=1;
@@ -1503,7 +1630,10 @@ MagickExport char **GetPathComponents(const char *path,
   components=(char **) AcquireQuantumMemory((size_t) *number_components+1UL,
     sizeof(*components));
   if (components == (char **) NULL)
-    return((char **) NULL);
+    {
+      *number_components=0;
+      return((char **) NULL);
+    }
   p=path;
   for (i=0; i < (ssize_t) *number_components; i++)
   {
@@ -1520,6 +1650,7 @@ MagickExport char **GetPathComponents(const char *path,
         for (j=0; j < i; j++)
           components[j]=DestroyString(components[j]);
         components=(char **) RelinquishMagickMemory(components);
+        *number_components=0;
         return((char **) NULL);
       }
     (void) CopyMagickString(components[i],p,(size_t) (q-p+1));
@@ -1565,9 +1696,13 @@ MagickExport MagickBooleanType GetPathTemplate(char *path)
   MagickBooleanType
     status;
 
+  size_t
+    directory_length;
+
   struct stat
     attributes;
 
+  assert(path != (char *) NULL);
   (void) FormatLocaleString(path,MagickPathExtent,"magick-"
     MagickPathTemplate);
   exception=AcquireExceptionInfo();
@@ -1602,7 +1737,10 @@ MagickExport MagickBooleanType GetPathTemplate(char *path)
       (void) CloneString(&directory,value);
       value=DestroyString(value);
     }
-  if (strlen(directory) > (MagickPathExtent-25))
+  if (directory == (char *) NULL)
+    return(MagickFalse);
+  directory_length=strlen(directory);
+  if ((directory_length == 0) || (directory_length > (MagickPathExtent-25)))
     {
       directory=DestroyString(directory);
       return(MagickFalse);
@@ -1613,7 +1751,7 @@ MagickExport MagickBooleanType GetPathTemplate(char *path)
       directory=DestroyString(directory);
       return(MagickFalse);
     }
-  if (directory[strlen(directory)-1] == *DirectorySeparator)
+  if (directory[directory_length-1] == *DirectorySeparator)
     (void) FormatLocaleString(path,MagickPathExtent,"%smagick-"
       MagickPathTemplate,directory);
   else
@@ -1714,7 +1852,7 @@ static int IsPathDirectory(const char *path)
     attributes;
 
   if ((path == (const char *) NULL) || (*path == '\0'))
-    return(MagickFalse);
+    return(-1);
   status=GetPathAttributes(path,&attributes);
   if (status == MagickFalse)
     return(-1);
@@ -1781,17 +1919,19 @@ MagickExport char **ListFiles(const char *directory,const char *pattern,
   size_t *number_entries)
 {
   char
-    **filelist;
+    **filelist,
+    full_path[MagickPathExtent];
 
   DIR
     *current_directory;
 
+  size_t
+    directory_length,
+    max_entries;
+
   struct dirent
     *buffer,
     *entry;
-
-  size_t
-    max_entries;
 
   /*
     Open directory.
@@ -1816,19 +1956,32 @@ MagickExport char **ListFiles(const char *directory,const char *pattern,
       (void) closedir(current_directory);
       return((char **) NULL);
     }
-  /*
-    Save the current and change to the new directory.
-  */
   buffer=(struct dirent *) AcquireMagickMemory(sizeof(*buffer)+FILENAME_MAX+1);
   if (buffer == (struct dirent *) NULL)
-    ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+    {
+      filelist=(char **) RelinquishMagickMemory(filelist);
+      (void) closedir(current_directory);
+      ThrowFatalException(ResourceLimitFatalError,"MemoryAllocationFailed");
+    }
+  directory_length=strlen(directory);
   while ((MagickReadDirectory(current_directory,buffer,&entry) == 0) &&
          (entry != (struct dirent *) NULL))
   {
+    int
+      is_directory;
+
     if ((LocaleCompare(entry->d_name,".") == 0) ||
         (LocaleCompare(entry->d_name,"..") == 0))
       continue;
-    if ((IsPathDirectory(entry->d_name) > 0) ||
+    if ((directory_length > 0) &&
+        (directory[directory_length-1] == *DirectorySeparator))
+      (void) FormatLocaleString(full_path,MagickPathExtent,"%s%s",directory,
+        entry->d_name);
+    else
+      (void) FormatLocaleString(full_path,MagickPathExtent,"%s%s%s",directory,
+        DirectorySeparator,entry->d_name);
+    is_directory=IsPathDirectory(full_path);
+    if ((is_directory > 0) ||
 #if defined(MAGICKCORE_WINDOWS_SUPPORT)
         (GlobExpression(entry->d_name,pattern,MagickTrue) != MagickFalse))
 #else
@@ -1837,14 +1990,27 @@ MagickExport char **ListFiles(const char *directory,const char *pattern,
       {
         if (*number_entries >= max_entries)
           {
+            char
+              **resized_filelist;
+
             /*
               Extend the file list.
             */
             max_entries<<=1;
-            filelist=(char **) ResizeQuantumMemory(filelist,(size_t)
+            resized_filelist=(char **) ResizeQuantumMemory(filelist,(size_t)
               max_entries,sizeof(*filelist));
-            if (filelist == (char **) NULL)
-              break;
+            if (resized_filelist == (char **) NULL)
+              {
+                size_t
+                  i;
+
+                for (i=0; i < *number_entries; i++)
+                  filelist[i]=DestroyString(filelist[i]);
+                filelist=(char **) RelinquishMagickMemory(filelist);
+                *number_entries=0;
+                break;
+              }
+            filelist=resized_filelist;
           }
 #if defined(vms)
         {
@@ -1906,27 +2072,59 @@ MagickExport void MagickDelay(const MagickSizeType milliseconds)
 #if defined(MAGICKCORE_HAVE_NANOSLEEP)
   {
     struct timespec
+      remaining,
       timer;
 
     timer.tv_sec=(time_t) (milliseconds/1000);
-    timer.tv_nsec=(milliseconds % 1000)*1000*1000;
-    (void) nanosleep(&timer,(struct timespec *) NULL);
+    timer.tv_nsec=(long) ((milliseconds % 1000)*1000*1000);
+    while ((nanosleep(&timer,&remaining) == -1) && (errno == EINTR))
+      timer=remaining;
   }
 #elif defined(MAGICKCORE_HAVE_USLEEP)
-  usleep(1000*milliseconds);
+  {
+    MagickSizeType
+      remaining;
+
+    remaining=milliseconds;
+    while (remaining > 0)
+    {
+      useconds_t
+        chunk;
+
+      chunk=(useconds_t) (remaining > 500000 ? 500000 : remaining)*1000;
+      (void) usleep(chunk);
+      remaining-=(MagickSizeType) (chunk/1000);
+    }
+  }
 #elif defined(MAGICKCORE_HAVE_SELECT)
   {
     struct timeval
       timer;
 
-    timer.tv_sec=(long) milliseconds/1000;
-    timer.tv_usec=(long) (milliseconds % 1000)*1000;
+    timer.tv_sec=(long) (milliseconds/1000);
+    timer.tv_usec=(long) ((milliseconds % 1000)*1000);
     (void) select(0,(XFD_SET *) NULL,(XFD_SET *) NULL,(XFD_SET *) NULL,&timer);
   }
 #elif defined(MAGICKCORE_HAVE_POLL)
-  (void) poll((struct pollfd *) NULL,0,(int) milliseconds);
+  (void) poll((struct pollfd *) NULL,0,(int) (milliseconds > INT_MAX ? INT_MAX :
+    milliseconds));
 #elif defined(MAGICKCORE_WINDOWS_SUPPORT)
-  Sleep((long) milliseconds);
+  {
+    MagickSizeType
+      remaining;
+
+    remaining=milliseconds;
+    while (remaining > 0)
+    {
+      DWORD
+        chunk;
+
+      chunk=(DWORD) (remaining > (MagickSizeType) 0x7fffffff ? 0x7fffffff :
+        remaining);
+      Sleep(chunk);
+      remaining-=(MagickSizeType) chunk;
+    }
+  }
 #elif defined(vms)
   {
     float
@@ -1942,7 +2140,7 @@ MagickExport void MagickDelay(const MagickSizeType milliseconds)
     clock_t
       time_end;
 
-    time_end=clock()+milliseconds*CLOCKS_PER_SEC/1000;
+    time_end=clock()+(clock_t) (milliseconds*CLOCKS_PER_SEC/1000);
     while (clock() < time_end)
     {
     }
@@ -2053,12 +2251,31 @@ MagickPrivate MagickBooleanType ShredFile(const char *path)
   /*
     Shred the file.
   */
-  quantum=(size_t) MagickMinBufferExtent;
-  if ((fstat(file,&file_stats) == 0) && (file_stats.st_size > 0))
-    quantum=(size_t) MagickMin(file_stats.st_size,MagickMinBufferExtent);
+  if ((fstat(file,&file_stats) != 0) || (file_stats.st_size < 0))
+    {
+      (void) close_utf8(file);
+      return(MagickFalse);
+    }
+  if (file_stats.st_size == 0)
+    {
+      status=close_utf8(file);
+      return(status == -1 ? MagickFalse : MagickTrue);
+    }
+  quantum=(size_t) MagickMin(file_stats.st_size,MagickMinBufferExtent);
   length=(MagickSizeType) file_stats.st_size;
   random_info=AcquireRandomInfo();
+  if (random_info == (RandomInfo *) NULL)
+    {
+      (void) close_utf8(file);
+      return(MagickFalse);
+    }
   key=GetRandomKey(random_info,quantum);
+  if (key == (StringInfo *) NULL)
+    {
+      random_info=DestroyRandomInfo(random_info);
+      (void) close_utf8(file);
+      return(MagickFalse);
+    }
   for (i=0; i < passes; i++)
   {
     MagickOffsetType
