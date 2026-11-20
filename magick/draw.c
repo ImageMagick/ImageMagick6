@@ -98,6 +98,8 @@
 #define BezierQuantum  200
 #define PrimitiveExtentPad  4296.0
 #define MaxBezierCoordinates  67108864
+#define MinimumDashLength  0.001
+#define MaximumDashSegments  4194304
 #define MaxVectorRecursionDepth  400
 #define MacroExpansionLimit  262144
 #define ThrowPointExpectedException(image,token) \
@@ -1781,6 +1783,7 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
     i;
 
   size_t
+    dash_segments,
     number_vertices;
 
   ssize_t
@@ -1850,8 +1853,16 @@ static MagickBooleanType DrawDashPolygon(const DrawInfo *draw_info,
           n=0;
         length=scale*draw_info->dash_pattern[n];
       }
+    dash_segments=0;
     for (total_length=0.0; (length >= 0.0) && (maximum_length >= (total_length+length)); )
     {
+      if (++dash_segments > MaximumDashSegments)
+        {
+          (void) ThrowMagickException(&image->exception,GetMagickModule(),
+            DrawError,"TooManyDashSegments","`%s'",image->filename);
+          status=MagickFalse;
+          break;
+        }
       total_length+=length;
       if ((n & 0x01) != 0)
         {
@@ -3817,7 +3828,7 @@ static MagickBooleanType RenderMVGContent(Image *image,
                     &next_token);
                   if (token == next_token)
                     ThrowPointExpectedException(image,token);
-                  if (graphic_context[n]->dash_pattern[j] <= 0.0)
+                  if (graphic_context[n]->dash_pattern[j] < MinimumDashLength)
                     status=MagickFalse;
                 }
                 if (((x & 0x01) != 0) && (j == x))
@@ -6578,10 +6589,19 @@ static MagickBooleanType TraceEllipse(MVGInfo *mvg_info,const PointInfo center,
     return(MagickTrue);
   delta=MagickSafeReciprocal(MagickMax(radii.x,radii.y));
   step=MagickPI/(MagickPI*MagickSafeReciprocal(delta))/8.0;
+  if ((fabs(arc.x) > 1.0e+15) || (fabs(arc.y) > 1.0e+15) ||
+      (arc.x != arc.x) || (arc.y != arc.y))
+    {
+      (void) ThrowMagickException(mvg_info->exception,GetMagickModule(),
+        DrawError,"InvalidArcAngle","`%s'","");
+      return(MagickFalse);
+    }
   angle.x=DegreesToRadians(arc.x);
   y=arc.y;
-  while (y < arc.x)
-    y+=360.0;
+  if (y < arc.x)
+    y+=360.0*ceil((arc.x-y)/360.0);
+  if (y < arc.x)
+    y=arc.x;
   angle.y=DegreesToRadians(y);
   coordinates=ceil((angle.y-angle.x)/step+1.0);
   if (CheckPrimitiveExtent(mvg_info,coordinates+1) == MagickFalse)
