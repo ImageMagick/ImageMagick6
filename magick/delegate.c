@@ -1766,8 +1766,8 @@ static MagickBooleanType CopyDelegateFile(const char *source,
     return(MagickTrue);
   if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
     ThrowPolicyException(source,MagickFalse);
-  destination_file=open_utf8(destination,O_WRONLY | O_CLOEXEC | O_BINARY | O_CREAT |
-    O_NOFOLLOW,S_MODE);
+  destination_file=open_utf8(destination,O_WRONLY | O_CLOEXEC | O_BINARY |
+    O_CREAT | O_NOFOLLOW,S_MODE);
   if (destination_file == -1)
     return(MagickFalse);
   if (IsPathAuthorized(WritePolicyRights,destination) == MagickFalse)
