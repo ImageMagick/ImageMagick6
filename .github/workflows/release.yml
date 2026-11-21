@@ -175,29 +175,11 @@ jobs:
           nmake
           nmake release
 
-      - name: Sign executables and libraries
-        uses: ImageMagick/code-signing-action@11c51f7659405bee4dd3529748e1501a0d388911 #v1.0.1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          directory: ${{ github.workspace }}\Artifacts\bin
-          files: '*.exe *.dll'
-
       - name: Create installer
         shell: cmd
         run: |
           call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsDevCmd.bat"
           "C:\Program Files (x86)\Inno Setup 6\iscc.exe" Configure\Installer\Inno\ImageMagick.iss
-
-      - name: Sign installer
-        uses: ImageMagick/code-signing-action@11c51f7659405bee4dd3529748e1501a0d388911 #v1.0.1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          directory: ${{ github.workspace }}\Configure\Installer\Inno\Artifacts
-          files: '*.exe'
 
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 #v7.0.2
         with:
@@ -305,15 +287,6 @@ jobs:
         run: |
           call "C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsDevCmd.bat"
           msbuild /m /t:Rebuild /p:Configuration=Release,Platform=${{matrix.architecture}}
-
-      - name: Sign executables and libraries
-        uses: ImageMagick/code-signing-action@11c51f7659405bee4dd3529748e1501a0d388911 #v1.0.1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          directory: ${{ github.workspace }}\Artifacts\bin
-          files: '*.exe *.dll'
 
       - name: Copy Files
         shell: pwsh
