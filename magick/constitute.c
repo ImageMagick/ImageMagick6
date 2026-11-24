@@ -375,6 +375,12 @@ MagickExport Image *PingImages(const ImageInfo *image_info,
           return(PingImage(image_info,exception));
         }
       (void) CopyMagickString(filename,read_info->filename,MaxTextExtent);
+      if (image_info->number_scenes > GetMagickResourceLimit(ListLengthResource))
+        {
+          (void) ThrowMagickException(exception,GetMagickModule(),ResourceLimitError,
+            "ListLengthExceedsLimit","`%s`",read_info->filename);
+          return(MagickFalse);
+        }
       images=NewImageList();
       extent=(ssize_t) (read_info->scene+read_info->number_scenes);
       for (scene=(ssize_t) read_info->scene; scene < (ssize_t) extent; scene++)
@@ -976,6 +982,12 @@ MagickExport Image *ReadImages(const ImageInfo *image_info,
           return(ReadImage(image_info,exception));
         }
       (void) CopyMagickString(filename,read_info->filename,MaxTextExtent);
+      if (image_info->number_scenes > GetMagickResourceLimit(ListLengthResource))
+        {
+          (void) ThrowMagickException(exception,GetMagickModule(),ResourceLimitError,
+            "ListLengthExceedsLimit","`%s`",read_info->filename);
+          return(MagickFalse);
+        }
       images=NewImageList();
       extent=(ssize_t) (read_info->scene+read_info->number_scenes);
       for (scene=(ssize_t) read_info->scene; scene < (ssize_t) extent; scene++)
