@@ -1262,7 +1262,11 @@ MagickExport void MagickCoreGenesis(const char *path,
   const MagickBooleanType establish_signal_handlers)
 {
   char
-    *events;
+    *events,
+    *value;
+
+  MagickBooleanType
+    offline;
 
   /*
     Initialize the Magick environment.
@@ -1365,6 +1369,15 @@ MagickExport void MagickCoreGenesis(const char *path,
   (void) MonitorComponentGenesis();
   instantiate_magickcore=MagickTrue;
   UnlockMagickMutex();
+  value=GetPolicyValue("system:offline");
+  if (value == (char *) NULL)
+    return;
+  offline=IsStringTrue(value);
+  value=DestroyString(value);
+  if (offline == MagickFalse)
+    return;
+  (void) FormatLocaleFile(stderr,"ImageMagick is offline for maintenance. Try again later.\n");
+  exit(75);  /* EX_TEMPFAIL */
 }
 
 /*
