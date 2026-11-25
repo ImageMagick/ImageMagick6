@@ -379,7 +379,8 @@ MagickExport Image *PingImages(const ImageInfo *image_info,
         {
           (void) ThrowMagickException(exception,GetMagickModule(),ResourceLimitError,
             "ListLengthExceedsLimit","`%s`",read_info->filename);
-          return(MagickFalse);
+          read_info=DestroyImageInfo(read_info);
+          return((Image *) NULL);
         }
       images=NewImageList();
       extent=(ssize_t) (read_info->scene+read_info->number_scenes);
@@ -986,7 +987,8 @@ MagickExport Image *ReadImages(const ImageInfo *image_info,
         {
           (void) ThrowMagickException(exception,GetMagickModule(),ResourceLimitError,
             "ListLengthExceedsLimit","`%s`",read_info->filename);
-          return(MagickFalse);
+          read_info=DestroyImageInfo(read_info);
+          return((Image *) NULL);
         }
       images=NewImageList();
       extent=(ssize_t) (read_info->scene+read_info->number_scenes);
