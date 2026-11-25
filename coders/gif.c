@@ -676,7 +676,7 @@ static MagickBooleanType EncodeImage(const ImageInfo *image_info,Image *image,
     indexes=GetVirtualIndexQueue(image);
     if (y == 0)
       {
-        waiting_code=(short) (((size_t) (*indexes)) && 0xff);
+        waiting_code=(short) (((size_t) (*indexes)) & 0xff);
         p++;
       }
     for (x=(ssize_t) (y == 0 ? 1 : 0); x < (ssize_t) image->columns; x++)
